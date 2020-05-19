@@ -7,7 +7,7 @@ window.odin = {};
 
 /**
  * @author odin
- * @description helpers
+ * @description Helpers for data check and transform.
  */
 
 odin.helper = (function () {
@@ -165,6 +165,13 @@ odin.helper = (function () {
         return false;
     };
 
+    /**
+     * Always return true.
+     */
+    function yes(a, b, c) {
+        return true;
+    };
+
     /* eslint-enable no-unused-vars */
 
     /**
@@ -239,6 +246,91 @@ odin.helper = (function () {
 
     }
 
+    return {
+        isUndef,
+        isDef,
+        isTrue,
+        isFalse,
+        isPrimitive,
+        toRawType,
+        isPlainObject,
+        isObject,
+        isValidArrayIndex,
+        isPromise,
+        toString,
+        toNumber,
+        hasOwn,
+        toArray,
+        extend,
+        arrToObject,
+        no,
+        yes,
+        sameValue,
+        looseEqual,
+        resJSON
+    }
+})();
+
+/**
+ * @author odin
+ * @description Helpers for data check and transform.
+ */
+
+odin.math = (function () {
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description add ',' with string number
+     * @param  {number} price - the number which want to be added ,
+     * @param  {number} fixed - how many digits that you want to fix
+     * @returns {string} value with ','
+     */
+    function priceWithCommas(price, fixed) {
+
+        if (price == null) {
+
+            price = '';
+
+        }
+
+        if (fixed != null && !isNaN(parseFloat(price))) {
+
+            price = parseFloat(price.toString().replace(/,/g, '')).toFixed(fixed);
+
+        }
+
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description remove ',' with string number
+     * @param  {number} price - the number which want to be added ,
+     * @returns {string} value without ','
+     */
+    function priceWithoutCommas(price) {
+
+        return price.toString().replace(/,/g, '');
+
+    }
+
+    return {
+        priceWithCommas,
+        priceWithoutCommas
+    }
+
+})();
+
+/**
+ * @author odin
+ * @description Helpers for URL.
+ */
+
+odin.url = (function () {
+
     /**
      * @author odin
      * @class helpers
@@ -248,7 +340,7 @@ odin.helper = (function () {
      * @param  {string} [url = window.location.search] - url
      * @returns {string} value
      */
-    function getUrlParaByName (name, url) {
+    function getUrlParaByName(name, url) {
 
         var result,
             regex,
@@ -282,71 +374,16 @@ odin.helper = (function () {
 
     }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description add ',' with string number
-     * @param  {number} price - the number which want to be added ,
-     * @param  {number} fixed - how many digits that you want to fix
-     * @returns {string} value with ','
-     */
-    function priceWithCommas (price, fixed) {
-
-        if (price == null) {
-
-            price = '';
-
-        }
-
-        if (fixed != null && !isNaN(parseFloat(price))) {
-
-            price = parseFloat(price.toString().replace(/,/g, '')).toFixed(fixed);
-
-        }
-
-        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description remove ',' with string number
-     * @param  {number} price - the number which want to be added ,
-     * @returns {string} value without ','
-     */
-    function priceWithoutCommas (price) {
-
-        return price.toString().replace(/,/g, '');
-
-    }
-
     return {
-        isUndef,
-        isDef,
-        isTrue,
-        isFalse,
-        isPrimitive,
-        toRawType,
-        isPlainObject,
-        isObject,
-        isValidArrayIndex,
-        isPromise,
-        toString,
-        toNumber,
-        hasOwn,
-        toArray,
-        extend,
-        arrToObject,
-        no,
-        sameValue,
-        looseEqual,
-        resJSON,
-        getUrlParaByName,
-        priceWithCommas,
-        priceWithoutCommas
+        getUrlParaByName
     }
+
 })();
+
+/**
+ * @author odin
+ * @description Tools For jQuery 
+ */
 
 odin.jq = (function () {
 
