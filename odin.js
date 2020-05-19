@@ -12,69 +12,121 @@ window.odin = {};
 
 odin.helper = (function () {
 
+    /**
+     * @author odin
+     * @class helpers
+     * @description Checking the para is undefined or null.
+     * @param {any} o The value we want to check.
+     * @returns {boolean} true or false
+     */
     function isUndef(o) {
         return o === undefined || o === null
     }
 
+    /**
+     * @author odin
+     * @class helpers
+     * @description Checking the para is NOT undefined or null.
+     * @param {any} o The value we want to check.
+     * @returns {boolean} true or false
+     */
     function isDef(o) {
         return o !== undefined && o !== null
     }
 
+    /**
+     * @author odin
+     * @class helpers
+     * @description Checking the para is TRUE(boolean).
+     * @param {any} o The value we want to check.
+     * * @returns {boolean} true or false
+     */
     function isTrue(o) {
         return o === true
     }
 
+    /**
+     * @author odin
+     * @class helpers
+     * @description Checking the para is FALUSE(boolean).
+     * @param {any} o The value we want to check.
+     * @returns {boolean} true or false
+     */
     function isFalse(o) {
         return o === false
     }
 
     /**
-     * Check if value is primitive.
+     * @author odin
+     * @class helpers
+     * @description Check if value is primitive.
+     * @param {any} val The value we want to check.
+     * @returns {boolean} true or false
      */
-    function isPrimitive(value) {
+    function isPrimitive(val) {
         return (
-            typeof value === 'string' ||
-            typeof value === 'number' ||
+            typeof val === 'string' ||
+            typeof val === 'number' ||
             // $flow-disable-line
-            typeof value === 'symbol' ||
-            typeof value === 'boolean'
+            typeof val === 'symbol' ||
+            typeof val === 'boolean'
         )
     }
 
     /**
-     * Get the raw type string of a value, e.g., [object Object].
+     * @author odin
+     * @class helpers
+     * @description Get the raw type string of a value.
+     * @param {any} val The value we want to check.
+     * * @returns {string} [object Object]
      */
     var _toString = Object.prototype.toString;
 
-    function toRawType(value) {
-        return _toString.call(value).slice(8, -1)
+    function toRawType(val) {
+        return _toString.call(val).slice(8, -1)
     }
 
     /**
-     * Strict object type check. Only returns true
-     * for plain JavaScript objects.
+     * @author odin
+     * @class helpers
+     * @description  Strict object type check.Only returns true for plain JavaScript objects.
+     * @param {any} val The value we want to check.
+     * @returns {boolean} true or false
      */
-    function isPlainObject(obj) {
-        return _toString.call(obj) === '[object Object]'
+    function isPlainObject(val) {
+        return _toString.call(val) === '[object Object]'
     }
 
     /**
-     * Quick object check - this is primarily used to tell
-     * Objects from primitive values when we know the value
-     * is a JSON-compliant type.
+     * @author odin
+     * @class helpers
+     * @description Quick object check - this is primarily used to tell / Objects from primitive values when we know the value is a JSON - compliant type.
+     * @param {any} val The value we want to check.
+     * @returns {boolean} true or false
      */
-    function isObject(obj) {
-        return obj !== null && typeof obj === 'object'
+    function isObject(val) {
+        return val !== null && typeof val === 'object'
     }
 
     /**
-     * Check if val is a valid array index.
+     * @author odin
+     * @class helpers
+     * @description Check if val is a valid array index.
+     * @param {any} val The value we want to check.
+     * @returns {boolean} true or false
      */
     function isValidArrayIndex(val) {
         var n = parseFloat(String(val));
         return n >= 0 && Math.floor(n) === n && isFinite(val)
     }
 
+    /**
+     * @author odin
+     * @class helpers
+     * @description Check if val is a Promise.
+     * @param {any} val The input value
+     * @returns {boolean} true or false
+     */
     function isPromise(val) {
         return (
             isDef(val) &&
@@ -84,7 +136,11 @@ odin.helper = (function () {
     }
 
     /**
-     * Convert a value to a string that is actually rendered.
+     * @author odin
+     * @class helpers
+     * @description Convert a value to a string that is actually rendered.
+     * @param {any} val The input value
+     * @returns {string} string
      */
     function toString(val) {
         return val == null ?
@@ -95,8 +151,11 @@ odin.helper = (function () {
     }
 
     /**
-     * Convert an input value to a number for persistence.
-     * If the conversion fails, return original string.
+     * @author odin
+     * @class helpers
+     * @description Convert an input value to a number for persistence. / If the conversion fails, return original string.
+     * @param {string} val The input string
+     * @returns {number / string} number / string
      */
     function toNumber(val) {
         var n = parseFloat(val);
@@ -104,7 +163,12 @@ odin.helper = (function () {
     }
 
     /**
-     * Check whether an object has the property.
+     * @author odin
+     * @class helpers
+     * @description Check whether an object has the property.
+     * @param {object} obj Target Object
+     * @param {string} keyName The property name
+     * @returns {boolean} true or false
      */
     var hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -115,11 +179,37 @@ odin.helper = (function () {
     /**
      * @author odin
      * @class helpers
-     * @description Convert an Array - like object to a real Array.
-     * @param list Array like 
-     * @param start decide which index is the first value of new Array
+     * @description Pick the own property name and value to a new object
+     * @param {object} obj input object
+     * @returns {object} A new object contains only own property name and value
      */
-    function toArray(list, start) {
+
+    function getAllOwnPropertyObj(obj) {
+
+        var filterObj = {};
+
+        for (var key in obj) {
+
+            if (obj.hasOwnProperty(key)) {
+
+                filterObj.key = obj[key];
+
+            }
+
+        }
+
+        return filterObj;
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Convert an Array - like object to a real Array.
+     * @param list Array like arguments
+     * @param start decide which index is the first value of new Array
+     * @returns {object} to object extend by _from object
+     */
+    function arrLikeToArray1(list, start) {
         start = start || 0;
         var i = list.length - start;
         var ret = new Array(i);
@@ -132,9 +222,21 @@ odin.helper = (function () {
     /**
      * @author odin
      * @class helpers
+     * @description Convert an Array - like object to a real Array.
+     * @param list Array like arguments
+     * @returns {object} to object extend by _from object
+     */
+    function arrLikeToArray2(list) {
+        return [].slice.call(list);
+    }
+
+    /**
+     * @author odin
+     * @class helpers
      * @description Mix properties into target object.
      * @param to destination Object
      * @param _from from which Object
+     * @returns {object} to object extend by _from object
      */
     function extend(to, _from) {
         for (var key in _from) {
@@ -145,8 +247,9 @@ odin.helper = (function () {
     /**
      * @author odin
      * @class helpers
-     * @description Merge an Array of Objects into a single Object.
-     * @param arr input Array
+     * @description Merge an array of objects into a single object.
+     * @param {array} arr input Array
+     * @returns {object} new object extend by arr
      */
     function arrToObject(arr) {
         var res = {};
@@ -159,23 +262,31 @@ odin.helper = (function () {
     }
 
     /**
-     * Always return false.
+     * @author odin
+     * @class helpers
+     * @description Always return false.
+     * @returns {boolean} false
      */
     function no (a, b, c) {
         return false;
     };
 
     /**
-     * Always return true.
+     * @author odin
+     * @class helpers
+     * @description Always return true.
+     * @returns {boolean} true
      */
     function yes(a, b, c) {
         return true;
     };
 
-    /* eslint-enable no-unused-vars */
-
     /**
-     * Return the same value.
+     * @author odin
+     * @class helpers
+     * @description Return the same value.
+     * @param _ input data
+     * @returns {any} input data
      */
     function sameValue (_) {
         return _;
@@ -184,11 +295,10 @@ odin.helper = (function () {
     /**
      * @author odin
      * @class helpers
-     * @description Check
-     if two values are loosely equal - that is,
-         if they are plain objects, do they have the same shape ?
-     * @param a input variable
-     * @param a another input variable
+     * @description Check if two values are loosely equal - that is, if they are plain objects, do they have the same shape ?
+     * @param {any} a input variable
+     * @param {any} b another input variable
+     * @returns {boolean} true or false
      */
     function looseEqual(a, b) {
         if (a === b) {
@@ -227,7 +337,13 @@ odin.helper = (function () {
         }
     }
 
-    // String/JSON to JSON
+    /**
+     * @author odin
+     * @class helpers
+     * @description String / JSON to JSON
+     * @param {string / json} inputData input data
+     * @returns {json} json
+     */
     function resJSON(inputData) {
 
         var res = inputData;
@@ -246,6 +362,47 @@ odin.helper = (function () {
 
     }
 
+    /**
+     * @author odin
+     * @class helpers
+     * @description Reverse input text
+     * @param {string} str input string
+     * @returns {string} string
+     */
+    function reverseText(str) {
+
+        return str.split('').reverse().join('');
+
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Shallow copy of array or object
+     * @param {array / object} val input data of type object
+     * @returns {array / object} array / object
+     */
+
+    function shallowCopy(val) {
+        
+        return Array.isArray(val) ? val.slice() : extend({}, val);
+
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Deep copy of array or object
+     * @param {array / object} val input data of type object
+     * @returns {array / object} array / object
+     */
+
+    function deepCopy(val) {
+
+        return JSON.parse(JSON.stringify(val));
+
+    }
+
     return {
         isUndef,
         isDef,
@@ -260,15 +417,21 @@ odin.helper = (function () {
         toString,
         toNumber,
         hasOwn,
-        toArray,
+        getAllOwnPropertyObj,
+        arrLikeToArray1,
+        arrLikeToArray2,
         extend,
         arrToObject,
         no,
         yes,
         sameValue,
         looseEqual,
-        resJSON
+        resJSON,
+        reverseText,
+        shallowCopy,
+        deepCopy
     }
+
 })();
 
 /**
@@ -280,10 +443,10 @@ odin.math = (function () {
 
     /**
      * @author odin
-     * @class helpers
+     * @class math
      * @description add ',' with string number
-     * @param  {number} price - the number which want to be added ,
-     * @param  {number} fixed - how many digits that you want to fix
+     * @param {number} price - the number which want to be added ,
+     * @param {number} fixed - how many digits that you want to fix
      * @returns {string} value with ','
      */
     function priceWithCommas(price, fixed) {
@@ -306,7 +469,7 @@ odin.math = (function () {
 
     /**
      * @author odin
-     * @class helpers
+     * @class math
      * @description remove ',' with string number
      * @param  {number} price - the number which want to be added ,
      * @returns {string} value without ','
@@ -317,9 +480,41 @@ odin.math = (function () {
 
     }
 
+    /**
+     * @author odin
+     * @class math
+     * @description find the max value among of input array
+     * @param {array} arr - input array
+     * @returns {number} max number
+     */
+    function max(arr) {
+
+        return arr.reduce(function (preValue, curValue, index, array) {
+            return preValue > curValue ? preValue : curValue;
+        });
+
+    }
+
+    /**
+     * @author odin
+     * @class math
+     * @description find the min value among of input array
+     * @param {array} arr - input array
+     * @returns {number} min number
+     */
+    function min(arr) {
+
+        return arr.reduce(function (preValue, curValue, index, array) {
+            return preValue > curValue ? curValue : preValue;
+        })
+
+    }
+
     return {
         priceWithCommas,
-        priceWithoutCommas
+        priceWithoutCommas,
+        max,
+        min
     }
 
 })();
@@ -333,11 +528,11 @@ odin.url = (function () {
 
     /**
      * @author odin
-     * @class helpers
+     * @class url
      * @description get the value of the specific parameter name from url
-     * @param  {string} [url = window.location.search] - url
-     * @param  {string} name - query parameter name
-     * @param  {string} [url = window.location.search] - url
+     * @param {string} [url = window.location.search] - url
+     * @param {string} name - query parameter name
+     * @param {string} [url = window.location.search] - url
      * @returns {string} value
      */
     function getUrlParaByName(name, url) {
@@ -389,6 +584,38 @@ odin.jq = (function () {
 
     /**
      * @author odin
+     * @class jq
+     * @description Checking if the jQuery is existing.
+     * @returns {boolean} true or false
+     */
+    function isjQeryExist(o) {
+        return jQuery ? true : false;
+    }
+
+    /**
+     * @author odin
+     * @class jq
+     * @description Shallow copy of array or object
+     * @param {array / object} val input data of type object
+     * @returns {array / object} array / object
+     */
+    function shallowCopy(val) {
+        return Array.isArray(val) ? jQuery.extend([], val) : jQuery.extend({}, val);
+    }
+
+    /**
+     * @author odin
+     * @class jq
+     * @description Deep copy of array or object
+     * @param {array / object} val input data of type object
+     * @returns {array / object} array / object
+     */
+    function deepCopy(val) {
+        return Array.isArray(val) ? jQuery.extend(true, [], val) : jQuery.extend(true, {}, val);
+    }
+
+    /**
+     * @author odin
      * @class jq 
      * @description 
      * @param  {number} time - 秒
@@ -433,7 +660,77 @@ odin.jq = (function () {
     // }
 
     return {
+        isjQeryExist,
+        shallowCopy,
+        deepCopy,
         // makeTimeStr
+    };
+
+})();
+
+/**
+ * @author odin
+ * @description Tools For ES6 
+ */
+
+odin.es6 = (function () {
+
+    /**
+     * @author odin
+     * @class url
+     * @description Convert an Array - like object to a real Array. 
+     * @param {array / array-like list} list
+     * @param {boolean} isNeedToCutTheSameValue Cut the same value among of the array or array like list 
+     * @returns {array} array
+     */
+    function arrLikeToArrayEs6(list, isNeedToCutTheSameValue) {
+
+        return isNeedToCutTheSameValue ? Array.from(new Set(list)) : Array.from(list);
+
+    }
+
+    /**
+     * @author odin
+     * @class es6
+     * @description find the max value among of input array
+     * @param {array} arr - input array
+     * @returns {number} max number
+     */
+    function max(arr) {
+
+        return Math.max(...arr);
+
+    }
+
+    /**
+     * @author odin
+     * @class es6
+     * @description find the min value among of input array
+     * @param {array} arr - input array
+     * @returns {number} min number
+     */
+    function min(arr) {
+
+        return Math.min(...arr);
+
+    }
+
+    /**
+     * @author odin
+     * @class es6
+     * @description Shallow copy of array or object
+     * @param {array / object} val input data of type object
+     * @returns {array / object} array / object
+     */
+    function shallowCopy (val) {
+        return Object.assign(val);
+    }
+
+    return {
+        arrLikeToArrayEs6,
+        max,
+        min,
+        shallowCopy,
     };
 
 })();
