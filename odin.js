@@ -89,6 +89,28 @@ odin.helper = (function () {
     /**
      * @author odin
      * @class helpers
+     * @description  Strict number type check.Only returns true for number(without Infinity and NaN).
+     * @param {any} val The value we want to check.
+     * @returns {boolean} true or false
+     */
+    function isNumber(val) {
+        return typeof target === 'number' && isFinite(target);
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description  Strict number type check.Only returns true for number(without Infinity and NaN).
+     * @param {any} val The value we want to check.
+     * @returns {boolean} true or false
+     */
+    function isNumber2(val) {
+        return _toString.call(val) === '[object Number]' && isFinite(target);
+    }
+
+    /**
+     * @author odin
+     * @class helpers
      * @description  Strict object type check.Only returns true for plain JavaScript objects.
      * @param {any} val The value we want to check.
      * @returns {boolean} true or false
@@ -155,11 +177,24 @@ odin.helper = (function () {
      * @class helpers
      * @description Convert an input value to a number for persistence. / If the conversion fails, return original string.
      * @param {string} val The input string
-     * @returns {number / string} number / string
+     * @returns {number / string / NaN} number / string / NaN
      */
     function toNumber(val) {
         var n = parseFloat(val);
         return isNaN(n) ? val : n
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Convert an input value to a number for persistence. / If the conversion fails, return original string.
+     * @param {string} val The input string
+     * @param {number} radix between 2 ~ 36
+     * @returns {number / string / NaN} number / string / NaN
+     */
+    function toNumberWithRaix(val, radix) {
+        var n = parseFloat(val, radix);
+        return isNaN(n) ? val : n;
     }
 
     /**
@@ -410,12 +445,15 @@ odin.helper = (function () {
         isFalse,
         isPrimitive,
         toRawType,
+        isNumber,
+        isNumber2,
         isPlainObject,
         isObject,
         isValidArrayIndex,
         isPromise,
         toString,
         toNumber,
+        toNumberWithRaix,
         hasOwn,
         getAllOwnPropertyObj,
         arrLikeToArray1,
@@ -510,11 +548,172 @@ odin.math = (function () {
 
     }
 
+    /**
+     * @author odin
+     * @class math
+     * @description Get the total from arguments
+     * @param {number / array - like} arguments Series of numbers
+     * @returns {number} total
+     */
+    function total() {
+
+        var nums = odin.helper.arrLikeToArray2(arguments);
+
+        var total = nums.reduce(function (acc, val) {
+
+            return acc + val
+
+        }, 0);
+
+    }
+
+    /**
+     * @author odin
+     * @class math
+     * @description Get the average from arguments
+     * @param {number / array - like} arguments Series of numbers
+     * @returns {number} average
+     */
+    function average() {
+        
+        return total(arguments) / odin.helper.arrLikeToArray2(arguments).length;
+
+    }
+
+    /**
+     * @author odin
+     * @class math
+     * @description Get the double number of val
+     * @param {number} val the number we want to double
+     * @returns {number} double number of val
+     */
+    function double (val) {
+
+        return val * 2;
+
+    }
+
+    /**
+     * @author odin
+     * @class math
+     * @description Get the triple number of val
+     * @param {number} val the number we want to triple
+     * @returns {number} triple number of val
+     */
+    function triple(val) {
+
+        return val * 3;
+
+    }
+
+    /**
+     * @author odin
+     * @class math
+     * @description Get the double number of val
+     * @param {array} arr The array contains 
+     * @returns {array} New array of double numbers
+     */
+    function arrDouble(arr) {
+
+        return arrDouble = arr.map(function (num) {
+            return num * 2
+        });
+
+    }
+
+    /**
+     * @author odin
+     * @class math
+     * @description Get the triple number of val
+     * @param {array} arr The array contains 
+     * @returns {array} New array of triple numbers
+     */
+    function arrTriple(val) {
+
+        return arrDouble = arr.map(function (num) {
+            return num * 3
+        });
+
+    }
+
+    /**
+     * @author odin
+     * @class math
+     * @description 四捨五入(round)
+     * @param {number} num The number we want to round
+     * @returns {number} Rounded number
+     */
+    function round(num) {
+
+        return Math.round(num);
+
+    }
+
+    /**
+     * @author odin
+     * @class math
+     * @description 取最大正整數(floor)
+     * @param {number} num The number we want to floor
+     * @returns {number} Floored number
+     */
+    function floor(num) {
+
+        return Math.floor(num);
+
+    }
+
+    /**
+     * @author odin
+     * @class math
+     * @description 取最小整數(ceil)
+     * @param {number} num The number we want to ceil
+     * @returns {number} Ceiled number
+     */
+    function ceil(num) {
+
+        return Math.ceil(num);
+
+    }
+
+    /**
+     * @author odin
+     * @class math
+     * @description 帶小數的四捨五入(round)
+     * @param {number} num The number with decimal whcich we want to round it and cut the digit of decimal
+     * @param {number} digit the number we want to leave of decimal 
+     * @returns {number} Rounded number with specific digit
+     */
+    function roundDecimal(num, digit) {
+
+        return Math.round(Math.round(val * Math.pow(10, (digit || 0) + 1)) / 10) / Math.pow(10, (digit || 0));
+
+    }
+
+    /**
+     * @author odin
+     * @class math
+     * @description 絕對值(abs)
+     * @param {number} num The number we want to abs
+     * @returns {number} Absed number
+     */
+    function abs(num) {
+
+        return Math.abs(num);
+
+    }
+
     return {
         priceWithCommas,
         priceWithoutCommas,
         max,
-        min
+        min,
+        total,
+        average,
+        double,
+        triple,
+        arrDouble,
+        arrTriple,
+        roundDecimal,
     }
 
 })();
@@ -525,6 +724,102 @@ odin.math = (function () {
  */
 
 odin.url = (function () {
+
+    /**
+     * @author odin
+     * @class url
+     * @description get the URL
+     * @returns {string} URL
+     */
+    function getUrl() {
+
+        return window.location.href;
+
+    }
+
+    /**
+     * @author odin
+     * @class url
+     * @description 取得目前造訪網頁的通訊協定 - get the protocol
+     * @returns {string} 通訊協定 - protocol
+     */
+    function getProtocol() {
+
+        return window.location.protocol;
+
+    }
+
+    /**
+     * @author odin
+     * @class url
+     * @description 取得目前造訪網頁的主機名稱, 包含port - get the hostname with post
+     * @returns {string} 主機名稱, 包含port - Host
+     */
+    function getHost() {
+
+        return window.location.host;
+
+    }
+
+    /**
+     * @author odin
+     * @class url
+     * @description 取得目前造訪網頁的主機名稱, 不包含port - get the hostname without post
+     * @returns {string} 主機名稱, 不包含port - Hostname
+     */
+    function getHostname() {
+
+        return window.location.hostname;
+
+    }
+
+    /**
+     * @author odin
+     * @class url
+     * @description 取得目前造訪網頁的路徑 - get the pathname
+     * @returns {string} 網頁的路徑 - pathname
+     */
+    function getPathname() {
+
+        return window.location.pathname;
+
+    }
+
+    /**
+     * @author odin
+     * @class url
+     * @description 取得目前造訪網頁茅點(#)(hashtag) - get the hashtag
+     * @returns {string} hashtag
+     */
+    function getHash() {
+
+        return window.location.hash;
+
+    }
+
+    /**
+     * @author odin
+     * @class url
+     * @description 取得目前造訪網頁的port - get the port
+     * @returns {string} port
+     */
+    function getPort() {
+
+        return window.location.port;
+
+    }
+
+    /**
+     * @author odin
+     * @class url
+     * @description 取得目前造訪網頁查詢參數 - get the search
+     * @returns {string} search
+     */
+    function getSearch() {
+
+        return window.location.search;
+
+    }
 
     /**
      * @author odin
@@ -569,8 +864,66 @@ odin.url = (function () {
 
     }
 
+    /**
+     * @author odin
+     * @class url
+     * @description 改變參數狀態 pushState
+     * @param {object} state  - contain the paramName and value
+     * @param {string} url - the url we want to add
+     */
+    function pushState(state, url) {
+
+        var state = state ? state : '';
+
+        var title = '';
+
+        history.pushState(state, title, url);
+
+    }
+
+    /**
+     * @author odin
+     * @class url
+     * @description Generate the FB share link
+     * @param {string} url - the url we want to add
+     * @returns {string} FB share link
+     */
+    function generateFBShareLink(url) {
+
+        var fbPrefix = 'http://www.facebook.com/sharer.php?u=';
+
+        return url ? fbPrefix + url : fbPrefix + getUrl();
+
+    }
+
+    /**
+     * @author odin
+     * @class url
+     * @description Generate the Line share link
+     * @param {string} url - the url we want to add
+     * @returns {string} Line share link
+     */
+    function generateLineShareLink(url) {
+
+        var linePrefix = 'https://social-plugins.line.me/lineit/share?url=';
+
+        return url ? linePrefix + url : linePrefix + getUrl();
+
+    }
+
     return {
-        getUrlParaByName
+        getUrl,
+        getProtocol,
+        getHost,
+        getHostname,
+        getPathname,
+        getHash,
+        getPort,
+        getSearch,
+        getUrlParaByName,
+        pushState,
+        generateFBShareLink,
+        generateLineShareLink
     }
 
 })();
@@ -670,6 +1023,127 @@ odin.jq = (function () {
 
 /**
  * @author odin
+ * @description Tools For Time 
+ */
+
+odin.time = (function () {
+
+    /**
+     * @author odin
+     * @class time
+     * @description Get now date object
+     * @returns {object} Now date object
+     */
+    function getNowDateObj () {
+        return new Date();
+    }
+
+    /**
+     * @author odin
+     * @class time
+     * @description Get now date object
+     * @param {any date format} date any date format
+     * @returns {object} Specific date object
+     */
+    function getSpecificDateObj(date) {
+        return new Date(date);
+    }
+
+    /**
+     * @author odin
+     * @class time
+     * @description Get specific time stamp
+     * @param {any date format} date any date format
+     * @returns {object} Specific time stamp
+     */
+    function getSpecificTimeStamp(date) {
+        return Date.parse(date);
+    }
+
+    /**
+     * @author odin
+     * @class time
+     * @description Get specific time stamp
+     * @param {object} date Instance of Date Function
+     * @param {number} chnageDate plus or minus day, eg: 6 or -5 
+     * @returns {object} After change Date Object
+     */
+    function changeDate(date, chnageDate) {
+        return new Date(date.setDate(date.getDate() + changeDay));
+    }
+
+    /**
+     * @author odin
+     * @class time
+     * @description Convert any time format to YYYY-MM-DD
+     * @param {timeFormat(TimeStamp / Date Object)} date
+     * @param {string} seperator seperate the YYYY-MM-DD, eg: '-', '/'
+     * @returns {string} time string
+     */
+    function formatDate(date, seperator) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return seperator ? [year, month, day].join(seperator) : [year, month, day].join('-');
+    }
+    
+
+    return {
+        getNowDateObj,
+        getSpecificDateObj,
+        getSpecificTimeStamp,
+        formatDate,
+        changeDate
+    };
+
+})();
+
+/**
+ * @author odin
+ * @description Tools For specific function 
+ */
+
+odin.tools = (function () {
+
+    /**
+     * @author odin
+     * @class tools
+     * @description Convert any time format to YYYY-MM-DD
+     * @param {string} id Dom id, this Dom contains the content that we want to copy to the clipboard 
+     * @param {string} msg after copy done, show the message
+     */
+    function copyTextToClipboard(id, msg) {
+
+        var TextRange = document.createRange();
+
+        TextRange.selectNode(document.getElementById(id));
+
+        sel = window.getSelection();
+
+        sel.removeAllRanges();
+
+        sel.addRange(TextRange);
+
+        document.execCommand("copy");
+
+        alert(msg ? msg : 'copied!');
+
+    }
+
+
+    return {
+        copyTextToClipboard,
+    };
+
+})();
+
+/**
+ * @author odin
  * @description Tools For ES6 
  */
 
@@ -726,11 +1200,39 @@ odin.es6 = (function () {
         return Object.assign(val);
     }
 
+    /**
+     * @author odin
+     * @class es6
+     * @description Get the average from arguments
+     * @param {number / array - like} arguments Series of numbers
+     * @returns {number} average
+     */
+    function average (...nums) {
+
+        return nums.reduce((acc, val) => acc + val, 0) / nums.length;
+
+    }
+
+    /**
+     * @author odin
+     * @class es6
+     * @description Get the total from arguments
+     * @param {number / array - like} arguments Series of numbers
+     * @returns {number} total
+     */
+    function total(...nums) {
+
+        return nums.reduce((acc, val) => acc + val, 0);
+
+    }
+
     return {
         arrLikeToArrayEs6,
         max,
         min,
         shallowCopy,
+        average,
+        total,
     };
 
 })();
