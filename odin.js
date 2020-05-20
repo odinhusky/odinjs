@@ -1063,13 +1063,13 @@ odin.time = (function () {
     /**
      * @author odin
      * @class time
-     * @description Get specific time stamp
+     * @description Plus or Minus days of input Date object
      * @param {object} date Instance of Date Function
-     * @param {number} chnageDate plus or minus day, eg: 6 or -5 
-     * @returns {object} After change Date Object
+     * @param {number} changeDate plus or minus day, eg: 6 or -5 
+     * @returns {object} Changed Date Object
      */
-    function changeDate(date, chnageDate) {
-        return new Date(date.setDate(date.getDate() + changeDay));
+    function changeDate(date, changeDate) {
+        return new Date(date.setDate(date.getDate() + changeDate));
     }
 
     /**
