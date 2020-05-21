@@ -220,19 +220,12 @@ odin.helper = (function () {
      */
 
     function getAllOwnPropertyObj(obj) {
-
         var filterObj = {};
-
         for (var key in obj) {
-
             if (obj.hasOwnProperty(key)) {
-
                 filterObj.key = obj[key];
-
             }
-
         }
-
         return filterObj;
     }
 
@@ -380,21 +373,13 @@ odin.helper = (function () {
      * @returns {json} json
      */
     function resJSON(inputData) {
-
         var res = inputData;
-
         try {
-
             res = JSON.prase(res);
-
         } catch (e) {
-
             //
-
         }
-
         return res;
-
     }
 
     /**
@@ -405,9 +390,7 @@ odin.helper = (function () {
      * @returns {string} string
      */
     function reverseText(str) {
-
         return str.split('').reverse().join('');
-
     }
 
     /**
@@ -419,9 +402,7 @@ odin.helper = (function () {
      */
 
     function shallowCopy(val) {
-        
         return Array.isArray(val) ? val.slice() : extend({}, val);
-
     }
 
     /**
@@ -433,9 +414,33 @@ odin.helper = (function () {
      */
 
     function deepCopy(val) {
-
         return JSON.parse(JSON.stringify(val));
+    }
 
+    /**
+     * @author odin
+     * @class helpers
+     * @description Get the object key name into array 
+     * @param {object} obj input data of type object
+     * @returns {array} Key name array
+     */
+
+    function getObjKeyNameToArray(obj) {
+        return Object.keys(obj);
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Get the object value into array 
+     * @param {object} obj input data of type object
+     * @returns {array} Value array
+     */
+
+    function getObjValueToArray(obj) {
+        return getObjKeyNameToArray(obj).map(function (keyName) {
+            return obj[keyName];
+        });
     }
 
     return {
@@ -467,7 +472,9 @@ odin.helper = (function () {
         resJSON,
         reverseText,
         shallowCopy,
-        deepCopy
+        deepCopy,
+        getObjKeyNameToArray,
+        getObjValueToArray
     }
 
 })();
@@ -702,6 +709,20 @@ odin.math = (function () {
 
     }
 
+    /**
+     * @author odin
+     * @class math
+     * @description 處理浮點計算問題
+     * @param  {number} number - 傳入數字
+     * @param  {number} precision - 精確度
+     * @returns {number} 處理好的數字
+     */
+    function dealFloatNumber(number, precision) {
+
+        return parseFloat((+number).toPrecision(precision ? precision : 12));
+
+    }
+
     return {
         priceWithCommas,
         priceWithoutCommas,
@@ -714,6 +735,7 @@ odin.math = (function () {
         arrDouble,
         arrTriple,
         roundDecimal,
+        dealFloatNumber
     }
 
 })();
@@ -1135,9 +1157,32 @@ odin.tools = (function () {
 
     }
 
+    /**
+     * @author odin
+     * @class tools
+     * @description Prevent XSS from getting the html input data
+     * @param {string} str 
+     * @returns {string} Transformed string without XSS attack
+     */
+    function convertHTMLXSS(str) {
+        var strArr = str.split('');
+        var resultArr = strArr.map(function (character) {
+            return character
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#x27;')
+                    .replace(/\//g, '&#x2F;');
+        });
+
+        return resultArr.join('');
+    }
+
 
     return {
         copyTextToClipboard,
+        convertHTMLXSS
     };
 
 })();
@@ -1157,7 +1202,7 @@ odin.es6 = (function () {
      * @param {boolean} isNeedToCutTheSameValue Cut the same value among of the array or array like list 
      * @returns {array} array
      */
-    function arrLikeToArrayEs6(list, isNeedToCutTheSameValue) {
+    function arrLikeToArray(list, isNeedToCutTheSameValue) {
 
         return isNeedToCutTheSameValue ? Array.from(new Set(list)) : Array.from(list);
 
@@ -1226,13 +1271,81 @@ odin.es6 = (function () {
 
     }
 
+    /**
+     * @author odin
+     * @class es6
+     * @description Template Literals -- Prevent XSS from getting the html input data
+     * @param {Template Literals} TemplateLiterals 
+     * @returns {string} Transformed string without XSS attack
+     */
+    function convertHTMLXSS(strings, ...keys) {
+        return strings.map((str, i) => (
+            `${str}${keys[i] ? `${keys[i]
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#x27;')
+                    .replace(/\//g, '&#x2F;')
+                    }` : ''}`
+        )).join('');
+    }
+
+    /**
+     * @author odin
+     * @class es6
+     * @description Get the specific html attributes string
+     * @param {object} obj* 
+     * @example {
+                    'id': 'abc',
+                    'class': '',
+                    'data-gg': 'sss'
+                }
+     * @returns {string} String with html attributes
+     */
+    function getAttributeString(obj) {
+        return odin.helper.getObjKeyNameToArray(obj).map((keyName) => (
+            ` ${keyName}="${obj[keyName]}"`
+        )).join('');
+    }
+
+    /**
+     * @author odin
+     * @class es6
+     * @description Add Specific HTML Tag to ${}
+     * @param {object} tagDetail 
+     * @example {
+                    'tagType': 'span',
+                    'attributes': {
+                        'id': 'abc',
+                        'class': '',
+                        'data-gg': 'sss'
+                    }
+                }
+     * @param {Template Literals} TemplateLiterals 
+     * @returns {string} string
+     */
+    function addHighLightTag(tagDetail, TemplateLiterals) {
+        
+        const highlight = (strings, ...arg) => {
+            console.log(strings, ...arg);
+            
+            return strings.map((str, i) => (`${str} ${arg[i] ? `<${tagDetail.tagType}${getAttributeString(tagDetail.attributes)}>${arg[i]}</${tagDetail.tagType}>` : '' }`)).join('')
+        };
+        return highlight`${TemplateLiterals}`;
+
+    }
+
     return {
-        arrLikeToArrayEs6,
+        arrLikeToArray,
         max,
         min,
         shallowCopy,
         average,
         total,
+        convertHTMLXSS,
+        getAttributeString,
+        // addHighLightTag
     };
 
 })();
