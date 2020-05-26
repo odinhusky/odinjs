@@ -1678,7 +1678,7 @@ odin.es6 = (function () {
     /**
      * @author odin
      * @class es6
-     * @description Add Specific HTML Tag to ${}
+     * @description Get the specific attrs object for the Template Literals
      * @param {object} tagDetail 
      * @example {
                     'tagType': 'span',
@@ -1688,18 +1688,41 @@ odin.es6 = (function () {
                         'data-gg': 'sss'
                     }
                 }
-     * @param {Template Literals} TemplateLiterals 
      * @returns {string} string
      */
-    function addHighLightTag(tagDetail, TemplateLiterals) {
-        
-        const highlight = (strings, ...arg) => {
-            console.log(strings, ...arg);
-            
-            return strings.map((str, i) => (`${str} ${arg[i] ? `<${tagDetail.tagType}${getAttributeString(tagDetail.attributes)}>${arg[i]}</${tagDetail.tagType}>` : '' }`)).join('')
-        };
-        return highlight`${TemplateLiterals}`;
+    function TagAttr (obj) {
+        this.tagDetail = obj;
+    }
 
+    /**
+     * @author odin
+     * @class es6
+     * @description Add Specific HTML Tag to ${}
+     * @param {Template Literals} TemplateLiterals 
+     * @returns {string} string with tagged
+     * @example
+     *
+        const obj = {
+            tagType: 'span',
+            attributes: {
+                id: 'abc',
+                class: '',
+                'data-gg': 'sss',
+            },
+        };
+
+        // 產生實體，並帶入參數
+        const addTag = new odin.es6.TagAttr(obj);
+
+        const name = 'odin';
+        const age = 27;
+        addTag.addHighLightTag `我是${name},我今年${age}歲`;
+    */
+    TagAttr.prototype.addHighLightTag = function (strings, ...arg) {
+        // console.log('this', this);
+        // console.log(strings, ...arg);
+        const tagDetail = this.tagDetail;
+        return strings.map((str, i) => (`${str} ${arg[i] ? `<${tagDetail.tagType}${getAttributeString(tagDetail.attributes)}>${arg[i]}</${tagDetail.tagType}>` : '' }`)).join('');
     }
 
     return {
@@ -1711,7 +1734,7 @@ odin.es6 = (function () {
         total,
         convertHTMLXSS,
         getAttributeString,
-        // addHighLightTag
+        TagAttr
     };
 
 })();
