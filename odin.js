@@ -1239,7 +1239,7 @@ odin.time = (function () {
      * @class time
      * @description Convert any time format to YYYY-MM-DD
      * @param {timeFormat(TimeStamp / Date Object)} date
-     * @param {string} seperator seperate the YYYY-MM-DD, eg: '-', '/'
+     * @param {string} seperator seperate the YYYY-MM-DD, eg: '-', '/', default '-'
      * @returns {string} time string
      */
     function formatDate(date, seperator) {
@@ -1251,7 +1251,7 @@ odin.time = (function () {
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
 
-        return seperator ? [year, month, day].join(seperator) : [year, month, day].join('-');
+        return seperator ? [year, month, day].join(seperator ? seperator : '-') : [year, month, day].join('-');
     }
     
 
@@ -1464,6 +1464,109 @@ odin.actions = (function () {
     return {
         goTop
     };
+
+})();
+
+/**
+ * @author odin
+ * @description Tools For ajax
+ */
+
+odin.proxy = (function () {
+    
+    /**
+     * @author odin
+     * @class proxy
+     * @description Send a GET request to specific URL     
+     * @param {string} url request URL
+     */
+    function get(url) {
+        
+        return new Promise((resolve, reject) => {
+
+            var req = new XMLHttpRequest();
+
+            // 定義方法
+            req.open('GET', url);
+
+            req.onload = function () {
+                if (req.readyState == 4 && req.status == "200") {
+                    // 成功要做的事情
+                    resolve(req.respone);
+                } else {
+                    // 失敗要做的事情
+                    reject(req);
+                }
+            }
+
+            // 送出請求
+            req.send();
+
+        });
+    }
+
+    /**
+     * @author odin
+     * @class proxy
+     * @description Encoded object data to string
+     * @param {object} data The data desired to be encoded, eg. {c: 3, a :2} => "c=3&a=2"
+     */
+    function encodeFormData(data) {
+        if (!data) return ''; // 如果傳入為空，直接返回字符串
+        var pairs = []; // 保存名/值對
+        for (var name in data) { // 進行遍歷
+            if (!data.hasOwnProperty(name)) continue; // 跳過繼承屬性,指示自身的屬性是否具有該值
+            if (typeof data[name] === 'function') continue; // 跳過方法
+            var value = data[name].toString(); // 將值轉換成字符串
+            name = encodeURIComponent(name.replace('%20', '+'));
+            value = encodeURIComponent(value.replace('%20', '+'));
+            pairs.push(name + '=' + value); // 記住名值對
+        }
+        return pairs.join('&'); 
+    }
+
+    /**
+     * @author odin
+     * @class proxy
+     * @description Send a POST request to specific URL     
+     * @param {string} url request URL
+     * @param {string || object} data The data have to be sent to back-end
+     * @param {boolean} isJsonType This data is sent by json or encoded string, true === json, false === encoded string
+     */
+    function post(url, data, isJsonType) {
+
+        return new Promise((resolve, reject) => {
+
+            var req = new XMLHttpRequest();
+
+            // 定義方法
+            req.open('POST', url);
+
+            // 定義 Content-type
+            req.setRequestHeader("Content-type", (isJsonType ? "application/json;charset=UTF-8" : "application/x-www-form-urlencoded"));
+
+            req.onload = function () {
+                if (req.readyState == 4 && req.status == "200") {
+                    // 成功要做的事情
+                    resolve(req.respone);
+                } else {
+                    // 失敗要做的事情
+                    reject(req);
+                }
+            }
+
+            // 送出請求
+            req.send(isJsonType ? data : encodeFormData(data));
+            
+
+        });
+    }
+
+    return {
+        get,
+        encodeFormData,
+        post
+    }
 
 })();
 
