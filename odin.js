@@ -423,12 +423,96 @@ odin.helper = (function () {
     /**
      * @author odin
      * @class helpers
+     * @description Sort array numbers with positive sequence
+     * @param {array} arr input array with numbers
+     * @returns {array} array
+     */
+    function sortNum(arr) {
+        return arr.sort(function (a, b) {
+            return a - b
+        });
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Sort array numbers with reverse order
+     * @param {array} arr input array with numbers
+     * @returns {array} array
+     */
+    function sortNumReverse(arr) {
+        return arr.sort(function (a, b) {
+            return b - a
+        });
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Sort array numbers with positive sequence
+     * @param {array} obj input array with numbers
+     * @param {string} attr Object attribute key name
+     * @returns {object} object
+     */
+    function sortObjKey(obj, attr) {
+        return obj.sort(function (a, b) {
+            return a[attr] - b[attr]
+        });
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Sort array numbers with reverse order
+     * @param {array} obj input array with numbers
+     * @param {string} attr Object attribute key name
+     * @returns {object} object
+     */
+    function sortObjKeyReverse(obj, attr) {
+        return obj.sort(function (a, b) {
+            return b[attr] - a[attr]
+        });
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Delete Repeat data and return a array(Type of object values are exceptions)
+     * @param {array} arr input array
+     * @returns {array} array
+     */
+    function delRepeat(arr) {
+        var newArr = [];
+        arr.forEach(function (value) {
+            if (newArr.indexOf(value) == -1) {
+                newArr.push(value);
+            }
+        });
+        return newArr;
+    }
+
+    
+
+    /**
+     * @author odin
+     * @class helpers
      * @description Reverse input text
      * @param {string} str input string
      * @returns {string} string
      */
     function reverseText(str) {
         return str.split('').reverse().join('');
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Reverse input text
+     * @param {array} arr input array
+     * @returns {array} array
+     */
+    function reverseArray(arr) {
+        return arr.reverse();
     }
 
     /**
@@ -511,7 +595,13 @@ odin.helper = (function () {
         sameValue,
         looseEqual,
         resJSON,
+        sortNum,
+        sortNumReverse,
+        sortObjKey,
+        sortObjKeyReverse,
+        delRepeat,
         reverseText,
+        reverseArray,
         shallowCopy,
         deepCopy,
         getObjKeyNameToArray,
