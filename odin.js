@@ -112,6 +112,26 @@ odin.helper = (function () {
      * @author odin
      * @class helpers
      * @description  Strict object type check.Only returns true for plain JavaScript objects.
+     * @example
+     * Plain JavaScript Objects:
+        * var obj = {};
+        * var obj = new Object(); 只有用Object 的建構式才是 Plain JavaScript Objects，其他都不是
+        
+     * Non Plain JavaScript Objects:
+        ==========================
+     *  Using a function constructor:
+     *  var Obj = function(name) {
+            this.name = name;
+        }
+        var c = new Obj("hello"); 
+        ==========================
+        Using ES6 class syntax:
+        class myObject {
+            constructor(name) {
+                this.name = name;
+            }
+        }
+        var e = new myObject("hello");
      * @param {any} val The value we want to check.
      * @returns {boolean} true or false
      */
@@ -169,6 +189,36 @@ odin.helper = (function () {
         } else {
             return false;
         }
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Checking if the jQuery is existing.
+     * @returns {boolean} true or false
+     */
+    function isjQeryExist(o) {
+        return jQuery ? true : false;
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Checking if the Vue is existing.
+     * @returns {boolean} true or false
+     */
+    function isVueExist(o) {
+        return Vue ? true : false;
+    }
+
+    /**
+     * @author odin
+     * @class helpers
+     * @description Checking if the Vue is existing.
+     * @returns {boolean} true or false
+     */
+    function isReactExist(o) {
+        return __REACT_DEVTOOLS_APPEND_COMPONENT_STACK__ ? true : false;
     }
 
     /**
@@ -579,6 +629,9 @@ odin.helper = (function () {
         isValidArrayIndex,
         isPromise,
         isMobile,
+        isjQeryExist,
+        isVueExist,
+        isReactExist,
         toString,
         toNumber,
         toNumberWithRaix,
@@ -1091,16 +1144,6 @@ odin.jq = (function () {
     /**
      * @author odin
      * @class jq
-     * @description Checking if the jQuery is existing.
-     * @returns {boolean} true or false
-     */
-    function isjQeryExist(o) {
-        return jQuery ? true : false;
-    }
-
-    /**
-     * @author odin
-     * @class jq
      * @description Shallow copy of array or object
      * @param {array / object} val input data of type object
      * @returns {array / object} array / object
@@ -1262,7 +1305,6 @@ odin.jq = (function () {
     }
 
     return {
-        isjQeryExist,
         shallowCopy,
         deepCopy,
         // makeTimeStr,
