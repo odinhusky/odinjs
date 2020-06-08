@@ -1385,6 +1385,25 @@ odin.time = (function () {
 
         return seperator ? [year, month, day].join(seperator ? seperator : '-') : [year, month, day].join('-');
     }
+
+    /**
+     * @author odin
+     * @class time
+     * @description Convert any time format to YYYY-MM-DD HH:MM:SS
+     * @param {timeFormat(TimeStamp / Date Object)} date
+     * @param {string} seperator seperate the YYYY-MM-DD, eg: '-', '/', default '-'
+     * @returns {string} time string
+     */
+    function formatTime(date, seperator) {
+        var dates = new Date(date);
+        var year = dates.getFullYear();
+        var month = dates.getMonth() + 1;
+        var date = dates.getDate();
+        var hours = dates.getHours();
+        var minutes = dates.getMinutes();
+        var seconds = dates.getSeconds();
+        return year + seperator + month + seperator + date + ' ' + hours + ':' + minutes + ':' + seconds;
+    }
     
 
     return {
@@ -1392,7 +1411,8 @@ odin.time = (function () {
         getSpecificDateObj,
         getSpecificTimeStamp,
         formatDate,
-        changeDate
+        changeDate,
+        formatTime
     };
 
 })();
