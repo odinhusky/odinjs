@@ -1993,3 +1993,248 @@ odin.es6 = (function () {
     };
 
 })();
+
+/**
+ * @author odin
+ * @description Fun Js
+ */
+
+odin.fun = (function () {
+    
+    /**
+     * @author odin
+     * @class fun
+     * @description Helping printStar
+     * @param {number} num The value we want to make the stars line.
+     */
+    function judgeNum(num) {
+        var flag = false,
+            count = 0;
+        var data = 0;
+        var a = {};
+
+        if ((num & 1) && (num >= 7)) {
+            for (var i = 1;; i++) {
+                //判斷num能否滿足奇數迴文數之和
+                var listNum = i * i * 2 + 4 * i + 1;
+                var maxNum = (i + 1) * (i + 1) * 2 + 4 * (i + 1) + 1;
+                //如果在滿足數列中
+                if (num == listNum) {
+                    flag = true;
+                    count = i;
+                    break;
+                } else if (listNum < num && num < maxNum) {
+                    //找出小於num數的最大滿足條件值
+                    data = num - listNum;
+                    //將差值賦值給a.data
+                    a.data = data;
+                    flag = true;
+                    count = i;
+                    break;
+                }
+            }
+        } else {
+            alert("請輸入正確格式數字");
+            data = num;
+        }
+
+        a.flag = flag;
+        a.count = count;
+        return a;
+    }
+
+    /**
+     * @author odin
+     * @class fun
+     * @description Get the result variable
+     */
+    function result(num, str1, str2) {
+        if (num === 1) {
+            console.log('*');
+            return;
+        } else {
+            var flag = judgeNum(num).flag || 0;
+            var count = judgeNum(num).count * 2 + 1;
+            var data = judgeNum(num).data;
+            var emp, start;
+            if (flag) {
+
+                for (var i = 0; i < count; i++) {
+
+                    emp = count - (count - i);
+                    start = count - i * 2;
+                    var strItem = "";
+                    if (start < 0) {
+                        emp = count - i - 1;
+                        start = Math.abs(start) + 2;
+                    }
+
+                    for (var j = 0; j < emp; j++) {
+                        strItem += str1;
+                    }
+                    //打印
+                    for (var m = 0; m < start; m++) {
+                        strItem += str2;
+                    }
+                    // //打印後一部分空格
+                    for (var n = 0; n < emp; n++) {
+                        strItem += str1;
+                    }
+                    //換行
+                    console.log(strItem + "\n");
+                }
+            }
+            //如果存在差值則打印出差值
+            if (data) {
+                // document.write(data);
+                console.log(data);
+            }
+        }
+    }
+
+    /**
+     * @author odin
+     * @class fun
+     * @description Maxmum Stars at Start and End
+     */
+    function printStar(stars) {
+        if (typeof (stars) === 'number' && stars % 2 === 1) {
+            var totalStar = 0;
+            var loopLength = parseInt(stars / 2) + 1;
+
+            for (var i = 0; i < loopLength; i++) {
+                if (stars === 1) {
+                    totalStar += 1;
+                } else {
+                    totalStar += (stars * 2);
+                    stars -= 2;
+                }
+            }
+
+            console.log('totaStalr', totalStar)
+
+            result(totalStar, " ", "*");
+        } else {
+            alert('請輸入奇數數字');
+        }
+    }
+
+    return {
+        printStar
+    };
+})();
+
+/**
+ * @author odin
+ * @description Strange Js
+ */
+
+ odin.bats = (function () {
+    
+    /**
+     * @author odin
+     * @class bats
+     * @description Show all list about the js
+     */
+    function showList() {
+        const table = {
+            bats1: 'typeof(NaN)',
+            bats2: '9999999999999999',
+            bats3: '0.1+0.2 == 0.3',
+            bats4: 'Math.max()',
+            bats5: 'Math.min()',
+            bats6: '[]+[]',
+            bats7: '[]+{}',
+            bats8: '{}+[]',
+            bats9: 'true+true+true===3',
+            bats10: 'true-true',
+            bats11: 'true===1',
+            bats12: '(!+[]+[]+![])',
+            bats13: '9+"1"',
+            bats14: '91-"1"',
+            bats15: '[]==0',
+        };
+        console.table(table);
+    }
+
+    function bats1() {
+        console.log(typeof (NaN));
+    }
+
+    function bats2() {
+        console.log(9999999999999999);
+    }
+
+    function bats3() {
+        console.log(0.1 + 0.2 == 0.3);
+    }
+
+    function bats4() {
+        console.log(Math.max());
+    }
+
+    function bats5() {
+        console.log(Math.min());
+    }
+
+    function bats6() {
+        console.log([] + []);
+    }
+
+    function bats7() {
+        console.log([] + {});
+    }
+
+    function bats8() {
+        console.log({} + []);
+    }
+
+    function bats9() {
+        console.log(true + true + true === 3);
+    }
+
+    function bats10() {
+        console.log(true - true);
+    }
+
+    function bats11() {
+        console.log(true === 1);
+    }
+
+    function bats12() {
+        console.log((!+[] + [] + ![]));
+    }
+
+    function bats13() {
+        console.log(9 + "1");
+    }
+
+    function bats14() {
+        console.log(91 - "1");
+    }
+
+    function bats15() {
+        console.log([] == 0);
+    }
+    
+
+    return {
+        showList,
+        bats1,
+        bats2,
+        bats3,
+        bats4,
+        bats5,
+        bats6,
+        bats7,
+        bats8,
+        bats9,
+        bats10,
+        bats11,
+        bats12,
+        bats13,
+        bats14,
+        bats15
+    };
+    
+ })();
