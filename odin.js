@@ -2153,6 +2153,10 @@ odin.fun = (function () {
             bats13: '9+"1"',
             bats14: '91-"1"',
             bats15: '[]==0',
+            bats16: '"1"/0',
+            bats17: '0/0',
+            bats18: '0/1',
+            bats19: 'Infinity/Infinity',
         };
         console.table(table);
     }
@@ -2216,6 +2220,22 @@ odin.fun = (function () {
     function bats15() {
         console.log([] == 0);
     }
+
+    function bats16() {
+        console.log("1" / 0);
+    }
+
+    function bats17() {
+        console.log(0/0);
+    }
+
+    function bats18() {
+        console.log(0/1);
+    }
+
+    function bats19() {
+        console.log(Infinity / Infinity);
+    }
     
 
     return {
@@ -2234,7 +2254,11 @@ odin.fun = (function () {
         bats12,
         bats13,
         bats14,
-        bats15
+        bats15,
+        bats16,
+        bats17,
+        bats18,
+        bats19,
     };
-    
- })();
+
+})();
