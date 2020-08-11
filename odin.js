@@ -615,6 +615,32 @@ odin.helper = (function () {
         });
     }
 
+    /**
+     * @author odin
+     * @class helpers
+     * @description 檢查瀏覽器的語系
+     * @returns {string}
+     */
+    function detectLanguage() {
+      console.log("detect language");
+      let i18nlanguage = '';
+      let browserlanguage = (navigator.language||navigator.userLanguage||navigator.browserLanguage||navigator.systemLanguage).toLowerCase();
+      if(browserlanguage.search(/cn/) != -1) {
+          console.log("簡中", browserlanguage);
+          i18nlanguage = 'zh-Hans';
+      } else if(browserlanguage.search(/tw/) != -1 || browserlanguage.search(/hk/) != -1) {
+          console.log("繁中", browserlanguage);
+          i18nlanguage = 'zh-Hant';
+      } else if(browserlanguage.search("en") != -1) {
+          console.log("english", browserlanguage);
+          i18nlanguage = 'en-US';
+      } else {
+          console.log("other languages", browserlanguage);
+          i18nlanguage = 'zh-Hans';
+      }
+    return i18nlanguage;
+  }
+
     return {
         isUndef,
         isDef,
@@ -658,7 +684,8 @@ odin.helper = (function () {
         shallowCopy,
         deepCopy,
         getObjKeyNameToArray,
-        getObjValueToArray
+        getObjValueToArray,
+        detectLanguage
     }
 
 })();
