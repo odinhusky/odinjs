@@ -11,104 +11,103 @@ window.odin = {};
  */
 
 odin.helper = (function () {
+  /**
+   * @author odin
+   * @class helpers
+   * @description Checking the para is undefined or null.
+   * @param {any} o The value we want to check.
+   * @returns {boolean} true or false
+   */
+  function isUndef(o) {
+    return o === undefined || o === null;
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Checking the para is undefined or null.
-     * @param {any} o The value we want to check.
-     * @returns {boolean} true or false
-     */
-    function isUndef(o) {
-        return o === undefined || o === null
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Checking the para is NOT undefined or null.
+   * @param {any} o The value we want to check.
+   * @returns {boolean} true or false
+   */
+  function isDef(o) {
+    return o !== undefined && o !== null;
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Checking the para is NOT undefined or null.
-     * @param {any} o The value we want to check.
-     * @returns {boolean} true or false
-     */
-    function isDef(o) {
-        return o !== undefined && o !== null
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Checking the para is TRUE(boolean).
+   * @param {any} o The value we want to check.
+   * * @returns {boolean} true or false
+   */
+  function isTrue(o) {
+    return o === true;
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Checking the para is TRUE(boolean).
-     * @param {any} o The value we want to check.
-     * * @returns {boolean} true or false
-     */
-    function isTrue(o) {
-        return o === true
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Checking the para is FALUSE(boolean).
+   * @param {any} o The value we want to check.
+   * @returns {boolean} true or false
+   */
+  function isFalse(o) {
+    return o === false;
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Checking the para is FALUSE(boolean).
-     * @param {any} o The value we want to check.
-     * @returns {boolean} true or false
-     */
-    function isFalse(o) {
-        return o === false
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Check if value is primitive.
+   * @param {any} val The value we want to check.
+   * @returns {boolean} true or false
+   */
+  function isPrimitive(val) {
+    return (
+      typeof val === 'string' ||
+      typeof val === 'number' ||
+      // $flow-disable-line
+      typeof val === 'symbol' ||
+      typeof val === 'boolean'
+    );
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Check if value is primitive.
-     * @param {any} val The value we want to check.
-     * @returns {boolean} true or false
-     */
-    function isPrimitive(val) {
-        return (
-            typeof val === 'string' ||
-            typeof val === 'number' ||
-            // $flow-disable-line
-            typeof val === 'symbol' ||
-            typeof val === 'boolean'
-        )
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Get the raw type string of a value.
+   * @param {any} val The value we want to check.
+   * * @returns {string} [object Object]
+   */
+  var _toString = Object.prototype.toString;
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Get the raw type string of a value.
-     * @param {any} val The value we want to check.
-     * * @returns {string} [object Object]
-     */
-    var _toString = Object.prototype.toString;
+  function toRawType(val) {
+    return _toString.call(val).slice(8, -1);
+  }
 
-    function toRawType(val) {
-        return _toString.call(val).slice(8, -1)
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description  Strict number type check.Only returns true for number(without Infinity and NaN).
+   * @param {any} val The value we want to check.
+   * @returns {boolean} true or false
+   */
+  function isNumber(val) {
+    return typeof target === 'number' && isFinite(target);
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description  Strict number type check.Only returns true for number(without Infinity and NaN).
-     * @param {any} val The value we want to check.
-     * @returns {boolean} true or false
-     */
-    function isNumber(val) {
-        return typeof target === 'number' && isFinite(target);
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description  Strict number type check.Only returns true for number(without Infinity and NaN).
+   * @param {any} val The value we want to check.
+   * @returns {boolean} true or false
+   */
+  function isNumber2(val) {
+    return _toString.call(val) === '[object Number]' && isFinite(target);
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description  Strict number type check.Only returns true for number(without Infinity and NaN).
-     * @param {any} val The value we want to check.
-     * @returns {boolean} true or false
-     */
-    function isNumber2(val) {
-        return _toString.call(val) === '[object Number]' && isFinite(target);
-    }
-
-    /**
+  /**
      * @author odin
      * @class helpers
      * @description  Strict object type check.Only returns true for plain JavaScript objects.
@@ -135,559 +134,577 @@ odin.helper = (function () {
      * @param {any} val The value we want to check.
      * @returns {boolean} true or false
      */
-    function isPlainObject(val) {
-        return _toString.call(val) === '[object Object]'
+  function isPlainObject(val) {
+    return _toString.call(val) === '[object Object]';
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Quick object check - this is primarily used to tell / Objects from primitive values when we know the value is a JSON - compliant type.
+   * @param {any} val The value we want to check.
+   * @returns {boolean} true or false
+   */
+  function isObject(val) {
+    return val !== null && typeof val === 'object';
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Check if val is a valid array index.
+   * @param {any} val The value we want to check.
+   * @returns {boolean} true or false
+   */
+  function isValidArrayIndex(val) {
+    var n = parseFloat(String(val));
+    return n >= 0 && Math.floor(n) === n && isFinite(val);
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Check if val is a Promise.
+   * @param {any} val The input value
+   * @returns {boolean} true or false
+   */
+  function isPromise(val) {
+    return (
+      isDef(val) &&
+      typeof val.then === 'function' &&
+      typeof val.catch === 'function'
+    );
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Check if the device is Mobile.
+   * @returns {boolean} true or false
+   */
+  function isMobile() {
+    if (
+      /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
+        navigator.userAgent,
+      ) ||
+      /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(
+        navigator.userAgent.substr(0, 4),
+      )
+    ) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Quick object check - this is primarily used to tell / Objects from primitive values when we know the value is a JSON - compliant type.
-     * @param {any} val The value we want to check.
-     * @returns {boolean} true or false
-     */
-    function isObject(val) {
-        return val !== null && typeof val === 'object'
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Checking if the jQuery is existing.
+   * @returns {boolean} true or false
+   */
+  function isjQeryExist(o) {
+    return jQuery ? true : false;
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Check if val is a valid array index.
-     * @param {any} val The value we want to check.
-     * @returns {boolean} true or false
-     */
-    function isValidArrayIndex(val) {
-        var n = parseFloat(String(val));
-        return n >= 0 && Math.floor(n) === n && isFinite(val)
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Checking if the Vue is existing.
+   * @returns {boolean} true or false
+   */
+  function isVueExist(o) {
+    return Vue ? true : false;
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Check if val is a Promise.
-     * @param {any} val The input value
-     * @returns {boolean} true or false
-     */
-    function isPromise(val) {
-        return (
-            isDef(val) &&
-            typeof val.then === 'function' &&
-            typeof val.catch === 'function'
-        )
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Checking if the Vue is existing.
+   * @returns {boolean} true or false
+   */
+  function isReactExist(o) {
+    return __REACT_DEVTOOLS_APPEND_COMPONENT_STACK__ ? true : false;
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Check if the device is Mobile.
-     * @returns {boolean} true or false
-     */
-    function isMobile() {
-        if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0, 4))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Convert a value to a string that is actually rendered.
+   * @param {any} val The input value
+   * @returns {string} string
+   */
+  function toString(val) {
+    return val == null
+      ? ''
+      : Array.isArray(val) || (isPlainObject(val) && val.toString === _toString)
+      ? JSON.stringify(val, null, 2)
+      : String(val);
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Checking if the jQuery is existing.
-     * @returns {boolean} true or false
-     */
-    function isjQeryExist(o) {
-        return jQuery ? true : false;
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Convert an input value to a number for persistence. / If the conversion fails, return original string.
+   * @param {string} val The input string
+   * @returns {number / string / NaN} number / string / NaN
+   */
+  function toNumber(val) {
+    var n = parseFloat(val);
+    return isNaN(n) ? val : n;
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Checking if the Vue is existing.
-     * @returns {boolean} true or false
-     */
-    function isVueExist(o) {
-        return Vue ? true : false;
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Convert an input value to a number for persistence. / If the conversion fails, return original string.
+   * @param {string} val The input string
+   * @param {number} radix between 2 ~ 36
+   * @returns {number / string / NaN} number / string / NaN
+   */
+  function toNumberWithRaix(val, radix) {
+    var n = parseFloat(val, radix);
+    return isNaN(n) ? val : n;
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Checking if the Vue is existing.
-     * @returns {boolean} true or false
-     */
-    function isReactExist(o) {
-        return __REACT_DEVTOOLS_APPEND_COMPONENT_STACK__ ? true : false;
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Check whether an object has the property.
+   * @param {object} obj Target Object
+   * @param {string} keyName The property name
+   * @returns {boolean} true or false
+   */
+  var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Convert a value to a string that is actually rendered.
-     * @param {any} val The input value
-     * @returns {string} string
-     */
-    function toString(val) {
-        return val == null ?
-            '' :
-            Array.isArray(val) || (isPlainObject(val) && val.toString === _toString) ?
-            JSON.stringify(val, null, 2) :
-            String(val)
-    }
+  function hasOwn(obj, keyName) {
+    return hasOwnProperty.call(obj, keyName);
+  }
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Convert an input value to a number for persistence. / If the conversion fails, return original string.
-     * @param {string} val The input string
-     * @returns {number / string / NaN} number / string / NaN
-     */
-    function toNumber(val) {
-        var n = parseFloat(val);
-        return isNaN(n) ? val : n
-    }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Pick the own property name and value to a new object
+   * @param {object} obj input object
+   * @returns {object} A new object contains only own property name and value
+   */
 
-    /**
-     * @author odin
-     * @class helpers
-     * @description Convert an input value to a number for persistence. / If the conversion fails, return original string.
-     * @param {string} val The input string
-     * @param {number} radix between 2 ~ 36
-     * @returns {number / string / NaN} number / string / NaN
-     */
-    function toNumberWithRaix(val, radix) {
-        var n = parseFloat(val, radix);
-        return isNaN(n) ? val : n;
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Check whether an object has the property.
-     * @param {object} obj Target Object
-     * @param {string} keyName The property name
-     * @returns {boolean} true or false
-     */
-    var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-    function hasOwn(obj, keyName) {
-        return hasOwnProperty.call(obj, keyName)
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Pick the own property name and value to a new object
-     * @param {object} obj input object
-     * @returns {object} A new object contains only own property name and value
-     */
-
-    function getAllOwnPropertyObj(obj) {
-        var filterObj = {};
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                filterObj.key = obj[key];
-            }
-        }
-        return filterObj;
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Convert an Array - like object to a real Array.
-     * @param list Array like arguments
-     * @param start decide which index is the first value of new Array
-     * @returns {object} to object extend by _from object
-     */
-    function arrLikeToArray1(list, start) {
-        start = start || 0;
-        var i = list.length - start;
-        var ret = new Array(i);
-        while (i--) {
-            ret[i] = list[i + start];
-        }
-        return ret
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Convert an Array - like object to a real Array.
-     * @param list Array like arguments
-     * @returns {object} to object extend by _from object
-     */
-    function arrLikeToArray2(list) {
-        return [].slice.call(list);
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Check if the object is in this array
-     * @param arr Array to be checked
-     * @param obj Object 
-     * @returns {boolean} true or false
-     */
-    function include(arr, obj) {
-        return (arr.indexOf(obj) != -1);
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Check if the object is not in this array
-     * @param arr Array to be checked
-     * @param obj Object 
-     * @returns {boolean} true or false
-     */
-    function exclude(arr, obj) {
-        return (arr.indexOf(obj) == -1);
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Mix properties into target object.
-     * @param to destination Object
-     * @param _from from which Object
-     * @returns {object} to object extend by _from object
-     */
-    function extend(to, _from) {
-        for (var key in _from) {
-            to[key] = _from[key];
-        }
-        return to
-    }
-    /**
-     * @author odin
-     * @class helpers
-     * @description Merge an array of objects into a single object.
-     * @param {array} arr input Array
-     * @returns {object} new object extend by arr
-     */
-    function arrToObject(arr) {
-        var res = {};
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i]) {
-                extend(res, arr[i]);
-            }
-        }
-        return res
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Always return false.
-     * @returns {boolean} false
-     */
-    function no (a, b, c) {
-        return false;
-    };
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Always return true.
-     * @returns {boolean} true
-     */
-    function yes(a, b, c) {
-        return true;
-    };
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Return the same value.
-     * @param _ input data
-     * @returns {any} input data
-     */
-    function sameValue (_) {
-        return _;
-    };
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Check if two values are loosely equal - that is, if they are plain objects, do they have the same shape ?
-     * @param {any} a input variable
-     * @param {any} b another input variable
-     * @returns {boolean} true or false
-     */
-    function looseEqual(a, b) {
-        if (a === b) {
-            return true
-        }
-        var isObjectA = isObject(a);
-        var isObjectB = isObject(b);
-        if (isObjectA && isObjectB) {
-            try {
-                var isArrayA = Array.isArray(a);
-                var isArrayB = Array.isArray(b);
-                if (isArrayA && isArrayB) {
-                    return a.length === b.length && a.every(function (e, i) {
-                        return looseEqual(e, b[i])
-                    })
-                } else if (a instanceof Date && b instanceof Date) {
-                    return a.getTime() === b.getTime()
-                } else if (!isArrayA && !isArrayB) {
-                    var keysA = Object.keys(a);
-                    var keysB = Object.keys(b);
-                    return keysA.length === keysB.length && keysA.every(function (key) {
-                        return looseEqual(a[key], b[key])
-                    })
-                } else {
-                    /* istanbul ignore next */
-                    return false
-                }
-            } catch (e) {
-                /* istanbul ignore next */
-                return false
-            }
-        } else if (!isObjectA && !isObjectB) {
-            return String(a) === String(b)
-        } else {
-            return false
-        }
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description String / JSON to JSON
-     * @param {string / json} inputData input data
-     * @returns {json} json
-     */
-    function resJSON(inputData) {
-        var res = inputData;
-        try {
-            res = JSON.prase(res);
-        } catch (e) {
-            //
-        }
-        return res;
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Sort array numbers with positive sequence
-     * @param {array} arr input array with numbers
-     * @returns {array} array
-     */
-    function sortNum(arr) {
-        return arr.sort(function (a, b) {
-            return a - b
-        });
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Sort array numbers with reverse order
-     * @param {array} arr input array with numbers
-     * @returns {array} array
-     */
-    function sortNumReverse(arr) {
-        return arr.sort(function (a, b) {
-            return b - a
-        });
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Sort array numbers with positive sequence
-     * @param {array} obj input array with numbers
-     * @param {string} attr Object attribute key name
-     * @returns {object} object
-     */
-    function sortObjKey(obj, attr) {
-        return obj.sort(function (a, b) {
-            return a[attr] - b[attr]
-        });
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Sort array numbers with reverse order
-     * @param {array} obj input array with numbers
-     * @param {string} attr Object attribute key name
-     * @returns {object} object
-     */
-    function sortObjKeyReverse(obj, attr) {
-        return obj.sort(function (a, b) {
-            return b[attr] - a[attr]
-        });
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Delete Repeat data and return a array(Type of object values are exceptions)
-     * @param {array} arr input array
-     * @returns {array} array
-     */
-    function delRepeat(arr) {
-        var newArr = [];
-        arr.forEach(function (value) {
-            if (newArr.indexOf(value) == -1) {
-                newArr.push(value);
-            }
-        });
-        return newArr;
-    }
-
-    
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Reverse input text
-     * @param {string} str input string
-     * @returns {string} string
-     */
-    function reverseText(str) {
-        return str.split('').reverse().join('');
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Reverse input text
-     * @param {array} arr input array
-     * @returns {array} array
-     */
-    function reverseArray(arr) {
-        return arr.reverse();
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Shallow copy of array or object
-     * @param {array / object} val input data of type object
-     * @returns {array / object} array / object
-     */
-
-    function shallowCopy(val) {
-        return Array.isArray(val) ? val.slice() : extend({}, val);
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Deep copy of array or object
-     * @param {array / object} val input data of type object
-     * @returns {array / object} array / object
-     */
-
-    function deepCopy(val) {
-        return JSON.parse(JSON.stringify(val));
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Get the object key name into array 
-     * @param {object} obj input data of type object
-     * @returns {array} Key name array
-     */
-
-    function getObjKeyNameToArray(obj) {
-        return Object.keys(obj);
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description Get the object value into array 
-     * @param {object} obj input data of type object
-     * @returns {array} Value array
-     */
-
-    function getObjValueToArray(obj) {
-        return getObjKeyNameToArray(obj).map(function (keyName) {
-            return obj[keyName];
-        });
-    }
-
-    /**
-     * @author odin
-     * @class helpers
-     * @description 檢查瀏覽器的語系
-     * @returns {string}
-     */
-    function detectLanguage() {
-      console.log("detect language");
-      let i18nlanguage = '';
-      let browserlanguage = (navigator.language||navigator.userLanguage||navigator.browserLanguage||navigator.systemLanguage).toLowerCase();
-      if(browserlanguage.search(/cn/) != -1) {
-          console.log("簡中", browserlanguage);
-          i18nlanguage = 'zh-Hans';
-      } else if(browserlanguage.search(/tw/) != -1 || browserlanguage.search(/hk/) != -1) {
-          console.log("繁中", browserlanguage);
-          i18nlanguage = 'zh-Hant';
-      } else if(browserlanguage.search("en") != -1) {
-          console.log("english", browserlanguage);
-          i18nlanguage = 'en-US';
-      } else {
-          console.log("other languages", browserlanguage);
-          i18nlanguage = 'zh-Hans';
+  function getAllOwnPropertyObj(obj) {
+    var filterObj = {};
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        filterObj.key = obj[key];
       }
+    }
+    return filterObj;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Convert an Array - like object to a real Array.
+   * @param list Array like arguments
+   * @param start decide which index is the first value of new Array
+   * @returns {object} to object extend by _from object
+   */
+  function arrLikeToArray1(list, start) {
+    start = start || 0;
+    var i = list.length - start;
+    var ret = new Array(i);
+    while (i--) {
+      ret[i] = list[i + start];
+    }
+    return ret;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Convert an Array - like object to a real Array.
+   * @param list Array like arguments
+   * @returns {object} to object extend by _from object
+   */
+  function arrLikeToArray2(list) {
+    return [].slice.call(list);
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Check if the object is in this array
+   * @param arr Array to be checked
+   * @param obj Object
+   * @returns {boolean} true or false
+   */
+  function include(arr, obj) {
+    return arr.indexOf(obj) != -1;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Check if the object is not in this array
+   * @param arr Array to be checked
+   * @param obj Object
+   * @returns {boolean} true or false
+   */
+  function exclude(arr, obj) {
+    return arr.indexOf(obj) == -1;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Mix properties into target object.
+   * @param to destination Object
+   * @param _from from which Object
+   * @returns {object} to object extend by _from object
+   */
+  function extend(to, _from) {
+    for (var key in _from) {
+      to[key] = _from[key];
+    }
+    return to;
+  }
+  /**
+   * @author odin
+   * @class helpers
+   * @description Merge an array of objects into a single object.
+   * @param {array} arr input Array
+   * @returns {object} new object extend by arr
+   */
+  function arrToObject(arr) {
+    var res = {};
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i]) {
+        extend(res, arr[i]);
+      }
+    }
+    return res;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Always return false.
+   * @returns {boolean} false
+   */
+  function no(a, b, c) {
+    return false;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Always return true.
+   * @returns {boolean} true
+   */
+  function yes(a, b, c) {
+    return true;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Return the same value.
+   * @param _ input data
+   * @returns {any} input data
+   */
+  function sameValue(_) {
+    return _;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Check if two values are loosely equal - that is, if they are plain objects, do they have the same shape ?
+   * @param {any} a input variable
+   * @param {any} b another input variable
+   * @returns {boolean} true or false
+   */
+  function looseEqual(a, b) {
+    if (a === b) {
+      return true;
+    }
+    var isObjectA = isObject(a);
+    var isObjectB = isObject(b);
+    if (isObjectA && isObjectB) {
+      try {
+        var isArrayA = Array.isArray(a);
+        var isArrayB = Array.isArray(b);
+        if (isArrayA && isArrayB) {
+          return (
+            a.length === b.length &&
+            a.every(function (e, i) {
+              return looseEqual(e, b[i]);
+            })
+          );
+        } else if (a instanceof Date && b instanceof Date) {
+          return a.getTime() === b.getTime();
+        } else if (!isArrayA && !isArrayB) {
+          var keysA = Object.keys(a);
+          var keysB = Object.keys(b);
+          return (
+            keysA.length === keysB.length &&
+            keysA.every(function (key) {
+              return looseEqual(a[key], b[key]);
+            })
+          );
+        } else {
+          /* istanbul ignore next */
+          return false;
+        }
+      } catch (e) {
+        /* istanbul ignore next */
+        return false;
+      }
+    } else if (!isObjectA && !isObjectB) {
+      return String(a) === String(b);
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description String / JSON to JSON
+   * @param {string / json} inputData input data
+   * @returns {json} json
+   */
+  function resJSON(inputData) {
+    var res = inputData;
+    try {
+      res = JSON.prase(res);
+    } catch (e) {
+      //
+    }
+    return res;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Sort array numbers with positive sequence
+   * @param {array} arr input array with numbers
+   * @returns {array} array
+   */
+  function sortNum(arr) {
+    return arr.sort(function (a, b) {
+      return a - b;
+    });
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Sort array numbers with reverse order
+   * @param {array} arr input array with numbers
+   * @returns {array} array
+   */
+  function sortNumReverse(arr) {
+    return arr.sort(function (a, b) {
+      return b - a;
+    });
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Sort array numbers with positive sequence
+   * @param {array} obj input array with numbers
+   * @param {string} attr Object attribute key name
+   * @returns {object} object
+   */
+  function sortObjKey(obj, attr) {
+    return obj.sort(function (a, b) {
+      return a[attr] - b[attr];
+    });
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Sort array numbers with reverse order
+   * @param {array} obj input array with numbers
+   * @param {string} attr Object attribute key name
+   * @returns {object} object
+   */
+  function sortObjKeyReverse(obj, attr) {
+    return obj.sort(function (a, b) {
+      return b[attr] - a[attr];
+    });
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Delete Repeat data and return a array(Type of object values are exceptions)
+   * @param {array} arr input array
+   * @returns {array} array
+   */
+  function delRepeat(arr) {
+    var newArr = [];
+    arr.forEach(function (value) {
+      if (newArr.indexOf(value) == -1) {
+        newArr.push(value);
+      }
+    });
+    return newArr;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Reverse input text
+   * @param {string} str input string
+   * @returns {string} string
+   */
+  function reverseText(str) {
+    return str.split('').reverse().join('');
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Reverse input text
+   * @param {array} arr input array
+   * @returns {array} array
+   */
+  function reverseArray(arr) {
+    return arr.reverse();
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Shallow copy of array or object
+   * @param {array / object} val input data of type object
+   * @returns {array / object} array / object
+   */
+
+  function shallowCopy(val) {
+    return Array.isArray(val) ? val.slice() : extend({}, val);
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Deep copy of array or object
+   * @param {array / object} val input data of type object
+   * @returns {array / object} array / object
+   */
+
+  function deepCopy(val) {
+    return JSON.parse(JSON.stringify(val));
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Get the object key name into array
+   * @param {object} obj input data of type object
+   * @returns {array} Key name array
+   */
+
+  function getObjKeyNameToArray(obj) {
+    return Object.keys(obj);
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Get the object value into array
+   * @param {object} obj input data of type object
+   * @returns {array} Value array
+   */
+
+  function getObjValueToArray(obj) {
+    return getObjKeyNameToArray(obj).map(function (keyName) {
+      return obj[keyName];
+    });
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description 檢查瀏覽器的語系
+   * @returns {string}
+   */
+  function detectLanguage() {
+    console.log('detect language');
+    let i18nlanguage = '';
+    let browserlanguage = (
+      navigator.language ||
+      navigator.userLanguage ||
+      navigator.browserLanguage ||
+      navigator.systemLanguage
+    ).toLowerCase();
+    if (browserlanguage.search(/cn/) != -1) {
+      console.log('簡中', browserlanguage);
+      i18nlanguage = 'zh-Hans';
+    } else if (
+      browserlanguage.search(/tw/) != -1 ||
+      browserlanguage.search(/hk/) != -1
+    ) {
+      console.log('繁中', browserlanguage);
+      i18nlanguage = 'zh-Hant';
+    } else if (browserlanguage.search('en') != -1) {
+      console.log('english', browserlanguage);
+      i18nlanguage = 'en-US';
+    } else {
+      console.log('other languages', browserlanguage);
+      i18nlanguage = 'zh-Hans';
+    }
     return i18nlanguage;
   }
 
-    return {
-        isUndef,
-        isDef,
-        isTrue,
-        isFalse,
-        isPrimitive,
-        toRawType,
-        isNumber,
-        isNumber2,
-        isPlainObject,
-        isObject,
-        isValidArrayIndex,
-        isPromise,
-        isMobile,
-        isjQeryExist,
-        isVueExist,
-        isReactExist,
-        toString,
-        toNumber,
-        toNumberWithRaix,
-        hasOwn,
-        getAllOwnPropertyObj,
-        arrLikeToArray1,
-        arrLikeToArray2,
-        include,
-        exclude,
-        extend,
-        arrToObject,
-        no,
-        yes,
-        sameValue,
-        looseEqual,
-        resJSON,
-        sortNum,
-        sortNumReverse,
-        sortObjKey,
-        sortObjKeyReverse,
-        delRepeat,
-        reverseText,
-        reverseArray,
-        shallowCopy,
-        deepCopy,
-        getObjKeyNameToArray,
-        getObjValueToArray,
-        detectLanguage
-    }
-
+  return {
+    isUndef,
+    isDef,
+    isTrue,
+    isFalse,
+    isPrimitive,
+    toRawType,
+    isNumber,
+    isNumber2,
+    isPlainObject,
+    isObject,
+    isValidArrayIndex,
+    isPromise,
+    isMobile,
+    isjQeryExist,
+    isVueExist,
+    isReactExist,
+    toString,
+    toNumber,
+    toNumberWithRaix,
+    hasOwn,
+    getAllOwnPropertyObj,
+    arrLikeToArray1,
+    arrLikeToArray2,
+    include,
+    exclude,
+    extend,
+    arrToObject,
+    no,
+    yes,
+    sameValue,
+    looseEqual,
+    resJSON,
+    sortNum,
+    sortNumReverse,
+    sortObjKey,
+    sortObjKeyReverse,
+    delRepeat,
+    reverseText,
+    reverseArray,
+    shallowCopy,
+    deepCopy,
+    getObjKeyNameToArray,
+    getObjValueToArray,
+    detectLanguage,
+  };
 })();
 
 /**
@@ -696,259 +713,222 @@ odin.helper = (function () {
  */
 
 odin.math = (function () {
-
-    /**
-     * @author odin
-     * @class math
-     * @description add ',' with string number
-     * @param {number} price - the number which want to be added ,
-     * @param {number} fixed - how many digits that you want to fix
-     * @returns {string} value with ','
-     */
-    function priceWithCommas(price, fixed) {
-
-        if (price == null) {
-
-            price = '';
-
-        }
-
-        if (fixed != null && !isNaN(parseFloat(price))) {
-
-            price = parseFloat(price.toString().replace(/,/g, '')).toFixed(fixed);
-
-        }
-
-        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
+  /**
+   * @author odin
+   * @class math
+   * @description add ',' with string number
+   * @param {number} price - the number which want to be added ,
+   * @param {number} fixed - how many digits that you want to fix
+   * @returns {string} value with ','
+   */
+  function priceWithCommas(price, fixed) {
+    if (price == null) {
+      price = '';
     }
 
-    /**
-     * @author odin
-     * @class math
-     * @description remove ',' with string number
-     * @param  {number} price - the number which want to be added ,
-     * @returns {string} value without ','
-     */
-    function priceWithoutCommas(price) {
-
-        return price.toString().replace(/,/g, '');
-
+    if (fixed != null && !isNaN(parseFloat(price))) {
+      price = parseFloat(price.toString().replace(/,/g, '')).toFixed(fixed);
     }
 
-    /**
-     * @author odin
-     * @class math
-     * @description find the max value among of input array
-     * @param {array} arr - input array
-     * @returns {number} max number
-     */
-    function max(arr) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
 
-        return arr.reduce(function (preValue, curValue, index, array) {
-            return preValue > curValue ? preValue : curValue;
-        });
+  /**
+   * @author odin
+   * @class math
+   * @description remove ',' with string number
+   * @param  {number} price - the number which want to be added ,
+   * @returns {string} value without ','
+   */
+  function priceWithoutCommas(price) {
+    return price.toString().replace(/,/g, '');
+  }
 
-    }
+  /**
+   * @author odin
+   * @class math
+   * @description find the max value among of input array
+   * @param {array} arr - input array
+   * @returns {number} max number
+   */
+  function max(arr) {
+    return arr.reduce(function (preValue, curValue, index, array) {
+      return preValue > curValue ? preValue : curValue;
+    });
+  }
 
-    /**
-     * @author odin
-     * @class math
-     * @description find the min value among of input array
-     * @param {array} arr - input array
-     * @returns {number} min number
-     */
-    function min(arr) {
+  /**
+   * @author odin
+   * @class math
+   * @description find the min value among of input array
+   * @param {array} arr - input array
+   * @returns {number} min number
+   */
+  function min(arr) {
+    return arr.reduce(function (preValue, curValue, index, array) {
+      return preValue > curValue ? curValue : preValue;
+    });
+  }
 
-        return arr.reduce(function (preValue, curValue, index, array) {
-            return preValue > curValue ? curValue : preValue;
-        })
+  /**
+   * @author odin
+   * @class math
+   * @description Get the total from arguments
+   * @param {number / array - like} arguments Series of numbers
+   * @returns {number} total
+   */
+  function total() {
+    var nums = odin.helper.arrLikeToArray2(arguments);
 
-    }
+    var total = nums.reduce(function (acc, val) {
+      return acc + val;
+    }, 0);
+  }
 
-    /**
-     * @author odin
-     * @class math
-     * @description Get the total from arguments
-     * @param {number / array - like} arguments Series of numbers
-     * @returns {number} total
-     */
-    function total() {
+  /**
+   * @author odin
+   * @class math
+   * @description Get the average from arguments
+   * @param {number / array - like} arguments Series of numbers
+   * @returns {number} average
+   */
+  function average() {
+    return total(arguments) / odin.helper.arrLikeToArray2(arguments).length;
+  }
 
-        var nums = odin.helper.arrLikeToArray2(arguments);
+  /**
+   * @author odin
+   * @class math
+   * @description Get the double number of val
+   * @param {number} val the number we want to double
+   * @returns {number} double number of val
+   */
+  function double(val) {
+    return val * 2;
+  }
 
-        var total = nums.reduce(function (acc, val) {
+  /**
+   * @author odin
+   * @class math
+   * @description Get the triple number of val
+   * @param {number} val the number we want to triple
+   * @returns {number} triple number of val
+   */
+  function triple(val) {
+    return val * 3;
+  }
 
-            return acc + val
+  /**
+   * @author odin
+   * @class math
+   * @description Get the double number of val
+   * @param {array} arr The array contains
+   * @returns {array} New array of double numbers
+   */
+  function arrDouble(arr) {
+    return (arrDouble = arr.map(function (num) {
+      return num * 2;
+    }));
+  }
 
-        }, 0);
+  /**
+   * @author odin
+   * @class math
+   * @description Get the triple number of val
+   * @param {array} arr The array contains
+   * @returns {array} New array of triple numbers
+   */
+  function arrTriple(val) {
+    return (arrDouble = arr.map(function (num) {
+      return num * 3;
+    }));
+  }
 
-    }
+  /**
+   * @author odin
+   * @class math
+   * @description 四捨五入(round)
+   * @param {number} num The number we want to round
+   * @returns {number} Rounded number
+   */
+  function round(num) {
+    return Math.round(num);
+  }
 
-    /**
-     * @author odin
-     * @class math
-     * @description Get the average from arguments
-     * @param {number / array - like} arguments Series of numbers
-     * @returns {number} average
-     */
-    function average() {
-        
-        return total(arguments) / odin.helper.arrLikeToArray2(arguments).length;
+  /**
+   * @author odin
+   * @class math
+   * @description 取最大正整數(floor)
+   * @param {number} num The number we want to floor
+   * @returns {number} Floored number
+   */
+  function floor(num) {
+    return Math.floor(num);
+  }
 
-    }
+  /**
+   * @author odin
+   * @class math
+   * @description 取最小整數(ceil)
+   * @param {number} num The number we want to ceil
+   * @returns {number} Ceiled number
+   */
+  function ceil(num) {
+    return Math.ceil(num);
+  }
 
-    /**
-     * @author odin
-     * @class math
-     * @description Get the double number of val
-     * @param {number} val the number we want to double
-     * @returns {number} double number of val
-     */
-    function double (val) {
+  /**
+   * @author odin
+   * @class math
+   * @description 帶小數的四捨五入(round)
+   * @param {number} num The number with decimal whcich we want to round it and cut the digit of decimal
+   * @param {number} digit the number we want to leave of decimal
+   * @returns {number} Rounded number with specific digit
+   */
+  function roundDecimal(num, digit) {
+    return (
+      Math.round(Math.round(val * Math.pow(10, (digit || 0) + 1)) / 10) /
+      Math.pow(10, digit || 0)
+    );
+  }
 
-        return val * 2;
+  /**
+   * @author odin
+   * @class math
+   * @description 絕對值(abs)
+   * @param {number} num The number we want to abs
+   * @returns {number} Absed number
+   */
+  function abs(num) {
+    return Math.abs(num);
+  }
 
-    }
+  /**
+   * @author odin
+   * @class math
+   * @description 處理浮點計算問題
+   * @param  {number} number - 傳入數字
+   * @param  {number} precision - 精確度
+   * @returns {number} 處理好的數字
+   */
+  function dealFloatNumber(number, precision) {
+    return parseFloat((+number).toPrecision(precision ? precision : 12));
+  }
 
-    /**
-     * @author odin
-     * @class math
-     * @description Get the triple number of val
-     * @param {number} val the number we want to triple
-     * @returns {number} triple number of val
-     */
-    function triple(val) {
-
-        return val * 3;
-
-    }
-
-    /**
-     * @author odin
-     * @class math
-     * @description Get the double number of val
-     * @param {array} arr The array contains 
-     * @returns {array} New array of double numbers
-     */
-    function arrDouble(arr) {
-
-        return arrDouble = arr.map(function (num) {
-            return num * 2
-        });
-
-    }
-
-    /**
-     * @author odin
-     * @class math
-     * @description Get the triple number of val
-     * @param {array} arr The array contains 
-     * @returns {array} New array of triple numbers
-     */
-    function arrTriple(val) {
-
-        return arrDouble = arr.map(function (num) {
-            return num * 3
-        });
-
-    }
-
-    /**
-     * @author odin
-     * @class math
-     * @description 四捨五入(round)
-     * @param {number} num The number we want to round
-     * @returns {number} Rounded number
-     */
-    function round(num) {
-
-        return Math.round(num);
-
-    }
-
-    /**
-     * @author odin
-     * @class math
-     * @description 取最大正整數(floor)
-     * @param {number} num The number we want to floor
-     * @returns {number} Floored number
-     */
-    function floor(num) {
-
-        return Math.floor(num);
-
-    }
-
-    /**
-     * @author odin
-     * @class math
-     * @description 取最小整數(ceil)
-     * @param {number} num The number we want to ceil
-     * @returns {number} Ceiled number
-     */
-    function ceil(num) {
-
-        return Math.ceil(num);
-
-    }
-
-    /**
-     * @author odin
-     * @class math
-     * @description 帶小數的四捨五入(round)
-     * @param {number} num The number with decimal whcich we want to round it and cut the digit of decimal
-     * @param {number} digit the number we want to leave of decimal 
-     * @returns {number} Rounded number with specific digit
-     */
-    function roundDecimal(num, digit) {
-
-        return Math.round(Math.round(val * Math.pow(10, (digit || 0) + 1)) / 10) / Math.pow(10, (digit || 0));
-
-    }
-
-    /**
-     * @author odin
-     * @class math
-     * @description 絕對值(abs)
-     * @param {number} num The number we want to abs
-     * @returns {number} Absed number
-     */
-    function abs(num) {
-
-        return Math.abs(num);
-
-    }
-
-    /**
-     * @author odin
-     * @class math
-     * @description 處理浮點計算問題
-     * @param  {number} number - 傳入數字
-     * @param  {number} precision - 精確度
-     * @returns {number} 處理好的數字
-     */
-    function dealFloatNumber(number, precision) {
-
-        return parseFloat((+number).toPrecision(precision ? precision : 12));
-
-    }
-
-    return {
-        priceWithCommas,
-        priceWithoutCommas,
-        max,
-        min,
-        total,
-        average,
-        double,
-        triple,
-        arrDouble,
-        arrTriple,
-        roundDecimal,
-        dealFloatNumber
-    }
-
+  return {
+    priceWithCommas,
+    priceWithoutCommas,
+    max,
+    min,
+    total,
+    average,
+    double,
+    triple,
+    arrDouble,
+    arrTriple,
+    roundDecimal,
+    dealFloatNumber,
+  };
 })();
 
 /**
@@ -957,653 +937,593 @@ odin.math = (function () {
  */
 
 odin.url = (function () {
+  /**
+   * @author odin
+   * @class url
+   * @description get the URL
+   * @returns {string} URL
+   */
+  function getUrl() {
+    return window.location.href;
+  }
 
-    /**
-     * @author odin
-     * @class url
-     * @description get the URL
-     * @returns {string} URL
-     */
-    function getUrl() {
+  /**
+   * @author odin
+   * @class url
+   * @description 取得目前造訪網頁的通訊協定 - get the protocol
+   * @returns {string} 通訊協定 - protocol
+   */
+  function getProtocol() {
+    return window.location.protocol;
+  }
 
-        return window.location.href;
+  /**
+   * @author odin
+   * @class url
+   * @description 取得目前造訪網頁的主機名稱, 包含port - get the hostname with post
+   * @returns {string} 主機名稱, 包含port - Host
+   */
+  function getHost() {
+    return window.location.host;
+  }
 
+  /**
+   * @author odin
+   * @class url
+   * @description 取得目前造訪網頁的主機名稱, 不包含port - get the hostname without post
+   * @returns {string} 主機名稱, 不包含port - Hostname
+   */
+  function getHostname() {
+    return window.location.hostname;
+  }
+
+  /**
+   * @author odin
+   * @class url
+   * @description 取得目前造訪網頁的路徑 - get the pathname
+   * @returns {string} 網頁的路徑 - pathname
+   */
+  function getPathname() {
+    return window.location.pathname;
+  }
+
+  /**
+   * @author odin
+   * @class url
+   * @description 取得目前造訪網頁茅點(#)(hashtag) - get the hashtag
+   * @returns {string} hashtag
+   */
+  function getHash() {
+    return window.location.hash;
+  }
+
+  /**
+   * @author odin
+   * @class url
+   * @description 取得目前造訪網頁的port - get the port
+   * @returns {string} port
+   */
+  function getPort() {
+    return window.location.port;
+  }
+
+  /**
+   * @author odin
+   * @class url
+   * @description 取得目前造訪網頁查詢參數 - get the search
+   * @returns {string} search
+   */
+  function getSearch() {
+    return window.location.search;
+  }
+
+  /**
+   * @author odin
+   * @class url
+   * @description get the value of the specific parameter name from url
+   * @param {string} [url = window.location.search] - url
+   * @param {string} name - query parameter name
+   * @param {string} [url = window.location.search] - url
+   * @returns {string} value
+   */
+  function getUrlParaByName(name, url) {
+    var result, regex, part;
+
+    if (!url) {
+      url = window.location.search;
     }
 
-    /**
-     * @author odin
-     * @class url
-     * @description 取得目前造訪網頁的通訊協定 - get the protocol
-     * @returns {string} 通訊協定 - protocol
-     */
-    function getProtocol() {
+    name = name.replace(/[[\]]/g, '\\$&');
+    regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    part = regex.exec(url);
 
-        return window.location.protocol;
-
+    if (!part) {
+      result = null;
+    } else if (!part[2]) {
+      result = '';
+    } else {
+      result = decodeURIComponent(part[2].replace(/\+/g, ' '));
     }
 
-    /**
-     * @author odin
-     * @class url
-     * @description 取得目前造訪網頁的主機名稱, 包含port - get the hostname with post
-     * @returns {string} 主機名稱, 包含port - Host
-     */
-    function getHost() {
+    return result;
+  }
 
-        return window.location.host;
+  /**
+   * @author odin
+   * @class url
+   * @description 改變參數狀態 pushState
+   * @param {object} state  - contain the paramName and value
+   * @param {string} url - the url we want to add
+   */
+  function pushState(state, url) {
+    var state = state ? state : '';
 
-    }
+    var title = '';
 
-    /**
-     * @author odin
-     * @class url
-     * @description 取得目前造訪網頁的主機名稱, 不包含port - get the hostname without post
-     * @returns {string} 主機名稱, 不包含port - Hostname
-     */
-    function getHostname() {
+    history.pushState(state, title, url);
+  }
 
-        return window.location.hostname;
+  /**
+   * @author odin
+   * @class url
+   * @description Generate the FB share link
+   * @param {string} url - the url we want to add
+   * @returns {string} FB share link
+   */
+  function generateFBShareLink(url) {
+    var fbPrefix = 'http://www.facebook.com/sharer.php?u=';
 
-    }
+    return url ? fbPrefix + url : fbPrefix + getUrl();
+  }
 
-    /**
-     * @author odin
-     * @class url
-     * @description 取得目前造訪網頁的路徑 - get the pathname
-     * @returns {string} 網頁的路徑 - pathname
-     */
-    function getPathname() {
+  /**
+   * @author odin
+   * @class url
+   * @description Generate the Line share link
+   * @param {string} url - the url we want to add
+   * @returns {string} Line share link
+   */
+  function generateLineShareLink(url) {
+    var linePrefix = 'https://social-plugins.line.me/lineit/share?url=';
 
-        return window.location.pathname;
+    return url ? linePrefix + url : linePrefix + getUrl();
+  }
 
-    }
-
-    /**
-     * @author odin
-     * @class url
-     * @description 取得目前造訪網頁茅點(#)(hashtag) - get the hashtag
-     * @returns {string} hashtag
-     */
-    function getHash() {
-
-        return window.location.hash;
-
-    }
-
-    /**
-     * @author odin
-     * @class url
-     * @description 取得目前造訪網頁的port - get the port
-     * @returns {string} port
-     */
-    function getPort() {
-
-        return window.location.port;
-
-    }
-
-    /**
-     * @author odin
-     * @class url
-     * @description 取得目前造訪網頁查詢參數 - get the search
-     * @returns {string} search
-     */
-    function getSearch() {
-
-        return window.location.search;
-
-    }
-
-    /**
-     * @author odin
-     * @class url
-     * @description get the value of the specific parameter name from url
-     * @param {string} [url = window.location.search] - url
-     * @param {string} name - query parameter name
-     * @param {string} [url = window.location.search] - url
-     * @returns {string} value
-     */
-    function getUrlParaByName(name, url) {
-
-        var result,
-            regex,
-            part;
-
-        if (!url) {
-
-            url = window.location.search;
-
-        }
-
-        name = name.replace(/[[\]]/g, '\\$&');
-        regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-        part = regex.exec(url);
-
-        if (!part) {
-
-            result = null;
-
-        } else if (!part[2]) {
-
-            result = '';
-
-        } else {
-
-            result = decodeURIComponent(part[2].replace(/\+/g, ' '));
-
-        }
-
-        return result;
-
-    }
-
-    /**
-     * @author odin
-     * @class url
-     * @description 改變參數狀態 pushState
-     * @param {object} state  - contain the paramName and value
-     * @param {string} url - the url we want to add
-     */
-    function pushState(state, url) {
-
-        var state = state ? state : '';
-
-        var title = '';
-
-        history.pushState(state, title, url);
-
-    }
-
-    /**
-     * @author odin
-     * @class url
-     * @description Generate the FB share link
-     * @param {string} url - the url we want to add
-     * @returns {string} FB share link
-     */
-    function generateFBShareLink(url) {
-
-        var fbPrefix = 'http://www.facebook.com/sharer.php?u=';
-
-        return url ? fbPrefix + url : fbPrefix + getUrl();
-
-    }
-
-    /**
-     * @author odin
-     * @class url
-     * @description Generate the Line share link
-     * @param {string} url - the url we want to add
-     * @returns {string} Line share link
-     */
-    function generateLineShareLink(url) {
-
-        var linePrefix = 'https://social-plugins.line.me/lineit/share?url=';
-
-        return url ? linePrefix + url : linePrefix + getUrl();
-
-    }
-
-    return {
-        getUrl,
-        getProtocol,
-        getHost,
-        getHostname,
-        getPathname,
-        getHash,
-        getPort,
-        getSearch,
-        getUrlParaByName,
-        pushState,
-        generateFBShareLink,
-        generateLineShareLink
-    }
-
+  return {
+    getUrl,
+    getProtocol,
+    getHost,
+    getHostname,
+    getPathname,
+    getHash,
+    getPort,
+    getSearch,
+    getUrlParaByName,
+    pushState,
+    generateFBShareLink,
+    generateLineShareLink,
+  };
 })();
 
 /**
  * @author odin
- * @description Tools For jQuery 
+ * @description Tools For jQuery
  */
 
 odin.jq = (function () {
+  /**
+   * @author odin
+   * @class jq
+   * @description Shallow copy of array or object
+   * @param {array / object} val input data of type object
+   * @returns {array / object} array / object
+   */
+  function shallowCopy(val) {
+    return Array.isArray(val) ? jQuery.extend([], val) : jQuery.extend({}, val);
+  }
 
-    /**
-     * @author odin
-     * @class jq
-     * @description Shallow copy of array or object
-     * @param {array / object} val input data of type object
-     * @returns {array / object} array / object
-     */
-    function shallowCopy(val) {
-        return Array.isArray(val) ? jQuery.extend([], val) : jQuery.extend({}, val);
+  /**
+   * @author odin
+   * @class jq
+   * @description Deep copy of array or object
+   * @param {array / object} val input data of type object
+   * @returns {array / object} array / object
+   */
+  function deepCopy(val) {
+    return Array.isArray(val)
+      ? jQuery.extend(true, [], val)
+      : jQuery.extend(true, {}, val);
+  }
+
+  /**
+   * @author odin
+   * @class jq
+   * @description
+   * @param  {number} time - 秒
+   * @param  {number} [term] - 取最大單位項目數
+   * @param  {Array[]} [ignore] - 忽略列表(d,h,m,s)
+   * @returns {string} 時間文字(日時分秒)
+   */
+  // function makeTimeStr (time, term, ignore) {
+
+  //     var t = {
+  //             days: parseInt(time / 86400),
+  //             hours: parseInt((time % 86400) / 3600),
+  //             minutes: parseInt(((time % 86400) % 3600) / 60),
+  //             seconds: parseInt((time % 86400) % 60)
+  //         },
+  //         arr = [];
+
+  //     $.each(t, function (k, v) {
+
+  //         var lang = ['日', '時', '分', '秒'];
+
+  //         if (v !== 0 && (!ignore || ignore.indexOf(k.charAt(0)) === -1)) {
+
+  //             arr.push(v + lang[k.substr(0, k.length - 1)]);
+
+  //         }
+
+  //     });
+
+  //     if (term && arr.length > term) {
+
+  //         arr = arr.slice(0, term);
+
+  //     }
+
+  //     return arr.reduce(function (a, b) {
+
+  //         return a + ' ' + b;
+
+  //     });
+
+  // }
+
+  /**
+   * @author odin
+   * @class jq
+   * @description Go to somewhere     * @param {string} target Anchor ID, required
+   * @param {number} offset y軸偏移值(pixels, e.g. 50 or -50), optional
+   * @param {number} speed 毫秒(1000 == 1秒), optional
+   */
+  function goTo(anchor, offset, speed) {
+    var dis,
+      offset = parseFloat(offset) || 0,
+      speed = speed || 400;
+    if (anchor && document.getElementById(anchor) !== null) {
+      dis = $('#' + anchor).offset().top + offset;
+    } else {
+      dis = 0;
     }
-
-    /**
-     * @author odin
-     * @class jq
-     * @description Deep copy of array or object
-     * @param {array / object} val input data of type object
-     * @returns {array / object} array / object
-     */
-    function deepCopy(val) {
-        return Array.isArray(val) ? jQuery.extend(true, [], val) : jQuery.extend(true, {}, val);
+    try {
+      $('html, body').animate(
+        {
+          scrollTop: parseFloat(dis),
+        },
+        speed,
+      );
+    } catch (err) {
+      console.log(err.message);
     }
+  }
 
-    /**
-     * @author odin
-     * @class jq 
-     * @description 
-     * @param  {number} time - 秒
-     * @param  {number} [term] - 取最大單位項目數
-     * @param  {Array[]} [ignore] - 忽略列表(d,h,m,s)
-     * @returns {string} 時間文字(日時分秒)
-     */
-    // function makeTimeStr (time, term, ignore) {
-
-    //     var t = {
-    //             days: parseInt(time / 86400),
-    //             hours: parseInt((time % 86400) / 3600),
-    //             minutes: parseInt(((time % 86400) % 3600) / 60),
-    //             seconds: parseInt((time % 86400) % 60)
-    //         },
-    //         arr = [];
-
-    //     $.each(t, function (k, v) {
-
-    //         var lang = ['日', '時', '分', '秒'];
-
-    //         if (v !== 0 && (!ignore || ignore.indexOf(k.charAt(0)) === -1)) {
-
-    //             arr.push(v + lang[k.substr(0, k.length - 1)]);
-
-    //         }
-
-    //     });
-
-    //     if (term && arr.length > term) {
-
-    //         arr = arr.slice(0, term);
-
-    //     }
-
-    //     return arr.reduce(function (a, b) {
-
-    //         return a + ' ' + b;
-
-    //     });
-
-    // }
-
-    /**
-     * @author odin
-     * @class jq
-     * @description Go to somewhere     * @param {string} target Anchor ID, required
-     * @param {number} offset y軸偏移值(pixels, e.g. 50 or -50), optional
-     * @param {number} speed 毫秒(1000 == 1秒), optional
-     */
-    function goTo(anchor, offset, speed) {
-
-        var dis,
-            offset = parseFloat(offset) || 0,
-            speed = speed || 400;
-        if (anchor && document.getElementById(anchor) !== null) {
-
-            dis = $('#' + anchor).offset().top + offset;
-
-        } else {
-
-            dis = 0;
-
-        }
-        try {
-
-            $('html, body').animate({
-                scrollTop: parseFloat(dis)
-            }, speed);
-
-        } catch (err) {
-
-            console.log(err.message);
-
-        }
-
+  /**
+   * @author odin
+   * @class jq
+   * @description Go to somewhere
+   * @param {string||number} disfromTop Could be number or specific word like "top","bottom","down"
+   */
+  function scroll(disfromTop) {
+    var dis = disfromTop || 0;
+    if (dis == 'top') {
+      dis = 0;
+    } else if (dis == 'bottom' || dis == 'down') {
+      dis = document.body.scrollHeight;
     }
-
-    /**
-     * @author odin
-     * @class jq
-     * @description Go to somewhere     
-     * @param {string||number} disfromTop Could be number or specific word like "top","bottom","down"
-     */
-    function scroll(disfromTop) {
-
-        var dis = disfromTop || 0;
-        if (dis == 'top') {
-
-            dis = 0;
-
-        } else if (dis == 'bottom' || dis == 'down') {
-
-            dis = document.body.scrollHeight;
-
-        }
-        try {
-
-            $('html, body').animate({
-                scrollTop: parseFloat(dis)
-            }, 400);
-
-        } catch (err) {
-
-            console.log(err.message);
-
-        }
-
+    try {
+      $('html, body').animate(
+        {
+          scrollTop: parseFloat(dis),
+        },
+        400,
+      );
+    } catch (err) {
+      console.log(err.message);
     }
+  }
 
-    /**
-     * @author odin
-     * @class jq
-     * @description Send a Ajax request of with jQuery object
-     * @param {object} obj 
-     * @example 
-     * {
-     *      url: url,
-     *      dataType: 'json',
-     *      method: 'POST',
-     *      data: {
-     *          ...
-     *      }
-     * }
-     */
-    function sendAjax(obj) {
-        var deferred = $.Deferred();
+  /**
+   * @author odin
+   * @class jq
+   * @description Send a Ajax request of with jQuery object
+   * @param {object} obj
+   * @example
+   * {
+   *      url: url,
+   *      dataType: 'json',
+   *      method: 'POST',
+   *      data: {
+   *          ...
+   *      }
+   * }
+   */
+  function sendAjax(obj) {
+    var deferred = $.Deferred();
 
-        $.ajax(obj)
-            .then(function (res) {
-                deferred.resolve(res);
-            })
-            .catch(function (rej) {
-                deferred.resolve(rej);
-            });
+    $.ajax(obj)
+      .then(function (res) {
+        deferred.resolve(res);
+      })
+      .catch(function (rej) {
+        deferred.resolve(rej);
+      });
 
-        return deferred.promise();
-    }
+    return deferred.promise();
+  }
 
-    return {
-        shallowCopy,
-        deepCopy,
-        // makeTimeStr,
-        goTo,
-        scroll,
-        sendAjax
-    };
-
+  return {
+    shallowCopy,
+    deepCopy,
+    // makeTimeStr,
+    goTo,
+    scroll,
+    sendAjax,
+  };
 })();
 
 /**
  * @author odin
- * @description Tools For Time 
+ * @description Tools For Time
  */
 
 odin.time = (function () {
+  /**
+   * @author odin
+   * @class time
+   * @description Get now date object
+   * @returns {object} Now date object
+   */
+  function getNowDateObj() {
+    return new Date();
+  }
 
-    /**
-     * @author odin
-     * @class time
-     * @description Get now date object
-     * @returns {object} Now date object
-     */
-    function getNowDateObj () {
-        return new Date();
-    }
+  /**
+   * @author odin
+   * @class time
+   * @description Get now date object
+   * @param {any date format} date any date format
+   * @returns {object} Specific date object
+   */
+  function getSpecificDateObj(date) {
+    return new Date(date);
+  }
 
-    /**
-     * @author odin
-     * @class time
-     * @description Get now date object
-     * @param {any date format} date any date format
-     * @returns {object} Specific date object
-     */
-    function getSpecificDateObj(date) {
-        return new Date(date);
-    }
+  /**
+   * @author odin
+   * @class time
+   * @description Get specific time stamp
+   * @param {any date format} date any date format
+   * @returns {object} Specific time stamp
+   */
+  function getSpecificTimeStamp(date) {
+    return Date.parse(date);
+  }
 
-    /**
-     * @author odin
-     * @class time
-     * @description Get specific time stamp
-     * @param {any date format} date any date format
-     * @returns {object} Specific time stamp
-     */
-    function getSpecificTimeStamp(date) {
-        return Date.parse(date);
-    }
+  /**
+   * @author odin
+   * @class time
+   * @description Plus or Minus days of input Date object
+   * @param {object} date Instance of Date Function
+   * @param {number} changeDate plus or minus day, eg: 6 or -5
+   * @returns {object} Changed Date Object
+   */
+  function changeDate(date, changeDate) {
+    return new Date(date.setDate(date.getDate() + changeDate));
+  }
 
-    /**
-     * @author odin
-     * @class time
-     * @description Plus or Minus days of input Date object
-     * @param {object} date Instance of Date Function
-     * @param {number} changeDate plus or minus day, eg: 6 or -5 
-     * @returns {object} Changed Date Object
-     */
-    function changeDate(date, changeDate) {
-        return new Date(date.setDate(date.getDate() + changeDate));
-    }
+  /**
+   * @author odin
+   * @class time
+   * @description Convert any time format to YYYY-MM-DD
+   * @param {timeFormat(TimeStamp / Date Object)} date
+   * @param {string} seperator seperate the YYYY-MM-DD, eg: '-', '/', default '-'
+   * @returns {string} time string
+   */
+  function formatDate(date, seperator) {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
 
-    /**
-     * @author odin
-     * @class time
-     * @description Convert any time format to YYYY-MM-DD
-     * @param {timeFormat(TimeStamp / Date Object)} date
-     * @param {string} seperator seperate the YYYY-MM-DD, eg: '-', '/', default '-'
-     * @returns {string} time string
-     */
-    function formatDate(date, seperator) {
-        var d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
 
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
+    return seperator
+      ? [year, month, day].join(seperator ? seperator : '-')
+      : [year, month, day].join('-');
+  }
 
-        return seperator ? [year, month, day].join(seperator ? seperator : '-') : [year, month, day].join('-');
-    }
+  /**
+   * @author odin
+   * @class time
+   * @description Convert any time format to YYYY-MM-DD HH:MM:SS
+   * @param {timeFormat(TimeStamp / Date Object)} date
+   * @param {string} seperator seperate the YYYY-MM-DD, eg: '-', '/', default '-'
+   * @returns {string} time string
+   */
+  function formatTime(date, seperator) {
+    var dates = new Date(date);
+    var year = dates.getFullYear();
+    var month = dates.getMonth() + 1;
+    var date = dates.getDate();
+    var hours = dates.getHours();
+    var minutes = dates.getMinutes();
+    var seconds = dates.getSeconds();
+    return (
+      year +
+      seperator +
+      month +
+      seperator +
+      date +
+      ' ' +
+      hours +
+      ':' +
+      minutes +
+      ':' +
+      seconds
+    );
+  }
 
-    /**
-     * @author odin
-     * @class time
-     * @description Convert any time format to YYYY-MM-DD HH:MM:SS
-     * @param {timeFormat(TimeStamp / Date Object)} date
-     * @param {string} seperator seperate the YYYY-MM-DD, eg: '-', '/', default '-'
-     * @returns {string} time string
-     */
-    function formatTime(date, seperator) {
-        var dates = new Date(date);
-        var year = dates.getFullYear();
-        var month = dates.getMonth() + 1;
-        var date = dates.getDate();
-        var hours = dates.getHours();
-        var minutes = dates.getMinutes();
-        var seconds = dates.getSeconds();
-        return year + seperator + month + seperator + date + ' ' + hours + ':' + minutes + ':' + seconds;
-    }
-    
-
-    return {
-        getNowDateObj,
-        getSpecificDateObj,
-        getSpecificTimeStamp,
-        formatDate,
-        changeDate,
-        formatTime
-    };
-
+  return {
+    getNowDateObj,
+    getSpecificDateObj,
+    getSpecificTimeStamp,
+    formatDate,
+    changeDate,
+    formatTime,
+  };
 })();
 
 /**
  * @author odin
- * @description Tools For specific function 
+ * @description Tools For specific function
  */
 
 odin.tools = (function () {
+  /**
+   * @author odin
+   * @class tools
+   * @description Convert any time format to YYYY-MM-DD
+   * @param {string} id Dom id, this Dom contains the content that we want to copy to the clipboard
+   * @param {string} msg after copy done, show the message
+   */
+  function copyTextToClipboard(id, msg) {
+    var TextRange = document.createRange();
 
-    /**
-     * @author odin
-     * @class tools
-     * @description Convert any time format to YYYY-MM-DD
-     * @param {string} id Dom id, this Dom contains the content that we want to copy to the clipboard 
-     * @param {string} msg after copy done, show the message
-     */
-    function copyTextToClipboard(id, msg) {
+    TextRange.selectNode(document.getElementById(id));
 
-        var TextRange = document.createRange();
+    sel = window.getSelection();
 
-        TextRange.selectNode(document.getElementById(id));
+    sel.removeAllRanges();
 
-        sel = window.getSelection();
+    sel.addRange(TextRange);
 
-        sel.removeAllRanges();
+    document.execCommand('copy');
 
-        sel.addRange(TextRange);
+    alert(msg ? msg : 'copied!');
+  }
 
-        document.execCommand("copy");
+  /**
+   * @author odin
+   * @class tools
+   * @description Prevent XSS from getting the html input data
+   * @param {string} str
+   * @returns {string} Transformed string without XSS attack
+   */
+  function convertHTMLXSS(str) {
+    var strArr = str.split('');
+    var resultArr = strArr.map(function (character) {
+      return character
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;')
+        .replace(/\//g, '&#x2F;');
+    });
 
-        alert(msg ? msg : 'copied!');
+    return resultArr.join('');
+  }
 
+  /**
+   * @author odin
+   * @class tools
+   * @description Convert 886 mobile phone to the 09XXXXXXXX
+   * @param {number} num input phone number
+   * @returns {number} Transformed phone number
+   */
+  function mphoneNormalized(num) {
+    num = num.toString();
+    // 去886
+    if (num.length > 5 && num.indexOf('886') === 0) {
+      num = num.substr(3);
+    }
+    // 加0
+    if (num.indexOf('9') === 0) {
+      num = '0' + num;
+    }
+    return num;
+  }
+
+  /**
+   * @author odin
+   * @class tools
+   * @description 全形轉半形程式
+   * @param val string 傳入要轉換的字串 required
+   * @param trimSpace bool => 去除 space, default true
+   * @param trimDash bool => 去除 dash - , default true
+   */
+  function fullToHalf(val, trimSpace, trimDash) {
+    var value = val || '',
+      result = '',
+      i;
+
+    for (i = 0; i < value.length; i++) {
+      if (value.charCodeAt(i) === 12288) {
+        result += ' ';
+      } else if (value.charCodeAt(i) > 65280 && value.charCodeAt(i) < 65375) {
+        result += String.fromCharCode(value.charCodeAt(i) - 65248);
+      } else {
+        result += String.fromCharCode(value.charCodeAt(i));
+      }
     }
 
-    /**
-     * @author odin
-     * @class tools
-     * @description Prevent XSS from getting the html input data
-     * @param {string} str 
-     * @returns {string} Transformed string without XSS attack
-     */
-    function convertHTMLXSS(str) {
-        var strArr = str.split('');
-        var resultArr = strArr.map(function (character) {
-            return character
-                    .replace(/&/g, '&amp;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;')
-                    .replace(/"/g, '&quot;')
-                    .replace(/'/g, '&#x27;')
-                    .replace(/\//g, '&#x2F;');
-        });
+    if (trimSpace || true) result = result.replace(/ /g, '');
 
-        return resultArr.join('');
+    if (trimDash || true) result = result.replace(/-+/g, '');
+
+    return result;
+  }
+
+  /**
+   * @author odin
+   * @class tools
+   * @description
+   * @param {array} attrs - 屬性陣列
+   * @example
+   *  [
+   *      {
+   *          name: 'aaa',
+   *          value: 'bbb'
+   *      },
+   *      {
+   *          name: 'ccc',
+   *          value: 'ddd'
+   *      },
+   *  ]
+   * @param {Element} ele - 目標DOM元素
+   * @returns {Element} element with attrs
+   */
+  function _setAttrs(ele, attrs) {
+    if (Array.isArray(attrs) === false) {
+      attrs = [attrs];
     }
 
-    /**
-     * @author odin
-     * @class tools
-     * @description Convert 886 mobile phone to the 09XXXXXXXX
-     * @param {number} num input phone number
-     * @returns {number} Transformed phone number
-     */
-    function mphoneNormalized(num) {
-        num = num.toString();
-        // 去886
-        if (num.length > 5 && num.indexOf('886') === 0) {
-            num = num.substr(3);
-        }
-        // 加0
-        if (num.indexOf('9') === 0) {
-            num = '0' + num;
-        }
-        return num;
-    }
+    attrs.map(function (attr) {
+      ele.setAttribute(attr.name, attr.value);
+    });
 
-    /**
-     * @author odin
-     * @class tools
-     * @description 全形轉半形程式
-     * @param val string 傳入要轉換的字串 required
-     * @param trimSpace bool => 去除 space, default true
-     * @param trimDash bool => 去除 dash - , default true
-     */
-    function fullToHalf(val, trimSpace, trimDash) {
+    return ele;
+  }
 
-        var value = val || '',
-            result = '',
-            i;
-
-        for (i = 0; i < value.length; i++) {
-
-            if (value.charCodeAt(i) === 12288) {
-
-                result += ' ';
-
-            } else if (value.charCodeAt(i) > 65280 && value.charCodeAt(i) < 65375) {
-
-                result += String.fromCharCode(value.charCodeAt(i) - 65248);
-
-            } else {
-
-                result += String.fromCharCode(value.charCodeAt(i));
-
-            }
-
-        }
-
-        if (trimSpace || true) result = result.replace(/ /g, '');
-
-        if (trimDash || true) result = result.replace(/-+/g, '');
-
-        return result;
-
-    }
-
-    /**
-     * @author odin
-     * @class tools
-     * @description 
-     * @param {array} attrs - 屬性陣列
-     * @example 
-     *  [
-     *      {
-     *          name: 'aaa',
-     *          value: 'bbb'
-     *      },
-     *      {
-     *          name: 'ccc',
-     *          value: 'ddd'
-     *      },
-     *  ]
-     * @param {Element} ele - 目標DOM元素
-     * @returns {Element} element with attrs
-     */
-    function _setAttrs(ele, attrs) {
-
-        if (Array.isArray(attrs) === false) {
-
-            attrs = [attrs];
-
-        }
-
-        attrs.map(function (attr) {
-
-            ele.setAttribute(attr.name, attr.value);
-
-        });
-
-        return ele;
-
-    }
-
-
-    return {
-        copyTextToClipboard,
-        convertHTMLXSS,
-        mphoneNormalized,
-        fullToHalf,
-        _setAttrs
-    };
-
+  return {
+    copyTextToClipboard,
+    convertHTMLXSS,
+    mphoneNormalized,
+    fullToHalf,
+    _setAttrs,
+  };
 })();
 
 /**
@@ -1612,38 +1532,37 @@ odin.tools = (function () {
  */
 
 odin.actions = (function () {
+  /**
+   * @author odin
+   * @class actions
+   * @description Go to Top
+   * @param {number} duration 毫秒(1000 == 1秒), required
+   */
+  function goTop(duration) {
+    // cancel if already on top
+    if (document.scrollingElement.scrollTop === 0) return;
 
-    /**
-     * @author odin
-     * @class actions
-     * @description Go to Top     
-     * @param {number} duration 毫秒(1000 == 1秒), required
-     */
-    function goTop(duration) {
-        // cancel if already on top
-        if (document.scrollingElement.scrollTop === 0) return;
+    const totalScrollDistance = document.scrollingElement.scrollTop;
+    let scrollY = totalScrollDistance,
+      oldTimestamp = null;
 
-        const totalScrollDistance = document.scrollingElement.scrollTop;
-        let scrollY = totalScrollDistance,
-            oldTimestamp = null;
-
-        function step(newTimestamp) {
-            if (oldTimestamp !== null) {
-                // if duration is 0 scrollY will be -Infinity
-                scrollY -= totalScrollDistance * (newTimestamp - oldTimestamp) / duration;
-                if (scrollY <= 0) return document.scrollingElement.scrollTop = 0;
-                document.scrollingElement.scrollTop = scrollY;
-            }
-            oldTimestamp = newTimestamp;
-            window.requestAnimationFrame(step);
-        }
-        window.requestAnimationFrame(step);
+    function step(newTimestamp) {
+      if (oldTimestamp !== null) {
+        // if duration is 0 scrollY will be -Infinity
+        scrollY -=
+          (totalScrollDistance * (newTimestamp - oldTimestamp)) / duration;
+        if (scrollY <= 0) return (document.scrollingElement.scrollTop = 0);
+        document.scrollingElement.scrollTop = scrollY;
+      }
+      oldTimestamp = newTimestamp;
+      window.requestAnimationFrame(step);
     }
+    window.requestAnimationFrame(step);
+  }
 
-    return {
-        goTop
-    };
-
+  return {
+    goTop,
+  };
 })();
 
 /**
@@ -1652,101 +1571,98 @@ odin.actions = (function () {
  */
 
 odin.proxy = (function () {
-    
-    /**
-     * @author odin
-     * @class proxy
-     * @description Send a GET request to specific URL     
-     * @param {string} url request URL
-     */
-    function get(url) {
-        
-        return new Promise((resolve, reject) => {
+  /**
+   * @author odin
+   * @class proxy
+   * @description Send a GET request to specific URL
+   * @param {string} url request URL
+   */
+  function get(url) {
+    return new Promise((resolve, reject) => {
+      var req = new XMLHttpRequest();
 
-            var req = new XMLHttpRequest();
+      // 定義方法
+      req.open('GET', url);
 
-            // 定義方法
-            req.open('GET', url);
-
-            req.onload = function () {
-                if (req.readyState == 4 && req.status == "200") {
-                    // 成功要做的事情
-                    resolve(req.respone);
-                } else {
-                    // 失敗要做的事情
-                    reject(req);
-                }
-            }
-
-            // 送出請求
-            req.send();
-
-        });
-    }
-
-    /**
-     * @author odin
-     * @class proxy
-     * @description Encoded object data to string
-     * @param {object} data The data desired to be encoded, eg. {c: 3, a :2} => "c=3&a=2"
-     */
-    function encodeFormData(data) {
-        if (!data) return ''; // 如果傳入為空，直接返回字符串
-        var pairs = []; // 保存名/值對
-        for (var name in data) { // 進行遍歷
-            if (!data.hasOwnProperty(name)) continue; // 跳過繼承屬性,指示自身的屬性是否具有該值
-            if (typeof data[name] === 'function') continue; // 跳過方法
-            var value = data[name].toString(); // 將值轉換成字符串
-            name = encodeURIComponent(name.replace('%20', '+'));
-            value = encodeURIComponent(value.replace('%20', '+'));
-            pairs.push(name + '=' + value); // 記住名值對
+      req.onload = function () {
+        if (req.readyState == 4 && req.status == '200') {
+          // 成功要做的事情
+          resolve(req.respone);
+        } else {
+          // 失敗要做的事情
+          reject(req);
         }
-        return pairs.join('&'); 
+      };
+
+      // 送出請求
+      req.send();
+    });
+  }
+
+  /**
+   * @author odin
+   * @class proxy
+   * @description Encoded object data to string
+   * @param {object} data The data desired to be encoded, eg. {c: 3, a :2} => "c=3&a=2"
+   */
+  function encodeFormData(data) {
+    if (!data) return ''; // 如果傳入為空，直接返回字符串
+    var pairs = []; // 保存名/值對
+    for (var name in data) {
+      // 進行遍歷
+      if (!data.hasOwnProperty(name)) continue; // 跳過繼承屬性,指示自身的屬性是否具有該值
+      if (typeof data[name] === 'function') continue; // 跳過方法
+      var value = data[name].toString(); // 將值轉換成字符串
+      name = encodeURIComponent(name.replace('%20', '+'));
+      value = encodeURIComponent(value.replace('%20', '+'));
+      pairs.push(name + '=' + value); // 記住名值對
     }
+    return pairs.join('&');
+  }
 
-    /**
-     * @author odin
-     * @class proxy
-     * @description Send a POST request to specific URL     
-     * @param {string} url request URL
-     * @param {string || object} data The data have to be sent to back-end
-     * @param {boolean} isJsonType This data is sent by json or encoded string, true === json, false === encoded string
-     */
-    function post(url, data, isJsonType) {
+  /**
+   * @author odin
+   * @class proxy
+   * @description Send a POST request to specific URL
+   * @param {string} url request URL
+   * @param {string || object} data The data have to be sent to back-end
+   * @param {boolean} isJsonType This data is sent by json or encoded string, true === json, false === encoded string
+   */
+  function post(url, data, isJsonType) {
+    return new Promise((resolve, reject) => {
+      var req = new XMLHttpRequest();
 
-        return new Promise((resolve, reject) => {
+      // 定義方法
+      req.open('POST', url);
 
-            var req = new XMLHttpRequest();
+      // 定義 Content-type
+      req.setRequestHeader(
+        'Content-type',
+        isJsonType
+          ? 'application/json;charset=UTF-8'
+          : 'application/x-www-form-urlencoded',
+      );
 
-            // 定義方法
-            req.open('POST', url);
+      req.onload = function () {
+        if (req.readyState == 4 && req.status == '200') {
+          // 成功要做的事情
+          resolve(req.respone);
+        } else {
+          // 失敗要做的事情
+          reject(req);
+        }
+      };
 
-            // 定義 Content-type
-            req.setRequestHeader("Content-type", (isJsonType ? "application/json;charset=UTF-8" : "application/x-www-form-urlencoded"));
+      // 送出請求
+      req.send(isJsonType ? data : encodeFormData(data));
+    });
+  }
 
-            req.onload = function () {
-                if (req.readyState == 4 && req.status == "200") {
-                    // 成功要做的事情
-                    resolve(req.respone);
-                } else {
-                    // 失敗要做的事情
-                    reject(req);
-                }
-            }
-
-            // 送出請求
-            req.send(isJsonType ? data : encodeFormData(data));
-            
-
-        });
-    }
-
-    return {
-        get,
-        encodeFormData,
-        post
-    }
-
+  return {
+    get,
+    encodeFormData,
+    post,
+  };
 })();
 
 /**
@@ -1755,191 +1671,170 @@ odin.proxy = (function () {
  */
 
 odin.localStorage = (function () {
+  /**
+   * @author odin
+   * @class localStorage
+   * @description Handle differet act of localStorage
+   * @param  {string} act - getItem, setItem, removeItem
+   * @param  {string} key
+   * @param  {string} value
+   */
+  function _base(act, key, value) {
+    var r = null;
 
-    /**
-     * @author odin
-     * @class localStorage
-     * @description Handle differet act of localStorage
-     * @param  {string} act - getItem, setItem, removeItem
-     * @param  {string} key
-     * @param  {string} value
-     */
-    function _base(act, key, value) {
-
-        var r = null;
-
-        if (window.localStorage) {
-
-            try {
-
-                r = window.localStorage[act](key, value);
-
-            } catch (e) {
-
-                console.log(e);
-
-            }
-
-        } else {
-
-            console.log('LocalStorage is not support.');
-
-        }
-
-        return r;
-
+    if (window.localStorage) {
+      try {
+        r = window.localStorage[act](key, value);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      console.log('LocalStorage is not support.');
     }
 
-    /**
-     * @author odin
-     * @class localStorage
-     * @description Get the value of specific key name from localStorage
-     * @param  {string} key
-     */
-    function get(key) {
+    return r;
+  }
 
-        return _base('getItem', key);
+  /**
+   * @author odin
+   * @class localStorage
+   * @description Get the value of specific key name from localStorage
+   * @param  {string} key
+   */
+  function get(key) {
+    return _base('getItem', key);
+  }
 
-    }
+  /**
+   * @author odin
+   * @class localStorage
+   * @description Set the value of specific key name to localStorage
+   * @param  {string} key
+   * @param  {string} value
+   */
+  function set(key, value) {
+    return _base('setItem', key, value);
+  }
 
-    /**
-     * @author odin
-     * @class localStorage
-     * @description Set the value of specific key name to localStorage
-     * @param  {string} key
-     * @param  {string} value
-     */
-    function set(key, value) {
+  /**
+   * @author odin
+   * @class localStorage
+   * @description Remove the value and key name from localStorage
+   * @param  {string} key
+   */
+  function remove(key) {
+    return _base('removeItem', key);
+  }
 
-        return _base('setItem', key, value);
-
-    }
-
-    /**
-     * @author odin
-     * @class localStorage
-     * @description Remove the value and key name from localStorage
-     * @param  {string} key
-     */
-    function remove(key) {
-
-        return _base('removeItem', key);
-
-    }
-
-    return {
-        get,
-        set,
-        remove
-    };
-
+  return {
+    get,
+    set,
+    remove,
+  };
 })();
 
 /**
  * @author odin
- * @description Tools For ES6 
+ * @description Tools For ES6
  */
 
 odin.es6 = (function () {
+  /**
+   * @author odin
+   * @class url
+   * @description Convert an Array - like object to a real Array.
+   * @param {array / array-like list} list
+   * @param {boolean} isNeedToCutTheSameValue Cut the same value among of the array or array like list
+   * @returns {array} array
+   */
+  function arrLikeToArray(list, isNeedToCutTheSameValue) {
+    return isNeedToCutTheSameValue
+      ? Array.from(new Set(list))
+      : Array.from(list);
+  }
 
-    /**
-     * @author odin
-     * @class url
-     * @description Convert an Array - like object to a real Array. 
-     * @param {array / array-like list} list
-     * @param {boolean} isNeedToCutTheSameValue Cut the same value among of the array or array like list 
-     * @returns {array} array
-     */
-    function arrLikeToArray(list, isNeedToCutTheSameValue) {
+  /**
+   * @author odin
+   * @class es6
+   * @description find the max value among of input array
+   * @param {array} arr - input array
+   * @returns {number} max number
+   */
+  function max(arr) {
+    return Math.max(...arr);
+  }
 
-        return isNeedToCutTheSameValue ? Array.from(new Set(list)) : Array.from(list);
+  /**
+   * @author odin
+   * @class es6
+   * @description find the min value among of input array
+   * @param {array} arr - input array
+   * @returns {number} min number
+   */
+  function min(arr) {
+    return Math.min(...arr);
+  }
 
-    }
+  /**
+   * @author odin
+   * @class es6
+   * @description Shallow copy of array or object
+   * @param {array / object} val input data of type object
+   * @returns {array / object} array / object
+   */
+  function shallowCopy(val) {
+    return Object.assign(val);
+  }
 
-    /**
-     * @author odin
-     * @class es6
-     * @description find the max value among of input array
-     * @param {array} arr - input array
-     * @returns {number} max number
-     */
-    function max(arr) {
+  /**
+   * @author odin
+   * @class es6
+   * @description Get the average from arguments
+   * @param {number / array - like} arguments Series of numbers
+   * @returns {number} average
+   */
+  function average(...nums) {
+    return nums.reduce((acc, val) => acc + val, 0) / nums.length;
+  }
 
-        return Math.max(...arr);
+  /**
+   * @author odin
+   * @class es6
+   * @description Get the total from arguments
+   * @param {number / array - like} arguments Series of numbers
+   * @returns {number} total
+   */
+  function total(...nums) {
+    return nums.reduce((acc, val) => acc + val, 0);
+  }
 
-    }
+  /**
+   * @author odin
+   * @class es6
+   * @description Template Literals -- Prevent XSS from getting the html input data
+   * @param {Template Literals} TemplateLiterals
+   * @returns {string} Transformed string without XSS attack
+   */
+  function convertHTMLXSS(strings, ...keys) {
+    return strings
+      .map(
+        (str, i) =>
+          `${str}${
+            keys[i]
+              ? `${keys[i]
+                  .replace(/&/g, '&amp;')
+                  .replace(/</g, '&lt;')
+                  .replace(/>/g, '&gt;')
+                  .replace(/"/g, '&quot;')
+                  .replace(/'/g, '&#x27;')
+                  .replace(/\//g, '&#x2F;')}`
+              : ''
+          }`,
+      )
+      .join('');
+  }
 
-    /**
-     * @author odin
-     * @class es6
-     * @description find the min value among of input array
-     * @param {array} arr - input array
-     * @returns {number} min number
-     */
-    function min(arr) {
-
-        return Math.min(...arr);
-
-    }
-
-    /**
-     * @author odin
-     * @class es6
-     * @description Shallow copy of array or object
-     * @param {array / object} val input data of type object
-     * @returns {array / object} array / object
-     */
-    function shallowCopy (val) {
-        return Object.assign(val);
-    }
-
-    /**
-     * @author odin
-     * @class es6
-     * @description Get the average from arguments
-     * @param {number / array - like} arguments Series of numbers
-     * @returns {number} average
-     */
-    function average (...nums) {
-
-        return nums.reduce((acc, val) => acc + val, 0) / nums.length;
-
-    }
-
-    /**
-     * @author odin
-     * @class es6
-     * @description Get the total from arguments
-     * @param {number / array - like} arguments Series of numbers
-     * @returns {number} total
-     */
-    function total(...nums) {
-
-        return nums.reduce((acc, val) => acc + val, 0);
-
-    }
-
-    /**
-     * @author odin
-     * @class es6
-     * @description Template Literals -- Prevent XSS from getting the html input data
-     * @param {Template Literals} TemplateLiterals 
-     * @returns {string} Transformed string without XSS attack
-     */
-    function convertHTMLXSS(strings, ...keys) {
-        return strings.map((str, i) => (
-            `${str}${keys[i] ? `${keys[i]
-                    .replace(/&/g, '&amp;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;')
-                    .replace(/"/g, '&quot;')
-                    .replace(/'/g, '&#x27;')
-                    .replace(/\//g, '&#x2F;')
-                    }` : ''}`
-        )).join('');
-    }
-
-    /**
+  /**
      * @author odin
      * @class es6
      * @description Get the specific html attributes string
@@ -1951,13 +1846,14 @@ odin.es6 = (function () {
                 }
      * @returns {string} String with html attributes
      */
-    function getAttributeString(obj) {
-        return odin.helper.getObjKeyNameToArray(obj).map((keyName) => (
-            ` ${keyName}="${obj[keyName]}"`
-        )).join('');
-    }
+  function getAttributeString(obj) {
+    return odin.helper
+      .getObjKeyNameToArray(obj)
+      .map((keyName) => ` ${keyName}="${obj[keyName]}"`)
+      .join('');
+  }
 
-    /**
+  /**
      * @author odin
      * @class es6
      * @description Get the specific attrs object for the Template Literals
@@ -1972,11 +1868,11 @@ odin.es6 = (function () {
                 }
      * @returns {string} string
      */
-    function TagAttr (obj) {
-        this.tagDetail = obj;
-    }
+  function TagAttr(obj) {
+    this.tagDetail = obj;
+  }
 
-    /**
+  /**
      * @author odin
      * @class es6
      * @description Add Specific HTML Tag to ${}
@@ -2000,25 +1896,104 @@ odin.es6 = (function () {
         const age = 27;
         addTag.addHighLightTag `我是${name},我今年${age}歲`;
     */
-    TagAttr.prototype.addHighLightTag = function (strings, ...arg) {
-        // console.log('this', this);
-        // console.log(strings, ...arg);
-        const tagDetail = this.tagDetail;
-        return strings.map((str, i) => (`${str} ${arg[i] ? `<${tagDetail.tagType}${getAttributeString(tagDetail.attributes)}>${arg[i]}</${tagDetail.tagType}>` : '' }`)).join('');
+  TagAttr.prototype.addHighLightTag = function (strings, ...arg) {
+    // console.log('this', this);
+    // console.log(strings, ...arg);
+    const tagDetail = this.tagDetail;
+    return strings
+      .map(
+        (str, i) =>
+          `${str} ${
+            arg[i]
+              ? `<${tagDetail.tagType}${getAttributeString(
+                  tagDetail.attributes,
+                )}>${arg[i]}</${tagDetail.tagType}>`
+              : ''
+          }`,
+      )
+      .join('');
+  };
+
+  return {
+    arrLikeToArray,
+    max,
+    min,
+    shallowCopy,
+    average,
+    total,
+    convertHTMLXSS,
+    getAttributeString,
+    TagAttr,
+  };
+})();
+
+/**
+ * @author odin
+ * @description Utilities to check value
+ */
+odin.check = (function () {
+  /**
+   * @author odin
+   * @class check
+   * @description 判斷email是否有符合規則
+   * @param  {string} value - 要被檢查的字串
+   * @returns {boolean}
+   */
+  function checkEmail(value) {
+    // eslint-disable-next-line
+    const rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+    if (value.search(rule) == -1) {
+      return false;
+    } else {
+      return true;
     }
+  }
 
-    return {
-        arrLikeToArray,
-        max,
-        min,
-        shallowCopy,
-        average,
-        total,
-        convertHTMLXSS,
-        getAttributeString,
-        TagAttr
-    };
+  /**
+   * @author odin
+   * @class check
+   * @description 判斷電話號碼是否有符合規則
+   * @param  {string} coutryCode - 國碼
+   * @param  {string} cellphone - 電話號碼
+   * @returns {boolean}
+   */
+  function checkCellphone(coutryCode, cellphone) {
+    if (coutryCode == '+86') {
+      if (cellphone.slice(0, 1) != 1 || cellphone.length != 11) {
+        return false;
+      } else {
+        return true;
+      }
+    } else if (coutryCode == '+886') {
+      if (cellphone.slice(0, 2) != '09' || cellphone.length != 10) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
 
+  /**
+   * @author odin
+   * @class check
+   * @description 判斷兩個值是否相等
+   * @param  {string} value1 - 要比對的值 - 1
+   * @param  {string} value2 - 要比對的值 - 2
+   * @returns {boolean}
+   */
+  function checkSameContent(value1, value2) {
+    if (value1 === value2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  return {
+    checkEmail,
+    checkCellphone,
+    checkSameContent,
+  };
 })();
 
 /**
@@ -2027,128 +2002,125 @@ odin.es6 = (function () {
  */
 
 odin.fun = (function () {
-    
-    /**
-     * @author odin
-     * @class fun
-     * @description Helping printStar
-     * @param {number} num The value we want to make the stars line.
-     */
-    function judgeNum(num) {
-        var flag = false,
-            count = 0;
-        var data = 0;
-        var a = {};
+  /**
+   * @author odin
+   * @class fun
+   * @description Helping printStar
+   * @param {number} num The value we want to make the stars line.
+   */
+  function judgeNum(num) {
+    var flag = false,
+      count = 0;
+    var data = 0;
+    var a = {};
 
-        if ((num & 1) && (num >= 7)) {
-            for (var i = 1;; i++) {
-                //判斷num能否滿足奇數迴文數之和
-                var listNum = i * i * 2 + 4 * i + 1;
-                var maxNum = (i + 1) * (i + 1) * 2 + 4 * (i + 1) + 1;
-                //如果在滿足數列中
-                if (num == listNum) {
-                    flag = true;
-                    count = i;
-                    break;
-                } else if (listNum < num && num < maxNum) {
-                    //找出小於num數的最大滿足條件值
-                    data = num - listNum;
-                    //將差值賦值給a.data
-                    a.data = data;
-                    flag = true;
-                    count = i;
-                    break;
-                }
-            }
-        } else {
-            alert("請輸入正確格式數字");
-            data = num;
+    if (num & 1 && num >= 7) {
+      for (var i = 1; ; i++) {
+        //判斷num能否滿足奇數迴文數之和
+        var listNum = i * i * 2 + 4 * i + 1;
+        var maxNum = (i + 1) * (i + 1) * 2 + 4 * (i + 1) + 1;
+        //如果在滿足數列中
+        if (num == listNum) {
+          flag = true;
+          count = i;
+          break;
+        } else if (listNum < num && num < maxNum) {
+          //找出小於num數的最大滿足條件值
+          data = num - listNum;
+          //將差值賦值給a.data
+          a.data = data;
+          flag = true;
+          count = i;
+          break;
         }
-
-        a.flag = flag;
-        a.count = count;
-        return a;
+      }
+    } else {
+      alert('請輸入正確格式數字');
+      data = num;
     }
 
-    /**
-     * @author odin
-     * @class fun
-     * @description Get the result variable
-     */
-    function result(num, str1, str2) {
-        if (num === 1) {
-            console.log('*');
-            return;
-        } else {
-            var flag = judgeNum(num).flag || 0;
-            var count = judgeNum(num).count * 2 + 1;
-            var data = judgeNum(num).data;
-            var emp, start;
-            if (flag) {
+    a.flag = flag;
+    a.count = count;
+    return a;
+  }
 
-                for (var i = 0; i < count; i++) {
+  /**
+   * @author odin
+   * @class fun
+   * @description Get the result variable
+   */
+  function result(num, str1, str2) {
+    if (num === 1) {
+      console.log('*');
+      return;
+    } else {
+      var flag = judgeNum(num).flag || 0;
+      var count = judgeNum(num).count * 2 + 1;
+      var data = judgeNum(num).data;
+      var emp, start;
+      if (flag) {
+        for (var i = 0; i < count; i++) {
+          emp = count - (count - i);
+          start = count - i * 2;
+          var strItem = '';
+          if (start < 0) {
+            emp = count - i - 1;
+            start = Math.abs(start) + 2;
+          }
 
-                    emp = count - (count - i);
-                    start = count - i * 2;
-                    var strItem = "";
-                    if (start < 0) {
-                        emp = count - i - 1;
-                        start = Math.abs(start) + 2;
-                    }
-
-                    for (var j = 0; j < emp; j++) {
-                        strItem += str1;
-                    }
-                    //打印
-                    for (var m = 0; m < start; m++) {
-                        strItem += str2;
-                    }
-                    // //打印後一部分空格
-                    for (var n = 0; n < emp; n++) {
-                        strItem += str1;
-                    }
-                    //換行
-                    console.log(strItem + "\n");
-                }
-            }
-            //如果存在差值則打印出差值
-            if (data) {
-                // document.write(data);
-                console.log(data);
-            }
+          for (var j = 0; j < emp; j++) {
+            strItem += str1;
+          }
+          //打印
+          for (var m = 0; m < start; m++) {
+            strItem += str2;
+          }
+          // //打印後一部分空格
+          for (var n = 0; n < emp; n++) {
+            strItem += str1;
+          }
+          //換行
+          console.log(strItem + '\n');
         }
+      }
+      //如果存在差值則打印出差值
+      if (data) {
+        // document.write(data);
+        console.log(data);
+      }
     }
+  }
 
-    /**
-     * @author odin
-     * @class fun
-     * @description Maxmum Stars at Start and End
-     */
-    function printStar(stars) {
-        if (typeof (stars) === 'number' && stars % 2 === 1) {
-            var totalStar = 0;
-            var loopLength = parseInt(stars / 2) + 1;
+  /**
+   * @author odin
+   * @class fun
+   * @description Maxmum Stars at Start and End
+   */
+  function printStar(stars) {
+    if (typeof stars === 'number' && stars % 2 === 1) {
+      var totalStar = 0;
+      var loopLength = parseInt(stars / 2) + 1;
 
-            for (var i = 0; i < loopLength; i++) {
-                if (stars === 1) {
-                    totalStar += 1;
-                } else {
-                    totalStar += (stars * 2);
-                    stars -= 2;
-                }
-            }
-
-            console.log('totaStalr', totalStar)
-
-            result(totalStar, " ", "*");
+      for (var i = 0; i < loopLength; i++) {
+        if (stars === 1) {
+          totalStar += 1;
         } else {
-            alert('請輸入奇數數字');
+          totalStar += stars * 2;
+          stars -= 2;
         }
-    }
+      }
 
-    return {
-        printStar
-    };
+      console.log('totaStalr', totalStar);
+
+      result(totalStar, ' ', '*');
+    } else {
+      alert('請輸入奇數數字');
+    }
+  }
+
+  return {
+    printStar,
+  };
 })();
 
 /**
@@ -2156,136 +2128,133 @@ odin.fun = (function () {
  * @description Strange Js
  */
 
- odin.bats = (function () {
-    
-    /**
-     * @author odin
-     * @class bats
-     * @description Show all list about the js
-     */
-    function showList() {
-        const table = {
-            bats1: 'typeof(NaN)',
-            bats2: '9999999999999999',
-            bats3: '0.1+0.2 == 0.3',
-            bats4: 'Math.max()',
-            bats5: 'Math.min()',
-            bats6: '[]+[]',
-            bats7: '[]+{}',
-            bats8: '{}+[]',
-            bats9: 'true+true+true===3',
-            bats10: 'true-true',
-            bats11: 'true===1',
-            bats12: '(!+[]+[]+![])',
-            bats13: '9+"1"',
-            bats14: '91-"1"',
-            bats15: '[]==0',
-            bats16: '"1"/0',
-            bats17: '0/0',
-            bats18: '0/1',
-            bats19: 'Infinity/Infinity',
-        };
-        console.table(table);
-    }
-
-    function bats1() {
-        console.log(typeof (NaN));
-    }
-
-    function bats2() {
-        console.log(9999999999999999);
-    }
-
-    function bats3() {
-        console.log(0.1 + 0.2 == 0.3);
-    }
-
-    function bats4() {
-        console.log(Math.max());
-    }
-
-    function bats5() {
-        console.log(Math.min());
-    }
-
-    function bats6() {
-        console.log([] + []);
-    }
-
-    function bats7() {
-        console.log([] + {});
-    }
-
-    function bats8() {
-        console.log({} + []);
-    }
-
-    function bats9() {
-        console.log(true + true + true === 3);
-    }
-
-    function bats10() {
-        console.log(true - true);
-    }
-
-    function bats11() {
-        console.log(true === 1);
-    }
-
-    function bats12() {
-        console.log((!+[] + [] + ![]));
-    }
-
-    function bats13() {
-        console.log(9 + "1");
-    }
-
-    function bats14() {
-        console.log(91 - "1");
-    }
-
-    function bats15() {
-        console.log([] == 0);
-    }
-
-    function bats16() {
-        console.log("1" / 0);
-    }
-
-    function bats17() {
-        console.log(0/0);
-    }
-
-    function bats18() {
-        console.log(0/1);
-    }
-
-    function bats19() {
-        console.log(Infinity / Infinity);
-    }
-    
-
-    return {
-        showList,
-        bats1,
-        bats2,
-        bats3,
-        bats4,
-        bats5,
-        bats6,
-        bats7,
-        bats8,
-        bats9,
-        bats10,
-        bats11,
-        bats12,
-        bats13,
-        bats14,
-        bats15,
-        bats16,
-        bats17,
-        bats18,
-        bats19,
+odin.bats = (function () {
+  /**
+   * @author odin
+   * @class bats
+   * @description Show all list about the js
+   */
+  function showList() {
+    const table = {
+      bats1: 'typeof(NaN)',
+      bats2: '9999999999999999',
+      bats3: '0.1+0.2 == 0.3',
+      bats4: 'Math.max()',
+      bats5: 'Math.min()',
+      bats6: '[]+[]',
+      bats7: '[]+{}',
+      bats8: '{}+[]',
+      bats9: 'true+true+true===3',
+      bats10: 'true-true',
+      bats11: 'true===1',
+      bats12: '(!+[]+[]+![])',
+      bats13: '9+"1"',
+      bats14: '91-"1"',
+      bats15: '[]==0',
+      bats16: '"1"/0',
+      bats17: '0/0',
+      bats18: '0/1',
+      bats19: 'Infinity/Infinity',
     };
+    console.table(table);
+  }
 
+  function bats1() {
+    console.log(typeof NaN);
+  }
+
+  function bats2() {
+    console.log(9999999999999999);
+  }
+
+  function bats3() {
+    console.log(0.1 + 0.2 == 0.3);
+  }
+
+  function bats4() {
+    console.log(Math.max());
+  }
+
+  function bats5() {
+    console.log(Math.min());
+  }
+
+  function bats6() {
+    console.log([] + []);
+  }
+
+  function bats7() {
+    console.log([] + {});
+  }
+
+  function bats8() {
+    console.log({} + []);
+  }
+
+  function bats9() {
+    console.log(true + true + true === 3);
+  }
+
+  function bats10() {
+    console.log(true - true);
+  }
+
+  function bats11() {
+    console.log(true === 1);
+  }
+
+  function bats12() {
+    console.log(!+[] + [] + ![]);
+  }
+
+  function bats13() {
+    console.log(9 + '1');
+  }
+
+  function bats14() {
+    console.log(91 - '1');
+  }
+
+  function bats15() {
+    console.log([] == 0);
+  }
+
+  function bats16() {
+    console.log('1' / 0);
+  }
+
+  function bats17() {
+    console.log(0 / 0);
+  }
+
+  function bats18() {
+    console.log(0 / 1);
+  }
+
+  function bats19() {
+    console.log(Infinity / Infinity);
+  }
+
+  return {
+    showList,
+    bats1,
+    bats2,
+    bats3,
+    bats4,
+    bats5,
+    bats6,
+    bats7,
+    bats8,
+    bats9,
+    bats10,
+    bats11,
+    bats12,
+    bats13,
+    bats14,
+    bats15,
+    bats16,
+    bats17,
+    bats18,
+    bats19,
+  };
 })();
