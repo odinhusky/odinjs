@@ -75,6 +75,17 @@ odin.helper = (function () {
   /**
    * @author odin
    * @class helpers
+   * @description Check if number is odd.
+   * @param {Number} num The value we want to check.
+   * @returns {boolean} true or false
+   */
+  function isOdd(num) {
+    return num % 2 === 0 ? false : true;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
    * @description Get the raw type string of a value.
    * @param {any} val The value we want to check.
    * * @returns {string} [object Object]
@@ -665,6 +676,7 @@ odin.helper = (function () {
     isTrue,
     isFalse,
     isPrimitive,
+    isOdd,
     toRawType,
     isNumber,
     isNumber2,
@@ -1849,7 +1861,7 @@ odin.es6 = (function () {
   function getAttributeString(obj) {
     return odin.helper
       .getObjKeyNameToArray(obj)
-      .map((keyName) => ` ${keyName}="${obj[keyName]}"`)
+      .map(keyName => ` ${keyName}="${obj[keyName]}"`)
       .join('');
   }
 
