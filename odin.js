@@ -670,6 +670,25 @@ odin.helper = (function () {
     return i18nlanguage;
   }
 
+  /**
+   * @author odin
+   * @class helpers
+   * @description 轉換物件為字串
+   * @param {object} o 傳入的物件
+   * @example
+   * { page: '1', size: '2kg', key: undefined } => ?page=1&size=2kg'
+   * @returns {string}
+   */
+  function objectToQueryString(o) {
+    return o
+      ? Object.entries(o).reduce((str, [key, val], index) => {
+          const symbol = str.length === 0 ? '?' : '&';
+          str += typeof val === 'string' ? `${symbol}${key}=${val}` : '';
+          return str;
+        }, '')
+      : '';
+  }
+
   return {
     isUndef,
     isDef,
@@ -716,6 +735,7 @@ odin.helper = (function () {
     getObjKeyNameToArray,
     getObjValueToArray,
     detectLanguage,
+    objectToQueryString,
   };
 })();
 
