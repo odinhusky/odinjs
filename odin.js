@@ -214,7 +214,7 @@ odin.helper = (function () {
    * @description Checking if the jQuery is existing.
    * @returns {boolean} true or false
    */
-  function isjQeryExist(o) {
+  function isjQueryExist(o) {
     return jQuery ? true : false;
   }
 
@@ -236,6 +236,34 @@ odin.helper = (function () {
    */
   function isReactExist(o) {
     return __REACT_DEVTOOLS_APPEND_COMPONENT_STACK__ ? true : false;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Checking if this device is IOS
+   * @returns {boolean} true or false
+   */
+  function isIOS() {
+    if (navigator && navigator.userAgent.match(/(iPhone|iPad|iPod)/i)) {
+        return true;
+    } else {
+        return false;
+    }
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Checking if this device is Android
+   * @returns {boolean} true or false
+   */
+  function isAndroid() {
+    if (navigator && navigator.userAgent.match(/Android/i)) {
+        return true;
+    } else {
+        return false;
+    }
   }
 
   /**
@@ -704,9 +732,11 @@ odin.helper = (function () {
     isValidArrayIndex,
     isPromise,
     isMobile,
-    isjQeryExist,
+    isjQueryExist,
     isVueExist,
     isReactExist,
+    isIOS,
+    isAndroid,
     toString,
     toNumber,
     toNumberWithRaix,
