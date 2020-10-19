@@ -246,9 +246,9 @@ odin.helper = (function () {
    */
   function isIOS() {
     if (navigator && navigator.userAgent.match(/(iPhone|iPad|iPod)/i)) {
-        return true;
+      return true;
     } else {
-        return false;
+      return false;
     }
   }
 
@@ -260,9 +260,9 @@ odin.helper = (function () {
    */
   function isAndroid() {
     if (navigator && navigator.userAgent.match(/Android/i)) {
-        return true;
+      return true;
     } else {
-        return false;
+      return false;
     }
   }
 
@@ -977,6 +977,19 @@ odin.math = (function () {
     return parseFloat((+number).toPrecision(precision ? precision : 12));
   }
 
+  /**
+   * @author odin
+   * @class math
+   * @description 加總，傳入數字的序列獲釋陣列的序列，初始值為0
+   * @param  {numbers/arrays} arg - two or more numbers/arrays
+   * @returns {number} 加總好的數字
+   * @example prod(1, 2, 3, 4); // 24
+   * @example prod(...[1, 2, 3, 4]); // 24
+   */
+  function accumulator(...arr) {
+    return [...arr].reduce((acc, val) => acc * val, 0);
+  }
+
   return {
     priceWithCommas,
     priceWithoutCommas,
@@ -989,7 +1002,12 @@ odin.math = (function () {
     arrDouble,
     arrTriple,
     roundDecimal,
+    abs,
+    ceil,
+    round,
+    floor,
     dealFloatNumber,
+    accumulator,
   };
 })();
 
@@ -1911,7 +1929,7 @@ odin.es6 = (function () {
   function getAttributeString(obj) {
     return odin.helper
       .getObjKeyNameToArray(obj)
-      .map(keyName => ` ${keyName}="${obj[keyName]}"`)
+      .map((keyName) => ` ${keyName}="${obj[keyName]}"`)
       .join('');
   }
 
@@ -2182,6 +2200,65 @@ odin.fun = (function () {
 
   return {
     printStar,
+  };
+})();
+
+/**
+ * @author odin
+ * @description About color
+ */
+odin.color = (function () {
+  /**
+   * @author odin
+   * @class color
+   * @param {string} rgbStr -- color string
+   * @description Converts an rgb() color string to an object with the values of each color.
+   * @return {object} 'hsl(50,10%,10%)' => { hue: 50, saturation: 10, lightness: 10 }
+   */
+  function toRGBObject(rgbStr) {
+    const [red, green, blue] = rgbStr.match(/\d+/g).map(Number);
+    return { red, green, blue };
+  }
+
+  /**
+   * @author odin
+   * @class color
+   * @param {string} hslStr -- color string
+   * @description Converts an hsl() color string to an object with the values of each color.
+   * @return {object} 'hsl(50,10%,10%)' => { hue: 50, saturation: 10, lightness: 10 }
+   */
+  function toHSLObject(hslStr) {
+    const [hue, saturation, lightness] = hslStr.match(/\d+/g).map(Number);
+    return { hue, saturation, lightness };
+  }
+
+  /**
+   * @author odin
+   * @class color
+   * @param {string} hslStr -- color string
+   * @description Converts an hsl() color string to an array of values.
+   * @return {array} 'hsl(50,10%,10%)' => [50, 10, 10]
+   */
+  function toHSLArray(hslStr) {
+    return hslStr.match(/\d+/g).map(Number);
+  }
+
+  /**
+   * @author odin
+   * @class color
+   * @param {string} rgbStr -- color string
+   * @description Converts an rgb() color string to an array of values.
+   * @return {array} 'rgb(255,12,0)' => [255, 12, 0]
+   */
+  function toRGBArray(rgbStr) {
+    return rgbStr.match(/\d+/g).map(Number);
+  }
+
+  return {
+    toRGBObject,
+    toHSLObject,
+    toHSLArray,
+    toRGBArray,
   };
 })();
 
