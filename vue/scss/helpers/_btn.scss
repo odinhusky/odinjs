@@ -1,0 +1,134 @@
+.btn_gp {
+  @include w100;
+}
+
+.full_btn_sec {
+  @include w100;
+  margin-bottom: nth($rem5x, 2);
+}
+
+.center_btn_sec {
+  @include w100;
+  margin-bottom: nth($rem5x, 2);
+  @include flex-center;
+}
+
+.main_btn {
+  @include main-btn(false);
+
+  &:hover {
+    @include main-btn(true);
+  }
+}
+
+.gray_btn {
+  @include gray-btn(false);
+
+  &:hover {
+    @include gray-btn(true);
+  }
+}
+
+.s_btn {
+  @include s-btn(false);
+
+  &:hover {
+    @include s-btn(true);
+  }
+}
+
+.full_btn {
+  @include w100;
+}
+
+.half_btn {
+  width: calc(50% - 7px);
+}
+
+.sure_btn {
+  padding: nth($rem5x, 1) nth($rem5x, 8);
+}
+
+// =============== 新版 =====================
+.kart-btn {
+  border-radius: 50px;
+  padding: nth($px8x, 1);
+  user-select: none;
+  border: none;
+  box-shadow: none;
+  background: none;
+  color: $white;
+  text-align: center;
+  line-height: nth($dot5, 3);
+}
+
+.kart-rect-btn {
+  padding: nth($px8x, 1);
+  user-select: none;
+  border: none;
+  box-shadow: none;
+  background: none;
+  color: $white;
+  text-align: center;
+  line-height: nth($dot5, 3);
+}
+
+.kart-btn- {
+  border-radius: 50px;
+  padding: nth($px8x, 1);
+  user-select: none;
+  border: none;
+  box-shadow: none;
+  background: none;
+  color: $white;
+  text-align: center;
+  line-height: nth($dot5, 3);
+}
+
+.kart-main {
+  @include bg-color($main);
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $sub;
+  }
+}
+
+.kart-sub {
+  @include bg-color($sub);
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $main;
+  }
+}
+
+.kart-gray {
+  @include bg-color($grayBtnBg);
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $main;
+  }
+}
+
+.kart-bg-gray {
+  @include bg-color($grayBtnBg);
+
+  &:hover,
+  &:focus,
+  &:active {
+    @include bg-color($sub);
+  }
+}
+
+.trans-btn {
+  user-select: none;
+  border: none;
+  box-shadow: none;
+  background: none;
+  color: $black;
+}

@@ -1,0 +1,23 @@
+// select2 customize setting
+$vs-component-line-height: 2.5;
+
+.vs__dropdown-toggle {
+  padding: 6px 0;
+}
+
+.vs__selected-options {
+  flex-wrap: nowrap;
+}
+
+.vs__dropdown-toggle {
+  border: none;
+}
+
+.vs__search {
+  padding: 0;
+  margin: 0;
+}
+
+.vs__clear {
+  opacity: 0;
+}

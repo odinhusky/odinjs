@@ -1,0 +1,129 @@
+.list-unstyled {
+  @include list-unstyled;
+}
+
+.img-fluid {
+  @include img-fluid;
+}
+
+.d-flex {
+  @include d-flex;
+}
+
+.d-flex-wrap {
+  @include d-flex-wrap;
+}
+
+.flex-center {
+  @include flex-center;
+}
+
+.flex-center-right {
+  @include flex-center-right;
+}
+
+.flex-center-left {
+  @include flex-center-left;
+}
+
+.flex-justify-content-center {
+  @include flex-justify-content-center;
+}
+
+.flex-align-items-center {
+  @include flex-align-items-center;
+}
+
+.right-arrow {
+  @include right-arrow(true, 27px, 28px, 10px, 10px, 1.5px, $main);
+
+  &::after {
+    @include right-arrow(false, 27px, 28px, 10px, 10px, 1.5px, $main);
+  }
+}
+
+.position-relative {
+  @include position-relative;
+}
+
+// 共用設定 ===================================================================
+
+.root {
+  position: relative;
+  @include bg-color($bgColor);
+  padding-bottom: nth($rem5x, 10);
+}
+
+.margin-outer {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.main-10 {
+  display: block;
+  width: calc(100% / 12 * 10);
+  padding: 0 nth($px5x, 3);
+  padding-top: nth($rem5x, 6);
+  margin: 0 auto;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.mr-auto {
+  margin-right: auto;
+}
+
+.flex-line {
+  @include w100;
+  @include flex-center;
+}
+
+.page_title {
+  @include w100;
+  @include flex-center;
+  padding: nth($rem5x, 2);
+  font-size: nth($rem5x, 7);
+  line-height: nth($dot5, 3);
+  text-align: center;
+  color: $main;
+}
+
+.page-category-btn {
+  width: 285px;
+  padding: nth($px5x, 2) nth($px10x, 5);
+  color: $white;
+  position: relative;
+  margin-right: nth($px10x, 4);
+  border-radius: nth($px5x, 1);
+  font-size: nth($px8x, 2);
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.active.page-category-btn {
+  @include bg-color($sub);
+}
+
+.seperator {
+  @include w100;
+  @include bg-color($black);
+  height: 1px;
+}
+
+// RWD Start =============================
+
+@include rwd('medium') {
+  .page_title {
+    font-size: nth($rem5x, 5);
+  }
+}
+
+@include rwd('pad') {
+  .page_title {
+    font-size: nth($rem5x, 4);
+  }
+}
