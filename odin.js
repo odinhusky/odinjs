@@ -1738,10 +1738,67 @@ odin.proxy = (function () {
     });
   }
 
+  /**
+   * @author odin
+   * @class proxy
+   * @description 封裝 async/await 的包裝
+   * @param {promise} promise promise function
+   * @param {function} finallyFunc 結束之後一定會執行的 function
+   * @see https://cythilya.github.io/2020/07/22/cleaner-async-javascript-code-without-the-try-catch-mess/
+   * @example
+   *  async function detectALotOfThings() {
+        const [errorA, dataA] = await safeAwait(detectSomethingA(), sayHi);
+        const [errorB, dataB] = await safeAwait(detectSomethingB());
+
+        if(errorA) {
+          // detectSomethingA error Handling
+        }
+
+        if(errorB) {
+          // detectSomethingB error Handling
+        }
+      }
+   */
+  function safeAwait(promise, finallyFunc) {
+    const nativeExceptions = [
+      EvalError,
+      RangeError,
+      ReferenceError,
+      SyntaxError,
+      TypeError,
+      URIError,
+    ].filter((except) => typeof except === 'function');
+
+    function throwNative(error) {
+      for (const Exception of nativeExceptions) {
+        if (error instanceof Exception) throw error;
+      }
+    }
+
+    return promise
+      .then((data) => {
+        if (data instanceof Error) {
+          throwNative(data);
+          return [data];
+        }
+        return [undefined, data];
+      })
+      .catch((error) => {
+        throwNative(error);
+        return [error];
+      })
+      .finally(() => {
+        if (finallyFunc && typeof finallyFunc === 'function') {
+          finallyFunc();
+        }
+      });
+  }
+
   return {
     get,
     encodeFormData,
     post,
+    safeAwait,
   };
 })();
 
