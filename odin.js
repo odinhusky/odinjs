@@ -1013,6 +1013,28 @@ odin.math = (function () {
 
 /**
  * @author odin
+ * @description Array Related
+ */
+odin.array = (function () {
+  /**
+   * @author odin
+   * @class array
+   * @description 產生一個 從 0 開始的到 指定數字 陣列
+   * @param {number} num 給予指定的數字
+   * @returns {array} 數字陣列
+   * @example generateArrayToSpecificNumber(5) // [0, 1, 2, 3, 4, 5]
+   */
+  function generateArrayToSpecificNumber(num) {
+    return Array.from(new Array(num), (val, index) => index + 1);
+  }
+
+  return {
+    generateArrayToSpecificNumber
+  }
+})();
+
+/**
+ * @author odin
  * @description Helpers for URL.
  */
 
