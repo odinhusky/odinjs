@@ -2319,6 +2319,77 @@ odin.color = (function () {
   };
 })();
 
+odin.css = (function () {
+  /**
+   * @author odin
+   * @class css
+   * @param {css stylesheet} css -- css style
+   * @description Injects the given CSS code into the current document
+   * @example injectCSS('body { background-color: #000 }');
+   */
+  function injectCSS(css) {
+    let el = document.createElement('style');
+    el.type = 'text/css';
+    el.innerText = css;
+    document.head.appendChild(el);
+    return el;
+  }
+
+  /**
+   * @author odin
+   * @class css
+   * @param {Dom} el -- Specific Element Dom
+   * @param {string} className -- Specific className
+   * @description Checks if the given element has the specified class.
+   * @return {boolean} true | false
+   * @example hasClass(document.querySelector('p.special'), 'special'); // true
+   */
+  function hasClass(el, className) {
+    return el.classList.contains(className);
+  }
+
+  /**
+   * @author odin
+   * @class css
+   * @param {Dom} el -- All Elements have to be shown
+   * @description Show all the elements specified.
+   * @example show(...document.querySelectorAll('img'));
+   */
+  function show(...el) {
+    [...el].forEach(e => (e.style.display = '');
+  }
+
+  /**
+   * @author odin
+   * @class css
+   * @param {Dom} el -- All Elements have to be hide
+   * @description Hide all the elements specified.
+   * @example hide(document.querySelectorAll('img')); // Hides all <img> elements on the page
+   */
+  function hide(...el) {
+    [...el].forEach(e => (e.style.display = 'none');
+  }
+
+  /**
+   * @author odin
+   * @class css
+   * @param {Dom} el -- Specific Element want to be know the value of specific rule name
+   * @description Retrieves the value of a CSS rule for the specified element.
+   * @example getStyle(document.querySelector('p'), 'font-size'); // '16px'
+   */
+  function getStyle(el, ruleName) {
+    return getComputedStyle(el)[ruleName];
+  }
+
+  return {
+    injectCSS,
+    hasClass,
+    show,
+    hide,
+    getStyle
+  };
+})();
+
 /**
  * @author odin
  * @description Strange Js
