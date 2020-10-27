@@ -1816,11 +1816,44 @@ odin.proxy = (function () {
       });
   }
 
+  /**
+   * @author odin
+   * @class proxy
+   * @description Parses an HTTP Cookie header string, returning an object of all cookie name-value pairs.
+   * @param {string} str HTTP Cookie header string
+   * @return {object} // { foo: 'bar', equation: 'E=mc^2' }
+   * @example parseCookie('foo=bar; equation=E%3Dmc%5E2');
+   */
+  function parseCookie(str) {
+    return str
+            .split(';')
+            .map(v => v.split('='))
+            .reduce((acc, v) => {
+              acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+              return acc;
+            }, {});
+  }
+
+  /**
+   * @author odin
+   * @class proxy
+   * @description Parses an HTTP Cookie header string, returning an object of all cookie name-value pairs.
+   * @param {string} name cookie attr keyName
+   * @param {string} val cookie attr value
+   * @return {string} // 'foo=bar'
+   * @example serializeCookie('foo', 'bar');
+   */
+  function serializeCookie(name, val) {
+    return `${encodeURIComponent(name)}=${encodeURIComponent(val)}`;
+  }
+
   return {
     get,
     encodeFormData,
     post,
     safeAwait,
+    parseCookie,
+    serializeCookie,
   };
 })();
 
