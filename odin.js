@@ -1496,7 +1496,7 @@ odin.tools = (function () {
   /**
    * @author odin
    * @class tools
-   * @description Convert any time format to YYYY-MM-DD
+   * @description 複製文字到剪貼簿中
    * @param {string} id Dom id, this Dom contains the content that we want to copy to the clipboard
    * @param {string} msg after copy done, show the message
    */
@@ -1514,6 +1514,24 @@ odin.tools = (function () {
     document.execCommand('copy');
 
     alert(msg ? msg : 'copied!');
+  }
+
+  /**
+   * @author odin
+   * @class tools
+   * @description 複製文字到剪貼簿中
+   * @param {string} str 要複製到剪貼簿中的文字內容
+   */
+  function copyToClipboard(str) {
+    const el = document.createElement('textarea');
+    el.value = str;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
   }
 
   /**
@@ -1621,6 +1639,7 @@ odin.tools = (function () {
 
   return {
     copyTextToClipboard,
+    copyToClipboard,
     convertHTMLXSS,
     mphoneNormalized,
     fullToHalf,
@@ -1933,7 +1952,7 @@ odin.localStorage = (function () {
 odin.es6 = (function () {
   /**
    * @author odin
-   * @class url
+   * @class es6
    * @description Convert an Array - like object to a real Array.
    * @param {array / array-like list} list
    * @param {boolean} isNeedToCutTheSameValue Cut the same value among of the array or array like list
