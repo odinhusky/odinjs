@@ -717,6 +717,33 @@ odin.helper = (function () {
       : '';
   }
 
+  /**
+   * @author odin
+   * @class helpers
+   * @description JSON To CSV
+   * @param {JSON} arr 傳入的JSON
+   * @param {Array} columns
+   * @param {String} delimiter 分隔符號，預設是,
+   * @example
+   * JSONtoCSV(
+      [{ a: 1, b: 2 }, { a: 3, b: 4, c: 5 }, { a: 6 }, { b: 7 }],
+      ['a', 'b']
+    ); // 'a,b\n"1","2"\n"3","4"\n"6",""\n"","7"'
+   * @returns {CSV} // 'a,b\n"1","2"\n"3","4"\n"6",""\n"","7"'
+   */
+  function JSONtoCSV(arr, columns, delimiter = ',') {
+    return [
+      columns.join(delimiter),
+      ...arr.map(obj =>
+        columns.reduce(
+          (acc, key) =>
+            `${acc}${!acc.length ? '' : delimiter}"${!obj[key] ? '' : obj[key]}"`,
+          ''
+        )
+      ),
+    ].join('\n');
+  }
+
   return {
     isUndef,
     isDef,
@@ -1449,32 +1476,83 @@ odin.time = (function () {
   /**
    * @author odin
    * @class time
-   * @description Convert any time format to YYYY-MM-DD HH:MM:SS
+   * @description Convert any time format to YYYY-MM-DD
    * @param {timeFormat(TimeStamp / Date Object)} date
    * @param {string} seperator seperate the YYYY-MM-DD, eg: '-', '/', default '-'
-   * @returns {string} time string
+   * @returns {string} 2020/09/23 17:18:19
    */
-  function formatTime(date, seperator) {
-    var dates = new Date(date);
-    var year = dates.getFullYear();
-    var month = dates.getMonth() + 1;
-    var date = dates.getDate();
-    var hours = dates.getHours();
-    var minutes = dates.getMinutes();
-    var seconds = dates.getSeconds();
-    return (
-      year +
-      seperator +
-      month +
-      seperator +
-      date +
-      ' ' +
-      hours +
-      ':' +
-      minutes +
-      ':' +
-      seconds
-    );
+  function formatDateTime(date, seperator) {
+    let d = new Date(time),
+      sec = d.getSeconds(),
+      min = d.getMinutes(),
+      hour = d.getHours(),
+      month = d.getMonth() + 1,
+      day = d.getDate(),
+      year = d.getFullYear();
+  
+    if (day < 10) day = '0' + day;
+    if (hour < 10) hour = '0' + hour;
+    if (min < 10) min = '0' + min;
+  
+    return `${year}${seperator}${month}${seperator}${day} ${hour}:${min}:${sec}`;
+  }
+
+  /**
+   * @author odin
+   * @class time
+   * @description 設定這個 timer 的倒數
+   * @param {Number} seconds 要倒數的總秒數
+   * @param {Function} watch 每秒在倒數的時候要執行的function
+   * @param {Function} callback 全部倒數完要做的function
+   * @example init => let a = timer(180, watchFunc, callbackFunc);
+   * @example stop => a.stop();
+   * @example start => a.start();
+   * @example stop and execute the callback function => a.shutdown();
+   */
+  function timer(seconds, watch, callback) {
+    let countingSeconds = seconds;
+    let timer;
+
+    function start() {
+      timer = setInterval(function () {
+        // 倒數
+        countingSeconds -= 1;
+        // console.log('countingSeconds', countingSeconds);
+
+        // 監聽
+        if(watch instanceof Function) {
+          watch();
+        }
+        // 倒數結束
+        if(countingSeconds === 0) {
+          stop();
+
+          if(callback instanceof Function) {
+            callback();
+          }
+
+        }
+      }, 1000);
+    }
+
+    function stop() {
+      clearInterval(timer);
+    }
+
+    function shutdown(){
+      clearInterval(timer);
+      if(callback instanceof Function) {
+        callback();
+      }
+    }
+
+    start();
+
+    return {
+      start,
+      stop,
+      shutdown
+    }
   }
 
   return {
@@ -1482,8 +1560,9 @@ odin.time = (function () {
     getSpecificDateObj,
     getSpecificTimeStamp,
     formatDate,
+    formatDateTime,
     changeDate,
-    formatTime,
+    timer
   };
 })();
 
