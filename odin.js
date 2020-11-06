@@ -744,6 +744,36 @@ odin.helper = (function () {
     ].join('\n');
   }
 
+  /**
+   * @author odin
+   * @description 判斷目前是哪個 瀏覽器
+   * @return {string}
+   */
+  function judgeBrowser() {
+    /* eslint-disable */
+    let Sys = {};
+    let ua = navigator.userAgent.toLowerCase();
+    let s;
+    (s = ua.match(/msie ([\d.]+)/))
+      ? (Sys.ie = s[1])
+      : (s = ua.match(/firefox\/([\d.]+)/))
+      ? (Sys.firefox = s[1])
+      : (s = ua.match(/chrome\/([\d.]+)/))
+      ? (Sys.chrome = s[1])
+      : (s = ua.match(/opera.([\d.]+)/))
+      ? (Sys.opera = s[1])
+      : (s = ua.match(/version\/([\d.]+).*safari/))
+      ? (Sys.safari = s[1])
+      : 0;
+    // 測試是哪一種瀏覽器
+    if (Sys.ie) return 'IE';
+    if (Sys.firefox) return 'firefox';
+    if (Sys.chrome) return 'chrome';
+    if (Sys.opera) return 'opera';
+    if (Sys.safari) return 'safari';
+    /* eslint-enable */
+  }
+
   return {
     isUndef,
     isDef,
@@ -793,6 +823,7 @@ odin.helper = (function () {
     getObjValueToArray,
     detectLanguage,
     objectToQueryString,
+    judgeBrowser,
   };
 })();
 
@@ -1499,6 +1530,36 @@ odin.time = (function () {
 
   /**
    * @author odin
+   * @description 將傳入的秒數轉換成 XX:XX:XX (時分秒)
+   * @param {number} seconds 傳入的秒數
+   * @return {string} XX:XX:XX or XX:XX
+   */
+  function formatSeconds(seconds) {
+    let sec = parseInt(seconds); // 秒
+    let min = 0; // 分
+    let hour = 0; // 小時
+    let secString, minString, hourString;
+
+    if (sec > 60) {
+      min = parseInt(sec / 60);
+      sec = parseInt(sec % 60);
+      if (min > 60) {
+        hour = parseInt(min / 60);
+        min = parseInt(min % 60);
+      }
+    }
+
+    secString = parseInt(sec) < 10 ? '0' + parseInt(sec) : parseInt(sec);
+
+    minString = parseInt(min) < 10 ? '0' + parseInt(min) : parseInt(min);
+
+    hourString = parseInt(hour) > 0 ? parseInt(hour) + ':' : '';
+
+    return `${hourString}${minString}:${secString}`;
+  }
+
+  /**
+   * @author odin
    * @class time
    * @description 設定這個 timer 的倒數
    * @param {Number} seconds 要倒數的總秒數
@@ -1555,12 +1616,15 @@ odin.time = (function () {
     }
   }
 
+
+
   return {
     getNowDateObj,
     getSpecificDateObj,
     getSpecificTimeStamp,
     formatDate,
     formatDateTime,
+    formatSeconds,
     changeDate,
     timer
   };
@@ -1716,6 +1780,59 @@ odin.tools = (function () {
     return ele;
   }
 
+  /**
+   * @author odin
+   * @class tools
+   * @description 全螢幕顯示
+   * @param {Dom} Dom 需要被全螢幕顯示的Dom
+   */
+  function fullScreen() {
+    console.log("fullScreen!");
+
+    if (!checkFullScreen() && Dom.requestFullscreen) {
+        Dom.requestFullscreen();
+    } else if (!checkFullScreen() && Dom.mozRequestFullScreen) { /* Firefox */
+        Dom.mozRequestFullScreen();
+    } else if (!checkFullScreen() && Dom.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        Dom.webkitRequestFullscreen();
+    } else if (!checkFullScreen() && Dom.msRequestFullscreen) { /* IE/Edge */
+        Dom.msRequestFullscreen();
+    }
+
+    if (checkFullScreen() && !Dom.requestFullscreen) {
+        Dom.exitFullscreen();
+    } else if (checkFullScreen() && !Dom.mozRequestFullScreen) { /* Firefox */
+        Dom.mozCancelFullScreen();
+    } else if (checkFullScreen() && !Dom.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        Dom.webkitCancelFullScreen();
+    } else if (checkFullScreen() && !Dom.msRequestFullscreen) { /* IE/Edge */
+        Dom.msExitFullscreen();
+    }
+  }
+
+    /**
+   * @author odin
+   * @class tools
+   * @description 確認是否為全螢幕顯示
+   * @retunr boolean
+   */
+  function checkFullScreen() {
+    let isFull = false;
+
+    if (
+      (document.fullscreenEnabled ||
+        window.fullScreen ||
+        document.webkitIsFullScreen ||
+        document.msFullscreenEnabled) &&
+      window.innerWidth == screen.width &&
+      window.innerHeight == screen.height
+    ) {
+      isFull = true;
+    }
+
+    return isFull;
+  }
+
   return {
     copyTextToClipboard,
     copyToClipboard,
@@ -1723,6 +1840,8 @@ odin.tools = (function () {
     mphoneNormalized,
     fullToHalf,
     _setAttrs,
+    fullScreen,
+    checkFullScreen,
   };
 })();
 
