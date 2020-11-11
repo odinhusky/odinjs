@@ -1,0 +1,25 @@
+.pagination_body {
+  @include w100;
+  @include flex-center;
+  margin-top: nth($px10x, 5);
+}
+
+.page_btn {
+  @include bg-color(transparent);
+
+  padding: 0 nth($rem5x, 1);
+  color: map-get($pagination, default);
+
+  &:hover {
+    color: map-get($pagination, hover);
+  }
+}
+
+.page_btn.unactive {
+  cursor: default;
+  color: map-get($pagination, default);
+
+  &:hover {
+    color: map-get($pagination, default);
+  }
+}

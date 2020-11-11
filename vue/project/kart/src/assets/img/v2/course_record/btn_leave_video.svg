@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20.344" height="17.013" viewBox="0 0 20.344 17.013">
+  <g id="btn_leave_video" transform="translate(-256 -284.614)">
+    <circle id="Ellipse_35" data-name="Ellipse 35" cx="8" cy="8" r="8" transform="translate(256 285)" opacity="0"/>
+    <g id="btn_leave" transform="translate(261 284.614)">
+      <path id="Path_624" data-name="Path 624" d="M1169.236,754.477v-7.705h4.525v-3.6a.936.936,0,0,0-.936-.939H1165.2a.937.937,0,0,0-.937.939v15.133a.94.94,0,0,0,.939.939h7.623a.939.939,0,0,0,.939-.939v-3.831Z" transform="translate(-1164.26 -742.235)" fill="#fff"/>
+      <rect id="Rectangle_274" data-name="Rectangle 274" width="5.64" height="3.5" transform="translate(6.934 6.757)" fill="#fff"/>
+      <path id="Path_625" data-name="Path 625" d="M1181.994,750.3l-1.991,2.07-1.992,2.07v-8.278l1.992,2.07Z" transform="translate(-1166.65 -741.796)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

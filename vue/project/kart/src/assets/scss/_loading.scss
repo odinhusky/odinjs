@@ -1,0 +1,10 @@
+.app_loading {
+  @include position-fixed-full(900);
+  @include fullscreen;
+  @include bg-color(transparent);
+  @include flex-center;
+}
+
+.loading_img {
+  width: nth($px10x, 6);
+}

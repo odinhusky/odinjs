@@ -1,0 +1,41 @@
+.lightbox_root {
+  @include position-fixed-full(800);
+  @include fullscreen;
+  @include flex-center;
+  @include bg-color(transparent);
+
+  .lightbox_mask {
+    @include position-absolute-full(801);
+    @include fullscreen;
+    background-color: $black;
+    opacity: 0.5;
+  }
+
+  .lightbox_container {
+    @include min-WH(430px, 194px);
+    @include flex-center;
+    @include bg-color($white);
+
+    position: relative;
+    z-index: 802;
+    border-radius: nth($px5x, 3);
+    box-shadow: 0 nth($px, 3) nth($px, 6) 0 rgba(0, 0, 0, 0.16);
+    border: 2px solid $sub;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.7);
+    padding: nth($px10x, 3);
+    padding-top: nth($px10x, 5);
+  }
+}
+
+// RWD Start ============================
+@include rwd('mobile') {
+  .lightbox_root {
+    padding: nth($px10x, 3);
+
+    .lightbox_container {
+      @include clear-min-max('min-W');
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,314 @@
+.root_course_record {
+  @include w100;
+  @include flex-align-items-center;
+
+  height: calc(100vh - 3rem);
+  padding-bottom: 0;
+}
+
+.course_record_section {
+  @include wh100;
+  @include d-flex;
+  @include bg-color($courseRecordBgColor);
+
+  flex: 1 1 auto;
+}
+
+.videogroup {
+  @include w100;
+  overflow: hidden;
+  position: relative;
+}
+
+.videogroup__remote {
+  @include d-flex-wrap;
+  @include wh100;
+  padding: 0;
+  background: radial-gradient(circle, transparent, rgba(255, 255, 255, 0.2));
+}
+
+.videogroup__videorecord {
+  @include position-absolute-left-bottom-0(9);
+  @include wh100;
+  @include flex-justify-content-center;
+  object-fit: contain;
+}
+
+// videojs setting
+.video-js {
+  @include h100;
+  height: calc(100% - 55px);
+}
+
+.videogroup__player {
+  @include position-absolute-left-bottom-0(9);
+  @include w100;
+  @include d-flex;
+
+  height: auto;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.47)
+  );
+  justify-content: space-between;
+}
+
+.progress {
+  @include d-flex;
+  height: 1rem;
+  overflow: hidden;
+  font-size: 0.75rem;
+  background-color: $gray-200;
+  border-radius: 0.25rem;
+}
+
+.progress-bar {
+  @include d-flex;
+  @include bg-color($sub);
+  @include flex-direction('|');
+  @include bg-color($sub);
+  -ms-flex-pack: center;
+  justify-content: center;
+
+  overflow: hidden;
+  color: $white;
+  text-align: center;
+  white-space: nowrap;
+  transition: width 0.6s ease;
+  position: relative;
+  z-index: 0;
+}
+
+.videogroup__progressbarcontainer {
+  @include w100;
+  @include position-absolute-left-top-0(10);
+
+  height: 10px;
+  transform: translateY(-50%);
+  border-radius: 0;
+}
+
+.videogroup__playercontainer1 {
+  @include flex-align-items-center;
+  padding-left: nth($px10x, 2);
+
+  .play {
+    .play_video_img {
+      display: inline-block;
+    }
+
+    .pause_video_img {
+      display: none;
+    }
+  }
+
+  .pause {
+    .play_video_img {
+      display: none;
+    }
+
+    .pause_video_img {
+      display: inline-block;
+    }
+  }
+
+  .videogroup__volumemutebtn {
+    .not__muted__img {
+      display: inline-block;
+    }
+
+    .muted__img {
+      display: none;
+    }
+
+    &.muted {
+      .not__muted__img {
+        display: none;
+      }
+
+      .muted__img {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.video_control_btn {
+  padding: nth($px10x, 1) 0 0 0;
+  margin-right: nth($px5x, 3);
+}
+
+.videogroup__durationtext {
+  display: inline-block;
+  margin-top: nth($px, 6);
+  color: $white;
+}
+
+.classgroup__title {
+  @include bg-color($courseRecordListTitleBgColor);
+  flex: 0 0 nth($px10x, 3);
+  padding: 0.8rem;
+}
+
+.classgroup__titletext {
+  font-size: nth($px8x, 2);
+  color: $main;
+}
+
+.classgroup__name {
+  @include bg-color($courseRecordListNameBgColor);
+  flex: 0 0 nth($px10x, 3);
+  padding: 0.8rem;
+}
+
+.course_record_list_section {
+  @include h100;
+  @include d-flex;
+  @include flex-direction('|');
+
+  width: 300px;
+  flex: 0 0 300px;
+}
+
+.classgroup__content {
+  @include bg-color($white);
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: nth($rem5x, 1);
+}
+
+.list-group-item:first-child {
+  border-top-left-radius: nth($rem25x, 1);
+  border-top-right-radius: nth($rem25x, 1);
+}
+
+.classgroup__cardbodyitemimg {
+  width: nth($px8x, 3);
+  margin-right: nth($px, 8);
+}
+
+.list-group-item {
+  @include bg-color($white);
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+
+  &:last-child {
+    border: none;
+  }
+}
+
+.classgroup__cardbodyitem {
+  position: relative;
+  @include flex-align-items-center;
+  justify-content: space-between;
+  padding: nth($rem25x, 1) nth($rem25x, 6);
+  border-style: none none solid;
+  cursor: pointer;
+}
+
+.classgroup__main {
+  color: $main;
+  font-size: nth($px6x, 3);
+}
+
+.classgroup__sub {
+  color: $subTextColor;
+  font-size: 14px;
+}
+
+.videogroup__volumebar {
+  width: nth($px10x, 6);
+  height: nth($px, 3);
+  position: relative;
+  top: 8%;
+  transform: translateY(-50%);
+  margin-right: nth($px5x, 3);
+}
+
+.classgroup__cardbodyitemname {
+  @include w100;
+}
+
+.zoomout__img {
+  display: none;
+}
+
+.zoom {
+  .zoom__img {
+    display: none;
+  }
+
+  .zoomout__img {
+    display: block;
+  }
+}
+
+.video_record_lightbox {
+  .lightbox_container {
+    @include flex-direction('|');
+  }
+
+  .btn_group {
+    margin-top: nth($px10x, 3);
+  }
+
+  .kart-btn {
+    width: calc(50% - 15px);
+    margin-right: nth($px10x, 3);
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.video_week_lightbox {
+  .lightbox_container {
+    @include flex-direction('|');
+  }
+
+  .btn_group {
+    justify-content: center;
+    margin-top: nth($px10x, 3);
+  }
+}
+
+.lightbox_title {
+  font-size: 1.4rem;
+  margin-bottom: nth($px10x, 2);
+}
+
+.lightbox_controll {
+  @include w100;
+  @include flex-center;
+}
+
+.video_week_checkbox {
+  margin-right: nth($px8x, 1);
+}
+
+.video_week_label {
+  font-size: 1.2rem;
+}
+
+// RWD Start ======================================
+
+@include rwd('medium') {
+  .root_course_record {
+    @include flex-direction('|');
+
+    height: calc(200vh - 3rem);
+  }
+
+  .course_record_section {
+    height: calc(100vh - 3rem);
+  }
+
+  .course_record_list_section {
+    @include w100;
+    flex: 1 1 auto;
+  }
+}

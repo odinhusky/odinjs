@@ -1,0 +1,290 @@
+.login_root {
+  @include w100;
+  @include flex-center;
+  @include flex-direction('|');
+  @include bg-color(transparent);
+}
+
+.login_title {
+  text-align: center;
+  margin-bottom: nth($px8x, 1);
+  color: $black;
+  font-weight: 500;
+  font-size: 23px;
+  opacity: 0.8;
+}
+
+.login_sub_title {
+  color: $loginSubTitleColor;
+  font-size: nth($px8x, 2);
+  margin-bottom: nth($px10x, 2);
+
+  span {
+    color: $loginSubTitleColor;
+    font-size: nth($px8x, 2);
+  }
+
+  &.bigger,
+  &.bigger span {
+    font-size: 18px;
+  }
+}
+
+.verify_step2 .login_sub_title {
+  @include flex-align-items-center;
+  @include w100;
+
+  .edit_phone_number {
+    margin-left: auto;
+    width: 41px;
+    font-size: 12px;
+    padding: nth($px, 2) nth($px, 4);
+    color: $main;
+    border: 1px solid $main;
+    border-radius: nth($px, 6);
+    text-align: center;
+  }
+}
+
+.input_group {
+  @include w100;
+  @include flex-center;
+  @include flex-direction('|');
+  position: relative;
+
+  .input_control {
+    @include w100;
+    padding: nth($px10x, 2) 0;
+    border-bottom: 1px solid $inputGroupUnderLineColor;
+
+    &.error {
+      border-color: $errorColor;
+    }
+
+    &.disabled {
+      position: relative;
+
+      &::before {
+        @include position-absolute-full(1);
+        @include wh100;
+        @include bg-color($black);
+
+        content: '';
+        display: block;
+        opacity: 0.1;
+      }
+    }
+
+    // Vue-Select Setting
+    .v-select {
+      @include position-absolute-left-top(30px, 8px, 1);
+      width: nth($px10x, 9);
+      border: 1px solid $vueSelect2BorderColor;
+      border-radius: nth($px, 6);
+    }
+
+    &.vselect2 {
+      @include flex-align-items-center;
+      position: relative;
+
+      .login_input {
+        padding-left: 100px;
+      }
+    }
+  }
+
+  .verify_input_control {
+    @include w100;
+    @include flex-align-items-center;
+    padding-bottom: nth($px10x, 1);
+    margin-top: 60px;
+    border-bottom: 1px solid $vueSelect2BorderColor;
+
+    &.error {
+      border-color: $errorColor;
+    }
+
+    // Vue-Select Setting
+    .v-select {
+      width: 105px;
+      border: 1px solid $vueSelect2BorderColor;
+      border-radius: nth($px, 6);
+      margin-right: auto;
+    }
+
+    .phonenumber {
+      width: 145px;
+      height: 27px;
+    }
+  }
+
+  .checkbox_control {
+    @include flex-center;
+    padding: nth($px10x, 2) 0;
+  }
+
+  .input_icon {
+    width: nth($px8x, 2);
+    margin-right: nth($px8x, 2);
+  }
+
+  .login_input {
+    width: calc(100% - 32px);
+    border: none;
+    background: none;
+    color: $black;
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .disabled .login_input {
+    color: $vueSelect2BorderColor;
+  }
+
+  .login_select {
+    width: 77px;
+    border: 1px solid $vueSelect2BorderColor;
+    border-radius: nth($px, 3);
+    padding-left: nth($px10x, 2);
+  }
+
+  .en_gender_select {
+    width: 110px;
+  }
+}
+
+.forget_btn {
+  font-size: nth($px8x, 2);
+  color: $main;
+  padding: 0;
+  padding-bottom: nth($px, 3);
+  border-bottom: 1px solid $main;
+}
+
+.btn_group {
+  @include w100;
+  @include d-flex-wrap;
+  margin-top: nth($px10x, 6);
+
+  .login_btn {
+    margin-bottom: nth($px10x, 2);
+  }
+
+  .teacher_login_btn {
+    color: $main;
+    font-size: nth($px8x, 2);
+    padding: 0;
+    margin: 0 auto;
+    margin-top: nth($px10x, 2);
+
+    .right-arrow::after {
+      border-color: $main;
+    }
+  }
+}
+
+.verify_phone_root {
+  @include max-W(275px);
+  margin: 0 auto;
+}
+
+.step_progress {
+  @include flex-align-items-center;
+  margin-top: nth($px10x, 4);
+
+  .step {
+    display: block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: $main;
+    opacity: 0.4;
+    margin-right: 28px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &.active1 .step1 {
+    opacity: 1;
+  }
+
+  &.active2 .step1,
+  &.active2 .step2 {
+    opacity: 1;
+  }
+  &.active3 .step1,
+  &.active3 .step2,
+  &.active3 .step3 {
+    opacity: 1;
+  }
+}
+
+.verify_links {
+  @include w100;
+  @include flex-align-items-center;
+  margin-top: nth($px10x, 2);
+
+  .verify_link {
+    display: inline-block;
+    font-size: 14px;
+    color: $main;
+  }
+
+  .disabled {
+    cursor: default;
+    color: $vueSelect2BorderColor;
+    position: relative;
+
+    &::before {
+      @include bg-color('transparent');
+      @include wh100;
+      @include position-absolute-left-top-0(1);
+      content: '';
+      display: block;
+    }
+  }
+
+  .re_get_verify_code {
+    margin-right: auto;
+  }
+}
+
+.signup_root {
+  .tologin {
+    margin-top: nth($px10x, 2);
+    margin-bottom: nth($px10x, 1);
+  }
+}
+
+.label_login_remember_me {
+  font-size: nth($px8x, 2);
+}
+
+// RWD Start ======================================
+
+@include rwd('mobile') {
+  .login_title {
+    font-size: nth($px10x, 2);
+  }
+
+  .verify_phone_fail_root .login_title {
+    font-size: nth($px8x, 2);
+  }
+
+  .login_sub_title.bigger,
+  .login_sub_title.bigger span {
+    font-size: 14px;
+  }
+
+  .verify_links .verify_link {
+    font-size: 12px;
+  }
+
+  .input_group .verify_input_control .phonenumber {
+    width: 100px;
+  }
+}

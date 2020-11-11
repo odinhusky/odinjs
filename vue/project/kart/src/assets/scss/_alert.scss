@@ -1,0 +1,105 @@
+.alert_body {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9000;
+}
+
+.alert_mask {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9001;
+  background-color: $black;
+  opacity: 0.2;
+}
+
+.alert_box {
+  @include position-absolute-left-top-center(9002);
+  @include flex-center;
+  @include flex-direction('|');
+  @include box-shadow();
+  @include bg-color($white);
+
+  max-width: 95vw;
+  max-height: 90vh;
+  min-width: 430px;
+  min-height: 278px;
+  border-radius: nth($px5x, 3);
+  border: solid nth($px, 2) $sub;
+  overflow-y: auto;
+  padding: nth($rem5x, 6);
+}
+
+.text_part {
+  @include w100;
+  text-align: center;
+  margin: nth($px8x, 2) 0;
+}
+
+.alert_title {
+  opacity: nth($dot1, 7);
+  font-size: nth($px6x, 4);
+  font-weight: nth($num100, 5);
+  line-height: nth($dot5, 3);
+  color: $black;
+  margin: 0;
+}
+
+.alert_subtitle {
+  opacity: nth($dot1, 7);
+  font-size: nth($px6x, 3);
+  font-weight: nth($num100, 5);
+  line-height: nth($dot5, 2);
+  color: $main;
+}
+
+.close_position {
+  @include position-absolute-right-top(nth($px6x, 3), nth($px6x, 3), 9004);
+}
+
+.close_btn {
+  width: nth($px5x, 5);
+  height: nth($px5x, 5);
+  position: absolute;
+  cursor: pointer;
+  background-color: transparent;
+  @include position-absolute-right-top(nth($px6x, 3), nth($px6x, 3), 9005);
+}
+
+.close_btn::before {
+  content: '';
+  display: block;
+  @include w100;
+  height: nth($px, 4);
+  background-color: $closeBtnColor;
+  @include position-absolute-left-top(0, nth($percent5, 9), 1);
+  transform: rotate(45deg);
+}
+
+.close_btn::after {
+  content: '';
+  display: block;
+  @include w100;
+  height: nth($px, 4);
+  background-color: $closeBtnColor;
+  @include position-absolute-left-top(0, nth($percent5, 9), 1);
+  transform: rotate(-45deg);
+}
+
+// RWD Start ======================================
+
+@include rwd('mobile') {
+  .alert_box {
+    max-width: 90vw;
+    max-height: 90vh;
+    min-width: 1px;
+    min-height: 1px;
+    background-color: $white;
+    padding: 29px 23px 26px 23px;
+  }
+}

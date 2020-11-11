@@ -1,0 +1,301 @@
+.browse_title {
+  margin-bottom: nth($rem5x, 2);
+}
+
+.browse_btn_group {
+  @include w100;
+  @include flex-center;
+}
+
+.browse_btn {
+  @include notification-text;
+  margin: 0 nth($rem5x, 1);
+  padding: nth($rem5x, 1) nth($rem5x, 6);
+  border: none;
+  border-radius: nth($px5x, 1);
+  border-color: $gray-300 $gray-300 $white;
+  color: $white;
+  background-color: #bbb9b9;
+
+  &.active {
+    background-color: #32bcc9;
+  }
+}
+
+.browse_courses {
+  margin-top: nth($rem5x, 6);
+  @include d-flex-wrap;
+}
+
+.browse_course_outer {
+  width: calc(100% / 3);
+  padding: 0 nth($px5x, 3);
+  margin-bottom: 1.5rem;
+}
+
+.browse_course_unit {
+  @include w100;
+
+  box-shadow: 0 nth($px, 3) nth($px, 6) nth($px, 2) rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  background-clip: border-box;
+  border-radius: 0;
+}
+
+.course_detail {
+  @include w100;
+  height: 400px;
+  overflow-y: auto;
+  min-height: 1px;
+  padding: nth($rem25x, 5);
+}
+
+.course_detail_title {
+  @include w100;
+  display: block;
+  margin-bottom: nth($rem25x, 3);
+  font-size: nth($rem25x, 6);
+  font-weight: nth($num100, 5);
+  line-height: 1.2;
+}
+
+.course_detail_text {
+  @include w100;
+}
+
+.text_set {
+  @include w100;
+  @include d-flex;
+}
+
+.text_set_title {
+  width: nth($px10x, 4);
+  color: $subTextColor;
+  font-size: nth($rem5x, 2);
+}
+
+.text_set_divider {
+  color: $subTextColor;
+  margin: 0 nth($rem5x, 1);
+}
+
+.text_set_content {
+  font-size: 1.2rem;
+}
+
+.text_set_main {
+  font-size: nth($percent5, 20);
+  color: $subTextColor;
+  line-height: nth($dot5, 3);
+}
+
+.text_set_sub {
+  font-size: nth($percent5, 16);
+  color: $subTextColor;
+  line-height: nth($dot5, 3);
+}
+
+.text_set_seperator {
+  margin: nth($rem5x, 1) 0;
+  border-top: 1px solid #ccc;
+}
+
+.text_set_container {
+  width: calc(100% - 60px);
+}
+
+.en {
+  line-height: nth($dot5, 3);
+
+  .text_set_title {
+    width: nth($px10x, 8);
+  }
+
+  .text_set_container {
+    width: calc(100% - 100px);
+  }
+}
+
+.text_set_content {
+  @include w100;
+}
+
+.text_set_time {
+  width: calc(100% - 30px);
+  @include notification-text;
+  color: $subTextColor;
+  // padding-right: nth($rem5x, 6);
+}
+
+.text_set_status {
+  @include flex-center;
+}
+
+.add_wish_btn {
+  padding: 0 nth($px, 6);
+  background-color: transparent;
+}
+
+.add_wish_img {
+  display: block;
+  width: 18px;
+  padding-top: 1px;
+
+  &.remove {
+    display: none;
+  }
+}
+
+.selected {
+  .add_wish_img.add {
+    display: none;
+  }
+
+  .add_wish_img.remove {
+    display: block;
+  }
+}
+
+.had_signed_up {
+  display: block;
+  width: nth($px10x, 6);
+  font-size: nth($rem5x, 1);
+  text-align: center;
+  padding: nth($px, 5);
+  border-radius: nth($px, 5);
+  color: $white;
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.course_detail_btn {
+  @include w100;
+  @include flex-center;
+  @include bg-color($sub);
+
+  color: $white;
+
+  &:hover {
+    color: $main;
+  }
+}
+
+// 課程詳情燈箱
+.course_detail_alert {
+  width: 520px;
+}
+
+.course_alert_cotent {
+  @include w100;
+}
+
+.course_alert_title {
+  @include flex-center;
+  @include w100;
+  font-size: nth($rem5x, 3);
+}
+
+.course_alert_seperator {
+  @include w100;
+  margin: nth($rem5x, 2) 0;
+  border-top: 1px solid #ccc;
+}
+
+.course_alert_detail {
+  @include w100;
+  height: 300px;
+  overflow-y: auto;
+}
+
+.course_alert_detail_unit {
+  @include d-flex;
+  @include w100;
+  margin-bottom: nth($rem5x, 4);
+}
+
+.course_alert_detail_unit_title {
+  font-weight: normal;
+  font-size: 1.2rem;
+}
+
+.course_alert_detail_unit_divider {
+  margin: 0 nth($rem5x, 1);
+}
+
+.course_alert_detail_unit_content {
+  width: calc(100% - 110px);
+  color: $subTextColor;
+  font-size: 1.2rem;
+}
+
+.course_alert_detail_unit_time {
+  display: block;
+  @include w100;
+}
+
+.course_alert_btn_container {
+  @include w100;
+  @include flex-center;
+
+  .course_alert_close {
+    width: nth($percent5, 12);
+    margin-top: nth($rem5x, 4);
+    line-height: nth($dot5, 3);
+    font-size: nth($rem5x, 3);
+  }
+}
+
+.fix_btns {
+  @include position-fixed-right-bottom-0(2);
+  @include d-flex;
+  @include flex-direction('|');
+
+  padding: nth($rem5x, 4);
+
+  .fix_btn {
+    width: 100px;
+    margin-top: nth($rem5x, 2);
+    padding: 0;
+    background-color: transparent;
+  }
+}
+
+.sale_ad_alert {
+  width: 960px;
+  padding: nth($rem5x, 2);
+}
+
+.lessions_unit {
+  @include w100;
+  padding: nth($rem5x, 2);
+  border: 1px solid $main;
+  margin: nth($rem5x, 2) 0;
+}
+// RWD Start =============================
+
+@include rwd('large') {
+  .course_detail_alert {
+    padding: nth($rem5x, 2);
+    width: 90vw;
+  }
+
+  .sale_ad_alert {
+    padding: nth($rem5x, 1);
+  }
+
+  .browse_course_outer {
+    width: 50%;
+  }
+}
+
+@include rwd('pad') {
+  .fix_btns .fix_btn {
+    width: nth($px10x, 7);
+  }
+
+  .browse_course_outer {
+    width: 100%;
+  }
+}

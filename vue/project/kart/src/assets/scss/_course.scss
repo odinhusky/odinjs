@@ -1,0 +1,146 @@
+.course_container_body {
+  width: nth($percent5, 20);
+}
+
+.course_title {
+  width: nth($percent5, 20);
+  margin-bottom: nth($rem5x, 2);
+  @include d-flex;
+  align-items: center;
+}
+
+.course_title_img {
+  height: nth($rem5x, 6);
+  margin-right: nth($rem5x, 2);
+}
+
+.title_text span {
+  font-size: nth($rem5x, 3);
+  color: $sub;
+}
+
+.tabs_list {
+  @include w100;
+  @include flex-align-items-center;
+}
+
+// .active.course_tab::before {
+//   content: '';
+//   display: block;
+//   width: nth($percent5, 20);
+//   height: nth($px, 3);
+//   background-color: $courseTabBtnActiveColor;
+//   @include position-absolute-left-bottom(0, -1px, 1);
+// }
+
+.active.course_tab {
+  @include bg-color($sub);
+}
+
+.course_tab {
+  width: 285px;
+  padding: nth($px5x, 2) nth($px10x, 5);
+  color: $white;
+  position: relative;
+  @include bg-color($grayBtnBg);
+  margin-right: nth($px10x, 4);
+  border-radius: nth($px5x, 1);
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    @include bg-color($sub);
+  }
+}
+
+.course_content {
+  width: nth($percent5, 20);
+  margin-top: nth($rem5x, 4);
+}
+
+.course_content_box {
+  @include d-flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.course_nocourse {
+  width: nth($percent5, 20);
+  @include flex-center;
+  @include flex-direction('|');
+}
+
+.course_next_container {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+  margin-bottom: nth($rem5x, 3);
+  padding-right: nth($px5x, 3);
+  padding-left: nth($px5x, 3);
+  cursor: pointer;
+}
+
+.coursenext_time {
+  display: block;
+  margin-bottom: nth($rem5x, 1);
+  color: $main;
+}
+
+.course_next_img {
+  border-radius: 0;
+  padding-bottom: 56%;
+  background-size: cover;
+  background-position: center;
+}
+
+.course_next_body {
+  padding: nth($rem5x, 1) 0;
+  min-height: 1px;
+}
+
+.course_next_title {
+  margin: 0 0 nth($rem25x, 1);
+  color: $sub;
+  font-weight: nth($num100, 5);
+  line-height: 1.2;
+  font-size: nth($rem25x, 5);
+}
+
+.course_next_teacher_name small {
+  @include notification-text;
+  font-size: 80%;
+  color: $gray-600;
+}
+
+// RWD Start =============================
+@include rwd('large') {
+  .course_next_container {
+    flex: 0 0 nth($percent5, 10);
+    max-width: nth($percent5, 10);
+  }
+}
+
+@include rwd('pad') {
+  .course_next_container {
+    flex: 0 0 nth($percent5, 20);
+    max-width: nth($percent5, 20);
+  }
+}
+
+@include rwd('mobile') {
+  .tabs_list {
+    // @include flex-direction('|');
+  }
+  .course_tab {
+    width: calc(50% - 15px);
+    padding: nth($px5x, 2) nth($px10x, 1);
+    margin-right: nth($px10x, 3);
+    font-size: 14px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

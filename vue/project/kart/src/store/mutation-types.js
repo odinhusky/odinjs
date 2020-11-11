@@ -1,0 +1,18 @@
+// common
+export const UPDATE_I18N_LANGUAGE = 'UPDATE_I18N_LANGUAGE';
+
+// AppIndex
+export const FETCH_BANNER_IMG_PATH = 'FETCH_BANNER_IMG_PATH';
+
+// AppLoginForm
+export const UPDATE_LOGIN_DETAIL = 'UPDATE_LOGIN_DETAIL';
+
+// TheNav
+export const UPDATE_LOGOUT_DETAIL = 'UPDATE_LOGOUT_DETAIL';
+export const FETCH_NOTIFICATION = 'FETCH_NOTIFICATION';
+
+// AppCourse
+export const FETCH_COURSES = 'FETCH_COURSES';
+
+//AppLogin
+export const FETCH_COUNTRYCODE_LIST = 'FETCH_COUNTRYCODE_LIST';

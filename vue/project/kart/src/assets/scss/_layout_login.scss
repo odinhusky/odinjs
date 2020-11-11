@@ -1,0 +1,85 @@
+.root_layout_login {
+  @include fullscreen;
+  height: 110vh;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+  &.adjust_height {
+    height: auto;
+    padding-bottom: nth($px10x, 6);
+  }
+
+  &::before {
+    content: '';
+    @include wh100;
+    @include position-absolute-full(0);
+    @include bg-color($main);
+    opacity: 0.7;
+  }
+}
+
+.root_login_nav {
+  @include w100;
+  @include bg-color(transparent);
+  padding: nth($px10x, 6);
+  position: relative;
+  z-index: 2;
+
+  .login_nav {
+    display: block;
+    @include w100;
+
+    .login_nav_logo_link {
+      display: block;
+      width: 175px;
+    }
+  }
+}
+
+.layout_login_content {
+  @include max-W(544px);
+  @include min-H(719px);
+  @include flex-center;
+  position: relative;
+  z-index: 2;
+  background-color: $white;
+  border-radius: nth($px10x, 1);
+  box-shadow: 0 nth($px5x, 5) nth($px10x, 2) 0 rgba(0, 0, 0, 0.22);
+  padding: 30px;
+  margin: 0 auto;
+}
+
+.layout_login_limit {
+  @include max-W(400px);
+  @include w100;
+  margin: 0 auto;
+}
+
+// RWD Start =============================
+@include rwd('pad') {
+  .layout_login_content {
+    @include clear-min-max('all');
+    width: calc(100% - 60px);
+    min-height: 70vh;
+  }
+
+  .root_login_nav {
+    position: relative;
+    padding: 12vw;
+  }
+
+  .root_login_nav .login_nav {
+    @include flex-center;
+  }
+}
+
+@include rwd('mobile') {
+  .root_layout_login {
+    @include bg-color($main);
+    height: auto;
+    padding-bottom: nth($px10x, 3);
+  }
+}

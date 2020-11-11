@@ -1,0 +1,206 @@
+.main_section {
+  margin-top: nth($px10x, 6);
+}
+
+// 未報名的頁面內容
+.unenroll_seciton {
+  @include w100;
+}
+
+.enroll_courses_content {
+  @include w100;
+  @include d-flex-wrap;
+}
+
+.enroll_course_unit {
+  @include bg-color($white);
+  width: calc(33.33333% - 33.33333px);
+  margin-right: nth($px10x, 5);
+  margin-bottom: nth($px10x, 5);
+  padding: nth($px5x, 3);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+
+  &:nth-child(3n + 3) {
+    margin-right: 0;
+  }
+}
+
+.enroll_course_title {
+  font-size: nth($px6x, 3);
+  color: $main;
+  font-weight: bold;
+  margin-bottom: nth($px6x, 2);
+}
+
+.enrolled_course_teacher_name {
+  font-size: nth($px8x, 2);
+  color: $subTextColor;
+}
+
+.enroll_course_seperator {
+  @include bg-color($gray-200);
+  margin: nth($px6x, 2) 0;
+}
+
+.enroll_course_lessions {
+  @include max-H(150px);
+  @include min-H(150px);
+  overflow-y: auto;
+}
+
+.enroll_course_lession_unit {
+  @include flex-align-items-center;
+  margin-bottom: nth($px5x, 3);
+
+  .detail_part {
+    width: calc(100% - 40px);
+    margin-right: auto;
+
+    .detail_span {
+      display: block;
+      color: $subTextColor;
+      font-size: nth($px8x, 2);
+    }
+  }
+
+  .remove_cart_btn {
+    width: nth($px10x, 4);
+    padding: 0 nth($px5x, 2);
+
+    .remove_cart_img {
+      width: 100%;
+    }
+  }
+
+  .cancel_enrolled {
+    width: 65px;
+    padding: nth($px, 3) nth($px, 5);
+    font-size: nth($px6x, 2);
+  }
+}
+
+.remaining_section {
+  @include flex-align-items-center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.detail_container {
+  width: 33.33333%;
+  padding: nth($px5x, 3);
+}
+
+.detail_line {
+  @include w100;
+  font-size: nth($px8x, 2);
+  color: $myAccountLabelColor;
+}
+
+.confirm_to_enroll {
+  width: 185px;
+  margin-top: nth($px8x, 3);
+}
+
+.enroll_confrim_text {
+  @include w100;
+
+  font-size: nth($px5x, 4);
+  color: $gray-700;
+  display: block;
+  margin-bottom: nth($px5x, 3);
+  text-align: center;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.enroll_confrim_btn_group {
+  @include w100;
+  @include flex-center;
+  margin-top: nth($px10x, 3);
+
+  .cancel_enroll {
+    @include max-W(150px);
+    @include min-W(130px);
+    margin-right: nth($px5x, 3);
+  }
+
+  .enroll_cart_lessions {
+    @include max-W(150px);
+    @include min-W(130px);
+  }
+}
+
+.minus_points_h6 {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+// RWD Start ============================
+@include rwd('medium') {
+  .enroll_course_unit {
+    width: calc(50% - 15px);
+    margin-right: nth($px10x, 3);
+    margin-bottom: nth($px10x, 3);
+
+    &:nth-child(3n + 3) {
+      margin-right: nth($px10x, 3);
+    }
+
+    &:nth-child(2n + 2) {
+      margin-right: 0;
+    }
+  }
+}
+
+@include rwd('mobile') {
+  .enroll_course_unit {
+    @include w100;
+    margin-right: 0;
+    margin-bottom: nth($px5x, 3);
+
+    &:nth-child(3n + 3) {
+      margin-right: 0;
+    }
+  }
+
+  .enroll_confrim_btn_group {
+    flex-wrap: wrap;
+
+    .kart-btn {
+      @include w100;
+      font-size: 14px;
+    }
+
+    .cancel_enroll {
+      margin-right: 0;
+      margin-top: nth($px8x, 2);
+      order: 2;
+    }
+
+    .enroll_cart_lessions {
+      order: 1;
+    }
+  }
+
+  .remaining_section {
+    margin-top: nth($px10x, 2);
+  }
+
+  .detail_container {
+    @include w100;
+  }
+
+  .detail_line {
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .confirm_to_enroll {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+  }
+}

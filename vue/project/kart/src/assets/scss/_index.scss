@@ -1,0 +1,156 @@
+.index_box {
+  @include w100;
+  position: relative;
+}
+
+.index_container {
+  // @include w100;
+  // padding-top: nth($rem5x, 6);
+  // padding-left: calc(100% / 12);
+  // padding-right: calc(100% / 12);
+}
+
+.index_section {
+  @include w100;
+  padding: 0 nth($px5x, 3);
+  margin: 0 nth($px5x, 3);
+}
+
+.banner_img {
+  @include w100;
+}
+
+.teachers_list {
+  margin-top: nth($rem5x, 6);
+}
+
+.teachers_list_title {
+  @include w100;
+  padding: nth($rem5x, 2);
+  @include flex-center;
+  font-size: nth($rem5x, 7);
+  font-weight: nth($num100, 5);
+  line-height: nth($dot5, 3);
+  letter-spacing: nth($px, 2);
+  color: $sub;
+}
+
+.teacher_unit_list {
+  margin-top: nth($rem5x, 4);
+  margin-right: -15px;
+  margin-left: -15px;
+  @include d-flex;
+  flex-wrap: wrap;
+}
+
+.teacher_outer {
+  width: calc(100% / 3);
+  padding: 0 nth($px5x, 3);
+  margin-bottom: nth($rem5x, 3);
+  cursor: pointer;
+}
+
+.teacher_unit {
+  @include w100;
+  @include box-shadow();
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-bottom: nth($px5x, 2) solid $main;
+
+  .teacher_img {
+    border-radius: 0;
+    height: 0;
+    padding-bottom: 56%;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .detail {
+    height: 280px;
+    min-height: 1px;
+    padding: nth($rem25x, 5);
+  }
+}
+
+.teacher_name {
+  margin: 0;
+  display: block;
+  padding-bottom: nth($rem25x, 3);
+  border-bottom: 1px solid $separatorColor;
+
+  .name_main {
+    font-size: nth($rem25x, 5);
+    line-height: 1.2;
+    font-weight: nth($num100, 5);
+    color: map-get($indexText, main);
+  }
+
+  .name_sub {
+    font-size: nth($rem5x, 2);
+    font-weight: nth($num100, 4);
+    line-height: 1.2;
+    color: map-get($indexText, sub);
+  }
+}
+
+.intros {
+  @include w100;
+  height: 170px;
+  margin-top: nth($rem5x, 1);
+  overflow-y: auto;
+}
+
+.intro {
+  @include w100;
+
+  .intro_main {
+    color: $subTextColor;
+    font-size: nth($rem5x, 2);
+    line-height: nth($dot5, 3);
+  }
+
+  .intro_sub {
+    font-size: nth($px6x, 2);
+    color: $subTextColor;
+    line-height: nth($dot5, 3);
+  }
+}
+
+.index_alert {
+  width: 520px;
+}
+
+.go_to_login {
+  width: nth($percent5, 12);
+  @include main-btn(false);
+  font-size: 1.4rem;
+  border-radius: 24px;
+  text-align: center;
+
+  &:hover {
+    @include main-btn(true);
+  }
+}
+
+// RWD Start ======================================
+
+@include rwd('medium') {
+  .teacher_outer {
+    width: nth($percent5, 10);
+  }
+
+  .teachers_list_title {
+    font-size: 2.2rem;
+  }
+}
+
+@include rwd('pad') {
+  .teacher_outer {
+    @include w100;
+  }
+}
+
+@include rwd('mobile') {
+  .index_alert {
+    width: 80vw;
+  }
+}

@@ -1,0 +1,349 @@
+body.login-color {
+  background-color: $main;
+  background-color: $mainWithOpacity;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 50vw;
+    height: 100%;
+    height: 100vh;
+    position: absolute;
+    left: 50%;
+    background-color: $login_mask;
+    z-index: 0;
+  }
+}
+
+.body {
+  width: 100vw;
+  // height: 100vh;
+  position: relative;
+}
+
+.login_container {
+  max-width: 1140px;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  margin: 0 auto;
+  @include flex-center;
+}
+
+.login {
+  width: 100%;
+  max-height: 85vh;
+  border-radius: nth($px5x, 2);
+  box-shadow: 0 25px 20px 0 rgba(0, 0, 0, 0.22);
+  @include d-flex;
+}
+
+.login_part {
+  width: 50%;
+}
+
+.login_l {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ade4e9;
+  background-image: url('~@/assets/img/login/bg_login.svg');
+  border-radius: nth($px5x, 2) 0 0 nth($px5x, 2);
+  padding-right: 15px;
+  padding-left: 15px;
+
+  .img_body {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.login_r {
+  padding: 10vh 0;
+  background-color: #ffffff;
+  border-radius: 0 nth($px5x, 2) nth($px5x, 2) 0;
+  @include flex-center;
+  @include flex-direction('|');
+}
+
+.login_title {
+  margin-bottom: nth($rem5x, 4);
+}
+
+.login_title_p {
+  text-align: center;
+}
+
+.login_title1 {
+  font-size: nth($rem5x, 3);
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.login_title2 {
+  font-size: nth($rem5x, 2);
+  opacity: 0.4;
+}
+
+.form-ctrl {
+  width: 50%;
+}
+
+.choose_hint {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: nth($rem5x, 2);
+  color: #999999;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.type_choose_gp {
+  width: 100%;
+  @include flex-between;
+  margin-bottom: nth($rem5x, 2);
+}
+
+.login_type_btn {
+  cursor: pointer;
+  @include flex-center;
+  @include flex-direction('|');
+  background-color: $white;
+}
+
+.login_type_text {
+  font-size: nth($rem5x, 2);
+  line-height: 1.5;
+  color: map-get($loginTypeColor, default);
+}
+
+.active .login_type_text {
+  color: map-get($loginTypeColor, active);
+}
+
+.login_next_btn {
+  width: 50%;
+  background-color: $main;
+  border-radius: nth($px6x, 4);
+  color: map-get($loginNextBtn, default);
+  font-size: nth($rem5x, 2);
+  line-height: 1.5;
+  &:hover {
+    color: map-get($loginNextBtn, hover);
+  }
+}
+
+.input_data_form {
+  @include w100;
+  display: block;
+}
+
+.input_gp {
+  width: 100%;
+  display: block;
+  position: relative;
+  border-bottom: 1px solid map-get($loginInputUnderLine, default);
+  margin-bottom: nth($rem5x, 4);
+
+  &.focused {
+    border-color: map-get($loginInputUnderLine, hover);
+  }
+
+  &.error {
+    border-color: map-get($loginInputUnderLine, error);
+
+    .icon_error {
+      display: block;
+    }
+  }
+}
+
+.gp_password {
+  margin-bottom: nth($rem5x, 2);
+}
+
+.form_unit {
+  padding-left: nth($rem5x, 4);
+
+  input[type='text'],
+  input[type='password'],
+  select {
+    @include form-unit-base;
+  }
+}
+
+.icon_body {
+  width: nth($px6x, 4);
+  @include flex-center;
+}
+
+.icon_left {
+  @include position-absolute-left-top-0(1);
+  margin-top: nth($px, 5);
+}
+
+.mail_icon .icon_left {
+  margin-top: nth($px6x, 2);
+}
+
+.icon_error {
+  display: none;
+  width: nth($rem5x, 2);
+  @include position-absolute-right-top-0(1);
+  margin-top: nth($px5x, 2);
+}
+
+.form_countrycode {
+  position: absolute;
+  width: 6rem;
+  padding: 0;
+  background: transparent;
+  margin-left: nth($rem5x, 4);
+}
+
+.form_input {
+  @include w100;
+}
+
+.form_cellphone_number {
+  padding-left: nth($rem5x, 16);
+}
+
+.login_detail {
+  @include flex-between;
+  margin-bottom: nth($rem5x, 10);
+}
+
+.form_unit_detail {
+  @include flex-center;
+  font-size: 0.9rem;
+}
+.login_remember_me {
+  width: nth($rem5x, 2);
+  height: nth($rem5x, 2);
+  cursor: pointer;
+  border-radius: nth($px, 5);
+  margin-right: nth($px, 5);
+}
+
+.login_remember_me {
+  display: inline-block;
+}
+
+.form_unit_detail {
+  margin-top: nth($px, 5);
+}
+
+.login_forget_link {
+  text-decoration: underline;
+  color: map-get($forgetPasswordLink, default);
+
+  &:hover {
+    color: map-get($forgetPasswordLink, hover);
+  }
+}
+
+.login_btn {
+  @include w100;
+}
+
+.other_sec {
+  @include w100;
+  @include flex-between;
+}
+
+.other_btn {
+  width: 48%;
+}
+
+.gp_vali_cellphone {
+  position: relative;
+}
+
+.vali_btn_container {
+  @include position-absolute-right-top(0, 0.5rem, 1);
+}
+
+.teacher_login {
+  margin-top: nth($px5x, 4);
+}
+
+.atag_center {
+  @include flex-center;
+
+  a {
+    display: block;
+  }
+}
+
+.text_link_text {
+  font-size: 21px;
+  line-height: nth($dot5, 3);
+  color: $main;
+}
+
+.text_link_symbol {
+  margin-left: nth($px, 7);
+  margin-bottom: -2px;
+}
+
+// RWD Start ======================================
+
+@include rwd('large') {
+  .login_container {
+    max-width: 960px;
+  }
+}
+
+@include rwd('medium') {
+  .login_container {
+    max-width: 720px;
+  }
+
+  .login {
+    box-shadow: 0 nth($px5x, 5) nth($px5x, 4) 0 rgba(0, 0, 0, 0.22);
+    max-height: inherit;
+    @include flex-direction('|');
+    align-items: center;
+  }
+
+  .login_part {
+    width: 100%;
+    padding-right: nth($px5x, 3);
+    padding-left: nth($px5x, 3);
+  }
+
+  .login_l {
+    border-radius: nth($px5x, 2) nth($px5x, 2) 0 0;
+    padding: nth($px5x, 3);
+  }
+
+  .login_r {
+    border-radius: 0 0 nth($px5x, 2) nth($px5x, 2);
+  }
+
+  .form-ctrl {
+    width: 70%;
+  }
+}
+
+@include rwd('pad') {
+  .login_container {
+    max-width: 540px;
+  }
+
+  .login_l {
+    padding: nth($rem5x, 4);
+  }
+}
+
+@include rwd('mobile') {
+  .login_container {
+    max-width: inherit;
+    width: 100%;
+    height: auto;
+  }
+}
