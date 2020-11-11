@@ -235,3 +235,32 @@ $h3-font-size:                $font-size-base * 1.75 !default;
 $h4-font-size:                $font-size-base * 1.5 !default;
 $h5-font-size:                $font-size-base * 1.25 !default;
 $h6-font-size:                $font-size-base !default;
+
+// Break Points 
+
+$breakpoints: (
+  'm320': (
+    max-width: 320px,
+  ),
+  'm375': (
+    max-width: 375px,
+  ),
+  'm480': (
+    max-width: 480px,
+  ),
+  'm': (
+    max-width: 576px,
+  ),
+  'pad': (
+    max-width: 767px,
+  ),
+  'md': (
+    max-width: 992px,
+  ),
+  'l': (
+    max-width: 1200px,
+  ),
+  'xl': (
+    max-width: 1500px,
+  ),
+) !default;
