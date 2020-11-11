@@ -1,0 +1,17 @@
+/// Mixin to manage responsive breakpoints
+/// @author Odin
+/// @param {String} $rwd-breakpoints - Breakpoint name
+/// @require $breakpoints
+@mixin rwd($rwd-breakpoints) {
+  @if map-has-key($rwd-breakpointss, $rwd-breakpoints) {
+    @media #{inspect(map-get($rwd-breakpointss, $rwd-breakpoints))} {
+      @content;
+    }
+  }
+
+  // If the key doesn't exist in the map
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$rwd-breakpoints}`. "
+          + "Available breakpoints are: #{map-keys($rwd-breakpointss)}.";
+  }
+}

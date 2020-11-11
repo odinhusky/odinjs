@@ -1,0 +1,294 @@
+@mixin w100() {
+  width: nth($percent5, 20);
+}
+
+@mixin w50() {
+  width: nth($percent5, 10);
+}
+
+@mixin w33() {
+  width: 33.33333%;
+}
+
+@mixin h100() {
+  height: nth($percent5, 20);
+}
+
+@mixin wh100() {
+  width: nth($percent5, 20);
+  height: nth($percent5, 20);
+}
+
+@mixin fullscreen() {
+  width: 100vw;
+  height: 100vh;
+}
+
+@mixin min-W($minWidth) {
+  min-width: $minWidth;
+}
+
+@mixin min-H($minHeight) {
+  min-height: $minHeight;
+}
+
+@mixin min-WH($minWidth, $minHeight) {
+  min-width: $minWidth;
+  min-height: $minHeight;
+}
+
+@mixin max-W($maxWidth) {
+  max-width: $maxWidth;
+}
+
+@mixin max-H($maxHeight) {
+  max-height: $maxHeight;
+}
+
+@mixin max-WH($maxWidth, $maxHeight) {
+  max-width: $maxWidth;
+  max-height: $maxHeight;
+}
+
+@mixin clear-min-max($option) {
+  @if $option == 'min' {
+    min-width: inherit;
+    min-height: inherit;
+  } @else if $option == 'max' {
+    max-width: inherit;
+    max-height: inherit;
+  } @else if $option == 'min-W' {
+    min-width: inherit;
+  } @else if $option == 'max-H' {
+    min-height: inherit;
+  } @else if $option == 'max-W' {
+    max-width: inherit;
+  } @else if $option == 'max-H' {
+    max-height: inherit;
+  } @else if $option == 'all' {
+    min-width: inherit;
+    min-height: inherit;
+    max-width: inherit;
+    max-height: inherit;
+  }
+}
+
+@mixin list-unstyled() {
+  padding-left: 0;
+  list-style: none;
+}
+
+@mixin img-fluid() {
+  max-width: 100%;
+  height: auto;
+}
+
+@mixin relative() {
+  position: relative;
+}
+
+@mixin fixed() {
+  position: fixed;
+}
+
+@mixin fixed-full($zindex) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $zindex;
+}
+
+@mixin fixed-left-top-0($zindex) {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: $zindex;
+}
+
+@mixin fixed-left-bottom-0($zindex) {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: $zindex;
+}
+
+@mixin fixed-right-top-0($zindex) {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: $zindex;
+}
+
+@mixin fixed-right-bottom-0($zindex) {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: $zindex;
+}
+
+@mixin fixed-left-top($left, $top, $zindex) {
+  position: fixed;
+  left: $left;
+  top: $top;
+  z-index: $zindex;
+}
+
+@mixin fixed-left-bottom($left, $bottom, $zindex) {
+  position: fixed;
+  left: $left;
+  bottom: $bottom;
+  z-index: $zindex;
+}
+
+@mixin fixed-right-top($right, $top, $zindex) {
+  position: fixed;
+  right: $right;
+  top: $top;
+  z-index: $zindex;
+}
+
+@mixin fixed-right-bottom($right, $top, $zindex) {
+  position: fixed;
+  right: $right;
+  bottom: $top;
+  z-index: $zindex;
+}
+
+@mixin absolute-full($zindex) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $zindex;
+}
+
+@mixin absolute-left-top-0($zindex) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: $zindex;
+}
+
+@mixin absolute-left-bottom-0($zindex) {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: $zindex;
+}
+
+@mixin absolute-right-top-0($zindex) {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: $zindex;
+}
+
+@mixin absolute-right-bottom-0($zindex) {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: $zindex;
+}
+
+@mixin absolute-left-top($left, $top, $zindex) {
+  position: absolute;
+  left: $left;
+  top: $top;
+  z-index: $zindex;
+}
+
+@mixin absolute-left-bottom($left, $bottom, $zindex) {
+  position: absolute;
+  left: $left;
+  bottom: $bottom;
+  z-index: $zindex;
+}
+
+@mixin absolute-right-top($right, $top, $zindex) {
+  position: absolute;
+  right: $right;
+  top: $top;
+  z-index: $zindex;
+}
+
+@mixin absolute-right-bottom($right, $top, $zindex) {
+  position: absolute;
+  right: $right;
+  bottom: $top;
+  z-index: $zindex;
+}
+
+@mixin absolute-left-top-center($zindex) {
+  position: absolute;
+  left: nth($percent5, 10);
+  top: nth($percent5, 10);
+  z-index: $zindex;
+  transform: translate(-50%, -50%);
+}
+
+@mixin bg-color($color) {
+  background-color: $color;
+}
+
+@mixin bg-img($img) {
+  background-image: url($img);
+}
+
+@mixin bg-img-setting() {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@mixin bg-visual-setting($minH) {
+  min-height: $minH;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/// Draw a right triangle arrow
+/// @author Odin
+/// @param {Boolean} $isArror - true => 箭頭的設定 || false => after的設定
+/// @param {Unit} $outerWidth - 外層父元素的寬
+/// @param {Unit} $outerHeight - 外層父元素的高
+/// @param {Unit} $arrowWidth - 箭頭的寬(建議跟高一樣)
+/// @param {Unit} $arrowHeight - 箭頭的高(建議跟寬一樣)
+/// @param {Unit} $arrowBorderWidth - 箭頭的寬度
+/// @param {Unit} $arrowColor - 箭頭的顏色
+/// 單位建議用絕對單位
+@mixin right-arrow(
+  $isArror,
+  $outerWidth,
+  $outerHeight,
+  $arrowWidth,
+  $arrowHeight,
+  $arrowBorderWidth,
+  $arrowColor
+) {
+  @if $isArror {
+    display: inline-block;
+    position: relative;
+    width: $outerWidth;
+    height: $outerHeight;
+  } @else {
+    display: inline-block;
+    content: ' ';
+    height: $arrowWidth;
+    width: $arrowHeight;
+    border-width: $arrowBorderWidth $arrowBorderWidth 0 0;
+    border-color: $arrowColor;
+    border-style: solid;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    margin-top: 0;
+  }
+}
+
+@mixin elimate-aTag-attribute() {
+  text-decoration: none;
+}
