@@ -1,0 +1,20 @@
+// 覆蓋樣式(要在boostrap variables的前面)
+// $body-bg: red;
+$body-color: #111;
+
+// 加入新的 theme-colors(詳細作法要看官網) 需要個別引入客製化的檔案
+// $custom-colors: (
+//   'custom-color': #900,
+// );
+
+// // Merge the maps
+// $theme-colors: map-merge($theme-colors, $custom-colors);
+
+// 或是直接改動 $theme-colors
+
+// 全部的 B5
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+.card4 {
+  width: 50px;
+}
