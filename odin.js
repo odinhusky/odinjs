@@ -2667,7 +2667,7 @@ odin.algorithm = (function () {
   /**
    * @author odin
    * @class css
-   * @param {css stylesheet} css -- css style
+   * @param {array} arr -- 包含純數字的陣列
    * @description 快速排序陣列中的數字
    * @example quickSort([4,2,3,3]) => [1,2,3,4]
    */
