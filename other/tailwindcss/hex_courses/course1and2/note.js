@@ -50,13 +50,4 @@
 //   plugins: [],
 // }
 
-// Webpack
-
-// module.exports = {
-//   plugins: [
-//     // ...
-//     require('tailwindcss'),
-//     require('autoprefixer'),
-//     // ...
-//   ]
-// }
+// 4. 使用 CLI 快速編譯 => npx tailwindcss build styles.css -o output.css
