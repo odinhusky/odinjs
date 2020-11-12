@@ -343,3 +343,10 @@ $enable-negative-margins:     false !default;
 $enable-deprecation-messages: true !default;
 $enable-important-utilities:  true !default;
 
+// Define the edge positioning anchors of the position utilities.
+
+$position-values: (
+  0: 0,
+  50: 50%,
+  100: 100%
+) !default;
