@@ -8,5 +8,22 @@
 </head>
 <body>
   <a href="#" class="aaa">aaa</a>
+
+  <script>
+    function quickSort(arr) {
+      if (arr.length < 2) return arr
+      const [p, ...ary] = arr
+      const left = [], right = []
+
+      ary.forEach(c => {
+        if (c < p) left.push(c)
+        else right.push(c)
+      })
+
+      return [...quickSort(left), p, ...quickSort(right)]
+    }
+
+    quickSort([4, 1, 2, 3]);
+  </script>
 </body>
 </html>

@@ -2662,6 +2662,33 @@ odin.css = (function () {
   };
 })();
 
+odin.algorithm = (function () {
+
+  /**
+   * @author odin
+   * @class css
+   * @param {css stylesheet} css -- css style
+   * @description 快速排序陣列中的數字
+   * @example quickSort([4,2,3,3]) => [1,2,3,4]
+   */
+  function quickSort(arr) {
+    if (arr.length < 2) return arr
+    const [p, ...ary] = arr
+    const left = [], right = []
+  
+    ary.forEach(c => {
+      if (c < p) left.push(c)
+      else right.push(c)
+    })
+  
+    return [...quickSort(left), p, ...quickSort(right)]
+  }
+
+  return {
+    quickSort
+  };
+})();
+
 /**
  * @author odin
  * @description Strange Js
