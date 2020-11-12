@@ -1,0 +1,11 @@
+$a: (
+  'pro': baseline top middle bottom text-bottom text-top center,
+);
+
+$test: map-get($a, 'pro');
+@debug 'a.pro #{$test}';
+
+.aaa {
+  vertical-align: $test;
+  color: red;
+}
