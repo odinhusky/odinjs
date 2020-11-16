@@ -1,7 +1,7 @@
 {
-  "course_link": "https://www.youtube.com/watch?v=k781fEhqzxI&t=17s",
+  "course_link": "https://www.youtube.com/watch?v=nCIngYHwo1M",
   "sources": {
-    "tailwindcss_web": "https://tailwindcss.com/",
+    "tailwindcss_web": "https://tailwindcss.com/docs/controlling-file-size",
     "version": "v5.0.0-alpha2",
     "github": "https://github.com/tailwindlabs/tailwindcss"
   }
