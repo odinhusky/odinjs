@@ -9,3 +9,15 @@ $test: map-get($a, 'pro');
   vertical-align: $test;
   color: red;
 }
+
+// 關於 @debug 是只能用終端機來執行指令
+
+// 可參考 stackoverflow 討論內容: https://stackoverflow.com/questions/56724734/live-sass-compiler-not-showing-the-messages-in-the-output-window
+
+// 所以要先全域安裝 sass
+
+// npm install sass -g
+
+// 接著在終端機裡面輸入
+
+// sass --watch 'scss 檔案名稱' '輸出的 CSS 檔案名稱'
