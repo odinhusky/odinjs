@@ -30,7 +30,7 @@
 
 // 這樣的覆蓋設定，也可以寫在 tailwind.config.js 的設定檔中
 // tailwind.config.js
-const plugin = require('tailwindcss/plugin');
+const plugin = require('../course7/node_modules/tailwindcss/plugin');
 
 module.exports = {
   plugins: [

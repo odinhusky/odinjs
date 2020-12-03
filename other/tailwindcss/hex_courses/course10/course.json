@@ -1,0 +1,9 @@
+{
+  "course_link": "https://www.youtube.com/watch?v=J8ssTOorI0k&t=8s",
+  "name": "Tailwind 教學(10) - 新增 component 元件方式",
+  "sources": {
+    "tailwindcss_web": "https://tailwindcss.com/",
+    "version": "v5.0.0-alpha2",
+    "github": "https://github.com/tailwindlabs/tailwindcss"
+  }
+}

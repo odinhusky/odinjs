@@ -1,0 +1,9 @@
+{
+  "course_link": "https://www.youtube.com/watch?v=tyhrMCtc7eU",
+  "name": "Tailwind 教學(11) - 新增 Utilities 方式，讓您不缺各種 util CSS Class！",
+  "sources": {
+    "tailwindcss_web": "https://tailwindcss.com/",
+    "version": "v5.0.0-alpha2",
+    "github": "https://github.com/tailwindlabs/tailwindcss"
+  }
+}

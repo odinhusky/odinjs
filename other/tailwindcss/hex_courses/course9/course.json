@@ -1,0 +1,9 @@
+{
+  "course_link": "https://www.youtube.com/watch?v=6W7GNfCq4Iw",
+  "name": "Tailwind 教學(9) - 強大 Variant 讓你寫 CSS 偽元素不卡卡",
+  "sources": {
+    "tailwindcss_web": "https://tailwindcss.com/",
+    "version": "v5.0.0-alpha2",
+    "github": "https://github.com/tailwindlabs/tailwindcss"
+  }
+}
