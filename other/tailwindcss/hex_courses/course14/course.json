@@ -1,0 +1,9 @@
+{
+  "course_link": "https://www.youtube.com/watch?v=Bd4lQuuYYFc",
+  "name": "【Tailwind CSS 教學 14】透過 Tailwind 達到容器與內容分離",
+  "sources": {
+    "tailwindcss_web": "https://tailwindcss.com/",
+    "version": "v5.0.0-alpha2",
+    "github": "https://github.com/tailwindlabs/tailwindcss"
+  }
+}

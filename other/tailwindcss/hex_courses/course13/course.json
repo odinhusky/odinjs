@@ -1,0 +1,9 @@
+{
+  "course_link": "https://www.youtube.com/watch?v=N4FD2TCUO2s",
+  "name": "Tailwind 教學(13) - 超多 functions CSS 支援帶你飛",
+  "sources": {
+    "tailwindcss_web": "https://tailwindcss.com/",
+    "version": "v5.0.0-alpha2",
+    "github": "https://github.com/tailwindlabs/tailwindcss"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "course_link": "https://www.youtube.com/watch?v=wyS4dKRmEF4",
+  "name": "Tailwind 教學(12) - 如何新增第三方套件，成為超強武器庫！",
+  "sources": {
+    "tailwindcss_web": "https://tailwindcss.com/",
+    "version": "v5.0.0-alpha2",
+    "github": "https://github.com/tailwindlabs/tailwindcss"
+  }
+}
