@@ -2527,8 +2527,42 @@ odin.fun = (function () {
     }
   }
 
+  const morseCode = {
+    A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....', I: '..',  J: '.---',  K: '-.-',  L: '.-..', M: '--',
+    N: '-.',  O: '---', P: '.--.',  Q: '--.-',  R: '.-.', S: '...', T: '-', U: '..-', V: '...-', W: '.--', X: '-..-',  Y: '-.--', Z: '--..', 1: '.----', 2: '..---', 3: '...--', 4: '....-', 5: '.....', 6: '-....', 7: '--...', 8: '---..', 9: '----.', 0: '-----', ' ': ' '
+  }
+
+  /**
+   * @author odin
+   * @class fun
+   * @param {string} text 字串(可包含空白)
+   * @description 將字串翻譯成摩斯密碼
+   * @return {string} ..|..
+   */
+  function translateToMorse (string) {
+    return string.toUpperCase().split('').map(letter => morseCode[letter]).join('|');
+  }
+  
+  /**
+   * @author odin
+   * @class fun
+   * @param {string} code 字串(必須用 | 分隔兩個密碼)
+   * @description 將密碼翻譯成英文原文
+   * @return {string} 
+   */
+  function translateToAlphabets (code) {
+    const morseReverseObject = {};
+    Object.keys(morseCode).forEach(key => {
+      morseReverseObject[morseCode[key]] = key;
+    })
+  
+    return code.split('|').map(letter => morseReverseObject[letter]).join('');
+  }
+
   return {
     printStar,
+    translateToMorse,
+    translateToAlphabets,
   };
 })();
 
@@ -2822,5 +2856,102 @@ odin.bats = (function () {
     bats17,
     bats18,
     bats19,
+  };
+})();
+
+/**
+ * @author odin
+ * @description Tool to manipulate Javascript Set Data
+ */
+
+odin.set = (function() {
+  
+  /**
+   * @author odin
+   * @class set
+   * @param {set} 多個 set
+   * @description 聯集所有傳進來的set
+   */
+  function unionSets(...sets) {
+    let arr = [];
+    sets.forEach(item => {
+      arr.push(...item)
+    });
+    return new Set(arr);
+  }
+
+  /**
+   * @author odin
+   * @class set
+   * @param {set} firstSet
+   * @param {set} otherSet
+   * @description 回傳兩個集合中共同有的元素
+   */
+  function intersectionSets(firstSet, otherSet) {
+    // store intersectionSet 
+    let intersectionSet = new Set();
+    firstSet.forEach(i => {
+        if(otherSet.has(i) == true){
+            intersectionSet.add(i)
+        }
+    })
+    // get the same value
+    return intersectionSet;   
+  }
+
+  /**
+   * @author odin
+   * @class set
+   * @param {set} firstSet
+   * @param {set} otherSet
+   * @description 回傳兩個集合的元素但不包含重覆元素
+   */
+  function differenceSets(firstSet, otherSet) {
+    // store union
+    let differenceSet = union(firstSet, otherSet);
+    let intersectionSet = intersection(firstSet, otherSet);
+    differenceSet.forEach(i => {
+        if(intersectionSet.has(i) == true){
+            differenceSet.delete(i)
+        }
+    })
+    
+    return differenceSet;
+  }
+
+  /**
+   * @author odin
+   * @class set
+   * @param {set} firstSet
+   * @param {set} otherSet
+   * @description 回傳兩個集合的元素但不包含重覆元素
+   */
+  function subtractingSets(firstSet, otherSet) {
+    let subtractingSet = new Set([...firstSet]);
+    otherSet.forEach(i => {
+        if(subtractingSet.has(i) == true){
+            subtractingSet.delete(i)
+        }
+    })
+    return subtractingSet;
+  }
+
+  /**
+   * @author odin
+   * @class set
+   * @param {Array} arr
+   * @description 檢查該陣列是否有重複的值
+   * @returns {boolean}
+   */
+  function containsDuplicate(arr) {
+    return new Set(nums).size < nums.length;
+  }
+
+  return {
+    unionSets,
+    intersectionSets,
+    differenceSets,
+    subtractingSets,
+    containsDuplicate,
   };
 })();
