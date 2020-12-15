@@ -28,7 +28,7 @@ function formatDate(time) {
       timeText = '下午';
     } else if (hour >= 18 && hour < 24) {
       hour = hour - 12;
-      timeText = '凌晨';
+      timeText = '晚上';
     }
   }
 

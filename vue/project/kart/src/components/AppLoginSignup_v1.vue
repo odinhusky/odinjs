@@ -115,16 +115,19 @@
       </AppLoginFormInputGroup>
 
       <!-- 按扭區 -->
-      <div class="btn_gp">
-        <div class="center_btn_sec">
-          <button class="main_btn half_btn signup_btn" @click.prevent="signUp">
+      <div class="w-100">
+        <div class="w-100 flex-center mb-3">
+          <button
+            class="kart-btn kart-main half_btn signup_btn"
+            @click.prevent="signUp"
+          >
             {{ $t('register_form.register') }}
           </button>
         </div>
 
-        <div class="center_btn_sec">
+        <div class="w-100 flex-center mb-3">
           <button
-            class="gray_btn half_btn back_btn"
+            class="kart-btn kart-gray half_btn back_btn"
             @click.prevent="backToLoginForm"
           >
             {{ $t('register_form.tologin') }}

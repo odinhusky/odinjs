@@ -31,7 +31,7 @@
     <div class="btn_group">
       <!-- 驗證 -->
       <button
-        class="kart-btn kart-sub full_btn verify"
+        class="kart-btn kart-sub w-100 verify"
         @click.prevent="saveVerifyCode"
       >
         {{ $t('verify_code.verify') }}

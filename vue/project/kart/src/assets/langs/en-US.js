@@ -67,14 +67,49 @@ export default {
   welcome: ' , Welcome back!',
 
   navigation: {
+    videos: 'Videos',
     calendar: 'Calendar',
+    course: 'Course',
     mycourse: 'Browse',
     notification: 'Notifications',
     personal: 'Account',
     contact_admin: 'Contact Administrator',
     account: 'Account',
     video_record: 'Video Record',
+    video_upload: 'Video Uplaod',
     logout: 'Log out',
+  },
+
+  video: {
+    video_title: 'Videos',
+    monthly_eslite: 'Monthly Choice',
+    course_record: 'Live rewind',
+    watch: 'Watch',
+  },
+
+  video_upload: {
+    title: 'Video Upload',
+    primary: 'Student video upload',
+    secondary: 'College student video upload',
+    upload: 'Upload',
+    uploading: 'Uploading',
+    upload_video: 'Upload',
+    upload_success: 'Upload successfully',
+    upload_fail: 'Fail to upload',
+    upload_time: 'Uploading time',
+    comment: 'Comment',
+    file_unit: 'MB',
+    choose: 'Choose video to upload',
+    choose_file: 'Choose',
+    check_delete: 'Are you sure to delete this video？',
+    check_video: '‘Watch',
+    cancel_upload: 'Uploading has been canceled',
+    delete_video: 'Delete',
+    delete_success: 'Delete successfully',
+    delete_fail: 'Fail to delete',
+    edit_video_filename: 'Edit file name:',
+    edit_video_input_placeholder: 'eg. video.mp4',
+    college_only: 'This page can only be accessed by college students.',
   },
 
   teacher_list: {
@@ -95,6 +130,16 @@ export default {
   nextcourse: {
     time: 'Next courses',
     nodata: 'You have finished all the courses',
+    no_eslite: 'Subscribe to watch more video',
+    no_courses_reocrd: 'No video to display',
+    no_live: 'No live courses to join',
+    no_onetoone: 'No one to on course to join',
+    no_teacher_courses: 'Courses have not yet been arranged',
+    no_assistant_courses: 'Courses have not yet been arranged',
+    no_videos: 'No videos',
+    more_movie: 'More videos',
+    no_comment: 'No commets',
+    no_notification: 'No notifications',
   },
 
   pastcourse: {
@@ -105,6 +150,9 @@ export default {
 
   mycourse: {
     title: 'Browse',
+    live: 'Live classes',
+    record: 'Live rewind',
+    onetoone: 'One to one',
     course: 'Courses',
     product: 'Programs',
     public: 'Open courses',
@@ -158,6 +206,7 @@ export default {
     normal_point_not_enough: 'Remaining course is insufficient',
     reviewablel_point_not_enough:
       'Master review remaining course is insufficient',
+    enroll_now: 'Enroll',
   },
 
   live: {
@@ -182,9 +231,10 @@ export default {
   },
 
   myaccount: {
-    title: 'my account',
+    title: 'My account',
     info: {
       mysetting: 'Setting',
+      profile: 'Personal Information',
       name: 'Name',
       level: 'Level',
       level_expired_1var: '(Expire on {0})',
@@ -194,6 +244,11 @@ export default {
       gender: 'Gender',
       agent_code: 'Agent Code',
       save: 'save',
+      live_point: 'Live',
+      onetoone_point: 'One on one',
+      expired_at: 'Expired at:',
+      not_subscribed: 'Not subscribed',
+      no_purchase_record: 'No purchase history',
     },
     password: {
       change_password: 'Change password',
@@ -203,6 +258,7 @@ export default {
     },
     remaining: {
       remaining_course: 'Remaining course',
+      remaining_course2: 'Remaining course',
       total_remaining_course: 'remaining course',
       course_unit: '',
     },
@@ -217,12 +273,30 @@ export default {
       buy_course: 'Purchase',
       no_orderlist: 'No order history',
     },
+    links: {
+      purchase_lession: 'Purchase',
+      purchase_record: 'Purchase history',
+      enrolled_list: 'Enrollment list',
+      edit_profile: 'Edit',
+      change_password: 'Change password',
+    },
+    profile: {
+      cellphone: 'Cellphone:',
+      name: 'Name:',
+      level: 'Level:',
+      college: 'College:',
+      email: 'Email:',
+      birthday: 'Birthday:',
+      gender: 'Gender:',
+      password: 'Password:',
+    },
   },
 
   role: {
     standard: 'Standard',
     vip: 'VIP',
     admin: 'Admin',
+    college_student: 'College student',
   },
 
   agent: {
@@ -240,6 +314,7 @@ export default {
   },
 
   system_message: {
+    check_more: 'See More',
     enroll_after_login: 'Login to see more',
     cellphone_format_error: 'Please enter valid mobile number',
     email_format_error: 'Please enter valid email address',
@@ -252,6 +327,8 @@ export default {
     signup_success: 'Signup successful！',
     change_password_success: 'Password changed successful！',
     change_info_success: 'Information changed successful！',
+    enroll_single_lesson_success: 'Enroll successfully!',
+    enroll_single_lesson_fail: 'Fail to enroll',
     success: 'Successful！',
     confirm: 'Confirm',
     cancel: 'Not now',
@@ -292,11 +369,66 @@ export default {
     'KEI Art no longer supports Internet Explorer 11(IE11) or lower, use other browsers for better user experience',
 
   footer: {
-    name: 'KEI Art learning',
+    title1: '凱音雅樂',
+    title2: 'KEI Art learning',
     email: 'kart88888@163.com',
     full_cellphone: '+886 0912456789',
     contact_us: 'Contact Us',
     business_cooperation: 'Business Cooperation',
     foucs_wechat: 'Follow us on WeChat',
+  },
+
+  index: {
+    signup_btn: 'Sign up/Login',
+    banner_title_paragraph: 'Kei Art Learning',
+    banner_title_description:
+      'Learn from world-class international teachers. Kei Art Learning is an international, online music educational platform.All teachers hail from prestigious schools.The faculty boasts heavy - weights from all over the world.The platform provides online, high - end piano lessons, including master classes, lectures, one - to - one programs, and so forth.',
+    master_section_title: 'Learn from the Masters',
+    introduction_unit_title1: 'Face to face with top masters',
+    introduction_unit_title2: 'Learning music from any borderline',
+    introduction_unit_title3: 'Interactive learning of high efficiency',
+    introduction_unit_detail1:
+      'Kei Art Learning offers you the only chance to have the opportunity to meet different international masters, listen to the unique interpretation of professors, and explore a brand new world that has never been discovered in the past!',
+    introduction_unit_detail2:
+      'Masters come from all over the world, while its platform membership has, as well, reached every corner of world. As such, students can not only communicate with teachers around the globe, but also have the opportunity to hold online concerts. Kei Art Learning is your stage to the world!',
+    introduction_unit_detail3:
+      "At Kei Art Learning, students  can interact with teachers, so that they can have real-time discussions with the teachers with regard to composer's style and background, musical style, rhythm, harmony color, melody structure, etc. and even emotional expressions.",
+    video_section_detail_title: 'College programs',
+    video_section_detail_line:
+      'Famous teacher, Matti Raekallio, from the Juilliard School of America offer courses at international piano academy of Kei Art Learning!The only one around the world! There is only one chance for the grand competition and school admission, and why not let the most efficient and high - quality program to help solve all your problems in music learning! Master perfect strength in 16 weeks!',
+    phonecourse_title1: 'Real time one to one lessons',
+    phonecourse_detail1:
+      'At Kei Art Learning, students can interact with teachers, so that they can have real-time discussions with the teachers with regard to composer’s style and background, musical style, rhythm, harmony color, melody structure, etc. and even emotional expressions.',
+    phonecourse_title2: 'Live sessions from the international master',
+    phonecourse_detail2:
+      'Through Live session, masters come from all over the world reach every corner of world. As such, students can not only communicate with teachers around the globe, but also have the opportunity to hold online concerts.',
+    enroll_now: 'Enroll now',
+    howto_enroll_title: 'HOW TO ENROLL',
+    footer_logo_title: '凱音雅樂',
+    contact_us_link: 'Contact us',
+    contact_phone_link: '+8615527716868',
+    bussiness_coporation_link: 'Cooperation',
+    focus_our_wechat_text: 'Follow us on WeChat',
+    howto_enroll_toggle_content: [
+      {
+        title: 'Register Account',
+        content:
+          'Search Kei art learning in App Store or Google play and Register your account.',
+      },
+      {
+        title: 'Purchase',
+        content: 'Find the purchase page to buy the course credits.',
+      },
+      {
+        title: 'Enroll',
+        content:
+          'Save courses you are interested in on the browse page and go to enroll page to submit the courses you wish to take.',
+      },
+      {
+        title: 'Notification',
+        content:
+          'Notification will be sent once the enrollment is successful as well as 10 minutes before the enrolled courses start. ',
+      },
+    ],
   },
 };

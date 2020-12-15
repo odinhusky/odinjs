@@ -2,11 +2,6 @@
   margin-bottom: nth($rem5x, 2);
 }
 
-.browse_btn_group {
-  @include w100;
-  @include flex-center;
-}
-
 .browse_btn {
   @include notification-text;
   margin: 0 nth($rem5x, 1);
@@ -44,7 +39,7 @@
 
 .course_detail {
   @include w100;
-  height: 400px;
+  height: 300px;
   overflow-y: auto;
   min-height: 1px;
   padding: nth($rem25x, 5);
@@ -81,6 +76,7 @@
 
 .text_set_content {
   font-size: 1.2rem;
+  margin-bottom: nth($px6x, 2);
 }
 
 .text_set_main {
@@ -127,6 +123,21 @@
   // padding-right: nth($rem5x, 6);
 }
 
+.text_set_group {
+  width: calc(100% - 40px);
+
+  .text_set_line {
+    @include w100;
+
+    display: block;
+    font-size: 1rem;
+    color: #212529;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #666666;
+  }
+}
+
 .text_set_status {
   @include flex-center;
 }
@@ -138,7 +149,7 @@
 
 .add_wish_img {
   display: block;
-  width: 18px;
+  width: nth($px8x, 3);
   padding-top: 1px;
 
   &.remove {
@@ -183,68 +194,13 @@
 }
 
 // 課程詳情燈箱
-.course_detail_alert {
-  width: 520px;
-}
-
 .course_alert_cotent {
   @include w100;
 }
 
-.course_alert_title {
-  @include flex-center;
-  @include w100;
-  font-size: nth($rem5x, 3);
-}
-
-.course_alert_seperator {
-  @include w100;
-  margin: nth($rem5x, 2) 0;
-  border-top: 1px solid #ccc;
-}
-
-.course_alert_detail {
-  @include w100;
-  height: 300px;
-  overflow-y: auto;
-}
-
-.course_alert_detail_unit {
-  @include d-flex;
-  @include w100;
-  margin-bottom: nth($rem5x, 4);
-}
-
-.course_alert_detail_unit_title {
-  font-weight: normal;
-  font-size: 1.2rem;
-}
-
-.course_alert_detail_unit_divider {
-  margin: 0 nth($rem5x, 1);
-}
-
-.course_alert_detail_unit_content {
-  width: calc(100% - 110px);
-  color: $subTextColor;
-  font-size: 1.2rem;
-}
-
-.course_alert_detail_unit_time {
-  display: block;
-  @include w100;
-}
-
-.course_alert_btn_container {
-  @include w100;
-  @include flex-center;
-
-  .course_alert_close {
-    width: nth($percent5, 12);
-    margin-top: nth($rem5x, 4);
-    line-height: nth($dot5, 3);
-    font-size: nth($rem5x, 3);
-  }
+.course_detail_alert {
+  width: calc(((100% / 12) * 10) / 3);
+  padding: nth($rem5x, 4);
 }
 
 .fix_btns {
@@ -267,20 +223,46 @@
   padding: nth($rem5x, 2);
 }
 
-.lessions_unit {
+.lessons_unit {
   @include w100;
   padding: nth($rem5x, 2);
-  border: 1px solid $main;
+  border: 1px solid $sub;
   margin: nth($rem5x, 2) 0;
 }
+
+.course_time_container {
+  margin-top: nth($rem5x, 6);
+  margin-bottom: nth($rem5x, 2);
+}
+
+.lesson_unit {
+  @include d-flex;
+  @include w100;
+  border-bottom: 1px solid #ccc;
+  padding-top: nth($rem5x, 1);
+  padding-bottom: nth($rem5x, 1);
+}
+
+.lesson_detail,
+.lesson_status {
+  width: nth($percent5, 10);
+}
+
+.lesson_status {
+  @include flex-center-right;
+}
+
+.enroll_now {
+  width: 70px;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-right: nth($rem5x, 2);
+}
+
 // RWD Start =============================
 
 @include rwd('large') {
-  .course_detail_alert {
-    padding: nth($rem5x, 2);
-    width: 90vw;
-  }
-
   .sale_ad_alert {
     padding: nth($rem5x, 1);
   }
@@ -297,5 +279,10 @@
 
   .browse_course_outer {
     width: 100%;
+  }
+
+  .course_detail_alert {
+    padding: nth($rem5x, 2);
+    width: 90vw;
   }
 }

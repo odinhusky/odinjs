@@ -1,11 +1,26 @@
 <template>
   <div class="root footer_body" :class="rootClassObj">
-    <div class="main-10 footer_body_container">
+    <div class="main-11 footer_body_container">
       <!-- footer logo -->
       <section class="logo_section">
-        <a class="footer_logo" @click.prevent="goToIndexJudge">
-          <img src="../assets/img/footer/logo_with_text@2x.png" />
-        </a>
+        <button class="footer_logo" @click.prevent="goToIndexJudge">
+          <!-- logo 圖片 -->
+          <img
+            class="footer_logo_img"
+            src="../assets/img/v2/footer/icon_kartlogo@2x.png"
+          />
+
+          <!-- logo 文字 -->
+          <div class="footer_logo_text_container">
+            <span class="d-block footer_logo_title footer_logo_title1"
+              >{{ $t('footer.title1') }}
+            </span>
+
+            <span class="d-block footer_logo_title footer_logo_title2"
+              >{{ $t('footer.title2') }}
+            </span>
+          </div>
+        </button>
       </section>
 
       <!-- detal -->
@@ -17,10 +32,14 @@
               src="../assets/img/footer/icon_wechat@2x.png"
               class="left_icon"
             />
-            <span class="left_text">{{ $t('footer.name') }}</span>
+            <span class="left_text">{{ $t('footer.title2') }}</span>
           </div>
           <div class="set_right">
-            <a href="#" class="detail_text contact_us" @click.prevent="">
+            <a
+              href="mailto:kart88888@163.com"
+              class="detail_text contact_us"
+              @click.prevent=""
+            >
               {{ $t('footer.contact_us') }}
             </a>
           </div>
@@ -41,7 +60,6 @@
               target="_blank"
               rel="noreferrer noopener nofollow"
               class="detail_text contact_us"
-              @click.prevent=""
             >
               {{ $t('footer.business_cooperation') }}
             </a>
@@ -65,38 +83,47 @@
         </div>
       </section>
 
-      <!-- QR and App -->
-      <section class="qr_app_section">
-        <!-- QR -->
-        <div class="qr_box">
-          <img
-            src="../assets/img/footer/icon_wechatqrcode@2x.png"
-            class="qr_img"
-          />
-          <span class="qr_description">{{ $t('footer.foucs_wechat') }}</span>
-        </div>
+      <!-- QR -->
+      <section class="qr_box">
+        <img
+          src="../assets/img/v2/footer/icon_wechatqrcode@2x.jpg"
+          class="qr_img"
+        />
+        <span class="qr_description">{{ $t('footer.foucs_wechat') }}</span>
+      </section>
 
-        <!-- APP -->
-        <div class="app_box">
-          <!-- IOS -->
-          <a href="#" class="app_download download_ios_app" @click.prevent="">
-            <img
-              class="app_img"
-              src="../assets/img/footer/icon_appstore@2x.png"
-            />
-          </a>
-          <!-- GooglePlay -->
-          <a
-            href="#"
-            class="app_download download_googleplay_app"
-            @click.prevent=""
-          >
-            <img
-              class="app_img"
-              src="../assets/img/footer/icon_googleplay@2x.png"
-            />
-          </a>
-        </div>
+      <!-- APP -->
+      <section class="app_box">
+        <!-- Huawei -->
+        <a
+          href="appmarket://details?id=com.mejor.course"
+          class="app_download download_huawei_app"
+        >
+          <img
+            class="app_img"
+            src="../assets/img/v2/footer/icon_huawei@2x.png"
+          />
+        </a>
+        <!-- IOS -->
+        <a
+          href="https://itunes.apple.com/app/id1500544764"
+          class="app_download download_ios_app"
+        >
+          <img
+            class="app_img"
+            src="../assets/img/footer/icon_appstore@2x.png"
+          />
+        </a>
+        <!-- GooglePlay -->
+        <a
+          href="market://details?id=com.mejor.course"
+          class="app_download download_googleplay_app"
+        >
+          <img
+            class="app_img"
+            src="../assets/img/footer/icon_googleplay@2x.png"
+          />
+        </a>
       </section>
     </div>
   </div>

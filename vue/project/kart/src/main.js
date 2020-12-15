@@ -7,13 +7,20 @@ import { boot as bootAxios } from './axios';
 
 import './registerServiceWorker';
 
+// animate.css
+import VAnimateCss from 'v-animate-css';
+Vue.use(VAnimateCss);
+
 // filters
 import filters from '@/filters/filters';
 
 // CSS Reset
 import 'normalize.css';
 
-// Vue use
+// 引入阿里雲的 js
+// import './plugins/aliyun-oss-sdk.min.js';
+
+// Vue config
 Vue.config.productionTip = false;
 // Vue.prototype.odin = odin;
 

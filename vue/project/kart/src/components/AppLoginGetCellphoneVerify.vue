@@ -46,7 +46,10 @@
         </div>
 
         <div class="vali_btn_container">
-          <button class="s_btn vali_send_btn" @click.prevent="fetchVerifyCode">
+          <button
+            class="kart-btn kart-sub vali_send_btn"
+            @click.prevent="fetchVerifyCode"
+          >
             {{ $t('register_form.send') }}
           </button>
         </div>

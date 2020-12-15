@@ -64,7 +64,7 @@
     <div class="btn_group">
       <!-- 登入 -->
       <button
-        class="kart-btn kart-sub full_btn login_btn"
+        class="kart-btn kart-sub w-100 login_btn"
         @click.prevent="studentLogin"
       >
         {{ $t('login_form.login') }}
@@ -72,7 +72,7 @@
 
       <!-- 註冊 -->
       <button
-        class="kart-btn kart-gray half_btn mr-auto signup_btn"
+        class="kart-btn kart-gray half-btn half-left-btn mr-auto signup_btn"
         @click.prevent="verifyPhone('signup')"
       >
         {{ $t('login_form.register') }}
@@ -80,7 +80,7 @@
 
       <!-- 回上頁 -->
       <button
-        class="kart-btn kart-gray half_btn back_btn"
+        class="kart-btn kart-gray half-btn back_btn"
         @click.prevent="goToPrevPage"
       >
         {{ $t('login_form.back') }}

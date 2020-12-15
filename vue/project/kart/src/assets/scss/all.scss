@@ -8,10 +8,21 @@
 // Self-Define-Reset
 @import '@/assets/scss/helpers/_reset.scss';
 
+// function 
+@import '@/assets/scss/helpers/_functions.scss';
+
 // mixins
-@import '@/assets/scss/mixins/_utilities.scss';
 @import '@/assets/scss/mixins/_breakpoints.scss';
+@import '@/assets/scss/mixins/_utilities.scss';
 @import '@/assets/scss/mixins/_flex.scss';
+
+// 共用設定
+@import '@/assets/scss/_base.scss';
+
+// class utility
+@import '@/assets/scss/class_utitlities/_class_utilities_data.scss';
+@import '@/assets/scss/class_utitlities/_class_utilities_generator.scss';
+@import '@/assets/scss/class_utitlities/_class_utilities_api.scss';
 
 // select2
 @import 'vue-select/src/scss/vue-select.scss';
@@ -40,3 +51,6 @@
 @import '@/assets/scss/_footer.scss';
 @import '@/assets/scss/_loading.scss';
 @import '@/assets/scss/_course_record.scss';
+@import '@/assets/scss/_videos.scss';
+@import '@/assets/scss/_video_upload.scss';
+

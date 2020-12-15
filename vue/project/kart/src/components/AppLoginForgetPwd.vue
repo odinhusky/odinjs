@@ -35,7 +35,7 @@
     <div class="btn_group">
       <!-- 修改密碼 -->
       <button
-        class="kart-btn kart-sub full_btn change_password"
+        class="kart-btn kart-sub w-100 change_password"
         @click.prevent="requestResetPassword"
       >
         {{ $t('myaccount.password.change_password') }}

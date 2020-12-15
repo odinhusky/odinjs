@@ -1,0 +1,336 @@
+.myaccount_root {
+  @include min-H(65vh);
+}
+
+.my_account_title_box {
+  @include bg-color(rgba(207, 169, 114, 0.4));
+  @include flex-center-left;
+  @include w100;
+
+  padding: nth($rem5x, 2);
+  margin-bottom: nth($rem5x, 2);
+
+  .my_account_title {
+    margin: 0 nth($rem5x, 3);
+  }
+}
+
+.my_account_title_img {
+  width: 69px;
+}
+
+.account_tabs {
+  @include tab-outer;
+}
+
+.account_btn {
+  padding: nth($rem5x, 1);
+  color: $black;
+  background-color: transparent;
+  line-height: nth($dot5, 3);
+  border: nth($px, 1) solid transparent;
+  position: relative;
+
+  &:hover {
+    @include tab-hover;
+  }
+
+  &.active {
+    border-bottom: nth($px, 1) solid $separatorColor;
+  }
+}
+
+.account_content {
+  @include w100;
+  margin-top: nth($rem5x, 4);
+}
+
+.show_box {
+  padding: 0 nth($rem5x, 1);
+}
+
+.mysetting_form_group {
+  @include w100;
+  @include flex-align-items-center;
+  flex-wrap: wrap;
+  line-height: nth($rem5x, 4);
+  padding: nth($rem5x, 1) 0;
+}
+
+.mysetting_title {
+  width: 120px;
+  color: $myAccountLabelColor;
+  line-height: nth($rem5x, 4);
+  font-size: nth($px8x, 2);
+  font-weight: normal;
+}
+
+.mysetting_content {
+  width: 250px;
+  font-size: 18px;
+  color: $main;
+  line-height: nth($rem5x, 4);
+}
+
+.mysetting_input {
+  @include w100;
+  @include bg-color(transparent);
+
+  padding: nth($px6x, 1) nth($px6x, 2);
+  font-size: 18px;
+  color: $main;
+  border: nth($px, 2) solid $sub;
+  border-radius: nth($px, 9);
+
+  &.error {
+    border-color: $errorColor;
+  }
+}
+
+.mysetting_save_box {
+  margin-top: nth($rem5x, 2);
+}
+
+.mysetting_save {
+  padding: nth($rem5x, 1) nth($rem5x, 8);
+}
+
+.password_label {
+  @include flex-center-left;
+  line-height: nth($rem5x, 2);
+  margin: nth($rem25x, 3) 0;
+}
+
+.password_label_img {
+  margin-right: nth($rem5x, 1);
+}
+
+.password_label_text {
+  color: $main;
+}
+
+.change_password_control {
+  @include w33;
+  @include position-relative;
+
+  .change_password_input {
+    @include w100;
+    @include bg-color(transparent);
+
+    border-bottom: nth($px, 2) solid $vueSelect2BorderColor;
+    display: block;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: nth($rem5x, 2);
+    font-weight: nth($num100, 4);
+    line-height: nth($dot5, 3);
+    color: $gray-700;
+    transition: all 0.15s ease-in-out;
+
+    &::placeholder {
+      color: $vueSelect2BorderColor;
+    }
+  }
+
+  .password_error_img {
+    display: none;
+    width: 1rem;
+    @include position-absolute-right-top(0, 0, 1);
+    margin-top: nth($px5x, 2);
+  }
+}
+
+.password_form_group.error {
+  .change_password_input {
+    border-color: $errorColor;
+  }
+
+  .password_error_img {
+    display: block;
+  }
+}
+
+.change_password_save_box {
+  margin-top: nth($rem5x, 2);
+  @include flex-center-right;
+
+  .change_password_save {
+    padding: nth($rem5x, 1) nth($rem5x, 8);
+  }
+}
+
+.remaining_course_num {
+  font-size: nth($rem5x, 11);
+}
+
+.remaining_course_text {
+  font-size: nth($rem5x, 7);
+}
+
+.gender_radius_control {
+  @include flex-align-items-center;
+
+  .form-group {
+    margin-right: nth($px5x, 3);
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.gender_radio {
+  margin-right: nth($px5x, 1);
+}
+
+.remaining_container {
+  @include w100;
+}
+
+.remaining_course_box {
+  margin-right: auto;
+}
+
+.remaining_line {
+  display: block;
+  margin-bottom: nth($px5x, 1);
+  color: $myAccountLabelColor;
+  font-size: nth($px8x, 2);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.orderlist_section {
+  @include w100;
+  margin-top: nth($px10x, 3);
+
+  .orderlist_table {
+    @include w100;
+
+    th,
+    td {
+      padding: nth($rem5x, 1);
+      border: 1px solid $myAccountLabelColor;
+      text-align: center;
+    }
+
+    th {
+      @include bg-color($thBgColor);
+    }
+  }
+
+  .orderlist_div {
+    display: none;
+  }
+}
+
+.order_btn_section {
+  @include w100;
+  @include flex-center-right;
+}
+
+.go_purchase {
+  margin-top: nth($px10x, 3);
+}
+
+// RWD Start ======================================
+
+@include rwd('medium') {
+  .remaining_course_num {
+    font-size: nth($rem5x, 7);
+  }
+
+  .remaining_course_text {
+    font-size: nth($rem5x, 5);
+  }
+
+  .change_password_control {
+    @include w50;
+  }
+}
+
+@include rwd('pad') {
+  .change_password_input {
+    @include w100;
+  }
+
+  .mysetting_save_box,
+  .change_password_save_box {
+    margin-top: nth($rem5x, 4);
+    justify-content: center;
+  }
+
+  .change_password_control {
+    @include w100;
+  }
+}
+
+@include rwd('mobile') {
+  .myaccount_root {
+    @include clear-min-max('min-H');
+  }
+
+  .account_tabs {
+    @include flex-align-items-center;
+    justify-content: space-between;
+  }
+
+  .tab_btn {
+    font-size: 14px;
+  }
+
+  .change_password_control {
+    @include w100;
+
+    .change_password_input {
+      font-size: 14px;
+    }
+  }
+
+  .password_label_text {
+    font-size: 14px;
+  }
+
+  .orderlist_section {
+    @include w100;
+
+    .orderlist_table {
+      display: none;
+    }
+
+    .orderlist_div {
+      display: block;
+    }
+  }
+
+  .order_unit {
+    @include w100;
+    @include bg-color($white);
+    padding: nth($rem25x, 5);
+    margin-bottom: nth($rem5x, 2);
+  }
+
+  .order_btn_section {
+    justify-content: center;
+  }
+
+  .remaining_course_box {
+    @include w100;
+  }
+
+  .mysetting_root {
+    .mysetting_save_box {
+      flex-wrap: wrap;
+    }
+
+    .remaining_line {
+      text-align: center;
+    }
+
+    .mysetting_save {
+      margin-top: nth($px10x, 3);
+    }
+  }
+}

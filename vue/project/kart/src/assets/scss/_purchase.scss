@@ -127,13 +127,11 @@
     @include flex-center;
     @include flex-direction('|');
 
-    width: 100px;
+    width: 300px;
     font-size: nth($px8x, 2);
     color: $gray-600;
 
     .no_classses_img {
-      @include w100;
-
       display: block;
     }
 

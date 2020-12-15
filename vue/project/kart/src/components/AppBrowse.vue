@@ -1,172 +1,130 @@
 <template>
   <div class="root browse_root" :class="rootClassObj">
     <main class="main-10">
-      <h2 class="page_title browse_title">{{ $t('mycourse.title') }}</h2>
+      <h2 class="page_title browse_title">{{ $t('navigation.mycourse') }}</h2>
 
-      <section class="browse_btn_group">
+      <section class="page-category-container center browse_btn_group">
         <button
-          class="kart-btn kart-bg-gray page-category-btn course"
-          :class="{ active: category === 'course' }"
-          @click.prevent="changeCategory('course')"
+          class="page-category-btn kart-btn kart-bg-gray live"
+          :class="{ active: category === 'live' }"
+          @click.prevent="changeCategory('live')"
         >
-          {{ $t('mycourse.course') }}
+          {{ $t('mycourse.live') }}
         </button>
         <button
-          class="kart-btn kart-bg-gray page-category-btn product"
-          :class="{ active: category === 'set' }"
-          @click.prevent="changeCategory('set')"
+          class="page-category-btn kart-btn kart-bg-gray record"
+          :class="{ active: category === 'record' }"
+          @click.prevent="changeCategory('record')"
         >
-          {{ $t('mycourse.product') }}
+          {{ $t('mycourse.record') }}
         </button>
       </section>
 
       <section class="browse_courses margin-outer">
-        <div
-          v-for="item in courseJudge"
-          :key="item.id"
-          class="browse_course_outer"
-        >
-          <div class="browse_course browse_course_unit">
-            <!-- 圖片 -->
-            <div
-              class="course_next_img"
-              :style="{ backgroundImage: `url(${item.img})` }"
-            ></div>
+        <!-- 沒有資料的時候 -->
+        <AppNoClasses
+          v-if="viewData.length === 0"
+          :no-classes-text="noClassesText"
+        />
 
-            <!-- 內容 -->
-            <div class="course_detail">
-              <!-- 課程名稱 -->
-              <h5 class="course_detail_title">{{ item.name }}</h5>
+        <template v-else>
+          <div
+            v-for="item in viewData"
+            :key="item.id"
+            class="browse_course_outer"
+          >
+            <div class="browse_course browse_course_unit">
+              <!-- 圖片 -->
+              <div
+                class="course_next_img"
+                :style="{ backgroundImage: `url(${item.img})` }"
+              ></div>
 
-              <div class="course_detail_text">
-                <!-- 老師 -->
-                <div v-if="category === 'course'" class="text_set">
-                  <span class="text_set_title">{{
-                    $t('course_item.teacher')
-                  }}</span>
-                  <span class="text_set_divider">|</span>
-                  <!-- 根據不同語系顯示不同內容 -->
-                  <div
-                    v-if="i18n === 'cn' || i18n === 'tw'"
-                    class="text_set_container"
-                  >
-                    <div class="text_set_content">
-                      <span class="text_set_main">
-                        {{ dealTeacherName(item) }}
-                      </span>
-                      <br />
+              <!-- 內容 -->
+              <div class="course_detail">
+                <!-- 課程名稱 -->
+                <h5 class="course_detail_title">{{ item.name }}</h5>
 
-                      <small class="text_set_sub">{{
-                        item.teacher.name_en
-                      }}</small>
-                      <br />
-                    </div>
-                  </div>
-                  <div v-if="i18n === 'en'" class="text_set_content">
-                    <span class="text_set_main">{{
-                      item.teacher.name_en
+                <div class="course_detail_text">
+                  <!-- 老師 -->
+                  <div class="text_set">
+                    <span class="text_set_title">{{
+                      $t('course_item.teacher')
                     }}</span>
-                    <br />
-                  </div>
-                </div>
-
-                <div
-                  v-if="category === 'course'"
-                  class="text_set_seperator"
-                ></div>
-
-                <!-- 經歷 -->
-                <div v-if="category === 'course'" class="text_set">
-                  <span class="text_set_title">{{
-                    $t('course_item.teacher_intro')
-                  }}</span>
-                  <span class="text_set_divider">|</span>
-                  <!-- 根據不同語系顯示不同內容 -->
-                  <div
-                    v-if="i18n === 'cn' || i18n === 'tw'"
-                    class="text_set_container"
-                  >
-                    <div class="text_set_content">
-                      <span class="text_set_main">
-                        {{ dealTeacherIntros(item.teacher.intros[0]) }}
-                      </span>
-                      <br />
-
-                      <small class="text_set_sub">{{
-                        item.teacher.intros[0].intro_en
-                      }}</small>
-                      <br />
-                    </div>
-                  </div>
-                  <div v-if="i18n === 'en'" class="text_set_content">
-                    <span class="text_set_main">{{
-                      item.teacher.intros[0].intro_en
-                    }}</span>
-                  </div>
-                </div>
-
-                <div
-                  v-if="category === 'course'"
-                  class="text_set_seperator"
-                ></div>
-
-                <!-- 時間 -->
-                <div class="text_set">
-                  <span class="text_set_title">{{
-                    $t('course_item.time')
-                  }}</span>
-                  <span class="text_set_divider">|</span>
-                  <!-- 根據不同語系顯示不同內容 -->
-                  <div class="text_set_container">
+                    <span class="text_set_divider">|</span>
+                    <!-- 根據不同語系顯示不同內容 -->
                     <div
-                      v-for="time in item.times"
-                      :key="time.id"
-                      class="text_set_content flex-align-items-center"
-                      :data-id="time.id"
+                      v-if="i18n === 'cn' || i18n === 'tw'"
+                      class="text_set_container"
                     >
-                      <span class="text_set_time">
-                        {{ time.start_at | formatDate }}
-                      </span>
-                      <div v-if="category === 'course'" class="text_set_status">
-                        <button
-                          v-if="!isThisCourseHadApplied(time.id)"
-                          class="add_wish_btn"
-                          :class="{ selected: isThisCourseInCart(time.id) }"
-                          @click.prevent="toggleCart(time.id)"
-                        >
-                          <img
-                            class="add_wish_img add"
-                            src="@/assets/img/v2/browse/purchase_empty_heart@2x.png"
-                          />
-                          <img
-                            class="add_wish_img remove"
-                            src="@/assets/img/v2/browse/purchase_heart@2x.png"
-                          />
-                        </button>
-                        <span
-                          v-if="isThisCourseHadApplied(time.id)"
-                          class="kart-gray had_signed_up"
-                          >{{ $t('enroll.enrolled') }}
+                      <div class="text_set_content">
+                        <span class="text_set_main">
+                          {{ dealTeacherName(item.teacher) }}
                         </span>
+                        <br />
+
+                        <small class="text_set_sub">{{
+                          item.teacher.name_en
+                        }}</small>
+                        <br />
                       </div>
+                    </div>
+                    <div v-if="i18n === 'en'" class="text_set_content">
+                      <span class="text_set_main">{{
+                        item.teacher.name_en
+                      }}</span>
+                      <br />
+                    </div>
+                  </div>
+
+                  <div class="text_set_seperator"></div>
+
+                  <!-- 經歷 -->
+                  <div class="text_set">
+                    <span class="text_set_title">{{
+                      $t('course_item.teacher_intro')
+                    }}</span>
+                    <span class="text_set_divider">|</span>
+                    <!-- 根據不同語系顯示不同內容 -->
+                    <div
+                      v-if="i18n === 'cn' || i18n === 'tw'"
+                      class="text_set_container"
+                    >
+                      <div class="text_set_content">
+                        <span class="text_set_main">
+                          {{ dealTeacherIntros(item.teacher.intros[0]) }}
+                        </span>
+                        <br />
+
+                        <small class="text_set_sub">{{
+                          item.teacher.intros[0].intro_en
+                        }}</small>
+                        <br />
+                      </div>
+                    </div>
+                    <div v-if="i18n === 'en'" class="text_set_content">
+                      <span class="text_set_main">{{
+                        item.teacher.intros[0].intro_en
+                      }}</span>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!-- 課程詳情按鈕 -->
-            <button
-              class="course_detail_btn"
-              @click.prevent="showCourseDetailAlert(item)"
-            >
-              {{ $t('course_item.enroll') }}
-            </button>
+              <!-- 課程詳情按鈕 -->
+              <button
+                class="course_detail_btn"
+                @click.prevent="showCourseDetailAlert(item)"
+              >
+                {{ $t('course_item.enroll') }}
+              </button>
+            </div>
           </div>
-        </div>
+        </template>
       </section>
 
-      <section class="fix_btns">
+      <!-- 右下方固定的按鈕(目前是隱藏的) -->
+      <section class="fix_btns" v-if="false">
         <!-- 線上報名課程 -->
         <!-- <button class="fix_btn btnenroll">
           <img src="" alt="" />
@@ -213,292 +171,158 @@
 
       <!-- 頁碼 -->
       <ThePagination
-        :page-obj="coursePageObj.props"
-        @fetchSpecificCoursePage="fetchSpecificCoursePage"
+        v-if="viewData.length !== 0"
+        :page-obj="paginationObj"
+        @fetchSpecificCoursePage="paginationEvent"
       />
     </main>
 
     <!-- 銷售方案燈箱 -->
-    <AppAlert
+    <AppLightBox
       v-model="saleAdAlert.openOrNot"
-      :title="saleAdAlert.title"
       :classname="saleAdAlert.classname"
-      :is-show-icon="saleAdAlert.isShowIcon"
-      :is-show-cancel="saleAdAlert.isShowCancel"
     >
-      <template slot="content">
+      <template>
         <div class="sale_ad_box">
           <img :src="saleAdImgSrc" class="sale_ad_img" />
         </div>
       </template>
-    </AppAlert>
-    <!-- 一般課程詳細燈箱的內容 -->
-    <AppAlert
+    </AppLightBox>
+
+    <!-- 課程詳細燈箱的內容 -->
+    <AppLightBox
       v-model="courseAlert.openOrNot"
-      :title="courseAlert.title"
-      :classname="courseAlert.classname"
-      :is-show-icon="courseAlert.isShowIcon"
       :is-show-cancel="courseAlert.isShowCancel"
+      :classname="courseAlert.classname"
     >
-      <template slot="content">
+      <template>
         <div class="course_alert_cotent">
-          <!-- 標題 -->
-          <h5 class="course_alert_title">{{ $t('course_info.info_title') }}</h5>
-          <div class="course_alert_seperator"></div>
-
-          <!-- 內容 -->
-          <div class="course_alert_detail">
-            <!-- 課程名稱 -->
-            <div class="course_alert_detail_unit">
-              <h6 class="course_alert_detail_unit_title">
-                {{ $t('course_info.name') }}
-              </h6>
-              <span class="course_alert_detail_unit_divider">|</span>
-              <div class="course_alert_detail_unit_content">
-                {{ courseAlert.courseObj.name }}
-              </div>
-            </div>
-
-            <!-- 授課老師 -->
-            <div class="course_alert_detail_unit">
-              <h6 class="course_alert_detail_unit_title">
-                {{ $t('teacher_list.teacher') }}
-              </h6>
-              <span class="course_alert_detail_unit_divider">|</span>
-              <div class="course_alert_detail_unit_content">
-                <!-- 根據不同語系顯示不同內容 -->
-                <div
-                  v-if="i18n === 'cn' || i18n === 'tw'"
-                  class="course_alert_detail_unit_container"
-                >
-                  <div class="unit_box">
-                    <span class="unit_main">
-                      {{ dealTeacherName(courseAlert.courseObj) }}
-                    </span>
-                    <br />
-
-                    <small class="text_set_sub">
-                      {{ courseAlert.courseObj.teacher.name_en }}
-                    </small>
-                  </div>
-                </div>
-                <div
-                  v-if="i18n === 'en'"
-                  class="course_alert_detail_unit_container"
-                >
-                  <div class="unit_box">
-                    <span class="unit_main">{{
-                      courseAlert.courseObj.teacher.name_en
-                    }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 課程介紹 -->
-            <div class="course_alert_detail_unit">
-              <h6 class="course_alert_detail_unit_title">
-                {{ $t('course_info.intro_title') }}
-              </h6>
-              <span class="course_alert_detail_unit_divider">|</span>
-              <div class="course_alert_detail_unit_content">
-                {{ courseAlert.courseObj.introduction }}
-              </div>
-            </div>
-
-            <!-- 課程時間 -->
-            <div class="course_alert_detail_unit">
-              <h6 class="course_alert_detail_unit_title">
-                {{ $t('course_info.time') }}
-              </h6>
-              <span class="course_alert_detail_unit_divider">|</span>
-              <div class="course_alert_detail_unit_content">
-                <span
-                  v-for="time in courseAlert.courseObj.times"
-                  :key="time.id"
-                  class="course_alert_detail_unit_time"
-                >
-                  {{ time.start_at | formatDate }}
-                </span>
-              </div>
-            </div>
-
-            <!-- 老師經歷 -->
-            <div class="course_alert_detail_unit">
-              <h6 class="course_alert_detail_unit_title">
-                {{ $t('course_info.intro_teacher') }}
-              </h6>
-              <span class="course_alert_detail_unit_divider">|</span>
-              <div class="course_alert_detail_unit_content">
-                <!-- 根據不同語系顯示不同內容 -->
-                <div
-                  v-for="intro in courseAlert.courseObj.teacher.intros"
-                  :key="intro.id"
-                  class="course_alert_detail_unit_outer"
-                >
-                  <div
-                    v-if="i18n === 'cn' || i18n === 'tw'"
-                    class="course_alert_detail_unit_container"
-                  >
-                    <div class="unit_box">
-                      <span class="text_set_main">
-                        {{ dealTeacherIntros(intro) }}
-                      </span>
-                      <br />
-
-                      <small class="text_set_sub">{{ intro.intro_en }}</small>
-                      <br />
-                    </div>
-                  </div>
-                  <div
-                    v-if="i18n === 'en'"
-                    class="course_alert_detail_unit_container"
-                  >
-                    <div class="unit_box">
-                      <span class="text_set_main">
-                        {{ intro.intro_en }}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 關閉按鈕 -->
-          <div class="course_alert_btn_container">
-            <button
-              class="main_btn course_alert_close"
-              @click.prevent="courseAlert.openOrNot = false"
-            >
-              {{ $t('system_message.close') }}
-            </button>
-          </div>
-        </div>
-      </template>
-    </AppAlert>
-
-    <!-- 套裝課程詳細燈箱的內容 -->
-    <AppAlert
-      v-model="setCourseAlert.openOrNot"
-      :title="setCourseAlert.title"
-      :classname="setCourseAlert.classname"
-      :is-show-icon="setCourseAlert.isShowIcon"
-      :is-show-cancel="setCourseAlert.isShowCancel"
-    >
-      <template slot="content">
-        <div class="course_alert_cotent">
-          <!-- 標題 -->
-          <h5 class="course_alert_title">{{ $t('course_info.info_title') }}</h5>
-          <div class="course_alert_seperator"></div>
-
-          <!-- 內容 -->
-          <div class="course_alert_detail">
-            <!-- 課程單位 -->
+          <!-- 課程名稱 -->
+          <h5 class="course_detail_title course_name">
+            {{ viewLightBoxData.name }}
+          </h5>
+          <!-- 教師名稱 -->
+          <span class="text_set_main teacher_name border-none">{{
+            dealTeacherName(viewLightBoxData.teacher)
+          }}</span>
+          <!-- 教師經歷(根據不同語系顯示不同內容) -->
+          <template>
             <div
-              v-for="item in setCourseAlert.lessionsInAlert"
-              :key="item.lesson.id"
-              class="lessions_unit"
+              v-if="i18n === 'cn' || i18n === 'tw'"
+              class="text_set_container"
             >
-              <!-- 課程名稱 -->
-              <div class="course_alert_detail_unit">
-                <h6 class="course_alert_detail_unit_title">
-                  {{ $t('course_info.name') }}
-                </h6>
-                <span class="course_alert_detail_unit_divider">|</span>
-                <div class="course_alert_detail_unit_content">
-                  {{ item.lesson.name }}
-                </div>
+              <div class="text_set_content">
+                <span class="text_set_main">
+                  {{ dealTeacherIntros(viewLightBoxData.teacher.intros[0]) }}
+                </span>
+                <br />
+
+                <small class="text_set_sub">{{
+                  viewLightBoxData.teacher.intros[0].intro_en
+                }}</small>
+                <br />
               </div>
+            </div>
 
-              <!-- 授課老師 -->
-              <div class="course_alert_detail_unit">
-                <h6 class="course_alert_detail_unit_title">
-                  {{ $t('teacher_list.teacher') }}
-                </h6>
-                <span class="course_alert_detail_unit_divider">|</span>
-                <div class="course_alert_detail_unit_content">
-                  <!-- 根據不同語系顯示不同內容 -->
-                  <div
-                    v-if="i18n === 'cn' || i18n === 'tw'"
-                    class="course_alert_detail_unit_container"
-                  >
-                    <div class="unit_box">
-                      <span class="unit_main">
-                        {{ dealTeacherName(item.lesson) }}
-                      </span>
-                      <br />
+            <div v-if="i18n === 'en'" class="text_set_content">
+              <span class="text_set_main">{{
+                viewLightBoxData.teacher.intros[0].intro_en
+              }}</span>
+            </div>
+          </template>
 
-                      <small class="text_set_sub">
-                        {{ item.lesson.teacher.name_en }}
-                      </small>
-                    </div>
-                    <div
-                      v-if="i18n === 'en'"
-                      class="course_alert_detail_unit_container"
-                    >
-                      <div class="unit_box">
-                        <span class="unit_main">{{
-                          item.lesson.teacher.name_en
-                        }}</span>
-                      </div>
-                    </div>
-                  </div>
+          <!-- 課程時間 -->
+          <div class="course_time_container">
+            <!-- 標題 -->
+            <h5 class="course_detail_title course_name">
+              {{ $t('course_info.time') }}
+            </h5>
+
+            <!-- 課堂 -->
+            <div class="lessons_container">
+              <div
+                v-for="lesson in viewLightBoxData.times"
+                :key="lesson.id"
+                class="lesson_unit"
+              >
+                <!-- 課堂開始時間以及課堂名稱 -->
+                <div
+                  class="lesson_detail"
+                  :class="{ 'w-100': isShowLessionStatus === false }"
+                >
+                  <span class="text_set_sub d-block fz-70 lesson_name">{{
+                    lesson.name
+                  }}</span>
+                  <span class="text_set_sub d-block fz-70 lesson_time">{{
+                    lesson.start_at | formatDate
+                  }}</span>
                 </div>
-              </div>
 
-              <!-- 課程介紹 -->
-              <div class="course_alert_detail_unit">
-                <h6 class="course_alert_detail_unit_title">
-                  {{ $t('course_info.intro_title') }}
-                </h6>
-                <span class="course_alert_detail_unit_divider">|</span>
-                <div class="course_alert_detail_unit_content">
-                  {{ item.lesson.introduction }}
-                </div>
-              </div>
-
-              <!-- 課程時間 -->
-              <div class="course_alert_detail_unit">
-                <h6 class="course_alert_detail_unit_title">
-                  {{ $t('course_info.time') }}
-                </h6>
-                <span class="course_alert_detail_unit_divider">|</span>
-                <div class="course_alert_detail_unit_content">
+                <!-- 課堂狀態 -->
+                <div v-if="isShowLessionStatus" class="lesson_status">
+                  <!-- 已報名 -->
                   <span
-                    v-for="time in item.times"
-                    :key="time.id"
-                    class="course_alert_detail_unit_time"
-                  >
-                    {{ time.start_at | formatDate }}
+                    v-if="isThisCourseHadApplied(lesson.id)"
+                    class="kart-gray had_signed_up"
+                    >{{ $t('enroll.enrolled') }}
                   </span>
+
+                  <!-- 立即報名 和 愛心 -->
+                  <template v-else>
+                    <!-- 立即報名 -->
+                    <button
+                      class="kart-btn kart-sub enroll_now"
+                      @click.prevent="checkRemaingCourse(lesson.id)"
+                    >
+                      {{ $t('enroll.enroll_now') }}
+                    </button>
+
+                    <!-- 愛心 -->
+                    <button
+                      v-if="!isThisCourseHadApplied(lesson.id)"
+                      class="add_wish_btn"
+                      :class="{ selected: isThisCourseInCart(lesson.id) }"
+                      @click.prevent="toggleCart(lesson.id)"
+                    >
+                      <img
+                        class="add_wish_img add"
+                        src="@/assets/img/v2/browse/purchase_empty_heart@2x.png"
+                      />
+                      <img
+                        class="add_wish_img remove"
+                        src="@/assets/img/v2/browse/purchase_heart@2x.png"
+                      />
+                    </button>
+                  </template>
                 </div>
               </div>
             </div>
           </div>
+
           <!-- 關閉按鈕 -->
-          <div class="course_alert_btn_container">
-            <button
-              class="main_btn course_alert_close"
-              @click.prevent="setCourseAlert.openOrNot = false"
-            >
-              {{ $t('system_message.close') }}
-            </button>
-          </div>
+          <button
+            class="w-100 kart-btn kart-sub close_course_alert"
+            @click.prevent="courseAlert.openOrNot = false"
+          >
+            {{ $t('system_message.close') }}
+          </button>
         </div>
       </template>
-    </AppAlert>
+    </AppLightBox>
   </div>
 </template>
 
 <script>
 // resources
 import {
-  courseListPath,
-  setCourseListPath,
-  cartItemPath,
-  enrolledListPath,
-  cartPath,
-  saleAdvertisementImgSrcPath,
+  fetchBrowseLiveCoursePath,
+  fetchBrowseRecordCoursePath,
+  fetchcartItemPath,
+  fetchenrolledListPath,
+  operateCartPath,
+  fetchSaleAdvertisementImgSrcPath,
+  fetchRemainingCoursePath,
+  enrollNowPath,
 } from '@/store/ajax-path.js';
 import { axiosSuccessHint } from '@/plugins/utility.js';
 import { checkObjectIsEmpty } from '@/plugins/checker.js';
@@ -507,13 +331,17 @@ import commonMixinObj from '@/mixins/common.js';
 import categoryMixinObj from '@/mixins/category.js';
 
 // component
-import AppAlert from '@/components/AppAlert.vue';
+// import AppAlert from '@/components/AppAlert.vue';
+import AppLightBox from '@/components/AppLightBox.vue';
+import AppNoClasses from '@/components/AppNoClasses.vue';
 import ThePagination from '@/components/ThePagination.vue';
 
 export default {
   name: 'AppBrowse',
   components: {
-    AppAlert,
+    // AppAlert,
+    AppLightBox,
+    AppNoClasses,
     ThePagination,
   },
   mixins: [commonMixinObj, paginationMixinObj, categoryMixinObj],
@@ -525,26 +353,65 @@ export default {
   },
   data() {
     return {
-      // 分類( 'course' => 一般課程 ｜ 'public' => 套裝課程)
+      // 分類( 'live' => 直播課程 ｜ 'record' => 回播課程)
       category: '',
       // 銷售方案燈箱
       saleAdImgSrc: '',
-      courses: {
-        // 一般課程
-        course: [],
-        // 套裝課程
-        set: [],
-      },
-      // 可加入購物車清單
+      // 購物車內有哪些課堂
+      cartLessions: [],
+      // 已報名的課堂
+      enrolledLessions: [],
+      // 所有的課堂(包含直播以及回播)
       courseCartList: [],
+      // 餘課數
+      remaining: {
+        points: 0,
+        reviewable_points: 0,
+        individual_points: 0,
+      },
+      courseObj: {
+        // 直播課程
+        live: {
+          courses: [],
+          // 直播課程 的頁碼
+          livePageObj: {
+            links: {},
+            props: {
+              current: 1,
+              prev: 1,
+              next: 1,
+              total: 1,
+              totalPages: 1,
+              perPage: 10,
+              path: '',
+              limitPage: 5,
+            },
+          },
+        },
+        // 套裝課程
+        record: {
+          courses: [],
+          // 直播課程 的頁碼
+          recordPageObj: {
+            links: {},
+            props: {
+              current: 1,
+              prev: 1,
+              next: 1,
+              total: 1,
+              totalPages: 1,
+              perPage: 10,
+              path: '',
+              limitPage: 5,
+            },
+          },
+        },
+      },
       // 課程詳細燈箱的內容
       courseAlert: {
         openOrNot: false,
-        classname: 'course_detail_alert',
-        title: '',
-        subtitle: '',
-        isShowIcon: false,
         isShowCancel: false,
+        classname: 'course_detail_alert',
         // 給予最低的結構不讓程式執行錯誤
         courseObj: {
           name: '',
@@ -561,77 +428,15 @@ export default {
               },
             ],
           },
-          times: [{ start_at: '2020-06-09T16:00:00+00:00', id: 1 }],
+          times: [
+            { start_at: '2020-06-09T16:00:00+00:00', id: 1, name: '123' },
+          ],
         },
-      },
-      // 套裝課程的燈箱內容
-      setCourseAlert: {
-        openOrNot: false,
-        classname: 'course_detail_alert set_course_detail_alert',
-        title: '',
-        subtitle: '',
-        isShowIcon: false,
-        isShowCancel: false,
-        // 給予最低的結構不讓程式執行錯誤
-        setCourseObj: {},
-        lessionsInAlert: [
-          {
-            lesson: {
-              id: 1,
-              teacher: {
-                name_en: '',
-                name_hant: '',
-                name: '',
-                intros: [
-                  {
-                    id: 1,
-                    intro: '',
-                    intro_en: '',
-                    intro_hant: '',
-                  },
-                ],
-              },
-            },
-            times: [{ start_at: '2020-06-09T16:00:00+00:00', id: 1 }],
-          },
-        ],
       },
       // 銷售方案的燈箱內容
       saleAdAlert: {
         openOrNot: false,
         classname: 'sale_ad_alert',
-        title: '',
-        subtitle: '',
-        isShowIcon: false,
-        isShowCancel: true,
-      },
-      // 一般課程的頁碼
-      coursePageObj: {
-        links: {},
-        props: {
-          current: 1,
-          prev: 1,
-          next: 1,
-          total: 1,
-          totalPages: 1,
-          perPage: 10,
-          path: '',
-          limitPage: 5,
-        },
-      },
-      // 套裝課程的頁碼
-      setCoursePageObj: {
-        links: {},
-        props: {
-          current: 1,
-          prev: 1,
-          next: 1,
-          total: 1,
-          totalPages: 1,
-          perPage: 10,
-          path: '',
-          limitPage: 5,
-        },
       },
     };
   },
@@ -644,8 +449,13 @@ export default {
     },
   },
   computed: {
-    loginToken() {
-      return this.$store.state.user.loginToken;
+    /**
+     * @author odin
+     * @description 判斷沒有內容的時候要顯示的文字
+     * @return {boolean}
+     */
+    noClassesText() {
+      return 'nextcourse.nodata';
     },
 
     /**
@@ -653,95 +463,126 @@ export default {
      * @description 開啟特定課程的詳細內容
      * @return {array} 判斷要用哪一個陣列
      */
-    courseJudge() {
+    viewData() {
       let arr = [];
-      if (this.category === 'course') {
-        arr = [...this.courses.course];
-      } else if (this.category === 'set') {
-        arr = [...this.courses.set];
+      switch (this.category) {
+        case 'live':
+          arr = [...this.courseObj.live.courses];
+          break;
+        case 'record':
+          arr = [...this.courseObj.record.courses];
+          break;
       }
+
       return arr;
+    },
+
+    /**
+     * @author odin
+     * @description 指引燈箱的內容要用哪一個資料來源
+     * @return {object}}
+     */
+    viewLightBoxData() {
+      return this.courseAlert.courseObj;
+    },
+
+    /**
+     * @author odin
+     * @description 判斷要用哪個 paginationbObj
+     * @return {object}
+     */
+    paginationObj() {
+      let returnPaginationObj = {};
+
+      switch (this.category) {
+        case 'live':
+          returnPaginationObj = this.courseObj.live.livePageObj.props;
+          break;
+        case 'record':
+          returnPaginationObj = this.courseObj.record.recordPageObj.props;
+          break;
+      }
+
+      return returnPaginationObj;
+    },
+
+    /**
+     * @author odin
+     * @description 判斷要用哪個 paginationn 的事件
+     * @return {function}
+     */
+    paginationEvent() {
+      let eventName = {};
+
+      switch (this.category) {
+        case 'live':
+          eventName = this.fetchLiveCourse;
+          break;
+        case 'record':
+          eventName = this.fetchRecordCourse;
+          break;
+      }
+
+      return eventName;
+    },
+
+    /**
+     * @author odin
+     * @description 判斷課程狀態是否要打開
+     * @return {boolean}
+     */
+    isShowLessionStatus() {
+      let showOrNot = false;
+
+      // 分頁在直撥課程，且為訂閱制學生時，不顯示課程狀態
+      if (this.category === 'live' && this.loginUserIsSubscribed) {
+        showOrNot = false;
+      } else {
+        showOrNot = true;
+      }
+
+      return showOrNot;
     },
   },
   created() {
-    // 取得資料的初始化
-    this.initAxioses();
+    // 元件初始化
+    this.init();
   },
   methods: {
+    /**
+     * @author odin
+     * @description 元件初始化
+     */
+    init() {
+      // 取得其他初始化資料
+      this.initAxioses();
+    },
+
     /**
      * @author odin
      * @description 開啟特定課程的詳細內容
      * @param {object} course 單一個課程的所有內容
      */
     showCourseDetailAlert(course) {
-      const category = this.category;
-      console.log('category', category);
-      console.log('course', course);
-
-      if (category === 'course') {
-        // 把特定內容給放到對應的位置
-        this.courseAlert.courseObj = { ...course };
-        // 開啟燈箱
-        this.courseAlert.openOrNot = true;
-      } else if (category === 'set') {
-        // 把特定內容給放到對應的位置
-        this.setCourseAlert.setCourseObj = { ...course };
-        // 處理燈箱要顯示的課程資訊
-        this.dealSetCourseDataForAlert();
-        // 開啟燈箱
-        this.setCourseAlert.openOrNot = true;
+      switch (this.category) {
+        case 'live':
+          // 把特定內容給放到對應的位置
+          this.courseAlert.courseObj = { ...course };
+          // 開啟燈箱
+          this.courseAlert.openOrNot = true;
+          break;
+        case 'record':
+          // 把特定內容給放到對應的位置
+          this.courseAlert.courseObj = { ...course };
+          // 開啟燈箱
+          this.courseAlert.openOrNot = true;
+          break;
       }
+
+      // 開啟燈箱
+      this.courseAlert.openOrNot = true;
     },
 
-    /**
-     * @author odin
-     * @description 處理套裝課程所要產生的資料
-     * @return {array}
-     */
-    dealSetCourseDataForAlert() {
-      console.log(
-        'this.setCourseAlert.setCourseObj',
-        typeof this.setCourseAlert.setCourseObj,
-        this.setCourseAlert.setCourseObj,
-      );
-      const setCourseObj = this.setCourseAlert.setCourseObj;
-      const thisSetCourseTimesArray = [...setCourseObj.times];
-
-      let resultData = {};
-
-      thisSetCourseTimesArray.forEach(item => {
-        let lessonId = item.lesson.id;
-        if (!resultData[lessonId]) {
-          resultData[lessonId] = [];
-        }
-        resultData[lessonId].push(item);
-      });
-
-      let lessonIds = Object.keys(resultData);
-      let lessons = lessonIds.map(lessonId => ({
-        lesson: resultData[lessonId][0].lesson,
-        times: resultData[lessonId],
-      }));
-
-      console.log('lessons', lessons);
-
-      this.setCourseAlert.lessionsInAlert = lessons;
-    },
-
-    /**
-     * @author odin
-     * @description 處理不同語系的老師名稱
-     * @param {object} item 單一個課程的所有介紹
-     */
-    dealTeacherName(item) {
-      if (this.i18n === 'cn') {
-        return item.teacher.name;
-      } else if (this.i18n === 'tw') {
-        return item.teacher.name_hant;
-      } else {
-        return '';
-      }
-    },
     /**
      * @author odin
      * @description 處理不同語系的老師介紹
@@ -763,12 +604,14 @@ export default {
      * @return {array} 含有所有課程可以加入購物清單(愛心)的陣列
      */
     prepareCourseCartList() {
-      const targetArray = [...this.courses.course];
+      const targetArray = [
+        ...this.courseObj.live.courses,
+        ...this.courseObj.record.courses,
+      ];
       let courseCartList = [];
 
       targetArray.forEach(item => {
         const timesArray = [...item.times];
-
         timesArray.forEach(timeItem => {
           courseCartList.push({
             id: timeItem.id,
@@ -786,15 +629,15 @@ export default {
      * @description 確認是否有回傳內容，有的話就將 courseCartList 中對應 lesson_time_id 的 物件的 isInCart 改為 true
      * @param {array} cartItemArray -- ajax 傳回來的結果陣列
      */
-    prepareCartItems(cartItemArray) {
-      console.log('cartItemArray', cartItemArray);
-      if (checkObjectIsEmpty(cartItemArray)) return;
+    prepareCartItems() {
+      const enrolledLessions = this.enrolledLessions;
+      if (checkObjectIsEmpty(enrolledLessions)) return;
 
       // 找出回傳的 ajax 陣列中，有的物件 id 比對，找到的話就將 courseCartList 中的那個 id 的 isInCart 改為 true
-      [...cartItemArray].forEach(courseInCartObj => {
-        [...this.courseCartList].forEach((lession, lessionIndex) => {
-          if (lession.id === courseInCartObj.lesson_time_id) {
-            this.courseCartList[lessionIndex].isInCart = true;
+      [...enrolledLessions].forEach(enrolled => {
+        [...this.courseCartList].forEach((lesson, lessonIndex) => {
+          if (lesson.id === enrolled.lesson_time_id) {
+            this.courseCartList[lessonIndex].isInCart = true;
           }
         });
       });
@@ -830,19 +673,23 @@ export default {
 
     /**
      * @author odin
-     * @description 處理一般課程回傳的值
-     * @param {object} intro 老師介紹的第一筆內容
+     * @param {object} liveRes ajax 回傳成功的內容
+     * @description 處理 直播課程 回傳的值
      */
-    handleCourseData(courseRes) {
-      const data = courseRes.data.data;
-      const meta = courseRes.data.meta;
-      const links = courseRes.data.links;
+    handleLiveCourseData(liveRes) {
+      const data = liveRes.data.data;
+      const meta = liveRes.data.meta;
+      const links = liveRes.data.links;
 
       // 放入課程內容
-      this.courses.course = data;
+      this.courseObj.live.courses = data;
 
       // 處理頁碼
-      this.vMixhandlePaginationData(this.coursePageObj, links, meta);
+      this.vMixhandlePaginationData(
+        this.courseObj.live.livePageObj,
+        links,
+        meta,
+      );
 
       // 回到最上方
       this.backToTop();
@@ -850,19 +697,23 @@ export default {
 
     /**
      * @author odin
-     * @description 處理套裝課程回傳的值
-     * @param {object} intro 老師介紹的第一筆內容
+     * @param {object} recordRes ajax 回傳成功的內容
+     * @description 處理 回播課程 回傳的值
      */
-    handleSetCourseData(courseRes) {
-      const data = courseRes.data.data;
-      const meta = courseRes.data.meta;
-      const links = courseRes.data.links;
+    handleRecordCourseData(recordRes) {
+      const data = recordRes.data.data;
+      const meta = recordRes.data.meta;
+      const links = recordRes.data.links;
 
       // 放入課程內容
-      this.courses.set = data;
+      this.courseObj.record.courses = data;
 
       // 處理頁碼
-      this.vMixhandlePaginationData(this.setCoursePageObj, links, meta);
+      this.vMixhandlePaginationData(
+        this.courseObj.record.recordPageObj,
+        links,
+        meta,
+      );
 
       // 回到最上方
       this.backToTop();
@@ -870,29 +721,60 @@ export default {
 
     /**
      * @author odin
-     * @description 處理套裝課程回傳的值
-     * @param {object} targetPageObj data對應的頁碼物件
-     * @param {object} links ajax 傳過來的 links 物件
-     * @param {object} meta ajax 傳過來的 meta 物件
+     * @param {object} cartRes ajax 回傳成功的內容
+     * @description 處理 購物車內的課堂 的物件
      */
-    // move to plugins/vue-handle.js
-    // handlePaginationData(targetPageObj, links, meta) {
-    //   // 放入連結
-    //   targetPageObj.links = links;
+    handleCartItems(cartRes) {
+      this.lessonsInCart = cartRes.data.data;
+    },
 
-    //   // 放入頁碼相關資訊
-    //   targetPageObj.props.current = meta.current_page;
-    //   targetPageObj.props.prev = meta.from;
-    //   targetPageObj.props.next =
-    //     meta.current_page === meta.last_page
-    //       ? meta.last_page
-    //       : meta.current_page + 1;
-    //   targetPageObj.props.total = meta.total;
-    //   targetPageObj.props.totalPages = meta.last_page;
-    //   targetPageObj.props.perPage = meta.per_page;
-    //   targetPageObj.props.path = meta.path;
-    //   targetPageObj.props.limitPage = 5;
+    /**
+     * @author odin
+     * @param {object} enrollRes ajax 回傳成功的內容
+     * @description 處理 已報名課堂 的物件
+     */
+    handleEnrollItems(enrollRes) {
+      this.enrolledLessions = enrollRes.data.data;
+    },
+
+    /**
+     * @author odin
+     * @param {object} saleAdRes ajax 回傳成功的內容
+     * @description 處理 購物車內的課程物件
+     */
+    handleSaleAdvertisementImg(saleAdRes) {
+      this.saleAdImgSrc = saleAdRes.data.data.img;
+    },
+
+    /**
+     * @author odin
+     * @description 處理套裝課程回傳的值
+     * @param {object} intro 老師介紹的第一筆內容
+     */
+    // handleSetCourseData(courseRes) {
+    //   const data = courseRes.data.data;
+    //   const meta = courseRes.data.meta;
+    //   const links = courseRes.data.links;
+
+    //   // 放入課程內容
+    //   this.courses.set = data;
+
+    //   // 處理頁碼
+    //   this.vMixhandlePaginationData(this.setCoursePageObj, links, meta);
+
+    //   // 回到最上方
+    //   this.backToTop();
     // },
+
+    /**
+     * @author odin
+     * @param {object} remainingRes ajax 回傳成功的內容
+     * @description 處理 購物車內的課程物件
+     */
+    handleRemainingCoursesData(remainingRes) {
+      console.log('remainingRes', remainingRes);
+      this.remaining = remainingRes.data.data;
+    },
 
     /**
      * @author odin
@@ -907,7 +789,7 @@ export default {
 
       const thisObj = [...this.courseCartList].find(item => id === item.id);
 
-      return thisObj.isInCart;
+      return thisObj !== undefined ? thisObj.isInCart : false;
     },
 
     /**
@@ -917,22 +799,38 @@ export default {
      */
     isThisCourseHadApplied(id) {
       // 還沒讀到資料之前
-      if (checkObjectIsEmpty(this.courseCartList)) {
+      if (checkObjectIsEmpty(this.cartLessions)) {
         return;
       }
 
-      const thisObj = [...this.courseCartList].find(item => id === item.id);
+      const thisObj = [...this.cartLessions].find(item => id === item.id);
 
       return thisObj.hadApplied;
     },
 
     /**
      * @author odin
-     * @description 取得一般課程列表(不含套裝課程)
+     * @description 確認該使用者的餘課數是否還足夠
+     * @param {string} lessionId 想要報名該課堂的ID
      */
-    fetchCourse() {
+    checkRemaingCourse(lessionId) {
+      if (this.remaining.points >= 1) {
+        // 點數足夠，打API告知報名該課堂
+        this.enrollNow(lessionId);
+      } else {
+        // 關閉燈箱並且顯示點數不夠
+        this.courseAlert.openOrNot = false;
+        this.$bus.$emit('notify:message', 'enroll.normal_point_not_enough');
+      }
+    },
+
+    /**
+     * @author odin
+     * @return {Axios Obj} 回傳 直播課程的 axios 物件
+     */
+    returnLiveCourseAxios() {
       return this.axios({
-        url: `${courseListPath}?page=1`,
+        url: `${fetchBrowseLiveCoursePath}?page=1`,
         method: 'get',
         headers: {
           Authorization: this.loginToken,
@@ -942,11 +840,11 @@ export default {
 
     /**
      * @author odin
-     * @description 取得套裝課程列表
+     * @return {Axios Obj} 回傳 直播課程的 axios 物件
      */
-    fetchSetCourse() {
+    returnRecordCourseAxios() {
       return this.axios({
-        url: `${setCourseListPath}?page=1`,
+        url: `${fetchBrowseRecordCoursePath}?page=1`,
         method: 'get',
         headers: {
           Authorization: this.loginToken,
@@ -958,9 +856,9 @@ export default {
      * @author odin
      * @description 取得購物車內的資料
      */
-    fetchCartItems() {
+    returnCartItemsAxios() {
       return this.axios({
-        url: cartItemPath,
+        url: fetchcartItemPath,
         method: 'get',
         headers: {
           Authorization: this.loginToken,
@@ -972,9 +870,9 @@ export default {
      * @author odin
      * @description 取得 已報名(非套裝) 的課程時間
      */
-    fetchEnrolledList() {
+    returnEnrolledListAxios() {
       return this.axios({
-        url: enrolledListPath,
+        url: fetchenrolledListPath,
         method: 'get',
         headers: {
           Authorization: this.loginToken,
@@ -986,9 +884,9 @@ export default {
      * @author odin
      * @description 取得 銷售方案 的img:src
      */
-    fetchSaleAdvertisement() {
+    returnSaleAdvertisementAxios() {
       return this.axios({
-        url: saleAdvertisementImgSrcPath,
+        url: fetchSaleAdvertisementImgSrcPath,
         method: 'get',
         headers: {
           Authorization: this.loginToken,
@@ -998,51 +896,78 @@ export default {
 
     /**
      * @author odin
-     * @description 一開始的時候一併送出 axios 的請求
+     * @description 取得可以購買的課程(非套裝課程)(餘課數)
      */
-    async initAxioses() {
+    returnRemainingCourseAxios() {
+      return this.axios({
+        url: fetchRemainingCoursePath,
+        method: 'get',
+        headers: {
+          Authorization: this.loginToken,
+        },
+      });
+    },
+
+    /**
+     * @author odin
+     * @description 取得 直播課程 的資料
+     */
+    async fetchLiveCourse(page = 1) {
       // 開啟 loading
       this.$bus.$emit('loading:on');
 
       try {
-        const courseRes = await this.fetchCourse();
+        const res = await this.axios({
+          url: `${fetchBrowseLiveCoursePath}?page=${page}`,
+          method: 'get',
+          headers: {
+            Authorization: this.loginToken,
+          },
+        });
 
-        const setCourseRes = await this.fetchSetCourse();
+        if (res.data.data || res.data.status) {
+          axiosSuccessHint('fetchLiveCourse', res);
 
-        const cartRes = await this.fetchCartItems();
-
-        const enrollRes = await this.fetchEnrolledList();
-
-        const saleAdRes = await this.fetchSaleAdvertisement();
-
-        // 成功提示
-        axiosSuccessHint('fetchCourse', courseRes);
-        axiosSuccessHint('fetchSetCourse', setCourseRes);
-        axiosSuccessHint('fetchCartItems', cartRes);
-        axiosSuccessHint('enrollRes', enrollRes);
-        axiosSuccessHint('saleAdRes', saleAdRes);
-
-        if (
-          courseRes !== undefined &&
-          setCourseRes !== undefined &&
-          cartRes !== undefined &&
-          enrollRes !== undefined &&
-          saleAdRes !== undefined
-        ) {
-          // 資料處理(順序一定要這樣)
-          this.handleCourseData(courseRes);
-          this.handleSetCourseData(setCourseRes);
-          this.prepareCourseCartList();
-          this.prepareCartItems(cartRes.data.data);
-          this.handleCourseHadApplied(enrollRes.data.data);
-          this.saleAdImgSrc = saleAdRes.data.data.img;
+          // 處理 直播課程 回傳的值
+          this.handleLiveCourseData(res);
         }
       } catch (err) {
-        console.log('initAxioses err', err);
-      } finally {
-        // 關閉 loading
-        this.$bus.$emit('loading:off');
+        console.log('fetchLiveCourse', err);
       }
+
+      // 關閉 loading
+      this.$bus.$emit('loading:off');
+    },
+
+    /**
+     * @author odin
+     * @description 取得 直播課程 的資料
+     */
+    async fetchRecordCourse(page = 1) {
+      // 開啟 loading
+      this.$bus.$emit('loading:on');
+
+      try {
+        const res = await this.axios({
+          url: `${fetchBrowseRecordCoursePath}?page=${page}`,
+          method: 'get',
+          headers: {
+            Authorization: this.loginToken,
+          },
+        });
+
+        if (res.data.data || res.data.status) {
+          axiosSuccessHint('fetchRecordCourse', res);
+
+          // 處理 直播課程 回傳的值
+          this.handleRecordCourseData(res);
+        }
+      } catch (err) {
+        console.log('fetchRecordCourse', err);
+      }
+
+      // 關閉 loading
+      this.$bus.$emit('loading:off');
     },
 
     /**
@@ -1061,34 +986,147 @@ export default {
           this.saleAdImgSrc = saleAdRes.data.data.img;
         }
       } catch (err) {
-        console.log('initAxioses err', err);
+        console.log('fetchSaleAdRes err', err);
       }
     },
 
     /**
      * @author odin
-     * @description 打加入購物車的API，並傳入 lessonTimeId
+     * @description 一開始的時候一併送出 axios 的請求
      */
-    async fetchSpecificCoursePage(page = 1) {
-      console.log('fetchSpecificCoursePage page', page);
+    async initAxioses() {
+      // 開啟 loading
+      this.$bus.$emit('loading:on');
+
+      try {
+        // 取得 直播課程 的資料
+        const liveRes = await this.returnLiveCourseAxios();
+
+        // 取得 課程回播(影片回放) 的資料
+        const recordRes = await this.returnRecordCourseAxios();
+
+        // 取得在購物車中的列表
+        const cartRes = await this.returnCartItemsAxios();
+
+        // 取得已報名課堂列表
+        const enrollRes = await this.returnEnrolledListAxios();
+
+        // 取得銷售廣告的圖片路徑
+        const saleAdRes = await this.returnSaleAdvertisementAxios();
+
+        // 取得餘課數
+        const remainingRes = await this.returnRemainingCourseAxios();
+
+        // 成功提示
+        axiosSuccessHint('liveRes', liveRes);
+        axiosSuccessHint('recordRes', recordRes);
+        axiosSuccessHint('cartRes', cartRes);
+        axiosSuccessHint('enrollRes', enrollRes);
+        axiosSuccessHint('saleAdRes', saleAdRes);
+        axiosSuccessHint('remainingRes', remainingRes);
+
+        if (
+          liveRes !== undefined &&
+          recordRes !== undefined &&
+          cartRes !== undefined &&
+          enrollRes !== undefined &&
+          saleAdRes !== undefined &&
+          remainingRes !== undefined
+        ) {
+          // 資料處理
+          this.handleLiveCourseData(liveRes);
+          this.handleRecordCourseData(recordRes);
+          this.handleCartItems(cartRes);
+          this.handleEnrollItems(enrollRes);
+          this.handleSaleAdvertisementImg(saleAdRes);
+          this.handleRemainingCoursesData(remainingRes);
+
+          // 處理課堂相關的資料，並且比對是否有報名該課程
+          this.prepareCourseCartList();
+          this.prepareCartItems();
+        }
+      } catch (err) {
+        console.log('initAxioses err', err);
+      } finally {
+        // 關閉 loading
+        this.$bus.$emit('loading:off');
+      }
+    },
+
+    /**
+     * @author odin
+     * @param {string} lessionId 課堂 id
+     * @description 打立即報名的API，並傳入 lessonTimeId
+     */
+    async enrollNow(lessionId) {
+      // 開啟 loading
+      this.$bus.$emit('loading:on');
+
       try {
         const res = await this.axios({
-          url: `${courseListPath}?page=${page}`,
-          method: 'get',
+          url: enrollNowPath,
+          method: 'post',
+          data: {
+            lesson_time_id: lessionId,
+          },
           headers: {
             Authorization: this.loginToken,
           },
         });
 
         if (res.data.data || res.data.status) {
-          console.log('addToCart Success');
-          console.log('fetchSpecificCoursePage res => ', res);
-          this.handleCourseData(res);
+          axiosSuccessHint('enrollNow', res);
+
+          // 關閉目前的燈箱
+          this.courseAlert.openOrNot = false;
+          // 顯示報名成功的燈箱
+          this.$bus.$emit(
+            'notify:message',
+            'system_message.enroll_single_lesson_success',
+          );
+
+          // 重整
+          this.reload();
         }
       } catch (err) {
-        console.log('addToCart', err);
+        console.log('enrollNow', err);
+        // 關閉目前的燈箱
+        this.courseAlert.openOrNot = false;
+        // 顯示報名成功的燈箱
+        this.$bus.$emit(
+          'notify:message',
+          'system_message.enroll_single_lesson_fail',
+        );
       }
+
+      // 關閉 loading
+      this.$bus.$emit('loading:off');
     },
+
+    /**
+     * @author odin
+     * @description 打加入購物車的API，並傳入 lessonTimeId
+     */
+    // async fetchSpecificCoursePage(page = 1) {
+    //   console.log('fetchSpecificCoursePage page', page);
+    //   try {
+    //     const res = await this.axios({
+    //       url: `${courseListPath}?page=${page}`,
+    //       method: 'get',
+    //       headers: {
+    //         Authorization: this.loginToken,
+    //       },
+    //     });
+
+    //     if (res.data.data || res.data.status) {
+    //       console.log('addToCart Success');
+    //       console.log('fetchSpecificCoursePage res => ', res);
+    //       this.handleCourseData(res);
+    //     }
+    //   } catch (err) {
+    //     console.log('addToCart', err);
+    //   }
+    // },
 
     /**
      * @author odin
@@ -1097,7 +1135,7 @@ export default {
     async addToCart(lessonTimeId) {
       try {
         const res = await this.axios({
-          url: cartPath,
+          url: operateCartPath,
           method: 'post',
           data: {
             lesson_time_id: lessonTimeId,
@@ -1124,7 +1162,7 @@ export default {
       console.log('lessonTimeId', lessonTimeId);
       try {
         const res = await this.axios({
-          url: `${cartPath}/${lessonTimeId}`,
+          url: `${operateCartPath}/${lessonTimeId}`,
           method: 'delete',
           headers: {
             Authorization: this.loginToken,
@@ -1147,6 +1185,8 @@ export default {
      */
     toggleCart(lessonTimeId) {
       const courseCartList = [...this.courseCartList];
+
+      console.log('courseCartList', courseCartList);
 
       if (this.isThisCourseInCart(lessonTimeId)) {
         // 從購物車中移除

@@ -13,6 +13,10 @@
   &:hover {
     color: map-get($pagination, hover);
   }
+
+  &.current {
+    color: map-get($pagination, hover);
+  }
 }
 
 .page_btn.unactive {

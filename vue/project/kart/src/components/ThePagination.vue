@@ -12,6 +12,7 @@
       v-for="page in scopeArray"
       :key="page"
       class="page_btn num_page_btn"
+      :class="{ current: page === pageObj.current }"
       @click.prevent="goSpecifiPage(page)"
     >
       {{ page }}
@@ -108,7 +109,7 @@ export default {
         }
       }
 
-      console.log('scopeArray', scopeArray);
+      // console.log('scopeArray', scopeArray);
       return scopeArray;
     },
   },

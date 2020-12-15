@@ -5,8 +5,10 @@
 const defaultCategory = {
   course: '',
   enroll: 'cart',
-  browse: 'course',
+  browse: 'live',
   'my-account': 'mysetting',
+  videos: 'monthlyeslite',
+  'video-upload': 'normal',
 };
 
 const categoryMixinObj = {

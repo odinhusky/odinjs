@@ -1,6 +1,5 @@
 import axios from '../axios';
 import {
-  fetchBannerImgPath,
   studentLoginPath,
   studentLogoutPath,
   teacherLoginPath,
@@ -9,11 +8,11 @@ import {
   countryCodeListPath,
 } from '@/store/ajax-path.js';
 import {
-  FETCH_BANNER_IMG_PATH,
   FETCH_NOTIFICATION,
   UPDATE_I18N_LANGUAGE,
   UPDATE_LOGIN_DETAIL,
   UPDATE_LOGOUT_DETAIL,
+  UPDATE_USER_DATA,
 } from '@/store/mutation-types';
 
 // action 作非同步的行為，把資料commit給mutation
@@ -28,19 +27,17 @@ const actions = {
   updateI18nLanguage(context, payload) {
     context.commit(UPDATE_I18N_LANGUAGE, payload);
   },
+
   /**
    * @author odin
    * @param {object} context 第一個參數固定是context
-   * @description ES7包裝axios取得 Banner 路徑
+   * @param {string} payload 傳進來要變動的使用者資料
+   * @description 更新因為修改學生資料而變動的使用者資料欄位
    */
-  async fetchBannerImgPath(context) {
-    const result = await axios.get(fetchBannerImgPath);
-
-    if (result.data) {
-      let bannerPath = result.data.data[0].img;
-      context.commit(FETCH_BANNER_IMG_PATH, bannerPath);
-    }
+  updateUserData(context, payload) {
+    context.commit(UPDATE_USER_DATA, payload);
   },
+
   /**
    * @author odin
    * @param {object} context 第一個參數固定是context
@@ -57,7 +54,7 @@ const actions = {
     if (result.data) {
       const loginToken = `${result.data.data.token.token_type} ${result.data.data.token.access_token}`;
       const loginDetail = result.data.data;
-      const loginType = loginDetail.is_teacher ? 'teacher' : 'student';
+      const loginType = 'student';
       const mutationPayload = {
         loginToken,
         loginType,
@@ -95,8 +92,7 @@ const actions = {
     if (result.data) {
       const loginToken = `${result.data.data.token.token_type} ${result.data.data.token.access_token}`;
       const loginDetail = result.data.data;
-      const loginType =
-        loginDetail.login_type === 'teacher' ? 'teacher' : 'student';
+      const loginType = 'teacher';
       const mutationPayload = {
         loginToken,
         loginType,

@@ -33,7 +33,7 @@ export default {
   created() {
     // 把store的內容拿出來並更新store
     if (window.localStorage.getItem('state')) {
-      console.log('updateState');
+      // console.log('updateState!!');
       this.$store.replaceState(
         Object.assign(
           {},

@@ -128,9 +128,12 @@
         </div>
         <!--  記得我 + 忘記密碼 -->
         <!-- 按扭區 -->
-        <div class="btn_gp">
-          <div class="full_btn_sec login_sec">
-            <button class="main_btn login_btn" @click.prevent="loginJudge">
+        <div class="w-100">
+          <div class="w-100 mb-3 login_sec">
+            <button
+              class="kart-btn kart-main login_btn"
+              @click.prevent="loginJudge"
+            >
               {{ $t('login_form.login') }}
             </button>
           </div>
@@ -138,7 +141,7 @@
           <div class="other_sec">
             <button
               v-if="activeType === 'student'"
-              class="gray_btn other_btn signin_btn"
+              class="kart-btn kart-gray other_btn signin_btn"
               @click.prevent="goToSignUp"
             >
               {{ $t('login_form.register') }}
@@ -146,7 +149,7 @@
 
             <button
               v-if="activeType === 'student'"
-              class="gray_btn back_btn"
+              class="kart-btn kart-gray back_btn"
               :class="{ other_btn: activeType === 'student' }"
               @click.prevent="backToPreviousPage"
             >
@@ -155,17 +158,14 @@
 
             <button
               v-if="activeType === 'teacher'"
-              class="gray_btn back_btn"
+              class="kart-btn kart-gray back_btn"
               :class="{ login_btn: activeType === 'teacher' }"
               @click.prevent="backToStudentLogin"
             >
               {{ $t('login_form.back') }}
             </button>
           </div>
-          <div
-            v-if="activeType === 'student'"
-            class="full_btn_sec teacher_login"
-          >
+          <div v-if="activeType === 'student'" class="w-100 mb-3 teacher_login">
             <div class="atag_center">
               <a href="#" @click.prevent="goToTeacherLogin">
                 <span class="text_link_text">{{

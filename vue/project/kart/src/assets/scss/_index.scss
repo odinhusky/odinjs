@@ -1,156 +1,1122 @@
-.index_box {
-  @include w100;
-  position: relative;
+// Common Setting Adjustment
+.index_root {
+  padding-bottom: 0;
 }
 
-.index_container {
-  // @include w100;
-  // padding-top: nth($rem5x, 6);
-  // padding-left: calc(100% / 12);
-  // padding-right: calc(100% / 12);
+// LoginBar
+.loginbar_container {
+  @include w100;
+  @include position-absolute-left-top-0(1000);
+  @include flex-align-items-center;
+  padding: nth($px10x, 3) nth($px10x, 5);
 }
 
-.index_section {
-  @include w100;
-  padding: 0 nth($px5x, 3);
-  margin: 0 nth($px5x, 3);
+.loginbar_logo {
+  width: 370px;
+  margin-right: auto;
+}
+
+.loginbar_hamburger_btn {
+  display: none;
+}
+
+.loginbar_hamburger {
+  display: flex;
+  align-items: center;
+}
+
+.loginbar_hamburger_list {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.loginbar_hamburger_item {
+  display: block;
+}
+
+.hadsigned_items_container {
+  display: none;
+}
+
+.unsigne_list {
+  display: flex;
+  align-items: center;
+}
+
+.unsigne_item {
+  margin-right: 20px;
+}
+
+.unsigne_item:last-child {
+  margin-right: 0;
+}
+
+.nav_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 5px;
+  height: 30px;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.i18n_btn_select {
+  width: 100%;
+  padding: 3px 0px;
+  font-size: 1rem;
+  border-radius: 2px;
+  border: none;
+}
+
+.close_btn {
+  // display: none;
+}
+
+// Banner carousel
+.banner_carousel {
+  @include position-relative;
+}
+
+.banner_slide {
+  @include position-relative;
+  // @include bg-img-setting;
+  @include bg-color(red);
 }
 
 .banner_img {
   @include w100;
+  display: block;
 }
 
-.teachers_list {
-  margin-top: nth($rem5x, 6);
+.banner_text {
+  @include position-absolute-left-top(15.3vw, 55%, 10);
+  width: 32.5vw;
+  transform: translateY(-50%);
+  color: $white;
 }
 
-.teachers_list_title {
+.banner_slide_title {
   @include w100;
-  padding: nth($rem5x, 2);
-  @include flex-center;
-  font-size: nth($rem5x, 7);
-  font-weight: nth($num100, 5);
-  line-height: nth($dot5, 3);
-  letter-spacing: nth($px, 2);
-  color: $sub;
+  display: block;
+  font-size: 4.5vw;
+  line-height: 1.25;
 }
 
-.teacher_unit_list {
-  margin-top: nth($rem5x, 4);
-  margin-right: -15px;
-  margin-left: -15px;
-  @include d-flex;
+.banner_description {
+  margin-top: nth($rem5x, 6);
+  font-size: 19px;
+  color: $bannerDescriptionColor;
+}
+
+// Vue Carousel 套件設定
+.VueCarousel-navigation-button {
+  width: 45px;
+  height: 45px;
+  padding: 0 !important;
+  border: none !important;
+  user-select: none !important;
+  outline: none !important;
+}
+
+.VueCarousel-navigation-next {
+  right: 60px !important;
+}
+
+.VueCarousel-navigation-prev {
+  left: 60px !important;
+}
+
+.banner_btn_img {
+  width: 100%;
+}
+
+// Introductions
+.introductions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: center;
+
+  width: 100%;
+  padding: 100px 0px;
+
+  /* 背景自動縮放/固定 */
+  background-attachment: fixed;
+  background-size: cover;
+
+  position: relative;
+  margin-top: -6px;
+}
+
+.introductions::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: #000000;
+  opacity: 0.55;
+}
+
+.introduction_unit {
+  width: 21.2vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-right: 60px;
+  color: #ffffff;
+}
+
+.introduction_unit:last-child {
+  margin-right: 0;
+}
+
+.introduction_icon_img {
+  display: block;
+  width: 70px;
+}
+
+.introduction_unit_title {
+  display: block;
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 1.5;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.introduction_unit_detail {
+  width: 100%;
+  display: block;
+  font-size: 16px;
+  line-height: 1.5;
+}
+/* Video Section */
+.video_section {
+  width: 100%;
+  color: #ffffff;
+  background-color: #000000;
+  padding: 72px 0 72px 15.1vw;
+  display: flex;
+  align-items: center;
+}
+
+.video_section_detail {
+  max-width: 400px;
+  padding-right: 24px;
+}
+
+.video_section_detail_title {
+  display: block;
+  font-size: 66px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 2.5px;
+  color: #cfa972;
+}
+
+.video_section_detail_text {
+  display: block;
+  font-size: 19px;
+  line-height: 1.5;
+}
+
+.course_video {
+  width: 62.5vw;
+}
+
+/* video setting */
+.video_container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+}
+
+.video_container iframe,
+.video_container object,
+.video_container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video_section_detail_line {
+  display: block;
+  width: 100%;
+}
+
+// VideoJs 套件設定
+.course_video .video-js {
+  width: 100%;
+  height: 100%;
+}
+
+/* Learn from the Masters */
+.master_section {
+  width: 100%;
+  padding: 160px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #050926;
+}
+
+.master_section_title {
+  font-size: 100px;
+  font-weight: 600;
+  color: #cfa972;
+  margin-bottom: 80px;
+}
+
+.master_profile_container {
+  width: 80vw;
+  display: flex;
   flex-wrap: wrap;
 }
 
-.teacher_outer {
-  width: calc(100% / 3);
-  padding: 0 nth($px5x, 3);
-  margin-bottom: nth($rem5x, 3);
-  cursor: pointer;
+.master_profile_unit {
+  width: calc(33.3333% - 30px);
+  min-height: 150px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  border-radius: 11px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  background-color: #191c21;
+  color: #ffffff;
+  display: flex;
 }
 
-.teacher_unit {
-  @include w100;
-  @include box-shadow();
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-bottom: nth($px5x, 2) solid $main;
-
-  .teacher_img {
-    border-radius: 0;
-    height: 0;
-    padding-bottom: 56%;
-    background-size: cover;
-    background-position: center;
-  }
-
-  .detail {
-    height: 280px;
-    min-height: 1px;
-    padding: nth($rem25x, 5);
-  }
+.master_profile_unit:nth-child(3n) {
+  margin-right: 0x;
 }
 
-.teacher_name {
-  margin: 0;
+.master_img {
   display: block;
-  padding-bottom: nth($rem25x, 3);
-  border-bottom: 1px solid $separatorColor;
-
-  .name_main {
-    font-size: nth($rem25x, 5);
-    line-height: 1.2;
-    font-weight: nth($num100, 5);
-    color: map-get($indexText, main);
-  }
-
-  .name_sub {
-    font-size: nth($rem5x, 2);
-    font-weight: nth($num100, 4);
-    line-height: 1.2;
-    color: map-get($indexText, sub);
-  }
+  width: 150px;
+  height: 150px;
+  -webkit-border-top-left-radius: 11px;
+  -webkit-border-bottom-left-radius: 11px;
+  -moz-border-radius-topleft: 11px;
+  -moz-border-radius-bottomleft: 11px;
+  border-top-left-radius: 11px;
+  border-bottom-left-radius: 11px;
 }
 
-.intros {
-  @include w100;
-  height: 170px;
-  margin-top: nth($rem5x, 1);
+.master_detai {
+  width: calc(100% - 150px);
+  max-height: 150px;
   overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
-.intro {
-  @include w100;
-
-  .intro_main {
-    color: $subTextColor;
-    font-size: nth($rem5x, 2);
-    line-height: nth($dot5, 3);
-  }
-
-  .intro_sub {
-    font-size: nth($px6x, 2);
-    color: $subTextColor;
-    line-height: nth($dot5, 3);
-  }
+.master_name {
+  display: block;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.66px;
+  color: #ffffff;
+  margin-bottom: 8px;
 }
 
-.index_alert {
-  width: 520px;
+.master_intro {
+  display: block;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #cfcfcf;
 }
 
-.go_to_login {
-  width: nth($percent5, 12);
-  @include main-btn(false);
-  font-size: 1.4rem;
-  border-radius: 24px;
+/* Phone Course Section */
+.phonecourse_section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  width: 100%;
+  min-height: 800px;
+
+  /* 背景自動縮放/固定 */
+  background-attachment: fixed;
+  background-size: cover;
+
+  position: relative;
+  color: #ffffff;
+  padding: 170px 30px;
+}
+
+.phonecourse_unit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 48px;
+}
+
+.text_part {
+  max-width: 782px;
+  margin-right: 40px;
+}
+
+.left_text .text_part {
+  order: 1;
+}
+
+.left_text .phone_part {
+  order: 2;
+}
+
+.left_phone .text_part {
+  order: 2;
+}
+
+.left_phone .text_part {
+  order: 1;
+  margin-right: 0;
+  margin-left: 40px;
+}
+
+.phonecourse_title {
+  display: block;
+  font-size: 58px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.phonecourse_detail {
+  display: block;
+  font-size: 19px;
+  line-height: 1.5;
+  letter-spacing: 0.35px;
+  text-align: left;
+}
+
+.phone_part {
+  width: 26.98vw;
+  height: 50.62vw;
+  position: relative;
+  border-radius: 12%;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.phonecourse_frame_img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.phonecourse_course_img {
+  position: absolute;
+  z-index: 0;
+  min-width: 100%;
+  height: 100%;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.phone_play_pause {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone_play_pause input {
+  display: none;
+}
+
+.phone_play_pause:hover label {
+  display: block;
+}
+
+.phone_play_pause input[name='video_trigger']:checked + label {
+  display: none;
+}
+
+.phone_play_pause:hover input[name='video_trigger']:checked + label {
+  display: block;
+}
+
+.phone_play_pause input[name='video_trigger'] + label:after {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  content: '';
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-color: transparent transparent transparent #ffffff;
+  border-style: solid;
+  border-width: 10px 0 10px 20px;
+  transition: 100ms all ease;
+}
+
+.phone_play_pause input[name='video_trigger']:checked + label:after {
+  content: '';
+  border-style: double;
+  border-width: 0px 0px 0px 30px;
+}
+
+.phone_play_pause label {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  cursor: pointer;
   text-align: center;
+  border: 2px solid white;
+  border-radius: 50%;
+}
 
-  &:hover {
-    @include main-btn(true);
+.index_enroll_now {
+  width: 240px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 23px;
+  border: solid 1px #cfa972;
+  background: none;
+  color: #cfa972;
+  font-size: 29px;
+  line-height: 2;
+  letter-spacing: 1.74px;
+  margin-top: 26px;
+}
+
+.hover_slide {
+  transition: 0.7s;
+}
+
+.hover_slide:hover,
+.hover_slide:focus {
+  box-shadow: inset 18em 0 0 0 #cfa972;
+  color: #ffffff;
+}
+
+.hover_slide:hover,
+.hover_slide:focus {
+  box-shadow: inset 18em 0 0 0 #cfa972;
+  color: #ffffff;
+}
+
+.phone_video {
+  @include position-relative;
+  @include position-absolute-full(0);
+}
+
+/* Preview Videos */
+.preview_videos_section {
+  @include position-relative;
+  @include w100;
+  @include bg-color($main);
+  @include flex-center;
+  flex-wrap: wrap;
+  padding: 60px 30px;
+}
+
+.preview_video_container {
+  width: calc(25% - 30px);
+  padding: 0 15px;
+}
+
+// VideoJs Setting
+.vjs-big-play-button {
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* How to Enroll */
+.howto_enroll_section {
+  @include w100;
+  padding: 0 50px;
+  background-color: #050926;
+}
+
+.howto_enroll {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.howto_enroll_container {
+  max-width: 1460px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 120px 30px;
+  border-bottom: 1px solid #cfa972;
+}
+
+.howto_enroll_title {
+  display: block;
+  font-size: 100px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.extend_content_btn {
+  width: 100px;
+  height: 100px;
+  padding: 0;
+}
+
+.extend_content_btn.closed {
+  margin-bottom: 100px;
+}
+
+.extend_content_img {
+  display: none;
+}
+
+.up .extend_content_img.up_img,
+.down .extend_content_img.down_img {
+  display: inline-block;
+  width: 100%;
+}
+
+.howto_enroll_toggle_content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.howto_enroll_step {
+  max-width: 1230px;
+  width: 100%;
+}
+
+.howto_enroll_step_title {
+  display: block;
+  color: #cfa972;
+  font-size: 74px;
+  font-weight: 600;
+  margin-bottom: 42px;
+  text-align: center;
+}
+
+.howto_enroll_step_detail {
+  display: block;
+  color: #ffffff;
+  font-size: 25px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.howto_enroll_step {
+  margin-bottom: 66px;
+}
+
+.howto_enroll_step:last-child {
+  margin-bottom: 78px;
+}
+
+.howto_enroll_now_btn {
+  margin-top: 0;
+}
+
+.enroll_now_btn {
+  width: 240px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 23px;
+  border: solid 1px #cfa972;
+  background: none;
+  color: #cfa972;
+  font-size: 29px;
+  line-height: 2;
+  letter-spacing: 1.74px;
+  margin-top: 26px;
+}
+// RWD Start =============================
+@include rwd('mlarge') {
+  .banner_text {
+    width: 36.25vw;
+    left: 15.3vw;
+  }
+
+  .banner_description {
+    font-size: nth($rem5x, 2);
+    margin-top: nth($rem5x, 2);
   }
 }
 
-// RWD Start ======================================
+@include rwd('large') {
+  .loginbar_container {
+    padding: 15px 30px;
+  }
+
+  .banner_text {
+    width: 33.33333vw;
+  }
+
+  .video_section_detail_title {
+    font-size: 48px;
+  }
+
+  .video_section_detail_text {
+    font-size: 16px;
+  }
+
+  .master_section {
+    padding: 60px 30px;
+  }
+
+  .master_section_title {
+    font-size: 48px;
+  }
+
+  .master_profile_container {
+    width: 90vw;
+  }
+
+  .master_profile_unit {
+    width: calc(50% - 30px);
+  }
+
+  .master_profile_unit:nth-child(2n) {
+    margin-right: 0;
+  }
+
+  .phonecourse_section {
+    padding: 60px 30px;
+  }
+
+  .text_part {
+    width: 40.72vw;
+  }
+
+  .phonecourse_title {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+  .phonecourse_detail {
+    font-size: 16px;
+  }
+
+  .index_enroll_now {
+    width: 200px;
+    height: 58.33px;
+    font-size: 24px;
+  }
+
+  .howto_enroll {
+    padding: 0 50px;
+  }
+
+  .howto_enroll_container {
+    padding: 90px 30px;
+  }
+
+  .howto_enroll_title {
+    font-size: 60px;
+  }
+
+  .extend_content_btn {
+    width: 60px;
+    height: 60px;
+  }
+
+  .extend_content_btn.closed {
+    margin-bottom: 60px;
+  }
+
+  .howto_enroll_step_title {
+    font-size: 48px;
+    margin-bottom: 30px;
+  }
+
+  .howto_enroll_step_detail {
+    font-size: 18px;
+  }
+}
 
 @include rwd('medium') {
-  .teacher_outer {
-    width: nth($percent5, 10);
+  .video_section_detail_title {
+    font-size: 36px;
   }
 
-  .teachers_list_title {
-    font-size: 2.2rem;
+  .video_section_detail_text {
+    font-size: 14px;
+  }
+
+  .introductions {
+    flex-direction: column;
+    padding-top: 85px;
+    padding-bottom: 85px;
+  }
+
+  .introduction_unit {
+    width: 100%;
+    padding: 0 30px;
+    margin-right: 0;
+    margin-bottom: 65px;
+  }
+
+  .introduction_icon_img {
+    width: 70px;
+  }
+
+  .introduction_unit_title {
+    font-size: 36px;
+  }
+
+  .introduction_unit_detail {
+    font-size: 16px;
+  }
+
+  .introduction_unit_detail {
+    width: 45vw;
+  }
+
+  .preview_video_container {
+    width: calc(50% - 30px);
   }
 }
 
 @include rwd('pad') {
-  .teacher_outer {
+  .loginbar_container {
+    position: relative;
+    background-color: #050926;
+  }
+
+  .loginbar_logo_img {
+    width: 206px;
+    /* min-width: 206px; */
+  }
+
+  .loginbar_hamburger {
+    background-color: #ffffff;
+    position: absolute;
+    right: 0;
+    top: 60px;
+  }
+
+  .close_btn {
+    // width: 37px;
+    // height: 37px;
+    position: absolute;
+    // left: -37px;
+    // top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #ffffff;
+  }
+
+  .close_line {
+    width: 20px;
+    height: 3px;
+    background-color: #a7a7a7;
+  }
+
+  .close_line.one {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    margin-bottom: -2px;
+  }
+
+  .close_line.two {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    margin-bottom: -1px;
+  }
+
+  .loginbar_hamburger_list {
+    display: block;
+    width: 48.53vw;
+    height: 62.93vw;
+    padding-top: 20px;
+  }
+
+  .loginbar_hamburger_item {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0 9px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  }
+
+  .loginbar_hamburger_inside_ul {
+    display: block;
+  }
+
+  .loginbar_hamburger_inside_li {
+    display: block;
+    width: 100%;
+  }
+
+  .loginbar_hamburger_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 30px;
+    height: 30px;
+  }
+
+  .loginbar_hamburger_btn_line {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: #ffffff;
+    margin-bottom: 4px;
+  }
+
+  .loginbar_hamburger_btn_line:last-child {
+    margin-bottom: 0;
+  }
+
+  .unsigne_item {
+    margin-right: 0;
+  }
+
+  .hadsigned_items_container {
+    display: none;
+  }
+
+  .signup_signin_btn {
+    color: #000000;
+    border: none;
+    border-radius: none;
+  }
+
+  .signup_signin_btn:hover {
+    color: $main;
+    border: none;
+  }
+
+  .signup_signin_btn::before {
+    display: none;
+  }
+
+  .banner_img {
+    @include max-H(500px);
+  }
+  .banner_text {
+    width: 65vw;
+  }
+
+  .banner_slide_title {
+    font-size: 30px;
+  }
+
+  .master_section {
+    padding: 30px;
+  }
+
+  .master_section_title {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+
+  .master_profile_container {
+    width: 100%;
+  }
+
+  .master_profile_unit {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .video_section {
+    padding: 0;
+    padding-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .video_section_detail {
+    order: 2;
+    max-width: inherit;
+    padding: 0 50px;
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .video_section_detail_title {
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .video_section_detail_text {
+    width: 280px;
+    font-size: 16px;
+  }
+
+  .course_video {
     @include w100;
+  }
+
+  .phonecourse_unit {
+    flex-direction: column;
+    margin-top: 60px;
+  }
+
+  .text_part {
+    width: 75.73vw;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+
+  .left_text .text_part,
+  .left_phone .text_part {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .left_text .text_part {
+    order: 3;
+  }
+
+  .index_enroll_now {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .howto_enroll_container {
+    padding: 70px 30px;
+  }
+
+  .howto_enroll_title {
+    font-size: 48px;
+  }
+
+  .extend_content_btn {
+    width: 50px;
+    height: 50px;
+  }
+
+  .extend_content_btn.closed {
+    margin-bottom: 50px;
+  }
+
+  .howto_enroll_step_title {
+    font-size: 36px;
+    margin-bottom: 30px;
+  }
+
+  .howto_enroll_step_detail {
+    font-size: 16px;
   }
 }
 
 @include rwd('mobile') {
-  .index_alert {
-    width: 80vw;
+  .VueCarousel-navigation-button {
+    display: none !important;
+  }
+
+  .enroll_now_btn {
+    width: 137px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .howto_enroll_container {
+    padding: 60px 0;
+  }
+
+  .howto_enroll_title {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  .extend_content_btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .extend_content_btn.closed {
+    margin-bottom: 40px;
+  }
+
+  .phone_part {
+    width: 50.4vw;
+    height: 99.5vw;
+  }
+
+  .phonecourse_title {
+    font-size: 30px;
+  }
+
+  .preview_video_container {
+    @include w100;
+    padding: 0;
+  }
+
+  .howto_enroll_step_title {
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+
+  .howto_enroll_step_detail {
+    font-size: 14px;
+  }
+
+  .howto_enroll_step {
+    margin-bottom: 30px;
+  }
+}
+
+@include rwd('mobile480') {
+  .banner_description {
+    margin-top: nth($rem5x, 1);
+  }
+
+  .banner_slide_title {
+    font-size: 22px;
+  }
+}
+
+@include rwd('mobile360') {
+  .howto_enroll_title {
+    font-size: 24px;
   }
 }

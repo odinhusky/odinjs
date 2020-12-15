@@ -19,6 +19,11 @@ $black: #000 !default;
 $main: #050926;
 $sub: #cfa972;
 
+$theme-colors: (
+  'main': $main,
+  'sub': $sub,
+) !default;
+
 $mainWithOpacity: rgba(50, 188, 201, 0.79);
 $webTextColor: #212529;
 $errorColor: #fe8a8a;
@@ -44,6 +49,7 @@ $courseRecordBgColor: #373737;
 $progressColor: #007bff;
 $courseRecordListTitleBgColor: #cccccc;
 $courseRecordListNameBgColor: #eeeeee;
+$bannerDescriptionColor: #ebebeb;
 
 $loginTypeColor: (
   default: #999999,
@@ -86,6 +92,12 @@ $pagination: (
   hover: $sub,
 );
 
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+$enable-important-utilities: true !default;
+$enable-negative-margins: false !default;
+
 // Spacing
 $px: 1px, 2px, 3px, 4px, 5px, 6px, 7px, 8px, 9px, 10px;
 $px5x: 5px, 10px, 15px, 20px, 25px;
@@ -107,5 +119,111 @@ $num100: 100, 200, 300, 400, 500, 600, 700, 800, 900;
 $dot1: 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9;
 $dot5: 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5;
 
+$spacer: 1rem !default;
+$spacers: (
+  0: 0,
+  1: $spacer / 4,
+  2: $spacer / 2,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 2,
+  6: $spacer * 3,
+  7: $spacer * 4,
+  '1rem': 1rem,
+  '2rem': 2rem,
+  '3rem': 3rem,
+  '4rem': 4rem,
+  '5rem': 5rem,
+  '6rem': 6rem,
+  '7rem': 7rem,
+  '8rem': 8rem,
+  '9rem': 9rem,
+  '10rem': 10rem,
+  '11rem': 11rem,
+  '12rem': 12rem,
+  '13rem': 13rem,
+  '14rem': 14rem,
+  '15rem': 15rem,
+  '16rem': 16rem,
+) !default;
+
+$negative-spacers: if(
+  $enable-negative-margins,
+  negativify-map($spacers),
+  null
+) !default;
+
 // Login
 $login_mask: rgba(255, 255, 255, 0.14);
+
+// Define the edge positioning anchors of the position utilities.
+$position-values: (
+  0: 0,
+  50: 50%,
+  100: 100%,
+) !default;
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$border-width: 1px !default;
+$border-color: $gray-300 !default;
+
+$border-radius: 0.25rem !default;
+$border-radius-sm: 0.2rem !default;
+$border-radius-lg: 0.3rem !default;
+$border-widths: (
+  0: 0,
+  1: 1px,
+  2: 2px,
+  3: 3px,
+  4: 4px,
+  5: 5px,
+) !default;
+
+// Font, line-height, and color for body text, headings, and more.
+
+// stylelint-disable value-keyword-case
+$font-family-sans-serif: system-ui, -apple-system, 'Segoe UI', Roboto,
+  'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' !default;
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+  'Liberation Mono', 'Courier New', monospace !default;
+// stylelint-enable value-keyword-case
+$font-family-base: var(--bs-font-sans-serif) !default;
+$font-family-code: var(--bs-font-monospace) !default;
+
+// $font-size-root effects the value of `rem`, which is used for as well font sizes, paddings and margins
+// $font-size-base effects the font size of the body text
+$font-size-root: null !default;
+$font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
+$font-size-sm: $font-size-base * 0.875 !default;
+$font-size-lg: $font-size-base * 1.25 !default;
+$font-size-xl: $font-size-base * 2 !default;
+
+$font-weight-lighter: lighter !default;
+$font-weight-light: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-bold: 700 !default;
+$font-weight-bolder: bolder !default;
+
+$font-weight-base: $font-weight-normal !default;
+
+$line-height-base: 1.5 !default;
+$line-height-sm: 1.25 !default;
+$line-height-lg: 2 !default;
+
+$h1-font-size: $font-size-base * 2.5 !default;
+$h2-font-size: $font-size-base * 2 !default;
+$h3-font-size: $font-size-base * 1.75 !default;
+$h4-font-size: $font-size-base * 1.5 !default;
+$h5-font-size: $font-size-base * 1.25 !default;
+$h6-font-size: $font-size-base !default;
+
+$headings-margin-bottom: $spacer / 2 !default;
+$headings-font-family: null !default;
+$headings-font-style: null !default;
+$headings-font-weight: 500 !default;
+$headings-line-height: 1.2 !default;
+$headings-color: null !default;

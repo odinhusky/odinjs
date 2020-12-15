@@ -5,6 +5,7 @@ import VueRouter from 'vue-router';
 import Layout from '@/layout/Layout.vue';
 import LayoutLogin from '@/layout/LayoutLogin.vue';
 import LayoutWithoutFooter from '@/layout/LayoutWithoutFooter.vue';
+import LayoutWithoutNav from '@/layout/LayoutWithoutNav.vue';
 
 // Containers
 import AppIndex from '@/components/AppIndex.vue';
@@ -20,7 +21,7 @@ const routes = [
     children: [
       {
         path: '/',
-        component: Layout,
+        component: LayoutWithoutNav,
         children: [
           {
             path: '',
@@ -168,13 +169,35 @@ const routes = [
         ],
       },
       {
-        path: 'course-record',
+        path: 'videos',
+        component: Layout,
+        children: [
+          {
+            path: '',
+            name: 'videos',
+            component: () => import('@/components/AppVideos.vue'),
+          },
+        ],
+      },
+      {
+        path: 'video-play',
         component: LayoutWithoutFooter,
         children: [
           {
             path: '',
-            name: 'course-record',
-            component: () => import('@/components/AppCourseRecord.vue'),
+            name: 'video-play',
+            component: () => import('@/components/AppVideoPlay.vue'),
+          },
+        ],
+      },
+      {
+        path: 'video-upload',
+        component: Layout,
+        children: [
+          {
+            path: '',
+            name: 'video-upload',
+            component: () => import('@/components/AppVideoUpload.vue'),
           },
         ],
       },

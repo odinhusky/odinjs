@@ -50,10 +50,18 @@
           v-model="signup.gender"
           name="gerder"
           class="login_select gender"
-          :class="{ en_gender_select: i18n === 'en' }"
+          :class="{
+            en_gender_select: i18n === 'en',
+            other_gender_selec: signup.gender === 'none',
+          }"
         >
-          <option value="female">{{ $t('gender.female') }}</option>
-          <option value="male">{{ $t('gender.male') }}</option>
+          <option
+            v-for="option in genderOption"
+            :key="option.id"
+            :value="option.value"
+          >
+            {{ $t(option.text) }}
+          </option>
         </select>
       </div>
 
@@ -101,7 +109,7 @@
     <div class="btn_group">
       <!-- 完成註冊 -->
       <button
-        class="kart-btn kart-sub full_btn register"
+        class="kart-btn kart-sub w-100 register"
         @click.prevent="requestSignup"
       >
         {{ $t('register_form.register') }}
@@ -110,7 +118,7 @@
       <!-- 返回登入頁 -->
       <router-link
         :to="{ name: 'login', params: { lang: this.$route.params.lang } }"
-        class="kart-btn kart-gray full_btn tologin"
+        class="kart-btn kart-gray w-100 tologin"
       >
         {{ $t('register_form.tologin') }}
       </router-link>
@@ -160,6 +168,26 @@ export default {
         password: false,
         password_confirm: false,
       },
+      genderOption: [
+        // 男
+        {
+          id: 0,
+          value: 'male',
+          text: 'gender.male',
+        },
+        // 女
+        {
+          id: 1,
+          value: 'female',
+          text: 'gender.female',
+        },
+        // 其他
+        {
+          id: 2,
+          value: 'none',
+          text: 'gender.other',
+        },
+      ],
     };
   },
   computed: {
@@ -383,25 +411,8 @@ export default {
             console.log('requestSignup Success');
             console.log('requestSignup res => ', res);
 
-            // 清空輸入欄位
-            this.clearSignup();
-
-            // 清除localStorage的資料
-            this.clearLoginLocalStorage();
-
-            // 燈箱顯示
-            this.$bus.$emit(
-              'notify:message',
-              this.$t('system_message.signup_success'),
-            );
-
-            // 1.5秒之後導頁
-            setTimeout(() => {
-              this.$router.push({
-                name: 'login',
-                params: { lang: this.$route.params.lang },
-              });
-            }, 1500);
+            // 註冊完之後直接登入
+            this.afterSignupLogin();
           }
         } catch (err) {
           console.log('requestSignup axios error response => ', err.response);
@@ -420,6 +431,44 @@ export default {
         // 關閉 loading
         this.$bus.$emit('loading:off');
       }
+    },
+
+    /**
+     * @author odin
+     * @description 學生註冊完立刻登入
+     */
+    afterSignupLogin() {
+      this.$store
+        .dispatch('studentLogin', {
+          rememberMe: false,
+          data: {
+            cellphone: this.fullCellPhone,
+            password: this.signup.password,
+          },
+        })
+        .then(() => {
+          console.log('studentLogin Success');
+
+          // 清空輸入欄位
+          this.clearSignup();
+
+          // 清除localStorage的資料
+          this.clearLoginLocalStorage();
+
+          // 導頁
+          this.$router.push({
+            name: 'course',
+            params: { lang: this.$route.params.lang },
+          });
+        })
+        .catch(error => {
+          console.log('studentLogin Fail');
+          console.log('studentLogin error', error);
+          if (error.response.data.message) {
+            // 燈箱顯示
+            this.$bus.$emit('notify:message', error.response.data.message);
+          }
+        });
     },
   },
 };

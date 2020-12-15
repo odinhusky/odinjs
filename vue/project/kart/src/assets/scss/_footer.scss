@@ -11,12 +11,27 @@
 }
 
 .logo_section {
-  margin-right: nth($rem5x, 11);
   margin-right: auto;
 }
 
 .footer_logo {
+  @include flex-align-items-center;
+}
+
+.footer_logo_img {
   display: block;
+  width: 87px;
+  margin-right: nth($rem5x, 2);
+}
+
+.footer_logo_text_container {
+  color: $white;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.footer_logo_title {
+  text-align: left;
 }
 
 .detail_section {
@@ -56,40 +71,36 @@
   }
 }
 
-.qr_app_section {
-  @include flex-center;
+.qr_box {
+  @include flex-align-items-center;
+  @include flex-direction('|');
+  width: 135px;
+  margin-right: auto;
 
-  .qr_box {
-    width: 155px;
-    margin-right: nth($rem5x, 4);
-    @include flex-align-items-center;
-    @include flex-direction('|');
-
-    .qr_img {
-      width: 7vw;
-    }
-
-    .qr_description {
-      display: block;
-      margin-top: nth($rem5x, 2);
-      @include footer-text-block;
-    }
+  .qr_img {
+    @include max-WH(135px, 135px);
   }
 
-  .app_box {
-    width: 16vw;
+  .qr_description {
+    @include footer-text-block;
+    display: block;
+    font-size: 14px;
+  }
+}
 
-    .app_download {
-      display: block;
-      margin-bottom: nth($rem5x, 4);
+.app_box {
+  width: 16vw;
 
-      &.download_googleplay_app {
-        margin-bottom: 0;
-      }
+  .app_download {
+    display: block;
+    margin-bottom: nth($rem5x, 2);
 
-      .app_img {
-        @include w100;
-      }
+    &.download_googleplay_app {
+      margin-bottom: 0;
+    }
+
+    .app_img {
+      @include w100;
     }
   }
 }
@@ -113,7 +124,7 @@
     }
 
     .detail_text {
-      font-size: nth($px6x, 2);
+      font-size: nth($rem5x, 2);
     }
   }
 
@@ -137,6 +148,7 @@
 
     .footer_logo {
       @include flex-center;
+      margin: 0 auto;
     }
   }
 
@@ -151,36 +163,26 @@
     }
   }
 
-  .qr_app_section {
-    @include w100;
+  .qr_box {
+    margin-right: nth($rem5x, 4);
   }
 
-  .qr_app_section {
-    .qr_box {
-      margin-right: nth($rem5x, 2);
+  .app_box {
+    width: 200px;
 
-      .qr_img {
-        width: 100px;
-      }
-
-      .qr_description {
-        font-size: nth($px5x, 2);
-      }
-    }
-
-    .app_box {
-      width: 200px;
-
-      .app_download {
-        margin-bottom: nth($rem5x, 2);
-      }
+    .app_download {
+      margin-bottom: nth($rem5x, 2);
     }
   }
 }
 
 @include rwd('mobile') {
-  .logo_section .footer_logo img {
-    width: 41.1vw;
+  .footer_logo_img {
+    width: 70px;
+  }
+
+  .footer_logo_text_container {
+    font-size: nth($rem25x, 5);
   }
 
   .detail_section {
@@ -193,17 +195,16 @@
 
   .detail_set .set_left .left_text,
   .detail_set .detail_text {
-    font-size: nth($px5x, 2);
+    font-size: 14px;
   }
 
-  .qr_app_section {
-    .qr_box .qr_img {
-      width: 19.7vw;
-    }
+  .qr_box {
+    margin-right: nth($rem5x, 2);
+    margin-bottom: nth($rem5x, 2);
+  }
 
-    .app_box {
-      width: 37.4vw;
-    }
+  .app_box {
+    margin-bottom: nth($rem5x, 2);
   }
 
   .en {
@@ -228,6 +229,14 @@
 }
 
 @include rwd('iphone6') {
+  .qr_box {
+    margin-right: 0;
+  }
+
+  .app_box {
+    margin-bottom: 0;
+  }
+
   .en .detail_set {
     @include w100;
 

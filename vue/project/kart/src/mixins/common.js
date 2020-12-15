@@ -16,6 +16,8 @@ const commonMixinObj = {
     this.deviceCategory = this.judgeClient();
     // browser init
     this.browser = this.judgeBrowser();
+    // 如果有開啟的燈箱就清掉
+    this.$bus.$emit('notify:off');
   },
   computed: {
     /**
@@ -103,6 +105,7 @@ const commonMixinObj = {
     loginDetail() {
       return this.$store.state.user.detail;
     },
+
     /**
      * @author odin
      * @description 使用者的 email
@@ -110,6 +113,24 @@ const commonMixinObj = {
      */
     loginUserEmail() {
       return this.$store.state.user.detail[this.loginType].email;
+    },
+
+    /**
+     * @author odin
+     * @description 使用者的 生日
+     * @return {string}
+     */
+    loginUserBirthday() {
+      return this.$store.state.user.detail[this.loginType].birthday;
+    },
+
+    /**
+     * @author odin
+     * @description 使用者的 性別
+     * @return {string}
+     */
+    loginUserGender() {
+      return this.$store.state.user.detail[this.loginType].gender;
     },
 
     /**
@@ -140,6 +161,81 @@ const commonMixinObj = {
       return this.$store.state.user.detail[this.loginType].cellphone_info
         .phone_number;
     },
+
+    /**
+     * @author odin
+     * @description 使用者是否為訂閱制學生
+     * @return {boolean}
+     */
+    loginUserIsSubscribed() {
+      let isSubscribed = false;
+
+      if (this.loginType === 'student') {
+        let subscriptionObj = this.$store.state.user.detail[this.loginType]
+          .subscription;
+
+        isSubscribed = subscriptionObj === null ? false : true;
+      }
+
+      return isSubscribed;
+    },
+
+    /**
+     * @author odin
+     * @description 使用者是否為學院學生
+     * @return {boolean}
+     */
+    loginUserIsAcademy() {
+      let isAcademy = false;
+
+      if (this.loginType === 'student') {
+        isAcademy = this.$store.state.user.detail.student.is_academy;
+      }
+
+      return isAcademy;
+    },
+
+    /**
+     * @author odin
+     * @description 使用者的等級(學生)
+     * @return {string}
+     */
+    loginUserLevel() {
+      let levelStr = '';
+
+      if (this.loginType === 'student') {
+        if (this.loginDetail.student.is_vvip) {
+          levelStr = 'VIP';
+        } else if (
+          this.loginDetail.student.vip !== null &&
+          typeof this.loginDetail.student.vip === 'object'
+        ) {
+          levelStr = `VIP (${this.loginUserSubscribedExpiredAt})`;
+        } else {
+          levelStr = 'normal';
+        }
+      }
+
+      return levelStr;
+    },
+
+    /**
+     * @author odin
+     * @description 使用者的訂閱到期日，如果沒有的話的話就回傳空字串
+     * @return {string}
+     */
+    loginUserSubscribedExpiredAt() {
+      let expiredAt = '';
+
+      if (this.loginType === 'student' && this.loginUserIsSubscribed) {
+        let subscriptionObj = this.$store.state.user.detail[this.loginType]
+          .subscription;
+
+        expiredAt = this.formatDateWithSlash(subscriptionObj.expired_at);
+      }
+
+      return expiredAt;
+    },
   },
   // 從 App.vue 註冊的重新整理'
   inject: ['reload'],
@@ -158,6 +254,24 @@ const commonMixinObj = {
      */
     backToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+
+    /**
+     * @author odin
+     * @param {string} i18nLanguageData
+     * @description 轉換語系
+     */
+    changeLanguage(i18nLanguageData) {
+      const langMap = {
+        'zh-Hans': null,
+        'zh-Hant': 'tw',
+        'en-US': 'en',
+      };
+      const lang = langMap[i18nLanguageData];
+      this.$router.push({
+        name: this.$route.name,
+        params: { lang: lang },
+      });
     },
 
     /**
@@ -255,6 +369,52 @@ const commonMixinObj = {
 
     /**
      * @author odin
+     * @param {object} teacherObj 後端傳來的老師物件
+     * @description 判斷當前語系選擇要輸出哪一個老師的名稱
+     */
+    dealTeacherName(teacherObj) {
+      let teacherName = '';
+
+      switch (this.i18n) {
+        case 'tw':
+          teacherName = teacherObj.name_hant;
+          break;
+        case 'cn':
+          teacherName = teacherObj.name;
+          break;
+        case 'en':
+          teacherName = teacherObj.name_en;
+          break;
+      }
+
+      return teacherName;
+    },
+
+    /**
+     * @author odin
+     * @param {object} teacherIntroObj 後端傳來的老師物件
+     * @description 判斷當前語系選擇要輸出哪一個老師的經歷
+     */
+    dealTeacherIntro(teacherIntroObj) {
+      let teacherIntro = '';
+
+      switch (this.i18n) {
+        case 'tw':
+          teacherIntro = teacherIntroObj.intro_hant;
+          break;
+        case 'cn':
+          teacherIntro = teacherIntroObj.intro;
+          break;
+        case 'en':
+          teacherIntro = teacherIntroObj.intro_en;
+          break;
+      }
+
+      return teacherIntro;
+    },
+
+    /**
+     * @author odin
      * @description 判斷目前是哪個 navigator
      * @return {string} Android|IOS|PC
      */
@@ -265,8 +425,8 @@ const commonMixinObj = {
       var isMac = (function () {
         return /macintosh|mac os x/i.test(u);
       })();
-      console.log('是否是Android：' + isAndroid); //true,false
-      console.log('是否是iOS：' + isIOS);
+      // console.log('是否是Android：' + isAndroid); //true,false
+      // console.log('是否是iOS：' + isIOS);
       if (isAndroid) {
         return 'Android';
       } else if (isIOS) {

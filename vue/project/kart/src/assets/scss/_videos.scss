@@ -1,0 +1,9 @@
+.watch_video {
+  @include position-absolute-right-bottom(0, 0.5rem, 1);
+  width: auto;
+  padding: nth($px, 4) nth($px10x, 1);
+}
+
+.go_to_browse {
+  margin-top: nth($rem5x, 2);
+}

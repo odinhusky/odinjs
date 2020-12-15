@@ -45,7 +45,7 @@
     <div class="btn_group">
       <!-- 修改密碼 -->
       <button
-        class="kart-btn kart-sub full_btn send_fail_btn"
+        class="kart-btn kart-sub w-100 send_fail_btn"
         @click.prevent="requestVerifyFail"
       >
         {{ $t('register_form.send') }}

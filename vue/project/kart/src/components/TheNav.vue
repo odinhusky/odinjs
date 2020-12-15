@@ -48,8 +48,15 @@
                     :to="routerItem.linkTo"
                     :class="routerItem.class"
                   >
-                    <img :src="routerItem.imgMain" class="nav_img nav_white" />
-                    <img :src="routerItem.imgSub" class="nav_img nav_blue" />
+                    <!-- 目前不要 icon -->
+                    <img
+                      :src="routerItem.imgMain"
+                      class="nav_img nav_white d-none"
+                    />
+                    <img
+                      :src="routerItem.imgSub"
+                      class="nav_img nav_blue d-none"
+                    />
                     <span class="nav_btn_text">
                       {{ $t(`${routerItem.spanTextCode}`) }}
                     </span>
@@ -67,11 +74,11 @@
                 >
                   <img
                     :src="navItems.aTag[0].imgMain"
-                    class="nav_img nav_white"
+                    class="nav_img nav_white d-none"
                   />
                   <img
                     :src="navItems.aTag[0].imgSub"
-                    class="nav_img nav_blue"
+                    class="nav_img nav_blue d-none"
                   />
                   <span class="nav_btn_text">{{
                     $t('navigation.notification')
@@ -87,18 +94,30 @@
                   </h5>
 
                   <div class="notification_group">
-                    <!-- 單一個通知 -->
-                    <div
-                      v-for="item in notifications"
-                      :key="item.id"
-                      class="notification_unit"
-                    >
+                    <template v-if="notifications.length > 0">
+                      <!-- 單一個通知 -->
+                      <div
+                        v-for="item in notifications"
+                        :key="item.id"
+                        class="notification_unit"
+                      >
+                        <div class="notification_divider"></div>
+                        <p class="notification_content">{{ item.content }}</p>
+                        <span class="notification_time">{{
+                          item.created_at | formatDate
+                        }}</span>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <!-- 單一個通知 -->
                       <div class="notification_divider"></div>
-                      <p class="notification_content">{{ item.content }}</p>
-                      <span class="notification_time">{{
-                        item.created_at | formatDate
-                      }}</span>
-                    </div>
+
+                      <div class="notification_unit p-3">
+                        <p class="notification_content text-center">
+                          {{ $t('nextcourse.no_notification') }}
+                        </p>
+                      </div>
+                    </template>
                   </div>
                 </div>
               </li>
@@ -112,11 +131,11 @@
                 >
                   <img
                     :src="navItems.aTag[1].imgMain"
-                    class="nav_img nav_white"
+                    class="nav_img nav_white d-none"
                   />
                   <img
                     :src="navItems.aTag[1].imgSub"
-                    class="nav_img nav_blue"
+                    class="nav_img nav_blue d-none"
                   />
                   <span class="nav_btn_text">{{
                     $t('navigation.personal')
@@ -165,6 +184,24 @@
                         }}
                       </router-link>
                     </div>
+                    <!-- 帳戶 -->
+                    <div class="personal_unit" @click="toggleNav">
+                      <router-link
+                        :class="
+                          navItems.aTag[1].dropDown.personalObj.videoUpload
+                            .classname
+                        "
+                        :to="
+                          navItems.aTag[1].dropDown.personalObj.videoUpload
+                            .linkTo
+                        "
+                      >
+                        {{
+                          navItems.aTag[1].dropDown.personalObj.videoUpload
+                            .linkText
+                        }}
+                      </router-link>
+                    </div>
                     <!-- 登出 -->
                     <div class="personal_unit" @click="toggleNav">
                       <a
@@ -192,7 +229,7 @@
                     v-model="i18nLanguageData"
                     name="i18n_select nav_item_i18n_select"
                     class="i18n_select nav_item_i18n_select"
-                    @change="changeLanguage"
+                    @change="changeLanguage(i18nLanguageData)"
                   >
                     <option
                       v-for="item in langOption"
@@ -227,7 +264,7 @@
             v-model="i18nLanguageData"
             name="i18n_select"
             class="i18n_select"
-            @change="changeLanguage"
+            @change="changeLanguage(i18nLanguageData)"
           >
             <option
               v-for="item in langOption"
@@ -304,17 +341,30 @@ export default {
       return {
         routerLinks: [
           {
-            // 影片重播
-            id: 'r1',
-            type: 'course-record',
+            // 我的課程
+            id: 'r0',
+            type: 'course',
             linkTo: {
-              name: 'course-record',
+              name: 'course',
               params: { lang: this.$route.params.lang },
             },
             imgMain: require('@/assets/img/nav/icon_video.svg'),
             imgSub: require('@/assets/img/nav/icon_video_blue.svg'),
-            spanTextCode: 'navigation.video_record',
-            class: 'vidoe_nav_btn',
+            spanTextCode: 'navigation.course',
+            class: 'course_nav_btn',
+          },
+          {
+            // 影片區
+            id: 'r1',
+            type: 'videos',
+            linkTo: {
+              name: 'videos',
+              params: { lang: this.$route.params.lang },
+            },
+            imgMain: require('@/assets/img/nav/icon_video.svg'),
+            imgSub: require('@/assets/img/nav/icon_video_blue.svg'),
+            spanTextCode: 'navigation.videos',
+            class: 'video_nav_btn',
           },
           // {
           //   // 行事曆
@@ -328,32 +378,32 @@ export default {
           //   imgSub: require('@/assets/img/nav/icon_calendar_2x.png'),
           //   spanTextCode: 'navigation.calendar',
           // },
-          {
-            // 選課單
-            id: 'r3',
-            type: 'browse',
-            linkTo: {
-              name: 'browse',
-              params: { lang: this.$route.params.lang },
-            },
-            imgMain: require('@/assets/img/nav/icon_myclass@2x.png'),
-            imgSub: require('@/assets/img/nav/icon_myclass_2x.png'),
-            spanTextCode: 'navigation.mycourse',
-            class: 'browse_nav_btn',
-          },
-          {
-            // 課程報名
-            id: 'r4',
-            type: 'enroll',
-            linkTo: {
-              name: 'enroll',
-              params: { lang: this.$route.params.lang },
-            },
-            imgMain: require('@/assets/img/v2/nav/heart@2x.png'),
-            imgSub: require('@/assets/img/v2/nav/purchase_heart@2x.png'),
-            spanTextCode: 'enroll.title',
-            class: 'eroll_nav_btn',
-          },
+          // {
+          //   // 課程瀏覽
+          //   id: 'r3',
+          //   type: 'browse',
+          //   linkTo: {
+          //     name: 'browse',
+          //     params: { lang: this.$route.params.lang },
+          //   },
+          //   imgMain: require('@/assets/img/nav/icon_myclass@2x.png'),
+          //   imgSub: require('@/assets/img/nav/icon_myclass_2x.png'),
+          //   spanTextCode: 'navigation.mycourse',
+          //   class: 'browse_nav_btn',
+          // },
+          // {
+          //   // 課程報名
+          //   id: 'r4',
+          //   type: 'enroll',
+          //   linkTo: {
+          //     name: 'enroll',
+          //     params: { lang: this.$route.params.lang },
+          //   },
+          //   imgMain: require('@/assets/img/v2/nav/heart@2x.png'),
+          //   imgSub: require('@/assets/img/v2/nav/purchase_heart@2x.png'),
+          //   spanTextCode: 'enroll.title',
+          //   class: 'eroll_nav_btn',
+          // },
         ],
         aTag: [
           {
@@ -401,6 +451,16 @@ export default {
                   linkText: this.$t('navigation.account'),
                   classname: 'personal_btn personal_account_btn',
                 },
+                videoUpload: {
+                  id: 2,
+                  routerLinkOrNot: true,
+                  linkTo: {
+                    name: 'video-upload',
+                    params: { lang: this.$route.params.lang },
+                  },
+                  linkText: this.$t('navigation.video_upload'),
+                  classname: 'personal_btn personal_account_btn',
+                },
                 logout: {
                   id: 3,
                   routerLinkOrNot: false,
@@ -438,23 +498,6 @@ export default {
     }
   },
   methods: {
-    /**
-     * @author odin
-     * @description 轉換語系
-     */
-    changeLanguage() {
-      const langMap = {
-        'zh-Hans': null,
-        'zh-Hant': 'tw',
-        'en-US': 'en',
-      };
-      const lang = langMap[this.i18nLanguageData];
-      this.$router.push({
-        name: this.$route.name,
-        params: { lang: lang },
-      });
-    },
-
     /**
      * @author odin
      * @description 取得通知資料並放在data的欄位中
@@ -527,12 +570,18 @@ export default {
 
     /**
      * @author odin
-     * @description 判斷何時展開或收合
+     * @description 判斷個人的選單何時展開或收合
      */
     toggleNav() {
       if (this.window.fullWidth < 1200) {
-        this.navItemsIsShow = false;
-        this.mobileHamburgerStatus = false;
+        // 如果 個人的選單 開啟的狀態的話 就要順便關閉整個選單，並且調整狀態
+        if (this.isShowPersonalDropdown) {
+          this.isShowPersonalDropdown = false;
+          this.navItemsIsShow = false;
+          this.mobileHamburgerStatus = false;
+        }
+      } else {
+        this.isShowPersonalDropdown = false;
       }
     },
 

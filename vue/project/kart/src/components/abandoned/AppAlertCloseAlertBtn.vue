@@ -1,5 +1,9 @@
 <template>
-  <button class="main_btn sure_btn" type="button" @click.prevent="triggerClick">
+  <button
+    class="kart-btn kart-main pl-2 pr-5"
+    type="button"
+    @click.prevent="triggerClick"
+  >
     <template slot="content">{{ $t('system_message.close') }}</template>
   </button>
 </template>

@@ -4,7 +4,7 @@
       <h2 class="page_title _title">{{ $t('') }}</h2>
 
       <!-- 分類 btn -->
-      <section class="page_center_btns_box">
+      <section class="page-category-container center">
         <button class="page-category-btn kart-btn kart-bg-gray active">
           {{ $t('') }}
         </button>
@@ -12,6 +12,8 @@
           {{ $t('') }}
         </button>
       </section>
+
+      <section class="main-section sec"></section>
     </main>
   </div>
 </template>

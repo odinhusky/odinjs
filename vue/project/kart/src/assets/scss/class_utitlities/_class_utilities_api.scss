@@ -1,0 +1,34 @@
+// Print utilities
+@each $key, $utility in $utilities {
+  // The utility can be disabled with `false`, thus check if the utility is a map first
+  // Then check if the utility needs print styles
+  @if type-of($utility) == 'map' and map-get($utility, print) == true {
+    @media print {
+      @include generate-utility($utility, '-print');
+    }
+  }
+
+  // 就算有 print 的屬性，還是得印出一般的樣式
+  @include generate-utility($utility, '');
+}
+
+
+// Loop over each breakpoint
+@each $breakpoint in map-keys($grid-breakpoints) {
+  // Generate media query if needed
+  @include media-breakpoint-down($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    // Loop over each utility property
+    @each $key, $utility in $utilities {
+      // The utility can be disabled with `false`, thus check if the utility is a map first
+      // Only proceed if responsive media queries are enabled or if it's the base media query
+      @if type-of($utility) ==
+        'map' and
+        (map-get($utility, responsive) or $infix == '')
+      {
+        @include generate-utility($utility, $infix);
+      }
+    }
+  }
+}

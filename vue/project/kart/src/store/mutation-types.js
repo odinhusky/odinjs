@@ -1,9 +1,6 @@
 // common
 export const UPDATE_I18N_LANGUAGE = 'UPDATE_I18N_LANGUAGE';
 
-// AppIndex
-export const FETCH_BANNER_IMG_PATH = 'FETCH_BANNER_IMG_PATH';
-
 // AppLoginForm
 export const UPDATE_LOGIN_DETAIL = 'UPDATE_LOGIN_DETAIL';
 
@@ -16,3 +13,6 @@ export const FETCH_COURSES = 'FETCH_COURSES';
 
 //AppLogin
 export const FETCH_COUNTRYCODE_LIST = 'FETCH_COUNTRYCODE_LIST';
+
+// AppMyAccount
+export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';

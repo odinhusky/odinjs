@@ -61,48 +61,18 @@
     <div class="mysetting_form_group">
       <h5 class="mysetting_title">{{ $t('myaccount.info.gender') }}：</h5>
       <div class="mysetting_content gender_radius_control">
-        <!-- 男 -->
-        <div class="form-group">
+        <!-- 所有的性別 radio -->
+        <div v-for="gender in genderRadio" :key="gender.id" class="form-group">
           <input
             v-model="myAccountSetting.value.gender"
             type="radio"
             name="gender"
-            class="gender_radio gender_male"
-            value="male"
-            id="gender_male"
+            :class="gender.class"
+            :value="gender.value"
+            :id="gender.idName"
           />
-          <label for="gender_male" class="gender_radio_label">{{
-            $t('gender.male')
-          }}</label>
-        </div>
-
-        <!-- 女 -->
-        <div class="form-group">
-          <input
-            v-model="myAccountSetting.value.gender"
-            type="radio"
-            name="gender"
-            class="gender_radio gender_female"
-            value="female"
-            id="gender_female"
-          />
-          <label for="gender_female" class="gender_radio_label">{{
-            $t('gender.female')
-          }}</label>
-        </div>
-
-        <!-- 其他 -->
-        <div class="form-group">
-          <input
-            v-model="myAccountSetting.value.gender"
-            type="radio"
-            name="gender"
-            class="gender_radio gender_other"
-            value="other"
-            id="gender_other"
-          />
-          <label for="gender_other" class="gender_radio_label">{{
-            $t('gender.other')
+          <label :for="gender.idName" class="gender_radio_label">{{
+            $t(gender.labelText)
           }}</label>
         </div>
       </div>
@@ -188,6 +158,32 @@ export default {
   },
   data() {
     return {
+      genderRadio: [
+        // 男
+        {
+          id: 0,
+          class: 'gender_radio gender_male',
+          value: 'male',
+          idName: 'gender_male',
+          labelText: 'gender.male',
+        },
+        // 女
+        {
+          id: 1,
+          class: 'gender_radio gender_female',
+          value: 'female',
+          idName: 'gender_female',
+          labelText: 'gender.female',
+        },
+        // 其他
+        {
+          id: 2,
+          class: 'gender_radio gender_other',
+          value: 'none',
+          idName: 'gender_other',
+          labelText: 'gender.other',
+        },
+      ],
       myAccountSetting: {
         value: {
           name: '',

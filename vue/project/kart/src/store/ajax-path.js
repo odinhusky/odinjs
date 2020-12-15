@@ -4,6 +4,7 @@ export const countryCodeListPath = '/api/common/countrycodes';
 // AppIndex
 export const fetchBannerImgPath = '/api/common/banners';
 export const teacherListAPI = '/api/common/teachers';
+export const fetchPreviewVideoPath = '/api/common/home/videos';
 
 // AppLogin
 export const studentLoginPath = '/api/students/login';
@@ -34,23 +35,31 @@ export const studentRemainingPath = '/api/students/current/points';
 export const studentAccountDetailPath = '/api/students/current';
 export const studentChangeSettingPath = '/api/students/current';
 export const studentChangePasswordPath = '/api/students/current/password';
+export const fetchPurchaseRecordListPath =
+  '/api/students/current/payment-orders';
+
 export const teacherChangePasswordPath = '/api/teachers/current/password';
 
 // AppMyAccountOrderList
 export const fetchOrderListPath = '/api/students/current/payment-orders';
 
 // AppBrowse
-export const courseListPath = '/api/students/current/lessons/other';
+export const fetchBrowseLiveCoursePath = '/api/students/current/lessons/review';
+export const fetchBrowseRecordCoursePath =
+  '/api/students/current/lessons/review';
 export const setCourseListPath = '/api/students/current/products/sets';
-export const cartItemPath = '/api/students/current/cart-items';
+export const fetchcartItemPath = '/api/students/current/cart-items';
+export const enrollNowPath = '/api/students/current/times/signup';
 // 選課單 已報名 非套裝
-export const enrolledListPath = '/api/students/current/enrolled';
-export const cartPath = '/api/students/current/cart-items';
-export const saleAdvertisementImgSrcPath = '/api/salesplan/current';
+export const fetchenrolledListPath = '/api/students/current/enrolled';
+export const operateCartPath = '/api/students/current/cart-items';
+export const fetchSaleAdvertisementImgSrcPath = '/api/salesplan/current';
 
 // AppCourse
 export const fetchNormalCoursesPath = '/api/test/lessons/recent';
 export const fetchPublicCoursesPath = '/api/students/current/publics';
+export const fetchLiveCoursePath = '/api/common/lessons/recent/live';
+export const fetchOneToOneCoursePath = '/api/common/lessons/recent/individual';
 export const fetchTeacherCoursePath = '/api/common/lessons/recent';
 
 // AppPurchase
@@ -66,5 +75,19 @@ export const removeCartLessionsPath = '/api/students/current/cart-items';
 export const removeEnrolledLessionPathPath = '/api/students/current/times';
 export const enrollCartLessionPath = '/api/students/current/times/apply';
 
+// AppVideos
+export const fetchMonthlyEslitePath = '/api/students/current/videos';
+
 // AppCourseRecord
 export const fetchCourseRecordListPath = '/api/students/current/times';
+
+// AppVideoUpload
+export const fetchNormalVideosListPath = '/api/students/current/uploads';
+export const fetchCollegeVideosListPath = '/api/students/current/exams';
+export const fetchNormalSTSTokenPath = '/api/students/current/uploads/token';
+export const fetchCollegeSTSTokenPath = '/api/common/sts/token';
+export const deleteSpecificVideoPath = '/api/students/current/uploads';
+export const requestNormalVideoUploadSuccessPath =
+  '/api/students/current/uploads';
+export const requestCollegeVideoUploadSuccessPath =
+  '/api/students/current/exams';

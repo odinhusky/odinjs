@@ -65,14 +65,49 @@ export default {
   welcome: '，歡迎回來',
 
   navigation: {
+    videos: '影片區',
+    course: '我的課程',
     calendar: '行事曆',
-    mycourse: '選課單',
+    mycourse: '課程瀏覽',
     notification: '通知',
     personal: '個人',
-    contact_admin: '聯絡管理員',
+    contact_admdin: '聯絡管理員',
     account: '帳戶',
     video_record: '影片重播',
+    video_upload: '影片上傳區',
     logout: '登出',
+  },
+
+  videos: {
+    video_title: '影片',
+    monthly_eslite: '每月精選',
+    course_record: '指定課程',
+    watch: '觀看影片',
+  },
+
+  video_upload: {
+    title: '影片上傳區',
+    primary: '一般影片上傳',
+    secondary: '學院影片上傳',
+    upload: '上傳',
+    uploading: '上傳中',
+    upload_video: '上傳影片',
+    upload_success: '上傳成功',
+    upload_fail: '上傳失敗',
+    upload_time: '上傳時間',
+    comment: '評論',
+    file_unit: 'MB',
+    choose: '請點選擇影片',
+    choose_file: '選擇檔案',
+    check_delete: '確認是否要刪除？',
+    check_video: '查看',
+    cancel_upload: '已取消上傳',
+    delete_video: '刪除',
+    delete_success: '刪除成功',
+    delete_fail: '刪除失敗',
+    edit_video_filename: '編輯上傳檔案名稱:',
+    edit_video_input_placeholder: 'video.mp4，需包含副檔名',
+    college_only: '此為學院學生專區',
   },
 
   teacher_list: {
@@ -92,7 +127,17 @@ export default {
 
   nextcourse: {
     time: '下次上課時間',
-    nodata: '哇！沒有課程啦！趕緊報名去～',
+    nodata: '沒有課程啦！趕緊報名去～',
+    no_eslite: '觀看精彩影片，請先訂閱',
+    no_courses_reocrd: '目前沒有影片可觀看',
+    no_live: '沒有課程，趕緊報名去',
+    no_onetoone: '沒有課程，趕緊報名去',
+    no_teacher_courses: '目前尚未安排課程',
+    no_assistant_courses: '目前尚未安排課程',
+    no_videos: '您目前沒有影片',
+    more_movie: '查看更多影片',
+    no_comment: '尚無評論',
+    no_notification: '尚無通知',
   },
 
   pastcourse: {
@@ -103,6 +148,9 @@ export default {
 
   mycourse: {
     title: '選課單',
+    live: '直播課程',
+    onetoone: '一對一課程',
+    record: '回播影片',
     course: '一般課程',
     product: '套裝課程',
     public: '公益課程',
@@ -156,6 +204,7 @@ export default {
     buy_lession: '購買堂數',
     normal_point_not_enough: '餘課數不足',
     reviewablel_point_not_enough: '點評餘課數不足',
+    enroll_now: '立即報名',
   },
 
   live: {
@@ -183,6 +232,7 @@ export default {
     title: '我的帳戶',
     info: {
       mysetting: '個人設定',
+      profile: '個人資料',
       name: '姓名',
       level: '等級',
       level_expired_1var: '（到期時間{0}）',
@@ -192,6 +242,11 @@ export default {
       gender: '性別',
       agent_code: '代理商代碼',
       save: '儲存',
+      live_point: '直播數',
+      onetoone_point: '一對一',
+      expired_at: '訂閱到期日',
+      not_subscribed: '未訂閱',
+      no_purchase_record: '無購買紀錄',
     },
     password: {
       change_password: '修改密碼',
@@ -201,6 +256,7 @@ export default {
     },
     remaining: {
       remaining_course: '剩餘課數',
+      remaining_course2: '餘課數',
       total_remaining_course: '剩餘總課數',
       course_unit: '堂',
     },
@@ -217,12 +273,30 @@ export default {
       buy_course: '購買堂數',
       no_orderlist: '尚無購買清單',
     },
+    links: {
+      purchase_lession: '購買堂數',
+      purchase_record: '購買紀錄',
+      enrolled_list: '報名清單',
+      edit_profile: '修改個人資料',
+      change_password: '修改密碼',
+    },
+    profile: {
+      cellphone: '手機:',
+      name: '姓名:',
+      level: '等級:',
+      college: '學院:',
+      email: 'Email:',
+      birthday: '生日:',
+      gender: '性別:',
+      password: '密碼:',
+    },
   },
 
   role: {
     standard: '一般會員',
     vip: 'VIP',
     admin: '管理員',
+    college_student: '學院學生',
   },
 
   agent: {
@@ -240,6 +314,7 @@ export default {
   },
 
   system_message: {
+    check_more: '查看更多',
     enroll_after_login: '查看更多 請先登入',
     cellphone_format_error: '電話格式錯誤',
     email_format_error: 'email格式錯誤',
@@ -251,6 +326,8 @@ export default {
     signup_success: '註冊成功！',
     change_password_success: '修改密碼成功！',
     change_info_success: '修改資料成功！',
+    enroll_single_lesson_success: '報名成功',
+    enroll_single_lesson_fail: '報名失敗',
     success: '成功！',
     confirm: '確認',
     cancel: '取消',
@@ -289,11 +366,65 @@ export default {
     '為了提供您最佳的瀏覽體驗，將不支援IE11(含)以下的瀏覽器，建議使用其他瀏覽器。',
 
   footer: {
-    name: 'KEI Art learning',
+    title1: '凱音雅樂',
+    title2: 'KEI Art learning',
     email: 'kart88888@163.com',
     full_cellphone: '+886 0912456789',
     contact_us: '聯絡我們',
     business_cooperation: '商務合作',
     foucs_wechat: '關注我們微信公眾號',
+  },
+
+  index: {
+    signup_btn: '註冊/登入',
+    banner_title_paragraph: '凱音雅樂<br>國際頂尖名師<br>線上教學',
+    banner_title_description:
+      '凱音雅樂是國際線上音樂教育平台，師資來自於大陸中央音樂學院、美國茱莉亞音樂院、英國皇家音樂院、耶魯大學等多所名校，包含韋丹文、馬提·瑞卡利奧、克里斯多福·艾爾頓、鮑利斯·貝爾曼、斯坦尼斯拉夫·尤丹尼奇等重量級名師。平台專注提供線上高端鋼琴教育大師班、講座、一對一等課程。',
+    master_section_title: '國際頂尖名師線上教學',
+    introduction_unit_title1: '頂尖大師面對面',
+    introduction_unit_title2: '學習音樂無國界',
+    introduction_unit_title3: '互動學習高效率',
+    introduction_unit_detail1:
+      '凱音雅樂唯一讓您有機會接觸不同的國際大師，聽聽老師們對於同一首曲子的不同的觀點當作練習參考。原本已經很熟悉的曲子經過大師的獨到的詮釋，學習上也會因此探索出過去沒有發現的新世界！',
+    introduction_unit_detail2:
+      '大師來自世界各國，平台會員也涵蓋了全世界，不僅可以和來自世界各國的老師學習，也有機會開線上音樂會分享你的音樂，凱音雅樂就是你的世界舞台。',
+    introduction_unit_detail3:
+      '學習不應該只是單向，在凱音雅樂我們每次的學習，都可以和老師做互動，舉凡演奏時的節奏、色彩、旋律、結構等等甚至是情感上的表現都可以和老師做即時的討論和示範。',
+    video_section_detail_title: '學院課程',
+    video_section_detail_line:
+      '美國茱莉亞音樂院名師 馬提. 瑞卡力奧<br>於凱音雅樂開設國際鋼琴學院課程！全球獨一無二！<br>大比賽與升學只有一次機會，<br>讓最高效精品課程解決你彈琴大小難題！<br>16週掌握完美實力！',
+    phonecourse_title1: '絕無僅有與大師面對面上課',
+    phonecourse_detail1:
+      '凱音雅樂一對一課程，都可以即時和老師做互動，舉凡演奏時的節奏、色彩、旋律、結構等等甚至是情感上的表現都可以和老師做即時的討論和示範。',
+    phonecourse_title2: '最精彩的國際大師講座直播課',
+    phonecourse_detail2:
+      '各個國際級大師透過凱音雅樂直播課程分享至全世界各地，平台會員不僅可以和來自世界各國的老師學習，也有機會開線上音樂會',
+    enroll_now: '馬上報名上課',
+    howto_enroll_title: 'HOW TO ENROLL',
+    footer_logo_title: '凱音雅樂',
+    contact_us_link: '聯絡我們',
+    contact_phone_link: '+8615527716868',
+    bussiness_coporation_link: '商務合作',
+    focus_our_wechat_text: '關注我們官方微信號',
+    howto_enroll_toggle_content: [
+      {
+        title: '註冊會員',
+        content:
+          '蘋果用戶可至蘋果商店，安卓用戶可至google store下載APP，<br>搜尋“凱音雅樂” 海外用戶搜尋 KEI ART Learning，<br>並需要驗證手機號註冊成會員。',
+      },
+      {
+        title: '繳費',
+        content:
+          '除了免費課程與公益課程都需要收費，<br>選擇需要的套餐，繳費給您的代理商，代理商會幫您開通。',
+      },
+      {
+        title: '報名',
+        content: '開通後可在APP選課，或請代理商選課。',
+      },
+      {
+        title: '報名完成',
+        content: '報名成功後會在APP內收到通知，祝您上課愉快。',
+      },
+    ],
   },
 };

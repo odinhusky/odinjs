@@ -76,7 +76,7 @@
   }
 
   .browse_nav_btn .nav_btn_text {
-    width: 50px;
+    width: 60px;
   }
 
   .eroll_nav_btn .nav_btn_text {
@@ -116,7 +116,7 @@
   }
 
   .browse_nav_btn .nav_btn_text {
-    width: 50px;
+    width: 60px;
   }
 
   .eroll_nav_btn .nav_btn_text {
@@ -296,7 +296,7 @@
       width: 210px;
       background-color: $white;
       padding: 0;
-      @include position-absolute-right-top(0, 3rem, 1);
+      @include position-absolute-right-top(0, 3rem, 999);
     }
 
     .hamburger_btn {

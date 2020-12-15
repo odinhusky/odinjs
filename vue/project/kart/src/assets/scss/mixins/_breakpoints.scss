@@ -1,6 +1,23 @@
-$breakpoints: (
+$grid-breakpoints: (
+  iphone5: 320px,
+  iphone6: 375px,
+  mobile360: 360px,
+  mobile480: 480px,
+  mobile: 576px,
+  pad: 768px,
+  medium: 992px,
+  large: 1200px,
+  mlarge: 1350px,
+  xlarge: 1500px,
+) !default;
+// scss-docs-end grid-breakpoints
+
+$max-breakpoints: (
   'iphone5': (
     max-width: 320px,
+  ),
+  'mobile360': (
+    max-width: 360px,
   ),
   'iphone6': (
     max-width: 375px,
@@ -12,13 +29,16 @@ $breakpoints: (
     max-width: 576px,
   ),
   'pad': (
-    max-width: 767px,
+    max-width: 768px,
   ),
   'medium': (
-    max-width: 992px,
+    max-width: 991px,
   ),
   'large': (
     max-width: 1200px,
+  ),
+  'mlarge': (
+    max-width: 1350px,
   ),
   'xlarge': (
     max-width: 1500px,
@@ -27,18 +47,18 @@ $breakpoints: (
 
 /// Mixin to manage responsive breakpoints
 /// @author Odin
-/// @param {String} $breakpoint - Breakpoint name
-/// @require $breakpoints
-@mixin rwd($breakpoint) {
-  @if map-has-key($breakpoints, $breakpoint) {
-    @media #{inspect(map-get($breakpoints, $breakpoint))} {
+/// @param {String} $breakpointname - Breakpoint name
+/// @require $max-breakpoints
+@mixin rwd($breakpointname) {
+  @if map-has-key($max-breakpoints, $breakpointname) {
+    @media #{inspect(map-get($max-breakpoints, $breakpointname))} {
       @content;
     }
   }
 
   // If the key doesn't exist in the map
   @else {
-    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
-          + "Available breakpoints are: #{map-keys($breakpoints)}.";
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpointname}`. "
+          + "Available breakpoints are: #{map-keys($max-breakpoints)}.";
   }
 }

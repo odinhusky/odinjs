@@ -50,7 +50,7 @@
     <div class="btn_group">
       <!-- 登入 -->
       <button
-        class="kart-btn kart-sub full_btn login_btn"
+        class="kart-btn kart-sub w-100 login_btn"
         @click.prevent="teacherLogin"
       >
         {{ $t('login_form.login') }}
@@ -58,7 +58,7 @@
       <!-- 回上頁 -->
       <router-link
         :to="{ name: 'login', params: { lang: this.$route.params.lang } }"
-        class="kart-btn kart-gray full_btn back_btn"
+        class="kart-btn kart-gray w-100 back_btn"
       >
         {{ $t('login_form.back') }}
       </router-link>

@@ -1,0 +1,33 @@
+.video_time_detail {
+  color: $gray-600;
+  font-size: nth($rem5x, 2);
+}
+
+.upload_video_text_btn {
+  @include position-absolute-right-top(15px, 75%, 2);
+  transform: translateY(-50%);
+  color: $sub;
+}
+
+// 顯示 影片播放的 video player && lightbox 調整
+.watch_video_lightbox {
+  width: 80vw;
+  height: 80vh;
+}
+
+.watch_video_container {
+  @include wh100;
+}
+
+.watch_video_plugin {
+  @include wh100;
+
+  .video-js {
+    @include wh100;
+  }
+}
+
+// 上傳影片的燈箱
+.progress_bar {
+  transition: all 0.5s;
+}

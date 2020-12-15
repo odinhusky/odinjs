@@ -116,7 +116,7 @@
       </div>
     </section>
 
-    <!-- 回放課程列表 -->
+    <!-- 影片課程列表 -->
     <section class="sec course_record_list_section">
       <div class="classgroup__title">
         <p class="classgroup__titletext">課程內容</p>
@@ -127,28 +127,44 @@
       <div class="classgroup__content">
         <ul class="list-group classgroup__listgroup">
           <li
-            v-for="courseRecord in courseRecordList"
-            :key="courseRecord.id"
+            v-for="videoObj in video.videoList"
+            :key="videoObj.id"
             class="list-group-item classgroup__cardbodyitem"
-            @click="checkRemainSecond(courseRecord)"
+            @click="judgePlayWhichVideo(videoObj)"
           >
             <img
               class="classgroup__cardbodyitemimg img-fluid"
               src="@/assets/img/v2/course_record/icon_playarrow@2x.png"
             />
             <div class="classgroup__cardbodyitemname">
-              <span
-                class="break-warp classgroup__main classgroup__cardbodyitemlesson"
-                >{{ courseRecord.lesson.name }}</span
-              >
-              <span
-                class="break-warp classgroup__sub classgroup__cardbodyitemteacher"
-                >{{ dealTeacherName(courseRecord.lesson.teacher) }}</span
-              >
-              <span
-                class="break-warp classgroup__sub classgroup__cardbodyitemdate"
-                >{{ courseRecord.start_at | formatDate }}</span
-              >
+              <!-- 每月精選只顯示課堂名稱跟老師名稱 -->
+              <template v-if="video.category === 'monthlyeslite'">
+                <span
+                  class="break-warp classgroup__main classgroup__cardbodyitemlesson"
+                  >{{ videoObj.name }}</span
+                >
+
+                <span
+                  class="break-warp classgroup__sub classgroup__cardbodyitemteacher"
+                  >{{ dealTeacherName(videoObj.teacher) }}</span
+                >
+              </template>
+
+              <!-- 指定課程(影片回播) 要顯示課程名稱 老師姓名 以及 開始日期 -->
+              <template v-if="video.category === 'courserecord'">
+                <span
+                  class="break-warp classgroup__main classgroup__cardbodyitemlesson"
+                  >{{ videoObj.lesson.name }}</span
+                >
+                <span
+                  class="break-warp classgroup__sub classgroup__cardbodyitemteacher"
+                  >{{ dealTeacherName(videoObj.lesson.teacher) }}</span
+                >
+                <span
+                  class="break-warp classgroup__sub classgroup__cardbodyitemdate"
+                  >{{ videoObj.start_at | formatDate }}</span
+                >
+              </template>
             </div>
           </li>
           <!-- <li class="list-group-item classgroup__cardbodyitem">
@@ -194,38 +210,7 @@
         </ul>
       </div>
     </section>
-    <!-- 提示影片課程為一週後上架的燈箱 -->
-    <AppLightBox
-      v-model="video_week_lightbox.openOrNot"
-      :class="video_week_lightbox.classname"
-      :isShowCancel="false"
-    >
-      <template>
-        <h5 class="lightbox_title">{{ $t('course_record.notice.title') }}</h5>
-
-        <div class="lightbox_controll">
-          <input
-            v-model="video_week_lightbox.dontShowAgain"
-            type="checkbox"
-            class="video_week_checkbox dont_show_again"
-            name="dont_show_again"
-            id="dont_show_again"
-          />
-          <label for="dont_show_again" class="video_week_label">{{
-            $t('course_record.notice.skip')
-          }}</label>
-        </div>
-
-        <div class="btn_group">
-          <button
-            class="kart-btn kart-gray cancel-btn"
-            @click.prevent="checkDontShowAgain"
-          >
-            {{ $t('system_message.close') }}
-          </button>
-        </div>
-      </template>
-    </AppLightBox>
+    <!-- //////////////////////////////////////// 燈箱 //////////////////////////////////////// -->
     <!-- 點選課程後，提示還有幾分鐘的燈箱 -->
     <AppLightBox
       v-model="video_record_lightbox.openOrNot"
@@ -237,14 +222,14 @@
         <div class="btn_group">
           <button
             class="kart-btn kart-gray cancel-btn"
-            @click.prevent="cancelReview"
+            @click.prevent="cancelWatchVideo"
           >
             {{ $t('system_message.close') }}
           </button>
 
           <button
             class="kart-btn kart-sub confirm-btn"
-            @click.prevent="requestReview"
+            @click.prevent="checkPlayVideo"
           >
             {{ $t('system_message.ok') }}
           </button>
@@ -258,7 +243,10 @@
 // Resources
 import commonMixinObj from '@/mixins/common.js';
 import screenfull from 'screenfull';
-import { fetchCourseRecordListPath } from '@/store/ajax-path.js';
+import {
+  fetchMonthlyEslitePath,
+  fetchCourseRecordListPath,
+} from '@/store/ajax-path.js';
 import { axiosSuccessHint } from '@/plugins/utility.js';
 // require styles
 import 'video.js/dist/video-js.css';
@@ -268,7 +256,7 @@ import AppLightBox from '@/components/AppLightBox';
 import { videoPlayer } from 'vue-video-player';
 
 export default {
-  name: 'AppCourseRecord',
+  name: 'AppVideoPlay',
   components: {
     AppLightBox,
     videoPlayer,
@@ -285,15 +273,19 @@ export default {
     return {
       // 全螢幕套件要用的data
       fullscreen: false,
-      // 回放影片列表
-      courseRecordList: [],
-      // 取得回放影片之後的資料
-      currentReview: {},
       // 回放影片剩餘時間的計算
       reviewcounter: 0,
       intervalArray: [],
       // video 相關的資料
       video: {
+        // 目前的分類
+        category: '',
+        // 目前要播放的影片ID
+        Id: '',
+        // 取得的影片列表
+        videoList: [],
+        // 取得回放影片之後的資料
+        currentView: {},
         // 要回放的課程id
         requestCourseID: '',
         // 是否為全螢幕模式
@@ -343,20 +335,11 @@ export default {
         classname: 'video_record_lightbox',
         msg: '',
       },
-      // 提示影片課程為一週後上架 的燈箱
-      video_week_lightbox: {
-        openOrNot: true,
-        classname: 'video_week_lightbox',
-        // checkbox
-        dontShowAgain: false,
-      },
     };
   },
   created() {
     // 元件初始化
     this.init();
-    // 確認是否要顯示影片回放一週後上架的燈箱
-    this.checkWeekLightboxShow();
   },
   mounted() {
     // 因為按下ESC退出全螢幕時要變換 icon
@@ -366,13 +349,16 @@ export default {
     /**
      * @author odin
      * @description 播放器的實體
+     * @return {object}
      */
     player() {
       return this.$refs.videoPlayer.player;
     },
+
     /**
      * @author odin
      * @description 播放按鈕的class切換
+     * @return {object} class 的物件
      */
     playOrPauseClass() {
       return {
@@ -386,6 +372,11 @@ export default {
       };
     },
 
+    /**
+     * @author odin
+     * @description 播放器上目前的時間顯示
+     * @return {string}
+     */
     videoFormatCurrentTime() {
       let formatCurrentTime = '';
 
@@ -398,6 +389,11 @@ export default {
       return formatCurrentTime;
     },
 
+    /**
+     * @author odin
+     * @description 播放器上影片總長的時間顯示
+     * @return {string}
+     */
     videoFormatTotalTime() {
       let formatTotalTime = '';
 
@@ -416,8 +412,50 @@ export default {
      * @description 元件初始化需要得到的資料
      */
     init() {
-      // 抓取回放課程列表
-      this.fetchCourseRecordList();
+      // 取得傳進來的資料
+      this.getVideoCategoryAndID();
+      // 抓取特定課程的列表
+      this.judgeFetchWhichVideoList();
+    },
+
+    /**
+     * @author odin
+     * @description 取得影片類型以及現在要播放的影片id，沒抓到就導頁回到影片區
+     */
+    getVideoCategoryAndID() {
+      const videoCategory = localStorage.getItem('video_category');
+      const videoID = parseInt(localStorage.getItem('video_ID'));
+
+      if (
+        videoCategory &&
+        videoCategory !== null &&
+        videoID &&
+        videoID !== null
+      ) {
+        this.video.category = videoCategory;
+        this.video.Id = videoID;
+      } else {
+        // 導頁
+        this.$router.push({
+          name: 'videos',
+          params: { lang: this.$route.params.lang },
+        });
+      }
+    },
+
+    /**
+     * @author odin
+     * @description 取得影片類型以及現在要播放的影片id
+     */
+    judgeFetchWhichVideoList() {
+      switch (this.video.category) {
+        case 'monthlyeslite':
+          this.fetchMonthlyEsliteList();
+          break;
+        case 'courserecord':
+          this.fetchCourseRecordList();
+          break;
+      }
     },
 
     /**
@@ -452,6 +490,26 @@ export default {
 
     /**
      * @author odin
+     * @description 是否全螢幕
+     */
+    checkFull() {
+      let isFull = false;
+
+      if (
+        (document.fullscreenEnabled ||
+          window.fullScreen ||
+          document.webkitIsFullScreen ||
+          document.msFullscreenEnabled) &&
+        window.innerWidth == screen.width &&
+        window.innerHeight == screen.height
+      ) {
+        isFull = true;
+      }
+      return isFull;
+    },
+
+    /**
+     * @author odin
      * @description 因為因為按下ESC退出全螢幕時，將 isZoom 改為 false 來變換icon
      */
     setZoomFalse() {
@@ -474,26 +532,6 @@ export default {
 
     /**
      * @author odin
-     * @description 是否全螢幕
-     */
-    checkFull() {
-      let isFull = false;
-
-      if (
-        (document.fullscreenEnabled ||
-          window.fullScreen ||
-          document.webkitIsFullScreen ||
-          document.msFullscreenEnabled) &&
-        window.innerWidth == screen.width &&
-        window.innerHeight == screen.height
-      ) {
-        isFull = true;
-      }
-      return isFull;
-    },
-
-    /**
-     * @author odin
      * @param {object} teacherObj 回傳過來老師的名字
      * @description 根據語系顯示不同老師的名字
      */
@@ -512,6 +550,32 @@ export default {
       }
 
       return teacherName;
+    },
+
+    /**
+     * @author odin
+     * @param {object} videoObj 傳過來影片的物件
+     * @description 判斷要播放哪一種影片
+     */
+    judgePlayWhichVideo(videoObj) {
+      if (videoObj) {
+        // 如果有傳物件的話, 先儲存到 data
+        this.video.Id = videoObj.id;
+        this.video.currentView = { ...videoObj };
+      } else {
+        // 沒有的話代表，是一開始的播放呼叫的，將已經找出特定的 currentView 帶入
+        videoObj = { ...this.video.currentView };
+      }
+
+      // 判斷要使用哪種方式處理資料
+      switch (this.video.category) {
+        case 'monthlyeslite':
+          this.initVideo();
+          break;
+        case 'courserecord':
+          this.checkRemainSecond(videoObj);
+          break;
+      }
     },
 
     /**
@@ -557,36 +621,51 @@ export default {
 
     /**
      * @author odin
-     * @description 關閉燈箱的同時確認是否不需要在顯示
+     * @description 一進來播放特定的影片
      */
-    checkDontShowAgain() {
-      const isDontShow = this.video_week_lightbox.dontShowAgain;
-
-      // 紀錄是否要顯示燈箱
-      window.localStorage.setItem('isShowVideoWeekLightbox', isDontShow);
-
-      this.video_week_lightbox.openOrNot = false;
+    playSpecificVideo() {
+      console.log(
+        'playSpecificVideo this.video.videoList',
+        this.video.videoList,
+      );
+      // 根據傳來的影片找出對應的影片物件
+      this.handleSpecificVideoObj();
+      // 判斷播放的是哪一種影片
+      this.judgePlayWhichVideo();
     },
 
     /**
      * @author odin
-     * @description 確認是否要顯示影片回放一週後上架的燈箱
+     * @description 影片初始化 => 課程的影片(根據 id 找出對應的資料並且放入url，播放影片)
      */
-    checkWeekLightboxShow() {
-      const isWeekLightboxShow = window.localStorage.getItem(
-        'isShowVideoWeekLightbox',
-      );
+    initVideo() {
+      // 處理影片的播放
+      this.handleVideoSrc();
+      // 回卷到最上方
+      this.backToTop();
 
-      if (isWeekLightboxShow === 'true') {
-        this.video_week_lightbox.openOrNot = false;
+      if (this.video.category === 'courserecord') {
+        // 計算剩餘時間
+        this.handleRemainingTimeCalculation();
       }
+    },
+
+    /**
+     * @author odin
+     * @description 確認觀看影片並關閉燈箱
+     */
+    checkPlayVideo() {
+      this.video_record_lightbox.openOrNot = false;
+
+      // 開始播放影片
+      this.initVideo();
     },
 
     /**
      * @author odin
      * @description 取消觀看影片
      */
-    cancelReview() {
+    cancelWatchVideo() {
       this.video_record_lightbox.openOrNot = false;
       this.video_record_lightbox.msg = '';
       this.video.requestCourseID = '';
@@ -594,27 +673,15 @@ export default {
 
     /**
      * @author odin
-     * @param {object} res ajax 成功回傳的物件結果
-     * @description 處理公開課程的資料列表
+     * @description 根據傳來的影片找出對應的影片物件
      */
-    handleFetchCourseRecordListData(res) {
-      this.courseRecordList = res.data.data;
-    },
+    handleSpecificVideoObj() {
+      console.log('this.video.Id', this.video.Id);
+      const thisVideoObj = [...this.video.videoList].find(
+        item => item.id === this.video.Id,
+      );
 
-    /**
-     * @author odin
-     * @param {object} res ajax 成功回傳的物件結果
-     * @description 處理選定要播放的課程資料
-     */
-    handleRequestReviewData(res) {
-      this.currentReview = res.data.data;
-
-      // 處理影片的播放
-      this.handleVideoSrc();
-      // 處裡剩餘時間的計算
-      this.handleRemainingTimeCalculation();
-      // 回卷到最上方
-      this.backToTop();
+      this.video.currentView = thisVideoObj;
     },
 
     /**
@@ -623,7 +690,24 @@ export default {
      */
     handleVideoSrc() {
       this.video.playerCtrl.videoStatus = 'play';
-      this.video.videoOptions.sources[0].src = this.currentReview.review_url;
+
+      switch (this.video.category) {
+        case 'monthlyeslite':
+          this.video.videoOptions.sources[0].src = this.video.currentView.video_url;
+          break;
+        case 'courserecord':
+          this.video.videoOptions.sources[0].src = this.video.currentView.review_url;
+          break;
+      }
+    },
+
+    /**
+     * @author odin
+     * @param {object} res ajax 成功回傳的物件結果
+     * @description 處理公開課程的資料列表
+     */
+    handleVideoListData(res) {
+      this.video.videoList = res.data.data;
     },
 
     /**
@@ -631,7 +715,7 @@ export default {
      * @description 處裡剩餘時間的計算
      */
     handleRemainingTimeCalculation() {
-      let remainSeconds = this.currentReview.review_remain_seconds;
+      let remainSeconds = this.video.currentView.review_remain_seconds;
 
       this.reviewcounter = window.setInterval(
         this.stopReview,
@@ -656,15 +740,15 @@ export default {
 
     /**
      * @author odin
-     * @description 取得公開課程的資料列表
+     * @description 取得 每月精選 的資料列表
      */
-    async fetchCourseRecordList() {
+    async fetchMonthlyEsliteList() {
       // 開啟 loading
       this.$bus.$emit('loading:on');
 
       try {
         const res = await this.axios({
-          url: `${fetchCourseRecordListPath}?type=open`,
+          url: fetchMonthlyEslitePath,
           method: 'get',
           headers: {
             Authorization: this.loginToken,
@@ -672,9 +756,11 @@ export default {
         });
 
         if (res.data.data || res.data.status) {
-          axiosSuccessHint('fetchCourseRecordList', res);
-          // 處理公開課程的資料列表
-          this.handleFetchCourseRecordListData(res);
+          axiosSuccessHint('fetchMonthlyEsliteList', res);
+          // 處理 每月精選 的資料列表
+          this.handleVideoListData(res);
+          // 播放 傳來的 影片
+          this.playSpecificVideo();
         }
       } catch (err) {
         // 燈箱顯示
@@ -687,29 +773,27 @@ export default {
 
     /**
      * @author odin
-     * @description 取得要回放的影片資料
+     * @description 取得 指定課程(影片回顧) 的資料列表 | limit=999 目前後端是使用 limit 的方式在控制，沒有帶的話就最多只給 10 筆
      */
-    async requestReview() {
-      // 關閉燈箱
-      this.video_record_lightbox.openOrNot = false;
-      this.video_record_lightbox.msg = '';
-
+    async fetchCourseRecordList() {
       // 開啟 loading
       this.$bus.$emit('loading:on');
 
       try {
         const res = await this.axios({
-          url: `${fetchCourseRecordListPath}/${this.video.requestCourseID}/review`,
-          method: 'post',
+          url: `${fetchCourseRecordListPath}?type=open&limit=999`,
+          method: 'get',
           headers: {
             Authorization: this.loginToken,
           },
         });
 
         if (res.data.data || res.data.status) {
-          axiosSuccessHint('requestReview', res);
-          // 處理公開課程的資料列表
-          this.handleRequestReviewData(res);
+          axiosSuccessHint('fetchCourseRecordList', res);
+          // 處理 指定課程(影片回顧) 的資料列表
+          this.handleVideoListData(res);
+          // 播放 傳來的 影片
+          this.playSpecificVideo();
         }
       } catch (err) {
         // 燈箱顯示
@@ -717,9 +801,6 @@ export default {
       } finally {
         // 關閉 loading
         this.$bus.$emit('loading:off');
-
-        // 用完就刪除ID
-        this.video.requestCourseID = '';
       }
     },
 

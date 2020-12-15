@@ -214,10 +214,10 @@
   z-index: $zindex;
 }
 
-@mixin position-absolute-right-bottom($right, $top, $zindex) {
+@mixin position-absolute-right-bottom($right, $bottom, $zindex) {
   position: absolute;
   right: $right;
-  bottom: $top;
+  bottom: $bottom;
   z-index: $zindex;
 }
 
@@ -227,44 +227,6 @@
   top: nth($percent5, 10);
   z-index: $zindex;
   transform: translate(-50%, -50%);
-}
-
-@mixin main-btn($hoverOrNot) {
-  @if $hoverOrNot {
-    color: map-get($loginNextBtn, hover);
-  } @else {
-    background-color: $main;
-    color: map-get($loginNextBtn, default);
-    border-radius: nth($px8x, 3);
-    padding: 0.375rem 0.75rem;
-    line-height: nth($dot5, 3);
-  }
-}
-
-@mixin gray-btn($hoverOrNot) {
-  @if $hoverOrNot {
-    color: map-get($loginNextBtn, hover);
-  } @else {
-    background-color: $grayBtnBg;
-    color: map-get($loginNextBtn, default);
-    border-radius: nth($px8x, 3);
-    padding: 0.375rem 0.75rem;
-    line-height: nth($dot5, 3);
-  }
-}
-
-@mixin s-btn($hoverOrNot) {
-  @if $hoverOrNot {
-    color: map-get($loginNextBtn, hover);
-  } @else {
-    width: 3rem;
-    background-color: $main;
-    color: map-get($loginNextBtn, default);
-    border-radius: nth($px, 5);
-    padding: 0.1rem 0;
-    line-height: nth($dot5, 3);
-    font-size: 0.5rem;
-  }
 }
 
 @mixin form-unit-base() {

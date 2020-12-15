@@ -4,7 +4,7 @@
       <h2 class="page_title browse_title">{{ $t('enroll.title') }}</h2>
 
       <!-- category btns -->
-      <section class="page_category_btns_box center">
+      <section class="page-category-container center">
         <!-- 未報名 -->
         <button
           class="page-category-btn kart-btn kart-bg-gray"
@@ -25,7 +25,7 @@
 
       <!-- 未報名內容頁 -->
       <section
-        v-if="category === 'cart'"
+        v-show="category === 'cart'"
         class="sec main_section unenroll_seciton"
       >
         <!-- 課程內容 -->
@@ -87,12 +87,15 @@
         </div>
 
         <!-- 沒有課程的時候顯示 -->
-        <AppNoClasses v-if="cartLesstion.list.length === 0" />
+        <AppNoClasses
+          v-if="cartLesstion.list.length === 0"
+          :no-classes-text="noClassesText"
+        />
       </section>
 
       <!-- 已報名內容頁 -->
       <section
-        v-if="category === 'enrolled'"
+        v-show="category === 'enrolled'"
         class="sec main_section enrolled_seciton"
       >
         <!-- 課程內容 -->
@@ -156,7 +159,10 @@
         </div>
 
         <!-- 沒有課程的時候顯示 -->
-        <AppNoClasses v-if="enrolledLesstion.list.normal.length === 0" />
+        <AppNoClasses
+          v-if="enrolledLesstion.list.normal.length === 0"
+          :no-classes-text="noClassesText"
+        />
       </section>
 
       <!-- 剩餘課數等詳細資料 -->
@@ -362,6 +368,7 @@ export default {
       remaining: {
         points: 0,
         reviewable_points: 0,
+        individual_points: 0,
       },
       // 報名確定要扣幾堂課點數的燈箱
       enroll_confrim: {
@@ -404,8 +411,13 @@ export default {
     };
   },
   computed: {
-    loginToken() {
-      return this.$store.state.user.loginToken;
+    /**
+     * @author odin
+     * @description 判斷沒有內容的時候要顯示的文字
+     * @return {boolean}
+     */
+    noClassesText() {
+      return 'nextcourse.nodata';
     },
   },
   created() {
@@ -511,6 +523,7 @@ export default {
       const data = res.data.data;
       this.remaining.points = data.points;
       this.remaining.reviewable_points = data.reviewable_points;
+      this.remaining.individual_points = data.individual_points;
     },
 
     /**

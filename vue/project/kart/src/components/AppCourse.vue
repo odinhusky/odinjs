@@ -13,28 +13,28 @@
           </p>
         </section>
 
-        <section class="course_group">
+        <section class="live_group">
           <!-- 學生的切換列表 -->
-          <div v-if="loginType === 'student'" class="tabs_list">
+          <div v-show="loginType === 'student'" class="tabs_list">
             <button
-              class="course_tab"
-              :class="{ active: category === 'course' }"
-              @click.prevent="changeCategory('course')"
+              class="kart-btn kart-sub course_tab"
+              :class="{ active: category === 'live' }"
+              @click.prevent="changeCategory('live')"
             >
-              {{ $t('mycourse.course') }}
+              {{ $t('mycourse.live') }}
             </button>
 
             <button
-              class="course_tab"
-              :class="{ active: category === 'public' }"
-              @click.prevent="changeCategory('public')"
+              class="kart-btn kart-sub course_tab"
+              :class="{ active: category === 'onetoone' }"
+              @click.prevent="changeCategory('onetoone')"
             >
-              {{ $t('mycourse.public') }}
+              {{ $t('mycourse.onetoone') }}
             </button>
           </div>
 
           <!-- 老師的切換列表 -->
-          <div v-if="loginType === 'teacher'" class="tabs_list">
+          <div v-show="loginType === 'teacher'" class="tabs_list">
             <button
               class="course_tab"
               :class="{ active: category === 'teacher' }"
@@ -52,37 +52,55 @@
             </button>
           </div>
 
-          <div class="course_content">
-            <div class="course_content_box course_box">
+          <div class="course_content mt-5">
+            <div class="card-container course_content_box course_box">
               <div
-                v-for="item in courseData[loginType][category].courses"
+                v-for="item in viewData"
                 :key="item.id"
-                class="course_next_container"
+                class="card card-3 course_next_container"
               >
-                <div class="course_next">
-                  <p class="coursenext_time">
+                <div class="card-content course_next">
+                  <p class="card-header-text coursenext_time">
                     {{ item.times[0].start_at | formatDate }}
                   </p>
                   <div
-                    class="course_next_img"
+                    class="card-img course_next_img"
                     :style="{ backgroundImage: `url(${item.img})` }"
                   ></div>
-                  <div class="course_next_body">
-                    <h5 class="course_next_title">{{ item.name }}</h5>
-                    <p class="course_next_teacher_name">
-                      <small>{{ judgeTeacherName(item.teacher) }}</small>
+                  <div class="card-foot course_next_body">
+                    <h5 class="card-foot-title course_next_title">
+                      {{ item.name }}
+                    </h5>
+                    <p class="card-foot-text course_next_teacher_name">
+                      <small>{{ dealTeacherName(item.teacher) }}</small>
                     </p>
                   </div>
                 </div>
               </div>
-              <AppCourseWithoutCourse
-                v-if="courseData[loginType][category].courses.length === 0"
-              />
+
+              <!-- 沒有資料的時候 -->
+              <AppNoClasses
+                v-if="viewData.length === 0"
+                :no-classes-text="noClassesText"
+              >
+                <template v-if="category === 'live'" slot="btns">
+                  <router-link
+                    :to="{
+                      name: 'browse',
+                      params: { lang: this.$route.params.lang },
+                    }"
+                    class="kart-btn kart-sub go_to_browse"
+                  >
+                    {{ $t('nextcourse.more_movie') }}
+                  </router-link>
+                </template>
+              </AppNoClasses>
             </div>
           </div>
 
           <!-- 四種狀況的頁碼 -->
           <ThePagination
+            v-if="viewData.length !== 0"
             :page-obj="paginationObj"
             @fetchSpecificCoursePage="paginationEvent"
           />
@@ -105,25 +123,26 @@
 // Resource
 import { axiosSuccessHint } from '@/plugins/utility.js';
 import {
-  fetchNormalCoursesPath,
   fetchPublicCoursesPath,
+  fetchLiveCoursePath,
+  fetchOneToOneCoursePath,
   fetchTeacherCoursePath,
 } from '@/store/ajax-path.js';
-// import { checkIsLogin } from '@/plugins/checker.js';
+import { isEmptyObject } from '@/plugins/checker.js';
 import commonMixinObj from '@/mixins/common.js';
 import paginationMixinObj from '@/mixins/pagination.js';
 import categoryMixinObj from '@/mixins/category.js';
 
 // Component
 import AppAlert from '@/components/AppAlert.vue';
-import AppCourseWithoutCourse from '@/components/AppCourseWithoutCourse.vue';
+import AppNoClasses from '@/components/AppNoClasses.vue';
 import ThePagination from '@/components/ThePagination.vue';
 
 export default {
   name: 'AppCourse',
   components: {
     AppAlert,
-    AppCourseWithoutCourse,
+    AppNoClasses,
     ThePagination,
   },
   mixins: [commonMixinObj, paginationMixinObj, categoryMixinObj],
@@ -136,7 +155,7 @@ export default {
 
   data() {
     return {
-      // 分類( 'course' => 一般課程 ｜ 'public' => 公益課程 | 'teacher' => 老師主講課程 ｜ 'assistant' => 老師作為助教的課程 )
+      // 分類( 'live' => 直撥課程 ｜ 'onetoone' => 一對一課程 | 'teacher' => 老師主講課程 ｜ 'assistant' => 老師作為助教的課程 )
       category: '',
       alert: {
         openOrNot: false,
@@ -145,12 +164,11 @@ export default {
       },
       courseData: {
         student: {
-          course: {
+          live: {
             id: '1',
-            api: '/api/test/lessons/recent',
-            // 一般課程的頁碼
-            coursePageObj: {
-              links: {},
+            // 直撥課程的頁碼
+            livePageObj: {
+              pageOrderArr: [],
               props: {
                 current: 1,
                 prev: 1,
@@ -162,13 +180,15 @@ export default {
                 limitPage: 5,
               },
             },
+            // 兩個混合的陣列課程(公益課程在前面)
             courses: [],
+            liveCourses: [],
+            publicCourses: [],
           },
-          public: {
+          onetoone: {
             id: '2',
-            api: '/api/students/current/publics',
-            // 一般課程的頁碼
-            publicPageObj: {
+            // 一對一課程的頁碼
+            onetoonePageObj: {
               links: {},
               props: {
                 current: 1,
@@ -231,6 +251,7 @@ export default {
     /**
      * @author odin
      * @description 判斷是否為超級學生
+     * @return {boolean}
      */
     isSuperStudent() {
       return this.loginType === 'student' &&
@@ -238,18 +259,53 @@ export default {
         ? true
         : false;
     },
+
+    /**
+     * @author odin
+     * @description 判斷沒有內容的時候要顯示的文字
+     * @return {boolean}
+     */
+    noClassesText() {
+      let str = '';
+      switch (this.category) {
+        case 'live':
+          str = 'nextcourse.no_live';
+          break;
+        case 'onetoone':
+          str = 'nextcourse.no_onetoone';
+          break;
+        case 'teacher':
+          str = 'nextcourse.no_teacher_courses';
+          break;
+        case 'assistant':
+          str = 'nextcourse.no_assistant_courses';
+          break;
+      }
+
+      return str;
+    },
+
+    /**
+     * @author odin
+     * @description
+     * @return {array}
+     */
+    viewData() {
+      return this.courseData[this.loginType][this.category]['courses'];
+    },
+
     /**
      * @author odin
      * @description 判斷要用哪個 paginationbObj
+     * @return {object}
      */
     paginationObj() {
       let returnPaginationObj = {};
       switch (this.category) {
-        case 'course':
-          returnPaginationObj = this.courseData.student.course.coursePageObj
-            .props;
+        case 'live':
+          returnPaginationObj = this.courseData.student.live.livePageObj.props;
           break;
-        case 'public':
+        case 'onetoone':
           returnPaginationObj = this.courseData.student.public.publicPageObj
             .props;
           break;
@@ -265,17 +321,19 @@ export default {
 
       return returnPaginationObj;
     },
+
     /**
      * @author odin
-     * @description 判斷要用哪個 paginationb 的 事件
+     * @description 判斷要用哪個 paginationn 的事件
+     * @return {function}
      */
     paginationEvent() {
       let eventName = {};
       switch (this.category) {
-        case 'course':
-          eventName = this.fetchNormalCourses;
+        case 'live':
+          eventName = this.goSpecifiLivePage;
           break;
-        case 'public':
+        case 'onetoone':
           eventName = this.fetchPublicCourses;
           break;
         case 'teacher':
@@ -296,29 +354,19 @@ export default {
   methods: {
     /**
      * @author odin
-     * @description 開啟燈箱
-     */
-    showAlert() {
-      this.alert.openOrNot = true;
-    },
-
-    /**
-     * @author odin
      * @description 初始化的內容
      */
     init() {
       // 判斷分類
       this.judgeCategory();
 
-      // 是否為超級學生
-      if (this.isSuperStudent) {
+      if (this.loginType === 'student') {
+        // 是否為學生
         // 抓取 一般/公益 課程清單
-        this.fetchNormalCourses();
-        this.fetchPublicCourses();
-      }
-
-      // 是否為老師
-      if (this.loginType === 'teacher') {
+        this.fetchLiveAndPublicCourse();
+        this.fetchOneToOneCourse();
+      } else if (this.loginType === 'teacher') {
+        // 是否為老師
         this.fetchTeacherCourse();
         this.fetchAssistantCourse();
       }
@@ -330,7 +378,7 @@ export default {
      */
     judgeCategory() {
       if (this.loginType === 'student') {
-        this.category = 'course';
+        this.category = 'live';
       } else if (this.loginType === 'teacher') {
         this.category = 'teacher';
       }
@@ -338,66 +386,68 @@ export default {
 
     /**
      * @author odin
-     * @description 判斷當前語系選擇要輸出哪一個老師的名稱
-     */
-    judgeTeacherName(teacherObj) {
-      let teacherName = '';
-
-      switch (this.i18n) {
-        case 'tw':
-          teacherName = teacherObj.name_hant;
-          break;
-        case 'cn':
-          teacherName = teacherObj.name;
-          break;
-        case 'en':
-          teacherName = teacherObj.name_en;
-          break;
-      }
-
-      return teacherName;
-    },
-
-    /**
-     * @author odin
      * @param {object} res axios 回傳的成功 response
      * @description 處理 一般課程 回傳回來的資料
      */
-    handleNormalCoursesData(res) {
-      const data = res.data.data;
-      const meta = res.data.meta;
-      const links = res.data.links;
+    // handleNormalCoursesData(res) {
+    //   const data = res.data.data;
+    //   const meta = res.data.meta;
+    //   const links = res.data.links;
 
-      // 放入課程內容
-      this.courseData.student.course.courses = data;
+    //   // 放入課程內容
+    //   this.courseData.student.course.courses = data;
 
-      // 處理頁碼
-      this.vMixhandlePaginationData(
-        this.courseData.student.course.coursePageObj,
-        links,
-        meta,
-      );
+    //   // 處理頁碼
+    //   this.vMixhandlePaginationData(
+    //     this.courseData.student.course.coursePageObj,
+    //     links,
+    //     meta,
+    //   );
 
-      // 回到最上方
-      this.backToTop();
-    },
+    //   // 回到最上方
+    //   this.backToTop();
+    // },
 
     /**
      * @author odin
      * @param {object} res axios 回傳的成功 response
      * @description 處理 公益課程 回傳回來的資料
      */
-    handlePublicCoursesData(res) {
+    // handlePublicCoursesData(res) {
+    //   const data = res.data.data;
+    //   const meta = res.data.meta;
+    //   const links = res.data.links;
+
+    //   // 放入課程內容
+    //   this.courseData.student.public.courses = data;
+
+    //   // 處理頁碼
+    //   this.vMixhandlePaginationData(
+    //     this.courseData.student.public.publicPageObj,
+    //     links,
+    //     meta,
+    //   );
+
+    //   // 回到最上方
+    //   this.backToTop();
+    // },
+
+    /**
+     * @author odin
+     * @param {object} res axios 回傳的成功 response
+     * @description 處理 一對一課程 回傳回來的資料
+     */
+    handleOneToOneCoursesData(res) {
       const data = res.data.data;
       const meta = res.data.meta;
       const links = res.data.links;
 
       // 放入課程內容
-      this.courseData.student.public.courses = data;
+      this.courseData.student.onetoone.courses = data;
 
       // 處理頁碼
       this.vMixhandlePaginationData(
-        this.courseData.student.public.publicPageObj,
+        this.courseData.student.onetoone.onetoonePageObj,
         links,
         meta,
       );
@@ -456,17 +506,155 @@ export default {
 
     /**
      * @author odin
-     * @param {number} page 要取得第幾頁，沒填的話預設是第一頁
-     * @description 判斷當前語系選擇要輸出哪一個老師的名稱
+     * @param {object} liveCourseRes axios 回傳的成功 response (直播課程)
+     * @param {object} publicCourseRes axios 回傳的成功 response (公益課程)
+     * @description 處理 該老師的主講課程 回傳回來的資料
      */
-    async fetchNormalCourses(page = 1) {
+    handleLiveAndPublicCourseData(liveCourseRes, publicCourseRes) {
+      const livesCoursesArr = liveCourseRes.data.data;
+      const publicCourseArr = publicCourseRes.data.data;
+      const livesMixArr = [...publicCourseArr, ...livesCoursesArr];
+      const pageOrderArr = this.sliceArrayForPagination(livesMixArr);
+
+      this.courseData.student.live.courses = livesMixArr;
+      this.courseData.student.live.liveCourses = livesCoursesArr;
+      this.courseData.student.live.publicCourses = publicCourseArr;
+      this.courseData.student.live.livePageObj.pageOrderArr = pageOrderArr;
+
+      // 處理 Lives Pagination 的問題
+      this.handleMixArrayPagination(livesMixArr);
+    },
+
+    /**
+     * @author odin
+     * @param {array} mixArr 組合好的 Array
+     * @description 處理 組合的陣列 要以 Pagination 的方式呈現的 Pagination Array 以及把資料放進對應的 PageObj 中
+     */
+    handleMixArrayPagination(mixArr) {
+      const pageOrderArr = this.sliceArrayForPagination(mixArr);
+      const totalPages = pageOrderArr.length;
+      const totalItems = mixArr.length;
+
+      // 放置分頁好的陣列
+      this.courseData.student.live.livePageObj.pageOrderArr = pageOrderArr;
+      // 放入第一頁分頁的內容
+      this.courseData.student.live.courses = isEmptyObject(pageOrderArr)
+        ? []
+        : pageOrderArr[0];
+
+      // 放置頁碼相關資料
+      this.courseData.student.live.livePageObj.props.current = 1;
+      this.courseData.student.live.livePageObj.props.prev = 1;
+      this.courseData.student.live.livePageObj.props.next = 2;
+      this.courseData.student.live.livePageObj.props.total = totalItems;
+      this.courseData.student.live.courses.props.totalPages = totalPages;
+    },
+
+    /**
+     * @author odin
+     * @param {array} arr 要被分割的陣列
+     * @param {number} sepNumber 用多少
+     * @description 處理 該老師的主講課程 回傳回來的資料
+     */
+    sliceArrayForPagination(arr, sepNumber = 10) {
+      const sliceNumber = Math.ceil(arr.length / sepNumber);
+      let paginationArray = [];
+      for (let i = 0; i < sliceNumber; i++) {
+        paginationArray.push(arr.slice(i * sepNumber, (i + 1) * sepNumber));
+      }
+
+      return paginationArray;
+    },
+
+    /**
+     * @author odin
+     * @param {number} page 到哪一頁
+     * @description 處理 直播課程 換頁
+     */
+    goSpecifiLivePage(page = 1) {
+      const pageOrderArr = this.courseData.student.live.livePageObj
+        .pageOrderArr;
+      const totalPages = this.courseData.student.live.livePageObj.props
+        .totalPages;
+
+      // 改變要顯示的資料
+      this.courseData.student.live.courses = pageOrderArr[page];
+
+      // 放置頁碼相關資料
+      this.courseData.student.live.livePageObj.props.current = page;
+      this.courseData.student.live.livePageObj.props.prev =
+        page === 1 ? 1 : page - 1;
+      this.courseData.student.live.livePageObj.props.next =
+        page === totalPages ? totalPages : page + 1;
+    },
+
+    /**
+     * @author odin
+     * @description 取得 公益課程 的課程資料
+     */
+    fetchLiveCourse() {
+      return this.axios({
+        url: fetchLiveCoursePath,
+        method: 'get',
+        headers: {
+          Authorization: this.loginToken,
+        },
+      });
+    },
+
+    /**
+     * @author odin
+     * @description 取得 公益課程 的課程資料
+     */
+    fetchPublicCourse() {
+      return this.axios({
+        url: `${fetchPublicCoursesPath}`,
+        method: 'get',
+        headers: {
+          Authorization: this.loginToken,
+        },
+      });
+    },
+
+    /**
+     * @author odin
+     * @description 取得 直撥課程 以及 公益課程 的資料
+     */
+    async fetchLiveAndPublicCourse() {
       // 開啟 loading
       this.$bus.$emit('loading:on');
 
-      console.log('fetchNormalCourses page', page);
+      try {
+        const liveCourseRes = await this.fetchLiveCourse();
+        const publicCourseRes = await this.fetchPublicCourse();
+
+        // 成功提示
+        axiosSuccessHint('fetchLiveCourse', liveCourseRes);
+        axiosSuccessHint('fetchPublicCourse', publicCourseRes);
+
+        if (liveCourseRes !== undefined && publicCourseRes !== undefined) {
+          // 資料處理(順序一定要這樣)
+          this.handleLiveAndPublicCourseData(liveCourseRes, publicCourseRes);
+        }
+      } catch (err) {
+        console.log('fetchLiveAndPublicCourse err', err);
+      } finally {
+        // 關閉 loading
+        this.$bus.$emit('loading:off');
+      }
+    },
+
+    /**
+     * @author odin
+     * @description 取得 一對一課程 的資料
+     */
+    async fetchOneToOneCourse(page = 1) {
+      // 開啟 loading
+      this.$bus.$emit('loading:on');
+
       try {
         const res = await this.axios({
-          url: `${fetchNormalCoursesPath}?page=${page}`,
+          url: `${fetchOneToOneCoursePath}?page=${page}`,
           method: 'get',
           headers: {
             Authorization: this.loginToken,
@@ -474,13 +662,13 @@ export default {
         });
 
         if (res.data.data || res.data.status) {
-          axiosSuccessHint('fetchNormalCourses', res);
+          axiosSuccessHint('fetchOneToOneCourse', res);
 
           // 資料處理
-          this.handleNormalCoursesData(res);
+          this.handleOneToOneCoursesData(res);
         }
       } catch (err) {
-        console.log('fetchNormalCourses', err);
+        console.log('fetchOneToOneCourse', err);
       }
 
       // 關閉 loading
@@ -490,35 +678,68 @@ export default {
     /**
      * @author odin
      * @param {number} page 要取得第幾頁，沒填的話預設是第一頁
-     * @description 判斷當前語系選擇要輸出哪一個老師的名稱
+     * @description 取得 一般課程 的資料
      */
-    async fetchPublicCourses(page = 1) {
-      // 開啟 loading
-      this.$bus.$emit('loading:on');
+    // async fetchNormalCourses(page = 1) {
+    //   // 開啟 loading
+    //   this.$bus.$emit('loading:on');
 
-      console.log('fetchPublicCourses page', page);
-      try {
-        const res = await this.axios({
-          url: `${fetchPublicCoursesPath}?page=${page}`,
-          method: 'get',
-          headers: {
-            Authorization: this.loginToken,
-          },
-        });
+    //   console.log('fetchNormalCourses page', page);
+    //   try {
+    //     const res = await this.axios({
+    //       url: `${fetchNormalCoursesPath}?page=${page}`,
+    //       method: 'get',
+    //       headers: {
+    //         Authorization: this.loginToken,
+    //       },
+    //     });
 
-        if (res.data.data || res.data.status) {
-          axiosSuccessHint('fetchPublicCourses', res);
+    //     if (res.data.data || res.data.status) {
+    //       axiosSuccessHint('fetchNormalCourses', res);
 
-          // 資料處理
-          this.handlePublicCoursesData(res);
-        }
-      } catch (err) {
-        console.log('fetchPublicCourses', err);
-      }
+    //       // 資料處理
+    //       this.handleNormalCoursesData(res);
+    //     }
+    //   } catch (err) {
+    //     console.log('fetchNormalCourses', err);
+    //   }
 
-      // 關閉 loading
-      this.$bus.$emit('loading:off');
-    },
+    //   // 關閉 loading
+    //   this.$bus.$emit('loading:off');
+    // },
+
+    /**
+     * @author odin
+     * @param {number} page 要取得第幾頁，沒填的話預設是第一頁
+     * @description 取得 公益課程 的資料
+     */
+    // async fetchPublicCourses(page = 1) {
+    //   // 開啟 loading
+    //   this.$bus.$emit('loading:on');
+
+    //   console.log('fetchPublicCourses page', page);
+    //   try {
+    //     const res = await this.axios({
+    //       url: `${fetchPublicCoursesPath}?page=${page}`,
+    //       method: 'get',
+    //       headers: {
+    //         Authorization: this.loginToken,
+    //       },
+    //     });
+
+    //     if (res.data.data || res.data.status) {
+    //       axiosSuccessHint('fetchPublicCourses', res);
+
+    //       // 資料處理
+    //       this.handlePublicCoursesData(res);
+    //     }
+    //   } catch (err) {
+    //     console.log('fetchPublicCourses', err);
+    //   }
+
+    //   // 關閉 loading
+    //   this.$bus.$emit('loading:off');
+    // },
 
     /**
      * @author odin

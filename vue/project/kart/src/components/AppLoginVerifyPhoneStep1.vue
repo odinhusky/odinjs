@@ -31,7 +31,7 @@
     <div class="btn_group">
       <!-- 下一步 -->
       <button
-        class="kart-btn kart-sub full_btn next_step_btn"
+        class="kart-btn kart-sub w-100 next_step_btn"
         @click.prevent="fetchVerifyCode"
       >
         {{ $t('type_form.next') }}
@@ -154,24 +154,51 @@ export default {
      */
     validationFetchVerifyCode() {
       // 檢查電話
+      // 台灣或大陸地區，依照電話檢查的規則走
       if (
-        checkCellphone(this.phone.countryCode, this.phone.phoneNumber) &&
-        !checkIsEmpty(this.phone.countryCode) &&
-        !checkIsEmpty(this.phone.phoneNumber)
+        this.phone.countryCode === '+86' ||
+        this.phone.countryCode === '+886'
       ) {
-        console.log('Validation Pass');
-        // 錯誤提示
-        this.error.phoneNumber = false;
-      } else {
-        // 錯誤提示
-        this.error.phoneNumber = true;
+        if (
+          checkCellphone(this.phone.countryCode, this.phone.phoneNumber) &&
+          !checkIsEmpty(this.phone.countryCode) &&
+          !checkIsEmpty(this.phone.phoneNumber)
+        ) {
+          console.log('Validation Pass');
+          // 錯誤提示
+          this.error.phoneNumber = false;
+        } else {
+          // 錯誤提示
+          this.error.phoneNumber = true;
 
-        // 燈箱顯示
-        this.$bus.$emit(
-          'notify:message',
-          this.$t('system_message.cellphone_format_error'),
-        );
-        return false;
+          // 燈箱顯示
+          this.$bus.$emit(
+            'notify:message',
+            this.$t('system_message.cellphone_format_error'),
+          );
+          return false;
+        }
+      } else {
+        // 非台灣或大陸地區，其電話號碼不得超過15碼
+        if (
+          !checkIsEmpty(this.phone.countryCode) &&
+          !checkIsEmpty(this.phone.phoneNumber) &&
+          this.phone.phoneNumber.length <= 15
+        ) {
+          console.log('Validation Pass');
+          // 錯誤提示
+          this.error.phoneNumber = false;
+        } else {
+          // 錯誤提示
+          this.error.phoneNumber = true;
+
+          // 燈箱顯示
+          this.$bus.$emit(
+            'notify:message',
+            this.$t('system_message.cellphone_format_error'),
+          );
+          return false;
+        }
       }
 
       return true;

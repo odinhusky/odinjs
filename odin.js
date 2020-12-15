@@ -2542,7 +2542,7 @@ odin.fun = (function () {
   function translateToMorse (string) {
     return string.toUpperCase().split('').map(letter => morseCode[letter]).join('|');
   }
-  
+
   /**
    * @author odin
    * @class fun
@@ -2555,7 +2555,7 @@ odin.fun = (function () {
     Object.keys(morseCode).forEach(key => {
       morseReverseObject[morseCode[key]] = key;
     })
-  
+
     return code.split('|').map(letter => morseReverseObject[letter]).join('');
   }
 
