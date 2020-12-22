@@ -2702,7 +2702,7 @@ odin.algorithm = (function () {
    * @author odin
    * @class css
    * @param {array} arr -- 包含純數字的陣列
-   * @description 快速排序陣列中的數字
+   * @description 快速排序陣列中的數字，隨便找一個值當作 pivot，比 pivot 小的放左邊的陣列，大的就放右邊的陣列，之後左右兩邊的陣列在個字做一次這種比較，直到陣列只剩兩個，排序完之後就可以得到排序過後的陣列
    * @example quickSort([4,2,3,3]) => [1,2,3,4]
    */
   function quickSort(arr) {
@@ -2718,8 +2718,101 @@ odin.algorithm = (function () {
     return [...quickSort(left), p, ...quickSort(right)]
   }
 
+  /**
+   * @author odin
+   * @class css
+   * @param {array} arr -- 包含純數字的陣列
+   * @param {number} index1 -- 要交換的第一個數字的索引
+   * @param {number} index2 -- 要交換的第二個數字的索引
+   * @description 交換用的function
+   */
+  function swap(arr, index1, index2){
+    // 要先把第一個值存下來
+    let tmpValue = arr[index1];
+    arr[index1] = arr[index2]
+    // 假如這邊寫 array[index2] = array[index1]; 那兩個值會是一樣的
+    arr[index2] = tmpValue;
+  }
+
+  /**
+   * @author odin
+   * @class css
+   * @param {array} arr -- 包含純數字的陣列
+   * @description Buble Sort -- 一次只比兩個，比較小的放前面，比較大的放後面
+   */
+  function bubbleSort(arr) {
+
+    let len = arr.length
+    let count = 0;
+
+    // 總共比 n -1 輪
+    for(let j = 0; j < len - 1; j++){
+      // 比較次
+      for(let i = 0; i< len - j - 1; i++){
+        count ++;
+        if(arr[i + 1] < arr[i]){
+          swap(arr, i, i + 1)
+        }
+      }
+    }
+
+    console.log(count)
+    return arr;
+  }
+
+  /**
+   * @author odin
+   * @class css
+   * @param {array} arr -- 包含純數字的陣列
+   * @description Selection Sort -- 每次選定從第一個開始的數值當基準值，遍歷整個陣列找出目前最小的值，並且跟第一個位置的數字交換位置，之後第二次則拿第二個值開始比較剩餘的陣列，如此不斷重複排序
+   */
+  function selectionSort(arr){
+    let len = arr.length;
+    let indexMin;
+    // 總共比 n -1 輪
+    for(let j = 0; j < len - 1; j++){
+      indexMin = j;
+      // 比較次
+      for(let i = j; i < len; i++){
+        if(arr[indexMin] > arr[i]){
+          indexMin = i
+        }
+      }
+      // 比完這一輪才交換
+      swap(arr, j, indexMin)
+    }
+    return arr;
+  }
+
+  /**
+   * @author odin
+   * @class css
+   * @param {array} arr -- 包含純數字的陣列
+   * @description Selection Sort -- 每次只把一個數字跟前面的數字作比較，直到找到對的地方
+   */
+  function insertSort(arr){
+    let len = arr.length
+    let count = 0;
+  
+    // 總共比 n -1 輪
+    for(let j = 0; j < len - 1; j++){
+      // 比較次
+      for(let i = j + 1; i > 0 ; i--){
+        count ++;
+        if(arr[i] < arr[i - 1]){
+          swap(arr, i - 1, i)
+        }
+      }
+    }
+    console.log(count)
+    return arr;
+  }
+
   return {
-    quickSort
+    quickSort,
+    bubbleSort,
+    selectionSort,
+    insertSort
   };
 })();
 
@@ -2865,7 +2958,7 @@ odin.bats = (function () {
  */
 
 odin.set = (function() {
-  
+
   /**
    * @author odin
    * @class set
