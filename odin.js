@@ -2323,6 +2323,19 @@ odin.es6 = (function () {
       .join('');
   };
 
+  /**
+   * @author odin
+   * @class es6
+   * @description 產生單獨唯一的值
+   * @type generator
+   * @returns {function} generator
+   */
+  function* idMaker(){
+    let i = 0
+    while(i++ < i)
+      yield Symbol(i)
+  }
+
   return {
     arrLikeToArray,
     max,
@@ -2333,6 +2346,7 @@ odin.es6 = (function () {
     convertHTMLXSS,
     getAttributeString,
     TagAttr,
+    idMaker,
   };
 })();
 
@@ -2625,6 +2639,11 @@ odin.color = (function () {
   };
 })();
 
+/**
+ * @author odin
+ * @description CSS Related
+ */
+
 odin.css = (function () {
   /**
    * @author odin
@@ -2696,11 +2715,16 @@ odin.css = (function () {
   };
 })();
 
+/**
+ * @author odin
+ * @description algorithm
+ */
+
 odin.algorithm = (function () {
 
   /**
    * @author odin
-   * @class css
+   * @class algorithm
    * @param {array} arr -- 包含純數字的陣列
    * @description 快速排序陣列中的數字，隨便找一個值當作 pivot，比 pivot 小的放左邊的陣列，大的就放右邊的陣列，之後左右兩邊的陣列在個字做一次這種比較，直到陣列只剩兩個，排序完之後就可以得到排序過後的陣列
    * @example quickSort([4,2,3,3]) => [1,2,3,4]
@@ -2720,7 +2744,7 @@ odin.algorithm = (function () {
 
   /**
    * @author odin
-   * @class css
+   * @class algorithm
    * @param {array} arr -- 包含純數字的陣列
    * @param {number} index1 -- 要交換的第一個數字的索引
    * @param {number} index2 -- 要交換的第二個數字的索引
@@ -2736,7 +2760,7 @@ odin.algorithm = (function () {
 
   /**
    * @author odin
-   * @class css
+   * @class algorithm
    * @param {array} arr -- 包含純數字的陣列
    * @description Buble Sort -- 一次只比兩個，比較小的放前面，比較大的放後面
    */
@@ -2762,7 +2786,7 @@ odin.algorithm = (function () {
 
   /**
    * @author odin
-   * @class css
+   * @class algorithm
    * @param {array} arr -- 包含純數字的陣列
    * @description Selection Sort -- 每次選定從第一個開始的數值當基準值，遍歷整個陣列找出目前最小的值，並且跟第一個位置的數字交換位置，之後第二次則拿第二個值開始比較剩餘的陣列，如此不斷重複排序
    */
@@ -2786,9 +2810,9 @@ odin.algorithm = (function () {
 
   /**
    * @author odin
-   * @class css
+   * @class algorithm
    * @param {array} arr -- 包含純數字的陣列
-   * @description Selection Sort -- 每次只把一個數字跟前面的數字作比較，直到找到對的地方
+   * @description Insert Sort -- 一開始排序好前面兩個順序，之後只再取一個進行排序到對的位置，才取下一個
    */
   function insertSort(arr){
     let len = arr.length
@@ -2808,11 +2832,84 @@ odin.algorithm = (function () {
     return arr;
   }
 
+  /**
+   * @author odin
+   * @class algorithm
+   * @param {array} arr -- 包含純數字的陣列
+   * @description Merge Sort -- 先把陣列切成一個陣列只有一個內容，之後再跟每個陣列中第一個值比較，小的就放前面
+   */
+  function mergeSort(arr) {
+    /**
+     * @author odin
+     * @class Merge Sort
+     * @param {Array} left -- 左邊的陣列
+     * @param {Array} right -- 右邊的陣列
+     * @description 合併分開的陣列
+     */
+    function merge(left, right){
+      const result = [];
+    
+      let il = 0; // record the left position
+      let ir = 0; // record the right position
+      
+      while(il < left.length && ir < right.length){
+      
+        // 哪邊值比較小就加入進 result
+        if(left[il] < right[ir]){
+          result.push(left[il]);
+          il ++;
+        }else{
+          result.push(right[ir]);
+          ir ++
+        }
+      }
+
+      // 只剩左邊陣列就直接加入 result
+      while(il < left.length){
+        result.push(left[il]);
+        il ++;
+      }
+
+      // 只剩右邊陣列就直接加入 result
+      while(ir < right.length){
+        result.push(right[ir]);
+        ir ++;
+      }
+
+      return result;
+    }
+
+    /**
+     * @author odin
+     * @class Merge Sort
+     * @param {Array} array -- 要排序的陣列
+     * @description 合併分開的陣列
+     */
+    function mergeSlice(array){
+      const len = array.length;
+
+      // 如果只剩一個值就不用切了
+      if( len === 1){
+        return array;
+      }
+
+      const mid = Math.floor(len/2);
+      const leftArray = array.slice(0, mid);
+      const rightArray = array.slice(mid, len);
+
+      // 這邊用遞迴一直切切到最後才會一個一個合併
+      return merge(mergeSlice(leftArray), mergeSlice(rightArray))
+    }
+
+    return mergeSlice(arr);
+  }
+
   return {
     quickSort,
     bubbleSort,
     selectionSort,
-    insertSort
+    insertSort,
+    mergeSort
   };
 })();
 
@@ -2848,6 +2945,9 @@ odin.bats = (function () {
       bats17: '0/0',
       bats18: '0/1',
       bats19: 'Infinity/Infinity',
+      bats20: '9007199254740991 + 1 === 9007199254740991 + 2',
+      bats21: 'Number.MAX_SAFE_INTEGER',
+      bats22: 'Number.MIN_SAFE_INTEGER',
     };
     console.table(table);
   }
@@ -2928,6 +3028,18 @@ odin.bats = (function () {
     console.log(Infinity / Infinity);
   }
 
+  function bats20() {
+    console.log(9007199254740991 + 1 === 9007199254740991 + 2);
+  }
+
+  function bats21() {
+    console.log(Number.MAX_SAFE_INTEGER);
+  }
+
+  function bats22() {
+    console.log(Number.MIN_SAFE_INTEGER);
+  }
+
   return {
     showList,
     bats1,
@@ -2949,6 +3061,9 @@ odin.bats = (function () {
     bats17,
     bats18,
     bats19,
+    bats20,
+    bats21,
+    bats22,
   };
 })();
 
