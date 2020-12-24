@@ -630,12 +630,40 @@ odin.helper = (function () {
    * @author odin
    * @class helpers
    * @description Deep copy of array or object
-   * @param {array / object} val input data of type object
+   * @param {array / object} val input data of type object or array
    * @returns {array / object} array / object
    */
 
   function deepCopy(val) {
     return JSON.parse(JSON.stringify(val));
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description Deep copy of object include !!!!! symbol and undefined value !!!!
+   * @param {array / object} obj input data of type object or array
+   * @returns {array / object} array / object
+   */
+  function deeepCopy(obj, cache = new WeakMap()) {
+    // 基本型別 & function
+    if (obj === null || typeof obj !== 'object') return obj
+    // Date 及 RegExp
+    if (obj instanceof Date || obj instanceof RegExp) return obj.constructor(obj)
+    // 檢查快取
+    if (cache.has(obj)) return cache.get(obj)
+
+    // 使用原物件的 constructor
+    const copy = new obj.constructor()
+
+    // 先放入 cache 中
+    cache.set(obj, copy)
+    // 取出所有一般屬性 & 所有 key 為 symbol 的屬性
+    ;[...Object.getOwnPropertyNames(obj), ...Object.getOwnPropertySymbols(obj)].forEach(key => {
+      copy[key] = deeepCopy(obj[key], cache)
+    })
+
+    return copy
   }
 
   /**
@@ -819,6 +847,7 @@ odin.helper = (function () {
     reverseArray,
     shallowCopy,
     deepCopy,
+    deeepCopy,
     getObjKeyNameToArray,
     getObjValueToArray,
     detectLanguage,
@@ -2860,7 +2889,7 @@ odin.algorithm = (function () {
           il ++;
         }else{
           result.push(right[ir]);
-          ir ++
+          ir ++;
         }
       }
 
