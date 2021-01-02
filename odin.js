@@ -2933,12 +2933,43 @@ odin.algorithm = (function () {
     return mergeSlice(arr);
   }
 
+  /**
+   * @author odin
+   * @class algorithm
+   * @param {array} arr -- 排序過後的 array
+   * @description Binary Search -- 先從中間找，如果中間目標的內容不符合目標，則比對目前中間值比較，比較大則往左找，比較小則往右找，直到找到為止。
+   */
+  function binarySearch(arr, target) {
+    // 這邊都以 index 為單位
+    let start = 0;
+    let end = arr.length - 1;
+    let mid;
+  
+    while (start <= end) {
+      //  從中間開始切
+      mid = Math.floor((start + end) / 2);
+      if (target < arr[mid]) {
+        // 往左找
+        end = mid - 1;
+      } else if (target > arr[mid]) {
+        // 往右找
+        start = mid + 1;
+      } else {
+        return mid;
+      }
+    }
+  
+    // 如果上面都不符合代表找不到
+    return -1;
+  }
+
   return {
     quickSort,
     bubbleSort,
     selectionSort,
     insertSort,
-    mergeSort
+    mergeSort,
+    binarySearch
   };
 })();
 
