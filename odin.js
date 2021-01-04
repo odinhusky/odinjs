@@ -2944,7 +2944,7 @@ odin.algorithm = (function () {
     let start = 0;
     let end = arr.length - 1;
     let mid;
-  
+
     while (start <= end) {
       //  從中間開始切
       mid = Math.floor((start + end) / 2);
@@ -2963,13 +2963,70 @@ odin.algorithm = (function () {
     return -1;
   }
 
+  /**
+   * @author odin
+   * @class algorithm
+   * @param {array} coins -- 硬幣的面額陣列
+   * @param {number} amount -- 要達到的金額
+   * @description 利用給定的硬幣面額陣列，找出使用最少面額的硬幣數量就能達到給定的金額，如果沒有辦法達到則回傳-1
+   * @description [LeetCode #322]
+   * @return {number}
+   */
+  function coinChange(coins, amount) {
+    if(!amount || coins.length === 0) {
+      return 0;
+    }
+  
+    let out = [0];
+    let i, l;
+    let index = 1;
+  
+    while(!out[amount]) {
+      out[index] = Infinity;
+  
+      for(i=0, l=coins.length; i<l; i++) {
+  
+        if(coins[i] <= index) {
+          out[index] = Math.min(out[index], 1 + out[index - coins[i]])
+        }
+  
+      }
+  
+      index++;
+    }
+  
+    return out[amount] === Infinity ? -1 : out[amount];
+  }
+
+  /**
+   * @author odin
+   * @class algorithm
+   * @param {array} numbers -- 給定的排序好的整數陣列
+   * @param {number} target -- 目標數值
+   * @description [LeetCode ] 167. Two Sum II - Input array is sorted
+   * @description 找到陣列中兩個相加的數字剛好等於給定的目標數值，並用陣列印出包含該兩個數值的位置分別是在陣列中的第幾個(非index)
+   * @return {number}
+   */
+  function twoSum(numbers, target) {
+    let pointer = 0;
+    let ind = numbers.lemgth - 1;
+
+    while(target !== numbers[pointer] + numbers[ind]) {
+      target > numbers[pointer] + numbers[ind] ? pointer++ : ind--;
+    }
+
+    retrun [pointer+1, ind+1];
+  }
+
   return {
     quickSort,
     bubbleSort,
     selectionSort,
     insertSort,
     mergeSort,
-    binarySearch
+    binarySearch,
+    coinChange,
+    twoSum
   };
 })();
 

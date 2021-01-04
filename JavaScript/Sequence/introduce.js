@@ -128,41 +128,42 @@ function binarySearch(fruitArray, target) {
 // Example:
 // Input: [-10,-5,0,3,7]
 // Output: 3
-// Explanation: 
+// Explanation:
 // For the given array, A[0] = -10, A[1] = -5, A[2] = 0, A[3] = 3, thus the output is 3.
 // Example 2:
 
 // Input: [0,2,5,8,17]
 // Output: 0
-// Explanation: 
+// Explanation:
 // A[0] = 0, thus the output is 0.
 // Example 3:
 
 // Input: [-10,-5,3,4,7,9]
 // Output: -1
-// Explanation: 
+// Explanation:
 // There is no such i that A[i] = i, thus the output is -1.
 
-* @param {number[]} A
-* @return {number}
-*/
-
+// * @param {number[]} A
+// * @return {number}
+// */
 
 // 其他部分單純用 Binary Search 解
 
 // 參考圖片8
 
 mid = Math.floor((start + end) / 2); // 從中間開始找
-if (mid < A[mid]) { // 2 < 0
-    // 往左找      
-    end = mid - 1;
-} else if (mid > A[mid]) { // 2 > 0
-    // 往右找
-    start = mid + 1 // start = 3
+if (mid < A[mid]) {
+  // 2 < 0
+  // 往左找
+  end = mid - 1;
+} else if (mid > A[mid]) {
+  // 2 > 0
+  // 往右找
+  start = mid + 1; // start = 3
 } else {
-    minIndex = Math.min(minIndex, mid);
-    end = mid - 1;
-};
+  minIndex = Math.min(minIndex, mid);
+  end = mid - 1;
+}
 
 // 參考圖片9
 
@@ -181,23 +182,21 @@ var fixedPoint = function (A) {
   let mid;
 
   while (start <= end) {
-      mid = Math.floor((start + end) / 2);
-      console.log('mid: ' + mid)
-      if (mid < A[mid]) { 
-          // 往左找      
-          end = mid - 1;
-      } else if (mid > A[mid]) { 
-          // 往右找
-          start = mid + 1 
-      } else {
-          minIndex = Math.min(minIndex, mid);
-          end = mid - 1;
-      };
+    mid = Math.floor((start + end) / 2);
+    console.log('mid: ' + mid);
+    if (mid < A[mid]) {
+      // 往左找
+      end = mid - 1;
+    } else if (mid > A[mid]) {
+      // 往右找
+      start = mid + 1;
+    } else {
+      minIndex = Math.min(minIndex, mid);
+      end = mid - 1;
+    }
   }
   // 如果上面都不符合代表找不到
-  return (minIndex == Number.MAX_SAFE_INTEGER) ? -1 : minIndex;
-
+  return minIndex == Number.MAX_SAFE_INTEGER ? -1 : minIndex;
 };
 
-
-console.log(fixedPoint([-10, -5, -2, 0, 4, 5, 6, 7, 8, 9, 10]))
+console.log(fixedPoint([-10, -5, -2, 0, 4, 5, 6, 7, 8, 9, 10]));
