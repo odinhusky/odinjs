@@ -1,80 +1,16 @@
 // Sort
 
-function swap(arr, index1, index2) {
-  let temp = arr[index1];
-  arr[index1] = arr[index2];
-  arr[index2] = temp;
-}
+[8, 4, 3, 1, 3, 7, 6];
 
-function bubble(arr) {
-  let len = arr.length;
-  if (len < 2) return arr;
+function quickSort(A) {
+  if (A.length < 2) return A;
 
-  let count = 0;
-
-  for (let j = 0; j < len - 1; j++) {
-    for (let i = 0; i < len - j - 1; i++) {
-      count++;
-      if (arr[i + 1] > arr[i]) {
-        swap(arr, i + 1, i);
-      }
-    }
-  }
-
-  console.log('count', count);
-  return arr;
-}
-
-function selection(arr) {
-  let len = arr.length;
-  if (len < 2) return arr;
-
-  let count = 0;
-  let minIndex = null;
-
-  for (let j = 0; j < len - 1; j++) {
-    minIndex = j;
-    for (let i = 0; i < len; i++) {
-      count++;
-      if (arr[minIndex] > arr[i]) {
-        minIndex = i;
-      }
-    }
-    swap(arr, minIndex, j);
-  }
-  console.log('count', count);
-  return arr;
-}
-
-function insertion(arr) {
-  let len = arr.length;
-  if (len < 2) return arr;
-
-  let count = 0;
-
-  for (let j = 0; j < len - 1; j++) {
-    for (let i = j + 1; i > 0; i--) {
-      count++;
-      if (arr[i] < arr[i - 1]) {
-        swap(arr, i - 1, i);
-      }
-    }
-  }
-
-  console.log('count', count);
-  return arr;
-}
-
-function quickSort(arr) {
-  let len = arr.length;
-  if (len < 2) return arr;
-
-  let [p, ...ary] = arr;
-  let l = [];
-  let r = [];
+  let l = [],
+    r = [];
+  let [p, ...ary] = A;
 
   ary.forEach((item) => {
-    if (item < p) {
+    if (p > item) {
       l.push(item);
     } else {
       r.push(item);
@@ -84,48 +20,130 @@ function quickSort(arr) {
   return [...quickSort(l), p, ...quickSort(r)];
 }
 
-function mergeSort(arr) {
-  function merge(left, right) {
-    let ir = 0;
-    let il = 0;
-    const result = [];
+function swap(A, i1, i2) {
+  let temp = A[i1];
+  A[i1] = A[i2];
+  A[i2] = temp;
+}
 
-    while (il < left.length && ir < right.length) {
-      if (left[il] < right[ir]) {
-        result.push(left[il]);
+function bubbleSort(A) {
+  let len = A.length;
+
+  if (len < 2) return A;
+
+  for (let j = 0; j < len - 1; j++) {
+    for (let i = 0; i < len - j - 1; i++) {
+      if (A[i + 1] < A[i]) {
+        swap(A, i + 1, i);
+      }
+    }
+  }
+
+  return A;
+}
+
+function selectionSort(A) {
+  let len = A.length;
+
+  if (len < 2) return A;
+
+  let minIndex;
+
+  for (let j = 0; j < len - 1; j++) {
+    minIndex = j;
+    for (let i = j; i < len; i++) {
+      if (A[minIndex] > A[i]) {
+        minIndex = i;
+      }
+    }
+    swap(A, minIndex, j);
+  }
+
+  return A;
+}
+
+function insertSort(A) {
+  let len = A.length;
+
+  if (len < 2) return A;
+
+  for (let j = 0; j < len - 1; j++) {
+    for (let i = j + 1; i > 0; i--) {
+      if (A[i - 1] > A[i]) {
+        swap(A, i - 1, i);
+      }
+    }
+  }
+
+  return A;
+}
+
+function mergeSort(A) {
+  let len = A.length;
+
+  if (len < 2) return A;
+
+  function merge(l, r) {
+    const result = [];
+    let il = 0,
+      ir = 0;
+
+    while (il < l.length && ir < r.length) {
+      if (l[il] < r[ir]) {
+        result.push(l[il]);
         il++;
-      } else {
-        result.push(right[ir]);
+      } else if (l[il] > r[ir]) {
+        result.push(r[ir]);
         ir++;
       }
     }
 
-    while (left.length > il) {
-      result.push(left[il]);
+    while (il < l.length) {
+      result.push(l[il]);
       il++;
     }
 
-    while (right.length > ir) {
-      result.push(right[ir]);
+    while (ir < r.length) {
+      result.push(r[ir]);
       ir++;
     }
 
     return result;
   }
 
-  function mergeSlice(arr) {
-    const len = arr.length;
+  function mergeSlice(A) {
+    if (len === 1) return A;
 
-    if (len === 1) return arr;
+    let mid = Math.floor(len / 2);
+    let leftA = A.slice(0, mid);
+    let rightA = A.slice(mid, len);
 
-    const mid = Math.floor(len / 2);
-    const left = arr.slice(0, mid);
-    const right = arr.slice(mid, len);
-
-    return merge(mergeSlice(left), mergeSlice(right));
+    return merge(mergeSlice(leftA), mergeSlice(rightA));
   }
 
-  return mergeSlice(arr);
+  return mergeSlice(A);
 }
 
-[5, 8, 11, 97, 1, 2, 3, 4, 5, 8, 63];
+function binarySearch(A, target) {
+  let len = A.length;
+
+  if (len < 2) return A;
+
+  let start = 0,
+    end = len - 1,
+    mid;
+
+  while (start <= end) {
+    mid = Math.floor(start + end / 2);
+
+    if (target < A[mid]) {
+      end = mid - 1;
+    } else if (target > A[mid]) {
+      start = mid + 1;
+    } else {
+      return mid;
+    }
+  }
+
+  return -1;
+}

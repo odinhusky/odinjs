@@ -3280,3 +3280,64 @@ odin.set = (function() {
     containsDuplicate,
   };
 })();
+
+/**
+ * @author odin
+ * @description Demostration to get data from different mode
+ */
+
+odin.mode = (function() {
+
+  // feelings: http://demo.nimius.net/debounce_throttle/
+
+  /**
+   * @author odin
+   * @class mode
+   * @param {function} func - callbackFunc
+   * @param {number} delay - 要延遲幾秒執行
+   * @description 代理模式 -- 等到最後一次function被觸發的時候，才開始計算timeout，等到timeout結束才抓取資料。
+   */
+  function debounce(func, delay){
+    // timeout 初始值
+    let timeout = null;
+    return function(){
+      let context = this;  // 指向 myDebounce 這個 input
+      let args = arguments;  // KeyboardEvent
+      clearTimeout(timeout)
+
+      timeout = setTimeout(function(){
+        func.apply(context, args)
+      }, delay)
+    }
+  }
+
+  /**
+   * @author odin
+   * @class mode
+   * @param {function} func - callbackFunc
+   * @param {number} delay - 要延遲幾秒執行
+   * @description 代理模式 -- function 被觸發第一次之後設定 timeout，就算在這段時間觸發該function，也不會執行內容，直到timeout結束為止才會在執行另一次。
+   */
+  function throttle(func, delay){
+    let inThrottle;
+    let timeout = null;
+    return function(){
+      let context = this;
+      let args = arguments;
+      if(!inThrottle){
+        // 輸入之後兩秒內都不回進入這邊
+        func.apply(context, args)
+        inThrottle = true;
+        clearTimeout(timeout);
+        timeout = setTimeout(function(){
+          inThrottle = false
+        }, delay)
+      }
+    }
+  }
+
+  return {
+    debounce,
+    throttle,
+  }
+})();
