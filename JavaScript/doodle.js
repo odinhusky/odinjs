@@ -147,3 +147,23 @@ function binarySearch(A, target) {
 
   return -1;
 }
+
+var reverse = function (x) {
+  if (x === 0) return x;
+
+  let max = Math.pow(2, 31);
+  let s = x > 0 ? 1 : -1;
+  let r = 0;
+  x = Math.abs(x);
+
+  while (x != 0) {
+    r = r * 10 + (x % 10);
+    x = Math.floor(x / 10);
+  }
+
+  if (r > max || r < max * -1) {
+    return 0;
+  } else {
+    return r * s;
+  }
+};

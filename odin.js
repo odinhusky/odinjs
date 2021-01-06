@@ -3289,6 +3289,7 @@ odin.set = (function() {
 odin.mode = (function() {
 
   // feelings: http://demo.nimius.net/debounce_throttle/
+  // codepen: https://codepen.io/hannahpun/pen/LqMjQR?editors=1011
 
   /**
    * @author odin
@@ -3341,3 +3342,41 @@ odin.mode = (function() {
     throttle,
   }
 })();
+
+/**
+ * @author odin
+ * @description LeetCode 解法
+ */
+
+ odin.leetcode = (function() {
+
+  /**
+   * @author odin
+   * @link https://leetcode.com/problems/reverse-integer
+   * @param {number} x
+   * @return {number}
+   */
+  var reverse = function (x) {
+    if (x === 0) return x;
+
+    let max = Math.pow(2, 31);
+    let s = x > 0 ? 1 : -1;
+    let r = 0;
+    x = Math.abs(x);
+
+    while (x != 0) {
+      r = r * 10 + (x % 10);
+      x = Math.floor(x / 10);
+    }
+
+    if (r > max || r < max * -1) {
+      return 0;
+    } else {
+      return r * s;
+    }
+  };
+
+  return {
+    reverse
+  }
+ })();
