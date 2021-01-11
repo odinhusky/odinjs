@@ -774,6 +774,7 @@ odin.helper = (function () {
 
   /**
    * @author odin
+   * @class helpers
    * @description 判斷目前是哪個 瀏覽器
    * @return {string}
    */
@@ -800,6 +801,16 @@ odin.helper = (function () {
     if (Sys.opera) return 'opera';
     if (Sys.safari) return 'safari';
     /* eslint-enable */
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @description 數字 轉 個別 數字字串 的陣列
+   * @return {string}
+   */
+  function numToArr(n) {
+    return n.toString().split('');
   }
 
   return {
@@ -853,6 +864,7 @@ odin.helper = (function () {
     detectLanguage,
     objectToQueryString,
     judgeBrowser,
+    numToArr
   };
 })();
 
@@ -3348,10 +3360,12 @@ odin.mode = (function() {
  * @description LeetCode 解法
  */
 
- odin.leetcode = (function() {
+odin.leetcode = (function() {
 
   /**
    * @author odin
+   * @class leetcode
+   * @title 7. Reverse Integer
    * @link https://leetcode.com/problems/reverse-integer
    * @param {number} x
    * @return {number}
@@ -3376,7 +3390,36 @@ odin.mode = (function() {
     }
   };
 
+  /**
+   * @author odin
+   * @class leetcode
+   * @title 9. Palindrome Number
+   * @link https://leetcode.com/problems/palindrome-number/
+   * @param {number} x
+   * @return {number}
+   */
+  var isPalindrome = function (x) {
+    if (x < 0) return false;
+    let dig = 1;
+
+    while (x / dig >= 10) {
+      dig *= 10;
+    }
+
+    while (x > 0) {
+      let f = Math.floor(x / dig);
+      let e = x % 10;
+      if (f !== e) return false;
+
+      x = Math.floor((x % dig) / 10);
+      dig = dig / 100;
+    }
+
+    return true;
+  };
+
   return {
-    reverse
+    reverse,
+    isPalindrome
   }
  })();

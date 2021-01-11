@@ -167,3 +167,42 @@ var reverse = function (x) {
     return r * s;
   }
 };
+
+var isPalindrome = function (x) {
+  if (x < 0) return false;
+
+  let A = x.toString().split('');
+  let point = 0;
+  let ind = A.length - 1;
+
+  while (point <= ind) {
+    if (A[point] !== A[ind]) {
+      return false;
+    }
+
+    point++;
+    ind--;
+  }
+
+  return true;
+};
+
+var isPalindrome = function (x) {
+  if (x < 0) return false;
+  let dig = 1;
+
+  while (x / dig >= 10) {
+    dig *= 10;
+  }
+
+  while (x > 0) {
+    let f = Math.floor(x / dig);
+    let e = x % 10;
+    if (f !== e) return false;
+
+    x = Math.floor((x % dig) / 10);
+    dig = dig / 100;
+  }
+
+  return true;
+};
