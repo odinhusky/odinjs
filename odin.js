@@ -267,6 +267,25 @@ odin.helper = (function () {
   }
 
   /**
+  * @author odin
+  * @class helpers
+  * @description 判斷是否該值為空
+  * @param  {Primitive value} value 輸入的值
+  * @returns {boolean or null}
+  */
+  function checkIsEmpty(value) {
+    if (value === 0) {
+      return false;
+    } else {
+      if (value && value !== '' && value !== null && value !== undefined) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
+  /**
    * @author odin
    * @class helpers
    * @description Convert a value to a string that is actually rendered.
@@ -833,6 +852,7 @@ odin.helper = (function () {
     isReactExist,
     isIOS,
     isAndroid,
+    checkIsEmpty,
     toString,
     toNumber,
     toNumberWithRaix,
