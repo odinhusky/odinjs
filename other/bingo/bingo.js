@@ -91,7 +91,7 @@ function setSquare(thisSquare) {
   } while (usedNums[newNum]);
   usedNums[newNum] = true;
   document.getElementById(currSquare).innerHTML = newNum;
-  document.getElementById(currSquare).className = '';
+  document.getElementById(currSquare).className = 'circle_number';
   document.getElementById(currSquare).onmousedown = toggleColor;
 }
 
@@ -109,10 +109,10 @@ function toggleColor(evt) {
   }
 
   // 顏色處理
-  if (thisSquare.className == '') {
-    thisSquare.className = 'pickedBG';
+  if (thisSquare.className == 'circle_number') {
+    thisSquare.className = 'circle_number pickedBG';
   } else {
-    thisSquare.className = '';
+    thisSquare.className = 'circle_number';
   }
 
   // 資料處理
@@ -193,6 +193,9 @@ function checkWin() {
 
     if (bingoCheck) {
       winCounts++;
+      $('#' + item).removeClass('hidden');
+    } else {
+      $('#' + item).addClass('hidden');
     }
   });
 
