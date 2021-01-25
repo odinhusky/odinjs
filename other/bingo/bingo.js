@@ -17,7 +17,19 @@ function anotherCard() {
     usedNums[i] = false;
   }
   newCard();
+  resetBingoHistroy();
+
   return false;
+}
+
+/**
+ * @author odin
+ * @description reset資料面
+ */
+function resetBingoHistroy() {
+  pickedList = [];
+  updatePickedNumber();
+  checkWin();
 }
 
 /**
