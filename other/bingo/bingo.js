@@ -208,4 +208,8 @@ var usedNums = new Array(76);
 var pickedList = [];
 
 // 一開始執行的順序
-window.onload = initAll;
+// window.onload = initAll;
+// var value = window.sessionStorage.getItem('keyname'); // 存取
+// var newValue = JSON.parse(value); // 如果是陣列或是物件要這樣轉換，數字 布林值 會被轉換成字串
+// window.sessionStorage.setItem('keyname', value); // 設定keyname 跟 value
+// window.sessionStorage.removeItem('keyname'); // 移除
