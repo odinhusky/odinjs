@@ -794,7 +794,7 @@ odin.helper = (function () {
   /**
    * @author odin
    * @class helpers
-   * @description 判斷目前是哪個 瀏覽器
+   * @description 判斷目前是哪個 瀏覽器(無法判斷IE11 above)
    * @return {string}
    */
   function judgeBrowser() {
@@ -821,6 +821,23 @@ odin.helper = (function () {
     if (Sys.safari) return 'safari';
     /* eslint-enable */
   }
+
+/**
+ * @author odin
+   * @class helpers
+ * @description 判斷目前是不是 IE 瀏覽器
+ * @return {boolean}}
+ */
+function isIE() {
+  if (
+    navigator.userAgent.indexOf('MSIE') !== -1 ||
+    navigator.appVersion.indexOf('Trident/') > 0
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
   /**
    * @author odin
@@ -884,6 +901,7 @@ odin.helper = (function () {
     detectLanguage,
     objectToQueryString,
     judgeBrowser,
+    isIE,
     numToArr
   };
 })();
