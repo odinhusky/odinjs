@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated bordered>
       <q-toolbar>
         <q-btn
           flat
@@ -20,7 +20,7 @@
     </q-header>
 
     <q-page-sticky position="top-right" :offset="[18, 18]">
-      <q-btn round color="primary" @click="alert" icon="alarm" />
+      <q-btn round color="odin" icon="alarm" />
     </q-page-sticky>
 
     <q-drawer
@@ -28,7 +28,6 @@
       show-if-above
       bordered
       content-class="bg-grey-1"
-      :content-style="{ color: 'red' }"
     >
       <q-list>
         <q-item-label header class="text-grey-8">
