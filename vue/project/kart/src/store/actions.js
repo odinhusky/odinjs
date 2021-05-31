@@ -6,6 +6,8 @@ import {
   teacherLogoutPath,
   notificationPath,
   countryCodeListPath,
+  fetchIsTestPath,
+  fetchNotTestPath,
 } from '@/store/ajax-path.js';
 import {
   FETCH_NOTIFICATION,
@@ -13,6 +15,10 @@ import {
   UPDATE_LOGIN_DETAIL,
   UPDATE_LOGOUT_DETAIL,
   UPDATE_USER_DATA,
+  UPDATE_LIVE_COURSE_DATA,
+  UPDATE_RTC_TOKEN_DATA,
+  CLEAR_LIVE_COURSE_DATA,
+  CLEAR_RTC_TOKEN_DATA,
 } from '@/store/mutation-types';
 
 // action 作非同步的行為，把資料commit給mutation
@@ -36,6 +42,36 @@ const actions = {
    */
   updateUserData(context, payload) {
     context.commit(UPDATE_USER_DATA, payload);
+  },
+
+  /**
+   * @author odin
+   * @param {object} context 第一個參數固定是context
+   * @param {string} payload 傳進來要變動的使用者資料
+   * @description 更新要準備進入直播前，選擇的直播課程資料(lessionid, courseIsLive, timeid)
+   */
+  updateLiveCourseData(context, payload) {
+    context.commit(UPDATE_LIVE_COURSE_DATA, payload);
+  },
+
+  /**
+   * @author odin
+   * @param {object} context 第一個參數固定是context
+   * @param {string} payload 傳進來要變動的使用者資料
+   * @description 清除直播課程的資料(lessionid, courseIsLive, timeid)
+   */
+  clearLiveCourseData(context) {
+    context.commit(CLEAR_LIVE_COURSE_DATA);
+  },
+
+  /**
+   * @author odin
+   * @param {object} context 第一個參數固定是context
+   * @param {string} payload 傳進來要變動的使用者資料
+   * @description 清除直播課程的資料(RTC Token)
+   */
+  clearRTCTokenData(context) {
+    context.commit(CLEAR_RTC_TOKEN_DATA);
   },
 
   /**
@@ -203,6 +239,47 @@ const actions = {
       );
       console.log(
         'fetchCountryCodeList axios error response message=> ',
+        err.response.data.message,
+      );
+    }
+  },
+
+  /**
+   * @author odin
+   * @param {object} context 第一個參數固定是context
+   * @param {string} payload 傳進來要變動的使用者資料(在這邊是isTest)
+   * @description 取得RTC Token
+   */
+  async fetchRTCToken(context, payload) {
+    const isTest = payload;
+    const lessonid = context.state.live.lessonid;
+    const timeid = context.state.live.timeid;
+    const loginToken = context.state.user.loginToken;
+
+    let apiPath = `${
+      isTest ? fetchIsTestPath : fetchNotTestPath
+    }/${lessonid}/times/${timeid}/token`;
+
+    console.log('apiPath', apiPath);
+
+    try {
+      const res = await axios({
+        url: apiPath,
+        method: 'post',
+        headers: {
+          Authorization: loginToken,
+        },
+      });
+
+      if (res.data.data || res.data.status) {
+        console.log('fetchRTCToken Success');
+        console.log('fetchRTCToken res => ', res);
+        context.commit(UPDATE_RTC_TOKEN_DATA, res.data.data);
+      }
+    } catch (err) {
+      console.log('fetchRTCToken axios error response => ', err.response);
+      console.log(
+        'fetchRTCToken axios error response message=> ',
         err.response.data.message,
       );
     }

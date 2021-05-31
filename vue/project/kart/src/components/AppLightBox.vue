@@ -7,7 +7,7 @@
 
       <button
         v-if="isShowCancel"
-        class="close_position close_btn"
+        class="close_position close_lightbox_btn"
         @click.prevent="closeAlert"
       ></button>
     </div>
@@ -39,6 +39,18 @@ export default {
       type: Boolean,
       required: false,
       default: true,
+    },
+  },
+  watch: {
+    openOrNot(value) {
+      // 防止背景滑動
+      if (value === false) {
+        // 對 body 移除 overflow-hidden 的 class
+        document.body.classList.remove('overflow-hidden');
+      } else if (value === true) {
+        // 對 body 加上 overflow-hidden 的 class
+        document.body.classList.add('overflow-hidden');
+      }
     },
   },
   methods: {

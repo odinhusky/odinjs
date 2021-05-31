@@ -43,6 +43,8 @@ export function boot({ app, Vue, router }) {
       return notifyError(message);
     }
 
+    // console.log('axios', response);
+
     // 根據 status code 顯示 default error message
     if (response.status === 401) {
       return notifyError(i18n.t('unauthorized'));

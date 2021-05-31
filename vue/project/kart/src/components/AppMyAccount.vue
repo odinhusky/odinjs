@@ -723,7 +723,7 @@
             <div class="btn-group">
               <!-- 取消按鈕 -->
               <button
-                class="kart-btn kart-gray purchase_record_btn cancel_edit_mode"
+                class="kart-btn kart-gray purchase_record_btn kart-basic-w cancel_edit_mode"
                 @click.prevent="purchaseRecordLightbox.openOrNot = false"
               >
                 {{ $t('system_message.cancel') }}
@@ -731,7 +731,7 @@
 
               <!-- 前往購買堂數的按鈕 -->
               <router-link
-                class="kart-btn kart-sub purchase_record_btn go_purchase_page"
+                class="kart-btn kart-sub purchase_record_btn kart-basic-w go_purchase_page"
                 :to="{
                   name: 'purchase',
                   params: { lang: this.$route.params.lang },
@@ -822,7 +822,7 @@ export default {
       // 購買紀錄資料的燈箱
       purchaseRecordLightbox: {
         openOrNot: false,
-        classname: 'purchase_record_lightbox',
+        classname: 'purchase_record_lightbox align-items-start',
         isShowCancel: false,
         // 購買清單列表
         purchaseRecordList: [],

@@ -44,7 +44,7 @@ export const teacherChangePasswordPath = '/api/teachers/current/password';
 export const fetchOrderListPath = '/api/students/current/payment-orders';
 
 // AppBrowse
-export const fetchBrowseLiveCoursePath = '/api/students/current/lessons/review';
+export const fetchBrowseLiveCoursePath = '/api/students/current/lessons/other';
 export const fetchBrowseRecordCoursePath =
   '/api/students/current/lessons/review';
 export const setCourseListPath = '/api/students/current/products/sets';
@@ -61,6 +61,8 @@ export const fetchPublicCoursesPath = '/api/students/current/publics';
 export const fetchLiveCoursePath = '/api/common/lessons/recent/live';
 export const fetchOneToOneCoursePath = '/api/common/lessons/recent/individual';
 export const fetchTeacherCoursePath = '/api/common/lessons/recent';
+export const fetchIsTestPath = '/api/test/lessons';
+export const fetchNotTestPath = '/api/common/lessons';
 
 // AppPurchase
 export const fetchPurchaseCoursesPath = '/api/common/products';
@@ -77,6 +79,8 @@ export const enrollCartLessionPath = '/api/students/current/times/apply';
 
 // AppVideos
 export const fetchMonthlyEslitePath = '/api/students/current/videos';
+export const checkThisCourseExpiredListPath =
+  '/api/students/current/lessons/review';
 
 // AppCourseRecord
 export const fetchCourseRecordListPath = '/api/students/current/times';

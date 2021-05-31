@@ -65,7 +65,49 @@ function formatDateWithSlash(time) {
   return `${year}/${month}/${day}`;
 }
 
+/**
+ * @author odin
+ * @description 將傳入的時間格式轉換成回傳值顯示的樣子
+ * @param {time form | string | timestamp | date object} time 傳入的時間格式
+ * @return {string}} 09:18 上午
+ */
+function formatDateOnlyTime(time) {
+  let d = new Date(time),
+    min = d.getMinutes(),
+    hour = d.getHours(),
+    timeText = '';
+
+  const i18nLanguage = getI18nLanguage();
+
+  if (i18nLanguage === 'en-US') {
+    if (hour >= 0 && hour < 12) {
+      timeText = 'AM';
+    } else if (hour >= 12 && hour < 24) {
+      hour = hour - 12;
+      timeText = 'PM';
+    }
+  } else if (i18nLanguage === 'zh-Hant' || i18nLanguage === 'zh-Hans') {
+    if (hour >= 0 && hour < 6) {
+      timeText = '凌晨';
+    } else if (hour >= 6 && hour < 12) {
+      timeText = '早上';
+    } else if (hour >= 12 && hour < 18) {
+      hour = hour - 12;
+      timeText = '下午';
+    } else if (hour >= 18 && hour < 24) {
+      hour = hour - 12;
+      timeText = '晚上';
+    }
+  }
+
+  if (hour < 10) hour = '0' + hour;
+  if (min < 10) min = '0' + min;
+
+  return `${hour}:${min} ${timeText}`;
+}
+
 export default {
   formatDate,
   formatDateWithSlash,
+  formatDateOnlyTime,
 };

@@ -27,6 +27,7 @@
           :no-classes-text="noClassesText"
         />
 
+        <!-- 課程內容 -->
         <template v-else>
           <div
             v-for="item in viewData"
@@ -177,6 +178,61 @@
       />
     </main>
 
+    <!-- 燈箱 -->
+    <!-- 點選課程後，提示還有幾分鐘的燈箱 -->
+    <AppLightBox
+      v-model="video_record_lightbox.openOrNot"
+      :class="video_record_lightbox.classname"
+      :is-show-cancel="video_record_lightbox.isShowCancel"
+    >
+      <template>
+        <span class="lightbox_msg">{{ video_record_lightbox.msg }}</span>
+
+        <div class="btn_group">
+          <button
+            class="kart-btn kart-gray kart-basic-w cancel-btn"
+            @click.prevent="cancelWatchVideo"
+          >
+            {{ $t('system_message.close') }}
+          </button>
+
+          <button
+            class="kart-btn kart-sub confirm-btn"
+            @click.prevent="goToPlayReviewVideo"
+          >
+            {{ $t('system_message.ok') }}
+          </button>
+        </div>
+      </template>
+    </AppLightBox>
+
+    <!-- 點選課程後，提示多少期間的燈箱 -->
+    <AppLightBox
+      v-model="video_period_lightbox.openOrNot"
+      :class="video_period_lightbox.classname"
+      :is-show-cancel="video_period_lightbox.isShowCancel"
+    >
+      <template>
+        <span class="lightbox_msg">{{ video_period_lightbox.msg }}</span>
+
+        <div class="btn_group">
+          <button
+            class="kart-btn kart-gray kart-basic-w cancel-btn"
+            @click.prevent="cancelWatchPeriodVideo"
+          >
+            {{ $t('system_message.close') }}
+          </button>
+
+          <button
+            class="kart-btn kart-sub confirm-btn"
+            @click.prevent="goToPlayReviewVideo"
+          >
+            {{ $t('system_message.ok') }}
+          </button>
+        </div>
+      </template>
+    </AppLightBox>
+
     <!-- 銷售方案燈箱 -->
     <AppLightBox
       v-model="saleAdAlert.openOrNot"
@@ -185,6 +241,113 @@
       <template>
         <div class="sale_ad_box">
           <img :src="saleAdImgSrc" class="sale_ad_img" />
+        </div>
+      </template>
+    </AppLightBox>
+
+    <!-- 確認是否要報名課堂的燈箱 -->
+    <AppLightBox
+      v-model="checkEnrollWillingLightbox.openOrNot"
+      :classname="checkEnrollWillingLightbox.classname"
+      :is-show-cancel="checkEnrollWillingLightbox.isShowCancel"
+    >
+      <template>
+        <h5
+          class="d-block text-gray700 fz-1_25rem w-100 text-center font-weight-normal"
+        >
+          {{ $t('enroll.make_sure_enroll') }}
+        </h5>
+        <h5
+          class="d-block text-gray700 fz-1_25rem w-100 text-center font-weight-normal"
+        >
+          {{ $t('enroll.minus_remaing_one_point', ['1']) }}
+        </h5>
+
+        <div class="btn-group mt-3">
+          <!-- 取消 -->
+          <button
+            class="kart-btn kart-gray close_check_enroll_willing_lightbox half-btn half-left-btn"
+            @click.prevent="checkEnrollWillingLightbox.openOrNot = false"
+          >
+            {{ $t('system_message.cancel') }}
+          </button>
+
+          <!-- 確認報名 -->
+          <button
+            class="kart-btn kart-sub close_check_enroll_willing_lightbox half-btn"
+            @click.prevent="enrollNow"
+          >
+            {{ $t('enroll.confirm_enroll') }}
+          </button>
+        </div>
+      </template>
+    </AppLightBox>
+
+    <!-- 課堂報名成功，連去 course 的燈箱 -->
+    <AppLightBox
+      v-model="goCoursePageLightbox.openOrNot"
+      :classname="goCoursePageLightbox.classname"
+    >
+      <template>
+        <div class="sale_ad_box w-100">
+          <!-- 報名成功的提示 -->
+          <h5
+            class="w-100 fz-1_25rem font-weight-normal text-center text-gray700 mb-3"
+          >
+            {{ $t('system_message.enroll_single_lesson_success') }}
+          </h5>
+
+          <!-- 按鈕們 -->
+          <div class="btn-group w-100">
+            <button
+              class="kart-btn kart-gray half-btn half-left-btn"
+              @click.prevent="goCoursePageLightbox.openOrNot = false"
+            >
+              {{ $t('enroll.stop_here') }}
+            </button>
+
+            <button
+              type="button"
+              class="kart-btn kart-sub half-btn"
+              @click.prevent="goCoursePage"
+            >
+              {{ $t('enroll.go_course') }}
+            </button>
+          </div>
+        </div>
+      </template>
+    </AppLightBox>
+
+    <!-- 課堂報名成功，確認是否立即觀看的燈箱 -->
+    <AppLightBox
+      v-model="watchNowOrNotLightbox.openOrNot"
+      :classname="watchNowOrNotLightbox.classname"
+    >
+      <template>
+        <div class="sale_ad_box w-100">
+          <!-- 報名成功的提示 -->
+          <h5
+            class="w-100 fz-1_25rem font-weight-normal text-center text-gray700 mb-3"
+          >
+            {{ $t('system_message.enroll_single_lesson_success') }}
+          </h5>
+
+          <!-- 按鈕們 -->
+          <div class="btn-group w-100">
+            <button
+              class="kart-btn kart-gray half-btn half-left-btn"
+              @click.prevent="watchNowOrNotLightbox.openOrNot = false"
+            >
+              {{ $t('system_message.cancel') }}
+            </button>
+
+            <button
+              class="kart-btn kart-sub half-btn"
+              @click.prevent="checkThisCourseExpired(watchNowLessonId)"
+            >
+              {{ $t('enroll.watch_now') }}
+            </button>
+          </div>
         </div>
       </template>
     </AppLightBox>
@@ -259,39 +422,80 @@
                 </div>
 
                 <!-- 課堂狀態 -->
+                <!-- 當分類是直播課程，且為訂閱制學生，就都不顯示課堂狀態 -->
                 <div v-if="isShowLessionStatus" class="lesson_status">
-                  <!-- 已報名 -->
-                  <span
-                    v-if="isThisCourseHadApplied(lesson.id)"
-                    class="kart-gray had_signed_up"
-                    >{{ $t('enroll.enrolled') }}
-                  </span>
+                  <!-- 當分類是直播課程，但非訂閱制學生時，只顯示愛心或是已報名的字樣 -->
+                  <template
+                    v-if="
+                      category === 'live' && loginUserIsSubscribed === false
+                    "
+                  >
+                    <!-- 是訂閱制 -->
+                    <template v-if="loginUserIsSubscribed">
+                      <span class="kart-gray had_signed_up"
+                        >{{ $t('subscribe.suscribed') }}
+                      </span>
+                    </template>
 
-                  <!-- 立即報名 和 愛心 -->
-                  <template v-else>
-                    <!-- 立即報名 -->
-                    <button
-                      class="kart-btn kart-sub enroll_now"
-                      @click.prevent="checkRemaingCourse(lesson.id)"
-                    >
-                      {{ $t('enroll.enroll_now') }}
-                    </button>
+                    <!-- 非訂閱制 -->
+                    <template v-else>
+                      <!-- 已報名 -->
+                      <span
+                        v-if="isThisCourseHadEnrolled(lesson.id)"
+                        class="kart-gray had_signed_up"
+                        >{{ $t('enroll.enrolled') }}
+                      </span>
 
-                    <!-- 愛心 -->
+                      <!-- 立即報名(還未報名的話，就顯示立即報名) -->
+                      <button
+                        type="button"
+                        class="kart-btn kart-sub enroll_now"
+                        v-if="!isThisCourseHadEnrolled(lesson.id)"
+                        @click.prevent="enrollNowInit(lesson.id)"
+                      >
+                        {{ $t('enroll.enroll_now') }}
+                      </button>
+
+                      <!-- 立即報名 和 愛心 -->
+                      <!-- <template v-else> -->
+                      <!-- 立即報名(還未報名的話，就顯示立即報名) -->
+                      <!-- <button
+                          type="button"
+                          class="kart-btn kart-sub enroll_now"
+                          v-if="!isThisCourseHadApplied(lesson.id)"
+                          @click.prevent="checkRemaingCourse(lesson.id)"
+                        >
+                          {{ $t('enroll.enroll_now') }}
+                        </button> -->
+
+                      <!-- 愛心 -->
+                      <!-- <button
+                        v-if="!isThisCourseHadApplied(lesson.id)"
+                        class="add_wish_btn"
+                        :class="{ selected: isThisCourseInCart(lesson.id) }"
+                        @click.prevent="toggleCart(lesson.id)"
+                      >
+                        <img
+                          class="add_wish_img add"
+                          src="@/assets/img/v2/browse/purchase_empty_heart@2x.png"
+                        />
+                        <img
+                          class="add_wish_img remove"
+                          src="@/assets/img/v2/browse/purchase_heart@2x.png"
+                        />
+                      </button> -->
+                      <!-- </template> -->
+                    </template>
+                  </template>
+
+                  <!-- 當分類是回放視頻，課堂狀態就只顯示立即觀看，如果有報名過該課堂，就直接連去影片觀看區，如果沒有，就檢查餘課數，不夠就跳不夠的燈箱，夠的話就直接報名課程，成功的話就跳成功報名，失敗的話跳報名失敗 -->
+                  <template v-if="category === 'record'">
+                    <!-- 立即觀看的按鈕 -->
                     <button
-                      v-if="!isThisCourseHadApplied(lesson.id)"
-                      class="add_wish_btn"
-                      :class="{ selected: isThisCourseInCart(lesson.id) }"
-                      @click.prevent="toggleCart(lesson.id)"
+                      class="kart-btn kart-sub mr-0 watch_now"
+                      @click.prevent="judgeEnrolledOrNot(lesson.id)"
                     >
-                      <img
-                        class="add_wish_img add"
-                        src="@/assets/img/v2/browse/purchase_empty_heart@2x.png"
-                      />
-                      <img
-                        class="add_wish_img remove"
-                        src="@/assets/img/v2/browse/purchase_heart@2x.png"
-                      />
+                      {{ $t('enroll.watch_now') }}
                     </button>
                   </template>
                 </div>
@@ -301,7 +505,7 @@
 
           <!-- 關閉按鈕 -->
           <button
-            class="w-100 kart-btn kart-sub close_course_alert"
+            class="w-100 kart-btn kart-sub mb-mobile480-3 close_course_alert"
             @click.prevent="courseAlert.openOrNot = false"
           >
             {{ $t('system_message.close') }}
@@ -323,6 +527,7 @@ import {
   fetchSaleAdvertisementImgSrcPath,
   fetchRemainingCoursePath,
   enrollNowPath,
+  checkThisCourseExpiredListPath,
 } from '@/store/ajax-path.js';
 import { axiosSuccessHint } from '@/plugins/utility.js';
 import { checkObjectIsEmpty } from '@/plugins/checker.js';
@@ -357,10 +562,14 @@ export default {
       category: '',
       // 銷售方案燈箱
       saleAdImgSrc: '',
+      // 立即觀看的課程Id
+      watchNowLessonId: 0,
       // 購物車內有哪些課堂
       cartLessions: [],
       // 已報名的課堂
       enrolledLessions: [],
+      // 已報名課堂的 timesId
+      enrolledLessonIds: [],
       // 所有的課堂(包含直播以及回播)
       courseCartList: [],
       // 餘課數
@@ -407,11 +616,27 @@ export default {
           },
         },
       },
+
+      /////////// 燈箱 /////////////
+      // 點選課程後，提示還有幾分鐘的燈箱
+      video_record_lightbox: {
+        openOrNot: false,
+        classname: 'video_record_lightbox',
+        isShowCancel: false,
+        msg: '',
+      },
+      // 點選課程後，提示還有幾分鐘的燈箱
+      video_period_lightbox: {
+        openOrNot: false,
+        classname: 'video_record_lightbox video_period_lightbox',
+        isShowCancel: false,
+        msg: '',
+      },
       // 課程詳細燈箱的內容
       courseAlert: {
         openOrNot: false,
         isShowCancel: false,
-        classname: 'course_detail_alert',
+        classname: 'course_detail_alert align-items-start',
         // 給予最低的結構不讓程式執行錯誤
         courseObj: {
           name: '',
@@ -437,6 +662,25 @@ export default {
       saleAdAlert: {
         openOrNot: false,
         classname: 'sale_ad_alert',
+      },
+      //課堂報名成功，確認是否立即觀看的燈箱
+      watchNowOrNotLightbox: {
+        openOrNot: false,
+        classname: 'watch_now_lightbox',
+        isShowCancel: false,
+      },
+
+      //課堂報名成功，連去 course 的燈箱
+      goCoursePageLightbox: {
+        openOrNot: false,
+        classname: 'go_course_lightbox',
+        isShowCancel: false,
+      },
+      // 確認是否要報名該課堂的燈箱
+      checkEnrollWillingLightbox: {
+        openOrNot: false,
+        classname: 'check_enroll_willing_lightbox d-block',
+        isShowCancel: false,
       },
     };
   },
@@ -534,7 +778,7 @@ export default {
     isShowLessionStatus() {
       let showOrNot = false;
 
-      // 分頁在直撥課程，且為訂閱制學生時，不顯示課程狀態
+      // 分頁在直播課程，且為訂閱制學生時，不顯示課程狀態
       if (this.category === 'live' && this.loginUserIsSubscribed) {
         showOrNot = false;
       } else {
@@ -545,6 +789,9 @@ export default {
     },
   },
   created() {
+    // 回到最上方
+    this.backToTop();
+
     // 元件初始化
     this.init();
   },
@@ -556,6 +803,20 @@ export default {
     init() {
       // 取得其他初始化資料
       this.initAxioses();
+    },
+
+    /**
+     * @author odin
+     * @description 關閉所有的燈箱
+     */
+    closeAllLightboxes() {
+      this.video_record_lightbox.openOrNot = false;
+      this.video_period_lightbox.openOrNot = false;
+      this.courseAlert.openOrNot = false;
+      this.saleAdAlert.openOrNot = false;
+      this.watchNowOrNotLightbox.openOrNot = false;
+      this.checkEnrollWillingLightbox.openOrNot = false;
+      this.$bus.$emit('notify:off');
     },
 
     /**
@@ -580,7 +841,19 @@ export default {
       }
 
       // 開啟燈箱
-      this.courseAlert.openOrNot = true;
+      // this.courseAlert.openOrNot = true;
+    },
+
+    /**
+     * @author odin
+     * @description 直接報名成功後導去 course頁面
+     */
+    goCoursePage() {
+      // 導頁
+      this.$router.push({
+        name: 'course',
+        params: { lang: this.$route.params.lang },
+      });
     },
 
     /**
@@ -633,14 +906,74 @@ export default {
       const enrolledLessions = this.enrolledLessions;
       if (checkObjectIsEmpty(enrolledLessions)) return;
 
-      // 找出回傳的 ajax 陣列中，有的物件 id 比對，找到的話就將 courseCartList 中的那個 id 的 isInCart 改為 true
       [...enrolledLessions].forEach(enrolled => {
         [...this.courseCartList].forEach((lesson, lessonIndex) => {
+          // 同時找出已報名的 課程 timesId 並記錄在 data 中
+          // this.enrolledLessonIds.push(lesson.id);
+
+          // 找出回傳的 ajax 陣列中，有的物件 id 比對，找到的話就將 courseCartList 中的那個 id 的 isInCart 改為 true
           if (lesson.id === enrolled.lesson_time_id) {
             this.courseCartList[lessonIndex].isInCart = true;
           }
         });
       });
+    },
+
+    /**
+     * @author odin
+     * @description 將以報名的 lesson_time_id 傳入資料陣列中
+     */
+    prepareEnrollLessonId() {
+      this.enrolledLessions.forEach(item => {
+        item.times.forEach(lesson => {
+          this.enrolledLessonIds.push(lesson.id);
+        });
+      });
+    },
+
+    /**
+     * @author odin
+     * @param {number} lessionId 該課程的 lessionTimeId
+     * @description 判斷點選立即觀看的這個課程是不是已經報名了
+     */
+    judgeEnrolledOrNot(lessionId) {
+      const isEnrolled = this.enrolledLessonIds.some(enrolledId => {
+        return enrolledId === lessionId;
+      });
+
+      console.log('isEnrolled', isEnrolled);
+
+      // 紀錄lessionId
+      this.watchNowLessonId = lessionId;
+
+      if (isEnrolled) {
+        // 確定課程是否有過期
+        this.checkThisCourseExpired();
+      } else {
+        this.courseAlert.openOrNot = false;
+        // 還沒報名過的課堂，先檢查餘課數是否足夠
+        this.checkRemaingCourse();
+      }
+
+      console.log('judgeEnrolledOrNot isEnrolled', isEnrolled);
+    },
+
+    /**
+     * @author odin
+     * @description 關閉剩餘多少分鐘的燈箱
+     */
+    cancelWatchVideo() {
+      this.video_record_lightbox.openOrNot = false;
+      this.video_record_lightbox.msg = '';
+    },
+
+    /**
+     * @author odin
+     * @description 關閉觀看期間的燈箱
+     */
+    cancelWatchPeriodVideo() {
+      this.video_period_lightbox.openOrNot = false;
+      this.video_period_lightbox.msg = '';
     },
 
     /**
@@ -748,32 +1081,68 @@ export default {
 
     /**
      * @author odin
-     * @description 處理套裝課程回傳的值
-     * @param {object} intro 老師介紹的第一筆內容
-     */
-    // handleSetCourseData(courseRes) {
-    //   const data = courseRes.data.data;
-    //   const meta = courseRes.data.meta;
-    //   const links = courseRes.data.links;
-
-    //   // 放入課程內容
-    //   this.courses.set = data;
-
-    //   // 處理頁碼
-    //   this.vMixhandlePaginationData(this.setCoursePageObj, links, meta);
-
-    //   // 回到最上方
-    //   this.backToTop();
-    // },
-
-    /**
-     * @author odin
      * @param {object} remainingRes ajax 回傳成功的內容
      * @description 處理 購物車內的課程物件
      */
     handleRemainingCoursesData(remainingRes) {
       console.log('remainingRes', remainingRes);
       this.remaining = remainingRes.data.data;
+    },
+
+    /**
+     * @author odin
+     * @param {object} res axios 回傳的成功 response
+     * @description 處理 單筆指定課程 回傳回來的資料
+     */
+    handleCheckThisCourseExpiredData(res) {
+      const videoDetail = res.data.data;
+      const remainMinutes =
+        videoDetail.review_remain_seconds > 0
+          ? videoDetail.review_remain_seconds / 60
+          : 0;
+      const totalMinutes = videoDetail.review_limit_minutes;
+      const startDateStr = this.formatDate(videoDetail.review_start_at);
+      // const startTmesStamp = this.getTimeStamp(videoDetail.review_start_at);
+      const endDateStr = this.formatDate(videoDetail.review_end_at);
+      const endTmesStamp = this.getTimeStamp(videoDetail.review_end_at);
+      const nowTimeStamp = new Date().getTime();
+      console.log('videoDetail', videoDetail);
+      console.log('endTmesStamp', endTmesStamp);
+      console.log('nowTimeStamp', nowTimeStamp);
+
+      // 關閉課程詳情燈箱
+      this.courseAlert.openOrNot = false;
+
+      // 判斷要出現哪種燈箱
+      if (totalMinutes === remainMinutes && remainMinutes !== 0) {
+        // 還沒觀看過，跳燈箱告知還有多少秒
+        let msg = `${this.$t(
+          'system_message.video_record_remain',
+        )} ${remainMinutes} ${this.$t('system_message.video_record_confirm')}`;
+
+        // 組裝文字
+        this.video_record_lightbox.msg = msg;
+
+        // 開啟燈箱
+        this.video_record_lightbox.openOrNot = true;
+      } else if (totalMinutes !== remainMinutes || remainMinutes === 0) {
+        if (nowTimeStamp > endTmesStamp || remainMinutes === 0) {
+          // 已經超過觀看期限，告知影片已經過期
+          this.$bus.$emit('notify:message', 'system_message.video_timeout');
+        } else {
+          // 已經觀看過，告知觀看區間
+          let msg = this.$t('system_message.video_record_range_2var', {
+            0: startDateStr,
+            1: endDateStr,
+          });
+
+          // 組裝文字
+          this.video_period_lightbox.msg = msg;
+
+          // 開啟燈箱
+          this.video_period_lightbox.openOrNot = true;
+        }
+      }
     },
 
     /**
@@ -810,18 +1179,54 @@ export default {
 
     /**
      * @author odin
-     * @description 確認該使用者的餘課數是否還足夠
-     * @param {string} lessionId 想要報名該課堂的ID
+     * @description 確認特定id的內容是否已經報名了
+     * @param {string} id 特定時間的課程id
      */
-    checkRemaingCourse(lessionId) {
+    isThisCourseHadEnrolled(id) {
+      // console.log('isThisCourseHadEnrolled id => ', id);
+
+      // 還沒讀到資料之前
+      if (checkObjectIsEmpty(this.enrolledLessonIds)) {
+        return;
+      }
+
+      const result = [...this.enrolledLessonIds].find(item => id === item);
+
+      // console.log('isThisCourseHadEnrolled result => ', result);
+
+      return result ? true : false;
+    },
+
+    /**
+     * @author odin
+     * @description 確認該使用者的餘課數是否還足夠
+     */
+    checkRemaingCourse() {
       if (this.remaining.points >= 1) {
-        // 點數足夠，打API告知報名該課堂
-        this.enrollNow(lessionId);
+        // 關閉目前課程資訊的燈箱
+        this.courseAlert.openOrNot = false;
+        // 開燈箱提示要扣點是否要報名
+        this.checkEnrollWillingLightbox.openOrNot = true;
       } else {
         // 關閉燈箱並且顯示點數不夠
         this.courseAlert.openOrNot = false;
+        // 清空要報名的課堂 Id
+        this.watchNowLessonId = 0;
         this.$bus.$emit('notify:message', 'enroll.normal_point_not_enough');
       }
+    },
+
+    /**
+     * @author odin
+     * @param {numbner} lessionId -- 該課堂的Id
+     * @description 儲存課堂的 Id 並且確認是否有剩餘的點數
+     */
+    enrollNowInit(lessonId) {
+      // 存取課堂 Id
+      this.watchNowLessonId = lessonId;
+
+      // 確認點數是否足夠
+      this.checkRemaingCourse();
     },
 
     /**
@@ -1044,6 +1449,7 @@ export default {
           // 處理課堂相關的資料，並且比對是否有報名該課程
           this.prepareCourseCartList();
           this.prepareCartItems();
+          this.prepareEnrollLessonId();
         }
       } catch (err) {
         console.log('initAxioses err', err);
@@ -1055,12 +1461,23 @@ export default {
 
     /**
      * @author odin
-     * @param {string} lessionId 課堂 id
      * @description 打立即報名的API，並傳入 lessonTimeId
      */
-    async enrollNow(lessionId) {
+    async enrollNow() {
       // 開啟 loading
       this.$bus.$emit('loading:on');
+
+      // 關閉所有燈箱
+      this.closeAllLightboxes();
+
+      const lessionId = this.watchNowLessonId;
+
+      // 判斷是否有存取到課堂的 Id
+      if (!lessionId) {
+        console.log('存取課堂id錯誤');
+        this.$bus.$emit('loading:off');
+        return;
+      }
 
       try {
         const res = await this.axios({
@@ -1080,19 +1497,13 @@ export default {
           // 關閉目前的燈箱
           this.courseAlert.openOrNot = false;
           // 顯示報名成功的燈箱
-          this.$bus.$emit(
-            'notify:message',
-            'system_message.enroll_single_lesson_success',
-          );
-
-          // 重整
-          this.reload();
+          this.goCoursePageLightbox.openOrNot = true;
         }
       } catch (err) {
         console.log('enrollNow', err);
         // 關閉目前的燈箱
         this.courseAlert.openOrNot = false;
-        // 顯示報名成功的燈箱
+        // 顯示報名失敗的燈箱
         this.$bus.$emit(
           'notify:message',
           'system_message.enroll_single_lesson_fail',
@@ -1105,28 +1516,43 @@ export default {
 
     /**
      * @author odin
-     * @description 打加入購物車的API，並傳入 lessonTimeId
+     * @param {number} videoId courserecord 指定課程的影片 id
+     * @description 取得單筆指定課程的影片資料，並且判斷是否可以播放
      */
-    // async fetchSpecificCoursePage(page = 1) {
-    //   console.log('fetchSpecificCoursePage page', page);
-    //   try {
-    //     const res = await this.axios({
-    //       url: `${courseListPath}?page=${page}`,
-    //       method: 'get',
-    //       headers: {
-    //         Authorization: this.loginToken,
-    //       },
-    //     });
+    async checkThisCourseExpired(videoId) {
+      // 開啟 loading
+      this.$bus.$emit('loading:on');
 
-    //     if (res.data.data || res.data.status) {
-    //       console.log('addToCart Success');
-    //       console.log('fetchSpecificCoursePage res => ', res);
-    //       this.handleCourseData(res);
-    //     }
-    //   } catch (err) {
-    //     console.log('addToCart', err);
-    //   }
-    // },
+      // 關閉所有的燈箱
+      this.closeAllLightboxes();
+
+      // 如果沒有給 videoId 就自己抓
+      if (!videoId) {
+        videoId = this.watchNowLessonId;
+      }
+
+      try {
+        const res = await this.axios({
+          url: `${checkThisCourseExpiredListPath}/${videoId}/detail`,
+          method: 'get',
+          headers: {
+            Authorization: this.loginToken,
+          },
+        });
+
+        if (res.data.data || res.data.status) {
+          axiosSuccessHint('checkThisCourseExpired', res);
+
+          // 資料處理
+          this.handleCheckThisCourseExpiredData(res);
+        }
+      } catch (err) {
+        console.log('checkThisCourseExpired', err);
+      }
+
+      // 關閉 loading
+      this.$bus.$emit('loading:off');
+    },
 
     /**
      * @author odin
@@ -1216,6 +1642,30 @@ export default {
           console.log('終止forEach');
         }
       }
+    },
+
+    /**
+     * @author odin
+     * @param {number} objId 傳過來該筆物件的id(可能是 每月精選 或是 指定影片的id)
+     * @description 將影片id 以及 是哪一個影片分類(monthlyeslite | courserecord) 儲存到 localStorage 並且轉去影片播放
+     */
+    recordIdAndCategoryThenGoPlayVideo(objId) {
+      localStorage.setItem('video_ID', objId);
+      localStorage.setItem('video_category', 'courserecord');
+
+      // 導頁
+      this.$router.push({
+        name: 'video-play',
+        params: { lang: this.$route.params.lang },
+      });
+    },
+
+    /**
+     * @author odin
+     * @description 導頁去影片播放頁面
+     */
+    goToPlayReviewVideo() {
+      this.recordIdAndCategoryThenGoPlayVideo(this.watchNowLessonId);
     },
   },
 };

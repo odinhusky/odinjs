@@ -1,93 +1,100 @@
 <template>
   <div class="root index_root" :class="rootClassObj">
-    <!-- Login_bar -->
-    <section class="sec loginbar_container">
-      <router-link
-        :to="{
-          name: 'index',
-          params: { lang: this.$route.params.lang },
-        }"
-        class="loginbar_logo"
-      >
-        <img
-          class="img-fluid loginbar_logo_img"
-          src="../assets/img/v2/index/keilogo@2x.png"
-        />
-      </router-link>
+    <!-- Nav -->
+    <!-- 還沒登入 -->
+    <template v-if="loginOrNot === false">
+      <section class="sec loginbar_container">
+        <router-link
+          :to="{
+            name: 'index',
+            params: { lang: this.$route.params.lang },
+          }"
+          class="loginbar_logo"
+        >
+          <img
+            class="img-fluid loginbar_logo_img"
+            src="../assets/img/v2/index/keilogo@2x.png"
+          />
+        </router-link>
 
-      <!-- 收合按鈕 -->
-      <button class="loginbar_hamburger_btn" @click.prevent="toggleHamburger">
-        <div class="loginbar_hamburger_btn_line"></div>
-        <div class="loginbar_hamburger_btn_line"></div>
-        <div class="loginbar_hamburger_btn_line"></div>
-      </button>
+        <!-- 收合按鈕 -->
+        <button class="loginbar_hamburger_btn" @click.prevent="toggleHamburger">
+          <div class="loginbar_hamburger_btn_line"></div>
+          <div class="loginbar_hamburger_btn_line"></div>
+          <div class="loginbar_hamburger_btn_line"></div>
+        </button>
 
-      <!-- 動畫顯現/隱藏的部分 -->
-      <transition name="slide">
-        <!-- 要收合的內容 -->
-        <div v-if="navItemsIsShow" class="loginbar_hamburger">
-          <ul class="loginbar_hamburger_list">
-            <!-- 還沒登入要顯示的 -->
-            <li
-              class="loginbar_hamburger_item unsigne_item"
-              id="unsigne_items_container"
-            >
-              <ul
-                class="loginbar_hamburger_inside_ul uunsigne_list"
-                id="unsigne_list"
+        <!-- 動畫顯現/隱藏的部分 -->
+        <transition name="slide">
+          <!-- 要收合的內容 -->
+          <div v-if="navItemsIsShow" class="loginbar_hamburger">
+            <ul class="loginbar_hamburger_list">
+              <!-- 還沒登入要顯示的 -->
+              <li
+                class="loginbar_hamburger_item unsigne_item"
+                id="unsigne_items_container"
               >
-                <!-- 登入／註冊 -->
-                <li class="loginbar_hamburger_inside_li unsigne_item">
-                  <router-link
-                    :to="{
-                      name: 'login',
-                      params: { lang: this.$route.params.lang },
-                    }"
-                    class="kart-nav-btn kart-btn-outline signup_signin_btn"
-                  >
-                    {{ $t('login_form.login_register') }}
-                  </router-link>
-                </li>
-              </ul>
-            </li>
-
-            <!-- 登入了要顯示的 -->
-            <li class="loginbar_hamburger_item hadsigned_items_container">
-              <ul
-                class="loginbar_hamburger_inside_ul hadsigned_list"
-                id="hadsigned_list"
-              >
-                <!-- 註冊 -->
-                <!-- <li class="loginbar_hamburger_inside_li hadsigned_item">
-                                  <a href="login.html" class="kei_btn kei_btn_outline nav_btn signup_btn">註冊</a>
-                              </li> -->
-              </ul>
-            </li>
-
-            <!-- 語系選擇 -->
-            <li class="loginbar_hamburger_item">
-              <div class="i18n_container">
-                <select
-                  v-model="i18nLanguageData"
-                  class="i18n_btn_select"
-                  @change="changeLanguage(i18nLanguageData)"
+                <ul
+                  class="loginbar_hamburger_inside_ul uunsigne_list"
+                  id="unsigne_list"
                 >
-                  <option value="zh-Hans">简中</option>
-                  <option value="zh-Hant">繁中</option>
-                  <option value="en-US">EN</option>
-                </select>
-              </div>
-            </li>
-          </ul>
+                  <!-- 登入／註冊 -->
+                  <li class="loginbar_hamburger_inside_li unsigne_item">
+                    <router-link
+                      :to="{
+                        name: 'login',
+                        params: { lang: this.$route.params.lang },
+                      }"
+                      class="kart-nav-btn kart-btn-outline signup_signin_btn"
+                    >
+                      {{ $t('login_form.login_register') }}
+                    </router-link>
+                  </li>
+                </ul>
+              </li>
 
-          <!-- X 關閉按鈕 -->
-          <button class="close_btn" @click="closeNavContent">
-            <div class="close_line one"></div>
-            <div class="close_line two"></div>
-          </button>
-        </div>
-      </transition>
-    </section>
+              <!-- 登入了要顯示的 -->
+              <li class="loginbar_hamburger_item hadsigned_items_container">
+                <ul
+                  class="loginbar_hamburger_inside_ul hadsigned_list"
+                  id="hadsigned_list"
+                >
+                  <!-- 註冊 -->
+                  <!-- <li class="loginbar_hamburger_inside_li hadsigned_item">
+                                    <a href="login.html" class="kei_btn kei_btn_outline nav_btn signup_btn">註冊</a>
+                                </li> -->
+                </ul>
+              </li>
+
+              <!-- 語系選擇 -->
+              <li class="loginbar_hamburger_item">
+                <div class="i18n_container">
+                  <select
+                    v-model="i18nLanguageData"
+                    class="i18n_btn_select"
+                    @change="changeLanguage(i18nLanguageData)"
+                  >
+                    <option value="zh-Hans">简中</option>
+                    <option value="zh-Hant">繁中</option>
+                    <option value="en-US">EN</option>
+                  </select>
+                </div>
+              </li>
+            </ul>
+
+            <!-- X 關閉按鈕 -->
+            <button class="close_btn" @click="closeNavContent">
+              <div class="close_line one"></div>
+              <div class="close_line two"></div>
+            </button>
+          </div>
+        </transition>
+      </section>
+    </template>
+    <!-- 登入了 -->
+    <template v-if="loginOrNot === true">
+      <TheNav @changeLanguage="changeLanguage" />
+    </template>
 
     <!-- Banner 輪播 -->
     <div class="sec banner_carousel">
@@ -227,7 +234,11 @@
           <div class="master_detai">
             <h5 class="master_name">{{ dealTeacherName(teacher) }}</h5>
             <p class="master_intro">
-              {{ dealTeacherIntro(teacher.intros[0]) }}
+              {{
+                teacher.intros.length > 0
+                  ? dealTeacherIntro(teacher.intros[0])
+                  : ''
+              }}
             </p>
           </div>
         </div>
@@ -253,7 +264,7 @@
 
           <router-link
             :to="{
-              name: 'login',
+              name: loginOrNot ? 'browse' : 'login',
               params: { lang: this.$route.params.lang },
             }"
             class="index_enroll_now hover_slide"
@@ -294,7 +305,7 @@
 
           <router-link
             :to="{
-              name: 'login',
+              name: loginOrNot ? 'browse' : 'login',
               params: { lang: this.$route.params.lang },
             }"
             class="index_enroll_now hover_slide"
@@ -367,9 +378,9 @@
           <button
             class="extend_content_btn"
             :class="[
-              { down: !isShowHoeToEnrollContent },
-              { up: isShowHoeToEnrollContent },
-              { closed: isShowHoeToEnrollContent },
+              { down: !isShowHowToEnrollContent },
+              { up: isShowHowToEnrollContent },
+              { closed: isShowHowToEnrollContent },
             ]"
             @click.prevent="toggleHowToEnrollContent"
           >
@@ -386,7 +397,7 @@
           <!-- 動畫顯現/隱藏的部分 -->
           <transition name="slide">
             <div
-              v-if="isShowHoeToEnrollContent"
+              v-if="isShowHowToEnrollContent"
               class="howto_enroll_toggle_content"
             >
               <div
@@ -461,6 +472,7 @@ import phonecourseBg from '../assets/img/v2/index/phonecourse_bg.jpg';
 import AppAlert from '@/components/AppAlert.vue';
 import { Carousel, Slide } from 'vue-carousel';
 import { videoPlayer } from 'vue-video-player';
+import TheNav from '@/components/TheNav.vue';
 
 export default {
   name: 'Index',
@@ -469,6 +481,7 @@ export default {
     Carousel,
     Slide,
     videoPlayer,
+    TheNav,
   },
   mixins: [commonMixinObj, deviceSizeMixinObj],
   props: {
@@ -502,7 +515,7 @@ export default {
         fullWidth: 0,
         fullHeight: 0,
       },
-      isShowHoeToEnrollContent: false,
+      isShowHowToEnrollContent: false,
       // How To Enroll Data
       howToEnrollData: [
         {
@@ -706,10 +719,20 @@ export default {
 
     /**
      * @author odin
+     * @description 更新 data.i18nLanguage 裡面的內容
+     * @param {string} i18nLanguage 切換後的語系
+     */
+    changeLanguage(i18nLanguage) {
+      this.i18nLanguage = i18nLanguage;
+    },
+
+    /**
+     * @author odin
      * @description 開啟或關閉 How To Enroll 的區塊
      */
     toggleHowToEnrollContent() {
-      this.isShowHoeToEnrollContent = !this.isShowHoeToEnrollContent;
+      console.log('toggleHowToEnrollContent');
+      this.isShowHowToEnrollContent = !this.isShowHowToEnrollContent;
     },
 
     /**

@@ -364,7 +364,7 @@
   }
 
   .myaccount_link_to_pages {
-    top: 65px;
+    top: 45px;
     transform: none;
     display: flex;
 
@@ -409,6 +409,10 @@
     .change_password_save {
       @include w100;
     }
+  }
+
+  .purchase_record_lightbox {
+    padding-top: 30px;
   }
 }
 

@@ -70,6 +70,8 @@ export default {
     videos: 'Videos',
     calendar: 'Calendar',
     course: 'Course',
+    mycourse_page: 'Course',
+    browse: 'Browse',
     mycourse: 'Browse',
     notification: 'Notifications',
     personal: 'Account',
@@ -80,7 +82,7 @@ export default {
     logout: 'Log out',
   },
 
-  video: {
+  videos: {
     video_title: 'Videos',
     monthly_eslite: 'Monthly Choice',
     course_record: 'Live rewind',
@@ -92,6 +94,7 @@ export default {
     primary: 'Student video upload',
     secondary: 'College student video upload',
     upload: 'Upload',
+    re_upload: 'Re-Upload',
     uploading: 'Uploading',
     upload_video: 'Upload',
     upload_success: 'Upload successfully',
@@ -102,7 +105,7 @@ export default {
     choose: 'Choose video to upload',
     choose_file: 'Choose',
     check_delete: 'Are you sure to delete this video？',
-    check_video: '‘Watch',
+    check_video: 'Watch',
     cancel_upload: 'Uploading has been canceled',
     delete_video: 'Delete',
     delete_success: 'Delete successfully',
@@ -110,6 +113,7 @@ export default {
     edit_video_filename: 'Edit file name:',
     edit_video_input_placeholder: 'eg. video.mp4',
     college_only: 'This page can only be accessed by college students.',
+    mp4_only: 'Please upload mp4. file',
   },
 
   teacher_list: {
@@ -140,6 +144,7 @@ export default {
     more_movie: 'More videos',
     no_comment: 'No commets',
     no_notification: 'No notifications',
+    course_start_not_yet: 'Course has not started',
   },
 
   pastcourse: {
@@ -192,6 +197,8 @@ export default {
     title: 'Enroll',
     unenrolled: 'Wishlist',
     enrolled: 'Enrolled',
+    make_sure_enroll: 'Are you sure to enroll ?',
+    minus_remaing_one_point: '{0} courses will be deducted from live courses.',
     normal_point: 'Remaining Courses：{0}',
     reviewable_point: 'Remaining Master Review Courses：{0}',
     selected_point: 'Saved Courses：{0}',
@@ -207,6 +214,13 @@ export default {
     reviewablel_point_not_enough:
       'Master review remaining course is insufficient',
     enroll_now: 'Enroll',
+    watch_now: 'Watch',
+    go_course: 'Check my course',
+    stop_here: 'Stay on this page',
+  },
+
+  subscribe: {
+    suscribed: 'Suscribed',
   },
 
   live: {
@@ -246,7 +260,7 @@ export default {
       save: 'save',
       live_point: 'Live',
       onetoone_point: 'One on one',
-      expired_at: 'Expired at:',
+      expired_at: 'Subscription expired date',
       not_subscribed: 'Not subscribed',
       no_purchase_record: 'No purchase history',
     },
@@ -345,6 +359,7 @@ export default {
 
     use_point: 'en將扣{0}堂課？',
 
+    video_timeout: 'Session of this video ends.',
     video_record_remain: 'Video watching session only lasts for ',
     video_record_confirm: ' minutes, click OK to enter.',
     video_record_range_2var:
@@ -374,8 +389,9 @@ export default {
     email: 'kart88888@163.com',
     full_cellphone: '+886 0912456789',
     contact_us: 'Contact Us',
-    business_cooperation: 'Business Cooperation',
-    foucs_wechat: 'Follow us on WeChat',
+    business_cooperation: 'Cooperation',
+    foucs_social: 'Follow us on WeChat',
+    social: 'k-art-learning',
   },
 
   index: {

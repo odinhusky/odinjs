@@ -215,13 +215,14 @@
     <AppLightBox
       v-model="video_record_lightbox.openOrNot"
       :class="video_record_lightbox.classname"
+      :is-show-cancel="video_record_lightbox.isShowCancel"
     >
       <template>
         <span class="lightbox_msg">{{ video_record_lightbox.msg }}</span>
 
         <div class="btn_group">
           <button
-            class="kart-btn kart-gray cancel-btn"
+            class="kart-btn kart-gray kart-basic-w cancel-btn"
             @click.prevent="cancelWatchVideo"
           >
             {{ $t('system_message.close') }}
@@ -229,7 +230,34 @@
 
           <button
             class="kart-btn kart-sub confirm-btn"
-            @click.prevent="checkPlayVideo"
+            @click.prevent="goToPlayReviewVideo"
+          >
+            {{ $t('system_message.ok') }}
+          </button>
+        </div>
+      </template>
+    </AppLightBox>
+
+    <!-- 點選課程後，提示還有幾分鐘的燈箱 -->
+    <AppLightBox
+      v-model="video_period_lightbox.openOrNot"
+      :class="video_period_lightbox.classname"
+      :is-show-cancel="video_period_lightbox.isShowCancel"
+    >
+      <template>
+        <span class="lightbox_msg">{{ video_period_lightbox.msg }}</span>
+
+        <div class="btn_group">
+          <button
+            class="kart-btn kart-gray kart-basic-w cancel-btn"
+            @click.prevent="cancelWatchPeriodVideo"
+          >
+            {{ $t('system_message.close') }}
+          </button>
+
+          <button
+            class="kart-btn kart-sub confirm-btn"
+            @click.prevent="goToPlayReviewVideo"
           >
             {{ $t('system_message.ok') }}
           </button>
@@ -246,6 +274,7 @@ import screenfull from 'screenfull';
 import {
   fetchMonthlyEslitePath,
   fetchCourseRecordListPath,
+  checkThisCourseExpiredListPath,
 } from '@/store/ajax-path.js';
 import { axiosSuccessHint } from '@/plugins/utility.js';
 // require styles
@@ -329,10 +358,18 @@ export default {
         },
       },
       /////////// 燈箱 /////////////
-      // 點選課程後，提示還有幾分鐘 的燈箱
+      // 點選課程後，提示還有幾分鐘的燈箱
       video_record_lightbox: {
         openOrNot: false,
         classname: 'video_record_lightbox',
+        isShowCancel: false,
+        msg: '',
+      },
+      // 點選課程後，提示還有幾分鐘的燈箱
+      video_period_lightbox: {
+        openOrNot: false,
+        classname: 'video_record_lightbox video_period_lightbox',
+        isShowCancel: false,
         msg: '',
       },
     };
@@ -340,6 +377,8 @@ export default {
   created() {
     // 元件初始化
     this.init();
+    //
+    this.$bus.$emit('notify:off');
   },
   mounted() {
     // 因為按下ESC退出全螢幕時要變換 icon
@@ -532,32 +571,42 @@ export default {
 
     /**
      * @author odin
-     * @param {object} teacherObj 回傳過來老師的名字
-     * @description 根據語系顯示不同老師的名字
+     * @description 一進來播放特定的影片
      */
-    dealTeacherName(teacherObj) {
-      let teacherName = '';
-      switch (this.i18n) {
-        case 'tw':
-          teacherName = teacherObj.name_hant;
-          break;
-        case 'cn':
-          teacherName = teacherObj.name;
-          break;
-        case 'en':
-          teacherName = teacherObj.name;
-          break;
-      }
+    playInitVideo() {
+      console.log('playInitVideo this.video.videoList', this.video.videoList);
+      // 根據傳來的影片找出對應的影片物件
+      this.findVideoObj();
+    },
 
-      return teacherName;
+    /**
+     * @author odin
+     * @description 根據傳來的影片找出對應的影片物件
+     */
+    findVideoObj() {
+      console.log('this.video.Id', this.video.Id);
+      // 判斷要使用哪種方式處理資料
+      if (this.video.category === 'monthlyeslite') {
+        const thisVideoObj = [...this.video.videoList].find(
+          item => item.id === this.video.Id,
+        );
+
+        this.video.currentView = thisVideoObj;
+
+        // 準備影片的初始化
+        this.prepareInitVideo();
+      } else if (this.video.category === 'courserecord') {
+        // 取得 指定課程 播放的影片物件
+        this.fetchCourseRecordReviewDetail();
+      }
     },
 
     /**
      * @author odin
      * @param {object} videoObj 傳過來影片的物件
-     * @description 判斷要播放哪一種影片
+     * @description 準備要播放傳過來的影片
      */
-    judgePlayWhichVideo(videoObj) {
+    prepareInitVideo(videoObj) {
       if (videoObj) {
         // 如果有傳物件的話, 先儲存到 data
         this.video.Id = videoObj.id;
@@ -567,71 +616,8 @@ export default {
         videoObj = { ...this.video.currentView };
       }
 
-      // 判斷要使用哪種方式處理資料
-      switch (this.video.category) {
-        case 'monthlyeslite':
-          this.initVideo();
-          break;
-        case 'courserecord':
-          this.checkRemainSecond(videoObj);
-          break;
-      }
-    },
-
-    /**
-     * @author odin
-     * @param {object} courseRecord 單一個課程的詳細內容物件
-     * @description 確認時間限制
-     */
-    checkRemainSecond(courseRecord) {
-      let remainSeconds = courseRecord.review_remain_seconds;
-      let limitMinutes = courseRecord.review_limit_minutes;
-
-      if (remainSeconds > 0) {
-        // 放入 id
-        this.video.requestCourseID = courseRecord.id;
-
-        if (remainSeconds / 60 === limitMinutes) {
-          let msg = `${this.$t(
-            'system_message.video_record_remain',
-          )} ${limitMinutes} ${this.$t('system_message.video_record_confirm')}`;
-
-          this.video_record_lightbox.msg = msg;
-
-          // 開啟燈箱
-          this.video_record_lightbox.openOrNot = true;
-        } else {
-          let msg = `${this.$t('system_message.video_record_range_2var', [
-            this.formatDate(courseRecord.review_start_at),
-            this.formatDate(courseRecord.review_end_at),
-          ])}`;
-
-          this.video_record_lightbox.msg = msg;
-
-          // 開啟燈箱
-          this.video_record_lightbox.openOrNot = true;
-        }
-      } else {
-        this.$bus.$emit(
-          'notify:message',
-          this.$t('system_message.video_record_end'),
-        );
-      }
-    },
-
-    /**
-     * @author odin
-     * @description 一進來播放特定的影片
-     */
-    playSpecificVideo() {
-      console.log(
-        'playSpecificVideo this.video.videoList',
-        this.video.videoList,
-      );
-      // 根據傳來的影片找出對應的影片物件
-      this.handleSpecificVideoObj();
-      // 判斷播放的是哪一種影片
-      this.judgePlayWhichVideo();
+      // 影片初始化
+      this.initVideo();
     },
 
     /**
@@ -652,6 +638,44 @@ export default {
 
     /**
      * @author odin
+     * @param {object} videoObj - 點選列表傳過來的影片物件
+     * @description 點選要播放的影片
+     */
+    judgePlayWhichVideo(videoObj) {
+      console.log('videoObj', videoObj);
+      if (this.video.category === 'monthlyeslite') {
+        // 每月精選(訂閱至才能看到的影片)
+        this.video.currentView = videoObj;
+        this.initVideo();
+      } else if (this.video.category === 'courserecord') {
+        // 紀錄 video id
+        this.video.Id = videoObj.id;
+
+        // 確認這隻影片是否過期了
+        this.checkThisCourseExpired(videoObj.id);
+      }
+    },
+
+    /**
+     * @author odin
+     * @description 關閉剩餘多少分鐘的燈箱
+     */
+    cancelWatchVideo() {
+      this.video_record_lightbox.openOrNot = false;
+      this.video_record_lightbox.msg = '';
+    },
+
+    /**
+     * @author odin
+     * @description 關閉觀看期間的燈箱
+     */
+    cancelWatchPeriodVideo() {
+      this.video_period_lightbox.openOrNot = false;
+      this.video_period_lightbox.msg = '';
+    },
+
+    /**
+     * @author odin
      * @description 確認觀看影片並關閉燈箱
      */
     checkPlayVideo() {
@@ -663,25 +687,16 @@ export default {
 
     /**
      * @author odin
-     * @description 取消觀看影片
+     * @description 播放該回播影片
      */
-    cancelWatchVideo() {
+    goToPlayReviewVideo() {
+      console.log('goToPlayReviewVideo!!!!!!!!!!!!!!!!!!!!');
+      // 關閉燈箱
       this.video_record_lightbox.openOrNot = false;
-      this.video_record_lightbox.msg = '';
-      this.video.requestCourseID = '';
-    },
+      this.video_period_lightbox.openOrNot = false;
 
-    /**
-     * @author odin
-     * @description 根據傳來的影片找出對應的影片物件
-     */
-    handleSpecificVideoObj() {
-      console.log('this.video.Id', this.video.Id);
-      const thisVideoObj = [...this.video.videoList].find(
-        item => item.id === this.video.Id,
-      );
-
-      this.video.currentView = thisVideoObj;
+      // 取得那支影片的 詳細播放內容
+      this.fetchCourseRecordReviewDetail();
     },
 
     /**
@@ -712,15 +727,88 @@ export default {
 
     /**
      * @author odin
+     * @param {object} res ajax 成功回傳的物件結果
+     * @description 處理 指定課程(回播) 的詳細資料
+     */
+    handleFetchCourseRecordReviewDetailData(res) {
+      const data = res.data.data;
+
+      this.video.currentView = data;
+    },
+
+    /**
+     * @author odin
      * @description 處裡剩餘時間的計算
      */
     handleRemainingTimeCalculation() {
       let remainSeconds = this.video.currentView.review_remain_seconds;
 
-      this.reviewcounter = window.setInterval(
-        this.stopReview,
-        remainSeconds * 1000,
-      );
+      console.log('remainSeconds', remainSeconds);
+
+      // 防止 remainSeconds 為 0 或是 undefined
+      if (remainSeconds) {
+        this.reviewcounter = window.setInterval(
+          this.stopReview,
+          remainSeconds * 1000,
+        );
+      }
+    },
+
+    /**
+     * @author odin
+     * @param {object} res axios 回傳的成功 response
+     * @description 處理 單筆指定課程 回傳回來的資料
+     */
+    handleCheckThisCourseExpiredData(res) {
+      const videoDetail = res.data.data;
+      const remainMinutes =
+        videoDetail.review_remain_seconds > 0
+          ? videoDetail.review_remain_seconds / 60
+          : 0;
+      const totalMinutes = videoDetail.review_limit_minutes;
+      const startDateStr = this.formatDate(videoDetail.review_start_at);
+      // const startTmesStamp = this.getTimeStamp(videoDetail.review_start_at);
+      const endDateStr = this.formatDate(videoDetail.review_end_at);
+      const endTmesStamp = this.getTimeStamp(videoDetail.review_end_at);
+      const nowTimeStamp = new Date().getTime();
+      console.log('videoDetail', videoDetail);
+      console.log('endTmesStamp', endTmesStamp);
+      console.log('nowTimeStamp', nowTimeStamp);
+
+      if (totalMinutes === remainMinutes) {
+        // 還沒觀看過，跳燈箱告知還有多少秒
+        let msg = `${this.$t(
+          'system_message.video_record_remain',
+        )} ${remainMinutes} ${this.$t('system_message.video_record_confirm')}`;
+
+        // 組裝文字
+        this.video_record_lightbox.msg = msg;
+
+        // 開啟燈箱
+        this.video_record_lightbox.openOrNot = true;
+      } else if (totalMinutes !== remainMinutes) {
+        if (nowTimeStamp > endTmesStamp) {
+          // 已經超過觀看期限，告知影片已經過期並且重新整理
+          this.$bus.$emit('notify:message', 'system_message.video_record_end');
+
+          // 重新整理
+          setTimeout(() => {
+            this.reload();
+          }, 500);
+        } else {
+          // 已經觀看過，告知觀看區間
+          let msg = this.$t('system_message.video_record_range_2var', {
+            0: startDateStr,
+            1: endDateStr,
+          });
+
+          // 組裝文字
+          this.video_period_lightbox.msg = msg;
+
+          // 開啟燈箱
+          this.video_period_lightbox.openOrNot = true;
+        }
+      }
     },
 
     /**
@@ -760,7 +848,7 @@ export default {
           // 處理 每月精選 的資料列表
           this.handleVideoListData(res);
           // 播放 傳來的 影片
-          this.playSpecificVideo();
+          this.playInitVideo();
         }
       } catch (err) {
         // 燈箱顯示
@@ -793,7 +881,76 @@ export default {
           // 處理 指定課程(影片回顧) 的資料列表
           this.handleVideoListData(res);
           // 播放 傳來的 影片
-          this.playSpecificVideo();
+          this.playInitVideo();
+        }
+      } catch (err) {
+        // 燈箱顯示
+        this.$bus.$emit('notify:message', err.response.data.message || err);
+      } finally {
+        // 關閉 loading
+        this.$bus.$emit('loading:off');
+      }
+    },
+
+    /**
+     * @author odin
+     * @param {number} videoId courserecord 指定課程的影片 id
+     * @description 取得單筆指定課程的影片資料，並且判斷是否可以播放
+     */
+    async checkThisCourseExpired(videoId) {
+      // 開啟 loading
+      this.$bus.$emit('loading:on');
+
+      try {
+        const res = await this.axios({
+          url: `${checkThisCourseExpiredListPath}/${videoId}/detail`,
+          method: 'get',
+          headers: {
+            Authorization: this.loginToken,
+          },
+        });
+
+        if (res.data.data || res.data.status) {
+          axiosSuccessHint('checkThisCourseExpired', res);
+
+          // 資料處理
+          this.handleCheckThisCourseExpiredData(res);
+        }
+      } catch (err) {
+        console.log('checkThisCourseExpired', err);
+      }
+
+      // 關閉 loading
+      this.$bus.$emit('loading:off');
+    },
+
+    /**
+     * @author odin
+     * @description 取得 指定課程(影片回顧) 的單筆資料
+     */
+    async fetchCourseRecordReviewDetail() {
+      // 開啟 loading
+      this.$bus.$emit('loading:on');
+
+      console.log('fetchCourseRecordReviewDetail');
+
+      const videoId = this.video.Id;
+
+      try {
+        const res = await this.axios({
+          url: `${fetchCourseRecordListPath}/${videoId}/review`,
+          method: 'post',
+          headers: {
+            Authorization: this.loginToken,
+          },
+        });
+
+        if (res.data.data || res.data.status) {
+          axiosSuccessHint('fetchCourseRecordReviewDetail', res);
+          // 處理 指定課程(影片回顧) 的單筆資料
+          this.handleFetchCourseRecordReviewDetailData(res);
+          // 準備影片的初始化
+          this.prepareInitVideo();
         }
       } catch (err) {
         // 燈箱顯示
@@ -812,7 +969,7 @@ export default {
      */
     resetVideo() {
       this.video.isVideoReady = false;
-      this.videoOptions.sources[0].src = '';
+      this.video.videoOptions.sources[0].src = '';
 
       // status
       this.video.playerCtrl.videoStatus = 'play';
@@ -1178,6 +1335,22 @@ export default {
       // volume 初始化
       player.volume(this.video.playerCtrl.volume.nowVolume);
     },
+  },
+  // Router-Setting
+  beforeRouteLeave(to, from, next) {
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+
+    console.log('beforeRouteLeave to', to);
+    console.log('beforeRouteLeave from', from);
+    console.log('beforeRouteLeave next', next);
+    console.log('beforeRouteLeave this', this);
+
+    // 停止 counting
+    clearInterval(this.reviewcounter);
+
+    // 前往要去的頁面
+    next();
   },
 };
 </script>

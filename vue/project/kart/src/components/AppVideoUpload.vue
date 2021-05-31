@@ -4,7 +4,9 @@
     :class="{ 'pb-12rem': category === 'normal' && normalVideoList.length < 5 }"
   >
     <main class="main-10">
-      <h2 class="page_title _title">{{ $t('video_upload.title') }}</h2>
+      <h2 class="page_title video_upload_title">
+        {{ $t('video_upload.title') }}
+      </h2>
 
       <!-- 分類 btn -->
       <section class="page-category-container center position-relative">
@@ -15,7 +17,7 @@
         >
           {{ $t('video_upload.primary') }}
         </button>
-        ｀
+
         <button
           class="page-category-btn kart-btn kart-bg-gray mr-0"
           :class="{ active: category === 'college' }"
@@ -24,10 +26,23 @@
           {{ $t('video_upload.secondary') }}
         </button>
 
-        <!-- 上傳影片的文字按鈕 -->
+        <!-- 上傳影片的文字按鈕(992以上出現) -->
         <button
           v-if="category === 'normal' && normalVideoList.length > 0"
-          class="trans-btn upload_video_text_btn"
+          class="trans-btn upload_video_text_btn d-medium-none"
+          @click.prevent="uploadVideoLightbox.openOrNot = true"
+        >
+          {{ $t('video_upload.upload_video') }}
+        </button>
+      </section>
+
+      <section
+        class="sec main-section upload_video_text_btn_containe d-none d-medium-flex justify-content-center mt-4"
+      >
+        <!-- 上傳影片的文字按鈕(991以下出現) -->
+        <button
+          v-if="category === 'normal' && normalVideoList.length > 0"
+          class="trans-btn text-sub"
           @click.prevent="uploadVideoLightbox.openOrNot = true"
         >
           {{ $t('video_upload.upload_video') }}
@@ -60,7 +75,7 @@
                 <!-- 查看 -->
                 <button
                   class="kart-btn kart-sub half-btn half-left-btn delete_video_btn"
-                  @click.prevent="watchThisVideo(normal.url)"
+                  @click.prevent="watchThisVideo(normal)"
                 >
                   {{ $t('video_upload.check_video') }}
                 </button>
@@ -76,6 +91,7 @@
           </div>
         </template>
 
+        <!-- 學院影片上傳 -->
         <template v-if="category === 'college' && collegevideoList.length > 0">
           <div class="card-container college_container w-100">
             <div
@@ -110,10 +126,19 @@
                   <div class="college_btns w-30">
                     <!-- 上傳 -->
                     <button
+                      v-if="!college.work.url"
                       class="kart-btn kart-gray w-100 mb-2 college_upload"
                       @click.prevent="prepareUploadCollegeVideo(college.id)"
                     >
                       {{ $t('video_upload.upload') }}
+                    </button>
+                    <!-- 查看 -->
+                    <button
+                      v-if="college.work.url"
+                      class="kart-btn kart-gray w-100 mb-2 college_watch"
+                      @click.prevent="watchThisVideo(college)"
+                    >
+                      {{ $t('video_upload.check_video') }}
                     </button>
                     <!-- 評論 -->
                     <button
@@ -152,6 +177,16 @@
     >
       <template>
         <div class="watch_video_container">
+          <!-- 重新上傳的按鈕 -->
+          <button
+            v-if="category === 'college' && upload.isShowReUpload"
+            class="kart-btn kart-sub re_upload"
+            @click.prevent="collegeReUploadVideo"
+          >
+            {{ $t('video_upload.re_upload') }}
+          </button>
+
+          <!-- 影片播放器 -->
           <video-player
             class="watch_video_plugin"
             ref="videoPlayer"
@@ -225,7 +260,7 @@
           <!-- 確定上傳 -->
           <div class="btn-group justify-content-center mt-4">
             <button
-              class="kart-btn kart-sub upload_this_video_btn"
+              class="kart-btn kart-sub kart-basic-w upload_this_video_btn"
               @click.prevent="prepareUploadVideo"
             >
               {{ $t('video_upload.upload') }}
@@ -276,7 +311,7 @@
           <!-- 取消按鈕 -->
           <div class="btn-group justify-content-center">
             <button
-              class="kart-btn kart-gray stop_uploading"
+              class="kart-btn kart-basic-w kart-gray stop_uploading"
               @click.prevent="stopUploadFile"
             >
               {{ $t('system_message.cancel') }}
@@ -350,7 +385,7 @@
           <!-- 關閉的按鈕 -->
           <div class="btn-group justify-content-center">
             <button
-              class="kart-btn kart-sub close_commet_lightbox"
+              class="kart-btn kart-sub kart-basic-w close_commet_lightbox"
               @click.prevent="commetVideoLightbox.openOrNot = false"
             >
               {{ $t('system_message.close') }}
@@ -522,6 +557,8 @@ export default {
         },
         // 上傳學院影片的時候，需要填入是哪一個學院課程的ID
         collegeId: '',
+        // 是否要顯示 重新上傳
+        isShowReUpload: false,
       },
       error: {
         show_file_name_input: false,
@@ -656,6 +693,20 @@ export default {
 
     /**
      * @author odin
+     * @description 打開燈箱
+     */
+    collegeReUploadVideo() {
+      // 關閉目前觀看影片的的燈箱
+      this.watchVideoLightbox.openOrNot = false;
+
+      // 清空資料
+      this.watchVideoLightbox.videoOptions.sources[0].src = '';
+
+      this.uploadVideoLightbox.openOrNot = true;
+    },
+
+    /**
+     * @author odin
      * @param {object} event 上傳檔案的物件
      * @description 元件初始化需要得到的資料
      */
@@ -693,6 +744,18 @@ export default {
       } else {
         // 改掉錯誤提示
         this.error.show_file_name_input = false;
+      }
+
+      // 檢查格式是不是 mp4
+      if (this.upload.fileName.split('.')[1] !== 'mp4') {
+        // 重置以及關閉燈箱
+        this.resetUploadFile();
+        this.uploadVideoLightbox.openOrNot = false;
+
+        // 提示格式不得為 mp4 以外的檔案
+        this.$bus.$emit('notify:message', 'video_upload.mp4_only');
+
+        return;
       }
 
       // 準備上傳影片
@@ -735,7 +798,7 @@ export default {
      * @description 判斷是否要打開燈箱，如果是的話就帶入資料並打開燈箱，不是的話就顯示提示
      */
     showCommentLightbox(collegeObj) {
-      if (collegeObj.work === null) {
+      if (!collegeObj.work.comment) {
         // 顯示提示並且不打開燈箱
         this.$bus.$emit('notify:message', 'nextcourse.no_comment');
       } else {
@@ -753,14 +816,29 @@ export default {
 
     /**
      * @author odin
-     * @param {string} url 要觀看的影片的連結字串
+     * @param {object} videoItem 該筆資料的物件格式
      * @description 放置url並且開啟燈箱
      */
-    watchThisVideo(url) {
-      // 放入影片內容
-      this.watchVideoLightbox.videoOptions.sources[0].src = url;
-      // 開啟燈箱
-      this.watchVideoLightbox.openOrNot = true;
+    watchThisVideo(videoItem) {
+      if (this.category === 'normal') {
+        // 放入影片內容
+        this.watchVideoLightbox.videoOptions.sources[0].src = videoItem.url;
+        // 開啟燈箱
+        this.watchVideoLightbox.openOrNot = true;
+      } else if (this.category === 'college') {
+        // 放入要重新上傳的 collegeId
+        this.upload.collegeId = videoItem.id;
+
+        // 放入影片內容
+        this.watchVideoLightbox.videoOptions.sources[0].src =
+          videoItem.work.url;
+
+        // 調整是否要顯示重新上傳
+        this.upload.isShowReUpload = !videoItem.work.is_reviewed;
+
+        // 開啟燈箱
+        this.watchVideoLightbox.openOrNot = true;
+      }
     },
 
     /**

@@ -65,13 +65,15 @@ export default {
   welcome: '，歡迎回來',
 
   navigation: {
-    videos: '影片區',
-    course: '我的課程',
+    videos: '錄播課程',
+    course: '直播課程',
+    mycourse_page: '我的課程',
     calendar: '行事曆',
-    mycourse: '課程瀏覽',
+    browse: '我要報名',
+    mycourse: '我要報名',
     notification: '通知',
     personal: '個人',
-    contact_admdin: '聯絡管理員',
+    contact_admin: '聯絡管理員',
     account: '帳戶',
     video_record: '影片重播',
     video_upload: '影片上傳區',
@@ -90,6 +92,7 @@ export default {
     primary: '一般影片上傳',
     secondary: '學院影片上傳',
     upload: '上傳',
+    re_upload: '重新上傳',
     uploading: '上傳中',
     upload_video: '上傳影片',
     upload_success: '上傳成功',
@@ -108,6 +111,7 @@ export default {
     edit_video_filename: '編輯上傳檔案名稱:',
     edit_video_input_placeholder: 'video.mp4，需包含副檔名',
     college_only: '此為學院學生專區',
+    mp4_only: '上傳影片格式必須為 .mp4',
   },
 
   teacher_list: {
@@ -138,6 +142,7 @@ export default {
     more_movie: '查看更多影片',
     no_comment: '尚無評論',
     no_notification: '尚無通知',
+    course_start_not_yet: '課程尚未開始',
   },
 
   pastcourse: {
@@ -191,6 +196,8 @@ export default {
     title: '課程報名',
     unenrolled: '未報名',
     enrolled: '已報名',
+    make_sure_enroll: '是否要報名?',
+    minus_remaing_one_point: '將扣除餘課數{0}堂',
     normal_point: '一般餘課數量：{0}堂',
     reviewable_point: '評論餘課數量：{0}堂',
     selected_point: '選擇數量：{0}堂',
@@ -205,6 +212,13 @@ export default {
     normal_point_not_enough: '餘課數不足',
     reviewablel_point_not_enough: '點評餘課數不足',
     enroll_now: '立即報名',
+    watch_now: '立即觀看',
+    go_course: '前網直播頁',
+    stop_here: '停留此頁',
+  },
+
+  subscribe: {
+    suscribed: '已訂閱',
   },
 
   live: {
@@ -343,6 +357,7 @@ export default {
 
     use_point: '將扣{0}堂課？',
 
+    video_timeout: '影片觀看時間已結束',
     video_record_remain: '影片觀看時間只有 ',
     video_record_confirm: ' 分鐘，確認觀看？',
     video_record_range_2var: '影片的有效期限為{0}到{1}',
@@ -368,11 +383,12 @@ export default {
   footer: {
     title1: '凱音雅樂',
     title2: 'KEI Art learning',
-    email: 'kart88888@163.com',
-    full_cellphone: '+886 0912456789',
+    email: 'kartaipei@gmail.com',
+    full_cellphone: '02-27112728',
     contact_us: '聯絡我們',
     business_cooperation: '商務合作',
-    foucs_wechat: '關注我們微信公眾號',
+    foucs_social: '關注我們官方Line帳號',
+    social: '@579qgerq',
   },
 
   index: {

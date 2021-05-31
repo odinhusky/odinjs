@@ -4,12 +4,12 @@
       <main class="main-10 course_main">
         <section class="course_title">
           <img
-            src="../assets/img/course/icon_list@2x.png"
+            src="../assets/img/v2/course/icon_list@2x.png"
             class="course_title_img"
           />
           <p class="title_text">
-            <span class="title_name">{{ loginUserName }}</span>
-            <span class="title_welcome">{{ $t('welcome') }}</span>
+            <span class="title_name text-main">{{ loginUserName }}</span>
+            <span class="title_welcome text-main">{{ $t('welcome') }}</span>
           </p>
         </section>
 
@@ -58,6 +58,7 @@
                 v-for="item in viewData"
                 :key="item.id"
                 class="card card-3 course_next_container"
+                @click="judgeCardBeClicked(item)"
               >
                 <div class="card-content course_next">
                   <p class="card-header-text coursenext_time">
@@ -245,6 +246,8 @@ export default {
           },
         },
       },
+      // 卡片被點擊的時候，該卡片相關的資料物件
+      cardBeClickedItem: {},
     };
   },
   computed: {
@@ -306,7 +309,7 @@ export default {
           returnPaginationObj = this.courseData.student.live.livePageObj.props;
           break;
         case 'onetoone':
-          returnPaginationObj = this.courseData.student.public.publicPageObj
+          returnPaginationObj = this.courseData.student.onetoone.onetoonePageObj
             .props;
           break;
         case 'teacher':
@@ -334,7 +337,7 @@ export default {
           eventName = this.goSpecifiLivePage;
           break;
         case 'onetoone':
-          eventName = this.fetchPublicCourses;
+          eventName = this.goSpecificOneToOnePage;
           break;
         case 'teacher':
           eventName = this.fetchTeacherCourse;
@@ -382,6 +385,65 @@ export default {
       } else if (this.loginType === 'teacher') {
         this.category = 'teacher';
       }
+    },
+
+    /**
+     * @author odin
+     * @param {object} item 該單一卡片相關的資料
+     * @description 判斷當前的 category 是哪一種
+     */
+    judgeCardBeClicked(item) {
+      let isLessonTimeStart = false;
+      // 先預設 isTest = false，如果是學生 is_test 又是 true 才讓他為 true，會影響要打什麼API path
+      let isTest = this.isTest;
+
+      // 先存放資料
+      this.cardBeClickedItem = item;
+
+      console.log('cardBeClickedItem', this.cardBeClickedItem);
+
+      // 判斷是要做哪一件事
+      if (this.loginType === 'student') {
+        console.log('Student Card is clicked');
+      } else if (this.loginType === 'teacher') {
+        console.log('Teacher Card is clicked');
+      }
+
+      // 確認課程是否開始
+      isLessonTimeStart = this.isTimeStart();
+
+      if (isLessonTimeStart) {
+        // 當課程已經開始就去取得他的 RTC Token
+        this.prepareToFetchRTCToken(isTest);
+      }
+
+      console.log('isLessonTimeStart', isLessonTimeStart);
+    },
+
+    /**
+     * @author odin
+     * @description 判斷當前的 category 是哪一種
+     * @return {boolean} 課程是否開始
+     */
+    isTimeStart() {
+      let result = false;
+      const lessonStartTimeStamp = this.getTimeStamp(
+        this.cardBeClickedItem.times[0].start_at,
+      );
+      const nowTimeStamp = new Date().getTime();
+
+      if (nowTimeStamp > lessonStartTimeStamp) {
+        // 課程開始了
+        console.log('課程開始了');
+        result = true;
+      } else {
+        // 課程尚未開始
+        console.log('課程尚未開始');
+        this.$bus.$emit('notify:message', 'nextcourse.course_start_not_yet');
+        result = false;
+      }
+
+      return result;
     },
 
     /**
@@ -590,6 +652,28 @@ export default {
 
     /**
      * @author odin
+     * @param {number} page 到哪一頁
+     * @description 處理 一對一課程 換頁
+     */
+    goSpecificOneToOnePage(page = 1) {
+      const pageOrderArr = this.courseData.student.onetoone.onetoonePageObj
+        .pageOrderArr;
+      const totalPages = this.courseData.student.onetoone.onetoonePageObj.props
+        .totalPages;
+
+      // 改變要顯示的資料
+      this.courseData.student.live.courses = pageOrderArr[page];
+
+      // 放置頁碼相關資料
+      this.courseData.student.onetoone.onetoonePageObj.props.current = page;
+      this.courseData.student.onetoone.onetoonePageObj.props.prev =
+        page === 1 ? 1 : page - 1;
+      this.courseData.student.onetoone.onetoonePageObj.props.next =
+        page === totalPages ? totalPages : page + 1;
+    },
+
+    /**
+     * @author odin
      * @description 取得 公益課程 的課程資料
      */
     fetchLiveCourse() {
@@ -673,6 +757,50 @@ export default {
 
       // 關閉 loading
       this.$bus.$emit('loading:off');
+    },
+
+    /**
+     * @author odin
+     * @param {boolean} isTest -- 是否為學生的測試帳號 根據此會有不同的 apiPath
+     * @description 透過 dispatch 的方式去取得 RTC Token 的資料
+     */
+    prepareToFetchRTCToken(isTest) {
+      const lessonid = this.cardBeClickedItem.id;
+      const courseIsLive = this.cardBeClickedItem.is_live;
+      const timeid = this.cardBeClickedItem.times[0].id;
+
+      // 放置資料到對應的 state 中
+      this.$store.dispatch('updateLiveCourseData', {
+        lessonid,
+        courseIsLive,
+        timeid,
+      });
+
+      // 取得RTC token 並且放置到 state 中
+      this.$store
+        .dispatch('fetchRTCToken', isTest)
+        .then(() => {
+          console.log('成功取得token');
+
+          // 成功的話就導頁
+          // 轉跳到 live 頁面
+          this.$router.push({
+            name: 'live',
+            params: { lang: this.$route.params.lang },
+          });
+        })
+        .catch(err => {
+          console.log('取得token 失敗');
+
+          // 清除該直播課程的相關資料
+          this.$store.dispatch('clearLiveCourseData');
+          this.$store.dispatch('clearRTCTokenData');
+
+          // 有錯誤訊息的話就顯示
+          if (err.message) {
+            this.$bus.$emit('notify:message', err.message);
+          }
+        });
     },
 
     /**
@@ -806,6 +934,19 @@ export default {
         this.$bus.$emit('loading:off');
       }
     },
+  },
+
+  beforeRouteEnter(to, from, next) {
+    // 在渲染该组件的对应路由被 confirm 前调用
+    // 不！能！获取组件实例 `this`
+    // 因为当守卫执行前，组件实例还没被创建
+    console.log('AppLive => to, from, next', to, from, next);
+
+    if (from.name === 'live') {
+      window.location.reload();
+    }
+
+    next();
   },
 };
 </script>

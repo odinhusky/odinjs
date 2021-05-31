@@ -6,6 +6,10 @@ import {
   FETCH_COURSES,
   FETCH_COUNTRYCODE_LIST,
   UPDATE_USER_DATA,
+  UPDATE_LIVE_COURSE_DATA,
+  CLEAR_LIVE_COURSE_DATA,
+  UPDATE_RTC_TOKEN_DATA,
+  CLEAR_RTC_TOKEN_DATA,
 } from '@/store/mutation-types.js';
 
 // mutation拿到資料後，只處理更新state的事情
@@ -54,6 +58,61 @@ const mutations = {
       detail: {},
     };
   },
+
+  /**
+   * @author odin
+   * @param {object} state 第一個參數固定是state，也就是上方的state物件
+   * @description 更新使用者點擊直播課程的資料(lessionid, courseIsLive, timeid)到 state 中
+   */
+  [UPDATE_LIVE_COURSE_DATA](state, payload) {
+    state.live = {
+      courseIsLive: payload.courseIsLive,
+      lessonid: payload.lessonid,
+      timeid: payload.timeid,
+    };
+  },
+
+  /**
+   * @author odin
+   * @description 清除目前直播課程的資料(lessionid, courseIsLive, timeid)
+   */
+  [CLEAR_LIVE_COURSE_DATA](state) {
+    state.live = {
+      courseIsLive: false,
+      lessonid: 0,
+      timeid: 0,
+    };
+  },
+
+  /**
+   * @author odin
+   * @param {object} state 第一個參數固定是state，也就是上方的state物件
+   * @description 更新使用者點擊直播課程的 RTC Token 到 state 中
+   */
+  [UPDATE_RTC_TOKEN_DATA](state, payload) {
+    state.rtc = {
+      appId: payload.app_id,
+      channel: payload.channel,
+      rtcToken: payload.rtc_token,
+      liveNow: payload.now,
+      startAt: payload.start_at,
+    };
+  },
+
+  /**
+   * @author odin
+   * @description 清除 state 中目前 RTC Token 內的資料
+   */
+  [CLEAR_RTC_TOKEN_DATA](state) {
+    state.rtc = {
+      appId: '',
+      channel: '',
+      rtcToken: '',
+      liveNow: '',
+      startAt: '',
+    };
+  },
+
   /**
    * @author odin
    * @param {object} state 第一個參數固定是state，也就是上方的state物件

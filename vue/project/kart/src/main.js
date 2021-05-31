@@ -17,9 +17,6 @@ import filters from '@/filters/filters';
 // CSS Reset
 import 'normalize.css';
 
-// 引入阿里雲的 js
-// import './plugins/aliyun-oss-sdk.min.js';
-
 // Vue config
 Vue.config.productionTip = false;
 // Vue.prototype.odin = odin;

@@ -3,7 +3,8 @@
     <div class="main-11 footer_body_container">
       <!-- footer logo -->
       <section class="logo_section">
-        <button class="footer_logo" @click.prevent="goToIndexJudge">
+        <!-- <button class="footer_logo" @click.prevent="goToIndexJudge"> -->
+        <button class="footer_logo" type="button" @click.prevent="">
           <!-- logo 圖片 -->
           <img
             class="footer_logo_img"
@@ -28,11 +29,19 @@
         <!-- KEI Art learning 聯絡我們 -->
         <div class="detail_set">
           <div class="set_left">
+            <!-- line icon -->
             <img
+              v-if="i18n === 'tw'"
+              src="../assets/img/v2/footer/line.png"
+              class="left_icon"
+            />
+            <!-- wechat icon -->
+            <img
+              v-else
               src="../assets/img/footer/icon_wechat@2x.png"
               class="left_icon"
             />
-            <span class="left_text">{{ $t('footer.title2') }}</span>
+            <span class="left_text">{{ $t('footer.social') }}</span>
           </div>
           <div class="set_right">
             <a
@@ -59,7 +68,7 @@
               href="https://reurl.cc/n0Y7k2"
               target="_blank"
               rel="noreferrer noopener nofollow"
-              class="detail_text contact_us"
+              class="detail_text business_cooperation"
             >
               {{ $t('footer.business_cooperation') }}
             </a>
@@ -86,16 +95,23 @@
       <!-- QR -->
       <section class="qr_box">
         <img
+          v-if="i18n === 'tw'"
+          src="../assets/img/v2/footer/qr-l.png"
+          class="qr_img"
+        />
+        <img
+          v-else
           src="../assets/img/v2/footer/icon_wechatqrcode@2x.jpg"
           class="qr_img"
         />
-        <span class="qr_description">{{ $t('footer.foucs_wechat') }}</span>
+        <span class="qr_description">{{ $t('footer.foucs_social') }}</span>
       </section>
 
       <!-- APP -->
       <section class="app_box">
         <!-- Huawei -->
         <a
+          v-if="i18n === 'cn' || i18n === 'en'"
           href="appmarket://details?id=com.mejor.course"
           class="app_download download_huawei_app"
         >
@@ -118,6 +134,7 @@
         <a
           href="market://details?id=com.mejor.course"
           class="app_download download_googleplay_app"
+          v-if="i18n === 'tw' || i18n === 'en'"
         >
           <img
             class="app_img"

@@ -121,6 +121,17 @@ const routes = [
         ],
       },
       {
+        path: 'live',
+        component: LayoutWithoutFooter,
+        children: [
+          {
+            path: '',
+            name: 'live',
+            component: () => import('@/components/AppLive.vue'),
+          },
+        ],
+      },
+      {
         path: 'my-account',
         // name: 'MyAccount',
         component: Layout,

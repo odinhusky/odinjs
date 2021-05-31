@@ -236,6 +236,60 @@ const commonMixinObj = {
 
       return expiredAt;
     },
+
+    /**
+     * @author odin
+     * @description 是否為測試帳號
+     * @return {boolean}
+     */
+    isTest() {
+      let result = false;
+
+      if (this.loginType === 'student') {
+        result = this.$store.state.user.detail.is_test;
+      }
+
+      return result;
+    },
+
+    /**
+     * @author odin
+     * @description 是否為vip
+     * @return {null | 期間}
+     */
+    isVip() {
+      let result = false;
+
+      if (this.loginType === 'student') {
+        result = this.$store.state.user.detail.student.vip ? true : false;
+      }
+
+      return result;
+    },
+
+    /**
+     * @author odin
+     * @description 是否為vip
+     * @return {null | 期間}
+     */
+    isVVip() {
+      let result = false;
+
+      if (this.loginType === 'student') {
+        result = this.$store.state.user.detail.student.is_vvip;
+      }
+
+      return result;
+    },
+
+    /**
+     * @author odin
+     * @description is_teacher 的值
+     * @return {boolean}
+     */
+    isTeacher() {
+      return this.$store.state.user.detail.is_teacher;
+    },
   },
   // 從 App.vue 註冊的重新整理'
   inject: ['reload'],
@@ -280,6 +334,16 @@ const commonMixinObj = {
      * @param {time form | string | timestamp | date object} time 傳入的時間格式
      * @return {string} 2020/09/23
      */
+    getTimeStamp(time) {
+      return new Date(time).getTime();
+    },
+
+    /**
+     * @author odin
+     * @description 將傳入的時間格式轉換成回傳值顯示的樣子
+     * @param {time form | string | timestamp | date object} time 傳入的時間格式
+     * @return {string} 2020/09/23
+     */
     formatDateWithSlash(time) {
       let d = new Date(time),
         month = d.getMonth() + 1,
@@ -289,6 +353,48 @@ const commonMixinObj = {
       if (day < 10) day = '0' + day;
 
       return `${year}/${month}/${day}`;
+    },
+
+    /**
+     * @author odin
+     * @description 將傳入的時間格式轉換成回傳值顯示的樣子
+     * @param {time form | string | timestamp | date object} time 傳入的時間格式
+     * @return {string} 09月 23(週四)
+     */
+    formatDateWithWeekName(time) {
+      let d = new Date(time),
+        month = d.getMonth() + 1,
+        day = d.getDate(),
+        weekDay = d.getDay(),
+        weekName = '';
+
+      switch (weekDay) {
+        case 0:
+          weekName = '週一';
+          break;
+        case 1:
+          weekName = '週二';
+          break;
+        case 2:
+          weekName = '週三';
+          break;
+        case 3:
+          weekName = '週四';
+          break;
+        case 4:
+          weekName = '週五';
+          break;
+        case 5:
+          weekName = '週六';
+          break;
+        case 6:
+          weekName = '週日';
+          break;
+      }
+
+      if (day < 10) day = '0' + day;
+
+      return `${month}月 ${day}(${weekName})`;
     },
 
     /**
@@ -398,16 +504,18 @@ const commonMixinObj = {
     dealTeacherIntro(teacherIntroObj) {
       let teacherIntro = '';
 
-      switch (this.i18n) {
-        case 'tw':
-          teacherIntro = teacherIntroObj.intro_hant;
-          break;
-        case 'cn':
-          teacherIntro = teacherIntroObj.intro;
-          break;
-        case 'en':
-          teacherIntro = teacherIntroObj.intro_en;
-          break;
+      if (typeof teacherIntroObj === 'object' || teacherIntroObj.intro) {
+        switch (this.i18n) {
+          case 'tw':
+            teacherIntro = teacherIntroObj.intro_hant;
+            break;
+          case 'cn':
+            teacherIntro = teacherIntroObj.intro;
+            break;
+          case 'en':
+            teacherIntro = teacherIntroObj.intro_en;
+            break;
+        }
       }
 
       return teacherIntro;

@@ -6,7 +6,7 @@
       <span>{{ i18nText ? $t(`${i18nText}`) : message }}</span>
 
       <button
-        class="close_position close_btn"
+        class="close_position close_lightbox_btn"
         @click.prevent="closeAlert"
       ></button>
     </div>

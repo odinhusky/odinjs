@@ -62,7 +62,8 @@
   @include position-absolute-right-top(nth($px6x, 3), nth($px6x, 3), 9004);
 }
 
-.close_btn {
+.close_btn,
+.close_lightbox_btn {
   width: nth($px5x, 5);
   height: nth($px5x, 5);
   position: absolute;
@@ -71,7 +72,8 @@
   @include position-absolute-right-top(nth($px6x, 3), nth($px6x, 3), 9005);
 }
 
-.close_btn::before {
+.close_btn::before,
+.close_lightbox_btn::before {
   content: '';
   display: block;
   @include w100;
@@ -81,7 +83,8 @@
   transform: rotate(45deg);
 }
 
-.close_btn::after {
+.close_btn::after,
+.close_lightbox_btn::after {
   content: '';
   display: block;
   @include w100;

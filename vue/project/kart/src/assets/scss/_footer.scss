@@ -6,6 +6,7 @@
 
 .footer_body_container {
   @include flex-center;
+  @include max-W(1460px);
   padding-top: nth($rem5x, 6);
   padding-bottom: nth($rem5x, 6);
 }
@@ -32,6 +33,10 @@
 
 .footer_logo_title {
   text-align: left;
+}
+
+.en .footer_logo_title2 {
+  width: 200px;
 }
 
 .detail_section {
@@ -105,6 +110,12 @@
   }
 }
 
+.tw {
+  .qr_box .qr_description {
+    font-size: nth($px6x, 2);
+  }
+}
+
 .en {
   .footer_logo {
     max-width: 260px;
@@ -124,19 +135,25 @@
     }
 
     .detail_text {
-      font-size: nth($rem5x, 2);
+      font-size: nth($px6x, 2);
     }
   }
 
-  .qr_app_section .qr_box .qr_description {
+  .qr_box .qr_description {
     font-size: nth($px6x, 2);
   }
 }
 
 // RWD Start =============================
 @include rwd('large') {
-  .en .footer_logo {
-    @include clear-min-max('max-W');
+  .en {
+    .footer_logo {
+      @include clear-min-max('max-W');
+    }
+
+    .footer_logo_title2 {
+      width: auto;
+    }
   }
 
   .footer_body_container {

@@ -7,7 +7,7 @@
         <router-link
           class="logo_link"
           :to="{
-            name: this.loginOrNot ? 'course' : 'index',
+            name: 'index',
             params: { lang: this.$route.params.lang },
           }"
         >
@@ -38,7 +38,36 @@
               <!-- router-link(學生的帳號才顯示) -->
               <template v-if="loginType === 'student'">
                 <li
-                  v-for="routerItem in navItems.routerLinks"
+                  v-for="routerItem in navItems.studentRouterLinks"
+                  :key="routerItem.id"
+                  class="nav_item"
+                  @click.prevent="toggleNav"
+                >
+                  <router-link
+                    class="nav_btn"
+                    :to="routerItem.linkTo"
+                    :class="routerItem.class"
+                  >
+                    <!-- 目前不要 icon -->
+                    <img
+                      :src="routerItem.imgMain"
+                      class="nav_img nav_white d-none"
+                    />
+                    <img
+                      :src="routerItem.imgSub"
+                      class="nav_img nav_blue d-none"
+                    />
+                    <span class="nav_btn_text">
+                      {{ $t(`${routerItem.spanTextCode}`) }}
+                    </span>
+                  </router-link>
+                </li>
+              </template>
+
+              <!-- router-link(學生的帳號才顯示) -->
+              <template v-if="loginType === 'teacher'">
+                <li
+                  v-for="routerItem in navItems.teacherRouterLinks"
                   :key="routerItem.id"
                   class="nav_item"
                   @click.prevent="toggleNav"
@@ -66,7 +95,7 @@
 
               <!-- 一般aTag -->
               <!-- 通知 -->
-              <li class="nav_item">
+              <li class="nav_item" v-if="false">
                 <a
                   class="nav_btn has_dropdown_btn"
                   :class="navItems.aTag[0].class"
@@ -84,7 +113,7 @@
                     $t('navigation.notification')
                   }}</span>
                 </a>
-                <!-- 訊息通知 -->
+                <!-- 訊息通知(暫時隱藏) -->
                 <div
                   class="drop_down notification"
                   :class="{ ...navItems.aTag[0].dropDown.dropDownClass }"
@@ -339,10 +368,10 @@ export default {
     },
     navItems() {
       return {
-        routerLinks: [
+        studentRouterLinks: [
           {
-            // 我的課程
-            id: 'r0',
+            // 直播課程
+            id: 'sr0',
             type: 'course',
             linkTo: {
               name: 'course',
@@ -354,8 +383,8 @@ export default {
             class: 'course_nav_btn',
           },
           {
-            // 影片區
-            id: 'r1',
+            // 錄播課程
+            id: 'sr1',
             type: 'videos',
             linkTo: {
               name: 'videos',
@@ -368,7 +397,7 @@ export default {
           },
           // {
           //   // 行事曆
-          //   id: 'r2',
+          //   id: 'sr2',
           //   type: 'calendar',
           //   linkTo: {
           //     name: 'calendar',
@@ -380,7 +409,7 @@ export default {
           // },
           // {
           //   // 課程瀏覽
-          //   id: 'r3',
+          //   id: 'sr3',
           //   type: 'browse',
           //   linkTo: {
           //     name: 'browse',
@@ -393,7 +422,7 @@ export default {
           // },
           // {
           //   // 課程報名
-          //   id: 'r4',
+          //   id: 'sr4',
           //   type: 'enroll',
           //   linkTo: {
           //     name: 'enroll',
@@ -404,6 +433,34 @@ export default {
           //   spanTextCode: 'enroll.title',
           //   class: 'eroll_nav_btn',
           // },
+          {
+            // 我要報名
+            id: 'sr5',
+            type: 'browse',
+            linkTo: {
+              name: 'browse',
+              params: { lang: this.$route.params.lang },
+            },
+            imgMain: require('@/assets/img/nav/icon_video.svg'),
+            imgSub: require('@/assets/img/nav/icon_video_blue.svg'),
+            spanTextCode: 'navigation.browse',
+            class: 'browse_nav_btn',
+          },
+        ],
+        teacherRouterLinks: [
+          {
+            // 直播課程
+            id: 'tr0',
+            type: 'course',
+            linkTo: {
+              name: 'course',
+              params: { lang: this.$route.params.lang },
+            },
+            imgMain: require('@/assets/img/nav/icon_video.svg'),
+            imgSub: require('@/assets/img/nav/icon_video_blue.svg'),
+            spanTextCode: 'navigation.mycourse_page',
+            class: 'course_nav_btn',
+          },
         ],
         aTag: [
           {

@@ -65,10 +65,12 @@ export default {
   welcome: '，欢迎回来',
 
   navigation: {
-    videos: '视频区',
+    videos: '录播课程',
+    course: '直播课程',
+    mycourse_page: '我的课程',
     calendar: '行事历',
-    course: '我的课程',
-    mycourse: '课程浏览',
+    browse: '我要报名',
+    mycourse: '我要报名',
     notification: '通知',
     personal: '个人',
     contact_admin: '联络管理员',
@@ -90,6 +92,7 @@ export default {
     primary: '一般视频上传',
     secondary: '学院视频上传',
     upload: '上传',
+    re_upload: '重新上传',
     uploading: '上传中',
     upload_video: '上传视频',
     upload_success: '上传成功',
@@ -108,6 +111,7 @@ export default {
     edit_video_filename: '编辑上传档案名称:',
     edit_video_input_placeholder: 'video.mp4，需包含副档名',
     college_only: '此为学院学生专区',
+    mp4_only: '上传影片格式必须为 .mp4',
   },
 
   teacher_list: {
@@ -138,6 +142,7 @@ export default {
     more_movie: '查看更多视频',
     no_comment: '尚无评论',
     no_notification: '尚无通知',
+    course_start_not_yet: '课程尚未开始',
   },
 
   pastcourse: {
@@ -191,6 +196,8 @@ export default {
     title: '课程报名',
     unenrolled: '未报名',
     enrolled: '已报名',
+    make_sure_enroll: '是否要报名?',
+    minus_remaing_one_point: '将扣除余课数{0}堂',
     normal_point: '一般余课数量：{0}堂',
     reviewable_point: '点评余课数量：{0}堂',
     selected_point: '选择数量：{0}堂',
@@ -205,6 +212,13 @@ export default {
     normal_point_not_enough: '余课数不足',
     reviewablel_point_not_enough: '点评余课数不足',
     enroll_now: '立即报名',
+    watch_now: '立即观看',
+    go_course: '前网直播页',
+    stop_here: '停留此页',
+  },
+
+  subscribe: {
+    suscribed: '已订阅',
   },
 
   live: {
@@ -343,6 +357,7 @@ export default {
 
     use_point: '将扣{0}堂课？',
 
+    video_timeout: '影片观看时间已结束',
     video_record_remain: '视频观看时间只有 ',
     video_record_confirm: ' 分钟，确认观看？',
     video_record_range_2var: '视频的有效期限为{0}到{1}',
@@ -372,7 +387,8 @@ export default {
     full_cellphone: '+886 0912456789',
     contact_us: '联络我们',
     business_cooperation: '商务合作',
-    foucs_wechat: '关注我们微信公众号',
+    foucs_social: '关注我们微信公众号',
+    social: 'k-art-learning',
   },
 
   index: {

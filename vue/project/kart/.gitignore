@@ -3,6 +3,7 @@ node_modules
 /dist
 
 /tests/e2e/reports/
+/src/layout/html/
 selenium-debug.log
 chromedriver.log
 geckodriver.log

@@ -14,7 +14,7 @@
 
 .lightbox_container {
   @include min-WH(430px, 194px);
-  @include max-W(80vw);
+  @include max-WH(80vw, 80vh);
   @include flex-center;
   @include bg-color($white);
 
@@ -27,6 +27,7 @@
   color: rgba(0, 0, 0, 0.7);
   padding: nth($px10x, 3);
   padding-top: nth($px10x, 5);
+  overflow-y: auto;
 }
 
 // RWD Start ============================
