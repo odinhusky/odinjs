@@ -13,6 +13,8 @@
     <li>元件另有 prop, emits 等資料傳遞及事件傳遞</li>
   </ul>
 
+  <alert></alert>
+
   <h3>不同元件的註冊方式</h3>
 
   <h4>
@@ -20,17 +22,45 @@
   </h4>
   <p>此 createApp 下，任何子元件都可運用，在中小型專案、一般頁面開發很方便</p>
 
+    <alert2></alert2>
 
   <h4>區域註冊</h4>
   <p>限制在特定元件下才可使用，在 Vue Cli 中很常使用此方法（便於管理）</p>
 
+  <alert3></alert3>
 
   <h4>模組化</h4>
   <p>同屬於區域註冊，Vue Cli 中的實戰運用技巧</p>
+  
+  <alert5></alert5>
 
 </div>
 
 <script type="module">
+  import alert5 from './component-alert.js'
+
+  const alert3 = {
+    data() {
+      return {
+        text: '元件 3'
+      };
+    },
+    template: `<div class="alert alert-primary" role="alert">
+      {{ text }}
+    </div>`
+  };
+
+  const alert4 = {
+    data() {
+      return {
+        text: '元件 4'
+      };
+    },
+    template: `<div class="alert alert-primary" role="alert">
+      {{ text }}
+    </div>`
+  };
+
   // 注意，這段起手式與先前不同
   const app = Vue.createApp({
     data() {
@@ -38,17 +68,36 @@
         text: '外部元件文字',
       };
     },
+    components: {
+      alert3,
+      alert5
+    }
+  }).component('alert', {
+    data() {
+      return {
+        text: '內部文字'
+      };
+    },
+    template: `<div class="alert alert-primary" role="alert">
+      {{ text }}
+    </div>`
+  });
+
+  app.component('alert2', {
+    data() {
+      return {
+        text: '元件 2'
+      };
+    },
+    components: {
+      alert4
+    },
+    template: `<div class="alert alert-primary" role="alert">
+      {{ text }}
+
+      <alert4></alert4>
+    </div>`
   })
-  //   .component('alert', {
-  //   data() {
-  //     return {
-  //       text: '內部文字'
-  //     };
-  //   },
-  //   template: `<div class="alert alert-primary" role="alert">
-  //     {{ text }}
-  //   </div>`
-  // });
 
   app.mount('#app');
 </script>
