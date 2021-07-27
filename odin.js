@@ -849,6 +849,96 @@ function isIE() {
     return n.toString().split('');
   }
 
+  /**
+   * @author odin
+   * @class helpers
+   * @param {Any} v -- 要轉換的值
+   * @example
+   *  transferBollean('true') => true || transferBollean({}) => {}
+   * @description 將字串的 'true' || 'false' 轉換成 布林值，其他的值就直接回傳
+   * @return {Boolean || Any} 回傳布林值或原本傳入的值
+  */
+  const transferBoolean = (v) => {
+    if(v === 'true' && typeof v === 'string') {
+      return true;
+    } else if (v === 'false' && typeof v === 'string') {
+      return false;
+    } else {
+      return v;
+    }
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @param {Object} obj -- 要過濾的物件
+   * @param {Array} keyArr -- 要留下的 key 值
+   * @description 回傳過濾完成的物件並將將字串的 'true' || 'false' 轉換成 布林值
+   * @return {Object} 回傳過濾完成的物件
+  */
+  const filterObjPropertyByKey = (obj, keyArr) => {
+    const newObj = {};
+
+    keyArr.forEach((keyName) => {
+      if(obj[keyName] !== undefined) {
+        newObj[keyName] = obj[keyName];
+      }
+    })
+
+    return  newObj;
+  }
+
+  /**
+   * @author odin
+   * @class helpers
+   * @param {Array} arr -- 要轉換的陣列
+   * @example
+   *  [{key: "helper", value: "http://192.168.0.161:18080"},
+      {key: "isJobNeedVerify", value: "false"},
+      {key: "canMultipleLogin", value: "true"}]
+
+      =>
+
+      {
+        canMultipleLogin: "true",
+        helper: "http://192.168.0.161:18080",
+        isJobNeedVerify: "false"
+      }
+  * @description 將具有物件屬性的陣列轉換成單一個物件
+  * @returns {Object}
+  */
+  const arrToObj = (arr) => (
+    arr.reduce((acc, cur)=> {
+      return { ...acc, [cur.key]: cur.value }
+    }, {})
+  )
+
+  /**
+   * @author odin
+   * @class helpers
+   * @param {ObjectChain} obj -- 要轉換的物件
+   * @example
+      {
+        canMultipleLogin: "true",
+        helper: "http://192.168.0.161:18080",
+        isJobNeedVerify: "false"
+      }
+
+      =>
+      [{key: "helper", value: "http://192.168.0.161:18080"},
+      {key: "isJobNeedVerify", value: "false"},
+      {key: "canMultipleLogin", value: "true"}]
+  * @description 將物件轉換成具有物件屬性的陣列
+  * @returns {Array}
+  */
+  const objToArr = (obj) => {
+    const keyArr = Object.keys(obj);
+
+    return keyArr.reduce((acc, cur)=> {
+      return [ ...acc, { key: cur, value:obj[cur] } ]
+    }, [])
+  }
+
   return {
     isUndef,
     isDef,
@@ -902,7 +992,11 @@ function isIE() {
     objectToQueryString,
     judgeBrowser,
     isIE,
-    numToArr
+    numToArr,
+    transferBoolean,
+    filterObjPropertyByKey,
+    arrToObj,
+    objToArr
   };
 })();
 
