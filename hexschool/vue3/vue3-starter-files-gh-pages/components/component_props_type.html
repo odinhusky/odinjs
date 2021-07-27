@@ -7,7 +7,7 @@
   <h3>Props 型別技巧</h3>
   <input type="number" v-model="money">
 
-  <props-type money="300"></props-type>
+  <props-type :money="{}"></props-type>
   <props-type :money="money"></props-type>
 
 
@@ -19,7 +19,7 @@
   </ul>
   <props-validation
   :prop-a="fun"
-  prop-c="required"
+  :prop-b="fun"
   :prop-f="10000"
   >
   </props-validation>
