@@ -4,7 +4,7 @@
  */
 
 window.odin = {};
-
+ 
 /**
  * @author odin
  * @description Helpers for data check and transform.
