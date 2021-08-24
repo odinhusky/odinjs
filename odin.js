@@ -9,7 +9,7 @@ window.odin = {};
  * @author odin
  * @description Helpers for data check and transform.
  */
-
+ 
 odin.helper = (function () {
   /**
    * @author odin
