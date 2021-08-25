@@ -3555,3 +3555,28 @@ odin.leetcode = (function() {
     isPalindrome
   }
  })();
+
+/**
+ * @author odin
+ * @description React hooks 相關的
+ */
+odin.rcthooks = (function() {
+
+  /**
+   * @author odin
+   * @class rcthooks
+   * @param {any} value - any type of data
+   * @description 取得變動前的 prop
+   */
+  const usePrevProps = value => {
+    const ref = React.useRef();
+    React.useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+  return {
+    usePrevProps
+  }
+})()
