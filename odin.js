@@ -1231,7 +1231,7 @@ odin.math = (function () {
    * @returns {number} 在指定範圍內的數字
    */
   function countRestrictRange(max, min, num) {
-    return Math.min(Math.max(e.target.value, minValue), maxValue)
+    return Math.min(Math.max(num, min), max)
   }
 
   return {
