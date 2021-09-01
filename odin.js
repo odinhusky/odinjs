@@ -1221,6 +1221,19 @@ odin.math = (function () {
     return [...arr].reduce((acc, val) => acc * val, 0);
   }
 
+  /**
+   * @author odin
+   * @class math
+   * @param {numbers} max - 高標數值
+   * @param {number} min - 低標數值
+   * @param {number} num - 傳入要檢查的數值
+   * @description 如果數字小於低標回傳低標，大於高標則回傳高標，在區間內則直接回傳傳入的數字
+   * @returns {number} 在指定範圍內的數字
+   */
+  function countRestrictRange(max, min, num) {
+    return Math.min(Math.max(e.target.value, minValue), maxValue)
+  }
+
   return {
     priceWithCommas,
     priceWithoutCommas,
@@ -1239,6 +1252,7 @@ odin.math = (function () {
     floor,
     dealFloatNumber,
     accumulator,
+    countRestrictRange
   };
 })();
 
