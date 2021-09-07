@@ -8,23 +8,25 @@
   <card>
   </card>
   <br>
-  <card></card>
+  <card>
+    <p>這是由外層定義的文字</p>
+  </card>
 
   <h3>具名插巢</h3>
-  <card2>
-    <template >我喜歡這張卡片</template>
-    <!--  預設請加入 default  -->
-    <template >這是卡片 2 號</template>
-    <template >這是卡片腳</template>
-  </card2>
-
-
-  <h3>具名插巢縮寫</h3>
   <card2>
     <template v-slot:header>我喜歡這張卡片</template>
     <!--  預設請加入 default  -->
     <template v-slot:default>這是卡片 2 號</template>
     <template v-slot:footer>這是卡片腳</template>
+  </card2>
+
+
+  <h3>具名插巢縮寫</h3>
+  <card2>
+    <template #header>我喜歡這張卡片</template>
+    <!--  預設請加入 default  -->
+    <template #default>這是卡片 2 號</template>
+    <template #footer>這是卡片腳</template>
   </card2>
 
 </div>
@@ -38,7 +40,9 @@
         元件 Header
       </div>
       <div class="card-body">
-        <p>這段是預設的文字</p>
+        <slot>
+          <p>這是預設值</p>
+        </slot>
       </div>
       <div class="card-footer">
         元件 Footer
@@ -49,13 +53,13 @@
   app.component('card2', {
     template: `<div class="card" style="width: 18rem;">
       <div class="card-header">
-        <slot>元件 Header</slot>
+        <slot name="header">元件 Header</slot>
       </div>
       <div class="card-body">
         <slot>這段是預設的文字</slot>
       </div>
       <div class="card-footer">
-        <slot>元件 Footer</slot>
+        <slot name="footer">元件 Footer</slot>
       </div>
     </div>`
   });

@@ -12,13 +12,13 @@
   </ul>
   {{ num }}
   <button-counter
-
+    @emit-num="addNum"
   ></button-counter>
 
   <h3>傳遞資料狀態</h3>
   內部傳來的文字：{{ text }}<br>
   <button-text
-
+    @emit-text="getData"
   ></button-text>
 
   <h3>命名注意</h3>
@@ -39,22 +39,27 @@
       };
     },
     methods: {
-      // addNum() {
-      //   console.log('addNum');
-      //   this.num++
-      // },
-      // getData(text) {
-      //   console.log('getData', text);
-      //   this.text = text;
-      // }
+      addNum(got) {
+        console.log('addNum');
+        this.num++
+      },
+      getData(text) {
+        console.log('getData', text);
+        this.text = text;
+      }
     }
   });
 
   app.component('button-counter', {
     methods: {
-
+      click() {
+        console.log('click');
+        // 定義這裏觸發 emit 事件，事件名稱為 emit-num
+        // 名稱一定要 case-camel 或是camelCase
+        this.$emit('emit-num');
+      }
     },
-    template: `<button type="button">add</button>`
+    template: `<button type="button" @click="click">add</button>`
   });
 
   app.component('button-text', {
@@ -64,15 +69,18 @@
       }
     },
     methods: {
+      emit() {
+        this.$emit('emit-text', this.text);
+      }
     },
-    template: `<button type="button">emit data</button>`
+    template: `<button type="button" @click="emit">emit data</button>`
   });
 
   app.component('button-named', {
     methods: {
       emit() {
         console.log('emit')
-        this.$emit('emitText', '內部文字');
+        this.$emit('emitText', '內部文字camelCase');
       }
     },
     template: `<button type="button" @click="emit">emit data</button>`
