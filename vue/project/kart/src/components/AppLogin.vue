@@ -124,6 +124,7 @@ export default {
   },
   data() {
     return {
+      aa: 'aa',
       student: {
         countryCode: '+86',
         phoneNumber: '',
