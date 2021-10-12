@@ -1,0 +1,271 @@
+<!DOCTYPE html><html><head><title>元件章節作業</title><meta name="viewport" content="width=device-width, initial-scale=1"><link href="images/favicon.ico" rel="shortcut icon"><meta charset="UTF-8"><script src="/javascripts/vendor.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.2/vue.global.js"></script></head><body class="bg-lighter">
+<div class="container main my-5"><div class="row"><main class="col post">
+<!-- 章節標題 --><div class="mb-4"><h1 class="mt-0 text-muted">元件章節作業</h1><small>檔名：<code>component_final_vue.html</code></small></div>
+<!-- 🔥🔥練習開始🔥🔥 -->
+<div id="app">
+  <h3>作業條件：</h3>
+  <ol>
+    <li>將以下範例改為 Vue 的版本</li>
+    <li>卡片、分頁要製作成 “元件”</li>
+    <li>分頁要善用 props 及 emits 的觀念</li>
+  </ol>
+
+
+  <div class="row" id="content">
+    <template v-if="!isEmpty(landMarks)">
+      <card-land v-for="item in landMarks" :land="item" />
+    </template>
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination" id="pageid">
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<style>
+.img-cover {
+  object-fit: cover;
+}
+</style>
+
+<!-- lodash -->
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
+<script type="module">
+
+  // init data
+  const jsonUrl = 'https://api.kcg.gov.tw/api/service/Get/9c8e1450-e833-499c-8320-29b36b7ace5c';
+
+  // loadash
+  const { isEmpty } = _;
+  const lodashObj = {
+    isEmpty
+  }
+
+  // Vue 3 Root Component
+  const app = Vue.createApp({
+    data() {
+      return {
+        landMarks: []
+      }
+    },
+    created() {
+      this.getLandMarksData();
+    },
+    methods: {
+      ...lodashObj,
+      /**
+       * @author odin
+       * @description 取得景點資訊
+      */
+      getLandMarksData() {
+        fetch(jsonUrl, {method: 'get'})
+          .then((response) => {
+          return response.json();
+        }).then((data) => {
+          this.landMarks = data.data.XML_Head.Infos.Info;
+          console.log('landMarks', this.landMarks)
+          // pagination(jsonData, 1);
+        })
+      }
+    }
+  });
+
+  // Components
+  app.component('card-land', {
+    props: {
+      land: {
+        type: Object,
+        required: true,
+        default: {
+          Add: "高雄市807三民區三德西街90巷8號",
+          Changetime: "2021/10/06 11:37:02",
+          Class1: "3",
+          Class2: "18",
+          Class3: "",
+          Description: "三塊厝驛(舊三塊厝車站)從明治41年(1908年)2月開始營運。三塊厝驛兼營客貨，以貨物運輸為主要，特別是提供位於其北邊的台灣煉瓦株式會社的成品輸運有極大的貢獻。整體而言，三塊厝驛可說是昭和16年(1941)6月今日高雄火車站啟用之前，僅次於舊打狗驛（今高雄港站）的重要鐵道車站。",
+          Gov: "397000000A",
+          Id: "C1_397000000A_001601",
+          Keyword: "",
+          Level: "",
+          Map: "",
+          Name: "三塊厝舊站",
+          Opentime: "10:00-18:00",
+          Orgclass: "",
+          Parkinginfo: "",
+          Parkinginfo_px: "",
+          Parkinginfo_py: "",
+          Picdescribe1: "三塊厝站5",
+          Picdescribe2: "",
+          Picdescribe3: "",
+          Picture1: "https://khh.travel/content/images/Attractions/1956/640x480_image024_8879.jpg",
+          Picture2: "",
+          Picture3: "",
+          Px: "120.29387",
+          Py: "22.63872",
+          Remarks: "",
+          Status: "2",
+          Tel: "886-7-2856234",
+          Ticketinfo: "",
+          Toldescribe: "三塊厝驛(舊三塊厝車站)從明治41年(1908年)2月開始營運。三塊厝驛兼營客貨，以貨物運輸為主要，特別是提供位於其北邊的台灣煉瓦株式會社的成品輸運有極大的貢獻。整體而言，三塊厝驛可說是昭和16年(1941)6月今日高雄火車站啟用之前，僅次於舊打狗驛（今高雄港站）的重要鐵道車站。現存站房於大正12年(1923)完成，是一座日式的木造車站建築，隨著中都工業的外移，舊三塊厝車站也在1986年廢站。2004年高雄市文化局將舊三塊厝車站列為市定古蹟，2008年因站體年久失修，台鐵決定將此進行維修，於2012年整修站體完成，舊站距離新站約50公尺。",
+          Travellinginfo: "",
+          Website: "",
+          Zipcode: "807"
+        }
+      },
+    },
+    template: `<div class="col-md-6 py-2">
+      <div class="card">
+        <div class="card bg-dark text-white text-left">
+          <img class="card-img-top img-cover" height="155" :src="land.Picture1">
+          <div class="card-img-overlay d-flex justify-content-between align-items-end p-0 px-3" style="background-color: rgba(0, 0, 0, .2)">
+            <h5 class="card-img-title-lg">{{ land.Name }}</h5><h5 class="card-img-title-sm">{{ land.Zone }}</h5>
+          </div>
+        </div>
+        <div class="card-body text-left">
+            <p class="card-text"><i class="far fa-clock fa-clock-time"></i>&nbsp;{{ land.Opentime }}</p>
+            <p class="card-text"><i class="fas fa-map-marker-alt fa-map-gps"></i>&nbsp;{{ land.Add }}</p>
+            <p class="card-text"><i class="fas fa-mobile-alt fa-mobile"></i>&nbsp;{{ land.Tel }}</p>
+
+            <div v-if="land.Ticketinfo">
+              <p class="card-text"><i class="fas fa-tags text-warning"></i>&nbsp;{{ land.Ticketinfo }}</p>
+            </div>
+        </div>
+      </div>
+    </div>`
+  });
+
+  app.mount('#content');
+</script>
+
+<!-- 🙇🙇練習結束🙇🙇 -->
+</main>
+  
+    <aside
+      class="col-md-3"><div class="sticky-top" style="top: 76px">
+  <div class="list-group">
+  
+    <a href="/components/component_register.html"
+      class="list-group-item list-group-item-action
+        
+        ">
+      元件註冊
+    </a>
+  
+    <a href="/components/component_template.html"
+      class="list-group-item list-group-item-action
+        
+        ">
+      元件樣板及綁定方式
+    </a>
+  
+    <a href="/components/component_props.html"
+      class="list-group-item list-group-item-action
+        
+        ">
+      Props
+    </a>
+  
+    <a href="/components/component_props_type.html"
+      class="list-group-item list-group-item-action
+        
+        ">
+      Props 型別與驗證
+    </a>
+  
+    <a href="/components/component_emits.html"
+      class="list-group-item list-group-item-action
+        
+        ">
+      Emit 傳遞事件
+    </a>
+  
+    <a href="/components/component_emits_api.html"
+      class="list-group-item list-group-item-action
+        
+        ">
+      Emits 驗證
+    </a>
+  
+    <a href="/components/component_slot.html"
+      class="list-group-item list-group-item-action
+        
+        ">
+      元件插巢
+    </a>
+  
+    <a href="/components/component_slot_props.html"
+      class="list-group-item list-group-item-action
+        
+        ">
+      元件插巢 Props
+    </a>
+  
+    <a href="/components/component_mitt.html"
+      class="list-group-item list-group-item-action
+        
+        ">
+      跨元件溝通
+    </a>
+  
+    <a href="/components/component_final.html"
+      class="list-group-item list-group-item-action
+        
+        active">
+      元件章節作業
+    </a>
+  
+  </div>
+  <div class="mt-3 text-end p-2 bg-light rounded">
+    <small class="text-black-50 fw-light mb-0">文件版本：2021/4/09</small>
+  </div>
+</div>
+
+</aside>
+    
+  </div>
+</div>
+
+<nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-secondary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Vue 3 練習手冊</a>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link " href="/es6/shorthand.html">JS 必備觀念</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/intro/createApp.html">認識 Vue.js</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/template/v-text.html">模板</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/optionsApi/options-methods.html">方法</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/components/component_register.html">元件</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/advApi/adv-refs.html">進階</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/router/vue-router.html">路由</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<footer class="footer py-2 bg-light">
+  <div class="container text-center">
+    <small class="text-black-50 fw-light mb-0">六角學院 Vue 課程專屬文件</small>
+  </div>
+</footer>
+<link rel="stylesheet" href="/stylesheets/all.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</body>
+</html>
