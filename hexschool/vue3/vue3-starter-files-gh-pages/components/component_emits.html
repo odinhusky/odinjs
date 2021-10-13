@@ -40,7 +40,7 @@
     },
     methods: {
       addNum(got) {
-        console.log('addNum');
+        console.log('addNum', got);
         this.num++
       },
       getData(text) {
@@ -56,7 +56,7 @@
         console.log('click');
         // 定義這裏觸發 emit 事件，事件名稱為 emit-num
         // 名稱一定要 case-camel 或是camelCase
-        this.$emit('emit-num');
+        this.$emit('emit-num', 3);
       }
     },
     template: `<button type="button" @click="click">add</button>`
