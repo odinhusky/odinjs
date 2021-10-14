@@ -5,11 +5,11 @@
 
 <div id="app">
   <h3>使用 ref 定義元素</h3>
-  <input type="text">
+  <input type="text" ref="inputRef">
 
   <h3>使用 ref 取得元件內的資訊</h3>
   <button type="button" @click="getComponentInfo">取得元件資訊</button>
-  <card></card>
+  <card ref="cardRef"></card>
 
   <h3>進階，使用 ref 搭配 Bootstrap</h3>
   Bootstrap Modal: <a href="https://getbootstrap.com/docs/5.0/components/modal/">https://getbootstrap.com/docs/5.0/components/modal/</a>
@@ -44,14 +44,27 @@ const app = Vue.createApp({
   },
   methods: {
     getComponentInfo() {
+      const card = this.$refs.cardRef;
+      console.log(card)
 
+      // 更改元件內的 data
+      card.title = "被更改過後的 title";
     },
     openModal() {
-
+      // 可以直接調用該 modal 的方法控制該 modal
+      this.bsModal.show();
     }
   },
   mounted() {
+    // ! 操作 Ref 的時候一定要在 mounted 之後
+    const input = this.$refs.inputRef;
+    console.log(input)
+    // 可以直接針對該 html 進行元素操作
+    input.focus()
 
+    // 建立控制 Bootstrap Modal 的實體
+    const modal = this.$refs.modal;
+    this.bsModal = new bootstrap.Modal(modal)
   }
 })
 

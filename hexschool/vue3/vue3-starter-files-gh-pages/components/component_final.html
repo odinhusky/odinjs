@@ -70,7 +70,7 @@ function pagination(jsonData, nowPage) {
   
   // 由前面可知 最小數字為 6 ，所以用答案來回推公式。
   const minData = (currentPage * perpage) - perpage + 1 ;
-  const maxData = (currentPage * perpage) ;
+  const maxData = (currentPage * perpage);
   
   // 先建立新陣列
   const data = [];
@@ -85,6 +85,7 @@ function pagination(jsonData, nowPage) {
       data.push(item);
     }
   })
+  
   // 用物件方式來傳遞資料
   const page = {
     pageTotal,
@@ -126,13 +127,13 @@ function displayData(data) {
 function pageBtn (page){
   let str = '';
   const total = page.pageTotal;
-  
+
   if(page.hasPage) {
     str += `<li class="page-item"><a class="page-link" href="#" data-page="${Number(page.currentPage) - 1}">Previous</a></li>`;
   } else {
     str += `<li class="page-item disabled"><span class="page-link">Previous</span></li>`;
   }
-  
+
 
   for(let i = 1; i <= total; i++){
     if(Number(page.currentPage) === i) {
