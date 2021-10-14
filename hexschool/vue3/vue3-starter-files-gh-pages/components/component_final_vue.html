@@ -208,7 +208,6 @@
       clickNext() {
         const {currentPage, hasNext} = this.pagination;
         console.log('next', currentPage, hasNext)
-        
 
         if(hasNext) {
           this.$emit('switch-page', currentPage + 1)
@@ -222,7 +221,7 @@
             <a class="page-link" href="#" @click.prevent="clickPrev">Previous</a>
           </li>
 
-          <li class="page-item"  v-for="page in pagination.pageTotal" :class="{'active' : pagination.currentPage === i }">
+          <li class="page-item"  v-for="page in pagination.pageTotal" :class="{'active' : pagination.currentPage === page }" key="page">
             <a class="page-link" href="#" @click.prevent="clickPage(page)">{{ page }}</a>
           </li>
 
