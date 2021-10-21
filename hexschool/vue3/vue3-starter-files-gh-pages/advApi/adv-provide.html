@@ -9,6 +9,7 @@
     <li>在外層加入 provide</li>
     <li>內層元件補上 inject</li>
   </ul>
+  {{ user.name }}
   <card></card>
 
   <h3>注意事項：響應式</h3>
@@ -24,9 +25,10 @@ const userComponent = {
   created() {
     console.log(this.user);
 
-    // 如果根元件沒有使用 function return 則不能使用響應式
-    // this.user.name = '杰倫'
-  }
+    // 如果根元件沒有使用 function return ，同事資料也指向 data 內的資料，則改動資料時沒辦法響應式的改動所有的資料
+    this.user.name = '杰倫'
+  },
+  inject: ['user']
 }
 
 const app = Vue.createApp({
@@ -38,6 +40,17 @@ const app = Vue.createApp({
       }
     }
   },
+  // provide: {
+  //   user: {
+  //     name: '小明',
+  //     uuid: 78163
+  //   }
+  // }
+  provide() {
+    return {
+      user: this.user
+    }
+  }
 })
 
   app.component('card', {
