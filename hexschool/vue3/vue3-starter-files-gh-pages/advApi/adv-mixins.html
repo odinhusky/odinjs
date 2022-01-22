@@ -41,9 +41,17 @@ const mixComponent2 = {
 const app = Vue.createApp({});
 
 app.component('card', {
+  // 主要都是以引用 mixin 的元件設定為主，但生命週期的觸發，最後一個才會是引用 mixin 元件內部的生命週期
+  data() {
+    return {
+      name: 'card'
+    }
+  },
   template: `<div class="card">
     <div class="card-body">{{ name }}</div>
   </div>`,
+  // 其他則是依照陣列的順序去覆蓋相同的 data 或是 method
+  mixins: [mixComponent1, mixComponent2],
   created() {
     console.log('card 的元件生命週期')
   }
