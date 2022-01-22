@@ -1,0 +1,10 @@
+.formGroup {
+  display: flex;
+  align-items: center;
+  padding: 20px 20px 5px;
+  .label {
+    padding-right: 40px;
+    font-size: 16px;
+    color: #333;
+  }
+}

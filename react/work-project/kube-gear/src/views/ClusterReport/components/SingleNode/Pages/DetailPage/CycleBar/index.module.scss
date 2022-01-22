@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  padding: 20px 0px;
+  .selectBlock {
+    display: flex;
+    .select {
+      display: flex;
+      margin-right: 10px;
+      label {
+        margin-right: 10px;
+      }
+    }
+  }
+}

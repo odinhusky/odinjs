@@ -1,0 +1,57 @@
+.container {
+  width: 400px;
+}
+
+.private {
+  width: 100%;
+  .selected {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .dropdown {
+      width: 100%;
+    }
+    .addButton {
+      display: flex;
+      align-items: flex-end;
+    }
+  }
+
+  .block {
+    border: 1px solid;
+    margin-top: 10px;
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto;
+    font-size: 14px;
+    .block__row {
+      display: flex;
+      align-items: center;
+      height: 40px;
+    }
+    .block__row__title {
+      width: 35%;
+      margin-left: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .block__row__input {
+      width: 50%;
+    }
+    .block__row__cancel {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.marginRight10 {
+  margin-right: 10px
+}

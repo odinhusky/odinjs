@@ -1,0 +1,32 @@
+.addUserBar {
+  display: flex;
+  align-items: stretch;
+  & > :first-child {
+    flex: 2;
+    margin-right: 16px;
+    max-width: 300px;
+  }
+}
+.userBox {
+  margin-top: 20px;
+  border: 1px solid #333;
+  height: 300px;
+  overflow: auto;
+  .userBoxItem {
+    padding: 16px;
+    display: flex;
+    border-bottom: 1px solid #eaeaea;
+    align-items: center;
+    justify-content: space-between;
+    .name {
+      width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+.footer {
+  padding-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}

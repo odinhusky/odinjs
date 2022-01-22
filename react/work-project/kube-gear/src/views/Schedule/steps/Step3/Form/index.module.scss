@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .title {
+    // width: 20%;
+    display: flex;
+    padding-right: 10px;
+    label {
+      font-weight: normal;
+      margin-bottom: 0;
+    }
+  }
+  .input {
+    width: 100%;
+  }
+  .select {
+    width: 200px;
+  }
+  .radioGroup {
+    label {
+      font-weight: normal;
+    }
+  }
+}
+
+.marginRight10 {
+  margin-right: 10px;
+}
+
+.width20 {
+  width: 20%;
+}
+
+.width45 {
+  width: 45%;
+}
+
+.width50 {
+  width: 50%
+}
+
+.width100 {
+  width: 100%;
+}

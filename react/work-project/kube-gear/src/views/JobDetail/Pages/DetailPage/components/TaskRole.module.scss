@@ -1,0 +1,53 @@
+.container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 10px;
+  .header {
+    position: relative;
+    display: flex;
+    padding: 10px 20px;
+    background: rgb(248, 248, 248);
+    font-size: 17px;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    span {
+      display: flex;
+      align-items: center;
+    }
+    .count {
+      display: flex;
+      align-items: center;
+      margin-left: 30px;
+      & > div {
+        margin-left: 10px;
+      }
+    }
+    .expandBtn {
+      position: absolute;
+      right: 30px;
+    }
+  }
+  .content {
+    flex: 1;
+    overflow: hidden;
+  }
+}
+
+.ml20 {
+  margin-left: 20px;
+}
+
+.disabled {
+  background: rgb(243, 242, 241);
+  color: rgb(161, 159, 157);
+  cursor: not-allowed;
+  i {
+    color: rgb(161, 159, 157);
+  }
+  &:hover {
+    background: rgb(243, 242, 241);
+    color: rgb(161, 159, 157);
+    cursor: not-allowed;
+  }
+}

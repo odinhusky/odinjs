@@ -1,0 +1,16 @@
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .wrapperPaper {
+    flex: 1;
+    overflow: hidden;
+  }
+}

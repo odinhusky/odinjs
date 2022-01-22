@@ -1,0 +1,26 @@
+.container {
+  position: relative;
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .topbar {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    .rightBlock {
+      display: flex;
+    }
+  }
+  .wapperPaper {
+    flex: 1;
+    overflow: hidden;
+  }
+}
+
+.isLoading {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

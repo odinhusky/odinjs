@@ -1,0 +1,32 @@
+.pt20 {
+  padding-top: 20px;
+}
+.overviewContainer {
+  display: flex;
+  & > div {
+    display: flex;
+    width: 33.33%;
+    justify-content: center;
+    padding: 20px;
+    flex-direction: column;
+    position: relative;
+    &:not(:last-child) {
+      border-right: 1px solid #EAEAEA;
+    }
+    p {
+      text-align: center;
+      color: '#333';
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+}
+
+.lineChartBox {
+  display: flex;
+  flex-wrap: wrap;
+  & > div {
+    width: 50%;
+    padding: 20px;
+  }
+}

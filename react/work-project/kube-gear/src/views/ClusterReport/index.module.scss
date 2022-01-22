@@ -1,0 +1,16 @@
+.container {
+  position: relative;
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .wrapper {
+    overflow: auto;
+    flex: 1;
+    background-color: rgb(251, 251, 251);
+    padding: 20px;
+  }
+  .usedTime {
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,19 @@
+.copyIcon{
+  font-size: 2rem;
+  cursor: pointer;
+  &:after{
+      content: 'Copied to clipboard'; 
+      display: inline-block; 
+      opacity: 0;
+      font-size: 12px;
+      position: absolute;
+      background: none;
+  }
+  &:active{
+    &:after{ 
+        opacity: 1;
+        top: 10px;
+        left: 30px;
+    } 
+  }
+} 

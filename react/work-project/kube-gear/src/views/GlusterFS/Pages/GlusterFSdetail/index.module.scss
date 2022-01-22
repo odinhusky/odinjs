@@ -1,0 +1,16 @@
+.topBar {
+  display: flex;
+  margin-bottom: 15px;
+  .text {
+    display: flex;
+  }
+}
+
+.wrapper {
+  flex: 1;
+  overflow: hidden;
+}
+
+.marginRight15 {
+  margin-right: 15px
+}

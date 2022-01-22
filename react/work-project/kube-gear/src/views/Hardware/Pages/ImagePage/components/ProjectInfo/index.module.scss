@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .row {
+    font-size: 16px;
+    color: #333333;
+    display: flex;
+    .info {
+      display: flex;
+      justify-content: flex-end;
+      padding: 5px;
+      span:nth-child(1) {
+        min-width: 30px;
+        text-align: right;
+        padding-right: 5px;
+      }
+    }
+  }
+}

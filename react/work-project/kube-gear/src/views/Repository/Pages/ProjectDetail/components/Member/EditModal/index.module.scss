@@ -1,0 +1,26 @@
+.selectedMemberList{
+  display: flex;
+  border: 1px solid #EAEAEA;
+  border-radius: 3px;
+  flex-direction: column;
+  padding: 0;
+  max-height: 220px;
+  overflow: auto;
+  li {
+      display: block;
+      list-style: none;
+      border-bottom: 1px solid #EAEAEA;
+      padding: 10px;
+      font-size: 14px;
+      color: #333333;
+      &:first-child {
+          font-weight: bold;
+          position: sticky;
+          top: 0;
+          background: #fff;
+      }
+      &:last-child {
+          border-bottom: none;
+      }
+  }
+}

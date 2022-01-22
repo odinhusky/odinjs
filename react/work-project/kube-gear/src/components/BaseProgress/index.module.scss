@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.track {
+  background: #E1DFDD;
+}
+
+.progess {
+  height: 10px;
+  animation: track 2s;
+}
+
+@keyframes track {
+  0% {
+    width: 0;
+  }
+}

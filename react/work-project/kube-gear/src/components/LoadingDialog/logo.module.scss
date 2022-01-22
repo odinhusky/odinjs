@@ -1,0 +1,40 @@
+.s, .i, .o1, .t, .n, .h, .o2, .l, .y {
+  animation: bounce 1s infinite;
+  animation-timing-function: linear;
+}
+.i {
+  animation-delay: .11s;
+}
+.o1 {
+  animation-delay: .22s;
+}
+.t {
+  animation-delay: .33s;
+}
+.n {
+  animation-delay: .44s;
+}
+.h {
+  animation-delay: .55s;
+}
+.o2 {
+  animation-delay: .66s;
+}
+.l {
+  animation-delay: .77s;
+}
+.y {
+  animation-delay: .88s;
+}
+
+@keyframes bounce{
+  0%{
+    transform: translateY(0);
+  }
+  30%{
+    transform: translateY(-20px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+}

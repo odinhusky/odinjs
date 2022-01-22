@@ -1,0 +1,15 @@
+.formRow {
+  display: flex;
+  margin-top: 10px;
+  .rowField {
+    flex: 3;
+    margin-right: 10px;
+  }
+  .rowLabel {
+    flex: 1;
+    margin-top: 14px;
+  }
+}
+.formRow:not(:first-child) {
+  padding-top: 20px;
+}

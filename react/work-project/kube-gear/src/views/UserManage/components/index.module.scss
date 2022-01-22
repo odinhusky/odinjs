@@ -1,0 +1,44 @@
+.title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  h3 {
+    font-size: 16px;
+    margin: 0 10px 0 0;
+  }
+  span {
+    flex-grow: 2;
+    border-bottom: 1px solid #eaeaea;
+    height: 1px;
+  }
+}
+
+.viewBox {
+  .content {
+    display: flex;
+    flex-wrap: wrap;
+    .field25 {
+      width: 25%
+    }
+    .field50 {
+      width: 50%
+    }
+    .field75 {
+      width: 75%
+    }
+    & > div {
+      margin-bottom: 10px;
+      padding-right: 15px;
+      p {
+        margin-bottom: 5px;
+        &:first-child {
+          color: #605E5C
+        }
+      }
+      span {
+        color: #a19f9d
+      }
+    }
+  }
+}

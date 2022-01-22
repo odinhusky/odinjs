@@ -1,0 +1,31 @@
+.input {
+  width: 180px;
+}
+.addUserBar {
+  display: flex;
+  align-items: flex-start;
+  & > :first-child {
+    flex: 2;
+    margin-right: 16px;
+    max-width: 400px;
+  }
+}
+.userBox {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #333;
+  height: 200px;
+  overflow: auto;
+  .userBoxItem {
+    padding: 16px;
+    display: flex;
+    border-bottom: 1px solid #eaeaea;
+    align-items: center;
+    justify-content: space-between;
+    .name {
+      width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

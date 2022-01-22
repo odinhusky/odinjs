@@ -1,0 +1,16 @@
+.userBox {
+  height: 200px;
+  width: 100%;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 4px;
+  overflow: auto;
+  .rows {
+    padding: 10px 20px;
+    .row {
+      margin-bottom: 10px;
+      & > div:first-child {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

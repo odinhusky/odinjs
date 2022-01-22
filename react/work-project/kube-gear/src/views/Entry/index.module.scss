@@ -1,0 +1,63 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-grow: 2;
+  overflow: auto;
+  position: relative;
+  flex-wrap: wrap;
+  align-items: stretch;
+  .left {
+    width: 50%;
+    min-width: 500px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    .card:nth-child(1) {
+      margin-bottom: 10px;
+    }
+    .card:nth-child(2) {
+      flex-grow: 1;
+    }
+  }
+  .right {
+    flex-grow: 2;
+  }
+  .card {
+    background-color: #fff;
+    width: 100%;
+    padding: 20px;
+    overflow: auto;
+    height: 100%;
+    h2 {
+      font-size: 18px;
+      margin-top: 0;
+    }
+    .statusList {
+      padding: 1rem 0;
+      border-bottom: 1px solid #efefef;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .statusText {
+        min-width: 120px;
+      }
+      .statusCount {
+        flex: 2;
+        padding: 0 30px;
+      }
+    }
+  }
+  @media (max-width: 1200px) {
+    .left {
+      padding-right: 0;
+      width: 100%;
+      min-width: unset;
+    }
+    .right {
+      width: 100%;
+      flex: none;
+      margin-top: 10px;
+      height: 50vh
+    }
+  }
+}

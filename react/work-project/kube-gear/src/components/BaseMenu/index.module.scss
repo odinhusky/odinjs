@@ -1,0 +1,29 @@
+.container {
+  position: absolute;
+  min-width: 100%;
+  .menu {
+    list-style: none;
+    color: #333333;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0;
+    li {
+      white-space: nowrap;
+    }
+    li:first-child {
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: display 1s;
+      border-left: 3px solid #fff;
+      &.active {
+        background: #EDEBE9;
+      }
+      svg {
+        font-size: 16px;
+        margin-right: 10px;
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+$barHeight:15px;
+
+.InfoBar{
+    background-color: #e1dfdd;
+    overflow: hidden;
+    display: flex;
+    align-items:center;
+    width: 100%;
+    min-height: $barHeight;
+}
+.CounterTitle{
+    font-size: 1rem;
+    min-width: 4rem;
+    margin-right: 1rem;
+    color: #333;
+    font-size: 14px;
+    width: 70px;
+}
+
+.CounterBar{ 
+    display: inline-block;
+    height: $barHeight;
+    background-color:#8d919d;
+    display: inline-block;
+}
+.UtilizationText{
+    position: absolute;
+    right: 10px;
+    display: inline-block; 
+    
+
+}
+
+.CounterList {
+    padding-left: 0;
+    
+    width: 100%;
+    li{
+        list-style:none;
+        min-height: 2rem;
+        padding: .1rem 0;
+        display: flex;
+        justify-content:space-between;
+        align-items:center;
+        font-size: 14px;
+    }
+}
+
+
+

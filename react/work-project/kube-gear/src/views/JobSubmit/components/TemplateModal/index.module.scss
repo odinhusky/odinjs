@@ -1,0 +1,28 @@
+.container {
+  width: 950px;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  .topBar {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .content {
+    flex-grow: 2;
+    border: 1px solid #eaeaea;
+    border-bottom: none;
+    margin-top: 16px;
+    overflow: hidden;
+  }
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+    border: 1px solid #eaeaea;
+    border-top: none;
+  }
+  .buttonBar {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+  }
+}

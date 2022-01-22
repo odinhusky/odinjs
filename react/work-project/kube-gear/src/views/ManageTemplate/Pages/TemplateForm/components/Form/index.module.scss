@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: center;
+  .title {
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 10px;
+    label {
+      font-weight: normal;
+      margin-bottom: 0;
+    }
+  }
+  .input {
+    width: 80%;
+  }
+  .select {
+    width: 200px;
+  }
+  .radioGroup {
+    label {
+      font-weight: normal;
+    }
+  }
+}

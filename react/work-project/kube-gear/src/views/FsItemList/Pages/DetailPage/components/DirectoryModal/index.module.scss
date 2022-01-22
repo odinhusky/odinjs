@@ -1,0 +1,48 @@
+.container {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  .breadcrumbs {
+    margin: 0;
+    padding: 0;
+    color: #333;
+    font-size: 16px;
+  }
+  .directory {
+    margin-top: 20px;
+    border: 1px solid #323130;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    overflow: auto;
+    &Item {
+      border-bottom: 1px solid #eaeaea;
+      color: #333;
+      padding: 22px 16px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      i {
+        margin-right: 10px;
+      }
+      &.active, &:hover {
+        background: #edebe9;
+      }
+    }
+  }
+  .loading {
+    display: flex;
+    flex: 2;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    button:first-child {
+      margin-right: 16px;
+    }
+  }
+}

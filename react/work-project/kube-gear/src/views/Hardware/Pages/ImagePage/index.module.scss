@@ -1,0 +1,46 @@
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  .left {
+    display: flex;
+    & > div:not(:last-child) {
+      margin-right: 20px;
+    }
+    & > button {
+      margin-right: 20px;
+    }
+  }
+  .right {
+    display: flex;
+    & > div:not(:last-child) {
+      margin-right: 20px;
+    }
+  }
+}
+
+.wrapper {
+  flex: 1;
+  overflow: hidden;
+}
+
+@media (max-width: 991px) {
+  .topBar {
+    .left {
+      flex-direction: column;
+      & > div:not(:last-child) {
+        margin-bottom: 8px;
+      }
+      & > button {
+        margin-bottom: 8px;
+      }
+    }
+    .right {
+      flex-direction: column;
+      & > div:not(:last-child) {
+        margin-bottom: 8px;
+      }
+    }
+  }
+}

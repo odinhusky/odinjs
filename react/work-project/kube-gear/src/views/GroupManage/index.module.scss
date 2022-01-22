@@ -1,0 +1,30 @@
+.container {
+  padding: 0 20px 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .content {
+    display: flex;
+    flex-grow: 2;
+    overflow: hidden;
+    .left {
+      width: 230px;
+      margin-right: 20px;
+      max-width: 230px;
+      overflow: auto;
+      background: #fff;
+      position: relative;
+      padding: 4px 0;
+      border-radius: 4px;
+    }
+    .right {
+      width: calc(100% - 250px);
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 4px 0;
+      border-radius: 4px;
+    }
+  }
+}

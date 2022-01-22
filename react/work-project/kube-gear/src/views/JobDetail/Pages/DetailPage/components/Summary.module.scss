@@ -1,0 +1,72 @@
+.container {
+  padding: 30px;
+  background-color: #fff;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  .jobName {
+    font-size: 28px;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    .column {
+      display: flex;
+      flex-direction: column;
+      div {
+        display: flex;
+        align-items: center;
+      }
+      & > div:first-child {
+        margin-bottom: 15px;
+      }
+      & > :nth-child(2) {
+        flex: 2
+      }
+      .toolBox {
+        display: flex;
+        margin-bottom: 0;
+        padding-inline: 0;
+        li {
+          position: relative;
+          list-style-type: none;
+          padding-right: 20px;
+          &:not(:last-child)::after {
+            content: '|';
+            display: block;
+            position: absolute;
+            right: 10px;
+            top: 0;
+          }
+        }
+      }
+    }
+  }
+  .flexDirectionColumn {
+    flex-direction: column;
+    .column {
+      margin-bottom: 10px;
+      & > div:first-child {
+        margin-bottom: 0px;
+      }
+    }
+  }
+}
+
+.isTabletContainer {
+  overflow: auto;
+  flex: 1;
+}
+
+.errorMessage {
+  margin-top: 10px;
+  .title {
+    font-weight: bold;
+    width: 100px;
+    text-align: left;
+    display: inline-block;
+  }
+}
