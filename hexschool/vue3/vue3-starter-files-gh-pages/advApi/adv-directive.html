@@ -18,7 +18,7 @@
     <li>主要透過生命週期來觸發變動，可參考：<a
         href="https://vue3js.cn/docs/zh/guide/custom-directive.html#%E5%8A%A8%E6%80%81%E6%8C%87%E4%BB%A4%E5%8F%82%E6%95%B0">https://vue3js.cn/docs/zh/guide/custom-directive.html#%E5%8A%A8%E6%80%81%E6%8C%87%E4%BB%A4%E5%8F%82%E6%95%B0</a></li>
   </ul>
-  <input type="email" v-model="text">
+  <input type="email" v-model="text" v-validator="'form-control'">
 
 </div>
 <script type="module">
@@ -37,7 +37,7 @@ app.directive('validator', {
     // el.focus();
 
     // 將外部的值改為
-    // el.className = binding.value
+    el.className = binding.value
   },
   updated: function(el, binding, vnode) {
     // el 元素本體
@@ -47,20 +47,23 @@ app.directive('validator', {
     // const className = binding.value;
 
     // 尋找當前的 model 名稱（取得 key 值，並帶入第一個）
-    // const currentModel = Object.keys(binding.instance)[0];
+    const currentModel = Object.keys(binding.instance)[0];
+    console.log(Object.keys(binding.instance))
+    console.log('currentModel', currentModel)
+
 
     // 從當前 Model 取值
-    // const value = binding.instance[currentModel];
-    // console.log(currentModel, value)
+    const value = binding.instance[currentModel];
+    console.log(currentModel, value)
 
     // Email validate
-    // const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-    // if (!re.test(value)) {
-    //   el.className = `${className} is-invalid`
-    // } else {
-    //   el.className = `${className} is-valid`
-    // }
+    if (!re.test(value)) {
+      el.className = `${className} is-invalid`
+    } else {
+      el.className = `${className} is-valid`
+    }
   },
 })
 
