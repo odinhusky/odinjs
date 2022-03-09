@@ -688,6 +688,29 @@ odin.helper = (function () {
   /**
    * @author odin
    * @class helpers
+   * @description Deep freeze of array or object
+   * @param {array / object} object input data of type object or array
+   * @returns {array / object} array / object
+   */
+  function deepFreeze(object) {
+
+    // Retrieve the property names defined on object
+    const propNames = Object.getOwnPropertyNames(object);
+
+    // Freeze properties before freezing self
+    for (let name of propNames) {
+      let value = object[name];
+
+      object[name] = value && typeof value === "object" ? 
+        deepFreeze(value) : value;
+    }
+
+  return Object.freeze(object);
+}
+
+  /**
+   * @author odin
+   * @class helpers
    * @description Get the object key name into array
    * @param {object} obj input data of type object
    * @returns {array} Key name array
@@ -986,6 +1009,7 @@ function isIE() {
     shallowCopy,
     deepCopy,
     deeepCopy,
+    deepFreeze,
     getObjKeyNameToArray,
     getObjValueToArray,
     detectLanguage,
@@ -3035,12 +3059,12 @@ odin.algorithm = (function () {
      */
     function merge(left, right){
       const result = [];
-    
+
       let il = 0; // record the left position
       let ir = 0; // record the right position
-      
+
       while(il < left.length && ir < right.length){
-      
+
         // 哪邊值比較小就加入進 result
         if(left[il] < right[ir]){
           result.push(left[il]);
