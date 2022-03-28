@@ -168,3 +168,79 @@ const anchor = document.querySelector('.odin')! as HTMLDivElement;
 
 console.log('anchor', anchor)
 console.log('anchor classList', anchor.classList)
+
+
+// * https://www.youtube.com/watch?v=EpOPR03z4Vw&list=PL4cUxeGkcC9gUgr39Q_yD6v-bSyMwKPUI&index=14
+// ^ TypeScript Tutorial #14 - Modules
+
+// * https://www.youtube.com/watch?v=IOzkOXSz9gE&list=PL4cUxeGkcC9gUgr39Q_yD6v-bSyMwKPUI&index=18
+// ^ TypeScript Tutorial #18 - Generics
+
+// 同上面泛形的教學
+
+// ? example 1
+const addUID = <T extends {name: string}>(obj: T) => {
+  let uid = Math.floor(Math.random() * 100);
+  return { ...obj, uid }
+}
+
+let docOne = addUID({ name: 'yoshi', age: 40 })
+console.log('docOne', docOne);
+
+interface Resource<T> {
+  uid: number,
+  resourceName: string,
+  data: T
+}
+
+const obj: Resource<string[]> = {
+  uid: 1,
+  resourceName: 'odin',
+  data: ['a']
+}
+
+const obj2: Resource<number> = {
+  uid: 1,
+  resourceName: 'odin',
+  data: 810923
+}
+
+// * https://www.youtube.com/watch?v=r8G7-hQG07o&list=PL4cUxeGkcC9gUgr39Q_yD6v-bSyMwKPUI&index=19
+// ^ TypeScript Tutorial #19 - Enums 列舉
+// https://medium.com/enjoy-life-enjoy-coding/typescript-%E5%96%84%E7%94%A8-enum-%E6%8F%90%E9%AB%98%E7%A8%8B%E5%BC%8F%E7%9A%84%E5%8F%AF%E8%AE%80%E6%80%A7-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-feat-javascript-b20d6bbbfe00
+
+enum ResourceType {
+  BOOK,
+  AUTHOR,
+  FILM,
+  DIRECTOR,
+  PERSON
+}
+
+// 預設的 enum 會帶入 index，以此例來說會 BOOK 會對應到 0，PERSON 會對應到 4
+
+console.log('enum BOOK', ResourceType.BOOK)
+console.log('enum PERSON', ResourceType.PERSON)
+
+// 也可以像是用物件一樣的方式，傳入特定相同類型的值，但內部定義是直接賦值的概念
+
+enum StatusCode {
+  success = 200,
+  error = 400
+}
+
+// 可以看到 render 完的 enum 會用一個立即函示包起來，並且傳入我們定義的值，產生出一個物件，但如果用 const 宣告，則不會產生這種物件，但還是可以使用在某個 type 或是 interface 上，只是單純要用物件名稱訪問的方式就會報錯，因為他沒有產生這個物件
+
+const enum OdinDetail {
+  name = 'husky',
+  age = '30'
+}
+
+interface odinObj {
+  name: OdinDetail.name,
+  age: OdinDetail.age
+}
+
+// console.log('OdinDetail', OdinDetail)
+
+
