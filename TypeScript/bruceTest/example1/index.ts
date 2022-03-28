@@ -243,4 +243,21 @@ interface odinObj {
 
 // console.log('OdinDetail', OdinDetail)
 
+// * https://www.youtube.com/watch?v=tHSstkiVbc8&list=PL4cUxeGkcC9gUgr39Q_yD6v-bSyMwKPUI&index=20
+// ^ TypeScript Tutorial #20 - Tuples 元組
+// https://ithelp.ithome.com.tw/articles/10221546
 
+// - 嚴格限制每個陣列的每個位置應該是什麼類型
+
+//宣告一個元組陣列
+let arr:[number,string,boolean];
+
+//賦值，初始化陣列
+arr = [10,'hello',true]; 
+
+//初始化陣列錯誤
+// arr = [true, 10, 'hello']; //各索引值型別不符，報錯
+// arr = [10, 'hello']; //少了第三個元素，報錯
+// arr[0]='hi' //，型別限定為數字，報錯
+
+// ! 無法任意調整該陣列中的類型位置
