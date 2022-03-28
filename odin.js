@@ -4,12 +4,12 @@
  */
 
 window.odin = {};
- 
+
 /**
  * @author odin
  * @description Helpers for data check and transform.
  */
- 
+
 odin.helper = (function () {
   /**
    * @author odin
@@ -845,22 +845,22 @@ odin.helper = (function () {
     /* eslint-enable */
   }
 
-/**
- * @author odin
+  /**
+   * @author odin
    * @class helpers
- * @description 判斷目前是不是 IE 瀏覽器
- * @return {boolean}}
- */
-function isIE() {
-  if (
-    navigator.userAgent.indexOf('MSIE') !== -1 ||
-    navigator.appVersion.indexOf('Trident/') > 0
-  ) {
-    return true;
-  } else {
-    return false;
+   * @description 判斷目前是不是 IE 瀏覽器
+   * @return {boolean}}
+  */
+  function isIE() {
+    if (
+      navigator.userAgent.indexOf('MSIE') !== -1 ||
+      navigator.appVersion.indexOf('Trident/') > 0
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
-}
 
   /**
    * @author odin
@@ -2944,12 +2944,12 @@ odin.algorithm = (function () {
     if (arr.length < 2) return arr
     const [p, ...ary] = arr
     const left = [], right = []
-  
+
     ary.forEach(c => {
       if (c < p) left.push(c)
       else right.push(c)
     })
-  
+
     return [...quickSort(left), p, ...quickSort(right)]
   }
 
@@ -3140,7 +3140,7 @@ odin.algorithm = (function () {
         return mid;
       }
     }
-  
+
     // 如果上面都不符合代表找不到
     return -1;
   }
