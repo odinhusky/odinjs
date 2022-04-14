@@ -16,6 +16,9 @@ function App() {
           <Link to="/about">About</Link>
           <Link to="/products">Products</Link>
         </nav>
+        {/* Switch -> Routes */}
+        {/* exact 變成預設行為的 props，不用特別添加 */}
+        {/* component 棄用，改用 element，並且傳入的只能是 JSX，不像 Component 傳入模組化的變數 */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

@@ -1,7 +1,7 @@
-import { Route } from "react-router-dom"
+// import { Route } from "react-router-dom"
 
 // nested routes
-import Offers from "./Offers"
+// import Offers from "./Offers"
 
 export default function About() {
   return (

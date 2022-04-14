@@ -1,7 +1,11 @@
-import { Route, useParams, useRouteMatch } from "react-router-dom"
+import {
+  // Route,
+  useParams,
+  // useRouteMatch
+} from "react-router-dom"
 
 // nested routes
-import Offers from "./Offers"
+// import Offers from "./Offers"
 
 export default function ProductDetails() {
   const { id } = useParams()
