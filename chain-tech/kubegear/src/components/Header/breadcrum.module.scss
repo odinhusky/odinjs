@@ -1,0 +1,26 @@
+.breadcrum{
+  display: flex; 
+  align-items: center;
+  margin:0 1rem;
+  a { 
+    cursor: pointer;
+    color:#999;
+    &:hover:not(.disabled){
+        color:#333;
+    }
+    &.disabled {
+        cursor: not-allowed;
+    }
+  }
+  li:after{
+      content: ">";
+      margin: 0 0.5rem;
+      display: inline-block; 
+  }
+  li:last-child:after{
+      display: none; 
+  }
+  li{
+      list-style: none;  
+  } 
+}

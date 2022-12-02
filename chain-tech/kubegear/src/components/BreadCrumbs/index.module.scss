@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0 24px;
+  .title {
+    margin: 1rem 0;
+    font-size: 24px,
+  }
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    margin: 0 1rem;
+    li {
+      display: flex;
+      align-items: center;
+      &:not(:last-child)::after {
+        content: ">";
+        margin: 0 .5rem;
+        display: inline-block;
+      }
+      a {
+        color: #999;
+        &[disabled] {
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}

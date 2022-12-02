@@ -1,0 +1,80 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.block {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+.innerBlock {
+  display: flex;
+  .left {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 160px;
+    img {
+      width: 382px;
+    }
+    @media (max-width: 1200px) {
+      display: none;
+    }
+    p {
+      display: flex;
+      align-items: center;
+      color: #fff;
+      font-size: 36px;
+      white-space: nowrap;
+      img {
+        width: 50px;
+        margin-right: 20px;
+      }
+    }
+  }
+}
+
+.resetPasswordContainerStack {
+  overflow: auto;
+  background-color: #fff;
+  padding: 40px;
+  width: 350px;
+  border-radius: 6px;
+  opacity: .9;
+  .fieldBlock {
+    padding: 10px 0;
+  }
+  .blockTitleText {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .buttonStackStyle {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.marginBottom10 {
+  margin-bottom: 10
+}

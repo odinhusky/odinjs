@@ -1,0 +1,54 @@
+.container {
+  border: 1px solid #FFA600;
+  width: 200px;
+  height: 370px;
+  border-radius: 6px;
+  position: relative;
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 85%;
+    height: 85%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #FFA600;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    p:nth-child(1){
+      color: #FFA600
+    }
+    p:nth-child(2) {
+      color: #333;
+      b {
+        font-size: 16px;
+      }
+    }
+  }
+  & > span {
+    border: 1px solid #FFA600;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    &:nth-child(1) {
+      top: 5px;
+      left: 5px
+    }
+    &:nth-child(2) {
+      top: 5px;
+      right: 5px
+    }
+    &:nth-child(3) {
+      bottom: 5px;
+      left: 5px
+    }
+    &:nth-child(4) {
+      bottom: 5px;
+      right: 5px
+    }
+  }
+}

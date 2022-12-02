@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  flex-grow: 2;
+  background: #FBFBFB;
+  overflow: hidden;
+  .topBar {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+  }
+  .content {
+    flex-grow: 2;
+  }
+}

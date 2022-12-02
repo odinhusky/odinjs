@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+  display: flex;
+  padding: 20px;
+  .left {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    p {
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+    .splitBox {
+      display: flex;
+      flex-grow: 2;
+      & > div {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        font-size: 14px;
+        &:first-child {
+          border-right: 1px solid #EAEAEA;
+          p {
+            color: #434E86;
+          }
+        }
+        p {
+          color: #955096;
+          font-size: 18px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .right {
+    flex-grow: 1;
+  }
+}

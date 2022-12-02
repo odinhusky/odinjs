@@ -1,0 +1,121 @@
+@import 'assets/scss/variables.scss';
+
+.logo {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    color: white;
+    > a {
+        color: white;
+        height: 100%;
+    }
+    > a:hover {
+        text-decoration: none;
+    }
+    .logoBlock {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        img {
+            height: 30px;
+            margin-right: 8px;
+        }
+        .logoVersion {
+            height: 30px;
+            display: flex;
+            align-items: flex-end;
+            font-size: 12px;
+            font-weight: 300;
+        }
+        p {
+            margin: 0 0 0 10px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            @media (max-width: 767px) {
+                display: none;
+            }
+        }
+    }
+}
+.menu {
+    width: 100%;
+}
+// .menu {
+//     display: flex;
+//     align-items: center;
+//     justify-content: flex-end;
+//     z-index: 3;
+//     width: 200px;
+// }
+.support {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+    a {
+        color: $theme-white;
+        i {
+            margin-right: 3px;
+        }
+    }
+}
+.dropdown {
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+    li {
+        display: inline-block;
+        list-style: none;
+        width: 120px;
+        height: 100%;
+        a {
+            color: #fff;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            svg {
+                margin-right: 5px
+            }
+        }
+    }
+    li:hover {
+        background: rgba(0,0,0,.1);
+        cursor: pointer;
+    }
+    ul {
+        position: absolute;
+        top: 100%;
+        background-color: #fff;
+        width: 120px;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        li {
+            box-sizing: border-box;
+            list-style: none;
+            height: 30px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            a {
+                color: #333;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &:hover {
+                  background-color: #e1e3e9;
+                }
+                i {
+                    margin-right: 1px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+.container {
+  margin-left: 10px;
+  padding: 0 10px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  & > span {
+    display: block;
+    width: 16px;
+    height: 100%;
+    border: 1px solid #DD5282;
+    border-radius: 16px;
+    margin: 0 5px;
+  }
+  .content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 95%;
+    height: 90%;
+    border: 1px solid #DD5282;
+    border-radius: 6px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    p {
+      margin: 0;
+      &:nth-child(1) {
+        color: #DD5282;
+      }
+      b {
+        font-size: 24px;
+      }
+    }
+  }
+  &.shm {
+    & > span, .content {
+      border-color: #FC9EBF;
+    }
+    p:nth-child(1) {
+      color: #FC9EBF;
+    }
+  }
+}

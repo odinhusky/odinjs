@@ -1,0 +1,181 @@
+.container {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(104.91deg, #42499C 0%, #252975 32%, #0A0B4F 67%, #000041 85%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  .bigGear {
+    position: absolute;
+    left: -10vw;
+    top: -40vh;
+    width: 50vw;
+    animation-name: spin;
+    animation-duration: 60s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    &:hover {
+        animation-play-state: paused;
+    }
+  }
+  .smallGear {
+    position: absolute;
+    right: -10vw;
+    bottom: -20vh;
+    width: 30vw;
+    animation-name: spin;
+    animation-duration: 40s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; 
+    &:hover {
+        animation-play-state: paused;
+    }
+  }
+  .arrowToDown {
+    position: absolute;
+    right: calc(45vh / 4.84 + 20px);
+    top: 70px;
+    width: 12px;
+    animation-name: arrowToDown;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in; 
+  }
+  .topLine {
+    position: absolute;
+    right: 0;
+    top: 0px;
+    height: 45%;
+  }
+  .bottomLine {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 55%;
+  }
+  .arrowToLeft1 , .arrowToLeft2 {
+    width: 100px;
+    left: -100px;
+    position: absolute;
+  }
+  .arrowToLeft1 {
+    bottom: calc((55vw * 0.3 / 2) + 25px);
+    animation-name: arrowToLeft1;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+  }
+  .arrowToLeft2 {
+    bottom: calc((55vw * 0.3 / 2) - 5px);
+    animation-name: arrowToLeft2;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+  }
+  .copyRightLink {
+    font-size: 10px;
+    color: #999999;
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    text-decoration: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+      background: url('/assets/img/background.svg');
+      background-size: cover;
+  }
+  .topLine, .arrowToDown, .bottomLine, .arrowToLeft1, .arrowToLeft2  {
+      display: none; 
+  }
+}
+
+@media (max-width: 767px), (max-height: 650px){
+  .container {
+      background: url('/assets/img/background.svg');
+      background-size: cover;
+  }
+  .topLine, .arrowToDown, .bottomLine, .arrowToLeft1, .arrowToLeft2  {
+      display: none; 
+  }
+}
+
+@keyframes spin {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+@keyframes arrowToDown {
+  0% {
+      top: 50px;
+      opacity: 0;
+  }
+  10% {
+      opacity: 1;
+  }
+  85% {
+      opacity: 1;
+  }
+  100% {
+      top: 45%;
+      opacity: 0;
+  }
+}
+
+@keyframes arrowToLeft1 {
+  0% {
+      left: 45%;
+      opacity: 0.5;
+  }
+  15% {
+      opacity: 1;
+  }
+  40% {
+      opacity: 0.9;
+  }
+  45% {
+      opacity: 0.7;
+  }
+  50% {
+      left: 30px;
+      opacity: 0;
+  }
+  100% {
+      left: 30px;
+      opacity: 0;
+  }
+}
+
+@keyframes arrowToLeft2 {
+  0% {
+      left: 45%;
+      opacity: 0
+  }
+  50% {
+      left: 45%;
+      opacity: 0;
+  }
+  51% {
+      opacity: 0.5;
+  }
+  55% {
+      opacity: 1;
+  }
+  90% {
+      opacity: 0.9;
+  }
+  95% {
+      opacity: 0.7;
+  }
+  100% {
+      opacity: 0;
+      left: 30px;
+  }
+}
