@@ -1,0 +1,20 @@
+[
+  {
+    "_id": "5aae6790-b3b4-4b2b-ab54-487e31a6f2f1",
+    "colName": "master",
+    "created": "2022-11-21T09:59:45.185Z",
+    "sortNum": 10000,
+    "folders": [],
+    "settings": {
+      "headers": [],
+      "auth": {
+        "type": "bearer",
+        "bearer": "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NzE2MTcwMjgsImFjY291bnQiOiJkZW1vMTIzNDU2In0.GaXA9s6vt5fJQaIT2PmwV2DkIfkY1g4TeeaX0sVyeGw"
+      },
+      "tests": [],
+      "options": {
+        "baseUrl": "https://api-ex.usefordemo.com"
+      }
+    }
+  }
+]

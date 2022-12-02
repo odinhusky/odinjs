@@ -1,0 +1,246 @@
+kind: pipeline
+type: docker
+name: dev_deploy
+
+steps:
+- name: npm-build-test-${DRONE_BRANCH##test/}
+  image: node:16-alpine
+  volumes:
+  - name: cache
+    path: /tmp/cache
+  - name: m2
+    path: /root/.m2
+  environment:
+    DOMAIN:
+      from_secret: api_domain
+  commands:
+    - "sed -i 's/api-ex.usefordemo.com/'$${DOMAIN}'/g' src/constants/api.ts"
+    - "sed -i 's/api-ex.usefordemo.com/'$${DOMAIN}'/g' src/store/select-context.tsx"
+    - unset CI
+    - npm install
+    - npm run build
+    - mv build /tmp/cache/webapp
+    - ls /tmp/cache/webapp
+  when:
+    branch:
+    - test/*
+
+- name: transfer-test-${DRONE_BRANCH##test/}
+  image: appleboy/drone-scp
+  volumes:
+  - name: cache
+    path: /tmp/cache
+  - name: m2
+    path: /root/.m2    
+  settings:
+    HOST: 
+      from_secret: aws_ec2_host
+    USERNAME: 
+      from_secret: aws_ec2_user
+    KEY: 
+      from_secret: aws_ec2_key
+    command_timeout: 15m
+    PORT: 22
+    TARGET:
+    - /home/ubuntu/drone_pass
+    SOURCE:
+    - /tmp/cache
+    STRIP_COMPONENTS: 2
+    DEBUG: true
+    OVERWRITE: true
+  when:
+    branch:
+    - test/*
+
+- name: deploy-test-${DRONE_BRANCH##test/}
+  image: appleboy/drone-ssh
+  settings:
+    HOST: 
+      from_secret: aws_ec2_host
+    USERNAME: 
+      from_secret: aws_ec2_user
+    KEY: 
+      from_secret: aws_ec2_key
+    command_timeout: 15m
+    PORT: 22
+    SCRIPT: 
+      - cd exchange/${DRONE_BRANCH##test/}
+      - rm -rf webapp/www
+      - mv /home/ubuntu/drone_pass/webapp webapp/www
+      - docker-compose stop webapp
+      - docker-compose up -d webapp
+  when:
+    branch:
+    - test/*
+
+# release 
+- name: npm-build-${DRONE_BRANCH##release/}
+  image: node:16-alpine
+  volumes:
+  - name: cache
+    path: /tmp/cache
+  - name: m2
+    path: /root/.m2
+  environment:
+    DOMAIN:
+      from_secret: api_domain_release
+  commands:
+    - "sed -i 's/api-ex.usefordemo.com/'$${DOMAIN}'/g' src/constants/api.ts"
+    - "sed -i 's/api-ex.usefordemo.com/'$${DOMAIN}'/g' src/store/select-context.tsx"
+    - unset CI
+    - npm install
+    - npm run build
+    - mv build /tmp/cache/webapp
+    - ls /tmp/cache/webapp
+  when:
+    branch:
+    - release/*
+
+- name: transfer-${DRONE_BRANCH##release/}
+  image: appleboy/drone-scp
+  volumes:
+  - name: cache
+    path: /tmp/cache
+  - name: m2
+    path: /root/.m2    
+  settings:
+    HOST: 
+      from_secret: aws_ec2_host_release
+    USERNAME: 
+      from_secret: aws_ec2_user_release
+    KEY: 
+      from_secret: aws_ec2_key_release
+    command_timeout: 15m
+    PORT: 22
+    TARGET:
+    - /home/ubuntu/drone_pass
+    SOURCE:
+    - /tmp/cache
+    STRIP_COMPONENTS: 2
+    DEBUG: true
+    OVERWRITE: true
+  when:
+    branch:
+    - release/*
+
+- name: deploy-${DRONE_BRANCH##release/}
+  image: appleboy/drone-ssh
+  settings:
+    HOST: 
+      from_secret: aws_ec2_host_release
+    USERNAME: 
+      from_secret: aws_ec2_user_release
+    KEY: 
+      from_secret: aws_ec2_key_release
+    command_timeout: 15m
+    PORT: 22
+    SCRIPT: 
+      - cd exchange/${DRONE_BRANCH##release/}
+      - rm -rf webapp/www
+      - mv /home/ubuntu/drone_pass/webapp webapp/www
+      - docker-compose stop webapp
+      - docker-compose up -d webapp
+  when:
+    branch:
+    - release/*
+
+- name: notification
+  image: appleboy/drone-telegram
+  settings:
+    token: 
+      from_secret: telegram_bot_token
+    to: 
+      from_secret: telegram_chat_id
+    message: >
+      {{#success build.status}}
+        build {{build.number}} ${DRONE_BRANCH} succeeded. Good job.
+      {{else}}
+        build {{build.number}} ${DRONE_BRANCH} failed. Fix me please.
+      {{/success}}
+  when:
+    status:
+    - success
+    - failure
+
+node:
+  hostname: drone-agent-159
+
+volumes:
+- name: cache
+  temp: {}
+- name: m2
+  host: 
+    path: /home/ubuntu/m2
+
+# drone telegram bot
+---
+kind: secret
+name: telegram_bot_token
+get:
+  path: secret/telegram
+  name: ex_drone_bot_token  
+
+---
+kind: secret
+name: telegram_chat_id
+get:
+  path: secret/telegram
+  name: ex_drone_chat_id
+
+# test
+---
+kind: secret
+name: aws_ec2_host
+get:
+  path: secret/exchange/test/${DRONE_BRANCH##test/}
+  name: aws_ec2_host
+
+---
+kind: secret
+name: aws_ec2_user
+get:
+  path: secret/exchange/test/${DRONE_BRANCH##test/}
+  name: aws_ec2_user
+
+---
+kind: secret
+name: aws_ec2_key
+get:
+  path: secret/exchange/test/${DRONE_BRANCH##test/}
+  name: aws_ec2_key
+
+---
+kind: secret
+name: api_domain
+get:
+  path: secret/exchange/test/${DRONE_BRANCH##test/}
+  name: api_domain
+
+#release
+---
+kind: secret
+name: aws_ec2_host_release
+get:
+  path: secret/exchange/${DRONE_BRANCH##release/}
+  name: aws_ec2_host
+
+---
+kind: secret
+name: aws_ec2_user_release
+get:
+  path: secret/exchange/${DRONE_BRANCH##release/}
+  name: aws_ec2_user
+
+---
+kind: secret
+name: aws_ec2_key_release
+get:
+  path: secret/exchange/${DRONE_BRANCH##release/}
+  name: aws_ec2_key
+
+---
+kind: secret
+name: api_domain_release
+get:
+  path: secret/exchange/${DRONE_BRANCH##release/}
+  name: api_domain

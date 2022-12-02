@@ -1,0 +1,26 @@
+.rc-slider-rail {
+  background-color: #dedde3;
+}
+
+.rc-slider-track {
+  background-color: #5f5c70;
+}
+
+.rc-slider-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #bdbcc8;
+  border: 2px solid #fff;
+}
+
+.rc-slider-dot-active {
+  background-color: #5f5c70;
+}
+
+.rc-slider-handle {
+  border: solid 3px #5f5c70;
+}
+
+.rc-slider-handle-click-focused {
+  border: solid 3px #5f5c70;
+}

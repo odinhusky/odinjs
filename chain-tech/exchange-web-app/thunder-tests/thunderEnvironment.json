@@ -1,0 +1,20 @@
+[
+  {
+    "_id": "7a28be11-75af-4322-b3c9-e80105048d0a",
+    "name": "test",
+    "default": true,
+    "sortNum": 10000,
+    "created": "2022-11-21T10:01:31.295Z",
+    "modified": "2022-11-21T10:02:05.609Z",
+    "data": [
+      {
+        "name": "account",
+        "value": "demo123456"
+      },
+      {
+        "name": "password",
+        "value": "1qaz@WSX3edc"
+      }
+    ]
+  }
+]

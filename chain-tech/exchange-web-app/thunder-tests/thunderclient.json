@@ -1,0 +1,49 @@
+[
+  {
+    "_id": "fbc44ea1-142e-4d4a-93fb-e05358ef22a0",
+    "colId": "5aae6790-b3b4-4b2b-ab54-487e31a6f2f1",
+    "containerId": "",
+    "name": "login",
+    "url": "/auth/login",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-11-21T10:01:02.955Z",
+    "modified": "2022-11-21T10:03:13.656Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"account\": \"{{account}}\",\n  \"password\": \"{{password}}\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "ba5fe137-5146-44a4-becb-69a6589403b2",
+    "colId": "5aae6790-b3b4-4b2b-ab54-487e31a6f2f1",
+    "containerId": "",
+    "name": "get user",
+    "url": "/user",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-11-21T10:04:41.538Z",
+    "modified": "2022-11-21T10:05:18.016Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "6a3c06d0-fb82-4822-b119-f89a92cb02a5",
+    "colId": "5aae6790-b3b4-4b2b-ab54-487e31a6f2f1",
+    "containerId": "",
+    "name": "get favorite",
+    "url": "/investor/favorite",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2022-11-21T10:34:05.946Z",
+    "modified": "2022-11-21T10:34:19.219Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  }
+]

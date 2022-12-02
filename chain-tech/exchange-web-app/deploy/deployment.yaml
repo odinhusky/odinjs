@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exchange
+  namespace: exchange
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: exchange
+  template:
+    metadata:
+      labels:
+        deployment: exchange
+    spec:
+      containers:
+        - name: exchange
+          image: harbor.aptan.cloud/exchange/exchange-frontend:123
+          ports:
+            - containerPort: 8080
