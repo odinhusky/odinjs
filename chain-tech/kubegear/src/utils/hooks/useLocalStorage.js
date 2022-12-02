@@ -8,14 +8,20 @@ function getSavedValue(key, initialValue) {
   return initialValue;
 }
 
-export const useLocalStorage = (key, initialValue) => {
+export const useLocalStorage = (key, initialValue, isKeep = false) => {
   const [value, setValue] = useState(() => getSavedValue(key, initialValue));
 
-  const valueMemo = useMemo(() => value, [value]);
+  const valueMemo = isKeep ? useMemo(() => value, [value]) : value;
 
-  const removeValue = useCallback(() => {
-    localStorage.removeItem(key);
-  }, [key]);
+  const removeValue = isKeep ? (
+    useCallback(() => {
+      localStorage.removeItem(key);
+    }, [key])
+  ) : (
+    () => {
+      localStorage.removeItem(key);
+    }, [key]
+  );
 
   useEffect(() => {
     localStorage.setItem('key', JSON.stringify(value));
