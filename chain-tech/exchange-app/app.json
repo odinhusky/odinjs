@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "Mung Bean",
+    "slug": "exchange_app",
+    "version": "1.4.6",
+    "orientation": "portrait",
+    "icon": "src/assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "src/assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mungbean.exchange",
+      "buildNumber": "1.4.6"
+    },
+    "android": {
+      "package": "com.mungbean.exchange",
+      "versionCode": 47,
+      "adaptiveIcon": {
+        "foregroundImage": "src/assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "src/assets/images/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ]
+  }
+}
