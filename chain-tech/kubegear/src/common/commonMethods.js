@@ -748,6 +748,22 @@ const handleK8sResourceName = (keyName) => {
   return resourceName;
 }
 
+/**
+ * @author odin
+ * @param {string | number} value - 可以是數字或是字串的小數
+ * @param {number} decimal - 無條件捨去到小數幾位
+ * @description 無條件捨去，根據 value 是什麼 type 就回傳什麼類型的數值
+ * @return {string | number}
+ */
+const roundDown = (value, decimal) => {
+  const isNumber = typeof value === 'number' ? true : false;
+  const num = Number(value);
+  const result = Math.floor( ( num + Number.EPSILON ) * Math.pow( 10, decimal ) ) / Math.pow( 10, decimal );
+
+
+  return isNumber ? result : String(result);
+}
+
 export {
   hasOwn,
   applySortProps,
@@ -779,5 +795,6 @@ export {
   handleI18NRoutePath,
   getDateDiff,
   getTimeSec,
-  handleK8sResourceName
+  handleK8sResourceName,
+  roundDown
 }
