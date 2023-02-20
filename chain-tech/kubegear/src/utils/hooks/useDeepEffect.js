@@ -4,6 +4,7 @@ import { isEqual } from 'lodash';
 export const useDeepEffect = (callback, dependencies) => {
   const currentDependenciesRef = useRef()
 
+
   if (!isEqual(currentDependenciesRef.current, dependencies)) {
     currentDependenciesRef.current = dependencies
   }
