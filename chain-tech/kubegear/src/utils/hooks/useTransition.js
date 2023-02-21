@@ -4,7 +4,7 @@ import * as translations from "./translation"
 function getNestedTranslation(language, keys) {
   return keys.reduce((obj, key) => {
     return obj?.[key]
-  }, translation[language])
+  }, translations[language])
 }
 
 export const useTranslation = () => {
