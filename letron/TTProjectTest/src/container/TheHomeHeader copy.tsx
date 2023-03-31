@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 
 // ? Components
-import { BaseImg } from 'component/BaseImg';
+import { BaseImg } from '@/component/BaseImg';
 
 
 // ? hook

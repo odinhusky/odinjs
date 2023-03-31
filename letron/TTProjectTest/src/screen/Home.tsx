@@ -5,7 +5,8 @@ import { HomeScreenProps } from '@/type/route'
 
 // % Components
 import TheHomeHeader from '@/container/TheHomeHeader';
-import BaseSafeView from 'component/BaseView';
+import BaseSafeView from '@/component/BaseView';
+import PrimaryBtn from '@/component/PrimaryBtn';
 
 const Home = (props: HomeScreenProps) : JSX.Element => {
 
@@ -19,6 +20,8 @@ const Home = (props: HomeScreenProps) : JSX.Element => {
       <Text>Home Screen</Text>
 
       <Button title="點我去Login" onPress={() => navigate('Login')} />
+
+      <PrimaryBtn label="點我去Login" onPress={() => navigate('Login')} />
     </BaseSafeView>
   );
 }

@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { RootStackParamList } from '@/type/route';
 
 // ? Route
-import screenList from '@/route';
+import { screenList } from '@/route';
 
 // ^ Navigation
 import { NavigationContainer } from '@react-navigation/native';

@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 
 // ? Components
-import { BaseIconBtn } from 'component/BaseIconBtn';
+import { BaseIconBtn } from '@/component/BaseIconBtn';
 
 // ? hook
 import { useNaviBack } from '@/hook/useNaviBack';
