@@ -1,7 +1,7 @@
 import { Pressable, Text, StyleSheet } from 'react-native';
 
 // % hook
-import { useToggle } from 'hook/useToggle'
+import { useToggle } from '@/hook/useToggle'
 
 // ^ Plugins
 import { get } from 'lodash';

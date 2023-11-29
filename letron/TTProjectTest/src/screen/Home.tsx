@@ -8,7 +8,7 @@ import TheHomeHeader from '@/container/TheHomeHeader';
 import BaseSafeView from '@/component/BaseView';
 import PrimaryBtn from '@/component/PrimaryBtn';
 
-const Home = (props: HomeScreenProps) : JSX.Element => {
+export const Home = (props: HomeScreenProps) : JSX.Element => {
 
   // $ init data
   const { navigation } = props;
