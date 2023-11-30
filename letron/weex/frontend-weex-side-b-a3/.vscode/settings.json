@@ -1,0 +1,23 @@
+{
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": true,
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#f8ff57",
+    "activityBar.background": "#f8ff57",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#00b7bf",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#15202b99",
+    "sash.hoverBorder": "#f8ff57",
+    "statusBar.background": "#f6ff24",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#e6f000",
+    "statusBarItem.remoteBackground": "#f6ff24",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#f6ff24",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#f6ff2499",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "peacock.color": "#f6ff24"
+}
