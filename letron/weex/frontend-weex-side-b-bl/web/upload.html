@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <title>上传图片、视频</title>
+  <meta name="weex-viewport" content="750">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no, email=no">
+  <style>
+    .wrapper {
+        width: 150px;
+        height: 150px;
+        opacity: 0;
+    }
+    .input-main {
+        width: 150px;
+        height: 150px;
+    }
+  </style>
+</head>
+<body>
+    <div class="wrapper">
+        <form action="" method="post" enctype="multipart/form-data" >
+            <input class="input-main" type="file" accept="image/*,video/*" onchange="upload()">
+        </form>
+     </div>
+
+     <script type="text/javascript">
+        async function upload(event) {
+            let f = {}
+            let href = window.location.href
+            let host = getUrlParam(href).host
+            let e = window.event||event;
+            // 获取当前选中的文件
+            let file = e.target.files[0];
+            // 文件大小
+            let fileSize = file.size / 1024 / 1024
+            // 文件类型
+            let fileType = file.type
+            let isImage = judgmentImage(fileType)
+            let isVideo = judgmentVideo(fileType)
+            
+            if (!isImage && !isVideo) {
+                f.data = ''
+                f.code = 403
+                f.type = ''
+                reload(f)
+                return
+            }
+
+            if (isImage) {
+                f.type = 'img'
+                if (fileSize > 8) {
+                    f.data = '',
+                    f.code = 4
+                    reload(f)
+                    return
+                }
+            }
+
+            if (isVideo) {
+                f.type = 'video'
+                if (fileSize > 100) {
+                    f.data = '',
+                    f.code = 100
+                    reload(f)
+                    return
+                }
+            }
+            // f.data = file.name
+            // f.code = 202
+            // reload(f)
+            // return
+            const formData = new FormData()
+            formData.append('file', file)
+            let url = host + '/api?method=upload'
+            
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(resp => {
+                if (resp.success) {
+                    f.code = 200
+                    f.data =  resp.data
+                    f.url = url
+                } else {
+                    f.code = 500 
+                    f.data = ''
+                    f.url = url
+                }
+                reload(f)
+            })
+            .catch(error => {
+                error.code = 400
+                error.url = url
+                reload(error)
+            })
+            
+        }
+        function reload(resp) {
+            let url = window.location.href
+            let num = url.indexOf("#");
+           
+            if (num > 0) {
+                url = url.substring(0,num); 
+            } else {
+                url = url
+            }
+            window.location.href = url + '#' + encodeURIComponent(JSON.stringify(resp)) ;
+        }
+
+        function judgmentImage (type) {
+            let isJPG = type == 'image/png' || type == 'image/jpg' || type == 'image/jpeg' || type == 'image/bmp' || type == 'image/gif' ? true : false
+            return isJPG
+        }
+
+        function judgmentVideo (type) {
+            let isV = type == 'video/mp4' || type == 'video/MP4' || type == 'video/mp3' || type == 'video/MP3' || type == 'video/mov' || type == 'video/MOV' || type == 'video/avi' || type == 'video/AVI' || type == 'video/mpg' || type == 'video/MPG' || type == 'video/wmv' || type == 'video/WMV' || type == 'video/flv' || type == 'video/FLV' || type == 'video/rm' || type == 'video/RM' || type == 'video/quicktime' ? true : false
+            return isV
+        }
+
+        function getUrlParam(url) {
+            let name, value;
+            let data={}
+            let str = url; //取得整个地址栏
+            let num = str.indexOf("?");
+            str = str.substr(num + 1); //取得所有参数   
+
+            let arr = str.split("&"); //各个参数放到数组里
+            for (let i = 0; i < arr.length; i++) {
+                num = arr[i].indexOf("=");
+                if (num > 0) {
+                    name = arr[i].substring(0, num);
+                    value = arr[i].substr(num + 1);
+                    num = value.indexOf('#')
+                    if (num > 0) {
+                        data[name] = value.substring(0, num);
+                    } else {
+                        data[name] = value;
+                    }
+                }
+            }
+            return data
+        }
+        
+    </script>
+</body>
+
+</html>

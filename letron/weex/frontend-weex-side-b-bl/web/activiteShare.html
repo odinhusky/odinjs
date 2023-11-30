@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>分享</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="format-detection" content="telephone=no, email=no">
+  <script src="./qrcode.js"></script>
+  <script src="./html2canvas.js"></script>
+  <style>
+    body {
+      margin: 0;
+    }
+    .shares-main {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+    }
+    .shares-content {
+      width: 95%;
+      height: calc(100% - 25vw);
+      margin: 0 auto;
+      border-radius: 12px;
+	  }
+    .show-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 95%;
+      height: calc(100% - 25vw);
+      border-radius: 12px;
+      display: none;
+      z-index: 999;
+      overflow: hidden;
+    }
+    @media screen and (max-width: 380px) {
+      .shares-content {
+        height: calc(100% - 15vw);
+      }
+      .show-img {
+        height: calc(100% - 15vw);
+      }
+    }
+    .shares-img {
+      width: 100%;
+      border-radius: 12px;
+      height: calc(100% - 0px);
+    }
+    .wrapperContainer {
+      display: flex;
+      width: 100%;
+      height: calc(100% - 0px);
+      justify-content: center;
+      border-radius: 12px;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    .wrapperbg {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 99;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+    .wrapperSavebg {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 99;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+    .matchImage {
+      width: 100%;
+      /* height: 100%; */
+    }
+    .appShareContainer {
+      display: flex;
+      width: 100%;
+      height: calc(100% - 0px);
+      justify-content: center;
+      border-radius: 12px;
+      overflow: hidden;
+      flex-direction: column;
+      position: relative;
+    }
+    .appSaveShareContainer {
+      position: fixed;
+      left: 750px;
+      border-radius: 0px;
+    }
+    .bottomContainer {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      height: 124px;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+    }
+    @media screen and (max-width: 380px) {
+      .bottomContainer {
+        height: 94px;
+      }
+     }
+    .downloadUrl {
+      flex: 1;
+      padding-left: 19px;
+    }
+	
+    .downloadUrlText {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.02em;
+      color: #FFFFFF;
+    }
+    .share-image {
+			width: 120px;
+      padding-right: 19px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+		}
+    .qrcode {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+    }
+    .qrcode img {
+      width: 25.7vw;
+      height:25.7vw;
+    }
+     @media screen and (max-width: 380px) {
+      .qrcode img {
+        width: 19.8vw;
+        height: 19.8vw;
+      }
+     }
+    .__share_popup_bottom__ {
+      width: 119px;
+      height: 29px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto 0;
+	}
+	.__bottom_content_item__ {
+    width: 100%;
+    height: 100%;
+		display: flex;
+		align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 38px;
+	}
+	.__bottom_content_img__ {
+		width: 20px;
+		height: 20px;
+	}
+	.__bottom_content_text__ {
+		font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    display: flex;
+    margin-left: 10px;
+    color: #000000;
+	}
+  .message-content {
+    height: 40px;
+    line-height: 40px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    text-align: center;
+    z-index: 9999;
+  }
+  .message-text {
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    padding: 10px 10px;
+    color: #fff;
+    background-color: rgba(76, 76, 76, .7);
+    box-shadow: 0px 10px 20px 0px rgb(28 23 47 / 20%);
+    border-radius: 8px;
+  }
+  .save-bottomContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 10.4vw;
+    z-index: 999;
+  }
+  .save-qrcode {
+    width: 110px;
+    height: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    margin:0 auto;
+  }
+  .saveText {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    margin-top: 15px;
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+  <div class="shares-main" id="main">
+    <div class="shares-content" id="content">
+        <div class="appShareContainer" id="appShareContainer">
+          <div class="wrapperbg"></div>
+          <div class="bottomContainer" id="bottom">
+            <div class="downloadUrl">
+              <div class="downloadUrlText">分享给好友，让好友</div>
+              <div class="downloadUrlText">下载APP，为你助力哦～</div>
+            </div>
+            <div class="share-image">
+              <div class="qrcode" id="qrcode"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="appShareContainer appSaveShareContainer" id="appSaveShareContainer">
+          <div class="wrapperSavebg"></div>
+          <div class="save-bottomContainer" id="savebottom">
+            <div class="save-qrcode">
+              <div class="save-qrcode" id="saveQrcode"></div>
+            </div>
+            <div class="saveText">截图分享给好友</div>
+          </div>
+        </div>
+      <div class="__share_popup_bottom__" id="btn-box">
+        <div class="__bottom_content_item__" id="save">
+            <div class="__bottom_content_img__" id="save-image"></div>
+            <div class="__bottom_content_text__">保存图片</div>
+        </div>
+      </div>
+    </div>
+   
+    <!-- <div class="show-img" id="showImg"></div> -->
+    <div class="message-content" id="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+  <script>
+    (function(){
+      document.addEventListener('touchstart',function (event) {
+          if(event.touches.length>1){
+              event.preventDefault();
+          }
+      });
+      // 禁用双击放大
+      let lastTouchEnd=0;
+      document.addEventListener('touchend',function (event) {
+          const now=(new Date()).getTime();
+          if(now-lastTouchEnd<=1000){
+              event.preventDefault();
+          }
+          lastTouchEnd=now;
+      },false);
+      document.addEventListener('gesturestart', function (event) {
+        event.preventDefault()
+      })
+      let timer = false
+      let createdAppShareImgUrl = ''
+      let href = window.location.search
+      let params = getUrlParam(href)
+
+      let qrUrl =  getParamString(href,'qrUrl')
+      let download = getParamString(href,'download')
+
+      var $wrapperbg = document.querySelector('.wrapperbg')
+      $wrapperbg.style.backgroundImage = `url('${download + '/static/shijiebei/bgba.png' + '?cors=1'}')`
+      var $wrapperSavebg = document.querySelector('.wrapperSavebg')
+      $wrapperSavebg.style.backgroundImage = `url('${download + '/static/shijiebei/bgbg.png' + '?cors=1'}')`
+      var $img = document.getElementById('save-image')
+      $img.innerHTML = `<img class="__bottom_content_img__" src='${download + 'static/shijiebei/save-image.png' + '?cors=1'}'/>`
+
+      createQRCode(qrUrl)
+
+      createQRCodes(qrUrl)
+
+      let $msg = document.getElementById('message')
+      $msg.style.display = "none";
+
+      $save = document.getElementById('save')
+
+      $save.addEventListener('click',function(){
+        
+        $msg.style.display = "none";
+
+        if (createdAppShareImgUrl) {
+          messages('图片已保存')
+          return
+        }
+        messages('正在生成图片')
+
+        setTimeout(()=> {
+				    const dom = document.getElementById('appSaveShareContainer');
+				    html2canvas(dom, {
+				      width:dom.clientWidth,
+				      height:dom.clientHeight,
+				      scrollX:0,
+				      scrollY:0,
+				      useCORS:true,
+				      allowTaint:false,
+				      scale:3
+				    }).then(canvas => {
+              let imageBase64Url = canvas.toDataURL('image/png');
+              let imgUrl = imageBase64Url.replace(/[]/g, ""); // 去除base64位中的空格
+              createdAppShareImgUrl = imgUrl
+              // let $content = document.getElementById('content')
+              // let $image = document.getElementById('showImg')
+              // let $btn = document.getElementById('btn-box')
+              // $content.style.display = 'none'
+              // $btn.style.display = 'none'
+              // $image.style.display = 'block'
+              // $image.innerHTML = `<img class="shares-img" src='${imgUrl}'/>`
+              closeMsg()
+              reload(imgUrl)
+				    }).catch(error => {
+              messages('图片生成失败，请重试！')
+				    })
+				}, 300)
+      })
+
+      function reload(imgUrl) {
+            let url = window.location.href
+            let name, value;
+            let num = url.indexOf("#");
+            if (num > 0) {
+                url = url.substring(0,num); 
+            } else {
+                url = url
+            }
+            let f = {}
+            f.url = imgUrl
+
+            window.location.href = url + '#' + encodeURIComponent(JSON.stringify(f));
+        }
+
+      function messages(text,time = 3000) {
+        if (timer) {
+          $msg.style.display = "none";
+          clearTimeout(timer)
+        }
+        let $text = document.querySelector('.message-content .message-text')
+        $text.innerHTML = text
+        $msg.style.display = "block";
+        timer = setTimeout(() => {
+          closeMsg()
+        }, time);
+      }
+
+      function closeMsg() {
+        let $text = document.querySelector('.message-content .message-text')
+        $msg.style.display = "none";
+      }
+
+      function createQRCode (url) {
+        var $QR = document.querySelector('#qrcode')
+        var QR = qrcode(0, 'L')
+        $QR.setAttribute('href', url)
+        QR.addData(url)
+        QR.make()
+        
+        $QR.innerHTML = QR.createImgTag(3, 4)
+        
+      }
+
+      function createQRCodes (url) {
+        var $QR = document.querySelector('#saveQrcode')
+        var QR = qrcode(0, 'L')
+        $QR.setAttribute('href', url)
+        QR.addData(url)
+        QR.make()
+        
+        $QR.innerHTML = QR.createImgTag(3, 5)
+        
+      }
+
+      function getUrlParam(url) {
+            let name, value;
+            let data={}
+            let str = url; //取得整个地址栏
+            let num = str.indexOf("?");
+            str = str.substr(num + 1); //取得所有参数   
+
+            let arr = str.split("&"); //各个参数放到数组里
+            for (let i = 0; i < arr.length; i++) {
+                num = arr[i].indexOf("=");
+               
+                if (num > 0) {
+                    name = arr[i].substring(0, num);
+                    value = arr[i].substr(num + 1);
+                    data[name] = decodeURI(value);
+                }
+            }
+            return data
+        }
+        
+        function getParamString(paraPart,name) {
+          var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+          var r = paraPart.substr(1).match(reg);
+          if (r != null) {
+            return decodeURI(r[2]);
+          } 
+          return '';
+        }
+    })();
+  </script>
+</body>
+</html>
