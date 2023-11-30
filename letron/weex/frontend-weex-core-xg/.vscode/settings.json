@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    ".prettierrc": "vue",
+    "locale": "cpp"
+  }
+}
