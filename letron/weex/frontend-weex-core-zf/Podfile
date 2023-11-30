@@ -1,0 +1,26 @@
+source 'git@github.com/CocoaPods/Specs.git'
+platform :ios, '9.0'
+
+
+target 'zfv2' do
+
+    pod 'WeexSDK', '0.30.0'
+    pod 'WeexPluginLoader'
+    pod 'SDWebImage', '3.7.5'
+    pod 'SocketRocket', '0.4.2'
+    pod 'WXDevtool', '0.24.0', :configurations => ['Debug']
+    pod 'ZipArchive', '1.4.0'
+
+    pod 'WeexImageCropPicker'
+    pod 'SAMKeychain'
+
+#jpush
+
+    pod 'JPush'
+    pod 'JPushWeexPlugin'
+
+
+#openinstall
+    pod 'libOpenInstallSDK'
+
+end

@@ -1,0 +1,77 @@
+PODS:
+  - JCore (3.2.5)
+  - JPush (4.8.0):
+    - JCore (>= 2.0.0)
+  - JPushWeexPlugin (0.0.3):
+    - JPush
+    - WeexPluginLoader
+    - WeexSDK
+  - libOpenInstallSDK (2.5.5)
+  - QBImagePickerController (3.4.0)
+  - RSKImageCropper (2.0.1)
+  - SAMKeychain (1.5.3)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
+  - SocketRocket (0.4.2)
+  - WeexImageCropPicker (1.0.4):
+    - QBImagePickerController (~> 3.4.0)
+    - RSKImageCropper (~> 2.0.0)
+    - WeexSDK
+  - WeexPluginLoader (0.0.1.9.1):
+    - WeexSDK
+  - WeexSDK (0.30.0)
+  - WXDevtool (0.24.0):
+    - SocketRocket
+    - WeexSDK
+  - ZipArchive (1.4.0)
+
+DEPENDENCIES:
+  - JPush
+  - JPushWeexPlugin
+  - libOpenInstallSDK
+  - SAMKeychain
+  - SDWebImage (= 3.7.5)
+  - SocketRocket (= 0.4.2)
+  - WeexImageCropPicker
+  - WeexPluginLoader
+  - WeexSDK (= 0.30.0)
+  - WXDevtool (= 0.24.0)
+  - ZipArchive (= 1.4.0)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - JCore
+    - JPush
+    - JPushWeexPlugin
+    - libOpenInstallSDK
+    - QBImagePickerController
+    - RSKImageCropper
+    - SAMKeychain
+    - SDWebImage
+    - SocketRocket
+    - WeexImageCropPicker
+    - WeexPluginLoader
+    - WeexSDK
+    - WXDevtool
+    - ZipArchive
+
+SPEC CHECKSUMS:
+  JCore: 4c9febdfdb1a5675ab361bc1f06c0905391d7b23
+  JPush: b4b212aa773928303f25dafb5eb048b34232fd3a
+  JPushWeexPlugin: 763cbc11cd86a8f1e81f0d31d0e3c5100dc07389
+  libOpenInstallSDK: 5fb61e50282834b7b30a8d6fef218f719c98380c
+  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
+  RSKImageCropper: 50d5a3e4160f0309b14d75b89d5ae2f496d56e0d
+  SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  SocketRocket: ffe08119b00ef982f6c37052a4705a057c8494ad
+  WeexImageCropPicker: 5d5560d2ded53db3108bb13c171767f1269a2ba7
+  WeexPluginLoader: 85c1304f8ba29864e58531614a0acfeceef1b85c
+  WeexSDK: 8e01e33244f51cb11f9f000b5200d93de5f4fa97
+  WXDevtool: 95b70c73c06fc3299d65bd53ba4b3e0b0087f3cb
+  ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
+
+PODFILE CHECKSUM: 7c03729667cfcae9ff258d7bae42c6338cff6226
+
+COCOAPODS: 1.11.3
