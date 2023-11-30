@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Weex Preview</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="format-detection" content="telephone=no, email=no">
+  <script src="./qrcode.js"></script>
+  <script src="./html2canvas.js"></script>
+  <style>
+    body {
+      margin: 0;
+    }
+    .shares-main {
+      width: 100%;
+      height: calc(100vh - 16vw);
+      overflow: hidden;
+      position: relative;
+    }
+    .shares-content {
+      width: 90%;
+      height: calc(100% - 42vw);
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+	  }
+    .show-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 90%;
+      height: calc(100% - 42vw);
+      border-radius: 20px;
+      display: none;
+      z-index: 999;
+      overflow: hidden;
+    }
+    @media screen and (max-width: 400px) {
+      .shares-content {
+        height: calc(100% - 36vw);
+      }
+      .show-img {
+        height: calc(100% - 36vw);
+      }
+    }
+    .shares-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+    }
+    .wrapperContainer {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+    }
+    .appShareContainer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+    }
+    .topMatchContent {
+      display: flex;
+      align-items: center;
+      padding: 5px 18px 0 18px;
+    }
+    .leftTimeContent {
+			width: 85px;
+			font-family: 'PingFang SC';
+			font-style: normal;
+			font-weight: 400;
+			font-size: 10px;
+			color: #787878;
+		}
+    .nameAbbrContent {
+			flex: 1;
+			font-family: 'PingFang SC';
+			font-style: normal;
+			font-weight: 400;
+			font-size: 12px;
+			color: #787878;
+			text-align: center;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+		}
+    .rightStatusContent {
+			width: 65px;
+			display: flex;
+      flex-direction: row;
+      align-items: center;
+			justify-content: flex-end;
+    }
+    .rightStatusLine {
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        margin-right: 5px;
+        border-radius: 50%;
+      }
+      .rightStatusText{
+        font-family: 'PingFang SC';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        letter-spacing: 0.05em;
+        color: #000000;
+      }
+    .topContainer {
+      width: 100%;
+      height: 14vw;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      }
+	  .leftTeamContainer {
+	    display: flex;
+	    flex-direction: row;
+	    flex: 2;
+	    justify-content: center;
+	    align-items: center;
+	    height: 14vw;
+	  }
+    .vsText {
+	    width: 40px;
+	    height: 14vw;
+	    font-family: "PingFang SC";
+	    font-style: normal;
+	    font-weight: 500;
+	    font-size: 16px;
+	    line-height: 14vw;
+	    color: #000000;
+	    text-align: center;
+	  }
+    .teamNameText {
+	    height: 30px;
+	    max-width: 110px;
+	    font-family: "PingFang SC";
+	    font-style: normal;
+	    font-weight: 500;
+	    font-size: 15px;
+	    line-height: 30px;
+	    color: #000000;
+	    text-align: center;
+		  overflow: hidden;
+	    text-overflow: ellipsis;
+		  white-space: nowrap;
+	  }
+    .teamLogoA {
+	    width: 30px;
+	    height: 25px;
+	    align-self: center;
+		  margin-left: 10px;
+	  }
+    .rightTeamContainer {
+	    display: flex;
+	    flex: 2;
+	    flex-direction: row;
+	    justify-content: center;
+	    align-items: center;
+	    height: 14vw;
+	  }
+    .teamLogoB {
+	    width: 30px;
+	    height: 25px;
+	    align-self: center;
+		  margin-right: 10px;
+	  }
+    .teama-logo-container {
+		  width: 30px;
+		  height: 30px;
+		  text-align: center;
+		  line-height: 30px;
+		  border-radius: 50%;
+		  background-color: #f2f3f4;
+	  }
+    .teama-logoa-container {
+      margin-left: 10px;
+    }
+    .teama-logob-container {
+      margin-right: 10px;
+    }
+    .team-logo-text {
+      font-family: "PingFang SC";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 15px;
+      align-items: center;
+      color: #000000;
+    }
+    .middleContainer {
+      width: 100%;
+      height: 45vw;
+    }
+		.matchImage {
+			height: 45vw;
+			width: 100%;
+		}
+    .match-thumb {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      background-color: #f2f3f4;
+    }
+    .match-thumb-teamFlag {
+      width: 80px;
+			height: 80px;
+			border-radius: 50px;
+			background-color: #fff;
+			text-align: center;
+			line-height: 80px;
+			font-size: 22px;
+    }
+    .streamerInfoContainer {
+      display: flex;
+      height: 30px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 17px;
+    }
+	  .streamerInfo {
+	    display: flex;
+	    flex-direction: row;
+	    justify-content: center;
+	    align-items: center;
+    }
+    .streamerIcon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background-color: #f2f3f4;
+      text-align: center;
+      line-height: 34px;
+    }
+    .nameIcon {
+      font-size: 18px;
+    }
+    .streamerNameText {
+      font-family: "PingFang SC";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      display: flex;
+      align-items: center;
+      text-align: right;
+      color: #000000;
+      margin-left: 10px;
+    }
+    .streamerStatic {
+	    display: flex;
+	    flex-direction: row;
+	    justify-content: center;
+	    align-items: center;
+	  }
+    .fire-img {
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
+    }
+    .bottomContainer {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 20px 40px;
+    }
+		.bottomTitle {
+			font-family: "PingFang SC";
+			font-style: normal;
+			font-weight: 600;
+			font-size: 17px;
+			line-height: 24px;
+			display: flex;
+			align-items: center;
+			color: #000000;
+		}
+    .downloadContainer {
+	    display: flex;
+	    flex-direction: row;
+		  justify-content: space-between;
+    }
+    .downloadUrl {
+      width: 220px;
+    }
+    .downloadTitle {
+      font-family: "PingFang SC";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 17px;
+      color: #07c160;
+      margin-top: 15px;
+    }
+	
+    .downloadUrlText {
+      font-family: "PingFang SC";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 18px;
+      margin-top: 5px;
+      color: #000000;
+      word-break: break-all;
+      border: 0px;
+    }
+    @media screen and (max-width: 700px) {
+      .downloadUrl {
+        width: 180px;
+      }
+    }
+    .share-image {
+			width: 120px;
+      padding-top: 15px;
+      line-height: 120px;
+      text-align: right;
+		}
+    .qrcode {
+      width: 120px;
+	    height: 120px;
+    }
+    .__share_popup_bottom__ {
+      background-color: #fff;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      padding-top: 2vw;
+      padding-bottom: 2vw;
+	}
+	.__bottom_content_item__ {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-left: 30px;
+		padding-right: 5px;
+	}
+	.__content_item_img__ {
+		width: 50px;
+		height: 50px;
+		background-color: #07C160;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.__bottom_content_img__ {
+		width: 35px;
+		height: 35px;
+	}
+	.__bottom_content_text__ {
+		font-family: 'PingFang SC';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 12px;
+		color: #000000;
+		margin-top: 5px;
+	}
+  .message-content {
+    height: 40px;
+    line-height: 40px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    text-align: center;
+    z-index: 9999;
+  }
+  .message-text {
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    padding: 10px 10px;
+    color: #fff;
+    background-color: rgba(76, 76, 76, .7);
+    box-shadow: 0px 10px 20px 0px rgb(28 23 47 / 20%);
+    border-radius: 8px;
+  }
+  </style>
+</head>
+<body>
+  <div class="shares-main" id="main">
+    <div class="shares-content">
+      <div class="wrapperContainer" id="content">
+        <div class="appShareContainer" id="appShareContainer">
+          <div class="topMatchContent">
+            <div class="leftTimeContent"></div>
+            <div class="nameAbbrContent"></div>
+            <div class="rightStatusContent">
+              <p class="rightStatusLine"></p>
+              <span class="rightStatusText">直播中</span>
+            </div>
+          </div>
+          <div class="topContainer">
+            <div class="leftTeamContainer"></div>
+            <div class="vsText">VS</div>
+            <div class="rightTeamContainer"></div>
+          </div>
+          <div class="middleContainer"></div>
+          <div class="streamerInfoContainer">
+            <div class="streamerInfo"></div>
+            <div class="streamerStatic">
+              <img src="https://file.landmarkhb.com/file/static/bhfire.png" class="fire-img">
+              <div class="amount"></div>
+            </div>
+          </div>
+          <div class="bottomContainer">
+            <div class="bottomTitle">永久免费观看高清体育赛事</div>
+            <div class="downloadContainer">
+              <div class="downloadUrl">
+                <div class="downloadTitle">下载地址</div>
+                <div class="downloadUrlText"></div>
+              </div>
+              <div class="share-image">
+                <div class="qrcode" id="qrcode"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="__share_popup_bottom__">
+        <div class="__bottom_content_item__" id="copy">
+          <div class="__content_item_img__">
+            <img class="__bottom_content_img__" src="https://file.landmarkhb.com/file/static/copy.png">
+          </div>
+          <div class="__bottom_content_text__">复制链接</div>
+        </div>
+        <div class="__bottom_content_item__" id="save">
+          <div class="__content_item_img__">
+            <img class="__bottom_content_img__" src="https://file.landmarkhb.com/file/static/save.png">
+          </div>
+          <div class="__bottom_content_text__">保存图片</div>
+        </div>
+      </div>
+    </div>
+    <div class="show-img" id="showImg"></div>
+    <div class="message-content" id="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+  <script>
+    (function(){
+      document.addEventListener('touchstart',function (event) {
+          if(event.touches.length>1){
+              event.preventDefault();
+          }
+      });
+      // 禁用双击放大
+      let lastTouchEnd=0;
+      document.addEventListener('touchend',function (event) {
+          const now=(new Date()).getTime();
+          if(now-lastTouchEnd<=1000){
+              event.preventDefault();
+          }
+          lastTouchEnd=now;
+      },false);
+      document.addEventListener('gesturestart', function (event) {
+        event.preventDefault()
+      })
+      let timer = false
+      let createdAppShareImgUrl = ''
+      let href = window.location.search
+      let params = getUrlParam(href)
+
+      let qrUrl =  getParamString(href,'qrUrl')
+      let liveUrl = getParamString(href,'liveUrl')
+      let beginTime = getParamString(href,'beginTime')
+      let name = getParamString(href,'name')
+      let time = getParamString(href,'time')
+      let teamNamea = getParamString(href,'teamNamea')
+      let teamNameb = getParamString(href,'teamNameb')
+      let teamFlaga = getParamString(href,'teamFlaga')
+      let teamFlagb = getParamString(href,'teamFlagb')
+      let matchThumbImg = getParamString(href,'matchThumbImg')
+      let amount = getParamString(href,'amount')
+      let avatar = getParamString(href,'avatar')
+      let userNicename = getParamString(href,'userNicename')
+      let download = getParamString(href,'download')
+      let uid =  getParamString(href,'uid')
+
+      var $lt = document.querySelector('.leftTimeContent')
+      var $na = document.querySelector('.nameAbbrContent')
+
+      $lt.innerHTML = `${beginTime}`
+      $na.innerHTML = `<span>${name}</span><span style="margin-left: 10px">${time}</span>`
+
+      $teama = document.querySelector('.leftTeamContainer')
+      $teamb = document.querySelector('.rightTeamContainer')
+
+      if (teamFlaga) {
+        $teama.innerHTML = `<span class="teamNameText">${teamNamea}</span><img class="teamLogoA" src='${download + teamFlaga + '?cors=1'}' height="30"width="25"/>`
+      } else {
+        $teama.innerHTML = `<span class="teamNameText">${teamNamea}</span><div class="teama-logo-container teama-logoa-container"><span class="team-logo-text">${teamNamea.trim("").charAt(0)}</span></div>`
+      }
+
+      if (teamFlagb) {
+        $teamb.innerHTML = `<img class="teamLogoB" src='${download + teamFlagb + '?cors=1'}' height="30"width="25"/><span class="teamNameText">${teamNameb}</span>`
+      } else {
+        $teamb.innerHTML = `<div class="teama-logo-container teama-logob-container"><span class="team-logo-text">${teamNameb.trim("").charAt(0)}</span></div><span class="teamNameText">${teamNameb}</span>`
+      }
+
+      $thumb = document.querySelector('.middleContainer')
+      if (matchThumbImg) {
+        $thumb.innerHTML = `<img class="matchImage" src='${download + matchThumbImg + '?cors=1'}'/>`
+      } else {
+        if (teamFlaga && teamFlagb) {
+          $thumb.innerHTML = `<div class="match-thumb">
+            <img class="match-thumb-teamFlag" src='${download + teamFlaga + '?cors=1'}'/>
+            <img class="match-thumb-teamFlag" src='${download + teamFlagb + '?cors=1'}'/>
+          </div>`
+        } else {
+          if (!teamFlaga && teamFlagb) {
+            $thumb.innerHTML = `<div class="match-thumb">
+              <div class="match-thumb-teamFlag">${teamNamea.trim("").charAt(0)}</div>
+              <img class="match-thumb-teamFlag" src='${download + teamFlagb + '?cors=1'}'/>
+            </div>`
+          } else if (teamFlaga && !teamFlagb) {
+            $thumb.innerHTML = `<div class="match-thumb">
+              <img class="match-thumb-teamFlag" src='${download + teamFlaga + '?cors=1'}'/>
+              <div class="match-thumb-teamFlag">${teamNameb.trim("").charAt(0)}</div>
+            </div>`
+          } else if (!teamFlaga && !teamFlagb) {
+            $thumb.innerHTML = `<div class="match-thumb">
+              <div class="match-thumb-teamFlag">${teamNamea.trim("").charAt(0)}</div>
+              <div class="match-thumb-teamFlag">${teamNameb.trim("").charAt(0)}</div>
+            </div>`
+          }
+        }
+        
+      }
+
+      $info = document.querySelector('.streamerInfo')
+      if (avatar) {
+        let reg = /(http|https):\/\/([\w.]+\/?)\S*/
+        if (reg.test(avatar)) {
+          $info.innerHTML = `<img class="streamerIcon" src='${avatar + '?cors=1'}'/> <span class="streamerNameText">${userNicename}</span>`
+        } else {
+          $info.innerHTML = `<img class="streamerIcon" src='${download + avatar + '?cors=1'}'/> <span class="streamerNameText">${userNicename}</span>`
+        }
+       
+      } else {
+        $info.innerHTML = `<div class="streamerIcon nameIcon">${userNicename.trim("").charAt(0)}</div> <span class="streamerNameText">${userNicename}</span>`
+      }
+
+      $amount = document.querySelector('.streamerStatic .amount')
+      $amount.innerHTML = `${amount}`
+
+      $down = document.querySelector('.downloadUrl .downloadUrlText')
+      $down.innerHTML = `${qrUrl}`
+      
+      $down.addEventListener('click',function(){
+        clipboardData(qrUrl)
+      });
+
+      createQRCode(qrUrl)
+
+      let $msg = document.getElementById('message')
+      $msg.style.display = "none";
+
+      $copy = document.getElementById('copy')
+      $save = document.getElementById('save')
+
+      $copy.addEventListener('click',function(){
+        let u = liveUrl + '&uid=' + uid
+        clipboardData(u)
+      });
+
+      $save.addEventListener('click',function(){
+        $msg.style.display = "none";
+        if (createdAppShareImgUrl) {
+          messages('已生成图片，长按图片保存')
+          return
+        }
+        messages('正在生成图片')
+        setTimeout(()=> {
+				    const dom = document.getElementById('appShareContainer');
+				    html2canvas(dom, {
+				      width:dom.clientWidth,
+				      height:dom.clientHeight,
+				      scrollX:0,
+				      scrollY:0,
+				      useCORS:true,
+				      allowTaint:false,
+				      scale:3
+				    }).then(canvas => {
+              let imageBase64Url = canvas.toDataURL('image/png');
+              let imgUrl = imageBase64Url.replace(/[]/g, ""); // 去除base64位中的空格
+              createdAppShareImgUrl = imgUrl
+              messages('长按保存图片')
+              let $content = document.getElementById('content')
+              let $image = document.getElementById('showImg')
+              $content.style.display = 'none'
+              $image.style.display = 'block'
+              $image.innerHTML = `<img class="shares-img" src='${imgUrl}'/>`
+				    }).catch(error => {
+              messages('图片生成失败，请重试！')
+				    })
+				}, 300)
+      })
+
+      function clipboardData(text) {
+        $msg.style.display = "none";
+        if (window.clipboardData) {
+          window.clipboardData.setData("text", text);
+        } else {
+          let inputTest = document.createElement("input"); //创建input元素
+          inputTest.value = text;
+          document.body.appendChild(inputTest);
+          inputTest.select();
+          let successful = document.execCommand("Copy");
+          inputTest.blur();
+          inputTest.className = "oInput";
+          inputTest.style.display = "none";
+          try {
+            let msg = successful ? "已复制链接，快去粘贴吧" : "复制失败，请重新复制";
+            messages(msg)
+          } catch (err) {}
+        }
+      }
+
+      function messages(text) {
+        if (timer) {
+          $msg.style.display = "none";
+          clearTimeout(timer)
+        }
+        let $text = document.querySelector('.message-content .message-text')
+        $text.innerHTML = text
+        $msg.style.display = "block";
+        timer = setTimeout(() => {
+          $msg.style.display = "none";
+        }, 3000);
+      }
+
+      function createQRCode (url) {
+        var $QR = document.querySelector('#qrcode')
+        var QR = qrcode(0, 'L')
+        $QR.setAttribute('href', url)
+        QR.addData(url)
+        QR.make()
+        $QR.innerHTML = QR.createImgTag(3, 5)
+      }
+      function getUrlParam(url) {
+            let name, value;
+            let data={}
+            let str = url; //取得整个地址栏
+            let num = str.indexOf("?");
+            str = str.substr(num + 1); //取得所有参数   
+
+            let arr = str.split("&"); //各个参数放到数组里
+            for (let i = 0; i < arr.length; i++) {
+                num = arr[i].indexOf("=");
+               
+                if (num > 0) {
+                    name = arr[i].substring(0, num);
+                    value = arr[i].substr(num + 1);
+
+                    data[name] = decodeURI(value);
+                }
+            }
+            return data
+        }
+        
+        function getParamString(paraPart,name) {
+          var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+          var r = paraPart.substr(1).match(reg);
+          if (r != null) {
+            return decodeURI(r[2]);
+          } 
+          return '';
+        }
+    })();
+  </script>
+</body>
+</html>

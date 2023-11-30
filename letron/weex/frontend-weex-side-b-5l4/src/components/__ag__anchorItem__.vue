@@ -1,0 +1,241 @@
+<template>
+    <div class="__ag__anchorlist-item__" :class="[isindex?'__ag__index-anchor-item__':'']" v-if="item && item.id">
+        <div class="__ag__anchorlist-img__" >
+            <ag-userimg class="__ag__anchorlist-image__" :fontSize="true" :avatar="item.avatar" :name="item.userNicename" @itemtap="$emit('onClick',item)"></ag-userimg>
+            <div class="__ag__anchorlist-status__" v-if="item && item.joinMap && item.joinMap.live && item.joinMap.live.scheduleId">
+                <text class="__ag__anchorlist-zb__">直播中</text>
+            </div>
+            <div class="__ag__anchorlist-status__ __ag__anchorlist-notstatus__" v-else>
+                <text class="__ag__anchorlist-home__">不在家</text>
+            </div>
+		</div>
+		<text class="__ag__anchorlist-text__">{{item && item.userNicename}}</text>
+        <div v-if="showAction" class="__ag__anchorlist_follow__">
+            <div class="__ag__anchorlist-gz__ __ag__anchorlist_item__ cancelfollow" @click.stop="__ag__cancelFollow__(item)" v-if="isFollow">
+                <!-- <text class="agiconfont icon-heart3 __ag__anchorlist-icon__ heart3">&#xe700;</text> -->
+                <text class="__ag__anchorlist-dy__ heart3">已订阅</text> 
+            </div>
+            <div v-else class="__ag__anchorlist-gz__ __ag__anchorlist_item__" @click.stop="__ag__followTap__(item)">
+                <!-- <text class="agiconfont icon-outlined_heart __ag__anchorlist-icon__">&#xe66d;</text> -->
+                <text class="__ag__anchorlist-dy__">订阅</text>
+            </div>
+            <div v-if="item && item.joinMap && item.joinMap.live && item.joinMap.live.scheduleId" class="__ag__anchorlist-gz__" @click.stop="__ag__private__(item)">
+                <!-- <text class="agiconfont icon-outlined_heart __ag__anchorlist-icon__">&#xe66d;</text> -->
+                <text class="__ag__anchorlist-dy__">私聊</text>
+            </div>
+        </div>
+		<div class="__ag__anchorlist-score__" v-if="showAction">
+			<text class="__ag__anchorlist-num__">订阅人数:</text>
+			<text class="__ag__anchorlist-num__">{{item &&  item.score}}</text>
+		</div>
+    </div>
+</template>
+<script>
+    import agMinix from './__ag__minix__.js'
+    import util from './util.js'
+    import userImg from './__ag__userImg__.vue'
+    export default {
+        mixins:[agMinix],
+        components:{
+            'ag-userimg': userImg,
+        },
+        props: {
+            item: {
+                type: Object,
+                default: function() {
+                    return {}
+                }
+            },
+            isindex: {
+                type: Boolean,
+                default: false
+            },
+            listFollowMap:{
+                type: Object,
+                default: function() {
+                    return {}
+                }
+            },
+            showAction: {
+                type: Boolean,
+                default: true
+            }
+        },
+        data() {
+            return {
+                f__ag_id__: 0
+            }
+        },
+        computed:{
+            isFollow(){
+                if( !this.listFollowMap){
+                    return false
+                }
+                let r = this.listFollowMap[this.item.id]
+                return r
+            },
+        },
+        methods: {
+            __ag__cancelFollow__(item) {
+               this.$emit('cancelFollow',item)
+            },
+            __ag__followTap__(item) {
+                this.$emit('followTap',item)
+            },
+            __ag__private__(item) {
+                let uid = item.id
+                let params = {
+					tab: 1,
+					uid: uid
+				}
+				util.getPush('__ag__live__',params)
+            }
+        }
+    }
+</script>
+<style scoped lang="less">
+ @import '../style/theme.less';
+    .__ag__anchorlist-item__ {
+        background-color: #fff;
+        margin-bottom: 16wx;
+        border-radius: 8px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 20px;
+        padding-top: 10px;
+    }
+    .__ag__index-anchor-item__ {
+		margin-bottom: 0px;
+	}
+    .__ag__anchorlist-img__ {
+        width: 120px;
+        height: 120px;
+        border-radius: 60px ;
+        background-color: #EFEFEF;
+        color: rgba(0, 0, 0, 0.3);
+        text-align: center;
+        line-height: 60px;
+        font-size: 27px;
+        margin-top: 14px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+    }
+    .__ag__anchorlist-image__ {
+        width: 120px;
+        height: 120px;
+        background-color: #EFEFEF;
+        border-radius:60px;
+        color: rgba(0, 0, 0, 0.3);
+        text-align: center;
+        display: flex;
+        /* align-items: center; */
+        justify-content: center;
+        font-size: 40px;
+        border-style: solid;
+        border-width: 2px;
+        border-color: @main-color;
+    }
+
+    .__ag__anchorlist-text__ {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14wx;
+        color: #000000;
+        margin-top: 20px;
+        margin-left: 16px;
+        margin-right: 16px;
+        text-align: center;
+        line-height: 40px;
+        lines:1;
+        text-overflow: ellipsis;
+    }
+    .__ag__anchorlist-status__ {
+        margin-top: 6px;
+        height: 30px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: absolute;
+        bottom: -5px;
+        padding-left: 5px;
+        padding-right: 5px;
+        background-color: @main-color;
+    }
+    .__ag__anchorlist-notstatus__ {
+        background-color: #b6b6b6;
+    }
+    .__ag__anchorlist-yuan__ {
+        background-color: #FF0000;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+    }
+    .__ag__anchorlist-zb__ {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 10wx;
+        text-align: center;
+        letter-spacing: 0.05em;
+        color: #fff;
+    }
+    .__ag__anchorlist-home__ {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 10wx;
+        letter-spacing: 0.05em;
+        color: #fff;
+    }
+    .__ag__anchorlist_follow__ {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+    .__ag__anchorlist_item__ {
+        margin-right: 15px;
+    }
+    .__ag__anchorlist-gz__ {
+        margin-top: 7px;
+        border-radius: 8px;
+        height: 30wx;
+        padding-left: 40px;
+        padding-right: 40px;
+        font-size: 13wx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFFFFF;
+        flex-direction: row;
+        background-color: @main-color;
+    }
+    .cancelfollow {
+        background-color: @button-bg-color;
+        color: @main-color;
+    }
+    .heart3 {
+        color: @main-color;
+    }
+    .__ag__anchorlist-dy__ {
+        font-size: 13wx;
+        color: #FFFFFF;
+    }
+    .__ag__anchorlist-icon__ {
+        font-size: 16wx;
+        color: #FFFFFF;
+        margin-right: 3px;
+    }
+
+    .__ag__anchorlist-score__ {
+        flex-direction: row;
+        margin-top: 30px;
+        align-items: center;
+    }
+    .__ag__anchorlist-num__ {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 11wx;
+        color: @main-color;
+    }
+
+</style>
