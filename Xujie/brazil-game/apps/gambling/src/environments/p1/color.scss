@@ -1,0 +1,77 @@
+@import './bp.scss';
+
+@mixin baseButton($bg) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: var(#{$bg});
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lucky-wheel-btn {
+  @include baseButton('--transparente');
+  justify-content: flex-end;
+  color: var(--text-title-secondary);
+}
+
+.lucky-wheel-primary-btn {
+  @include baseButton('--linear-primary-main');
+  border: 1px solid var(--white);
+  color: var(--text-button);
+}
+
+.lucky-wheel-primary-btn-disabled {
+  @include baseButton('--background-item');
+  border: 1px solid var(--transparent);
+}
+
+.lucky-wheel-tabs-btn {
+  @include baseButton('--transparent');
+  color: var(--text-caption);
+  border-radius: 0px;
+  border-bottom: 1px solid var(--text-caption);
+}
+
+.lucky-wheel-tabs-btn-disabled {
+  @include baseButton('--transparent');
+  border-radius: 0px;
+  color: var(--white);
+}
+
+.border-linear {
+  border-bottom: 1px solid var(--transparente-20);
+}
+
+.bg-modal {
+  background: var(--background-modal);
+  box-shadow: 0px 25px 50px -12px var(--transparente-black-40);
+}
+
+.bg-modal-btn {
+  background: var(--linear-primary-main);
+}
+
+.reward-amount {
+  box-shadow: 0px 4px 4px 0px var(--transparente-black-25);
+  background: var(--linear-secondary-main);
+}
+
+.lucky-wheel-description-container {
+  color: var(--grayscale-80);
+  & ol:first-child {
+    li {
+      &::marker, h6 {
+        color: var(--grayscale-100);
+        font-weight: 700;
+        color: white;
+        display: inline;
+        font-size: 12px;
+        @include bp(tab) {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}

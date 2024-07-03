@@ -1,0 +1,163 @@
+:root {
+  --font-family: "Maven Pro", sans-serif;
+
+  /** Base **/
+  --linear-1-main: linear-gradient(180deg, #8C32E5 0%, #8C32E5 100%);
+  --linear-1-dark-active: linear-gradient(180deg, #6F28B7 0%, #6F28B7 100%);
+  --linear-1-light-hover: linear-gradient(180deg, #A25BEA 0%, #A25BEA 100%);
+  --linear-1-disabled: linear-gradient(180deg, rgba(139, 50, 229, 0.25) 0%, rgba(139, 50, 229, 0.25) 100%);
+
+  --linear-2-main: linear-gradient(180deg, #EF39FF 0%, #B414FF 73%);
+  --linear-2-dark-active: linear-gradient(180deg, #BE2DCC 0%, #9010CC 57.5%);
+  --linear-2-light-hover: linear-gradient(180deg, #F160FF 0%, #C343FF 55%);
+  --linear-2-disabled: linear-gradient(180deg, rgba(239, 57, 255, 0.5) 0%, rgba(180, 20, 255, 0.5) 57%);
+
+  --linear-3-main: linear-gradient(180deg, #6F37FF 0%, #3E6AFF 100%);
+  --linear-3-dark-active: linear-gradient(180deg, #5630CC 0%, #3652CC 100%);
+  --linear-3-light-hover: linear-gradient(180deg, #8962FF 0%, #6786FF 100%);
+  --linear-3-disabled: linear-gradient(180deg, rgba(109, 58, 255, 0.5) 0%, rgba(65, 103, 255, 0.5) 100%);
+
+  --linear-4-main: linear-gradient(180deg, #321964 0%, #22104B 100%);
+  --linear-4-dark-active: linear-gradient(180deg, #2C1852 0%, #160A2C 100%);
+  --linear-4-light-hover: linear-gradient(180deg, #463072 0%, #352752 100%);
+
+  --linear-5-main: linear-gradient(180deg, #342246 0%, #211834 100%);
+
+  --linear-6-main: linear-gradient(180deg, #1E0F3E 0%, #361D69 100%);
+
+  --linear-7-main: linear-gradient(90deg, #F7F6F8 0%, #C6EDFF 50%, #A0ADFF 100%);
+
+  --linear-reward-amount: linear-gradient(93.05deg, #28FF7E 0%, #459BFF 100%);
+
+  /** State color **/
+  --state-info-main: #1F92E5;
+  --state-info-dark-active: #1975B7;
+  --state-info-light-hover: #4CA8EA;
+  --state-info-disabled: #1F92E580;
+
+  --state-warn-main: #FFA113;
+  --state-warn-dark-active: #CC810F;
+  --state-warn-light-hover: #FFB442;
+  --state-warn-disabled: #FFA11380;
+
+  --state-error-main: #ED3434;
+  --state-error-dark-active: #BE2A2A;
+  --state-error-light-hover: #F15D5D;
+  --state-error-disabled: #ED343480;
+
+  --state-success-main: #00C885;
+  --state-success-dark-active: #00A06A;
+  --state-success-light-hover: #33D39D;
+  --state-success-disabled: #00C88580;
+
+  /** Grayscale **/
+  --grayscale-00: #000000;
+  --grayscale-10: #13092A;
+  --grayscale-15: #1D0D3F;
+  --grayscale-20: #271254;
+  --grayscale-25: #311669;
+  --grayscale-30: #3A1B7E;
+  --grayscale-40: #4E24A8;
+  --grayscale-50: #612DD2;
+  --grayscale-60: #8157DB;
+  --grayscale-70: #A08BF9;
+  --grayscale-80: #C0ABED;
+  --grayscale-90: #E3DFED;
+  --grayscale-95: #F1EEF6;
+  --grayscale-100: #FFFFFF;
+
+  /** Transparente **/
+  --transparent-white-90: #FFFFFFE5;
+  --transparent-white-80: #FFFFFFCC;
+  --transparent-white-70: #FFFFFFB2;
+  --transparent-white-60: #FFFFFF99;
+  --transparent-white-50: #FFFFFF80;
+  --transparent-white-40: #FFFFFF66;
+  --transparent-white-30: #FFFFFF4D;
+  --transparent-white-25: #FFFFFF40;
+  --transparent-white-20: #FFFFFF33;
+  --transparent-white-10: #FFFFFF1A;
+  --transparent-white-5: #FFFFFF0D;
+  --transparent-black-90: #000000E5;
+  --transparent-black-80: #000000CC;
+  --transparent-black-70: #000000B2;
+  --transparent-black-60: #00000099;
+  --transparent-black-50: #00000080;
+  --transparent-black-40: #00000066;
+  --transparent-black-30: #0000004D;
+  --transparent-black-25: #00000040;
+  --transparent-black-20: #00000033;
+  --transparent-black-10: #0000001A;
+
+  --transparent: transparent;
+  --none: none;
+
+  /** Background **/
+  --background-main: linear-gradient(90deg, #14092A 0%, #14092A 100%);
+  --background-header: linear-gradient(90deg, #14092B 0%, #14092B 100%);
+  --background-tabbar: linear-gradient(180deg, #BC00D3 0%, #490ABC 100%);
+  --background-tab-bar: linear-gradient(180deg, #14092B 0%, #291450 12.63%, #13092B 100%);
+  --background-tab-bar-variant: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.09) 100%);
+  --background-game-bar: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%);
+  --background-vip: linear-gradient(90deg, #F1AC00 0%, #ED5B17 100%);
+  --background-vip-m: linear-gradient(90deg, rgba(250, 215, 31, 0) 0%, #FAD71F 50%, rgba(250, 215, 31, 0) 100%);
+  --background-convidar: linear-gradient(0deg, #4F0A70 0%, #6E5AE9 100%);
+  --background-info: linear-gradient(90deg, #212A7E 0%, #644A9A 100%);
+  --background-footer: linear-gradient(180deg, #14092B 0%, #14092B 100%);
+  --background-deposit-focus: linear-gradient(97.96deg, #BB4CF0 0.03%, #D52097 99.97%);
+  --background-deposit-default: linear-gradient(97.96deg, #1F305D 0.03%, #3D2D7A 99.97%);
+  --background-deposit-hover: linear-gradient(97.96deg, #7012CD 0.03%, #8520EB 99.97%);
+  --background-tabber-focus: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+  --background-tabber: linear-gradient(0deg, #14092A 0%, #271254 100%);
+  --background-impotrant: linear-gradient(90deg, rgba(255, 161, 19, 0) 0%, rgba(255, 161, 19, 0.2) 50%, rgba(255, 161, 19, 0) 100%);
+  --background-level-1: linear-gradient(82.49deg, #7F37F9 0%, #00B4F4 99.91%);
+  --background-level-2: linear-gradient(82.49deg, #FFB152 0%, #FE5D4B 99.91%);
+  --background-level-3: linear-gradient(82.49deg, #00D1A6 0%, #1A77ED 99.91%);
+  --background-download: #1E1258;
+  --background-error: #ED34341A;
+  --background-popup: linear-gradient(180deg, #4D6EC4 0%, #5A2673 100%);
+  --background-popup1: linear-gradient(180deg, #321964 0%, #1D0F3E 100%);
+  --background-popup2: linear-gradient(180deg, #7066F8 0%, #9F07FE 100%);
+  --background-tooltips: rgba(251, 216, 30, 1);
+
+  /** text **/
+  --text-important: linear-gradient(180deg, #FFDD0A 0%, #FFDD0A 100%);
+  --text-amount: #B03F00;
+  --text-linear: linear-gradient(360deg, #FFFFFF 0%, #7D45FF 100%);
+  --text-vip: linear-gradient(90deg, #FF0C0C 0%, #0055FA 100%);
+  --text-deposit-amount: linear-gradient(180deg, #FBDA85 25.64%, #FFFFFF 100%);
+  --text-highlight: #FFDD0A;
+  --text-tooltips: rgba(176, 63, 0, 1);
+
+
+  /** btn **/
+  --btn-header-main: linear-gradient(90deg, #311B5B 0%, #533088 100%);
+  --btn-header-hover: linear-gradient(90deg, #4B298C 0%, #7443BD 100%);
+  --btn-todos-main: linear-gradient(180deg, #351A66 0%, #7A45DA 100%);
+  --btn-todos-hover: linear-gradient(180deg, #48238C 0%, #9870E2 100%);
+
+  /** amount **/
+  --amount-main: linear-gradient(180deg, #600FB0 0%, #600FB0 100%);
+  --amount-hover: linear-gradient(196.24deg, #831AEB 11.28%, #851EEC 88.72%);
+  --amount-focus: linear-gradient(196.24deg, #FBD81E 11.28%, #FBD81E 88.72%);
+  --amount-banner: linear-gradient(180deg, #311861 0%, #1D0E3C 100%);
+
+  /** stroke **/
+  --stroke-popup: linear-gradient(180deg, #8B4FF4 0%, rgba(131, 47, 152, 0.2) 50%, #694BB7 100%);
+  --stroke-popup2: linear-gradient(180deg, #A74ED9 0%, #A74ED9 100%);
+  --stroke-amount: linear-gradient(180deg, #DC79FF 0%, #24134B 50%, #9263EC 100%);
+  --stroke-level: linear-gradient(180deg, #C135F4 0%, #67FBFF 100%);
+  --stroke-line: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 50%, rgba(255, 255, 255, 0) 100%);
+
+  /* Divider */
+  --divider-important: linear-gradient(90deg, rgba(255, 221, 10, 0) 0%, #FFDD0A 50%, rgba(255, 221, 10, 0) 100%);
+  --stroke-vip: #7E7E7E;
+  --stroke-vip-get: #8B4FF4;
+
+  --bg-box-d: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  --bg-box-tOrm: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+
+  /* Input Bg */
+  --input-bg: #3a2367;
+  --input-focus-bg: #59457e;
+}

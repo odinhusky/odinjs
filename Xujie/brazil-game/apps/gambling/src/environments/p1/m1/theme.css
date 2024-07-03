@@ -1,0 +1,238 @@
+:root {
+  --font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Segoe UI, Arial, Roboto, "PingFang SC", "miui", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;;
+
+  --primary-main-from: #16FF8F;
+  --primary-main-to: #047A70;
+
+  --background-nav-tab-from: #004423;
+  --background-nav-tab-to: #047A70;
+
+  --primary-assistant: #16FF8F;
+
+  --lineary-progress-from: #FBFF3F;
+  --lineary-progress-to: #FEC600;
+
+  --background-alert-text-from: #FF8833;
+  --background-alert-text-to: #FD6900;
+
+  --white: #FFFFFF;
+  --white-20: rgba(255, 255, 255, 0.2);
+  --white-30: rgba(255, 255, 255, 0.3);
+
+  --primary-variant: #31B77D;
+  --primary-assistant-20: #31B77D33;
+
+  --background-add-money: rgb(154, 62, 62);
+  --background-item: #014F4B;
+
+  --button-account-from: rgb(154, 62, 62);
+  --button-account-to: rgb(119, 43, 43);
+
+  --secondary-main-from: #56F0D6;
+  --secondary-main-to: #8499FD;
+
+  --button-check-from: #F45C6A;
+  --button-check-to: #F24050;
+
+  --button-disabled-from: #D5D5D5;
+  --button-disabled-to: #B2B2B2;
+
+  --background-dashboard-secondary: #069D5C;
+
+  --background-textfields: #069D5C;
+
+  --background-dashboard-main-from: #1EE59E;
+  --background-dashboard-main-to: #E2FD97;
+
+  --background-instruction-from: #125437;
+  --background-instruction-to: #125437;
+  --background-instruction-80: rgba(1, 62, 66, 0.8);
+
+  /*?*/
+  --grayscale-00: #000000;
+  --grayscale-10: #1A1A1A;
+  --grayscale-15: #262626;
+  /* u1 u2 其它站點會共用的組件 就先不改 u2都已經改*/
+  --grayscale-20: #333333;
+  --grayscale-30: #4D4D4D;
+  --grayscale-40: #666666;
+  --grayscale-50: #808080;
+  --grayscale-60: #999999;
+  --grayscale-70: #B3B3B3;
+  --grayscale-80: #CCCCCC;
+  --grayscale-90: #E6E6E6;
+  --grayscale-100: #FFFFFF;
+
+  /* Table 樣式 */
+  --table-thead: var(--table-main);
+  --table-thead-text: var(--white);
+  --table-tbody: var(--table-varient);
+  --table-tbody-zebra: var(--white-20);
+  --table-tbody-text: var(--white);
+
+  --secondary-main: rgb(154, 62, 62);
+
+  --background-modal: #047A70;
+
+  --background-modal-from: #047A70;
+  --background-modal-to: #047A70;
+
+  /*bg*/
+  --main: #025C50;
+  --varient: #014F4B;
+  --assistant: #013E42;
+  --medium: #069D5C;
+  --light: #31B77D;
+
+  /*bg-other*/
+  --game-block: #013E42;
+  --footer: #005B46;
+
+  /*main*/
+  --main-primary-main: #16FF8F;
+  --main-primary-varient: #047A70;
+  --main-primary-assistant: #10DB8D;
+  --main-secondary-main: #FBFF3F;
+  --main-state-error: #FF7777;
+  --main-state-warning: #FFCF45;
+  --state-error-variant: #FF9696;
+  --state-info: #33F7DE;
+  --state-success: #16FF8F;
+  --state-warning: #FF9000;
+
+  /*table*/
+  --table-main: #008B8D;
+  --table-varient: #006D79;
+  --table-asisstant: #005265;
+  --table-light: #58DCC7;
+
+  /*button*/
+  /*btn/button*/
+  --btn-gradient1-from: #C8F568;
+  --btn-gradient1-to: #16FF8F;
+
+  /*btn/button_2*/
+  --btn-gradient2-from: #56F0D6;
+  --btn-gradient2-to: #8499FD;
+
+  /*btn/button_inactive*/
+  --btn-gradient-inactive-from: #D9D9D9;
+  --btn-gradient-inactive-to: #C2C2C2;
+
+  /*btn/icon*/
+  --btn-gradient-icon-from: #99EDFF;
+  --btn-gradient-icon-to: #16FF8F;
+
+  /*btn-vip*/
+  --btn-gradient-vip-from: #FE6060;
+  --btn-gradient-vip-to: #FFA24D;
+
+  /*dashboard*/
+  /*dashboard/block_1*/
+  --dashboard-block1-gradient-from: #8692FF;
+  --dashboard-block1-gradient-to: #55F1D5;
+  /*dashboard/block_2*/
+  --dashboard-block2-gradient-from: #1EE59E;
+  --dashboard-block2-gradient-to: #E2FD97;
+  /*dashboard/block_3*/
+  --dashboard-block3-gradient-from: #FFA73F;
+  --dashboard-block3-gradient-to: #FFB8B8;
+
+
+  /*dashboard/dashboard_base*/
+  --dashboard-base: #F2FFDD;
+  /*dashboard/block_1*/
+  --dashboard-block1: #6432F1;
+
+  /*dashboard/block_2*/
+  --dashboard-block2: #028350;
+  /*dashboard/block_3*/
+  --dashboard-block3: #CA044B;
+
+
+
+  /*text*/
+  /*text/telegram*/
+  --text-telegram: #003BC6;
+  /*text/black*/
+  --black: #000000;
+  /*text/white*/
+  --white: #FFFFFF;
+  /*text/grey*/
+  --gray: #D9D9D9;
+
+  --text-caption: #FDEF70;
+
+  /*text-dashboard*/
+  --text-block1: #6432F1;
+  /*text-ad*/
+  --text-gradient-ad-from: #FFEF00;
+  --text-gradient-ad-to: #FFC100;
+
+  /*text-ad_tg*/
+  --text-gradient-ad-tg-from: #D071FD;
+  --text-gradient-ad-tg-to: #003BC6;
+
+  --text-progress: #069D5C;
+
+  --tab-primary-from: #013E42;
+  --tab-primary-to: #013E42;
+  --tab-text-color-normal: rgba(255,255,255,.5);
+  --tab-text-color-active: #16FF8F;
+
+  --text-primary: #16FF8F;
+  --text-seondary: #005265;
+
+  --text-button: #047A70;
+  --text-title-secondary: #FFCF45;
+  --text-lucky-value: #F59E0B;
+
+  --input-text-color: #ffffff;
+  --input-placeholder-color: #16FF8F;
+  /*--input-mobile-border: transparent;*/
+  --input-border: #85F1F8;
+  --input-background: #069D5C;
+  --input-focus-background: #E47174;
+  --input-focus-border: #1A7BFF;
+  --input-invalidation-border: #8B619E;
+  --input-invalidation-text-color: #FFC104;
+
+  --drawer-bg: #013E42;
+  --drawer-bg-opacity-50: rgba(1,62,66,.5);
+  --drawer-border: rgba(50,63,91,.7);
+
+  --outline-primary: #85F1F8;
+  --outline-secondary: #16FF8F;
+  --outline-table: #58DCC7;
+
+  --activity-text-shadow-90: rgba(32, 32, 32, 0.9);
+
+  /* --- Transparente --- */
+  --transparente-90: rgba(255, 255, 255, 0.9);
+  --transparente-80: rgba(255, 255, 255, 0.8);
+  --transparente-70: rgba(255, 255, 255, 0.7);
+  --transparente-60: rgba(255, 255, 255, 0.6);
+  --transparente-50: rgba(255, 255, 255, 0.5);
+  --transparente-40: rgba(255, 255, 255, 0.4);
+  --transparente-30: rgba(255, 255, 255, 0.3);
+  --transparente-25: rgba(255, 255, 255, 0.25);
+  --transparente-20: rgba(255, 255, 255, 0.2);
+  --transparente-10: rgba(255, 255, 255, 0.1);
+
+  --transparente-black-90: rgba(0, 0, 0, 0.9);
+  --transparente-black-80: rgba(0, 0, 0, 0.8);
+  --transparente-black-70: rgba(0, 0, 0, 0.7);
+  --transparente-black-60: rgba(0, 0, 0, 0.6);
+  --transparente-black-50: rgba(0, 0, 0, 0.5);
+  --transparente-black-40: rgba(0, 0, 0, 0.4);
+  --transparente-black-30: rgba(0, 0, 0, 0.3);
+  --transparente-black-25: rgba(0, 0, 0, 0.25);
+  --transparente-black-20: rgba(0, 0, 0, 0.2);
+  --transparente-black-10: rgba(0, 0, 0, 0.1);
+  
+  --transparente: transparent;
+
+  --linear-primary-main: linear-gradient(180deg, var(--btn-gradient1-from) 0%, var(--btn-gradient1-to) 100%);
+  --linear-secondary-main: linear-gradient(180deg, var(--btn-gradient2-from) 0%, var(--btn-gradient2-to) 100%);
+}
+

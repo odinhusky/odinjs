@@ -1,0 +1,29 @@
+{
+  "root": true,
+  "ignorePatterns": ["node_modules", "dist", "coverage"],
+  "plugins": ["@nx", "prettier", "react", "react-hooks"],
+  "extends": [
+    "plugin:@nx/react",
+    "plugin:@nx/typescript",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "callbacksLast": true,
+        "shorthandFirst": true,
+        "noSortAlphabetically": false,
+        "reservedFirst": true
+      }
+    ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

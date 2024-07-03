@@ -1,0 +1,119 @@
+:root {
+  --font-family: "Roboto", sans-serif;
+  /* --- Base --- */
+  --primary-main: #FDF708;
+  --primary-dark-active: #CAC502;
+  --primary-light-hover: #FEFA7D;
+  --primary-disabled: #FDF70880;
+
+  --secondary-main: #2DA33E;
+  --secondary-dark-active: #1E752B;
+  --secondary-light-hover: #65D675;
+  --secondary-disabled: #2DA33E80;
+
+
+  --tertiary-main: #FEE005;
+  --tertiary-dark-active: #CBB304;
+  --tertiary-light-hover: #FEE637;
+  --tertiary-disabled: #FEE00580;
+
+  --quaternary-main: #1F8C57;
+  --quaternary-dark-active: #166941;
+  --quaternary-light-hover: #36D186;
+  --quaternary-disabled: #1F8C5780;
+
+  /* --- State --- */
+  --state-warn-main: #FFA113;
+  --state-warn-dark-active: #D78100;
+  --state-warn-light-hover: #FFC66F;
+  --state-warn-disabled: #FFA11380;
+
+  --state-error-main: #C20023;
+  --state-error-dark-active: #B51030;
+  --state-error-light-hover: #E94262;
+  --state-error-disabled: #F6446480;
+
+  --state-success-main: #00C885;
+  --state-success-dark-active: #008257;
+  --state-success-light-hover: #23FFB6;
+  --state-success-disabled: #00C88580;
+
+  --state-info-main: #1F92E5;
+  --state-info-dark-active: #1975B7;
+  --state-info-light-hover: #4CA8EA;
+  --state-info-disabled: #1F92E580;
+
+  /* --- Grayscale --- */
+  --grayscale-00: #07120D;
+  --grayscale-10: #0D261A;
+  --grayscale-15: #133926;
+  --grayscale-20: #1A4D33;
+  --grayscale-25: #206040;
+  --grayscale-30: #26734C;
+  --grayscale-40: #339966;
+  --grayscale-50: #40BF80;
+  --grayscale-60: #66CC9A;
+  --grayscale-70: #8CD9B2;
+  --grayscale-80: #B3E5CC;
+  --grayscale-90: #D9F2E6;
+  --grayscale-95: #ECF9F2;
+  --grayscale-100: #FFFFFF;
+
+  /* --- Background --- */
+  --background-main: linear-gradient(180deg, #0A9140 -80.08%, #0A9140 80.08%);
+  --background-header: #0D512B;
+  --background-tabbar: #067831;
+  --background-footer: linear-gradient(180deg, #067831 0%, #06722F 100%);
+  --background-amount: #D13838;
+  --background-roleta: radial-gradient(81.78% 40.04% at 50% 0%, #BB00EA 0%, #000D4E 100%);
+  --background-popup: #047830;
+  --background-game: linear-gradient(180deg, #0A9140 0%, #087735 100%);
+  --background-header2: #0C5E2B;
+
+  /* --- Text --- */
+  --text-amount: #FFAA07;
+  --text-popup-error: rgba(237, 52, 52, 1);
+
+
+  /* --- Transparent --- */
+  --transparent-100:rgba(255, 255, 255, 1);
+  --transparent-90: rgba(255, 255, 255, 0.9);
+  --transparent-80: rgba(255, 255, 255, 0.8);
+  --transparent-70: rgba(255, 255, 255, 0.7);
+  --transparent-60: rgba(255, 255, 255, 0.6);
+  --transparent-50: rgba(255, 255, 255, 0.5);
+  --transparent-40: rgba(255, 255, 255, 0.4);
+  --transparent-30: rgba(255, 255, 255, 0.3);
+  --transparent-20: rgba(255, 255, 255, 0.2);
+  --transparent-10: rgba(255, 255, 255, 0.1);
+
+  /* --- Transparent-gray --- */
+  --transparent-gray-90: rgba(0, 0, 0, 0.9);
+  --transparent-gray-80: rgba(0, 0, 0, 0.8);
+  --transparent-gray-70: rgba(0, 0, 0, 0.7);
+  --transparent-gray-60: rgba(0, 0, 0, 0.6);
+  --transparent-gray-50: rgba(0, 0, 0, 0.5);
+  --transparent-gray-40: rgba(0, 0, 0, 0.4);
+  --transparent-gray-30: rgba(0, 0, 0, 0.3);
+  --transparent-gray-20: rgba(0, 0, 0, 0.2);
+  --transparent-gray-10: rgba(0, 0, 0, 0.1);
+
+  /* --- Game --- */
+  --game-1: linear-gradient(180deg, rgba(246, 13, 41, 0) 0%, #F60D29 100%);
+  --game-2: linear-gradient(180deg, rgba(246, 98, 13, 0) 0%, #F6620D 100%);
+  --game-3: linear-gradient(180deg, rgba(246, 139, 13, 0) 0%, #F68B0D 100%);
+  --game-4: linear-gradient(180deg, rgba(255, 212, 60, 0) 0%, #FFD43C 100%);
+  --game-5: linear-gradient(180deg, rgba(152, 223, 0, 0) 0%, #98DF00 100%);
+  --game-6: linear-gradient(180deg, rgba(10, 233, 126, 0) 0%, #0AE97E 100%);
+  --game-7: linear-gradient(180deg, rgba(0, 169, 27, 0) 0%, #00A91B 100%);
+  --game-8: linear-gradient(180deg, rgba(0, 168, 97, 0) 0%, #00A861 100%);
+  --game-9: linear-gradient(180deg, rgba(13, 246, 218, 0) 0%, #0DF6DA 100%);
+  --game-10: linear-gradient(180deg, rgba(13, 176, 246, 0) 0%, #0DB0F6 100%);
+  --game-11: linear-gradient(180deg, rgba(0, 91, 228, 0) 0%, #005BE4 100%);
+  --game-12: linear-gradient(180deg, rgba(107, 55, 255, 0) 0%, #6B37FF 100%);
+  --game-13: linear-gradient(180deg, rgba(151, 47, 255, 0) 0%, #972FFF 100%);
+  --game-14: linear-gradient(180deg, rgba(204, 0, 255, 0) 0%, #CC00FF 100%);
+  --game-15: linear-gradient(180deg, rgba(255, 54, 247, 0) 0%, #FF36F7 100%);
+  --game-16: linear-gradient(180deg, rgba(232, 10, 143, 0) 0%, #E80A8F 100%);
+
+}

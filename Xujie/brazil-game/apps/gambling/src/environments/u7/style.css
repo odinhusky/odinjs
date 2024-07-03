@@ -1,0 +1,553 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*How to Remove Arrow on Input type Number with Tailwind CSS*/
+/*https://stackoverflow.com/questions/71296535/how-to-remove-arrow-on-input-type-number-with-tailwind-css*/
+@layer base {
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--input-text-color);
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px var(--input-background);
+  }
+
+  .login-autofill-input:-webkit-autofill,
+  .login-autofill-input:-webkit-autofill:hover,
+  .login-autofill-input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #fff;
+  }
+}
+
+/*@font-face {*/
+/*  font-family: 'HeeboBold';*/
+/*  src: url("assets/fonts/Heebo-Bold.ttf") format("truetype");*/
+/*}*/
+
+html,
+body,
+#root {
+  /*feat: 不能用vh計算有些瀏覽器會有自訂工具列, html, body, root: height: 100%*/
+  height: 100%;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* for |IE|Edge| scrollbar */
+* {
+  -ms-overflow-style: none;
+}
+
+html,
+body {
+  /*height: 100%;*/
+  font-family: var(--font-family);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  background: var(--background-main);
+  background-image: var(--background-main);
+  scrollbar-width: none;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  /* for other scrollbar */
+  scrollbar-width: none;
+}
+
+html {
+  user-select: none;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+
+  /*height: 100%;*/
+  /*min-height: 100%;*/
+  /*min-height: 100vh;*/
+}
+
+
+@keyframes gameListShow {
+  from {
+    transform: translateY(20%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes recentGameListShow {
+  from {
+    transform: translateX(20%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    visibility: visible;
+    height: inherit;
+  }
+
+  to {
+    visibility: hidden;
+    height: 0;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    visibility: hidden;
+    height: 0;
+  }
+
+  to {
+    visibility: visible;
+    height: inherit;
+  }
+}
+
+.u6-loading-bar-common .ant-progress-text {
+  font-size: 16px;
+  color: #FFAF27;
+}
+
+.u6-loading-bar .ant-progress-steps-item {
+  width: 6px !important;
+  height: 12px !important;
+  background: #665775;
+}
+
+
+.u6-loading-bar-lg .ant-progress-text {
+  font-size: 18px !important;
+}
+
+.u6-loading-bar-lg .ant-progress-steps-item {
+  width: 8px !important;
+  height: 16px !important;
+}
+
+.u6-loading-bar-common .ant-progress-steps-item-active {
+  background: linear-gradient(93.05deg, #FF6828 0%, #FFD748 100%);
+}
+
+.u6-loading-bar-common .ant-progress-steps-item {
+  margin-right: 4px;
+}
+
+.text-transparent {
+  /*color: #fff;*/
+  /*font-weight: 600;*/
+  /*background-image: linear-gradient(90deg,#FFF600 0%,#4FFB0C 100%);*/
+  background-clip: text;
+  color: transparent;
+  /*display: block;*/
+  /*font-family: HeeboBold*/
+}
+
+.van-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.2rem;
+  overflow: hidden;
+  margin: 0 auto;
+  display: block;
+  background: rgba(9, 11, 15, .7);
+  border: 1px solid #FFFA05;
+}
+
+.add-favorites:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: -0.42rem;
+  right: -0.82rem;
+  width: 2rem;
+  height: 1rem;
+  background: #090B0F;
+  transform: rotate(45deg);
+  box-shadow: 0 0 15px inset rgba(255, 250, 5, .3);
+  background: rgba(9, 11, 15, .8);
+  border: 1px solid #FFFA05;
+}
+
+.tab-item-title-box:after {
+  /* position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg,transparent,#4FFB0C); */
+}
+
+.border-utils-orange {
+  border-radius: 14px;
+  border: 1px solid transparent;
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-image: linear-gradient(180deg, #090B0F, #090B0F), linear-gradient(90deg, #FF7F03, rgba(252, 106, 7, .2), #FF7F03, rgba(252, 106, 7, .2), #FF7F03);
+  box-shadow: inset 0 0 36px 5px #361810;
+}
+
+.border-utils-gray {
+  box-shadow: inset 0 0 36px 5px rgba(255, 255, 255, .08);
+  border-radius: 11px;
+  border: 1px solid rgba(255, 255, 255, .3);
+}
+
+.ant-picker-input input {
+  color: var(--white);
+}
+
+.table th {
+  text-transform: none;
+  background: var(--table-thead);
+}
+
+.table :where(tbody th, tbody td) {
+  background: var(--table-tbody);
+}
+
+.table-zebra tbody tr:nth-child(even) td {
+  background: var(--table-tbody-zebra);
+}
+
+/* scrollbar for safari - 滾軸出現時，thead 不壓縮 */
+@supports (-webkit-touch-callout: none) {
+  .customTable-thead {
+    padding-right: 0px;
+  }
+}
+
+/* scrollbar */
+/* Works on Firefox */
+.customTable-tbody,
+.u6-game-search-list {
+  scrollbar-color: var(--grayscale-60) var(--grayscale-30);
+  scrollbar-width: thin;
+}
+
+.customTable-tbody::-webkit-scrollbar,
+.u6-game-search-list::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+  background: var(--grayscale-30);
+  position: relative;
+  border-radius: 10px;
+}
+
+.customTable-tbody::-webkit-scrollbar-track,
+.u6-game-search-list::-webkit-scrollbar-track {
+  background: var(--grayscale-30);
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 10px;
+}
+
+.customTable-tbody::-webkit-scrollbar-thumb,
+.u6-game-search-list::-webkit-scrollbar-thumb {
+  background: var(--grayscale-60);
+  border-radius: 10px;
+}
+
+/* thead出現滾軸時，預留的scroll寬度 */
+.customTable-thead-scrollPadding {
+  padding-right: 8px;
+}
+
+.customTable-thead th {
+  font-weight: 400;
+}
+
+.customTable-tbody tr:nth-of-type(even) {
+  background: var(--background-header-light);
+}
+
+.vip-tab-items::-webkit-scrollbar {
+  display: none;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+.placeholder-color::placeholder {
+  color: var(--main-primary-main);
+}
+
+.custom-input::placeholder {
+  color: #ffffff;
+}
+
+.rmc-date-picker {
+  padding: 0;
+}
+
+.custom-date-picker .rmc-picker-mask {
+  background-image: linear-gradient(to bottom, rgb(from var(--white) r g b / 0.95), rgb(from var(--white) r g b / 0.60)), linear-gradient(to top, rgb(from var(--white) r g b / 0.95), rgb(from var(--white) r g b / 0.60));
+}
+
+.custom-date-picker .rmc-picker-item {
+  color: var(--black);
+}
+
+
+.ant-picker-panel-container {
+  background: var(--background-popup);
+  border-radius: 8px;
+}
+
+.ant-picker-cell {
+  color: var(--transparent-white-50);
+}
+
+.ant-picker-header,
+.ant-picker-date-panel .ant-picker-content th,
+.ant-picker-cell-in-view,
+.ant-picker-header button {
+  color: white;
+}
+.ant-picker-header,.ant-picker-panel {
+  border: none;
+}
+.ant-picker-cell-disabled {
+  color: var(--transparent-white-50);
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-in-range::before {
+  background-color: var(--transparent-white-10);
+}
+
+.ant-picker-panel-has-range-hover .ant-picker-cell-in-view.ant-picker-cell-in-range::before {
+  background-color: transparent;
+}
+.ant-picker-cell-in-view.ant-picker-cell-in-range.ant-picker-cell-range-hover::before {
+  background-color: var(--transparent-white-10);
+}
+.ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-range-start:not(.ant-picker-cell-range-start-single)::before,
+.ant-picker-cell-in-view.ant-picker-cell-range-end:not(.ant-picker-cell-range-end-single)::before,
+.ant-picker-cell:hover:not(.ant-picker-cell-in-view) .ant-picker-cell-inner,
+.ant-picker-cell:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end):not(.ant-picker-cell-range-hover-start):not(.ant-picker-cell-range-hover-end) .ant-picker-cell-inner,
+.ant-picker-date-panel .ant-picker-cell-in-view.ant-picker-cell-in-range.ant-picker-cell-range-hover-start .ant-picker-cell-inner::after,
+.ant-picker-date-panel .ant-picker-cell-in-view.ant-picker-cell-in-range.ant-picker-cell-range-hover-end .ant-picker-cell-inner::after,
+.ant-picker-cell-in-view.ant-picker-cell-range-start:not(.ant-picker-cell-range-start-single).ant-picker-cell-range-hover-start::before,
+.ant-picker-cell-in-view.ant-picker-cell-range-end:not(.ant-picker-cell-range-end-single).ant-picker-cell-range-hover-end::before {
+  background: var(--linear-1-main);
+}
+ 
+@keyframes loading-fade-in {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes loading-fade-out {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.loading-animation-1 {
+  animation-name: loading-fade-in;
+  animation-delay: 0.5s;
+  animation-duration: 1s;
+  /*animation-fill-mode: both;*/
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.loading-animation-2 {
+  animation-name: loading-fade-in;
+  animation-delay: 0.8s;
+  animation-duration: 1s;
+  /*animation-fill-mode: both;*/
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.loading-animation-3 {
+  animation-name: loading-fade-in;
+  animation-delay: 1s;
+  animation-duration: 1s;
+  /*animation-fill-mode: both;*/
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.watermark__inner {
+  right: 0;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.watermark__body {
+  font-size: 20px;
+  font-weight: bold;
+  user-select: none;
+  white-space: nowrap;
+  margin-bottom: 50px;
+}
+
+button {
+  outline: none;
+}
+
+.menu_drawer_download_btn {
+  background-color: var(--grayscale-20);
+  --bg-opacity: 0.2;
+  box-shadow: 0px 4px 4px 0px var(--grayscale-15);
+  border: 1.5px solid var(--grayscale-40);
+}
+
+.menu_drawer_download_btn:hover {
+  background-color: var(--grayscale-30);
+}
+
+.menu_drawer_download_btn:active {
+  background-color: var(--grayscale-15);
+}
+
+.daily-sign-in-desktop .slick-slide>div {
+  margin: 0 10px;
+}
+
+.daily-sign-in-tablet .slick-slide>div {
+  margin: 0 6px;
+}
+
+.footer-img-container {
+  @apply w-1/5 h-7 md:w-auto lg:max-h-7;
+}
+
+.footer-img {
+  @apply w-full h-auto;
+}
+
+@media (min-width: 480px) {
+  .footer-img-container {
+    @apply h-auto;
+  }
+
+  .footer-img {
+    @apply w-auto h-4/5 max-h-7;
+  }
+}
+
+@media (min-width: 1800px) {
+  .footer-img {
+    width: auto;
+    height: 28px !important;
+  }
+}
+
+.tabber-space {
+  @apply w-full pb-[52px] md:pb-10 lg:pb-8;
+  /* mobile: (tabber height(60) + bottom(12)) - footer padding bottom(20) = 52 */
+  /* md768: (tabber height(60) + bottom(12)) - footer padding bottom(32) = 40 */
+  /* lg1024: (tabber height(60) + bottom(12)) - footer padding bottom(20) = 32 */
+}
+
+@media (min-width: 1440px) {
+  .tabber-space {
+    padding-bottom: 0;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .ant-notification .ant-notification-notice {
+    width: 100vw;
+  }
+}
+
+.ant-notification .ant-notification-notice {
+  border: 1px solid #A7A7A74D;
+  box-shadow: 0px 2px 5px 0px #0000001A;
+  border-radius: 4px;
+
+}
+
+.ant-notification .ant-notification-notice.ant-notification-notice-success {
+  background: var(--state-success-main);
+}
+
+.ant-notification .ant-notification-notice.ant-notification-notice-error {
+  background: var(--state-error-main);
+}
+
+.ant-notification .ant-notification-notice-close,
+.ant-notification .ant-notification-notice-message {
+  color: var(--grayscale-100);
+  font-size: 18px;
+  line-height: 24px;
+  margin-bottom: 0
+}
+
+.ant-notification .ant-notification-notice-close {
+  margin-top: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.ant-notification .ant-notification-notice-close:hover {
+  color: var(--grayscale-100);
+}
+
+.ant-notification .anticon {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.ant-notification .anticon.ant-notification-notice-icon-success {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  background-image: url('/assets/u7/m1/icon_toast_success.png');
+  background-size: 100% 100%;
+}
+
+.ant-notification .anticon.ant-notification-notice-icon-error {
+  width: 20px;
+  height: 20px;
+  color: transparent;
+  background-image: url('/assets/u7/m1/icon_toast_error.png');
+  background-size: 100% 100%;
+}

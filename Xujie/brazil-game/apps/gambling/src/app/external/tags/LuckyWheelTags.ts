@@ -1,0 +1,1 @@
+export const LUCKY_WHEEL_LIST = 'LUCKY_WHEEL_LIST';

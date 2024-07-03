@@ -1,0 +1,488 @@
+@import './bp.scss';
+@mixin baseButton($type) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--grayscale-100);
+  font-weight: 500;
+  background: var(--#{$type}-main);
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.2) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.2) inset;
+  &:active {
+    background: var(--#{$type}-dark-active) !important;
+  }
+
+  &:hover {
+    background: var(--#{$type}-light-hover)
+  }
+
+  &:disabled {
+    background: var(--#{$type}-disabled);
+  }
+}
+
+@mixin baseDisabledButton() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--transparente-30);
+  font-weight: 500;
+  background: var(--transparente-gray-30);
+  border-radius: 8px;
+}
+
+.disabled-button {
+  @include baseDisabledButton();
+}
+
+/* --- linear-1 --- */
+.linear-1-button {
+  @include baseButton('linear-1')
+}
+
+.bg-linear-1-main {
+  background: var(--linear-1-main);
+}
+.bg-linear-1-disabled {
+  background: var(--linear-1-disabled);
+}
+/* --- linear-2 --- */
+.linear-2-button {
+  @include baseButton('linear-2')
+}
+
+.bg-linear-2-main {
+  background: var(--linear-2-main);
+}
+
+.bg-linear-2-disabled {
+  background: var(--linear-2-disabled);
+}
+
+/* --- linear-3 --- */
+.linear-3-button {
+  @include baseButton('linear-3')
+}
+
+.bg-linear-3-main {
+  background: var(--linear-3-main);
+}
+
+.bg--linear-3-disabled {
+  background: var(--linear-3-disabled);
+}
+
+.bg-linear-3-light-hover {
+  background: var(--linear-3-light-hover);
+}
+
+/* --- linear-4 --- */
+.linear-4-button {
+  @include baseButton('linear-4')
+}
+
+.bg-linear-4-main {
+  background: var(--linear-4-main);
+}
+
+.text-linear-4-main {
+  background-image: var(--linear-4-main);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --- linear-5 --- */
+.linear-5-button {
+  @include baseButton('linear-5')
+}
+
+/* --- linear-6 --- */
+.linear-6-button {
+  @include baseButton('linear-6')
+}
+
+.bg-linear-5-main {
+  background: var(--linear-5-main);
+}
+
+/* --- linear-6 --- */
+.bg-linear-6-main {
+  background: var(--linear-6-main);
+}
+
+/* --- State Success --- */
+.state-success-button {
+  @include baseButton('state-success')
+}
+
+.bg-state-success-main {
+  background: var(--state-success-main);
+}
+
+
+/* --- State Error --- */
+.state-error-button {
+  @include baseButton('state-error')
+}
+
+.bg-state-error-main {
+  background: var(--state-error-main);
+}
+
+/* --- State Info --- */
+.state-info-button {
+  @include baseButton('state-info')
+}
+
+.bg-state-info-main {
+  background: var(--state-info-main);
+}
+
+/* ---  State Warn --- */
+.state-warn-button {
+  @include baseButton('state-warn')
+}
+
+.bg-state-warn-main {
+  background: var(--state-warn-main);
+}
+
+/* --- transparente-gray  --- */
+.bg-transparente-gray-10 {
+  background: var(--transparente-gray-10);
+}
+
+.bg-transparente-gray-20 {
+  background: var(--transparente-gray-20);
+}
+
+.bg-transparente-gray-30 {
+  background: var(--transparente-gray-30);
+}
+
+.bg-transparente-gray-40 {
+  background: var(--transparente-gray-40);
+}
+
+.bg-transparente-gray-50 {
+  background: var(--transparente-gray-50);
+}
+
+.bg-transparente-gray-60 {
+  background: var(--transparente-gray-60);
+}
+
+.bg-transparente-gray-70 {
+  background: var(--transparente-gray-70);
+}
+
+.bg-transparente-gray-80 {
+  background: var(--transparente-gray-80);
+}
+
+.bg-transparente-gray-90 {
+  background: var(--transparente-gray-90);
+}
+
+/* --- transparente  --- */
+.bg-transparente-10 {
+  background: var(--transparente-10);
+}
+
+.bg-transparente-20 {
+  background: var(--transparente-20);
+}
+
+.bg-transparente-30 {
+  background: var(--transparente-30);
+}
+
+.bg-transparente-40 {
+  background: var(--transparente-40);
+}
+
+.bg-transparente-50 {
+  background: var(--transparente-50);
+}
+
+.bg-transparente-60 {
+  background: var(--transparente-60);
+}
+
+.bg-transparente-70 {
+  background: var(--transparente-70);
+}
+
+.bg-transparente-80 {
+  background: var(--transparente-80);
+}
+
+.bg-transparente-90 {
+  background: var(--transparente-90);
+}
+
+/* --- Background --- */
+.bg-main {
+  background: var(--background-main);
+}
+
+.bg-header {
+  background: var(--background-header);
+}
+
+/* --- for template footer --- */
+.bg-footer {
+  background: var(--grayscale-20);
+  border-top: 1px solid var(--grayscale-70);
+  color: var(--grayscale-80);
+  line-height: 16px;
+  font-size: 14px;
+  padding: 40px;
+
+  // 平板 之前斷點
+  @media (max-width: 767.99px) {
+    padding: 32px 16px;
+  }
+
+  // PC 之前斷點
+  @media (max-width: 1439.99px) {
+    font-size: 12px;
+    padding: 32px;
+  }
+
+  .bg-footer-title {
+    color: var(--grayscale-100);
+    font-weight: 500;
+    line-height: 20px;
+    font-size: 16px;
+
+    // PC 之前斷點
+    @media (max-width: 1439.99px) {
+      font-size: 14px;
+    }
+  }
+}
+
+/* --- for Drawer Menu Game Item --- */
+.linear-3-menu-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--grayscale-90);
+  font-weight: 500;
+  background: transparent;
+
+  .menu-focus {
+    background: var(--linear-3-main);
+    border-radius: 8px;
+    box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.2) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.2) inset;
+  }
+
+  &:active {
+    background: var(--linear-3-dark-active) !important;
+    border-radius: 8px;
+    box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.2) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.2) inset;
+  }
+
+  &:hover {
+    color: var(--grayscale-100);
+  }
+
+  &:disabled {
+    background: var(--linear-3-disabled)
+  }
+
+
+}
+
+/* --- for Drawer Menu Download Item --- */
+.menu-download-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--grayscale-100);
+  font-weight: 500;
+  background: var(--grayscale-50);
+  border-radius: 8px;
+  box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.2) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.2) inset;
+
+  &:active {
+    background: var(--grayscale-60) !important;
+  }
+
+  &:hover {
+    background: var(--grayscale-40)
+  }
+}
+
+/* --- for index page search button --- */
+
+.home-search-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--grayscale-90);
+  font-weight: 500;
+  background: var(--grayscale-40);
+  border-radius: 8px;
+  border-width: 2px;
+  border-color: var(--grayscale-90);
+  font-size: 20px;
+  line-height: 28px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  @media (max-width: 1439.99px) {
+    font-size: 14px;
+    line-height: 20px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  &:hover {
+    color: var(--grayscale-100);
+    background: var(--grayscale-60) !important;
+    border-color: var(--grayscale-70);
+  }
+
+  &:active {
+    color: var(--grayscale-100);
+    background: var(--grayscale-50) !important;
+    border-color: var(--grayscale-60);
+  }
+
+}
+
+/* --- for Lucky Wheel Related --- */
+@mixin baseBtn($bg) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: var(#{$bg});
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lucky-wheel-btn {
+  @include baseBtn('--linear-1-main');
+  justify-content: flex-end;
+  color: var(--text-title-secondary);
+}
+
+.lucky-wheel-primary-btn {
+  @include baseBtn('--linear-1-main');
+  color: var(--white);
+}
+
+.lucky-wheel-primary-btn-disabled {
+  @include baseBtn('--grayscale-40');
+  color: var(--grayscale-80);
+}
+
+.lucky-wheel-tabs-btn {
+  @include baseBtn('--linear-2-main');
+  color: var(--text-caption);
+  border-radius: 0px;
+}
+
+.lucky-wheel-tabs-btn-disabled {
+  @include baseBtn('--grayscale-40');
+  color: var(--grayscale-80);
+}
+
+.border-linear {
+  border-bottom: 1px solid var(--transparente-20);
+}
+
+.bg-modal {
+  background: var(--grayscale-30);
+  box-shadow: 0px 25px 50px -12px var(--transparente-black-25);
+}
+
+.bg-modal-btn {
+  @include baseButton('linear-1');
+}
+
+.reward-amount {
+  box-shadow: 0px 4px 4px 0px var(--transparente-black-25);
+  background: var(--linear-6-main);
+  border: 1px solid var(--transparente-50)
+}
+
+.lucky-wheel-description-container {
+  color: var(--grayscale-80);
+
+  & ol:first-child {
+    li {
+      &::marker, h6 {
+        color: var(--grayscale-100);
+        font-weight: 500;
+        color: white;
+        display: inline;
+      }
+    }
+  }
+}
+
+@keyframes customZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(2);
+  }
+}
+
+.animate__customZoomIn {
+  animation-name: customZoomIn;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes customZoomOut {
+  0% {
+    opacity: 0.6;
+    transform: scale(2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.animate__customZoomOut {
+  animation-name: customZoomOut;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes customCoinsDrop {
+  0% {
+    top: -260%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+.animate__customCoinsDrop {
+  animation-name: customCoinsDrop;
+  animation-duration: 2s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);;
+}
+
+.header-button {
+  padding: 6px;
+  border-radius: 8px;
+  border-width: 1.5px;
+  border-color: var(--grayscale-70);
+  box-shadow: 0px -3.5px 3.5px 0px rgba(0, 0, 0, 0.2) inset, 0px 3.5px 3.5px 0px rgba(255, 255, 255, 0.2) inset;
+}

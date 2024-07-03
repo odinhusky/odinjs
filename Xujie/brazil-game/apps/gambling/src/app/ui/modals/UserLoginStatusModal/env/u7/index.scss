@@ -1,0 +1,242 @@
+.mode-login-modal-1 {
+    // title
+    --title-text: #FFFFFF;
+    --title-outline: #ffffff;
+    //tab
+    --tab-background-active: transparent;
+    --tab-text-active: #FFFFFF;
+    --tab-outline-active: var(--grayscale-80);
+    --tab-background-unactive: transparent;
+    --tab-text-unactive: var(--grayscale-80);
+    --tab-outline-unactive: #ffffff;
+    --tab-link: #ffffff;
+    --tab-background-light-hover: transparent;
+    --tab-background-dark-active: var(--grayscale-80);
+    //textfields(input)
+    --input-background: var(--linear-4-main);
+    --input-label: #ffffff;
+    --input-placeholder: var(--transparent-white-50);
+    --input-outline: transparent;
+    --input-focus: transparent;
+    --input-error: var(--state-error-main);
+    // button-confirm
+    --button-confirm-background: var(--linear-1-main);
+    --button-confirm-background-hover: var(--linear-1-light-hover);
+    --button-confirm-background-active: var(--linear-1-dark-active);
+    --button-confirm-background-disabled: var(--linear-1-disabled);
+    --button-confirm-text: #ffffff;
+    --button-confirm-outline: #ffffff;
+    // button-get OTP
+    --button-getotp-background: var(--linear-3-main);
+    --button-getotp-background-hover: var(--linear-3-light-hover);
+    --button-getotp-background-active: var(--linear-3-dark-active);
+    --button-getotp-background-disabled: var(--linear-3-disabled);
+    --button-getotp-text: #ffffff;
+    --button-getotp-outline: #ffffff;
+    // caption
+    --caption-text: #ffffff;
+    --caption-link: var(--state-warn-main);
+    // background
+    --modal-background: var(--background-popup1);
+    --modal-outline: #ffffff;
+    // icon
+    --icon-common: var(--grayscale-70);
+    --icon-close: var(--transparent-white-70);
+    --icon-checkbox-background: #ffffff;
+    --icon-checkbox-outline: #ffffff;
+    --icon-input: var(--transparent-white-50);
+    // animate
+    --animate-duration: 0.5s;
+    --form-animate-duration: 0.2s;
+    // other
+    --common-border-radius: 100px;
+    // RWD
+    $screen-desktop: 7680px;
+    $screen-tablet: 1439px;
+    $screen-mobile: 767px;
+
+    @mixin linearGradientBorder($bgColor, $borderColor) {
+        border: 1.5px solid transparent;
+        background-clip: padding-box, border-box;
+        background-origin: padding-box, border-box;
+        background-image: $bgColor, $borderColor;
+    }
+
+    .mode-container {
+        padding: 10px 20px 30px 25px;
+        position: relative;
+        @include linearGradientBorder(var(--modal-background), var(--stroke-popup));
+
+
+        .icon-close {
+            position: absolute;
+            left: 50%;
+            bottom: -20px;
+            top: unset;
+            transform: translate(-50%, 100%);
+            width: 35px;
+            height: 35px;
+            color: var(--transparent-white-70);
+            border: 2px solid var(--transparent-white-70);
+            padding: 6px;
+            svg {
+                width: 20px !important;
+                height: 20px !important;
+            }
+            &:hover {
+                background: none;
+            }
+
+        }
+
+    }
+
+    .mode-input {
+        .input-container {
+            gap: 16px;
+
+            .input-box {
+                padding: 12px;
+                @include linearGradientBorder(var(--input-background), linear-gradient(180deg, #ffffff00 0%, rgba(131, 47, 152, 0.2) 80%, var(--grayscale-60) 100%));
+
+                &.error {
+                    @include linearGradientBorder(var(--input-background), linear-gradient(180deg, #ffffff00 0%, rgba(131, 47, 152, 0.2) 80%, var(--input-error) 100%));
+                }
+
+            }
+        }
+    }
+
+    
+
+    @media (min-width: $screen-mobile) {
+        .register-form {
+            position: relative;
+
+            padding-bottom: 75px;
+
+            .form-button {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+            }
+        }
+
+
+    }
+    .forget-link {
+        span {
+            span {
+                display: none;
+            }
+        }
+    }
+    .forget-form {
+        .sms-form-item {
+            .input-container {
+                width: calc(100% - 88px - 16px);
+                @media (max-width: $screen-mobile) {
+                    width: calc(100% - 80px - 8px);
+                }
+            }
+            .input-box {
+                position: relative;
+                .input-suffix {
+                    width: 88px;
+                    padding-left: 16px;
+                    box-sizing: content-box;
+                    @media (max-width: $screen-mobile) {
+                        width: 80px;
+                        padding-left: 8px;
+                    }
+    
+                    position: absolute;
+                    right: 0;
+                    height: 100%;
+                    transform: translateX(100%);
+    
+                    .mode-sms-code-button {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+        
+    }
+    
+
+
+    .icon-check {
+        @media (min-width: $screen-mobile) {
+            scale: 1.2 !important;
+        }
+
+        margin: 6px;
+        border-radius: 100% !important;
+    }
+
+
+    .mode-captcha {
+        width: 112.5px;
+        height: 50px;
+        position: unset;
+
+        .captcha-image,
+        .captcha-reload,
+        .captcha-loading {
+            position: unset;
+            width: 100%;
+        }
+    }
+    .mode-icon {
+        &.icon-arrow_left {
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+            top: 5px !important;
+            @media (max-width: $screen-mobile) {
+                top: 6px !important;
+            }
+        }
+    }
+    .mode-title {
+        text-align: left !important;
+        background: var(--text-linear);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        padding: 4px 20px !important;
+        font-weight: 700 !important;
+        font-size: 18px;
+        line-height: 24px;
+        @media (max-width: $screen-mobile) {
+            font-size: 14px;
+        }
+    }
+
+    .mode-tabs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+
+        .tabs-item {
+            &.active {
+                span {
+                    background: var(--text-linear);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    color: transparent;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}

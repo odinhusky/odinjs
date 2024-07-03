@@ -1,0 +1,1 @@
+export type VIPInfoTabListUnitType = { title: string, iconSrc?: string, contentKey: 'signInBonus' | 'upRewardAmount' | 'withdrawAmountLimitDayString' | 'withdrawTimesLimitDay' };

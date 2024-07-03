@@ -1,0 +1,87 @@
+@import './bp.scss';
+@mixin baseButton($bg) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: var(#{$bg});
+  border-radius: 8px;
+  cursor: pointer;
+
+  // &:active {s
+  //     background: var(--#{$type}-dark-active) !important;
+  // }
+
+  // &:hover {
+  //     background: var(--#{$type}-light-hover)
+  // }
+
+  // &:disabled {
+  //     background: var(--#{$type}-disabled)
+  // }
+}
+
+.blue-btn {
+  @include baseButton('--linear-blue-main');
+}
+
+.blue-btn-disabled {
+  @include baseButton('--primary-variant');
+  border: 1px solid var(--primary-assistant);
+  color: var(--primary-assistant);
+}
+
+.lucky-wheel-primary-btn {
+  @include baseButton('--linear-secondary-main');
+  box-shadow: 0px -4px 4px 0px var(--transparente-black-25) inset;
+  box-shadow: 0px 4px 4px 0px var(--transparente-25) inset;
+}
+
+.lucky-wheel-primary-btn-disabled {
+  @include baseButton('--state-disable-variant');
+  box-shadow: 0px -4px 4px 0px var(--transparente-black-25) inset;
+  box-shadow: 0px 4px 4px 0px var(--transparente-25) inset;
+}
+
+.lucky-wheel-secondary-btn {
+  @include baseButton('--linear-secondary-main');
+  box-shadow: 0px -4px 4px 0px var(--transparente-black-25) inset;
+  box-shadow: 0px 4px 4px 0px var(--transparente-25) inset;
+}
+
+.lucky-wheel-secondary-btn-disabled {
+  @include baseButton('--state-disable-variant');
+  box-shadow: 0px -4px 4px 0px var(--transparente-black-25) inset;
+  box-shadow: 0px 4px 4px 0px var(--transparente-25) inset;
+}
+
+.bg-modal {
+  background: linear-gradient(180deg, var(--background-modal-from), var(--background-modal-to));
+}
+
+.bg-modal-btn {
+  background: linear-gradient(180deg,var(--secondary-main-from) 0%,var(--secondary-main-to) 100%);
+}
+
+.reward-amount {
+  border: 3.5px solid #ffffff;
+  box-shadow: 1.13px 2.25px 0px 0px #C11D62;
+  background: linear-gradient(332.72deg, #EF389F 11.1%, #FA82CB 77.07%);
+}
+
+.lucky-wheel-description-container {
+  background: var(--transparente-20);
+  color: white;
+  & ol:first-child {
+    li {
+      br {
+        display: none;
+      }
+
+      h6 {
+        color: var(--grayscale-100);
+        display: inline;
+      }
+    }
+  }
+}

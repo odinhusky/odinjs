@@ -1,0 +1,111 @@
+:root {
+  --font-family: 'Nunito', sans-serif;
+
+  --darken-30: #0000004D;
+  --lighten-30: #FFFFFF4D;
+
+
+  /* --- Base --- */
+  --linear-1-main: linear-gradient(93.05deg, #EB00FF 0%, #FFF066 100%);
+  --linear-1-dark-active: linear-gradient(93.05deg, #BC04CA 0%, #CBB856 100%);
+  --linear-1-light-hover: linear-gradient(93.05deg, #F151FC 0%, #FEEE98 100%);
+  --linear-1-disabled: linear-gradient(93.05deg, rgba(235, 0, 255, 0.5) 0%, rgba(255, 240, 102, 0.5) 100%);
+
+  --linear-2-main: linear-gradient(93.05deg, #FF8400 0%, #FFF066 100%);
+  --linear-2-dark-active: linear-gradient(93.05deg, #CC6B02 0%, #CCBB4D 100%);
+  --linear-2-light-hover: linear-gradient(93.05deg, #FFAA4E 0%, #FFF090 100%);
+  --linear-2-disabled: linear-gradient(93.05deg, rgba(255, 132, 0, 0.5) 0%, rgba(255, 240, 102, 0.5) 100%);
+  
+  --linear-3-main: linear-gradient(93.05deg, #00D97E 0%, #FFEE57 100%);
+  --linear-3-dark-active: linear-gradient(93.05deg, #03AE64 0%, #C1BE48 100%);
+  --linear-3-light-hover:  linear-gradient(93.05deg, #4FE4A4 0%, #F5F28B 100%);
+  --linear-3-disabled: linear-gradient(45deg, rgba(0, 217, 126, 0.5) 0%, rgba(255, 238, 87, 0.5) 100%);
+
+  --linear-4-main: linear-gradient(93.05deg, #0075FF 0%, #66FF7E 100%);
+  --linear-4-dark-active: linear-gradient(93.05deg, #0261CA 0%, #4EC66A 100%);
+  --linear-4-light-hover: linear-gradient(93.05deg, #4EA1FE 0%, #8FF9AB 100%);
+  --linear-4-disabled: linear-gradient(93.05deg, rgba(0, 117, 255, 0.5) 0%, rgba(102, 255, 126, 0.5) 100%);
+
+  --linear-5-main: linear-gradient(93.05deg, #5A31FF 0%, #27F4B7 100%);
+  --linear-5-dark-active: linear-gradient(93.05deg, #482ACB 0%, #21BC95 100%);
+  --linear-5-light-hover: linear-gradient(93.05deg, #8B74FE 0%, #69F1CF 100%);
+  --linear-5-disabled: linear-gradient(93.05deg, rgba(90, 49, 255, 0.5) 0%, rgba(39, 244, 183, 0.5) 100%);
+
+
+  --linear-6-main: linear-gradient(93.05deg, #FF5794 0%, #FEDD69 100%);
+  --linear-6-dark-active:linear-gradient(93.05deg, #BF8699 0%, #CBAA56 100%);
+  --linear-6-light-hover: linear-gradient(93.05deg, #FF8DB3 0%, #FEE098 100%);
+  --linear-6-disabled: linear-gradient(93.05deg, rgba(255, 87, 148, 0.5) 0%, rgba(254, 221, 105, 0.5) 100%);
+
+  /* --- State color --- */
+  --state-error-main: #FC6868;
+  --state-error-dark-active: #7D2020; /*--darken-30*/
+  --state-error-light-hover: #FFA3A3; /*--lighten-30*/
+  --state-error-disabled: rgba(255, 66, 66, 0.5);
+
+  --state-warn-main: #FFAF27;
+  --state-warn-dark-active: #7D5613; /*--darken-30*/
+  --state-warn-light-hover: #FFD895; /*--lighten-30*/
+  --state-warn-disabled: rgba(255, 175, 39, 0.5);
+
+  --state-success-main: #00C885;
+  --state-success-dark-active: #006241; /*--darken-30*/
+  --state-success-light-hover: #82E4C4; /*--lighten-30*/
+  --state-success-disabled: rgba(0, 200, 133, 0.5);
+
+  --state-info-main: #5873FF;
+  --state-info-dark-active: #2B397D; /*--darken-30*/
+  --state-info-light-hover: #ADBAFF; /*--lighten-30*/
+  --state-info-disabled: rgba(88, 115, 255, 0.5);
+
+  --state-other-main: #B821FF;
+  --state-other-dark-active: #5A107D; /*--darken-30*/
+  --state-other-light-hover: #DC92FF; /*--lighten-30*/
+  --state-other-disabled: rgba(184, 33, 255, 0.5);
+
+  /* --- Grayscale --- */
+  --grayscale-00: #000000;
+  --grayscale-10: #0A291A;
+  --grayscale-15: #0F3D26;
+  --grayscale-20: #145247;
+  --grayscale-25: #0A6B54;
+  --grayscale-30: #1F7A5C;
+  --grayscale-40: #29A370;
+  --grayscale-50: #33CC9E;
+  --grayscale-60: #5CD699;
+  --grayscale-70: #85E1B3;
+  --grayscale-80: #ADEBCC;
+  --grayscale-90: #D7F5E6;
+  --grayscale-95: #EBFAF2;
+  --grayscale-100: #FFFFFF;
+
+  /* --- Transparente --- */
+  --transparente-90: rgba(255, 255, 255, 0.9);
+  --transparente-80: rgba(255, 255, 255, 0.8);
+  --transparente-70: rgba(255, 255, 255, 0.7);
+  --transparente-60: rgba(255, 255, 255, 0.6);
+  --transparente-50: rgba(255, 255, 255, 0.5);
+  --transparente-40: rgba(255, 255, 255, 0.4);
+  --transparente-30: rgba(255, 255, 255, 0.3);
+  --transparente-25: rgba(255, 255, 255, 0.25);
+  --transparente-20: rgba(255, 255, 255, 0.2);
+  --transparente-10: rgba(255, 255, 255, 0.1);
+
+  --transparente-black-90: rgba(0, 0, 0, 0.9);
+  --transparente-black-80: rgba(0, 0, 0, 0.8);
+  --transparente-black-70: rgba(0, 0, 0, 0.7);
+  --transparente-black-60: rgba(0, 0, 0, 0.6);
+  --transparente-black-50: rgba(0, 0, 0, 0.5);
+  --transparente-black-40: rgba(0, 0, 0, 0.4);
+  --transparente-black-30: rgba(0, 0, 0, 0.3);
+  --transparente-black-25: rgba(0, 0, 0, 0.25);
+  --transparente-black-20: rgba(0, 0, 0, 0.2);
+  --transparente-black-10: rgba(0, 0, 0, 0.1);
+  
+  --transparente: transparent;
+
+  /* --- Background --- */
+  --bg-main: radial-gradient(50% 50% at 50% 50%, #0B281A 0%, #0A291A 100%);
+  --bg-tab: linear-gradient(90deg, #0D3E2D 0%, #29A386 100%);;
+  --activity-text-shadow-90: rgba(32, 32, 32, 0.9);
+}

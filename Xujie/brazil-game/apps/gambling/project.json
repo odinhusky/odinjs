@@ -1,0 +1,1116 @@
+{
+  "name": "gambling",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/gambling/src",
+  "projectType": "application",
+  "targets": {
+    "serve": {
+      "executor": "@nx/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "hmr": true
+      },
+      "configurations": {
+        "dev-bmw": {
+          "buildTarget": "gambling:build:dev-bmw"
+        },
+        "dev-legend": {
+          "buildTarget": "gambling:build:dev-legend"
+        },
+        "dev-wild777bet": {
+          "buildTarget": "gambling:build:dev-wild777bet"
+        },
+        "dev-pernambucana777bet": {
+          "buildTarget": "gambling:build:dev-pernambucana777bet"
+        },
+        "dev-v1-p1-m1v1-pbet": {
+          "buildTarget": "gambling:build:dev-v1-p1-m1v1-pbet"
+        },
+        "dev-u1-m1": {
+          "buildTarget": "gambling:build:dev-u1-m1"
+        },
+        "dev-u1-m2": {
+          "buildTarget": "gambling:build:dev-u1-m2"
+        },
+        "dev-u1-m3": {
+          "buildTarget": "gambling:build:dev-u1-m3"
+        },
+        "dev-u2-m1": {
+          "buildTarget": "gambling:build:dev-u2-m1"
+        },
+        "dev-u2-m2": {
+          "buildTarget": "gambling:build:dev-u2-m2"
+        },
+        "dev-p1-m1": {
+          "buildTarget": "gambling:build:dev-p1-m1"
+        },
+        "dev-u1-m4": {
+          "buildTarget": "gambling:build:dev-u1-m4"
+        },
+        "dev-u2-m3": {
+          "buildTarget": "gambling:build:dev-u2-m3"
+        },
+        "dev-u1-m5": {
+          "buildTarget": "gambling:build:dev-u1-m5"
+        },
+        "dev-u2-m4": {
+          "buildTarget": "gambling:build:dev-u2-m4"
+        },
+        "dev-u1-m6": {
+          "buildTarget": "gambling:build:dev-u1-m6"
+        },
+        "dev-u2-m5": {
+          "buildTarget": "gambling:build:dev-u2-m5"
+        },
+        "dev-u5-m1": {
+          "buildTarget": "gambling:build:dev-u5-m1"
+        },
+        "dev-u1-m7": {
+          "buildTarget": "gambling:build:dev-u1-m7"
+        },
+        "dev-u2-m6": {
+          "buildTarget": "gambling:build:dev-u2-m6"
+        },
+        "dev-u6-m1": {
+          "buildTarget": "gambling:build:dev-u6-m1"
+        },
+        "dev-u1-m8": {
+          "buildTarget": "gambling:build:dev-u1-m8"
+        },
+        "dev-u2-m7": {
+          "buildTarget": "gambling:build:dev-u2-m7"
+        },
+        "dev-u5-m2": {
+          "buildTarget": "gambling:build:dev-u5-m2"
+        },
+        "dev-u5-m3": {
+          "buildTarget": "gambling:build:dev-u5-m3"
+        },
+        "dev-u7-m1": {
+          "buildTarget": "gambling:build:dev-u7-m1"
+        },
+        "dev-u6-m2": {
+          "buildTarget": "gambling:build:dev-u6-m2"
+        },
+        "dev-u9-m1": {
+          "buildTarget": "gambling:build:dev-u9-m1"
+        }
+      }
+    },
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/gambling",
+        "index": "apps/gambling/src/index.html",
+        "generateIndexHtml": false,
+        "baseHref": "/",
+        "main": "apps/gambling/src/main.tsx",
+        "tsConfig": "apps/gambling/tsconfig.app.json",
+        "assets": [
+          "apps/gambling/src/favicon.ico",
+          "apps/gambling/src/assets"
+        ],
+        "styles": [],
+        "scripts": [],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/gambling/build/webpack.config.main.js",
+        "postcssConfig": "apps/gambling/src/environments/postcss.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-bmw": {
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/deprecated/bmw/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/deprecated/bmw/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/index.replacement.html",
+              "with": "apps/gambling/src/environments/deprecated/bmw/index.html"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-legend": {
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/deprecated/legend/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/deprecated/legend/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/index.replacement.html",
+              "with": "apps/gambling/src/environments/deprecated/legend/index.html"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-pernambucana777bet": {
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/deprecated/pernambucana777bet/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/deprecated/pernambucana777bet/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/index.replacement.html",
+              "with": "apps/gambling/src/environments/deprecated/pernambucana777bet/index.html"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "prod-pernambucana777bet": {
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/pernambucana777bet/environment.prod.ts"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/pernambucana777bet/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/index.replacement.html",
+              "with": "apps/gambling/src/environments/pernambucana777bet/index.html"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "dev-wild777bet": {
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/deprecated/wild777bet/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/deprecated/wild777bet/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/index.replacement.html",
+              "with": "apps/gambling/src/environments/deprecated/wild777bet/index.html"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-v1-p1-m1v1-pbet": {
+          "postcssConfig": "apps/gambling/src/environments/p1/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/p1/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/p1/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/p1/m1v1/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/p1/m1v1/index.html"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "prod-v1-p1-m1v1-pbet": {
+          "postcssConfig": "apps/gambling/src/environments/p1/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/p1/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/p1/m1/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/p1/dev_m1/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/p1/dev_m1/index.html"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "prod-{TEMP_NAME}{U_VERSION}-m{M_VERSION}v{V_VERSION}": {
+          "postcssConfig": "apps/gambling/src/environments/{TEMP_NAME}{U_VERSION}/postcss.config.js",
+          "fileReplacements": [
+            {
+              "with": "apps/gambling/src/environments/{TEMP_NAME}{U_VERSION}/tailwind.variables",
+              "replace": "apps/gambling/src/environments/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/{TEMP_NAME}{U_VERSION}/m{M_VERSION}/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/{TEMP_NAME}{U_VERSION}/m{M_VERSION}v{V_VERSION}/environment.prod.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/{TEMP_NAME}{U_VERSION}/m{M_VERSION}v{V_VERSION}/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/{TEMP_NAME}{U_VERSION}/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/{TEMP_NAME}{U_VERSION}/m{M_VERSION}/color.scss"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "dev-u1-m1": {
+          "postcssConfig": "apps/gambling/src/environments/u1/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u1/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u1/m1/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u1/dev_m1/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u1/dev_m1/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u1/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u1/m1/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u1-m2": {
+          "postcssConfig": "apps/gambling/src/environments/u1/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u1/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u1/m2/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u1/dev_m2/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u1/dev_m2/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u1/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u1/m2/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u1-m3": {
+          "postcssConfig": "apps/gambling/src/environments/u1/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u1/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u1/m3/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u1/dev_m3/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u1/dev_m3/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u1/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u1/m3/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u2-m1": {
+          "postcssConfig": "apps/gambling/src/environments/u2/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u2/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u2/m1/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u2/dev_m1/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u2/dev_m1/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u2/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u2/m1/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u2-m2": {
+          "postcssConfig": "apps/gambling/src/environments/u2/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u2/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u2/m2/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u2/dev_m2/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u2/dev_m2/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u2/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u2/m2/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-p1-m1": {
+          "postcssConfig": "apps/gambling/src/environments/p1/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/p1/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/p1/m1/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/p1/dev_m1/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/p1/dev_m1/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/p1/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/p1/m1/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u1-m4": {
+          "postcssConfig": "apps/gambling/src/environments/u1/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u1/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u1/m4/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u1/dev_m4/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u1/dev_m4/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u1/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u1/m4/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u2-m3": {
+          "postcssConfig": "apps/gambling/src/environments/u2/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u2/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u2/m3/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u2/dev_m3/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u2/dev_m3/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u2/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u2/m3/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u1-m5": {
+          "postcssConfig": "apps/gambling/src/environments/u1/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u1/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u1/m5/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u1/dev_m5/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u1/dev_m5/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u1/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u1/m5/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u2-m4": {
+          "postcssConfig": "apps/gambling/src/environments/u2/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u2/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u2/m4/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u2/dev_m4/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u2/dev_m4/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u2/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u2/m4/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u1-m6": {
+          "postcssConfig": "apps/gambling/src/environments/u1/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u1/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u1/m6/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u1/dev_m6/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u1/dev_m6/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u1/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u1/m6/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u2-m5": {
+          "postcssConfig": "apps/gambling/src/environments/u2/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u2/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u2/m5/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u2/dev_m5/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u2/dev_m5/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u2/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u2/m5/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u5-m1": {
+          "postcssConfig": "apps/gambling/src/environments/u5/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u5/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u5/m1/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u5/dev_m1/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u5/dev_m1/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u5/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u5/m1/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u5-m2": {
+          "postcssConfig": "apps/gambling/src/environments/u5/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u5/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u5/m2/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u5/dev_m2/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u5/dev_m2/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u5/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u5/m2/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u5-m3": {
+          "postcssConfig": "apps/gambling/src/environments/u5/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u5/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u5/m3/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u5/dev_m3/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u5/dev_m3/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u5/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u5/m3/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u1-m7": {
+          "postcssConfig": "apps/gambling/src/environments/u1/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u1/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u1/m7/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u1/dev_m7/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u1/dev_m7/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u1/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u1/m7/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u2-m6": {
+          "postcssConfig": "apps/gambling/src/environments/u2/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u2/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u2/m6/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u2/dev_m6/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u2/dev_m6/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u2/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u2/m6/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u6-m1": {
+          "postcssConfig": "apps/gambling/src/environments/u6/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u6/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u6/m1/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u6/dev_m1/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u6/dev_m1/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u6/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u6/m1/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u1-m8": {
+          "postcssConfig": "apps/gambling/src/environments/u1/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u1/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u1/m8/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u1/dev_m8/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u1/dev_m8/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u1/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u1/m8/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u2-m7": {
+          "postcssConfig": "apps/gambling/src/environments/u2/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u2/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u2/m7/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u2/dev_m7/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u2/dev_m7/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u2/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u2/m7/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u7-m1": {
+          "postcssConfig": "apps/gambling/src/environments/u7/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u7/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u7/m1/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u7/dev_m1/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u7/dev_m1/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u7/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u7/m1/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u6-m2": {
+          "postcssConfig": "apps/gambling/src/environments/u6/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u6/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u6/m2/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u6/dev_m2/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u6/dev_m2/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u6/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u6/m2/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "dev-u9-m1": {
+          "postcssConfig": "apps/gambling/src/environments/u9/postcss.config.js",
+          "fileReplacements": [
+            {
+              "replace": "apps/gambling/src/environments/tailwind.variables",
+              "with": "apps/gambling/src/environments/u9/tailwind.variables"
+            },
+            {
+              "replace": "apps/gambling/src/environments/theme.css",
+              "with": "apps/gambling/src/environments/u9/m1/theme.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/environment.ts",
+              "with": "apps/gambling/src/environments/u9/dev_m1/environment.dev.ts"
+            },
+            {
+              "replace": "apps/gambling/src/index.html",
+              "with": "apps/gambling/src/environments/u9/dev_m1/index.html"
+            },
+            {
+              "replace": "apps/gambling/src/environments/style.css",
+              "with": "apps/gambling/src/environments/u9/style.css"
+            },
+            {
+              "replace": "apps/gambling/src/environments/color.scss",
+              "with": "apps/gambling/src/environments/u9/m1/color.scss"
+            }
+          ],
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/gambling/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "gambling:build"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "apps/gambling/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

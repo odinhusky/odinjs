@@ -1,0 +1,3 @@
+export const BIND_WITHDRAW_PASSWORD = 'BIND_WITHDRAW_PASSWORD';
+
+export const walletTags = [BIND_WITHDRAW_PASSWORD];

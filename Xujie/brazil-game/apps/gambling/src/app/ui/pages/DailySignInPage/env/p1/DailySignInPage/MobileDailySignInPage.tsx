@@ -1,0 +1,91 @@
+import { LeftOutlined } from '@ant-design/icons';
+import React from 'react';
+import { useNavigate } from 'react-router';
+import styled from 'styled-components';
+
+import { PageOrModalPathEnum } from '../../../../../PageOrModalPathEnum';
+import { Footer } from '../Footer';
+import { Notice } from '../Notice';
+import { DayList } from './index';
+import { RootState } from '../../../../../../reduxStore';
+import { useSelector } from 'react-redux';
+import { LevelList } from '../../../index';
+import { BackNavigation } from '../../../../../components-bs/BackNavigation/BackNavigation';
+import { GetPunchInConfigResponse } from '../../../../../../external/PunchInEndpoint';
+
+const Container = styled.div`
+  //background: #287052;
+  background-color: rgba(40, 112, 82, 0.1);
+`;
+export const PMobileDailySignInPage = ({
+  currentLevel,
+  signInAllConfig,
+  onClickToSignIn,
+  signInConfig,
+  signInTotalDays,
+  todayIsSignIn,
+  vipLevel,
+  setCurrentSelectedLevel,
+  currentSelectedLevel,
+}: {
+  currentLevel: number;
+  signInAllConfig: {
+    identifier: string;
+    value: string;
+  }[];
+  onClickToSignIn: () => void;
+  signInConfig?: GetPunchInConfigResponse['data']['signInConfig'];
+  signInTotalDays: GetPunchInConfigResponse['data']['signInTotalDays'];
+  todayIsSignIn: GetPunchInConfigResponse['data']['todayIsSignIn'];
+  vipLevel: GetPunchInConfigResponse['data']['vipLevel'];
+  currentSelectedLevel: number;
+  setCurrentSelectedLevel: React.Dispatch<React.SetStateAction<number>>;
+}) => {
+  const navigate = useNavigate();
+
+  return (
+    <Container className={'100vh relative'}>
+      {/*// <Container className={'h-full relative'}>*/}
+      {/*  <section className={"sm:rounded-3xl text-white font-bold overflow-hidden relative mb-8"}>*/}
+      {/*    <img className="w-full" src={`assets/${environment.assetPrefix}/bannerVIP.png`}/>*/}
+      {/*  </section>*/}
+
+      <div className={'p-2'}>
+        <BackNavigation
+          onClick={() => {
+            navigate(PageOrModalPathEnum.IndexPage);
+          }}
+        />
+
+        <div className={'mt-9'}>
+          <LevelList
+            startLevel={1}
+            currentLevel={currentLevel}
+            currentSelectedLevel={currentSelectedLevel}
+            setCurrentSelectedLevel={setCurrentSelectedLevel}
+          />
+        </div>
+
+        <DayList
+          className={'mx-4 flex-wrap justify-start'}
+          itemClassName={'shrink-0 grow-0 basis-[20%]'}
+          currentSelectedLevel={currentSelectedLevel}
+          signInAllConfig={signInAllConfig}
+          signInConfig={signInConfig}
+          signInTotalDays={signInTotalDays}
+          todayIsSignIn={todayIsSignIn}
+          vipLevel={vipLevel}
+        />
+
+        <Notice />
+
+        <Footer
+          onClickToSignIn={onClickToSignIn}
+          todayIsSignIn={todayIsSignIn}
+          vipLevel={vipLevel}
+          setCurrentSelectedLevel={setCurrentSelectedLevel}
+        />
+      </div>
+    </Container>
+  );
+};

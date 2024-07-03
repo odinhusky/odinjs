@@ -1,0 +1,18 @@
+.u6-custom-scrollbar-style {
+    &::-webkit-scrollbar {
+        display: block !important;
+        width: 4px;
+        background: var(--transparente-20);
+        border-radius: 10px;
+
+        @media (min-width: 767.99px) {
+            width: 8px !important;
+        }
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-clip: content-box;
+        background-color: var(--transparente-80);
+    }
+}

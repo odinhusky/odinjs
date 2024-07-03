@@ -1,0 +1,93 @@
+[
+  {
+    "lowerProductName": "u1devbet",
+    "U_VERSION": "1",
+    "M_VERSION": "8",
+    "M_MAX_VERSION": "8",
+    "V_VERSION": "1",
+    "PLATFORM_NAME": "U1M8V1",
+    "PLATFORM_GROUP": "O Group",
+    "APP_VERSION": "dev 1.06.00",
+    "TEMP_NAME": "u",
+    "EFFECTS": "none",
+    "BACKGROUND_VIDEO": ""
+  },
+  {
+    "lowerProductName": "u2devbet",
+    "U_VERSION": "2",
+    "M_VERSION": "7",
+    "M_MAX_VERSION": "7",
+    "V_VERSION": "1",
+    "PLATFORM_NAME": "U2M7V1",
+    "PLATFORM_GROUP": "O Group",
+    "APP_VERSION": "dev 1.06.00",
+    "TEMP_NAME": "u",
+    "EFFECTS": "none",
+    "BACKGROUND_VIDEO": ""
+  },
+  {
+    "lowerProductName": "p1devbet",
+    "U_VERSION": "1",
+    "M_VERSION": "1",
+    "M_MAX_VERSION": "1",
+    "V_VERSION": "1",
+    "PLATFORM_NAME": "P1M1V1",
+    "PLATFORM_GROUP": "O Group",
+    "APP_VERSION": "dev 1.06.00",
+    "TEMP_NAME": "p",
+    "EFFECTS": "none",
+    "BACKGROUND_VIDEO": ""
+  },
+  {
+    "lowerProductName": "u5devbet",
+    "U_VERSION": "5",
+    "M_VERSION": "3",
+    "M_MAX_VERSION": "3",
+    "V_VERSION": "1",
+    "PLATFORM_NAME": "U5M2V1",
+    "PLATFORM_GROUP": "O Group",
+    "APP_VERSION": "dev 1.06.00",
+    "TEMP_NAME": "u",
+    "EFFECTS": "none",
+    "BACKGROUND_VIDEO": ""
+  },
+  {
+    "lowerProductName": "u3devbet",
+    "U_VERSION": "3",
+    "M_VERSION": "1",
+    "M_MAX_VERSION": "1",
+    "V_VERSION": "1",
+    "PLATFORM_NAME": "U3M1V1",
+    "PLATFORM_GROUP": "O Group",
+    "APP_VERSION": "dev 1.06.00",
+    "TEMP_NAME": "u",
+    "EFFECTS": "none",
+    "BACKGROUND_VIDEO": ""
+  },
+  {
+    "lowerProductName": "u6devbet",
+    "U_VERSION": "6",
+    "M_VERSION": "1",
+    "M_MAX_VERSION": "2",
+    "V_VERSION": "1",
+    "PLATFORM_NAME": "U6M1V1",
+    "PLATFORM_GROUP": "O Group",
+    "APP_VERSION": "dev 1.06.00",
+    "TEMP_NAME": "u",
+    "EFFECTS": "none",
+    "BACKGROUND_VIDEO": ""
+  },
+  {
+    "lowerProductName": "u4devbet",
+    "U_VERSION": "4",
+    "M_VERSION": "1",
+    "M_MAX_VERSION": "1",
+    "V_VERSION": "1",
+    "PLATFORM_NAME": "U4M1V1",
+    "PLATFORM_GROUP": "O Group",
+    "APP_VERSION": "dev 1.06.00",
+    "TEMP_NAME": "p",
+    "EFFECTS": "none",
+    "BACKGROUND_VIDEO": ""
+  }
+]

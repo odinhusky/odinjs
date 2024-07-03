@@ -1,0 +1,26 @@
+.u7-range-picker.ant-picker {
+    .ant-picker-input {
+        width: 90px;
+        font-size: 14px;
+        padding: 2px 0;
+        font-weight: 500;
+
+        input {
+            text-align: center;
+        }
+    }
+
+    .ant-picker-range-separator {
+        padding: 0;
+    }
+}
+
+.u7-range-picker.ant-picker-focused {
+    box-shadow: none;
+}
+
+//.u7-range-date-picker {
+//    span:before {
+//        color: var(--grayscale-70)
+//    }
+//}

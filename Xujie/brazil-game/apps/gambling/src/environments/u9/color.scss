@@ -1,0 +1,257 @@
+@import './bp.scss';
+@mixin baseButton($type) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &,&[type='submit'] {
+    background: var(--#{$type}-main) ;
+  }
+  
+  cursor: pointer;
+
+  &:active {
+    background: var(--#{$type}-dark-active) !important;
+  }
+
+  &:hover {
+    background: var(--#{$type}-light-hover);
+  }
+
+  &:disabled {
+    background: var(--#{$type}-disabled) !important;
+  }
+}
+@mixin baseBackGround($type) {
+  background: var(--#{$type}-main);
+  &.active {
+    &:active {
+      background: var(--#{$type}-dark-active) !important;
+    }
+  }
+  &.hover {
+    &:hover {
+      background: var(--#{$type}-light-hover);
+    }
+  }
+  &.disabled {
+    &:disabled {
+      background: var(--#{$type}-disabled);
+    }
+  }
+}
+.primary-button {
+  @include baseButton('primary');
+}
+
+.secondary-button {
+  @include baseButton('secondary');
+}
+
+.tertiary-button {
+  @include baseButton('tertiary');
+}
+
+.quaternary-button {
+  @include baseButton('quaternary');
+}
+
+.state-other-button {
+  @include baseButton('state-other');
+}
+
+.state-success-button {
+  @include baseButton('state-success');
+}
+
+.state-error-button {
+  @include baseButton('state-error');
+}
+
+.state-warn-button {
+  @include baseButton('state-warn');
+}
+
+.state-info-button {
+  @include baseButton('state-info');
+}
+
+/* --- background--- */
+/* --- primary --- */
+.bg-primary-main {
+  @include baseBackGround('primary');
+}
+
+.bg-primary-dark-active {
+  background: var(--primary-dark-active);
+}
+
+.bg-primary-light-hover {
+  background: var(--primary-light-hover);
+}
+
+.bg-primary-disabled {
+  background: var(--primary-disabled);
+}
+
+/* --- secondary --- */
+.bg-secondary-main {
+  @include baseBackGround('secondary');
+}
+
+.bg-secondary-dark-active {
+  background: var(--secondary-dark-active);
+}
+
+.bg-secondary-light-hover {
+  background: var(--secondary-light-hover);
+}
+
+.bg-secondary-disabled {
+  background: var(--secondary-disabled);
+}
+
+/* --- tertiary --- */
+.bg-tertiary-main {
+  @include baseBackGround('tertiary');
+}
+
+.bg-tertiary-dark-active {
+  background: var(--tertiary-dark-active);
+}
+
+.bg-tertiary-light-hover {
+  background: var(--tertiary-light-hover);
+}
+
+.bg-tertiary-disabled {
+  background: var(--tertiary-disabled);
+}
+
+/* --- quaternary --- */
+.bg-quaternary-main {
+  @include baseBackGround('quaternary');
+}
+
+.bg-quaternary-dark-active {
+  background: var(--quaternary-dark-active);
+}
+
+.bg-quaternary-light-hover {
+  background: var(--quaternary-light-hover);
+}
+
+.bg-quaternary-disabled {
+  background: var(--quaternary-disabled);
+}
+
+/* --- State Success --- */
+.bg-state-success-main {
+  @include baseBackGround('state-success');
+}
+
+.bg-state-success-dark-active {
+  background: var(--state-success-dark-active);
+}
+
+.bg-state-success-light-hover {
+  background: var(--state-success-light-hover);
+}
+
+.bg-state-success-disabled {
+  background: var(--state-success-disabled);
+}
+
+/* --- State Error --- */
+.bg-state-error-main {
+  @include baseBackGround('state-error');
+}
+
+.bg-state-error-dark-active {
+  background: var(--state-error-dark-active);
+}
+
+.bg-state-error-light-hover {
+  background: var(--state-error-light-hover);
+}
+
+.bg-state-error-disabled {
+  background: var(--state-error-disabled);
+}
+
+/* --- State Info --- */
+.bg-state-info-main {
+  @include baseBackGround('state-info');
+}
+
+.bg-state-info-dark-active {
+  background: var(--state-info-dark-active);
+}
+
+.bg-state-info-light-hover {
+  background: var(--state-info-light-hover);
+}
+
+.bg-state-info-disabled {
+  background: var(--state-info-disabled);
+}
+
+/* ---  State Warn --- */
+.bg-state-warn-main {
+  @include baseBackGround('state-warn');
+}
+
+.bg-state-warn-dark-active {
+  background: var(--state-warn-dark-active);
+}
+
+.bg-state-warn-light-hover {
+  background: var(--state-warn-light-hover);
+}
+
+.bg-state-warn-disabled {
+  background: var(--state-warn-disabled);
+}
+
+.bg-main {
+  background: var(--background-main);
+}
+
+.bg-header {
+  background: var(--background-header);
+}
+
+.bg-tabbar {
+  background: var(--background-tabbar);
+}
+
+.bg-footer {
+  background: var(--background-footer);
+}
+
+.bg-amount {
+  background: var(--background-amount);
+}
+
+.bg-roleta {
+  background: var(--background-roleta);
+}
+
+.bg-popup {
+  background: var(--background-popup);
+}
+
+.bg-game {
+  background: var(--background-game);
+}
+
+.bg-header2 {
+  background: var(--background-header2);
+}
+
+.box-all-border {
+  box-sizing: border-box;
+
+  * {
+    box-sizing: border-box;
+  }
+}

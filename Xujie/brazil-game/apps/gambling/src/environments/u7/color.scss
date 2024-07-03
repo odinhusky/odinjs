@@ -1,0 +1,646 @@
+@mixin baseButton($type) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--grayscale-100);
+  font-weight: 500;
+  background: var(--#{$type}-main);
+  cursor: pointer;
+
+  &:active {
+    background: var(--#{$type}-dark-active) !important;
+  }
+
+  &:hover {
+    background: var(--#{$type}-light-hover);
+  }
+
+  &:disabled {
+    pointer-events: none;
+    background: var(--#{$type}-disabled);
+  }
+}
+
+@mixin baseButtonDisabled($type) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--grayscale-100);
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--#{$type}-disabled);
+}
+
+// 设置渐变边框 before:样式
+@mixin baseButtonBorder($type) {
+  position: relative;
+  &::before {
+    left: 0px;
+    top: 0px;
+    display: block;
+    content: '';
+    border-radius: 100px;
+    border: 2px solid transparent;
+    background: var(--stroke-#{$type}) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/**字体渐变**/
+@mixin colorText($type) {
+  background: var(--#{$type});
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/** 输入框 **/
+@mixin baseInput($type) {
+  background: var(--#{$type}-main);
+  &:hover {
+    background: var(--#{$type}-light-hover);
+  }
+}
+
+/** linear-1 **/
+.linear-1-button {
+  @include baseButton('linear-1')
+}
+
+.bg-linear-1-main {
+  background: var(--linear-1-main);
+}
+
+.bg-linear-1-dark-active {
+  background: var(--linear-1-dark-active);
+}
+
+.bg-linear-1-light-hover {
+  background: var(--linear-1-light-hover);
+}
+
+.bg-linear-1-disabled {
+  background: var(--linear-1-disabled);
+}
+
+/** linear-2 **/
+.linear-2-button {
+  @include baseButton('linear-2')
+}
+
+.bg-linear-2-main {
+  background: var(--linear-2-main);
+}
+
+.bg-linear-2-dark-active {
+  background: var(--linear-2-dark-active);
+}
+
+.bg-linear-2-light-hover {
+  background: var(--linear-2-light-hover);
+}
+
+.bg-linear-2-disabled {
+  background: var(--linear-2-disabled);
+}
+
+/** linear-3 **/
+.linear-3-button {
+  @include baseButton('linear-3')
+}
+
+.bg-linear-3-main {
+  background: var(--linear-3-main);
+}
+
+.bg-linear-3-dark-active {
+  background: var(--linear-3-dark-active);
+}
+
+.bg-linear-3-light-hover {
+  background: var(--linear-3-light-hover);
+}
+
+.bg-linear-3-disabled {
+  background: var(--linear-3-disabled);
+}
+
+/** linear-4 **/
+.linear-4-button {
+  @include baseButton('linear-4')
+}
+
+.bg-linear-4-main {
+  background: var(--linear-4-main);
+}
+
+.bg-linear-4-dark-active {
+  background: var(--linear-4-dark-active);
+}
+
+.bg-linear-4-light-hover {
+  background: var(--linear-4-light-hover);
+}
+
+.bg-error {
+  background: var(--background-error);
+}
+
+/** linear-5 **/
+.bg-linear-5-main {
+  background: var(--linear-5-main);
+}
+
+/** linear-6 **/
+.bg-linear-6-main {
+  background: var(--linear-6-main);
+}
+
+/** linear-7(colorstyle中没有设计图中有用到) **/
+.bg-linear-7-main {
+  background: var(--linear-7-main);
+}
+
+
+/** btn **/
+.btn-header {
+  cursor: pointer;
+  background: var(--btn-header-main);
+  &:hover{
+    background: var(--btn-header-hover);
+  }
+}
+
+.btn-header-main {
+  background: var(--btn-header-main);
+}
+
+.btn-header-hover {
+  background: var(--btn-header-hover);
+}
+
+.btn-todos {
+  @include baseButton('btn-todos')
+}
+
+.btn-todos-main {
+  background: var(--btn-todos-main);
+
+  &:hover {
+    background: var(--btn-todos-hover);
+  }
+}
+
+.btn-todos-hover {
+  background: var(--btn-todos-hover);
+}
+
+
+/** bg-state-info **/
+.bg-state-info-main {
+  background: var(--state-info-main);
+}
+
+.bg-state-info-dark-active {
+  background: var(--state-info-dark-active);
+}
+
+.bg-state-info-light-hover {
+  background: var(--state-info-light-hover);
+}
+
+.bg-state-info-disabled {
+  background: var(--state-info-disabled);
+}
+
+/** bg-state-warn **/
+.bg-state-warn-main {
+  background: var(--state-warn-main);
+}
+
+.bg-state-warn-dark-active {
+  background: var(--state-warn-dark-active);
+}
+
+.bg-state-warn-light-hover {
+  background: var(--state-warn-light-hover);
+}
+
+.bg-state-warn-disabled {
+  background: var(--state-warn-disabled);
+}
+
+/** bg-state-error **/
+.bg-state-error-main {
+  background: var(--state-error-main);
+}
+
+.bg-state-error-dark-active {
+  background: var(--state-error-dark-active);
+}
+
+.bg-state-error-light-hover {
+  background: var(--state-error-light-hover);
+}
+
+.bg-state-error-disabled {
+  background: var(--state-error-disabled);
+}
+
+/** bg-state-success **/
+.bg-state-success-main {
+  background: var(--state-success-main);
+}
+
+.bg-state-success-dark-active {
+  background: var(--state-success-dark-active);
+}
+
+.bg-state-success-light-hover {
+  background: var(--state-success-light-hover);
+}
+
+.bg-state-success-disabled {
+  background: var(--state-success-disabled);
+}
+
+/* --- Background --- */
+.bg-main {
+  background: var(--background-main);
+}
+
+.bg-header {
+  background: var(--background-header);
+}
+
+.bg-footer {
+  background: var(--background-footer);
+}
+
+.bg-popup1 {
+  background: var(--background-popup1);
+}
+
+.bg-popup2{
+  background: var(--background-popup2);
+}
+
+.bg-tab-bar{
+  background: var(--background-tab-bar);
+}
+.bg-tabbar{
+  background: var(--background-tabbar);
+}
+
+.bg-tab-bar-variant {
+  background: var(--background-tab-bar-variant);
+}
+
+.bg-tabber-focus {
+  background: var(--background-tabber-focus);
+}
+
+.bg-vip {
+  background: var(--background-vip);
+}
+
+.bg-vip-m {
+  background: var(--background-vip-m);
+}
+
+.bg-impotrant {
+  background: var(--background-impotrant);
+}
+
+.bg-amount-main {
+  background: var(--amount-main);
+}
+
+.bg-amount-hover {
+  background: var(--amount-hover);
+}
+
+.bg-amount-focus {
+  background: var(--amount-focus);
+}
+
+.bg-amount-banner {
+  background: var(--amount-banner);
+}
+
+.bg-convidar {
+  background: var(--background-convidar);
+}
+
+.bg-level-1 {
+  background: var(--background-level-1);
+}
+
+.bg-level-2 {
+  background: var(--background-level-2);
+}
+
+.bg-level-3 {
+  background: var(--background-level-3);
+}
+.bg-box-d{
+  background: var(--bg-box-d);
+}
+
+.bg-box-tOrm{
+  background: var(--bg-box-tOrm);
+}
+
+/** btn-border **/
+.border-popup-button {
+  @include baseButtonBorder('popup');
+}
+
+.border-popup2-button {
+  @include baseButtonBorder('popup2');
+}
+
+.border-amount-button {
+  @include baseButtonBorder('amount');
+}
+
+.border-level-button {
+  @include baseButtonBorder('level');
+}
+
+.border-line-button {
+  @include baseButtonBorder('line');
+}
+
+.border-vip-button {
+  border: 1px solid var(--stroke-vip)
+}
+
+.border-vip-get-button {
+  border: 1px solid var(--stroke-vip-get)
+}
+
+.border-stroke-popup-1 {
+  border: 1.5px solid transparent;
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-image: var(--background-main), var(--stroke-popup);
+}
+
+.border-stroke-popup {
+  // border: 1.5px solid transparent;
+  // background-clip: padding-box, border-box;
+  // background-origin: padding-box, border-box;
+  // background-image: var(--background-main), var(--stroke-popup);
+  background: var(--stroke-popup);
+  padding: 1.5px;
+
+  .transparent {
+    background: var(--background-main);
+  }
+
+  button,
+  div {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+}
+
+.border-stroke {
+  background: var(--stroke-popup);
+  // padding: 1.5px;
+  border: 1.5px solid transparent;
+  background-clip: border, padding-box;
+  box-sizing: border-box;
+}
+
+.border-stroke2 {
+  background: var(--stroke-popup2);
+  // padding: 1.5px;
+  border: 1.5px solid transparent;
+  background-clip: border, padding-box;
+  box-sizing: border-box;
+}
+
+/** 字体渐变 **/
+.text-linear3-main {
+  @include colorText("linear-3-main");
+}
+
+.text-important {
+  @include colorText("text-important");
+}
+
+.text-vip {
+  @include colorText("text-vip");
+}
+
+.text-deposit-amount {
+  @include colorText("text-deposit-amount");
+}
+
+.text-linear {
+  background: var(--text-linear);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+}
+
+.bg-game-bar {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%);
+}
+
+// 字體光暈
+.invite-bonus-modal-title-font-shimmer {
+  text-shadow: 0px 0px 12px #FE59FF;
+}
+
+// 分隔線
+.divider-important {
+  width: 100%;
+  height: 2px;
+  background: var(--divider-important);
+}
+/** for vip tab  **/
+/** 已經解鎖 **/
+.vip-tab-lock {
+  @include baseButton('linear-2');
+  color: var(--transparent-white-80);
+  font-weight: 500;
+
+  &:active {
+    background: var(--linear-3-main) !important;
+    color: var(--grayscale-100);
+    font-weight: 700;
+  }
+
+  &.selected {
+    background: var(--linear-3-main);
+    color: var(--grayscale-100);
+    font-weight: 700;
+    box-shadow: 0px 4px 4px 0px #00000040, 0px 4px 5px 0px #FFFFFF73 inset;
+    @include baseButtonBorder('level');
+
+    &::before {
+      border-radius: 8px;
+      border: 2px solid transparent;
+      border-width: 0 0 1px;
+    }
+  }
+}
+
+/** 未解鎖 **/
+.vip-tab-unlock {
+  @include baseButton('linear-2');
+  background: var(--linear-2-disabled);
+  color: var(--transparent-white-80);
+  font-weight: 500;
+
+  &:active {
+    background: var(--linear-3-disabled) !important;
+    color: var(--grayscale-100);
+    font-weight: 700;
+  }
+
+  &:hover {
+    background: var(--linear-1-light-hover);
+  }
+
+  &.selected {
+    background: var(--linear-3-disabled);
+    color: var(--grayscale-100);
+    font-weight: 700;
+    box-shadow: 0px 4px 4px 0px #00000040, 0px 4px 5px 0px #FFFFFF73 inset;
+    @include baseButtonBorder('level');
+
+    &::before {
+      border-radius: 8px;
+      border: 2px solid transparent;
+      border-width: 0 0 1px;
+    }
+  }
+}
+
+/** 输入框 **/
+.linear-4-input {
+  @include baseInput("linear-4");
+}
+
+/* --- for Lucky Wheel Related --- */
+@mixin baseBtn($bg) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: var(#{$bg});
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lucky-wheel-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lucky-wheel-primary-btn {
+  @include baseBtn('--linear-3-main');
+  color: var(--white);
+  box-shadow: 0px -4px 4px 0px var(--transparent-black-25) inset;
+  box-shadow: 0px 4px 4px 0px var(--transparent-white-25) inset;
+}
+
+.lucky-wheel-primary-btn-disabled {
+  @include baseBtn('--transparent-white-10');
+  color: var(--grayscale-100);
+  box-shadow: 0px -4px 4px 0px var(--transparent-black-25) inset;
+  box-shadow: 0px 4px 4px 0px var(--transparent-white-25) inset;
+}
+
+.lucky-wheel-tabs-btn {
+  @include baseBtn('--linear-3-main');
+  color: var(--text-caption);
+  font-weight: 700;
+}
+
+.lucky-wheel-tabs-btn-disabled {
+  @include baseBtn('--transparent');
+  color: var(--transparent-white-50);
+}
+
+.border-linear {
+  border-bottom: 1px solid var(--transparente-20);
+}
+
+.bg-modal-btn {
+  @include baseButton('linear-1');
+}
+
+.reward-amount {
+  box-shadow: 0px 4px 4px 0px var(--transparent-black-25);
+  background: var(--linear-reward-amount);
+  text-shadow: 0px 4px 4px var(--transparent-black-25);
+}
+
+.lucky-wheel-description-container {
+  color: var(--grayscale-80);
+
+  & ol:first-child {
+    li {
+
+      &::marker,
+      h6 {
+        color: var(--grayscale-100);
+        font-weight: 500;
+        color: white;
+        display: inline;
+      }
+    }
+  }
+}
+
+.invite-tab-button {
+  @include baseButton('linear-3');
+  box-shadow: 0px 0px 10.6px 6px var(--transparent-white-25) inset;
+  color: var(--grayscale-100);
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.invite-tab-unselect-button {
+  @include baseButtonBorder('popup');
+  background: var(--linear-4-main);
+  color: var(--transparent-white-50);
+  font-weight: 400;
+  border-radius: 999px;
+  &::before {
+    border-width: 0.5px;
+  }
+  //box-shadow: 0px 0px 10.6px 6px var(--transparent-white-25) inset;
+}
+
+.myDiv {
+  width: auto; /* 默认宽度 */
+}
+@media (max-width: 280px) {
+  .myDiv {
+    width: 105px; /* 当页面宽度小于等于 600px 时的宽度 */
+  }
+}
+.downloadTxt {
+  width: auto; /* 默认宽度 */
+}
+@media (max-width: 280px) {
+  .downloadTxt {
+    width: 135px; /* 当页面宽度小于等于 600px 时的宽度 */
+  }
+}

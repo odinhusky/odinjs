@@ -1,0 +1,318 @@
+@import './bp.scss';
+@mixin baseButton($type) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--grayscale-100);
+    background: var(--#{$type}-main);
+    border-radius: 100px;
+    cursor: pointer;
+    box-shadow: 0px -4px 4px 0px var(--transparente-black-40) inset, 0px 4px 4px 0px var(--transparente-40) inset;
+
+    &:active {
+        background: var(--#{$type}-dark-active) !important;
+    }
+
+    &:hover {
+        background: var(--#{$type}-light-hover)
+    }
+
+    &:disabled {
+        background: var(--#{$type}-disabled)
+    }
+}
+
+@mixin baseBackGround($type) {
+    background: var(--#{$type}-main);
+    &.active {
+        &:active {
+            background: var(--#{$type}-dark-active) !important;
+        }
+        
+    }
+    &.hover {
+        &:hover {
+            background: var(--#{$type}-light-hover)
+        }
+        
+    }
+    &.disabled {
+        &:disabled {
+            background: var(--#{$type}-disabled)
+        } 
+    }
+}
+
+@mixin baseBtn($bg) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: var(#{$bg});
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px -4px 4px 0px var(--transparente-black-40) inset, 0px 4px 4px 0px var(--transparente-40) inset;
+}
+
+.linear-1-button {
+    @include baseButton('linear-1')
+}
+
+.linear-2-button {
+    @include baseButton('linear-2')
+}
+
+.linear-3-button {
+    @include baseButton('linear-3')
+}
+
+.linear-4-button {
+    @include baseButton('linear-4')
+}
+
+.linear-5-button {
+    @include baseButton('linear-5')
+}
+
+.linear-6-button {
+    @include baseButton('linear-6')
+}
+.state-other-button {
+    @include baseButton('state-other')
+}
+.state-success-button {
+    @include baseButton('state-success')
+}
+
+.state-error-button {
+    @include baseButton('state-error')
+}
+
+.state-warn-button {
+    @include baseButton('state-warn')
+}
+
+.state-info-button {
+    @include baseButton('state-info')
+}
+
+/* --- background--- */
+/* --- linear-1 --- */
+.bg-linear-1-main {
+    @include baseBackGround('linear-1')
+}
+.bg-linear-1-dark-active {
+    background: var(--linear-1-dark-active);
+}
+.bg-linear-1-light-hover {
+    background: var(--linear-1-light-hover);
+}
+.bg-linear-1-disabled {
+    background: var(--linear-1-disabled);
+}
+
+/* --- linear-2 --- */
+.bg-linear-2-main {
+    @include baseBackGround('linear-2')
+}
+.bg-linear-2-dark-active {
+    background: var(--linear-2-dark-active);
+}
+.bg-linear-2-light-hover {
+    background: var(--linear-2-light-hover);
+}
+.bg-linear-2-disabled {
+    background: var(--linear-2-disabled);
+}
+
+/* --- linear-3 --- */
+.bg-linear-3-main {
+    @include baseBackGround('linear-3')
+}
+.bg-linear-3-dark-active {
+    background: var(--linear-3-dark-active);
+}
+.bg-linear-3-light-hover {
+    background: var(--linear-3-light-hover);
+}
+.bg-linear-3-disabled {
+    background: var(--linear-3-disabled);
+}
+/* --- linear-4 --- */
+.bg-linear-4-main {
+    @include baseBackGround('linear-4')
+}
+.bg-linear-4-dark-active {
+    background: var(--linear-4-dark-active);
+}
+.bg-linear-4-light-hover {
+    background: var(--linear-4-light-hover);
+}
+.bg-linear-4-disabled {
+    background: var(--linear-4-disabled);
+}
+
+/* --- linear-5 --- */
+.bg-linear-5-main {
+    @include baseBackGround('linear-5')
+}
+.bg-linear-5-dark-active {
+    background: var(--linear-5-dark-active);
+}
+.bg-linear-5-light-hover {
+    background: var(--linear-5-light-hover);
+}
+.bg-linear-5-disabled {
+    background: var(--linear-5-disabled);
+}
+
+
+/* --- linear-6 --- */
+.bg-linear-6-main {
+    @include baseBackGround('linear-6')
+}
+.bg-linear-6-dark-active {
+    background: var(--linear-6-dark-active);
+}
+.bg-linear-6-light-hover {
+    background: var(--linear-6-light-hover);
+}
+.bg-linear-6-disabled {
+    background: var(--linear-6-disabled);
+}
+
+
+/* --- State Success --- */
+.bg-state-success-main {
+    @include baseBackGround('state-success')
+}
+.bg-state-success-dark-active {
+    background: var(--state-success-dark-active);
+}
+.bg-state-success-light-hover {
+    background: var(--state-success-light-hover);
+}
+.bg-state-success-disabled {
+    background: var(--state-success-disabled);
+}
+
+/* --- State Error --- */
+.bg-state-error-main {
+    @include baseBackGround('state-error')
+}
+.bg-state-error-dark-active {
+    background: var(--state-error-dark-active);
+}
+.bg-state-error-light-hover {
+    background: var(--state-error-light-hover);
+}
+.bg-state-error-disabled {
+    background: var(--state-error-disabled);
+}
+
+/* --- State Info --- */
+.bg-state-info-main {
+    @include baseBackGround('state-info')
+}
+.bg-state-info-dark-active {
+    background: var(--state-info-dark-active);
+}
+.bg-state-info-light-hover {
+    background: var(--state-info-light-hover);
+}
+.bg-state-info-disabled {
+    background: var(--state-info-disabled);
+}
+
+
+/* ---  State Warn --- */
+.bg-state-warn-main {
+    @include baseBackGround('state-warn')
+}
+.bg-state-warn-dark-active {
+    background: var(--state-warn-dark-active);
+}
+.bg-state-warn-light-hover {
+    background: var(--state-warn-light-hover);
+}
+.bg-state-warn-disabled {
+    background: var(--state-warn-disabled);
+}
+.bg-main {
+    background: var(--bg-main);
+}
+.bg-tab {
+    background: var(--bg-tab);
+}
+
+// 輪盤相關
+.lucky-wheel-btn {
+  @include baseBtn('--transparente');
+  justify-content: flex-end;
+  color: var(--state-info-main);
+  box-shadow: none;
+}
+
+.lucky-wheel-primary-btn {
+  @include baseBtn('--linear-5-main');
+}
+
+.lucky-wheel-primary-btn-disabled {
+  @include baseBtn('--transparent');
+}
+
+.lucky-wheel-tabs-btn {
+  @include baseBtn('--linear-5-main');
+}
+
+.lucky-wheel-tabs-btn-disabled {
+  @include baseBtn('--transparent');
+  box-shadow: none;
+}
+
+.lucky-wheel-secondary-btn {
+  @include baseBtn('--linear-5-main');
+}
+
+.lucky-wheel-secondary-btn-disabled {
+  @include baseBtn('--grayscale-30');
+}
+
+.border-linear {
+  border-bottom: 1px solid var(--transparente-20);
+}
+
+.bg-modal {
+  background: var(--linear-5-main);
+}
+
+.bg-modal-btn {
+  background: var(--state-info-main);
+  box-shadow: 0px -4px 4px 0px var(--transparente-black-25) inset;
+  box-shadow: 0px 4px 4px 0px var(--transparente-25) inset;
+}
+
+.reward-amount {
+  box-shadow: 0px 4px 4px 0px var(--transparente-black-40);
+  background: var(--linear-2-main);
+}
+
+.lucky-wheel-description-container {
+  background: var(--grayscale-15);
+  color: var(--grayscale-70);
+
+  & ol:first-child {
+    li {
+      &::marker, h6 {
+        color: var(--grayscale-100);
+        font-weight: 700;
+        font-size: 14px;
+        color: white;
+        display: inline;
+        @include bp(tab) {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}

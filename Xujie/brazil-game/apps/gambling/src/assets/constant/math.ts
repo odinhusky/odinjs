@@ -1,0 +1,2 @@
+export const PERCENT_DENOMINATOR = 100;
+export const PROGRESS_GRID_NUM_ARRAY = [10, 20, 25, 33, 50];

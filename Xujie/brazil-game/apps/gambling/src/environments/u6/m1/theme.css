@@ -1,0 +1,104 @@
+:root {
+  --font-family: 'Inter', sans-serif;
+  /* --- Base --- */
+  --linear-1-main: linear-gradient(180deg, #28C5F9 0%, #1850B3 100%);
+  --linear-1-dark-active: linear-gradient(180deg, #0696C6 0%, #0F3270 100%); 
+  --linear-1-light-hover: linear-gradient(180deg, #6AD7FB 0%, #1E64E1 100%);
+  --linear-1-disabled:linear-gradient(180deg, #2b80c5 0%, #233e9e 100%);
+
+  --linear-2-main:  linear-gradient(180deg, #83D810 0%, #178F27 100%, #178F27 100.01%);
+  --linear-2-dark-active:  linear-gradient(180deg, #55A51D 0%, #4A7F01 100%);
+  --linear-2-light-hover:  linear-gradient(180deg, #7EDC3C 0%, #77CB01 100%);
+  /* --linear-2-disabled: linear-gradient(180deg, rgba(108, 208, 37, 0.6) 0%, rgba(104, 178, 1, 0.6) 100%); */
+  --linear-2-disabled: rgba(0, 0, 0, 0.3);
+
+
+  --linear-3-main: linear-gradient(180deg, #BD32F0 0%, #510D89 100%);
+  --linear-3-dark-active: linear-gradient(180deg, #8F0EBE 0%, #37095D 100%);
+  --linear-3-light-hover: linear-gradient(180deg, #CD62F4 0%,#6B11B6 100%);
+  --linear-3-disabled:linear-gradient(180deg, rgba(189, 50, 240, 0.6) 0%, rgba(81, 13, 137, 0.6) 100%);
+
+  --linear-4-main: linear-gradient(180deg, #FEC703 0%, #D25800 100%);
+  --linear-4-dark-active: linear-gradient(180deg, #CB9F01 0%, #B34B00 100%);
+  --linear-4-light-hover: linear-gradient(180deg, #F1CE50 0%, #FF6B00 100%);
+  --linear-4-disabled: linear-gradient(180deg, rgba(254, 199, 3, 0.6) 0%, rgba(210, 88, 0, 0.6) 100%);
+
+  --linear-5-main: linear-gradient(180deg, #F164AF 0%, #D41267 100%);
+  --linear-5-dark-active: linear-gradient(180deg, #ED3697 0%, #A50E50 100%);
+  --linear-5-light-hover: linear-gradient(180deg, #F593C7 0%, #D41267 100%);
+  --linear-5-disabled:linear-gradient(180deg, rgba(241, 100, 175, 0.6) 0%, rgba(167, 14, 81, 0.6) 100%);
+
+  --linear-6-main: linear-gradient(180deg, #4483E2 0%, #1CCE58 100%);
+  --linear-6-dark-active:linear-gradient(180deg, #4483E2 0%, #1CCE58 100%);
+  --linear-6-light-hover:linear-gradient(180deg, #2168D4 0%, #16A245 100%);
+  --linear-6-disabled:linear-gradient(180deg, #72A1E9 0%, #39E473 100%);
+
+  --liner-6-bn:linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 100%);
+  --liner-7-bn: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 100%);
+
+  /* --- State --- */
+  --state-warn-main: #FA61CF;
+  --state-warn-dark-active: #F82FC0;
+  --state-warn-light-hover: #FC92DE;
+  --state-warn-disabled:#FA61CF99;
+
+  --state-error-main: #FF686D;
+  --state-error-dark-active: #FF333A;
+  --state-error-light-hover: #FF999C;
+  --state-error-disabled: #FF686D99;
+
+  --state-success-main: #83D810;
+  --state-success-dark-active: #65A70C;
+  --state-success-light-hover: #9CF029;
+  --state-success-disabled: #83D81099;
+
+  --state-info-main: #36C0FC;
+  --state-info-dark-active: #04B1FB;
+  --state-info-light-hover: #68D0FD;
+  --state-info-disabled: #36C0FC99;
+
+  /* --- Grayscale --- */
+  --grayscale-00: #000000;
+  --grayscale-10: #110A29;
+  --grayscale-15: #19103D;
+  --grayscale-20: #211551;
+  --grayscale-25: #2C2758;
+  --grayscale-30: #321F7A;
+  --grayscale-40: #4329A3;
+  --grayscale-50: #5334CB;
+  --grayscale-60: #765CD6;
+  --grayscale-70: #9885E0;
+  --grayscale-80: #BAAEEA;
+  --grayscale-90: #DDD6F5;
+  --grayscale-95: #EEEBFA;
+  --grayscale-100: #FFFFFF;
+
+  /* --- Background --- */
+  --background-main: linear-gradient(180deg, #9123F6 0%, #3B0EB3 100%);
+  --background-header: linear-gradient(360deg, #2207C1 0%, #700BD4 100%);
+
+  /* --- Transparente --- */
+  --transparente-90: rgba(255, 255, 255, 0.9);
+  --transparente-80: rgba(255, 255, 255, 0.8);
+  --transparente-70: rgba(255, 255, 255, 0.7);
+  --transparente-60: rgba(255, 255, 255, 0.6);
+  --transparente-50: rgba(255, 255, 255, 0.5);
+  --transparente-40: rgba(255, 255, 255, 0.4);
+  --transparente-30: rgba(255, 255, 255, 0.3);
+  --transparente-20: rgba(255, 255, 255, 0.2);
+  --transparente-10: rgba(255, 255, 255, 0.1);
+  
+  /* --- Transparente-gray --- */
+  --transparente-gray-90: rgba(0, 0, 0, 0.9);
+  --transparente-gray-80: rgba(0, 0, 0, 0.8);
+  --transparente-gray-70: rgba(0, 0, 0, 0.7);
+  --transparente-gray-60: rgba(0, 0, 0, 0.6);
+  --transparente-gray-50: rgba(0, 0, 0, 0.5);
+  --transparente-gray-40: rgba(0, 0, 0, 0.4);
+  --transparente-gray-30: rgba(0, 0, 0, 0.3);
+  --transparente-gray-20: rgba(0, 0, 0, 0.2);
+  --transparente-gray-10: rgba(0, 0, 0, 0.1);
+
+  --text-1: rgba(255, 207, 39, 1);
+  --text-2: rgba(255, 224, 124, 1);
+}
