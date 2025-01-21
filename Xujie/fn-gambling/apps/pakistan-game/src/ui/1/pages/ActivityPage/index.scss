@@ -1,0 +1,13 @@
+@media (orientation: landscape) {
+  #app {
+    .activity {
+      .activity-list {
+        @apply mt-6;
+      }
+
+      .switch-bar {
+        @apply mt-3 mb-auto mx-auto;
+      }
+    }
+  }
+}

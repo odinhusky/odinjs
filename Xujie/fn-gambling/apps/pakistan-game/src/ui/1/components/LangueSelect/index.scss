@@ -1,0 +1,41 @@
+.langue-select {
+  &.mode-1 {
+    width: 100%;
+    .ant-select-selector {
+      // background: var(--grayscale-70) !important;
+      box-shadow: none !important;
+    }
+  }
+  &.mode-2 {
+    width: 110px;
+  }
+}
+
+.langue-select-item {
+  span {
+    @apply text-sm font-medium leading-6;
+  }
+
+  img {
+    @apply w-5 h-5;
+  }
+}
+
+.my-select {
+  .rc-virtual-list {
+    background: var(--grayscale-10) !important;
+    filter: brightness(1) !important;
+    border-radius: 8px;
+  }
+
+  .ant-select-item-option {
+    margin: 1px;
+  }
+
+  .ant-select-item-option-active {
+    background: var(--base-1-main) !important;
+    filter: brightness(1) !important;
+    border-radius: 8px;
+    margin: 1px;
+  }
+}

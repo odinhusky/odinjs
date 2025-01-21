@@ -1,0 +1,38 @@
+.mode-banner {
+  .swiper {
+    @apply relative max-tablet:bgi-[var(--grayscale-00)]  mobile:pb-[32.5px] pb-[24.5px] rounded-xl;
+    &::after {
+      display: block;
+      content: '';
+      width: 100%;
+      height: 40px;
+      background: var(--base-1-main);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+  }
+  .swiper-pagination {
+    @apply flex items-center justify-center absolute bottom-2;
+
+    .swiper-pagination-bullet {
+      @apply w-1.5 h-1.5 rounded-full;
+      background: var(--transparent-white-90) !important;
+    }
+
+    .swiper-pagination-bullet-active {
+      box-shadow: 0px 0px 4px 0px #ffffff;
+      background: transparent !important;
+      padding: 2px;
+      box-sizing: content-box;
+      &::after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        display: block;
+        background: var(--grayscale-00) !important;
+      }
+    }
+  }
+}

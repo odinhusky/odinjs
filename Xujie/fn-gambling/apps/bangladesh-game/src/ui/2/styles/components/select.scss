@@ -1,0 +1,19 @@
+.mode-select {
+  .ant-select-selector {
+    border: none !important;
+    background: transparent !important;
+    .ant-select-selection-item {
+      @include textColor(var(--base-2-main));
+    }
+  }
+}
+.mode-select-popup {
+  background: var(--grayscale-30) !important;
+  padding: 0;
+  .ant-select-item-option-active {
+    background: var(--base-1-main);
+  }
+  .ant-select-item-option-content {
+    @include textColor(var(--base-2-main));
+  }
+}

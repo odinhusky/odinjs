@@ -1,0 +1,19 @@
+.faq-list {
+  @apply flex flex-col items-start justify-center grow;
+  counter-reset: faq-desc;
+
+  @include bp(mobile) {
+    .faq-desc {
+      @apply relative ml-5;
+    }
+
+    .faq-desc:before {
+      content: counter(faq-desc) '. ';
+      counter-increment: faq-desc;
+      @apply bgi-text-[var(--grayscale-100)]
+              absolute
+              -left-5;
+      /* 移到预留的空间 */
+    }
+  }
+}

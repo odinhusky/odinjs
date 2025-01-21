@@ -1,0 +1,14 @@
+input {
+  &::placeholder {
+    color: var(--grayscale-50) !important;
+  }
+}
+
+.withdraw-select {
+  .ant-select-selector {
+    border: none !important;
+    height: 2.5rem !important;
+    box-shadow: none !important;
+    border-radius: 0.5rem !important;
+  }
+}

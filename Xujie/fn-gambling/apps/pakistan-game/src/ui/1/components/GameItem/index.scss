@@ -1,0 +1,7 @@
+.bg-hover {
+  @apply w-full h-full 
+    absolute left-0 top-0 z-[2]
+    brightness-[90%]
+    bgi-[var(--linear-1)]
+    backdrop-blur-sm;
+}

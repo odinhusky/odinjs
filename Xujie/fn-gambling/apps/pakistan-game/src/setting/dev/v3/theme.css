@@ -1,0 +1,160 @@
+:root {
+  --font-family: 'Inter', sans-serif;
+
+  --bg-main: linear-gradient(180deg, #022a2d 0%, #034543 100%);
+  --bg-sidebar: linear-gradient(270deg, #182f2a 0%, #1d3e35 100%);
+  --bg-home-tab-bar: linear-gradient(180deg, #1a1a1a 0%, #1a1a1a 100%);
+
+  /* base */
+  --base-1-main: linear-gradient(180deg, #28bd80 0%, #248f77 100%);
+  --base-1-light: linear-gradient(180deg, #42c58f 0%, #2f7055 100%);
+  --base-1-dark: linear-gradient(180deg, #23a671 0%, #115137 100%);
+  --base-1-50: linear-gradient(
+    180deg,
+    rgba(40, 189, 128, 0.5) 0%,
+    rgba(19, 92, 62, 0.5) 100%
+  );
+
+  --base-2-main: linear-gradient(180deg, #fefb71 0%, #e29731 100%);
+  --base-2-light: linear-gradient(180deg, #fefb82 0%, #e5a34a 100%);
+  --base-2-dark: linear-gradient(180deg, #e0dd63 0%, #c7852b 100%);
+  --base-2-50: linear-gradient(
+    180deg,
+    rgba(254, 251, 113, 0.5) 0%,
+    rgba(226, 151, 49, 0.5) 100%
+  );
+
+  --base-3-main: linear-gradient(180deg, #ec884a 0%, #671c1c 100%);
+  --base-3-light: linear-gradient(180deg, #ee9660 0%, #793737 100%);
+  --base-3-dark: linear-gradient(180deg, #d07841 0%, #5b1919 100%);
+  --base-3-50: linear-gradient(
+    180deg,
+    rgba(236, 136, 74, 0.5) 0%,
+    rgba(103, 28, 28, 0.5) 100%
+  );
+
+  /* linear */
+  --linear-1: linear-gradient(180deg, rgba(48, 246, 163, 0.3) 0%, #024125 100%);
+  --linear-2: linear-gradient(180deg, #fcd743 0%, #fbbb39 100%);
+  --linear-3: linear-gradient(
+    90deg,
+    rgba(217, 217, 217, 0) 0%,
+    #c1fcf4 50%,
+    rgba(217, 217, 217, 0) 100%
+  );
+  --linear-4: linear-gradient(
+    270deg,
+    rgba(120, 223, 142, 0.2) 0%,
+    #00673b 100%
+  );
+  --linear-5: linear-gradient(270deg, #fdee4b 0%, #e49831 100%);
+  --linear-6: linear-gradient(105.36deg, #883231 0.79%, #a93f3a 98.42%);
+  --linear-7: linear-gradient(
+    50.29deg,
+    #fec537 17.15%,
+    #fe1720 51.19%,
+    #de099f 85.23%
+  );
+  --linear-8-main: linear-gradient(180deg, #089173 0%, #064679 100%);
+  --linear-8-light: linear-gradient(180deg, #269e84 0%, #245c89 100%);
+  --linear-8-dark: linear-gradient(180deg, #078065 0%, #053e6a 100%);
+  --linear-8-50: linear-gradient(
+    180deg,
+    rgba(8, 145, 115, 0.5) 0%,
+    rgba(6, 70, 121, 0.5) 100%
+  );
+
+  /* state */
+  --state-error-main: #f83b3a;
+  --state-error-light: #f95352;
+  --state-error-dark: #da3433;
+  --state-error-50: rgba(248, 59, 58, 0.5);
+  --state-success-main: #adee2f;
+  --state-success-light: #b7f048;
+  --state-success-dark: #98d129;
+  --state-success-50: rgba(173, 238, 47, 0.5);
+  --state-warn-main: linear-gradient(180deg, #ff9e3a 0%, #ff8100 100%);
+  --state-warn-light: linear-gradient(180deg, #ffaa52 0%, #ff901f 100%);
+  --state-warn-dark: linear-gradient(180deg, #e08b33 0%, #e07200 100%);
+  --state-warn-main-50: linear-gradient(
+    180deg,
+    rgba(255, 158, 58, 0.5) 0%,
+    rgba(255, 129, 0, 0.5) 100%
+  );
+
+  /* game */
+  --game-1-main: #37b4fb;
+  --game-1-light: #69c6fc;
+  --game-1-dark: #05a1fa;
+  --game-1-50: rgba(55, 180, 251, 0.5);
+  --game-2-main: #9243f3;
+  --game-2-light: #ac6ff6;
+  --game-2-dark: #740ff0;
+  --game-2-50: rgba(146, 67, 243, 0.5);
+  --game-3-main: #c01db1;
+  --game-3-light: #e44ed6;
+  --game-3-dark: #85147b;
+  --game-3-50: rgba(192, 29, 177, 0.5);
+
+  /* grayscale */
+  --grayscale-00: #000000;
+  --grayscale-10: #122118;
+  --grayscale-15: #1b3224;
+  --grayscale-20: #244231;
+  --grayscale-25: #2d533d;
+  --grayscale-30: #366349;
+  --grayscale-40: #478561;
+  --grayscale-50: #64ab82;
+  --grayscale-60: #7ab894;
+  --grayscale-70: #9cc9af;
+  --grayscale-80: #bddbca;
+  --grayscale-90: #deede4;
+  --grayscale-95: #eef6f2;
+  --grayscale-100: #ffffff;
+
+  /* transparent-white */
+  --transparent-white-90: rgba(255, 255, 255, 0.9);
+  --transparent-white-80: rgba(255, 255, 255, 0.8);
+  --transparent-white-70: rgba(255, 255, 255, 0.7);
+  --transparent-white-60: rgba(255, 255, 255, 0.6);
+  --transparent-white-50: rgba(255, 255, 255, 0.5);
+  --transparent-white-40: rgba(255, 255, 255, 0.4);
+  --transparent-white-30: rgba(255, 255, 255, 0.3);
+  --transparent-white-20: rgba(255, 255, 255, 0.2);
+  --transparent-white-10: rgba(255, 255, 255, 0.1);
+
+  /* transparent-gray */
+  --transparent-gray-90: rgba(0, 0, 0, 0.9);
+  --transparent-gray-80: rgba(0, 0, 0, 0.8);
+  --transparent-gray-70: rgba(0, 0, 0, 0.7);
+  --transparent-gray-60: rgba(0, 0, 0, 0.6);
+  --transparent-gray-50: rgba(0, 0, 0, 0.5);
+  --transparent-gray-40: rgba(0, 0, 0, 0.4);
+  --transparent-gray-30: rgba(0, 0, 0, 0.3);
+  --transparent-gray-20: rgba(0, 0, 0, 0.2);
+  --transparent-gray-10: rgba(0, 0, 0, 0.1);
+
+  /** 以下皆為自定義 */
+  --transparent-gray-25: rgba(0, 0, 0, 0.25);
+
+  --title-line: linear-gradient(
+    90deg,
+    rgba(217, 217, 217, 0) 0%,
+    #ffd687 50%,
+    rgba(217, 217, 217, 0) 100%
+  );
+
+  /* boxShadow */
+  --inset-shadow: 0px 4px 4px 0px #cccccc40 inset,
+    0px -4px 4px 0px #33333340 inset;
+  --bar-drop-shadow: 0px 4px 4px 0px var(--transparent-gray-25);
+
+  --primary-10: rgba(32, 21, 51, 1);
+  --primary-20: rgba(56, 36, 83, 1);
+
+  --official-btn1: linear-gradient(90deg, #00ce7f 0%, #00aa93 100%);
+  --official-btn1-hover: linear-gradient(90deg, #00aa93 0%, #00ce7f 100%);
+  --official-btn2: linear-gradient(90deg, #2b98ff 0%, #607dff 100%);
+  --official-btn2-hover: linear-gradient(90deg, #607dff 0%, #2b98ff 100%);
+  --official-text: #1f5e5a;
+}

@@ -1,0 +1,11 @@
+.inputs {
+  ::placeholder {
+    color: var(--grayscale-70) !important;
+  }
+  :-webkit-input-placeholder {
+    color: var(--grayscale-70) !important;
+  }
+  :-moz-placeholder {
+    color: var(--grayscale-70) !important;
+  }
+}

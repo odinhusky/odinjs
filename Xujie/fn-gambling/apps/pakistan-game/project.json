@@ -1,0 +1,57 @@
+{
+  "name": "pakistan-game",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/pakistan-game/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/pakistan-game"
+      },
+      "configurations": {
+        "v4": {
+          "buildTarget": "pakistan-game:build:v4"
+        },
+        "v1": {
+          "buildTarget": "pakistan-game:build:v1"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "pakistan-game:build",
+        "hmr": true
+      },
+      "configurations": {
+        "v4": {
+          "mode": "v4"
+        },
+        "v1": {
+          "mode": "v1"
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "pakistan-game:build"
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    }
+  },
+  "tags": []
+}

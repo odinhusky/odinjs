@@ -1,0 +1,88 @@
+.input-container {
+  @apply py-2 px-0;
+}
+
+// antd
+.withdrawable-progress.ant-progress {
+  @apply leading-[normal] border-[none];
+}
+
+.withdrawable-progress.ant-progress .ant-progress-inner {
+  @apply bgi-[var(--transparent-white-30)];
+}
+
+.withdrawable-progress.ant-progress .ant-progress-success-bg,
+.withdrawable-progress.ant-progress .ant-progress-bg {
+  @apply bgi-[var(--linear-5)];
+}
+
+
+.ant-select-dropdown {
+  background: var(--grayscale-30) !important;
+}
+
+.ant-select-item-option-active,{
+  background: var(--grayscale-30) !important;
+  filter: brightness(1.15) !important;
+  //background: transparent !important;
+}
+.ant-select-item-option-selected, {
+  background: var(--grayscale-30) !important;
+  filter: brightness(0.85) !important;
+  //background: transparent !important;
+}
+
+//.ant-select-selector {
+//  @apply bgi-[var(--grayscale-30)];
+//}
+
+//.ant-select-selector,
+//.ant-select-selector:focus,
+//.ant-select-selector:active {
+//  @apply bgi-[var(--grayscale-10)];
+//}
+
+//.ant-select-item,
+//.ant-select-item-option,
+//.ant-select-item-option-active,
+//.ant-select-item-option-selected, {
+//  @apply bgi-[var(--grayscale-10)];
+//}
+
+
+//.form-select {
+//  width: 100%;
+// @apply px-2 py-3;
+//.ant-select-dropdown {
+//  background: var(--grayscale-30) !important;
+//  //@apply bgi-[var(--grayscale-30)];
+//}
+
+//& .ant-select-selector {
+//  @apply bgi-[var(--grayscale-30)];
+//  //background: var(--grayscale-30) !important;
+//  border: none !important;
+//  padding: 12px 16px 12px 8px !important;
+//  height: 48px !important;
+//  input {
+//    height: 100% !important;
+//  }
+//}
+
+
+//.ant-select-arrow {
+//  height: 100%; /* 設置箭頭的高度為 Select 高度 */
+//  padding: 0; /* 清除多餘的 padding */
+//  top: 15%; /* 讓箭頭垂直居中 */
+//  color: white;
+//  fill: white;
+//}
+
+//.ant-select-item {
+//  & .ant-select-item-option-active,
+//  & .ant-select-item-option-selected,
+//  & .ant-select-item-option-selected:hover {
+//    background: transparent !important;
+//  }
+//}
+//}

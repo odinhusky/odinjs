@@ -1,0 +1,16 @@
+.menu-bottom-group {
+  .menu-bottom-group-item {
+    @apply flex items-center justify-between gap-2 
+        cursor-pointer 
+        px-3 py-2 
+        bgi-text-[var(--base-2-main)];
+
+    .left-item {
+      @apply flex items-center gap-2;
+    }
+
+    .menu-icon {
+      @apply w-6 h-6;
+    }
+  }
+}

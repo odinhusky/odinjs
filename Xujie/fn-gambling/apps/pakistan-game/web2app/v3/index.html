@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+  <link rel="icon" href="static/picture/favicon.ico" type="image/x-icon">
+  <title>NoorBet1</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #04070D;
+    }
+
+    img {
+      border: 0;
+      vertical-align: middle;
+    }
+
+    .main_view_page {
+      margin: 0 auto;
+      position: relative;
+      max-width: 750px;
+      width: 100%;
+    }
+
+    .main_view_page .bg img {
+      width: 100%;
+    }
+
+    .tg_link img {
+      width: 100%;
+    }
+
+    .main_view_page .bot {
+      position: fixed;
+      max-width: 750px;
+      margin: 0 auto;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.7);
+      height: 80px;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .main_view_page .bot .toapk, .main_view_page .bot .toh5 {
+      margin: 0 15px;
+      flex: 1;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      position: relative;
+      text-align: center;
+      background-color: red;
+    }
+
+    .main_view_page .bot .toapk .tips, .main_view_page .bot .toh5 .tips {
+      position: absolute;
+      background: #ea4e3d;
+      height: 30px;
+      border-radius: 30px 30px 30px 0;
+      padding: 0 10px;
+      line-height: 30px;
+      right: 0;
+      top: -41px;
+      font-size: 15px;
+    }
+
+    .down {
+      cursor: pointer;
+    }
+
+    .down:hover {
+      /* hover 狀態樣式 */
+      filter: brightness(1.2);
+      /*background-color: lightgray; !* 可根據需要修改 *!*/
+    }
+
+    .down:active {
+      /* active 狀態樣式 */
+      filter: brightness(0.9);
+      /*background-color: darkgray; !* 可根據需要修改 *!*/
+    }
+
+    .main_view_page .bot .toapk .tips::after, .main_view_page .bot .toh5 .tips::after {
+      content: "";
+      position: absolute;
+      bottom: -11px;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-top: 13px solid #ea4e3d;
+      border-right: 13px solid transparent;
+    }
+
+    .main_view_page .bot .toapk {
+      background: #1678ff;
+    }
+
+    .main_view_page .bot .toh5 {
+      background: #ffaa06;
+    }
+  </style>
+  <script charset='UTF-8' src="static/js/sa-sdk-javascript/sensorsdata.min.js "></script>
+  <script charset='UTF-8' src="static/js/index.js "></script>
+  <script charset='UTF-8' src="static/js/fetchMyIp/index.js "></script>
+  <script charset='UTF-8' src="static/js/eventPixel/index.js "></script>
+  <script charset='UTF-8' src="static/js/setting/trackTokenSetting.js "></script>
+  <script type="text/javascript">
+
+    const defAdjustTrackerToken = "1iaa67r1";
+    const defChannelId = "9400000";
+    const defPackageName = "noorbet1";
+    const defDeepLinkSchema = `my${defPackageName}`
+    const defDomain = generateTopDomain();
+
+
+    // init Sensors Data
+    sensorsDataInit(`${defPackageName}w2a`);
+
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ?
+          n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+    // const uParams = new URLSearchParams(window.location.search);
+    // const id = uParams.get('p0');
+    // var pxid = uParams.get('fb_pixel_id');
+    // if (id === '1b6ef0fx') {
+    //   pxid = '421152770636295';
+    // } else if (id === '1cafo0uc') {
+    //   pxid = '1127386581916586';
+    // } else if (id === '1cljmlfa') {
+    //   pxid = '448952637545097';
+    // }
+
+    // fbq('init', pxid);
+    // fbq('track', 'PageView');
+
+
+    function doNoscriptSetUp(pixelId) {
+      if (pixelId) {
+        var noscriptImg = document.createElement('img');
+        noscriptImg.width = "1";
+        noscriptImg.height = "1";
+        noscriptImg.style.display = "none";
+        noscriptImg.src = `https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`;
+
+        var noscriptTag = document.createElement('noscript');
+        noscriptTag.appendChild(noscriptImg);
+
+        document.body?.appendChild(noscriptTag);
+      }
+    }
+
+    // await async .json file， 封裝一個 async fun do init fb pixel
+    async function loadDataAndProcess() {
+      const uParams = new URLSearchParams(window.location.search);
+      const id = uParams.get('p0');
+      const settingData = await loadSettingByTrackToken(id, defPackageName);
+      const pixelId = settingData?.pixel?.pixelId;
+      fbq('init', pixelId);
+      fbq('track', 'PageView');
+
+      doNoscriptSetUp(pixelId)
+    }
+
+    // do and await
+    loadDataAndProcess();
+
+    function getCookie(name) {
+      let cookie = {};
+      document.cookie.split(';').forEach(function (el) {
+        let split = el.split('=');
+        cookie[split[0].trim()] = split.slice(1).join("=");
+      })
+      return cookie[name];
+    }
+
+    const searchParams = new URLSearchParams(window.location.search);
+
+    const adjustTrackerToken = searchParams.get('p0'); //1bgb3er8
+    const campaignname = searchParams.get('p1');
+    const campaignid = searchParams.get('p2');
+    const adsetname = searchParams.get('p3');
+    const adsetid = searchParams.get('p4');
+    const adname = searchParams.get('p5');
+    const adid = searchParams.get('p6');
+    const promoteGameId = searchParams.get('top');
+
+    const fbclid = searchParams.get('fbclid') || getCookie('_fbc');
+    const fbpid = searchParams.get('fbpid') || getCookie('_fbp');
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // SPRIBE/Aviator 137101
+      // TOPBET/WINGO 137296
+      // TURBOGAME/MINES 132623
+      const pathMapping = ['137101', '137296', '132623']
+      const id = pathMapping.includes(promoteGameId) ? promoteGameId : '';
+      const bgPath = `https://game.ttgroup.vip/web2app/pk/v3/bg_${id}.webp`;
+      // 设置 <img> 的 src
+      const imageElement = document.getElementById('bgImage');
+      imageElement.src = bgPath;
+    });
+
+    async function doEventPixel(eventName) {
+      const settingData = await loadSettingByTrackToken(adjustTrackerToken, defPackageName);
+      let fbPixelId = settingData?.pixel?.pixelId || searchParams.get('fb_pixel_id') || '';
+      let fbAccessToken = settingData?.pixel?.accessToken || searchParams.get('fb_access_token') || '';
+      const data = {
+        'eventName': eventName,
+        'fbc': fbclid || '',
+        'fbp': fbpid || '',
+        'vendorPixelID': fbPixelId,
+        'vendorAccesToken': fbAccessToken
+      }
+      useEventPixel(data);
+    }
+
+    sensorsDataTrack('PageView', {'fbc': fbclid || '', 'fbp': fbpid || ''});
+    doEventPixel('PageView');
+
+    let isThrottled = false;
+    function throttle(func, delay) {
+      return function(...args) {
+        if (!isThrottled) {
+          func.apply(this, args);
+          isThrottled = true;
+          setTimeout(() => {
+            isThrottled = false;
+          }, delay);
+        }
+      };
+    }
+
+    function userDevice() {
+      var userAgent = navigator.userAgent;
+      if (userAgent.indexOf("iPhone") != -1 || userAgent.indexOf("iPad") != -1 || userAgent.indexOf("iPod") != -1) {
+        console.log('current device is ios');
+        return true;
+      } else {
+        console.log('current device is other');
+        return false;
+      }
+    }
+
+    async function handleButtonClick() {
+      const settingData = await loadSettingByTrackToken(adjustTrackerToken, defPackageName);
+      let fbPixelId = settingData?.pixel?.pixelId || searchParams.get('fb_pixel_id');
+      let fbAccessToken = settingData?.pixel?.accessToken || searchParams.get('fb_access_token');
+      let channelId = adjustTrackerToken
+        ? settingData?.appId || searchParams.get('cid') || defChannelId
+        : defChannelId;
+      let channelName = adjustTrackerToken
+        ? settingData?.name || 'none'
+        : 'none';
+      // TODO 增加參數 [channel/source/medium]
+      let medium = settingData?.medium || searchParams.get('medium') || 'paid';
+      let source = settingData?.source || searchParams.get('source') || 'facebook';
+
+      let downloadUrl = window.location.host;
+
+      let campaignParameter = adjustTrackerToken ? `?campaign=${campaignname}%20%28${campaignid}%29` : `?campaign=ttgroup`;
+      let adgroupParameter = adjustTrackerToken ? `&adgroup=${adsetname}%20%28${adsetid}%29` : `&adgroup=ttgroup`;
+      let creativeParameter = adjustTrackerToken ? `&creative=${adname}%20%28${adid}%29` : `&creative=ttgroup`;
+      let channelParameter = channelName ? `&channel=${channelName}` : '';
+      let sourceParameter = source ? `&source=${source}` : '';
+      let mediumParameter = medium ? `&medium=${medium}` : '';
+      let promoteGameIdParameter = promoteGameId? `__promoteGameId_${promoteGameId}` : '';
+      let labelParameter = `&label=medium_${medium}__source_${source}__channel_${channelName}` + promoteGameIdParameter;
+      let fbclidParameter = fbclid ? `&fbclid=${fbclid}` : '';
+      let fbpidParameter = fbpid ? `&fbpid=${fbpid}` : '';
+      let fbPixelIdParameter = fbPixelId ? `&fb_pixel_id=${fbPixelId}` : '';
+      let fbAccessTokenParameter = fbAccessToken ? `&fb_access_token=${fbAccessToken}` : '';
+
+      let deepLinkParameter = `${defDeepLinkSchema}://app/hall`
+      deepLinkParameter += campaignParameter;
+      deepLinkParameter += adgroupParameter;
+      deepLinkParameter += creativeParameter;
+      deepLinkParameter += channelParameter;
+      deepLinkParameter += sourceParameter;
+      deepLinkParameter += mediumParameter;
+
+      // let redirectParameter = `https://${downloadUrl}/apk/${defPackageName}/${defPackageName}_${channelId}.apk`;
+      let redirectParameter;
+      const state = userDevice();
+      if (state) {
+        redirectParameter = defDomain + "/hall";
+      } else {
+        redirectParameter = `https://${downloadUrl}/apk/${defPackageName}/${defPackageName}_${channelId}.apk`;
+      }
+
+      let link = `https://app.adjust.com/${adjustTrackerToken ? adjustTrackerToken : defAdjustTrackerToken}`;
+      link += campaignParameter;
+      link += adgroupParameter;
+      link += creativeParameter;
+      link += channelParameter;
+      link += sourceParameter;
+      link += mediumParameter;
+      link += labelParameter;
+      link += fbclidParameter;
+      link += fbpidParameter;
+      link += fbPixelIdParameter;
+      link += fbAccessTokenParameter;
+
+      // link += '&deep_link=' + encodeURIComponent(deepLinkParameter);
+      link += '&redirect=' + encodeURIComponent(redirectParameter);
+      console.log('link', link);
+      // Sensors Data Track
+      sensorsDataTrack('DownloadApk', {'apkUrl': link, 'fbc': fbclid || '', 'fbp': fbpid || ''});
+      doEventPixel('Download');
+      window.location.href = link;
+    };
+
+    // 封裝取抖動行為
+    const throttleHandleClick = throttle(handleButtonClick, 500);
+
+  </script>
+</head>
+<body>
+<div class="main_view_page">
+  <div class="bg">
+    <img id="bgImage" alt="bgImage">
+  </div>
+  <div class="service"></div>
+  <div class="bot">
+    <div class="toh5 down" onclick="throttleHandleClick()">
+      <div class="tips">Try Now</div>
+      Start the game
+    </div>
+    <div class="toapk down" onclick="throttleHandleClick()">
+      <div class="tips">Award PKR 88</div>
+      Download APP
+    </div>
+  </div>
+</div>
+</body>
+</html>
