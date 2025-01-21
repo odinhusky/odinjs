@@ -1,0 +1,12 @@
+{
+  "red_packets_rain_popup_open": "लकी मनी खोलें",
+  "red_packets_rain_popup_reward_1": "बधाई हो!",
+  "red_packets_rain_popup_reward_2": "इनाम आपके वॉलेट में िवतिरत कर िदया गया ह।ै",
+  "red_packets_rain_popup_received_title": "आपने पहले ही अपनी लकी मनी प्राप्त कर ली है!",
+  "red_packets_rain_popup_received_content_1": "आपकी जीत पर बधाई हो!",
+  "red_packets_rain_popup_received_content_2": "अगली फ्री कैश ड्रॉप के िलए तैयार रहें – अगला इससे भी बड़ा हो सकता ह!ै",
+  "red_packets_rain_popup_received_content_3": "लकी मनी रेन रोज़ {{timeRang}} बजे सही समय पर आएगी!",
+  "red_packets_rain_popup_unavailable_title": "लकी मनी रेन ब्रेक पर है – लेकिन ज्यादा देर नहीं!",
+  "red_packets_rain_popup_unavailable_content_1": "अपना अलामर् सेट करें और अगली बार जब बािरश हो, तो फ्री कैश पाने के िलए तैयार रहें! बड़े इनाम आपका इंतजार कर रह ेहैं!",
+  "red_packets_rain_popup_unavailable_content_2": "लकी मनी रेन रोज़ {{timeRang}} बजे सही समय पर आएगी!"
+}

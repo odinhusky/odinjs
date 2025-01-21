@@ -1,0 +1,38 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowJs": false,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "types": ["vite/client", "vitest"],
+    "paths": {
+      "@libs/*": ["libs/src/*"],
+      "@commonUtils/*": ["libs/src/commonUtils/*"],
+      "@mode2/*": ["libs/src/mode2/*"],
+      "@mode2API/*": ["libs/src/mode2/external/api/*"],
+      "@mode2Trans/*": ["libs/src/mode2/external/transform/*"],
+      "@constant/*": ["libs/src/constant/*"],
+      "@plugins/*": ["apps/activity-center/plugins/*"],
+      "@/*": ["apps/activity-center/src/*"],
+      "@ui/*": ["apps/activity-center/src/ui/1/*"],
+      "@modals/*": ["apps/activity-center/src/ui/1/modals/*"],
+      "@pages/*": ["apps/activity-center/src/ui/1/pages/*"],
+      "@components/*": ["apps/activity-center/src/ui/1/components/*"],
+      "@templates/*": ["apps/activity-center/src/ui/1/templates/*"],
+    }
+  },
+  "files": [],
+  "include": [],
+
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}

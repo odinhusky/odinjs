@@ -1,0 +1,12 @@
+{
+  "red_packets_rain_popup_open": "OPEN LUCK MONEY",
+  "red_packets_rain_popup_reward_1": "CONGRATULATIONS",
+  "red_packets_rain_popup_reward_2": "The reward has been distributed to your wallet",
+  "red_packets_rain_popup_received_title": "You’ve Already Grabbed Your Luck Money!",
+  "red_packets_rain_popup_received_content_1": "Congrats on your winnings!",
+  "red_packets_rain_popup_received_content_2": "Be ready for the next FREE cash drop – the next one could be even bigger!",
+  "red_packets_rain_popup_received_content_3": "Luck Money Rain at {{timeRang}} Daily!",
+  "red_packets_rain_popup_unavailable_title": "The Luck Money Rain is on a Break – But Not for Long!",
+  "red_packets_rain_popup_unavailable_content_1": "Set your alarm and prepare to grab your share of FREE cash the next time it pours down! Big prizes are waiting!",
+  "red_packets_rain_popup_unavailable_content_2": "Luck Money Rain at {{timeRang}} Daily!"
+}

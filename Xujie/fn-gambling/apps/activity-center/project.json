@@ -1,0 +1,63 @@
+{
+  "name": "activity-center",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/activity-center/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/activity-center"
+      },
+      "configurations": {
+        "v2": {
+          "buildTarget": "activity-center:build:v2"
+        },
+        "v3": {
+          "buildTarget": "activity-center:build:v3"
+        },
+        "v1": {
+          "buildTarget": "activity-center:build:v1"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "activity-center:build",
+        "hmr": true
+      },
+      "configurations": {
+        "v2": {
+          "mode": "v2"
+        },
+        "v3": {
+          "mode": "v3"
+        },
+        "v1": {
+          "mode": "v1"
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "activity-center:build"
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    }
+  },
+  "tags": []
+}

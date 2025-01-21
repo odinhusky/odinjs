@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* You can add global styles to this file, and also import other style files */
+
+*::-webkit-scrollbar {
+  display: none;
+}
+/* for |IE|Edge| scrollbar */
+* {
+  -ms-overflow-style: none;
+}
+
+/** 禁止文字反選 */
+
+body {
+  user-select: none; /* standard syntax */
+  -webkit-user-select: none; /* for Chrome、Safari */
+  -moz-user-select: none; /* for Mozilla、Firefox */
+  background: var(--bg-main);
+  background-image: var(--bg-main);
+  background-repeat: no-repeat; /* 不重复背景 */
+  background-position: center; /* 背景图像居中 */
+  background-size: 100vw 100vh; /* 背景图像拉伸至窗口宽度和高度 */
+  /* for other scrollbar */
+  scrollbar-width: none;
+}
+
+.border-gradient-linear-3 {
+  border-image: var(--linear-3);
+  border-image-slice: 1;
+}
+
+.border-gradient-grayscale-50 {
+  border-image: var(--grayscale-50);
+  border-image-slice: 1;
+}
+
+/** 覆蓋antd元件預設的樣式,避免客製化設定受影響 */
+
+.ant-form-item-required {
+  height: auto !important; /* 覆盖默认的 height:32px */
+}
+
+.ant-form-item-label {
+  padding: 0 !important; /* 覆盖默认的padding:0 0 8px */
+}
+
+// 透過更高的權重蓋過mode2 table元件預設的row樣式
+.mode-table .table-tbody-tr.ranking-table-row {
+  &:nth-child(-n + 3) {
+    @apply bgi-[var(--linear-4)];
+  }
+}
