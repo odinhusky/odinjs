@@ -1,0 +1,10 @@
+.mode-select {
+  .ant-select-arrow {
+    @apply hidden;
+  }
+}
+.mode-select-popup {
+  .ant-select-item-option-selected {
+    background-color: transparent !important;
+  }
+}

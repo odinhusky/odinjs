@@ -1,0 +1,9 @@
+.showDiv {
+  @apply animate-showAni pointer-events-none;
+  animation-fill-mode: forwards;
+}
+
+.hideDiv {
+  @apply animate-hideAni pointer-events-none;
+  animation-fill-mode: forwards;
+}

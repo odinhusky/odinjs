@@ -1,0 +1,157 @@
+:root {
+  --font-family: 'Inter', sans-serif;
+
+  --bg-main: linear-gradient(180deg, #1f1f1f 0%, #0a0a0a 100%);
+  --bg-sidebar: linear-gradient(270deg, #342e33 0%, #252525 100%);
+  --bg-home-tab-bar: linear-gradient(180deg, #282829 0%, #282829 100%);
+
+  /* base */
+  --base-1-main: linear-gradient(180deg, #009d80 0%, #009d80 100%);
+  --base-1-light: linear-gradient(180deg, #1fa98f 0%, #1fa98f 100%);
+  --base-1-dark: linear-gradient(180deg, #008a71 0%, #008a71 100%);
+  --base-1-50: linear-gradient(
+    180deg,
+    rgba(0, 157, 128, 0.5) 0%,
+    rgba(0, 157, 128, 0.5) 100%
+  );
+
+  --base-2-main: linear-gradient(180deg, #e0cd74 0%, #cf9f45 100%);
+  --base-2-light: linear-gradient(180deg, #e4d385 0%, #d5ab5b 100%);
+  --base-2-dark: linear-gradient(180deg, #c5b466 0%, #b68c3d 100%);
+  --base-2-50: linear-gradient(
+    180deg,
+    rgba(224, 205, 116, 0.5) 0%,
+    rgba(207, 159, 69, 0.5) 100%
+  );
+
+  --base-3-main: linear-gradient(180deg, #cb5bfd 0%, #8e1ef0 100%);
+  --base-3-light: linear-gradient(180deg, #d16ffd 0%, #9c39f2 100%);
+  --base-3-dark: linear-gradient(180deg, #b350df 0%, #7d1ad3 100%);
+  --base-3-50: linear-gradient(
+    180deg,
+    rgba(203, 91, 253, 0.5) 0%,
+    rgba(142, 30, 240, 0.5) 100%
+  );
+
+  /* V1 沒有 base-4 */
+  --base-4-main: linear-gradient(180deg, #ffa441 0%, #fe8b34 100%);
+  --base-4-light: linear-gradient(180deg, #ffbd75 0%, #fea867 100%);
+  --base-4-dark: linear-gradient(180deg, #f38c1b 0%, #f2700d 100%);
+  --base-4-50: linear-gradient(
+    180deg,
+    rgba(255, 164, 65, 0.5) 0%,
+    rgba(254, 139, 52, 0.5) 100%
+  );
+
+  /* linear */
+  --linear-1: linear-gradient(180deg, #427a13 0%, #245f2d 100%);
+  --linear-2: linear-gradient(180deg, #a4ff00 0%, #a4ff00 100%);
+  --linear-3: linear-gradient(90deg, #0a9e8100 0%, #0a9e81 50%, #0a9d8000 100%);
+  --linear-4: linear-gradient(270deg, #f2e33e 0%, #fcd743 100%);
+  --linear-5: linear-gradient(270deg, #f2e33e 0%, #f2e33e 100%);
+  --linear-6: linear-gradient(105.36deg, #006e8d 0.79%, #009c81 98.42%);
+  --linear-7: linear-gradient(50.29deg, #009d80 0%, #009d80 100%);
+  --linear-8-main: linear-gradient(180deg, #094831 0%, #01597c 100%);
+  --linear-8-light: linear-gradient(180deg, #275e4a 0%, #1f6d8c 100%);
+  --linear-8-dark: linear-gradient(180deg, #083f2b 0%, #014e6d 100%);
+  --linear-8-50: linear-gradient(
+    180deg,
+    rgba(9, 72, 49, 0.5) 0%,
+    rgba(1, 89, 124, 0.5) 100%
+  );
+
+  --title-line: linear-gradient(
+    90deg,
+    rgba(10, 157, 128, 0) 0%,
+    rgba(10, 157, 128, 1) 50%,
+    rgba(10, 157, 128, 0) 100%
+  );
+
+  /* state */
+  --state-error-main: #f83b3a;
+  --state-error-light: #f95352;
+  --state-error-dark: #da3433;
+  --state-error-50: rgba(248, 59, 58, 0.5);
+  --state-success-main: linear-gradient(180deg, #63cf30 0%, #63cf30 100%);
+  --state-success-light: linear-gradient(180deg, #76d549 0%, #76d549 100%);
+  --state-success-dark: linear-gradient(180deg, #57b62a 0%, #57b62a 100%);
+  --state-success-50: linear-gradient(
+    180deg,
+    rgba(99, 207, 48, 0.5) 0%,
+    rgba(99, 207, 48, 0.5) 100%
+  );
+
+  --state-warn-main: linear-gradient(180deg, #fe8b34 0%, #fe8b34 100%);
+  --state-warn-light: linear-gradient(180deg, #fe994c 0%, #fe994c 100%);
+  --state-warn-dark: linear-gradient(180deg, #e07a2e 0%, #e07a2e 100%);
+  --state-warn-50: linear-gradient(
+    180deg,
+    rgba(254, 139, 52, 0.5) 0%,
+    rgba(254, 139, 52, 0.5) 100%
+  );
+
+  /* game Mode1 沒有，參照 Mode2 */
+  --game-1-main: #37b4fb;
+  --game-1-light: #69c6fc;
+  --game-1-dark: #05a1fa;
+  --game-1-50: rgba(55, 180, 251, 0.5);
+  --game-2-main: #9243f3;
+  --game-2-light: #ac6ff6;
+  --game-2-dark: #740ff0;
+  --game-2-50: rgba(146, 67, 243, 0.5);
+  --game-3-main: #c01db1;
+  --game-3-light: #e44ed6;
+  --game-3-dark: #85147b;
+  --game-3-50: rgba(192, 29, 177, 0.5);
+
+  /* grayscale */
+  --grayscale-00: #000000;
+  --grayscale-10: #1a1a1a;
+  --grayscale-15: #262626;
+  --grayscale-20: #333333;
+  --grayscale-25: #403f3f;
+  --grayscale-30: #4d4c4c;
+  --grayscale-40: #666666;
+  --grayscale-50: #808080;
+  --grayscale-60: #a6a6a6;
+  --grayscale-70: #b3b3b3;
+  --grayscale-80: #cccccc;
+  --grayscale-90: #e6e6e6;
+  --grayscale-95: #f2f2f2;
+  --grayscale-100: #ffffff;
+
+  /* transparent-white */
+  --transparent-white-90: rgba(255, 255, 255, 0.9);
+  --transparent-white-80: rgba(255, 255, 255, 0.8);
+  --transparent-white-70: rgba(255, 255, 255, 0.7);
+  --transparent-white-60: rgba(255, 255, 255, 0.6);
+  --transparent-white-50: rgba(255, 255, 255, 0.5);
+  --transparent-white-40: rgba(255, 255, 255, 0.4);
+  --transparent-white-30: rgba(255, 255, 255, 0.3);
+  --transparent-white-20: rgba(255, 255, 255, 0.2);
+  --transparent-white-10: rgba(255, 255, 255, 0.1);
+
+  /* transparent-gray */
+  --transparent-gray-90: rgba(0, 0, 0, 0.9);
+  --transparent-gray-80: rgba(0, 0, 0, 0.8);
+  --transparent-gray-70: rgba(0, 0, 0, 0.7);
+  --transparent-gray-60: rgba(0, 0, 0, 0.6);
+  --transparent-gray-50: rgba(0, 0, 0, 0.5);
+  --transparent-gray-40: rgba(0, 0, 0, 0.4);
+  --transparent-gray-30: rgba(0, 0, 0, 0.3);
+  --transparent-gray-20: rgba(0, 0, 0, 0.2);
+  --transparent-gray-10: rgba(0, 0, 0, 0.1);
+
+  /* boxShadow */
+  --inset-shadow: 0px 4px 4px 0px #cccccc40 inset,
+    0px -4px 4px 0px #33333340 inset;
+
+  --primary-10: rgba(32, 21, 51, 1);
+
+  --official-btn1: linear-gradient(90deg, #ffe600 0%, #26be00 100%);
+  --official-btn1-hover: linear-gradient(90deg, #26be00 0%, #ffe600 100%);
+  --official-btn2: linear-gradient(90deg, #ffd600 0%, #ff8a00 100%);
+  --official-btn2-hover: linear-gradient(90deg, #ff8a00 0%, #ffd600 100%);
+  --official-text: #6a00aa;
+  --primary-20: rgba(56, 36, 83, 1);
+}

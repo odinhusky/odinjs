@@ -1,0 +1,2 @@
+export const handleBindKYCPageDesktopHeaderBackBtnClick =
+  'handleBindKYCPageDesktopHeaderBackBtnClick';

@@ -1,0 +1,62 @@
+import { AnnouncementType } from '@mode2/@types/announcementType';
+import { GameListItemResult } from '@mode2/zustand/page/hallPageStore';
+import useActivityStrategy from '@mode2/usecase/announcement/strategy/useActivityStrategy';
+import usePopupStrategy from '@mode2/usecase/announcement/strategy/usePopupStrategy';
+import useHomeStrategy from '@mode2/usecase/announcement/strategy/useHomeStrategy';
+
+export enum AnnouncementScenariosType {
+  HOME = 'HOME',
+  POPUP = 'POPUP',
+  ACTIVITY = 'ACTIVITY',
+}
+
+export interface ActionPayload {
+  type: AnnouncementType;
+  gameObj?: GameListItemResult;
+  linkUrl?: string;
+}
+
+/**
+ * 首頁 Banner
+ * 首頁 Popup Banner
+ * 活動大廳 Banner
+ *
+ * 使用決策模式 判斷可行動的 action 及 action 邏輯切割
+ * 透過 useParsingAnnouncementsContent 依照不同使用情境 解析出正確 {Type, Content}
+ * 統一管理 onAction 接口 onAnnouncementAction();
+ * MappingStrategy: [HomeAnnouncementsTypeMappingStrategy, PopupAnnouncementsTypeMappingStrategy, ActivityAnnouncementsTypeMappingStrategy]
+ *
+ */
+export const useAnnouncementActionBase = () => {
+  const { onAction: onHomeStrategyAction } = useHomeStrategy();
+  const { onAction: onPopupStrategyAction } = usePopupStrategy();
+  const { onAction: onActivityStrategyAction } = useActivityStrategy();
+
+  /**
+   * 依照 使用情境
+   * @param type
+   * @param gameObj
+   */
+  const onAnnouncementAction = (
+    type: AnnouncementScenariosType,
+    payload: ActionPayload
+  ) => {
+    switch (type) {
+      case AnnouncementScenariosType.HOME:
+        onHomeStrategyAction(payload);
+        break;
+      case AnnouncementScenariosType.POPUP:
+        onPopupStrategyAction(payload);
+        break;
+      case AnnouncementScenariosType.ACTIVITY:
+        onActivityStrategyAction(payload);
+        break;
+    }
+  };
+
+  return {
+    onAnnouncementAction,
+  };
+};
+
+export default useAnnouncementActionBase;

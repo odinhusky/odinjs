@@ -1,0 +1,163 @@
+.invite {
+  .earn {
+    .banner {
+      .banner-item {
+        &:first-child {
+          @apply bgi-[var(--transparent-gray-20)];
+        }
+
+        &:nth-child(2) {
+          @apply bgi-[var(--transparent-gray-30)];
+        }
+
+        &:nth-child(3) {
+          @apply bgi-[var(--transparent-gray-40)];
+        }
+      }
+    }
+
+    .bottom {
+      .earn-share-copy-box {
+        @apply mx-0 my-4
+          w-full
+          flex flex-col gap-1;
+
+        .earn-share-copy-title {
+          @apply bgi-text-[var(--grayscale-00)]
+            text-sm mobile:text-base
+            font-medium text-start
+            w-full;
+        }
+
+        .earn-share-href {
+          @apply text-xs mobile:text-sm
+            rounded
+            box-border
+            flex items-center justify-between
+            px-3 py-2
+            bgi-[var(--transparent-white-20)];
+
+          .earn-share-href-text {
+            @apply bgi-text-[var(--grayscale-100)];
+          }
+
+          .earn-share-href-icon-copy {
+            @apply w-5 h-5 cursor-pointer;
+          }
+        }
+      }
+
+      .bottom-item {
+        @apply flex items-start box-border mt-4;
+
+        .icon-button {
+          @include baseButton('game-1');
+          @apply w-12 h-12 rounded-[100%];
+        }
+
+        img {
+          @apply w-12 h-12;
+        }
+
+        .desc {
+          @apply ml-3 text-base bgi-text-[var(--grayscale-100)];
+          counter-reset: desc-item;
+        }
+
+        .desc-item {
+          @apply relative;
+        }
+
+        .desc-item:before {
+          content: '';
+
+          @apply absolute -left-5;
+          /* 移到预留的空间 */
+        }
+
+        .desc-contact {
+          @apply w-full 
+          flex justify-end 
+          font-medium
+          text-xs mobile:text-sm;
+        }
+      }
+    }
+  }
+
+  .statistics {
+    a {
+      @apply relative
+      bgi-text-[var(--state-warn-main)];
+      // position: relative;
+      // color: transparent; // 使文字透明以显示背景渐变
+      // @include textColor(var(--state-warn-main));
+
+      // 使用伪元素创建下划线效果
+      &::after {
+        @apply absolute left-0 bottom-0
+        w-full h-px
+        content-['']
+        bgi-[var(--state-warn-main)];
+        // 调整为你需要的下划线粗细
+        // background: var(--state-warn-main); // 与文字相同的渐变
+      }
+    }
+
+    .statistics-banner {
+      .statistics-banner-item {
+        @apply flex items-center justify-center
+        box-border
+        px-6 py-3;
+
+        &:first-child {
+          @apply bgi-[var(--transparent-gray-20)];
+        }
+
+        &:nth-child(2) {
+          @apply bgi-[var(--transparent-gray-30)];
+        }
+
+        .statistics-banner-icon-level {
+          @apply w-[60px] h-[60px] mr-3;
+        }
+
+        .statistics-banner-desc {
+          @apply font-medium text-xs mobile:text-base bgi-text-[var(--grayscale-100)];
+        }
+      }
+    }
+
+    .statistics-invite-btn {
+      @include baseButton('base-1');
+      @apply w-full
+      font-semibold text-base mobile:text-lg px-4 py-2;
+    }
+  }
+}
+
+.qa-title {
+  /* 假设你的图片元素有一个.toggle-icon的类名 */
+  .toggle-icon {
+    transition: transform 0.3s ease;
+    /* 添加过渡效果使旋转更平滑 */
+    @apply w-6 h-6;
+  }
+
+  .rotate-icon {
+    @apply rotate-180;
+    /* 当需要旋转时应用这个类 */
+  }
+}
+
+.text-lv {
+  text-wrap: balance;
+  @apply bgi-text-[var(--state-warn-main)];
+}
+
+.time-box {
+  @apply rounded
+    text-sm
+    px-2 py-1
+    bgi-[var(--base-1-main)];
+}

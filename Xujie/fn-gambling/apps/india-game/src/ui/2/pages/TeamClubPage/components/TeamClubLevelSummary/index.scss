@@ -1,0 +1,38 @@
+.team_club_level {
+  .swiper-pagination {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    z-index: 3 !important;
+    height: 32px; // 要跟 .reward-list 的 pb 要一樣
+
+    .swiper-pagination-bullet {
+      @apply bgi-[var(--transparent-white-20)] w-[6px] h-[6px] mx-[6px] opacity-80;
+      transition: all 0.3s ease;
+    }
+
+    .swiper-pagination-bullet:hover {
+      opacity: 1;
+    }
+
+    .swiper-pagination-bullet-active {
+      @apply bgi-[var(--state-warn-main)] opacity-100;
+    }
+  }
+}
+
+.team_club_tooltip {
+  .ant-tooltip-inner {
+    @apply py-2 px-3;
+  }
+
+  .ant-tooltip-arrow {
+    @apply hidden;
+  }
+}
+
+.team_club_progress_container {
+  .ant-progress-bg.ant-progress-bg-outer {
+    height: 8px !important;
+  }
+}

@@ -1,0 +1,39 @@
+.wallet {
+  color: var(--grayscale-100);
+  .tab-box {
+    text-align: center;
+
+    .tab-list {
+      margin-bottom: 20px;
+      display: inline-flex;
+      border-radius: 4px;
+      background: var(--transparent-white-10);
+
+      .tab-item {
+        width: 172px;
+        height: 40px;
+        display: flex;
+        gap: 4px;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        color: var(--grayscale-50);
+
+        &.active {
+          color: var(--grayscale-100);
+          background: var(--base-1-main);
+          border-radius: 4px;
+        }
+
+        .icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+
+  .withdraw-note-list li::marker {
+    color: #fe8b34;
+  }
+}

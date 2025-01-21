@@ -1,0 +1,46 @@
+.vip-group {
+  .activity-page-vip-info {
+    @apply flex flex-col gap-6
+      rounded tablet:rounded-lg
+      p-6
+      bgi-[var(--grayscale-20)];
+  }
+
+  .vip-card-slide {
+    &.swiper-slide {
+      height: auto !important;
+      width: auto !important;
+
+      .vip-card {
+        @apply transition-all duration-[0.5s] ease-[ease-in-out]
+        w-56 mr-3
+        mobile:w-[278px] mobile:mr-4;
+      }
+    }
+
+    &.swiper-slide-active {
+      .vip-card {
+        @apply w-[248px] h-32
+          mobile:w-[310px] mobile:h-40;
+      }
+    }
+  }
+
+  .swiper-wrapper {
+    @apply items-end;
+  }
+
+  // antd
+  .vip-level-progress.ant-progress {
+    @apply leading-[normal] border-[none];
+    .ant-progress-inner {
+      @apply bgi-[var(--transparent-white-30)];
+    }
+
+    .ant-progress-success-bg,
+    .ant-progress-bg {
+      background: var(--linear-5);
+      height: 12px !important;
+    }
+  }
+}

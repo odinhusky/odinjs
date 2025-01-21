@@ -1,0 +1,39 @@
+export enum AppLocalStorageKey {
+  DEVICE_ID = 'deviceId',
+  TOKEN = 'token',
+  LANG = 'lang',
+  REFERRAL_CODE = 'referralCode',
+  IS_OLD_USER = 'isOldUser',
+  FIRST_CHARGE_DISCOUNT_POPUP_INFO = 'firstChargeDiscountPopupInfo',
+
+  // // push token
+  // PUSH_TOKEN = 'pushToken',
+
+  // [BI]
+  FIRST_ADJUST_ATTRIBUTION_REPORT = 'firstInstall',
+  SENSORS_DATA_LABEL_FIRST_REPORT = 'first_f',
+  LAST_APP_LIST_REPORT_DATE = 'lastAppListReportDate',
+
+  LAST_ACTIVE_USER_EVENT_REPORT_DATE = 'lastActiveUserEventReportDate',
+
+  ONESIGNAL_NOTIFICATION_PROMPT = 'onesignal-notification-prompt',
+
+  IS_WEBP_SUPPORT = 'IS_WEBP_SUPPORT',
+
+  BADGER_COUNT = 'BADGER_COUNT',
+
+  LAST_WEAK_UPDATE_RUNTIME = 'LAST_WEAK_UPDATE_RUNTIME',
+
+  H5_LAST_MODIFIED = 'H5_LAST_MODIFIED',
+  H5_LAST_ETAG = 'H5_LAST_ETAG',
+
+  RECHARGE_NOTICE_POPUP = 'rechargeNoticePopup',
+
+  PROMOTE_GAME_ID = 'PROMOTE_GAME_ID',
+  DEPOSIT_AD_DATA = 'DEPOSIT_AD_DATA',
+  RED_ENVELOPE_RAIN_DATA = 'RED_ENVELOPE_RAIN_DATA',
+  USER_ID = 'USER_ID',
+  TEAM_MEMBER_TOTAL_COUNT = 'TEAM_MEMBER_TOTAL_COUNT',
+
+  INVITE_WHEEL_REWARD_POPUP = 'INVITE_WHEEL_REWARD_POPUP',
+}

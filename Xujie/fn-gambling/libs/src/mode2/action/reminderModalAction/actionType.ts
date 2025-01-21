@@ -1,0 +1,2 @@
+export const handleReminderModalDepositNowBtnClick = 'handleReminderModalDepositNowBtnClick';
+export const handleReminderModalCloseBtnClick = 'handleReminderModalCloseBtnClick';

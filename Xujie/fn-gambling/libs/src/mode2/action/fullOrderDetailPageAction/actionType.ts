@@ -1,0 +1,3 @@
+export const handleFullOrderDetailPageInputClick = "handleFullOrderDetailPageInputClick";
+export const handleFullOrderDetailPageUploadClick = "handleFullOrderDetailPageUploadClick";
+export const handleFullOrderDetailPageConfirmClick = "handleFullOrderDetailPageConfirmClick";

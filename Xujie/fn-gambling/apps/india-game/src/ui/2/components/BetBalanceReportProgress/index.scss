@@ -1,0 +1,44 @@
+.my-progress {
+  .report-amount-progress.ant-progress-line {
+    width: 152px;
+    height: 26px;
+
+    @include bp(mobile) {
+      width: 196px;
+    }
+  }
+
+  .report-amount-progress {
+    border: none;
+    position: absolute;
+    transform: rotate(-90deg);
+    bottom: 65px;
+    left: -64px;
+
+    @include bp(mobile) {
+      bottom: 86px;
+      left: -78px;
+    }
+
+    // 外框
+    .ant-progress-outer {
+      position: absolute;
+      height: 24px !important;
+
+      // 黑色背景部分
+      .ant-progress-inner {
+        border-radius: 4px;
+        height: 24px !important;
+        background: var(--grayscale-10);
+
+        // 數值部分
+        .ant-progress-success-bg,
+        .ant-progress-bg {
+          border-radius: 4px;
+          height: 24px !important;
+          background: var(--base-3-main);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+.adm-picker-view {
+  color: var(--grayscale-100);
+  background: var(--bg-slider) !important;
+}
+
+.adm-picker-view-mask {
+
+  .adm-picker-view-mask-top,
+  .adm-picker-view-mask-bottom {
+    background: unset !important;
+  }
+
+  .adm-picker-view-mask-middle {
+    border-top: 1px solid var(--transparent-white-10);
+    border-bottom: 1px solid var(--transparent-white-10);
+  }
+
+}

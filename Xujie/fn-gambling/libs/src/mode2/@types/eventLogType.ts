@@ -1,0 +1,1 @@
+export const LOG_MAX_LIMIT = 20;

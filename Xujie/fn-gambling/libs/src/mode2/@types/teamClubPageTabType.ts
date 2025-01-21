@@ -1,0 +1,6 @@
+export enum TeamClubPageTabType {
+  SHARE_FOR_BONUS = 'SHARE_FOR_BONUS',
+  MY_REWARDS = 'MY_REWARDS',
+  INVITE_REWARDS = 'INVITE_REWARDS',
+  RULES = 'RULES',
+}

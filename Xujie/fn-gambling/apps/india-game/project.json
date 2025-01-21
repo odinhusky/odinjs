@@ -1,0 +1,75 @@
+{
+  "name": "india-game",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/india-game/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/india-game"
+      },
+      "configurations": {
+        "v5": {
+          "buildTarget": "india-game:build:v5"
+        },
+        "v4": {
+          "buildTarget": "india-game:build:v4"
+        },
+        "v1": {
+          "buildTarget": "india-game:build:v1"
+        },
+        "v3": {
+          "buildTarget": "india-game:build:v3"
+        },
+        "v2": {
+          "buildTarget": "india-game:build:v2"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "india-game:build",
+        "hmr": true
+      },
+      "configurations": {
+        "v5": {
+          "mode": "v5"
+        },
+        "v4": {
+          "mode": "v4"
+        },
+        "v1": {
+          "mode": "v1"
+        },
+        "v3": {
+          "mode": "v3"
+        },
+        "v2": {
+          "mode": "v2"
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "india-game:build"
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    }
+  },
+  "tags": []
+}
