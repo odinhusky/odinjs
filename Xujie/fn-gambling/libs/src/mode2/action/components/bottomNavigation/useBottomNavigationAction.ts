@@ -1,4 +1,7 @@
-import { handleBottomNavigationButtonClick } from '@mode2/action/components/bottomNavigation/acitonType';
+import {
+  handleBottomNavigationButtonClick,
+  handleMobileExclusiveNavButtonClick,
+} from '@mode2/action/components/bottomNavigation/acitonType';
 import { handleFeedBackPageTabClick } from '@mode2/action/feedBackPageAction/acitonType';
 import handleGlobalClick from '@mode2/action/handleGlobalClick';
 import { HandleClickProps } from '@mode2/action/common/handleClickProps';
@@ -12,6 +15,11 @@ import { NavigateOptions } from 'react-router/dist/lib/context';
 
 type ActionClickPayloadMap = {
   [handleBottomNavigationButtonClick]: {
+    // label: string;
+    navigateTarget: BasePagePaths;
+    options?: NavigateOptions;
+  };
+  [handleMobileExclusiveNavButtonClick]: {
     // label: string;
     navigateTarget: BasePagePaths;
     options?: NavigateOptions;
@@ -35,14 +43,30 @@ export const useBottomNavigationActions = () => {
   const actionClickObj: ActionClickObjType = {
     [handleBottomNavigationButtonClick]: ({ navigateTarget, options }) => {
       handleGlobalClick({
-        target: handleFeedBackPageTabClick,
+        target: handleBottomNavigationButtonClick,
         callback: () => {
           const isMobile = useDeviceStore.getState().isMobile;
           if (!isMobile && navigateTarget === BasePagePathObj.MyPage) {
             if (sdkUtils.isCurrentLogin()) {
               setOpenMyDrawer(true);
             } else {
-              navToLoginPage();
+              navToLoginPage(36);
+            }
+          } else {
+            mapRoutesNavTo(navigateTarget, '', options);
+          }
+        },
+      });
+    },
+    [handleMobileExclusiveNavButtonClick]: ({ navigateTarget, options }) => {
+      handleGlobalClick({
+        target: handleMobileExclusiveNavButtonClick,
+        callback: () => {
+          if (navigateTarget === BasePagePathObj.MyPage) {
+            if (sdkUtils.isCurrentLogin()) {
+              mapRoutesNavTo(navigateTarget, '', options);
+            } else {
+              navToLoginPage(77);
             }
           } else {
             mapRoutesNavTo(navigateTarget, '', options);

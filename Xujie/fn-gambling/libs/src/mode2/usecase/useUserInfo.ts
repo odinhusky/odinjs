@@ -22,21 +22,11 @@ import { AppLocalStorageKey } from '@mode2/utils/sdk/persistant/storageKey';
 import { useFetchMyIpStore } from '@mode2/zustand/fetchMyIpStore';
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 import dayjs from 'dayjs';
-import { useDeepEffect } from '@libs/commonUtils';
+import { useDeepEffect, useUpdateEffect } from '@libs/commonUtils';
 
 const REFRESH_THRESHOLD = 3 * 1000;
 
-export interface UseUserInfoHookReturn {
-  refreshUserData: () => void;
-  isRefreshLoading: boolean;
-}
-
-const useUserInfo = (
-  options?: Partial<{
-    immediate: boolean;
-  }>
-): UseUserInfoHookReturn => {
-  const { immediate = true } = options || {};
+const useUserInfo = () => {
   const { doActiveEventReport } = useActiveUserEvent();
 
   const [
@@ -63,6 +53,16 @@ const useUserInfo = (
   );
   const setLowBalance = useUserProfileStore((state) => state.setLowBalance);
   const isLogin = useIsLoginStore((state) => state.isLogin);
+  const setUserRole = useUserProfileStore((state) => state.setUserRole);
+
+  const refreshUserDataCount = useUserProfileStore(
+    (state) => state.refreshUserDataCount
+  );
+  const refreshUserData = useUserProfileStore((state) => state.refreshUserData);
+
+  const setIsAPIMainInfoLoading = useUserProfileStore(
+    (state) => state.setIsAPIMainInfoLoading
+  );
 
   const handleSetProfileForSaleSmartChat = (mainInfo: PlayerMainInfoResult) => {
     const packagename = import.meta.env['VITE_PACKAGENAME'];
@@ -96,7 +96,13 @@ const useUserInfo = (
     });
   };
 
-  useEffect(() => {
+  const handleRefreshUserData = useCallback(() => {
+    if (isLogin) {
+      postPlayerMainInfo();
+    }
+  }, [isLogin]);
+
+  useDeepEffect(() => {
     if (isSuccess && mainInfo) {
       // [BI]活躍用戶上報
       doActiveEventReport();
@@ -120,6 +126,7 @@ const useUserInfo = (
       setTotalAssets(mainInfo.totalAssets);
       setLastApiUpdateTime(dayjs().unix());
       setLowBalance(mainInfo.isLowBalance);
+      setUserRole(mainInfo.userRole);
       if (mainInfo.isLevelPopup) {
         playerRemoveLevelCache();
       }
@@ -142,32 +149,30 @@ const useUserInfo = (
     }
   }, [isError]);
 
-  useDeepEffect(() => {
-    if (isLoading || !immediate) {
-      return;
-    }
+  useEffect(() => {
+    // 紀錄是否還在 fetch user data
+    setIsAPIMainInfoLoading(isLoading);
+
+    // 判斷是否要送出 fetch user data
+    if (isLoading) return;
+
     const lastApiUpdateTime = useUserProfileStore.getState().lastApiUpdateTime;
+
     /** 第一次進入或超過threshold才發請求 */
     const needRefresh =
       !lastApiUpdateTime ||
       (dayjs().unix() > lastApiUpdateTime + REFRESH_THRESHOLD &&
         !!lastApiUpdateTime);
 
-    if (isLogin && needRefresh) {
-      postPlayerMainInfo();
+    if (needRefresh) {
+      refreshUserData();
     }
-  }, [isLogin, isLoading]);
+  }, [isLoading]);
 
-  const isRefreshLoading = isLoading;
-
-  const refreshUserData = useCallback(() => {
-    if (isLogin) {
-      postPlayerMainInfo();
-    }
-  }, [isLogin]);
-
-  /** export出能強制更新的方法 */
-  return { refreshUserData, isRefreshLoading };
+  // 觸發打 API 的地方，固定只有單一個 dependency真正打 API 的地方
+  useUpdateEffect(() => {
+    handleRefreshUserData();
+  }, [refreshUserDataCount]);
 };
 
 export default useUserInfo;

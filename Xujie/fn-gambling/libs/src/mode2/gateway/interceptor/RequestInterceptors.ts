@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
-import { message } from 'antd';
 import { mergeRequestData } from '@libs/mode2/external/api/requestInitData';
+import { useMessageStore } from '@mode2/zustand/components/messageStore';
 
 export const setupRequestInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
@@ -13,7 +13,7 @@ export const setupRequestInterceptors = (instance: AxiosInstance) => {
       return config;
     },
     (error) => {
-      message.error(`${error['message'] || 'server error'}`);
+      useMessageStore.getState().error(`${error['message'] || 'server error'}`);
       return Promise.reject();
     }
   );

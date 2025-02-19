@@ -18,6 +18,7 @@ export class WebLocalStorage<T extends string> {
     } else {
       localStorage.setItem(key, value);
     }
+    // useState
   }
 
   removeStorage(key: T): void {

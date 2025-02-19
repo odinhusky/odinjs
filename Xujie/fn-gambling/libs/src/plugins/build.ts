@@ -2,6 +2,7 @@ import os from 'os';
 import path from 'path';
 import fs from 'fs';
 import { BuildOptions } from 'vite';
+
 export const getLocalExternalIPv4 = (): string => {
   const networkInterfaces = os.networkInterfaces();
   for (const interfaceName in networkInterfaces) {
@@ -63,6 +64,7 @@ export const setupComponentsMapping = (
     return output;
   };
   // 分别调用生成不同部分的路径
+  const apps = generatePaths('apps', config.apps);
   const components = generatePaths('components', config.components);
   const modals = generatePaths('modals', config.modals);
   const pages = generatePaths('pages', config.pages);
@@ -82,13 +84,30 @@ export const setupComponentsMapping = (
     styles = generatePaths('styles', stylesRecord);
   }
 
+  let routes = {};
+  if (config.routes) {
+    const output: Record<string, string> = {};
+    Object.entries(config.routes).forEach(([name, value]) => {
+      const basePath = `${name}`;
+      output[`@router/${basePath}`] = path.resolve(
+        __dirname,
+        `./src/router/${value}/${basePath}`
+      );
+    });
+    routes = output;
+  }
+
   const templateResult = {
+    ...apps,
     ...components,
     ...modals,
     ...pages,
     ...templates,
     ...styles,
+    ...routes,
   };
+
+  console.log('@@@===>', templateResult);
 
   return templateResult;
 };

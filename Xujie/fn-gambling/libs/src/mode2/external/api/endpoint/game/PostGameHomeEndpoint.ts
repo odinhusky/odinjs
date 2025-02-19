@@ -30,6 +30,7 @@ export interface GameResponse extends IGameResponse {
   ParentManufacturer?: string;
   IsGame?: number;
   PcLogo?: string;
+  PlatformId?: number;
 }
 
 interface WinGameResponse extends IGameResponse {
@@ -97,6 +98,7 @@ const mapGameListInfo = (raw: GameResponse[]) => {
       name: item?.Name || '',
       gameId: item?.GameId || 0,
       isHotGame: item?.IsHot === 1,
+      isNewGame: item?.IsNew === 1,
       isFavorite: item?.IsCollect === 1,
       isMaintain: item?.IsMaintain === 1,
       maintainTime:
@@ -108,6 +110,7 @@ const mapGameListInfo = (raw: GameResponse[]) => {
       manufacturer: item?.Manufacturer || '',
       enterGameType: mapEnterGameType(item.IsEnterLobby || 0, item.IsGame || 0),
       type: item?.Type || 0,
+      platformId: item?.PlatformId || 0,
     })
   );
 };

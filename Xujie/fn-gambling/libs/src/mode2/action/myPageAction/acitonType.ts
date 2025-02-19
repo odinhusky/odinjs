@@ -1,6 +1,9 @@
 export const handleMyPageActivityLineBtnClick =
   'handleMyPageActivityLineBtnClick';
 
+export const handleMyPageGiftCodeLineBtnClick =
+  'handleMyPageGiftCodeLineBtnClick';
+
 export const handleMyPageEarnMoneyLineBtnClick =
   'handleMyPageEarnMoneyLineBtnClick';
 
@@ -48,3 +51,12 @@ export const handleMyPageWithdrawBtnClick = 'handleMyPageWithdrawBtnClick';
 
 export const handleMyPageAnnouncementsActionClick =
   'handleMyPageAnnouncementsActionClick';
+
+export const handleLogoutBtnClick = 'handleLogoutBtnClick';
+
+export const handleCloseMyPageWeakTipsModal = 'handleCloseMyPageWeakTipsModal';
+
+export const handleMyPageMyInfoActionClick = 'handleMyPageMyInfoActionClick';
+export const handleMyPageBankDetailActionClick = 'handleMyPageBankDetailActionClick';
+export const handleMyPageAboutUsActionClick = 'handleMyPageAboutUsActionClick';
+export const handleMyPagSettingActionClick = 'handleMyPagSettingActionClick';

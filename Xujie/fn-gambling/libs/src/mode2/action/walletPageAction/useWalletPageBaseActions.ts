@@ -1,10 +1,13 @@
 import {
+  handleWalletPageOpenOnlineServiceActionClick,
   handleWalletPagePayPayChannelOtpClick,
   handleWalletPageRechargeBonusSwitchClick,
   handleWalletPageRechargeCardClick,
   handleWalletPageRechargeTabCheckOrderClick,
+  handleWalletPageRechargeTabCheckOrderDeatilClick,
   handleWalletPageSetPayChannelClick,
   handleWalletPageSwitchTabClick,
+  handleWalletPageUseGuideActionClick,
   handleWalletPageWithdrawModifierClick,
   handleWalletPageWithdrawTabCheckOrderClick,
 } from './acitonType';
@@ -31,8 +34,11 @@ import {
   useWalletPageRechargeCardStore,
   useWalletRechargeHighBonusStore,
 } from '@mode2/zustand/page/WalletPage/useWalletPageRechargeCardStore';
-import sdkUtils from '@mode2/utils/sdk';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
+import useBindPlayerPhoneModalStore from '@mode2/zustand/modal/BindPlayerPhoneModal';
+import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
+import { UserRoleType } from '@mode2/@types/userRoleTypes';
+import sdkUtils from '@mode2/utils/sdk';
 
 type ActionClickPayloadMap = {
   [handleWalletPageSwitchTabClick]: { id: WalletPageTabType };
@@ -41,8 +47,11 @@ type ActionClickPayloadMap = {
   [handleWalletPagePayPayChannelOtpClick]: { item: PayOptionsResult };
   [handleWalletPageWithdrawModifierClick]: void;
   [handleWalletPageRechargeTabCheckOrderClick]: void;
+  [handleWalletPageRechargeTabCheckOrderDeatilClick]: void;
   [handleWalletPageWithdrawTabCheckOrderClick]: void;
   [handleWalletPageRechargeBonusSwitchClick]: void;
+  [handleWalletPageOpenOnlineServiceActionClick]: void;
+  [handleWalletPageUseGuideActionClick]: void;
 };
 
 export interface HandleWalletPageBaseClickProps<
@@ -50,7 +59,8 @@ export interface HandleWalletPageBaseClickProps<
 > extends HandleClickProps<T, ActionClickPayloadMap> {}
 
 export const useWalletPageBaseActions = () => {
-  const { navToLoginPage, mapRoutesNavTo } = useNavPageClick();
+  const { navToLoginPage, mapRoutesNavTo, navToWalletGuidePage } =
+    useNavPageClick();
   const setCurSwitchContentTabId = useWalletPageSwitchContentTabsStore(
     (state) => state.setCurSwitchContentTabId
   );
@@ -74,8 +84,21 @@ export const useWalletPageBaseActions = () => {
       handleGlobalClick({
         target: handleWalletPageSwitchTabClick,
         callback: () => {
-          if (id === WalletPageTabType.WITHDRAW && !sdkUtils.isCurrentLogin()) {
-            navToLoginPage();
+          if (id === WalletPageTabType.WITHDRAW) {
+            const userRole = useUserProfileStore.getState().userRole;
+            switch (userRole) {
+              case UserRoleType.GUEST:
+                navToLoginPage(31);
+                break;
+              case UserRoleType.PLAYER:
+                useBindPlayerPhoneModalStore
+                  .getState()
+                  .setShowBindPlayerPhoneModal(true);
+                break;
+              case UserRoleType.USER:
+                setCurSwitchContentTabId(id);
+                break;
+            }
           } else {
             setCurSwitchContentTabId(id);
           }
@@ -132,6 +155,14 @@ export const useWalletPageBaseActions = () => {
         },
       });
     },
+    [handleWalletPageRechargeTabCheckOrderDeatilClick]: () => {
+      handleGlobalClick({
+        target: handleWalletPageRechargeTabCheckOrderDeatilClick,
+        callback: () => {
+          mapRoutesNavTo(BasePagePathObj.OrderDetailPage, '');
+        },
+      });
+    },
     [handleWalletPageWithdrawTabCheckOrderClick]: () => {
       handleGlobalClick({
         target: handleWalletPageWithdrawTabCheckOrderClick,
@@ -166,6 +197,22 @@ export const useWalletPageBaseActions = () => {
               ? RechargeCard.HIGH_BONUS
               : RechargeCard.TOP_UP_BONUS
           );
+        },
+      });
+    },
+    [handleWalletPageOpenOnlineServiceActionClick]: () => {
+      handleGlobalClick({
+        target: handleWalletPageOpenOnlineServiceActionClick,
+        callback: () => {
+          sdkUtils.openChat(() => {});
+        },
+      });
+    },
+    [handleWalletPageUseGuideActionClick]: () => {
+      handleGlobalClick({
+        target: handleWalletPageUseGuideActionClick,
+        callback: () => {
+          navToWalletGuidePage();
         },
       });
     },

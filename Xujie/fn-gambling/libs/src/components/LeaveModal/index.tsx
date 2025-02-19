@@ -1,5 +1,4 @@
 import BaseModal from '@libs/components/Modal';
-import Icon from '@libs/mode2/components/Icon';
 import { cx } from '@libs/commonUtils';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
@@ -7,6 +6,7 @@ import useLeaveModalStore from '@libs/mode2/zustand/components/leaveModalStore';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import useLeaveModalActions from '@libs/mode2/action/leaveModalAction/useLeaveModalActions';
 import { handleLeaveModalBtnClick } from '@libs/mode2/action/leaveModalAction/actionType';
+import BaseIcon from '@mode2/components/BaseIcon';
 
 export interface LeaveModalProps {
   content: string;
@@ -24,7 +24,7 @@ const LeaveModal = (props: LeaveModalProps) => {
     <BaseModal className="px-8">
       <div className="bg-[var(--grayscale-100)] text-center rounded-lg  max-w-96 mobile:w-96 p-4 mobile:p-6">
         <div className="flex items-center justify-center gap-2">
-          <Icon
+          <BaseIcon
             className="w-6 h-6 mobile:w-8 mobile:h-8"
             name="ic_home"
             color="var(--base-1-main)"

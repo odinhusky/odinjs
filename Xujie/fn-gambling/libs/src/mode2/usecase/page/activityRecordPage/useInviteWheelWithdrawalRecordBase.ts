@@ -1,7 +1,4 @@
-import {
-  ActivityRecordPageTypes,
-  useActivityRecordPageStore,
-} from '@mode2/zustand/page/activityRecordPageStore';
+import { useActivityRecordPageStore } from '@mode2/zustand/page/activityRecordPageStore';
 import { usePostInviteWheelWithdrawListMutation } from '@mode2API/index';
 import { useEffect } from 'react';
 
@@ -12,6 +9,10 @@ export const useInviteWheelWithdrawalRecordBase = () => {
   // const initData = async () => {
   //   await postInviteWheelWithdrawInformation();
   // };
+
+  const setInviteWithdrawalTotalRewards = useActivityRecordPageStore(
+    (state) => state.setInviteWithdrawalTotalRewards
+  );
 
   const setInviteWithdrawalHistoryList = useActivityRecordPageStore(
     (state) => state.setInviteWithdrawalHistoryList
@@ -24,6 +25,7 @@ export const useInviteWheelWithdrawalRecordBase = () => {
   useEffect(() => {
     // 邀请轮盘
     if (isSuccess && data) {
+      setInviteWithdrawalTotalRewards(data.totalRewards);
       setInviteWithdrawalHistoryList(data.inviteWithdrawList);
     }
   }, [isSuccess, data]);

@@ -12,3 +12,9 @@ export const handleInviteWheelPageNavToRecordClickAction =
 
 export const handleInviteWheelSpinButtonClick =
   'handleInviteWheelSpinButtonClick';
+
+export const handleInviteWheelClipboardReferralCodeClick =
+  'handleInviteWheelClipboardReferralCodeClick';
+
+export const handleInviteWheelPageOpenRuleModalClickAction =
+  'handleInviteWheelPageOpenRuleModalClickAction';

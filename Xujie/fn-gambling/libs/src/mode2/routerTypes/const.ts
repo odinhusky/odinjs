@@ -1,7 +1,8 @@
 import { BasePagePathObj } from './types';
 
 //路由白名單
-export const ROUTE_WHITE_LIST = [
+
+export const DEFAULT_ROUTE_WHITE_LIST = [
   BasePagePathObj.HallPage,
   BasePagePathObj.GamePage,
   BasePagePathObj.GameLobbyPage,

@@ -10,3 +10,5 @@ export const handleMyDrawerActionClick = 'handleMyDrawerActionClick';
 export const handlePrivacyPolicyLinkActionClick =
   'handlePrivacyPolicyLinkActionClick';
 export const handleMyPageActionClick = 'handleMyPageActionClick';
+export const handleInBoxActionClick = 'handleInBoxActionClick';
+export const handleLuckyWheelActionClick = 'handleLuckyWheelActionClick';

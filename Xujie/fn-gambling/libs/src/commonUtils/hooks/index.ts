@@ -9,3 +9,4 @@ export * from './useUpdateEffect';
 export * from './useUpdateDeepEffect';
 export * from './useDurationCountDown';
 export * from './useGivenTimeCountDown';
+export * from './useDebounceValue';

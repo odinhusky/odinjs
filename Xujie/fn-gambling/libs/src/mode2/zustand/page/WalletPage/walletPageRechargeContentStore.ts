@@ -1,4 +1,5 @@
 import {
+  PayActivationResult,
   PayChannelInfoResult,
   PayOptionsResult,
 } from '@mode2API/endpoint/wallet/PostPayConfigInfoWithOptionsEndpoint';
@@ -15,6 +16,19 @@ export interface PayChannelItem extends PayChannelInfoResult {
   onAction: () => void;
   optionActions: PayOptionItem[];
 }
+
+const DEF_PAY_CHANNEL = {
+  payLimit: { min: 0, max: 0 },
+  displayName: '',
+  payName: '',
+  isRecommend: false,
+  isDefaultSelected: false,
+  disableAmountInput: true,
+  options: [],
+  maxCashBackRate: 0,
+  payActivation: PayActivationResult.EXTERNAL,
+  maxRebateAmount: 0,
+};
 
 export interface WalletPageRechargeContentStoreTypes {
   rechargeLimitStr: [string, string]; // ['min limit', 'max limit']
@@ -66,6 +80,7 @@ export const useWalletPageRechargeContentStore =
         return { allPayChannelActionItems: list };
       }),
     currentPayChannel: {
+      ...DEF_PAY_CHANNEL,
       onAction: () => {},
       optionActions: [] as PayOptionItem[],
     } as PayChannelItem,

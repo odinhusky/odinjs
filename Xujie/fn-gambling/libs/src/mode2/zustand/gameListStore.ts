@@ -159,7 +159,7 @@ const defaultGameListData = {
   isHomeInfoSuccess: false,
   favoriteGameIds: [] as number[],
   favoriteGameList: [] as GameListItemResult[],
-  addOrRemoveFavoriteSuccessCount: 0,
+  addOrRemoveFavoriteSuccessCount: -1,
 };
 
 /**
@@ -167,22 +167,25 @@ const defaultGameListData = {
  * [熱門遊戲，遊戲列表，收藏遊戲列表]
  */
 export const useGameListStore = create<GameListStoreTypes>()(
-  devtoolsAndPersistWrapper('[gameList store] useGameListStore', (set) => ({
-    ...cloneDeep(defaultGameListData),
-    setHotGameList: (list) => set(() => ({ hotGameList: list })),
-    setWinGameList: (list) => set(() => ({ winGameList: list })),
-    setWinGamesIndex: (idx) => set(() => ({ winGamesIndex: idx })),
-    setPlatformGameMap: (map) => set(() => ({ platformGameMap: map })),
-    setIsHomeInfoSuccess: (bool) => set(() => ({ isHomeInfoSuccess: bool })),
-    setFavoriteGameList: (list) =>
-      set(() => ({
-        favoriteGameIds: list.map((item) => item.gameId),
-        favoriteGameList: list,
-      })),
-    triggerFavoriteAction: () =>
-      set((state: GameListStoreTypes) => ({
-        addOrRemoveFavoriteSuccessCount:
-          state.addOrRemoveFavoriteSuccessCount + 1,
-      })),
-  }))
+  devtoolsAndPersistWrapper(
+    '[gameList store] useGameListStore',
+    (set, get) => ({
+      ...cloneDeep(defaultGameListData),
+      setHotGameList: (list) => set(() => ({ hotGameList: list })),
+      setWinGameList: (list) => set(() => ({ winGameList: list })),
+      setWinGamesIndex: (idx) => set(() => ({ winGamesIndex: idx })),
+      setPlatformGameMap: (map) => set(() => ({ platformGameMap: map })),
+      setIsHomeInfoSuccess: (bool) => set(() => ({ isHomeInfoSuccess: bool })),
+      setFavoriteGameList: (list) =>
+        set(() => ({
+          favoriteGameIds: list.map((item) => item.gameId),
+          favoriteGameList: list,
+        })),
+      triggerFavoriteAction: () =>
+        set(() => ({
+          addOrRemoveFavoriteSuccessCount:
+            get().addOrRemoveFavoriteSuccessCount + 1,
+        })),
+    })
+  )
 );

@@ -6,15 +6,18 @@ import {
   handleRecordPageReportTabClick,
   handleRecordPageSwitchRecordListTabClick,
   handleRecordPageTabClick,
+  handleRecordPageHeaderTabIndexClick,
 } from './acitonType';
 
 import handleGlobalClick from '../handleGlobalClick';
 import {
+  RecordPageHeaderTabs,
   RecordPageReportSelectedProgressInfoUnit,
   RecordPageReportTimeTabs,
   RecordPageTabs,
   useRecordPageBalanceRecordStore,
   useRecordPageBalanceReportStore,
+  useRecordPageHeaderTabsStore,
   useRecordPageStore,
 } from '@mode2/zustand/page/recordPageStore';
 import { ActionClickObjType } from '../common/actionClickObjetType';
@@ -22,10 +25,14 @@ import { HandleClickProps } from '../common/handleClickProps';
 import handleAction from '../common/handleAction';
 import { useClipboard } from '@libs/commonUtils/hooks/useClipboard';
 import { useEffect } from 'react';
-import { useNavigateClick, useNavPageClick } from '@mode2/usecase/useNavPageClick';
+import {
+  useNavigateClick,
+  useNavPageClick,
+} from '@mode2/usecase/useNavPageClick';
 
 type ActionClickPayloadMap = {
   [handleRecordPageTabClick]: { index: RecordPageTabs };
+  [handleRecordPageHeaderTabIndexClick]: { index: RecordPageHeaderTabs };
   [handleRecordPageSwitchRecordListTabClick]: { index: number };
   [handleRecordPageReportTabClick]: { index: RecordPageReportTimeTabs };
   [handleRecordPageReportProgressClick]: {
@@ -65,6 +72,10 @@ export const useRecordPageActions = () => {
 
   const setSelectProgressInfo = useRecordPageBalanceReportStore(
     (state) => state.setSelectProgressInfo
+  );
+
+  const setHeaderTabIndex = useRecordPageHeaderTabsStore(
+    (state) => state.setHeaderTabIndex
   );
 
   useEffect(() => {
@@ -126,6 +137,14 @@ export const useRecordPageActions = () => {
         target: handleRecordPageToFullOrderPageClick,
         callback: () => {
           navToFullOrderDetailPage('', { state: { orderId: value } });
+        },
+      });
+    },
+    [handleRecordPageHeaderTabIndexClick]: ({ index }) => {
+      handleGlobalClick({
+        target: handleRecordPageHeaderTabIndexClick,
+        callback: () => {
+          setHeaderTabIndex(index);
         },
       });
     },

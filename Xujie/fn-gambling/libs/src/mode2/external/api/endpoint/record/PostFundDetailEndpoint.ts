@@ -6,6 +6,7 @@ import { extractApiMoneyString } from '@libs/commonUtils/extractApiMoneyString';
 export interface FundDetailRequest {
   limit: number;
   page: number;
+  type?: number;
 }
 
 interface FundDetailItemResponse {
@@ -16,18 +17,42 @@ interface FundDetailItemResponse {
   AfterBalance?: string; // '101321.00'
 }
 
+export enum FundDetailType {
+  ALL = 'ALL', // null
+  EXPENSE = 'EXPENSE', //2
+  INCOME = 'INCOME', //1
+}
+
+export interface FundDetailPayload {
+  limit: number;
+  page: number;
+  type?: FundDetailType;
+}
+
 type FundDetailResponse = FundDetailItemResponse[];
 
 /** 資金轉移紀錄 */
 export const PostFundDetailEndpoint = (builder: ExternalEndpoint) =>
-  builder.mutation<FundDetailResult, FundDetailRequest>({
-    query: (reqData) => ({
-      method: 'post',
-      url: POST_FUND_DETAIL_URL,
-      data: {
-        reqData,
-      },
-    }),
+  builder.mutation<FundDetailResult, FundDetailPayload>({
+    query: (payload) => {
+      const { type, ...rest } = payload;
+      const request: FundDetailRequest = {
+        ...rest,
+        type:
+          type === FundDetailType.INCOME
+            ? 1
+            : type === FundDetailType.EXPENSE
+            ? 2
+            : undefined, // is ALL
+      };
+      return {
+        method: 'post',
+        url: POST_FUND_DETAIL_URL,
+        data: {
+          reqData: request,
+        },
+      };
+    },
 
     transformResponse,
   });
@@ -44,11 +69,10 @@ type FundDetailResult = FundDetailItemResult[];
 
 const defaultResult = [] as FundDetailResult;
 
-
 const transformResponse = (
   response: ResponseStructure<FundDetailResponse>
 ): FundDetailResult => {
-  const resp = response?.Body; 
+  const resp = response?.Body;
   if (resp) {
     return resp.map((item) => ({
       timestamp: item?.ChangeTime || 0,

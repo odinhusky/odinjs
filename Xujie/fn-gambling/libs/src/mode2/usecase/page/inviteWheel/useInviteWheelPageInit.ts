@@ -7,7 +7,7 @@ import {
 } from '@libs/mode2/external/api';
 import { useDeepEffect } from '@libs/commonUtils';
 import { usePinduoduoFreeDrawModalStore } from '@mode2/zustand/components/pinduoduoFreeDrawModalStore';
-import useUpdatedEffect from 'antd/es/typography/hooks/useUpdatedEffect';
+import { useUpdateDeepEffect } from '@libs/commonUtils';
 
 const useInviteWheelPageInit = () => {
   const [postInviteWheelNewsTickerList, { data: newsTicker }] =
@@ -89,7 +89,7 @@ const useInviteWheelPageInit = () => {
 
   // 第一次金入不刷新
   // 刷新
-  useUpdatedEffect(() => {
+  useUpdateDeepEffect(() => {
     postInviteWheelPortalInfo();
     postInviteWheelRewardList();
   }, [refreshInfoNumber]);

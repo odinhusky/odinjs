@@ -6,16 +6,25 @@ import {
   useMoreGamePageRefsStore,
   useMoreGamePageStoreStore,
 } from '@mode2/zustand/page/moreGamePage';
-import { useBreakPoint, useDeepEffect } from '@commonUtils/hooks';
+import {
+  useBreakPoint,
+  useDeepEffect,
+  useUpdateEffect,
+} from '@commonUtils/hooks';
 import { useEffect, useRef } from 'react';
 import useMoreGamePageHeaderSetting from './useMoreGamePageHeaderSetting';
 import useMoreGamePageFooterSetting from './useMoreGamePageFooterSetting';
 import { useMode2PageResetFloatActionButton } from '../useMode2PageResetFloatActionButton';
 
+interface GetGameListByPageProps {
+  page: number;
+}
+
 interface MoreGamePageParams {
   manufacturer: string;
   manufacturerLogoUrl: string;
   type: string;
+  platformId?: number;
 }
 
 const defaultParams: MoreGamePageParams = {
@@ -55,31 +64,43 @@ export const useMode2MoreGamePageBase = () => {
   const isBreakPointFlagLoaded = isMobile || isTablet || isDesktop;
   const search = getParams();
 
-  const setManufacturer = useMoreGamePageStoreStore(
-    (state) => state.setManufacturer
+  const activeManufacturer = useMoreGamePageStoreStore(
+    (state) => state.activeManufacturer
   );
 
-  const setManufacturerLogoUrl = useMoreGamePageStoreStore(
-    (state) => state.setManufacturerLogoUrl
+  const setActiveManufacturer = useMoreGamePageStoreStore(
+    (state) => state.setActiveManufacturer
   );
 
-  useEffect(() => {
-    if (search.manufacturer) setManufacturer(search.manufacturer);
-    if (search.manufacturerLogoUrl)
-      setManufacturerLogoUrl(search.manufacturerLogoUrl);
-  }, [search.manufacturer, search.manufacturerLogoUrl]);
+  const setActiveManufacturerLogoUrl = useMoreGamePageStoreStore(
+    (state) => state.setActiveManufacturerLogoUrl
+  );
+
+  const activePlatformId = useMoreGamePageStoreStore(
+    (state) => state.activePlatformId
+  );
+
+  const setActivePlatformId = useMoreGamePageStoreStore(
+    (state) => state.setActivePlatformId
+  );
+
+  const activePlatformType = useMoreGamePageStoreStore(
+    (state) => state.activePlatformType
+  );
+
+  const setActivePlatformType = useMoreGamePageStoreStore(
+    (state) => state.setActivePlatformType
+  );
 
   const ref = useRef<HTMLDivElement | null>(null);
   const setMoreGamePageContainerRef = useMoreGamePageRefsStore(
     (state) => state.setMoreGamePageContainerRef
   );
 
-  useEffect(() => {
-    setMoreGamePageContainerRef(ref);
-  }, []);
-
-  const [postGameSearch, { data: gameSearchResult }] =
-    usePostGameSearchMutation();
+  const [
+    postGameSearch,
+    { data: gameSearchResult, isLoading: isPostGameLoading },
+  ] = usePostGameSearchMutation();
 
   const setMoreGameList = useMoreGamePageStoreStore(
     (state) => state.setMoreGameList
@@ -91,24 +112,56 @@ export const useMode2MoreGamePageBase = () => {
 
   const page = useMoreGamePageStoreStore((state) => state.page);
 
+  const scrollIntersectingCount = useMoreGamePageStoreStore(
+    (state) => state.scrollIntersectingCount
+  );
+
   const setPage = useMoreGamePageStoreStore((state) => state.setPage);
 
+  const setIsMoreGameLoading = useMoreGamePageStoreStore(
+    (state) => state.setIsMoreGameLoading
+  );
+
   const pageSize = (isDesktop ? 18 : isTablet ? 12 : 9) * 2;
-  const initData = (page: number) => {
-    if (allLoaded) return;
+
+  const getGameByPage = ({ page }: GetGameListByPageProps) => {
+    if (allLoaded && page >= 2) return;
     postGameSearch({
       gameName: '',
-      gameType: +search.type,
+      gameType: activePlatformType,
       limit: pageSize,
-      manufacturer: search.manufacturer,
-      page: page,
+      manufacturer: activeManufacturer,
+      page,
     });
   };
 
-  // $ Init API
-  useDeepEffect(() => {
+  // 設定 ref
+  useEffect(() => {
+    setMoreGamePageContainerRef(ref);
+  }, []);
+
+  // 設定 Loading state
+  useEffect(() => {
+    setIsMoreGameLoading(isPostGameLoading);
+  }, [isPostGameLoading]);
+
+  // 第一次進來透過 router 帶 options，把這個 options 內容是為目前 active 的遊戲廠商
+  useEffect(() => {
+    if (search.manufacturer) setActiveManufacturer(search.manufacturer);
+    if (search.manufacturerLogoUrl)
+      setActiveManufacturerLogoUrl(search.manufacturerLogoUrl);
+    if (search.platformId) {
+      setActivePlatformId(search.platformId);
+    }
+    if (search.type) {
+      setActivePlatformType(Number(search.type));
+    }
+  }, [search.platformId, search.manufacturer, search.manufacturerLogoUrl]);
+
+  // 透過 page 以及 activeManufacture activePlatformType pageSize 來控制拿到對應廠商的遊戲列表以及數量
+  useUpdateEffect(() => {
     if (isBreakPointFlagLoaded) {
-      initData(1);
+      getGameByPage({ page: 1 });
     }
 
     return () => {
@@ -116,23 +169,43 @@ export const useMode2MoreGamePageBase = () => {
       setMoreGameList([]);
       setAllLoaded(false);
     };
-  }, [isBreakPointFlagLoaded]);
+    // TODO activeManufacturer 應該要換成 activePlatformId 才對，因為 activeManufacturer 是有重複的機會，例如 platformItems 中 name="Red Tiger" 以及 name="Netent"，這兩者的 manufacture 都是 EVORT
+  }, [activeManufacturer, isBreakPointFlagLoaded]);
 
-  // $ 依照 page 變化打 API
-  useEffect(() => {
-    if (page >= 2) initData(page);
+  // 當符合滾動且 allLoad 等於 false，則變動 page state 觸發去拿下一頁的資料，滾動的 actionName 為 => handleMoreGamePageScroll
+  useUpdateEffect(() => {
+    if (page >= 2 && import.meta.env['VITE_V_VERSION'] !== 'v6') {
+      getGameByPage({ page });
+    }
   }, [page]);
 
+  // V6 的時候配合無限滾動的 useEffect
+  useUpdateEffect(() => {
+    const currentPage = useMoreGamePageStoreStore.getState().page;
+    const nextPage = currentPage + 1;
+
+    console.log(
+      '!! scrollIntersectingCount',
+      scrollIntersectingCount,
+      currentPage,
+      nextPage
+    );
+
+    setPage(nextPage);
+    getGameByPage({ page: nextPage });
+  }, [scrollIntersectingCount]);
+
+  // 針對 API 回來得資料做處理，並且更新 allLoaded 的邏輯
   useDeepEffect(() => {
     if (gameSearchResult && isBreakPointFlagLoaded) {
-      if (gameSearchResult.length === 0) {
+      if (gameSearchResult.length < pageSize) {
         setAllLoaded(true);
-      } else if (gameSearchResult.length < pageSize) {
-        if (page === 1) setMoreGameList(gameSearchResult);
+        if (page === 1) {
+          setMoreGameList(gameSearchResult);
+        }
         if (page > 1) setMoreGameList((prev) => [...prev, ...gameSearchResult]);
-
-        setAllLoaded(true);
       } else {
+        setAllLoaded(false);
         setMoreGameList((prev) => [...prev, ...gameSearchResult]);
       }
     }

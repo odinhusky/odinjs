@@ -14,11 +14,20 @@ export interface IRewardsDetailStore {
   setActiveDetailContent: (id: EDetailContentId) => void;
   setActiveDetailTable: (id: EDetailTableId) => void;
   resetRewardsDetail: () => void;
+
+  headerTabIndex: RewardsDetailPageHeaderTabsTypes; // [IN][V6]
+  setHeaderTabIndex: (id: RewardsDetailPageHeaderTabsTypes) => void;
 }
 export enum EDetailContentId {
   RECORD_DETAIL = '1',
   WITHDRAWAL_HISTORY = '2',
 }
+
+export enum RewardsDetailPageHeaderTabsTypes {
+  REWARDS_DETAIL = 'Rewards Detail',
+  WITHDRAWAL_HISTORY = 'Withdrawal History',
+}
+
 export enum EDetailTableId {
   DETAIL_ALL = 'All',
   DETAIL_BET = 'Bet',
@@ -96,5 +105,11 @@ export const useRewardsDetailStore = create<IRewardsDetailStore>((set) => ({
         activeDetailContentId: EDetailContentId.RECORD_DETAIL,
         activeDetailTableId: EDetailTableId.DETAIL_ALL,
       };
+    }),
+
+  headerTabIndex: RewardsDetailPageHeaderTabsTypes.REWARDS_DETAIL,
+  setHeaderTabIndex: (headerTabIndex) =>
+    set(() => {
+      return { headerTabIndex };
     }),
 }));

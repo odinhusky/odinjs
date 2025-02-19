@@ -253,6 +253,9 @@ export default {
         '.after-rounded-lg:after': {
           borderRadius: '0.5rem', // 圆角边
         },
+        '.after-rounded-xl:after': {
+          borderRadius: '0.75rem', // 圆角边
+        },
       });
       addUtilities({
         '.text-xxxs': {
@@ -369,6 +372,7 @@ export default {
                 WebkitMaskComposite: 'xor',
                 maskComposite: 'exclude',
                 borderRadius: 'inherit',
+                pointerEvents: 'none',
               },
             };
           } else {

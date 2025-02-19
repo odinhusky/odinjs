@@ -16,3 +16,6 @@ export const handleRecordPageDesktopHeaderBackBtnClick =
 
 export const handleRecordPageToFullOrderPageClick =
   'handleRecordPageToFullOrderPageClick';
+
+export const handleRecordPageHeaderTabIndexClick =
+  'handleRecordPageHeaderTabIndexClick';

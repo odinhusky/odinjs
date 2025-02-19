@@ -1,7 +1,6 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
 
-interface SocialInfo {
+export interface SocialInfo {
   label: string;
   icon: string;
   onActionClick: () => void;
@@ -13,6 +12,8 @@ export enum SocialScenarios {
   INVITE_PAGE = 'INVITE_PAGE',
   TEAM_CLUB = 'TEAM_CLUB',
   SHARE = 'SHARE',
+  V6_VERSION_SHARE = 'V6_VERSION_SHARE',
+  ABOUT_US = 'ABOUT_US',
 }
 
 interface UsageScenarios {
@@ -25,9 +26,7 @@ interface SocialListStoreTypes {
   setUsageScenariosList: (list: UsageScenarios[]) => void;
 }
 
-export const useSocialListStore = create<SocialListStoreTypes>()(
-  devtoolsAndPersistWrapper('[component store] useSocialListStore', (set) => ({
-    usageScenariosList: [] as UsageScenarios[],
-    setUsageScenariosList: (list) => set(() => ({ usageScenariosList: list })),
-  }))
-);
+export const useSocialListStore = create<SocialListStoreTypes>()((set) => ({
+  usageScenariosList: [] as UsageScenarios[],
+  setUsageScenariosList: (list) => set(() => ({ usageScenariosList: list })),
+}));

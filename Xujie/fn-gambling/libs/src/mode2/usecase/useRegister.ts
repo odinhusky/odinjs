@@ -15,14 +15,20 @@ import { useLoadingStore } from '../zustand/components/loadingStore';
 import { Form } from 'antd';
 
 import { useDebounceAction } from '../action/common/handleAction';
+import { useUserProfileStore } from '../zustand/user/userProfileStore';
+import { get } from 'lodash';
+import { useOTPCountDownStore } from '../zustand/components/OTPCountDownStore';
+import handleGlobalClick from '../action/handleGlobalClick';
 interface RegisterProps {
   successCallback?: () => void; // 登入成功的 callback
   failCallback?: () => void; // 登入失敗的 callback
+  isVisitor?: boolean;
 }
 
 export const useRegister = ({
   successCallback,
   failCallback,
+  isVisitor = false,
 }: RegisterProps) => {
   const setShowReminderModal = useReminderModalStore(
     (state) => state.setShowReminderModal
@@ -32,21 +38,34 @@ export const useRegister = ({
   );
   const setIsLogin = useIsLoginStore((state) => state.setIsLogin);
 
+  const setUserRole = useUserProfileStore((state) => state.setUserRole);
+
+  const otpId = useOTPCountDownStore((state) => state.otpId);
+
   const [postRegister, { data, isSuccess, status }] = usePostRegisterMutation();
 
   useEffect(() => {
     FetchMyIp.doFetchMyIp();
   }, []);
 
-  const register = (values: RegisterPayload) => {
-    const referralCode =
-      sdkUtils.getStorage(AppLocalStorageKey.REFERRAL_CODE) || undefined;
+  const register = (values: RegisterPayload, isVisitor: boolean = false) => {
+    const referralCode = get(
+      values,
+      'referralCode',
+      sdkUtils.getStorage(AppLocalStorageKey.REFERRAL_CODE) || undefined
+    );
     const pushToken = useAppStore.getState().pushToken;
+
     setShowLoading(true);
     postRegister({
       ...values,
-      referralCode: referralCode,
+      password: '',
+      referralCode,
       pushToken: pushToken,
+      isVisitor,
+      verifyCode: values.verifyCode || '',
+      optCode: values.optCode,
+      optId: otpId || '',
     }).finally(() => {
       setShowLoading(false);
     });
@@ -58,9 +77,15 @@ export const useRegister = ({
       sdkUtils.setStorage(AppLocalStorageKey.TOKEN, data.token);
       setShowReminderModal(data.isShowPopup);
       setRegisterBonus(data.registerBonus);
+      if (data?.userRole) setUserRole(data.userRole);
       setIsLogin(true);
       sdkUtils.setStorage(AppLocalStorageKey.IS_OLD_USER, 'false');
-      sdkUtils.removeStorage(AppLocalStorageKey.REFERRAL_CODE);
+
+      // 不是自動註冊的話才移除推薦碼
+      if (!data.isVisitor) {
+        sdkUtils.removeStorage(AppLocalStorageKey.REFERRAL_CODE);
+        useAppStore.getState().setTemporaryReferralCode('');
+      }
       successCallback?.();
     } else {
       // NOTICE isSuccess = false 可能是未提交状态
@@ -81,25 +106,38 @@ export const useRegister = ({
     base64CaptchaImg: '',
   });
   const refreshCaptcha = useDebounceAction(() => {
-    setShowLoading(true);
-    postCaptcha()
-      .then((res) => {
-        if ('data' in res && res.data) {
-          setCaptcha(res.data);
-        }
-      })
-      .finally(() => {
-        setShowLoading(false);
-      });
+    handleGlobalClick({
+      target: 'handleRefreshCaptcha',
+      callback: () => {
+        setShowLoading(true);
+        postCaptcha()
+          .then((res) => {
+            if ('data' in res && res.data) {
+              setCaptcha(res.data);
+            }
+          })
+          .finally(() => {
+            setShowLoading(false);
+          });
+      },
+    });
   }, 1000);
 
   useEffect(() => {
-    refreshCaptcha();
+    if (isVisitor === false) {
+      console.log('!! Captcha');
+      refreshCaptcha();
+    }
   }, []);
 
   const [form] = Form.useForm();
   const [submittable, setSubmittable] = useState(false);
   const values = Form.useWatch([], form);
+  const [policyCheck, setPolicyCheck] = useState(true);
+  const togglePolicyCheck = () => {
+    setPolicyCheck((pre) => !pre);
+  };
+
   useEffect(() => {
     form
       .validateFields({ validateOnly: true })
@@ -114,6 +152,9 @@ export const useRegister = ({
 
   return {
     form,
+    policyCheck,
+    setPolicyCheck,
+    togglePolicyCheck,
     register,
     captcha: {
       ...captcha,

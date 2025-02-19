@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { ClipboardInfo, ClipboardState } from '@commonUtils/hooks/useClipboard';
 import {
+  PromoteHomeResult,
   RateInfoResult,
   ReferralResult,
 } from '@mode2API/endpoint/team/PostPromoteHomeEndpoint';
@@ -67,6 +68,8 @@ export interface EarnUnit {
 }
 
 export interface Mode2InvitePageEarnStoreTypes {
+  fetchNumber: number;
+  refreshPromoteHomeData: () => void;
   lastFetchTime: number;
   setLastFetchTime: (time: number) => void;
   earnHeaderList: EarnUnit[];
@@ -75,26 +78,35 @@ export interface Mode2InvitePageEarnStoreTypes {
   setClipboardLinkResult: (result: ClipboardInfo) => void;
   referralInfo: ReferralResult;
   setReferralInfo: (info: ReferralResult) => void;
+  promoteHomeData?: PromoteHomeResult;
+  setPromoteHomeData: (data: PromoteHomeResult) => void;
 }
 
 export const useMode2InviteEarnStore = create<Mode2InvitePageEarnStoreTypes>()(
-  devtoolsAndPersistWrapper('[page store] useMode2InviteEarnStore', (set) => ({
-    lastFetchTime: 0,
-    setLastFetchTime: (time) => set(() => ({ lastFetchTime: time })),
-    earnHeaderList: [] as EarnUnit[],
-    setEarnHeaderList: (list) => set(() => ({ earnHeaderList: list })),
-    clipboardLinkResult: {
-      state: ClipboardState.INCOMPLETE,
-      message: '',
-    },
-    setClipboardLinkResult: (result) =>
-      set(() => ({ clipboardLinkResult: result })),
-    referralInfo: {
-      code: '',
-      link: '',
-    },
-    setReferralInfo: (info) => set(() => ({ referralInfo: info })),
-  }))
+  devtoolsAndPersistWrapper(
+    '[page store] useMode2InviteEarnStore',
+    (set, get) => ({
+      fetchNumber: -1,
+      refreshPromoteHomeData: () =>
+        set(() => ({ fetchNumber: get().fetchNumber + 1 })),
+      lastFetchTime: 0,
+      setLastFetchTime: (time) => set(() => ({ lastFetchTime: time })),
+      setPromoteHomeData: (data) => set(() => ({ promoteHomeData: data })),
+      earnHeaderList: [] as EarnUnit[],
+      setEarnHeaderList: (list) => set(() => ({ earnHeaderList: list })),
+      clipboardLinkResult: {
+        state: ClipboardState.INCOMPLETE,
+        message: '',
+      },
+      setClipboardLinkResult: (result) =>
+        set(() => ({ clipboardLinkResult: result })),
+      referralInfo: {
+        code: '',
+        link: '',
+      } as ReferralResult,
+      setReferralInfo: (info) => set(() => ({ referralInfo: info })),
+    })
+  )
 );
 
 // - Statics Store ==================================
@@ -118,6 +130,7 @@ interface StatisticsLevelExampleData {
   exampleDataSource: StatisticsExampleData[];
   rateResult: number;
 }
+
 const defaultStatisticsLevelExampleData: StatisticsLevelExampleData = {
   level1: { name: '', betting: 0, percentage: 0 },
   level2: { name: '', betting: 0, percentage: 0 },

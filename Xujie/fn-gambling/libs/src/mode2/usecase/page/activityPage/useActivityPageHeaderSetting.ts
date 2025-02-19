@@ -1,16 +1,22 @@
+import { BasePagePathObj } from '@libs/mode2/routerTypes/types';
 import {
   EHeaderType,
   useHeaderStore,
 } from '@libs/mode2/zustand/components/headerStore';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router';
 
 export const useActivityPageHeaderSetting = () => {
+  const thisPath = BasePagePathObj.ActivityPage;
+  const location = useLocation();
   const setConfig = useHeaderStore((state) => state.setConfig);
 
   useEffect(() => {
-    setConfig({
-      type: EHeaderType.Main,
-    });
+    if (location.pathname === thisPath) {
+      setConfig({
+        type: EHeaderType.Main,
+      });
+    }
   }, []);
 };
 

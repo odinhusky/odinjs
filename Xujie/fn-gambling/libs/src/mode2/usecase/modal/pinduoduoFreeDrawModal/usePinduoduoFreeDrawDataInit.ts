@@ -3,7 +3,7 @@ import { usePinduoduoFreeDrawModalStore } from '@libs/mode2/zustand/components/p
 import { useEffect } from 'react';
 import { useInviteWheelPageStoreStore } from '@mode2/zustand/page/inviteWheelPageStore';
 import { useDeepEffect } from '@libs/commonUtils';
-import useUpdatedEffect from 'antd/es/typography/hooks/useUpdatedEffect';
+import { useUpdateDeepEffect } from '@libs/commonUtils';
 
 const usePinduoduoFreeDrawDataInit = () => {
   const [postInviteWheelParticipate, { data, isSuccess, isError }] =
@@ -36,7 +36,7 @@ const usePinduoduoFreeDrawDataInit = () => {
     }
   }, [isShowPinduoduoFreeDrawModal]);
 
-  useUpdatedEffect(() => {
+  useUpdateDeepEffect(() => {
     if (participateNumber >= 0) {
       postInviteWheelParticipate();
     }

@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router';
 import { useDepositAdvertisementStore } from '../zustand/components/depositAdvertisementStore';
 import { useUserProfileStore } from '../zustand/user/userProfileStore';
-import useUserInfo from './useUserInfo';
 import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { BasePagePathObj } from '../routerTypes/types';
@@ -46,9 +45,8 @@ const useDepositAdModalBase = () => {
     }
   }, [countDownTime]);
   const isLowBalance = useUserProfileStore((state) => state.isLowBalance);
-  const { refreshUserData } = useUserInfo({
-    immediate: false,
-  });
+  const refreshUserData = useUserProfileStore((state) => state.refreshUserData);
+
   const location = useLocation();
   const userId = useUserProfileStore((state) => state.id);
   const lastApiUpdateTime = useUserProfileStore(

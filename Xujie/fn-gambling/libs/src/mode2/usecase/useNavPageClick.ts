@@ -1,20 +1,38 @@
 import useGuestNavigateClickStrategy from '@mode2/usecase/navPageClick/useGuestNavigateClickStrategy';
 import useUserNavigateClickStrategy from '@mode2/usecase/navPageClick/useUserNavigateClickStrategy';
+import usePlayerNavigateClickStrategy from '@mode2/usecase/navPageClick/usePlayerNavigateClickStrategy';
+
 import useUserNavPageClickStrategy from '@mode2/usecase/navPageClick/useUserNavPageClickStrategy';
+import usePlayerNavPageClickStrategy from '@mode2/usecase/navPageClick/usePlayerNavPageClickStrategy';
 import useGuestNavPageClickStrategy from '@mode2/usecase/navPageClick/useGuestNavPageClickStrategy';
-import { useIsLoginStore } from '@mode2/zustand/loginStore';
 import { useMemo } from 'react';
+import { useUserProfileStore } from '../zustand/user/userProfileStore';
+import { UserRoleType } from '../@types/userRoleTypes';
+import useEmptyNavigateClickStrategy from '@mode2/usecase/navPageClick/useEmptyNavigateClickStrategy';
+import useEmptyNavPageClickStrategy from '@mode2/usecase/navPageClick/useEmptyNavPageClickStrategy';
 
 export const useNavigateClick = () => {
-  const userNavStrategy = useUserNavigateClickStrategy();
-  const guestNavStrategy = useGuestNavigateClickStrategy();
+  const userNavigateClickStrategy = useUserNavigateClickStrategy();
+  const playerNavigateClickStrategy = usePlayerNavigateClickStrategy();
+  const guestNavigateClickStrategy = useGuestNavigateClickStrategy();
+  const emptyNavigateClickStrategy = useEmptyNavigateClickStrategy();
 
-  const isLogin = useIsLoginStore((state) => state.isLogin);
+  const userRole = useUserProfileStore((state) => state.userRole);
 
-  const useUSeNavigate = useMemo(() => {
-    return isLogin ? userNavStrategy : guestNavStrategy;
-  }, [isLogin]);
-  return useUSeNavigate;
+  const navigate = useMemo(() => {
+    switch (userRole) {
+      case UserRoleType.USER:
+        return userNavigateClickStrategy;
+      case UserRoleType.PLAYER:
+        return playerNavigateClickStrategy;
+      case UserRoleType.GUEST:
+        return guestNavigateClickStrategy;
+      default:
+        return emptyNavigateClickStrategy;
+    }
+  }, [userRole]);
+
+  return navigate;
 
   // return (to: To | number, options?: NavigateOptions) => {
   //   if (sdkUtils.isCurrentLogin()) {
@@ -26,13 +44,25 @@ export const useNavigateClick = () => {
 };
 
 export const useNavPageClick = () => {
-  const userNavStrategy = useUserNavPageClickStrategy();
-  const guestNavStrategy = useGuestNavPageClickStrategy();
+  const userNavPageClickStrategy = useUserNavPageClickStrategy();
+  const playerNavPageClickStrategy = usePlayerNavPageClickStrategy();
+  const guestNavPageClickStrategy = useGuestNavPageClickStrategy();
+  const emptyNavPageClickStrategy = useEmptyNavPageClickStrategy();
 
-  const isLogin = useIsLoginStore((state) => state.isLogin);
+  const userRole = useUserProfileStore((state) => state.userRole);
 
-  const useUSeNavigate = useMemo(() => {
-    return isLogin ? userNavStrategy : guestNavStrategy;
-  }, [isLogin]);
-  return useUSeNavigate;
+  const useNavPage = useMemo(() => {
+    switch (userRole) {
+      case UserRoleType.USER:
+        return userNavPageClickStrategy;
+      case UserRoleType.PLAYER:
+        return playerNavPageClickStrategy;
+      case UserRoleType.GUEST:
+        return guestNavPageClickStrategy;
+      default:
+        return emptyNavPageClickStrategy;
+    }
+  }, [userRole]);
+
+  return useNavPage;
 };

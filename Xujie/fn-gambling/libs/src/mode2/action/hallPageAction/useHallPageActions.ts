@@ -1,7 +1,10 @@
 import {
   handleBannerClickSwipe,
+  handleHallPageDepositBtnClick,
   handleHallPageTabClick,
+  handleHallPageWithdrawBtnClick,
   handleMarqueeActionClick,
+  handleHallPageBalanceRightArrowIconClick,
 } from './actionType';
 
 import handleGlobalClick from '../handleGlobalClick';
@@ -24,6 +27,11 @@ import {
   AnnouncementScenariosType,
   useAnnouncementActionBase,
 } from '@mode2/usecase/announcement/useAnnouncementActionBase';
+import { useNavPageClick } from '@libs/mode2/usecase/useNavPageClick';
+import { WalletPageTabType } from '@libs/mode2/@types/walletPageTabType';
+import { useWalletPageSwitchContentTabsStore } from '@libs/mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
+import { useWalletPageStore } from '@libs/mode2/zustand/page/WalletPage/walletPageStore';
+import { WalletDashboardType } from '@libs/mode2/@types/walletDashboardTypes';
 
 export type ActionClickPayloadMap = {
   [handleBannerClickSwipe]: {
@@ -33,6 +41,9 @@ export type ActionClickPayloadMap = {
   [handleMarqueeActionClick]: {
     item: BroadcastItemResult;
   };
+  [handleHallPageDepositBtnClick]: void;
+  [handleHallPageWithdrawBtnClick]: void;
+  [handleHallPageBalanceRightArrowIconClick]: void;
 };
 
 export interface HandleIndexClickProps<T extends keyof ActionClickPayloadMap>
@@ -42,6 +53,8 @@ export const useHallPageActions = () => {
   const { onAnnouncementAction } = useAnnouncementActionBase();
   const { onHomeMarqueeAction } = useMarqueeBase();
 
+  const { navToWalletPage } = useNavPageClick();
+
   const setCurTab = useMode2HallPageTabsStore((state) => state.setCurTab);
 
   const scrollContainerRef = useMode2HallPageRefsStore(
@@ -50,6 +63,13 @@ export const useHallPageActions = () => {
 
   const scrollContentRef = useMode2HallPageRefsStore(
     (state) => state.scrollContentRef
+  );
+
+  const setDisplayDashboardType = useWalletPageStore(
+    (state) => state.setDisplayDashboardType
+  );
+  const setCurSwitchContentTabId = useWalletPageSwitchContentTabsStore(
+    (state) => state.setCurSwitchContentTabId
   );
 
   const setFontColor = useMode2MarqueeListStore((state) => state.setFontColor);
@@ -113,6 +133,37 @@ export const useHallPageActions = () => {
         target: handleMarqueeActionClick,
         callback: () => {
           onHomeMarqueeAction(item);
+        },
+      });
+    },
+    [handleHallPageBalanceRightArrowIconClick]: () => {
+      handleGlobalClick({
+        target: handleHallPageBalanceRightArrowIconClick,
+        callback: () => {
+          // setDisplayDashboardType(WalletDashboardType.BALANCE);
+          navToWalletPage();
+        },
+      });
+    },
+    [handleHallPageDepositBtnClick]: () => {
+      handleGlobalClick({
+        target: handleHallPageDepositBtnClick,
+        callback: () => {
+          // setDisplayDashboardType(WalletDashboardType.NONE);
+          setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
+
+          navToWalletPage();
+        },
+      });
+    },
+    [handleHallPageWithdrawBtnClick]: () => {
+      handleGlobalClick({
+        target: handleHallPageWithdrawBtnClick,
+        callback: () => {
+          // setDisplayDashboardType(WalletDashboardType.NONE);
+          setCurSwitchContentTabId(WalletPageTabType.WITHDRAW);
+
+          navToWalletPage();
         },
       });
     },

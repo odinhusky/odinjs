@@ -1,7 +1,6 @@
 import { AxiosInstance } from 'axios';
 import sdkUtils from '../../utils/sdk/index';
 import { AppLocalStorageKey } from '@mode2/utils/sdk/persistant/storageKey';
-import { message } from 'antd';
 import { logout } from '@mode2/usecase/useLogout';
 import {
   apiErrorLoggerEvent,
@@ -11,6 +10,7 @@ import {
   POST_CAMPAIGN_LAUNCH_URL,
   POST_CAMPAIGN_LIST_URL,
 } from '@mode2API/urls';
+import { useMessageStore } from '@mode2/zustand/components/messageStore';
 
 const SkipErrorMessageWhitelist = [
   POST_CAMPAIGN_LAUNCH_URL,
@@ -20,7 +20,7 @@ const SkipErrorMessageWhitelist = [
 // 略過error message 封裝
 const showErrorMessage = (url: string, errorMessage: string) => {
   if (!SkipErrorMessageWhitelist.includes(url)) {
-    message.error(`${errorMessage}`);
+    useMessageStore.getState().error(errorMessage);
   }
 };
 

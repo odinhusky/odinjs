@@ -1,22 +1,28 @@
-import { useNavigate } from 'react-router-dom';
 import useNavigateInterceptor from '@mode2/usecase/navPageClick/useNavigateInterceptor';
 import { LoginFormType } from '@mode2/zustand/loginStore';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
 import { NavigateOptions } from 'react-router/dist/lib/context';
 import useNavToLoginPage from '@mode2/usecase/navPageClick/useNavToLoginPage';
 import { To } from 'react-router';
+import useShouldNavigate from '@mode2/usecase/navPageClick/useShouldNavigate';
+import { KYC_BOTH_STATE } from '@constant/KYC';
 
 /**
  * 已經登入的使用者，導航決策
  */
 const useUserNavPageClickStrategy = () => {
-  const navigate = useNavigate();
+  const navigate = useShouldNavigate();
   const { toWalletPageWithdrawTab } = useNavigateInterceptor();
   const navToLoginPage = (
+    flag: number,
     show: boolean = true,
     type: LoginFormType = LoginFormType.LOGIN
   ) => {
-    useNavToLoginPage(show, type, navigate);
+    console.log(
+      '@@@===> navToLoginPage',
+      JSON.stringify({ flag, show, type }, null, 2)
+    );
+    useNavToLoginPage(flag, show, type, navigate);
   };
 
   const navToHallPage = (query: string = '', options?: NavigateOptions) => {
@@ -26,6 +32,10 @@ const useUserNavPageClickStrategy = () => {
   const navToWalletPage = (query: string = '', options?: NavigateOptions) => {
     if (toWalletPageWithdrawTab(options)) {
       navigate(`${BasePagePathObj.WalletPage}${query}`, options);
+    } else {
+      navigate(BasePagePathObj.BindKYCPage, {
+        state: { tab: KYC_BOTH_STATE },
+      });
     }
   };
 
@@ -123,6 +133,44 @@ const useUserNavPageClickStrategy = () => {
     navigate(`${BasePagePathObj.FullOrderDetailPage}${query}`, options);
   };
 
+  const navToGiftCodeRedeemPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.GiftCodeRedeemPage}${query}`, options);
+  };
+
+  // ---- new foe v6 start ----
+  const navToAccountPage = (query: string = '', options?: NavigateOptions) => {
+    navigate(`${BasePagePathObj.AccountPage}${query}`, options);
+  };
+
+  const navToWalletGuidePage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.WalletGuidePage}${query}`, options);
+  };
+
+  const navToSettingPage = (query: string = '', options?: NavigateOptions) => {
+    navigate(`${BasePagePathObj.SettingPage}${query}`, options);
+  };
+
+  const navToGameSupplierListPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.GameSupplierListPage}${query}`, options);
+  };
+
+  const navToOrderDetailPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.OrderDetailPage}${query}`, options);
+  };
+  // ---- new foe v6 end ----
+
   const mapRoutesNavTo = (
     to: To,
     query: string = '',
@@ -187,6 +235,24 @@ const useUserNavPageClickStrategy = () => {
       case BasePagePathObj.FullOrderDetailPage:
         navToFullOrderDetailPage(query, options);
         break;
+      case BasePagePathObj.GiftCodeRedeemPage:
+        navToGiftCodeRedeemPage(query, options);
+        break;
+      case BasePagePathObj.AccountPage:
+        navToAccountPage(query, options);
+        break;
+      case BasePagePathObj.WalletGuidePage:
+        navToWalletGuidePage(query, options);
+        break;
+      case BasePagePathObj.SettingPage:
+        navToSettingPage(query, options);
+        break;
+      case BasePagePathObj.GameSupplierListPage:
+        navToGameSupplierListPage(query, options);
+        break;
+      case BasePagePathObj.OrderDetailPage:
+        navToOrderDetailPage(query, options);
+        break;
       default:
         navigate(`${path}${query}`, options);
     }
@@ -214,6 +280,12 @@ const useUserNavPageClickStrategy = () => {
     navToRechargeWheelRecordsPage,
     navToActivityRecordPage,
     navToFullOrderDetailPage,
+    navToGiftCodeRedeemPage,
+    navToAccountPage,
+    navToWalletGuidePage,
+    navToSettingPage,
+    navToGameSupplierListPage,
+    navToOrderDetailPage,
   };
 };
 

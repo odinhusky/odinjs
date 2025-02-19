@@ -16,6 +16,7 @@ import {
   LaunchType,
 } from '@mode2API/endpoint/game/PostEnterGameEndpoint';
 import { useLoadingStore } from '@mode2/zustand/components/loadingStore';
+import handleGlobalClick from '../action/handleGlobalClick';
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 import { useGuidanceDepositModalStore } from '@mode2/zustand/modal/GuidanceDepositModal/useGuidanceDepositModalStore';
 
@@ -50,8 +51,13 @@ export const useGameItemBase = () => {
 
   /** 將game item 加入/移出 最愛 */
   const onCollect = (item: GameListItemResult) => {
-    const { gameId, isFavorite } = item;
-    postGameCollect({ gameId: gameId, isCollect: isFavorite ? 0 : 1 });
+    handleGlobalClick({
+      target: 'handleAddOrRemoveGameItemFavorite',
+      callback: () => {
+        const { gameId, isFavorite } = item;
+        postGameCollect({ gameId: gameId, isCollect: isFavorite ? 0 : 1 });
+      },
+    });
   };
 
   /** 判斷game item底部是否需要顯示name */
@@ -72,70 +78,76 @@ export const useGameItemBase = () => {
    * 1.進入廠商的遊戲大廳 2.進入遊戲目錄 3.直接進入遊戲
    */
   const onEnterGame = (item: GameListItemResult) => {
-    // 首次用戶 先引導到充值頁面
-    const isFirstDeposit = useUserProfileStore.getState().isFirstDeposit;
-    if (isFirstDeposit) {
-      useGuidanceDepositModalStore.getState().setShowGuidanceDepositModal(true);
-      console.log('@@@===> onEnterGame.isFirstDeposit');
-      return;
-    }
+    handleGlobalClick({
+      target: 'handleEnterGameClick',
+      callback: () => {
+        const {
+          gameId: enterGameId,
+          platformId,
+          enterGameType,
+          manufacturer,
+          type,
+          manufacturerLogoUrl,
+        } = item;
+        // 1 push morePage 2 push webviewPage
+        // 首次用戶 先引導到充值頁面
+        const isFirstDeposit = useUserProfileStore.getState().isFirstDeposit;
+        if (isFirstDeposit) {
+          useGuidanceDepositModalStore
+            .getState()
+            .setShowGuidanceDepositModal(true);
+          console.log('@@@===> onEnterGame.isFirstDeposit');
+          return;
+        }
 
-    const {
-      gameId: enterGameId,
-      platformId,
-      enterGameType,
-      manufacturer,
-      type,
-      manufacturerLogoUrl,
-    } = item;
-    // 1 push morePage 2 push webviewPage
-    sdkUtils.playSound();
+        const gameId = enterGameId || platformId;
 
-    const gameId = enterGameId || platformId;
+        const handleEnterGame = (gameId: number) => {
+          const requestData: EnterGameRequest = {
+            gameId: +gameId,
+          };
+          setShowLoading(true);
 
-    const handleEnterGame = (gameId: number) => {
-      const requestData: EnterGameRequest = {
-        gameId: +gameId,
-      };
-      setShowLoading(true);
+          postEnterGame(requestData)
+            .then((resp) => {
+              if ('data' in resp && resp.data) {
+                const data = resp.data;
+                const state = {
+                  id: gameId,
+                  url: data.url,
+                  launchType: data.launchType,
+                };
+                if (data.launchType === LaunchType.REDIRECT) {
+                  sdkUtils.openBrowser(data.url);
+                } else if (enterGameType === EnterGameType.DIRECT) {
+                  navigate(BasePagePathObj.GamePage, { state: state });
+                } else if (enterGameType === EnterGameType.LOBBY) {
+                  navigate(BasePagePathObj.GameLobbyPage, { state: state });
+                }
+              }
+            })
+            .catch(() => {})
+            .finally(() => {
+              setShowLoading(false);
+            });
+        };
 
-      postEnterGame(requestData)
-        .then((resp) => {
-          if ('data' in resp && resp.data) {
-            const data = resp.data;
-            const state = {
-              id: gameId,
-              url: data.url,
-              launchType: data.launchType,
-            };
-            if (data.launchType === LaunchType.REDIRECT) {
-              sdkUtils.openBrowser(data.url);
-            } else if (enterGameType === EnterGameType.DIRECT) {
-              navigate(BasePagePathObj.GamePage, { state: state });
-            } else if (enterGameType === EnterGameType.LOBBY) {
-              navigate(BasePagePathObj.GameLobbyPage, { state: state });
-            }
-          }
-        })
-        .catch(() => {})
-        .finally(() => {
-          setShowLoading(false);
-        });
-    };
-
-    // 進入大廳or進入遊戲, 都是去開webview page
-    if (enterGameType === EnterGameType.DIRECTORY) {
-      // 進入遊戲目錄
-      navigate(BasePagePathObj.MoreGamePage, {
-        state: {
-          manufacturer: manufacturer,
-          manufacturerLogoUrl: manufacturerLogoUrl,
-          type: type,
-        },
-      });
-    } else {
-      handleEnterGame(gameId);
-    }
+        // 進入大廳or進入遊戲, 都是去開webview page
+        if (enterGameType === EnterGameType.DIRECTORY) {
+          // 進入遊戲目錄
+          navigate(BasePagePathObj.MoreGamePage, {
+            state: {
+              manufacturer: manufacturer,
+              manufacturerLogoUrl: manufacturerLogoUrl,
+              type: type,
+              platformId: platformId,
+            },
+          });
+        } else {
+          handleEnterGame(gameId);
+        }
+      },
+    });
   };
 
   return {

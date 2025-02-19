@@ -20,9 +20,9 @@ export interface PlayerInformationResponse {
   LimitAmount?: string; // "142410.00"
   WithdrawAmount?: string; // "10165.60"
   TotalAssets?: string; // "152,575.60"
-  WithdrawTimes?: number;
+  WithdrawTimes?: number; //提現次數
   WithdrawRate?: string; // "0.030"
-  MaxWithdraw?: string; // "100,000.00"
+  MaxWithdraw?: string; // "100,000.00" VIP提現上限
   Turnover?: string; // "13936.20"
   RequireTurnover?: string; // "325900.00"
   RewardTimes?: number;
@@ -31,6 +31,7 @@ export interface PlayerInformationResponse {
   ChargeType?: number;
   Loading?: boolean;
   IsRisk?: boolean;
+  RemainingWithdrawLimit?: string; // 當日剩餘可提現金額
 }
 
 export interface RechargeAccountResponse {
@@ -96,6 +97,9 @@ export type PlayerInfoResult = {
   maxWithdraw: number;
   turnover: number;
   requireTurnover: number;
+  remainingWithdrawLimit: number;
+  remainingBetToWithdraw: number;
+  withdrawTimes: number;
 };
 
 const defaultBankAccountInfo = {
@@ -117,6 +121,9 @@ const defaultResult = {
   limitAmount: 0,
   withdrawAmount: 0,
   maxWithdraw: 0,
+  remainingWithdrawLimit: 0,
+  remainingBetToWithdraw: 0,
+  withdrawTimes: 0,
 };
 
 const mapBankAccountInfo = (raw: WithdrawAccountResponse) => {
@@ -147,6 +154,10 @@ const transformResponse = (
     const isFirstDeposit =
       typeof resp?.ChargeType === 'number' ? resp?.ChargeType === 1 : null;
 
+    const turnover = extractApiMoneyString(resp.Turnover || '0');
+    const requireTurnover = extractApiMoneyString(resp.RequireTurnover || '0');
+    const remainingBetToWithdraw = Math.max(0, requireTurnover - turnover);
+
     return {
       isBankFirstBind,
       isPersonalInfoFirstBind,
@@ -158,8 +169,13 @@ const transformResponse = (
       withdrawAmount: extractApiMoneyString(resp?.WithdrawAmount || '0'),
       limitAmount: extractApiMoneyString(resp?.LimitAmount || '0'),
       totalAssets: extractApiMoneyString(resp?.TotalAssets || '0'),
-      turnover: extractApiMoneyString(resp.Turnover || '0'),
-      requireTurnover: extractApiMoneyString(resp.RequireTurnover || '0'),
+      turnover: turnover,
+      requireTurnover: requireTurnover,
+      remainingWithdrawLimit: extractApiMoneyString(
+        resp?.RemainingWithdrawLimit || '0'
+      ),
+      remainingBetToWithdraw: remainingBetToWithdraw,
+      withdrawTimes: resp?.WithdrawTimes || 0,
     };
   }
   return defaultResult;

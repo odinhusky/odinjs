@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
+import React from 'react';
 
 export enum EHeaderType {
   Main = 'main',
@@ -9,6 +9,10 @@ export enum EHeaderType {
   GameWeb = 'gameWeb',
   Common = 'common',
   Null = 'null',
+
+  // MobileExclusive for v6
+  CenterTitle = 'centerTitle',
+  Empty = 'Empty',
 }
 
 export interface IConfig {
@@ -18,14 +22,14 @@ export interface IConfig {
   // overwrite Recharge click
   onSystemLogoClick?: () => void;
   onDepositClick?: () => void;
+  render?: () => React.ReactNode | null;
+  headerBgColor?: string;
 }
 
 export const useHeaderStore = create<{
   config: IConfig;
   setConfig: (config: IConfig) => void;
-}>()(
-  devtoolsAndPersistWrapper('[component store] useHeaderStore', (set) => ({
-    config: { type: 'main' } as IConfig,
-    setConfig: (config: IConfig) => set(() => ({ config })),
-  }))
-);
+}>()((set) => ({
+  config: { type: 'main' } as IConfig,
+  setConfig: (config: IConfig) => set(() => ({ config })),
+}));

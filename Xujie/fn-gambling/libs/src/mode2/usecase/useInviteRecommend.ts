@@ -2,22 +2,17 @@ import {
   useMode2InviteEarnStore,
   useMode2InvitePageTeamStore,
 } from '@mode2/zustand/page/invitePageStore';
-import { usePostPromoteHomeMutation } from '@mode2API/index';
 import { useEffect } from 'react';
-import { useIsLoginStore } from '@mode2/zustand/loginStore';
-import sdkUtils from '@mode2/utils/sdk';
-import { AppLocalStorageKey } from '@mode2/utils/sdk/persistant/storageKey';
-import { isEmpty } from 'lodash';
 import { usePlatformDynamicConfigStore } from '@mode2/zustand/platform/platformDynamicConfig';
 import dayjs from 'dayjs';
-import { useDeepEffect } from '@libs/commonUtils';
 
 export const useInviteRecommend = () => {
-  const fetchInterval = 1000 * 30; // 預設 1 分鐘
-  const isLogin = useIsLoginStore((state) => state.isLogin);
-  const [postPromoteHome, { data: promoteHomeData }] =
-    usePostPromoteHomeMutation();
-  const lastFetchTime = useMode2InviteEarnStore((state) => state.lastFetchTime);
+  const refreshPromoteHomeData = useMode2InviteEarnStore(
+    (state) => state.refreshPromoteHomeData
+  );
+  const promoteHomeData = useMode2InviteEarnStore(
+    (state) => state.promoteHomeData
+  );
 
   const setReferralInfo = useMode2InviteEarnStore(
     (state) => state.setReferralInfo
@@ -44,11 +39,11 @@ export const useInviteRecommend = () => {
 
   const setRateInfo = useMode2InvitePageTeamStore((state) => state.setRateInfo);
 
-  useDeepEffect(() => {
-    if (dayjs().valueOf() >= fetchInterval + lastFetchTime && isLogin) {
-      postPromoteHome();
-    }
-  }, [lastFetchTime, isLogin]);
+  // useDeepEffect(() => {
+  //   if (dayjs().valueOf() >= fetchInterval + lastFetchTime && isLogin) {
+  //     postPromoteHome();
+  //   }
+  // }, [lastFetchTime, isLogin]);
 
   useEffect(() => {
     if (promoteHomeData) {
@@ -131,10 +126,11 @@ export const useInviteRecommend = () => {
 
   // 不可以  deps[isLogin]， 會造成多次觸發， 直接拿 token 判斷
   const fetchNow = () => {
-    const token = sdkUtils.getStorage(AppLocalStorageKey.TOKEN);
-    if (!isEmpty(token)) {
-      postPromoteHome();
-    }
+    // const token = sdkUtils.getStorage(AppLocalStorageKey.TOKEN);
+    refreshPromoteHomeData();
+    // if (!isEmpty(token)) {
+    //   postPromoteHome();
+    // }
   };
 
   return { fetchNow: fetchNow };

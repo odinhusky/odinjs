@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { handleCollectRewardBtnClick } from './actionType';
 import handleGlobalClick from '../handleGlobalClick';
@@ -8,6 +7,7 @@ import { HandleClickProps } from '../common/handleClickProps';
 import handleAction from '../common/handleAction';
 import { usePostPiggyBankWithdrawMutation } from '@mode2API/index';
 import { useRebateRewardModalStore } from '@mode2/zustand/components/rebateRewardModalStore';
+import { useMessageStore } from '@mode2/zustand/components/messageStore';
 
 type ActionClickPayloadMap = {
   [handleCollectRewardBtnClick]: { currentCash: number };
@@ -26,7 +26,7 @@ export const useRebateRewardModalAction = () => {
 
   useEffect(() => {
     if (collectRewardData?.withdrawResultMsg) {
-      message.info(collectRewardData.withdrawResultMsg);
+      useMessageStore.getState().info(collectRewardData.withdrawResultMsg);
     }
   }, [collectRewardData]);
 
@@ -39,7 +39,7 @@ export const useRebateRewardModalAction = () => {
             triggerCollect();
             setIsShowRebateRewardModal(false);
           } else {
-            message.info(t('toast_received_today'));
+            useMessageStore.getState().info(t('toast_received_today'));
           }
         },
       });

@@ -1,3 +1,4 @@
+import { EResourceLevel, getImgUrl } from '@libs/mode2/utils';
 import { cx } from '../commonUtils';
 
 export const MOBILE_BREAK_POINT_MAX_WIDTH = 'max-w-[750px] mx-auto';
@@ -24,8 +25,15 @@ export const MODAL_MASK = 'bg-[rgba(0,0,0,0.65)]';
 export const SHADOW = 'shadow-[0px_4px_4px_0px_#26212C]';
 
 export const DEFAULT_BG = 'bg-no-repeat bg-cover bg-center';
+export const PATTERN_BG = 'bg-repeat bg-fixed';
 
 export const remToPx = 16;
+
+export const patternBgStyle = {
+  backgroundImage: `url(${getImgUrl(EResourceLevel.V, 'pattern')})`,
+  backgroundSize: '40rem 40rem',
+  backgroundPosition: 'top left',
+};
 
 // Versions Classes
 

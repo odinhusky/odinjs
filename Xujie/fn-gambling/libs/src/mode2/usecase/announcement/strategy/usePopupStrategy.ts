@@ -50,6 +50,7 @@ export const usePopupStrategy = () => {
     navToTeamClubPage,
     navToInviteWheelPage,
     navToRechargeWheelPage,
+    navToGiftCodeRedeemPage,
   } = useNavPageClick();
 
   const setIsShowRebateRewardModal = useRebateRewardModalStore(
@@ -72,7 +73,7 @@ export const usePopupStrategy = () => {
         navToWalletPage();
         break;
       case AnnouncementType.TELEGRAM:
-        // TODO
+        navToGiftCodeRedeemPage();
         break;
       case AnnouncementType.SIGN:
         // TODO
@@ -86,14 +87,14 @@ export const usePopupStrategy = () => {
         if (sdkUtils.isCurrentLogin()) {
           setIsShowRebateRewardModal(true);
         } else {
-          navToLoginPage();
+          navToLoginPage(23);
         }
         break;
       case AnnouncementType.RED_PACKET:
         {
           // 进入活动中心 活动前两小时-显示活动规则 活动前一小时-显示活动说明  活动中-显示活动中心
           if (!sdkUtils.isCurrentLogin()) {
-            navToLoginPage();
+            navToLoginPage(22);
             return;
           }
 
@@ -136,14 +137,14 @@ export const usePopupStrategy = () => {
         break;
       case AnnouncementType.ENTER_GAME:
         if (!sdkUtils.isCurrentLogin()) {
-          navToLoginPage();
+          navToLoginPage(21);
         } else if (payload.gameObj) {
           onEnterGame(payload.gameObj);
         }
         break;
       case AnnouncementType.ENTER_DIRECTORY:
         if (!sdkUtils.isCurrentLogin()) {
-          navToLoginPage();
+          navToLoginPage(20);
         } else if (payload.gameObj) {
           onEnterGame(payload.gameObj);
         }

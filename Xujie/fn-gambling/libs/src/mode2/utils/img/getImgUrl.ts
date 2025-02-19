@@ -27,6 +27,7 @@ export enum EResourceLevel {
   BANNER = 'banner',
   SHARED = 'shared',
   POPUP_BANNER = 'popup_banner',
+  ICONS = 'icons',
 }
 
 const replacePathVerify = () => {
@@ -54,6 +55,10 @@ const getPopBannerResourcePath = () => {
   return `${replacePathVerify()}/${vVersion}/popup_banner`;
 };
 
+const getIconsResourcePath = () => {
+  return `${replacePathVerify()}/${vVersion}/icons`;
+};
+
 const getVResourcePath = () => {
   return `${replacePathVerify()}/${vVersion}`;
 };
@@ -70,6 +75,11 @@ const getLogoExt = () => {
 const getBannerExt = () => {
   return replaceExtVerify(true);
 };
+
+const getIconsExt = () => {
+  return replaceExtVerify(true);
+};
+
 const getVExt = () => {
   return replaceExtVerify(true);
 };
@@ -103,6 +113,12 @@ export const getImgUrl = (
   if (level === EResourceLevel.POPUP_BANNER) {
     return `${getPopBannerResourcePath()}/${imageSrc}${
       isEmpty(ext) ? getBannerExt() : ext
+    }`;
+  }
+
+  if (level === EResourceLevel.ICONS) {
+    return `${getIconsResourcePath()}/${imageSrc}${
+      isEmpty(ext) ? getIconsExt() : ext
     }`;
   }
 

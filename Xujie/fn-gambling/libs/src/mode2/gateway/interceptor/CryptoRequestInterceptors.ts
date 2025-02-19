@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import sdkUtils from '../../utils/sdk/index';
 import { mergeRequestData } from '@libs/mode2/external/api/requestInitData';
-import { message } from 'antd';
+import { useMessageStore } from '@mode2/zustand/components/messageStore';
 
 export const setupCryptoRequestInterceptors = (instance: AxiosInstance) => {
   const isEnableCrypto = import.meta.env['VITE_ENABLE_ENCODE_DECODE'] === '1';
@@ -24,7 +24,7 @@ export const setupCryptoRequestInterceptors = (instance: AxiosInstance) => {
       return config;
     },
     (error) => {
-      message.error(`${error['message'] || 'server error'}`);
+      useMessageStore.getState().error(`${error['message'] || 'server error'}`);
       return Promise.reject();
     }
   );

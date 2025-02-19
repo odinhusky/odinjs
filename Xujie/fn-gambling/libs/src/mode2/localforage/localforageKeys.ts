@@ -3,6 +3,7 @@ export enum LocalforageNameKeys {
   USER_CHARGE = 'userChargeData',
   SENSORS_DATA_REPORT = 'sensorsDataReport',
   EVENT_LOGGER_REPORT = 'eventLoggerReportStore',
+  COUNT_DOWN = 'countDown',
 }
 
 export enum LocalforageStoreKeys {

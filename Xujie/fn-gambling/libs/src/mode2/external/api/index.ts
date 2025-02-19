@@ -93,6 +93,12 @@ import PostRechargeQueryReceiptEndpoint from '@mode2API/endpoint/recharge/PostRe
 import PostRechargeUpdateReceiptEndpoint from '@mode2API/endpoint/recharge/PostRechargeUpdateReceiptEndpoint';
 import PostRechargeUploadReceiptEndpoint from '@mode2API/endpoint/recharge/PostRechargeUploadReceiptEndpoint';
 import PostInviteWheelNewsTickerListEndpoint from '@mode2API/endpoint/wheel/PostInviteWheelNewsTickerListEndpoint';
+import { PostGiftRandomEndpoint } from '@mode2API/endpoint/active/PostGiftRandomEndpoint';
+import { PostVisitorLoginCheckEndpoint } from '@mode2API/endpoint/user/PostVisitorLoginCheckEndpoint';
+import { PostPlayerBindAccountEndpoint } from '@mode2API/endpoint/user/PostPlayerBindAccountEndpoint';
+import { PostOtpLoginEndpoint } from '@mode2API/endpoint/user/PostOtpLoginEndpoint';
+import { PostPlayerBindReferCodeEndpoint } from '@mode2API/endpoint/user/PostPlayerBindReferCodeEndpoint';
+import { PostWithdrawOptionsEndpoint } from '@mode2API/endpoint/wallet/PostWithdrawOptionsEndpoint';
 
 export const baseCryptoAPI = createApi({
   reducerPath: 'baseCryptoApi',
@@ -132,6 +138,7 @@ export const baseCryptoAPI = createApi({
     postDownloadReceivePrize: PostDownloadReceivePrizeEndpoint(builder),
     postPiggyBankDetail: PostPiggyBankDetailEndpoint(builder),
     postPiggyBankWithdraw: PostPiggyBankWithdrawEndpoint(builder),
+    postGiftRandom: PostGiftRandomEndpoint(builder),
 
     // team
     postPromoteHome: PostPromoteHomeEndpoint(builder),
@@ -206,6 +213,7 @@ export const {
   usePostDownloadReceivePrizeMutation,
   usePostPiggyBankDetailMutation,
   usePostPiggyBankWithdrawMutation,
+  usePostGiftRandomMutation,
 
   // team
   usePostPromoteHomeMutation,
@@ -315,8 +323,18 @@ export const baseAPI = createApi({
     postRechargeQueryReceipt: PostRechargeQueryReceiptEndpoint(builder),
     postRechargeUpdateReceipt: PostRechargeUpdateReceiptEndpoint(builder),
     postRechargeUploadReceipt: PostRechargeUploadReceiptEndpoint(builder),
-
     // - 上報 UTR 相關 End ===========
+
+    // - 訪客模式 相關 Start ===========
+    postPlayerBindAccount: PostPlayerBindAccountEndpoint(builder),
+    postVisitorLoginCheck: PostVisitorLoginCheckEndpoint(builder),
+    postOtpLogin: PostOtpLoginEndpoint(builder),
+    postPlayerBindReferCode: PostPlayerBindReferCodeEndpoint(builder),
+    // - 訪客模式 相關 End ===========
+
+    // - [V6] 新增 Start ===========
+    postWithdrawOptions: PostWithdrawOptionsEndpoint(builder),
+    // - [V6] 新增 End ===========
   }),
 });
 
@@ -372,6 +390,16 @@ export const {
   usePostRechargeQueryReceiptMutation,
   usePostRechargeUpdateReceiptMutation,
   usePostRechargeUploadReceiptMutation,
-
   // - 上報 UTR 相關 End ===========
+
+  // - 訪客模式 相關 Start ===========
+  usePostPlayerBindAccountMutation,
+  usePostVisitorLoginCheckMutation,
+  usePostOtpLoginMutation,
+  usePostPlayerBindReferCodeMutation,
+  // - 訪客模式 相關 End ===========
+
+  // - [V6] 新增 Start ===========
+  usePostWithdrawOptionsMutation,
+  // - [V6] 新增 End ===========
 } = baseAPI;

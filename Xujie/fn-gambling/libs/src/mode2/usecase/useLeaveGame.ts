@@ -1,9 +1,9 @@
-import useUserInfo from './useUserInfo';
 import { useEffect, useState } from 'react';
 import useLeaveGameConfirmModalStore from '@mode2/zustand/components/leaveGameConfirmModalStore';
 import { usePostQuiteGameMutation } from '@mode2API/index';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
 import { useGameLoadingStore } from '@mode2/zustand/components/gameLoadingStore';
+import { useUserProfileStore } from '../zustand/user/userProfileStore';
 
 export const useLeaveGame = () => {
   const setIsShowLeaveGameConfirmModal = useLeaveGameConfirmModalStore(
@@ -13,7 +13,7 @@ export const useLeaveGame = () => {
     (state) => state.setIsShowGameLoading
   );
   const { navToHallPage } = useNavPageClick();
-  const { refreshUserData } = useUserInfo({ immediate: false });
+  const refreshUserData = useUserProfileStore((state) => state.refreshUserData);
 
   const [postQuiteGame, { isSuccess: isQuiteGameSuccess }] =
     usePostQuiteGameMutation();

@@ -57,8 +57,6 @@ export interface EarnStepUnit {
 }
 
 export interface Mode2TeamClubPageShareForBonusStoreTypes {
-  lastFetchTime: number;
-  setLastFetchTime: (time: number) => void;
   earnStepList: EarnStepUnit[];
   setEarnStepList: (list: EarnStepUnit[]) => void;
   clipboardLinkResult: ClipboardInfo;
@@ -70,8 +68,6 @@ export const useMode2TeamClubPageShareForBonusStore =
     devtoolsAndPersistWrapper(
       '[page store] useMode2TeamClubPageShareForBonusStore',
       (set) => ({
-        lastFetchTime: 0,
-        setLastFetchTime: (time) => set(() => ({ lastFetchTime: time })),
         earnStepList: [] as EarnStepUnit[],
         setEarnStepList: (list) => set(() => ({ earnStepList: list })),
         clipboardLinkResult: {

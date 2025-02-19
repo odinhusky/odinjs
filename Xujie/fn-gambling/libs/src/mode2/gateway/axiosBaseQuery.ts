@@ -14,6 +14,7 @@ type BaseQuery = {
   params?: AxiosRequestConfig['params'];
   headers?: AxiosRequestConfig['headers'];
 };
+
 export const axiosBaseQuery =
   (
     {

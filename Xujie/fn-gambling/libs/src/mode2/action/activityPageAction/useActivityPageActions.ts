@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
   handleActivityUnitClick,
   handleSwitchTabClick,
+  handleVipMyBounusClick,
   handleVipRecieveLevelRewardClick,
 } from './actionType';
 
@@ -28,6 +29,7 @@ import useAnnouncementActionBase, {
   AnnouncementScenariosType,
 } from '@mode2/usecase/announcement/useAnnouncementActionBase';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
+import { message } from 'antd';
 
 export enum VipRewardType {
   UPGRADE = 'upgrade',
@@ -42,6 +44,7 @@ type ActionClickPayloadMap = {
     item: ActivityUnit;
   };
   [handleVipRecieveLevelRewardClick]: { type: VipRewardType | string };
+  [handleVipMyBounusClick]: void;
 };
 
 export interface HandleActivityPageClickProps<
@@ -67,6 +70,9 @@ export const useActivityPageActions = () => {
   const [triggerVIPHome, { data: vipHome }] = usePostVIPHomeMutation();
 
   const setVipTableDatas = useMyPageStore((state) => state.setVipTableDatas);
+  const setShowVIPMyBonusModal = useMyPageStore(
+    (state) => state.setShowVIPMyBonusModal
+  );
 
   useEffect(() => {
     if (!vipHome) return;
@@ -89,7 +95,7 @@ export const useActivityPageActions = () => {
         callback: () => {
           // 避免訪客模式進入 MyVipContent
           if (idx === ActivityPageTabType.VIP && !sdkUtils.isCurrentLogin()) {
-            navToLoginPage();
+            navToLoginPage(37);
             return;
           }
           setPageIdx(idx);
@@ -116,6 +122,15 @@ export const useActivityPageActions = () => {
           if (type === VipRewardType.UPGRADE) triggerVipReceiveUpgradeReward();
           else if (type === VipRewardType.MONTHLY)
             triggerVipReceiveMonthlyReward();
+        },
+      });
+    },
+    [handleVipMyBounusClick]: () => {
+      handleGlobalClick({
+        target: handleVipMyBounusClick,
+        callback: () => {
+          message.info('TODO new Page or Modal & api');
+          setShowVIPMyBonusModal(true);
         },
       });
     },

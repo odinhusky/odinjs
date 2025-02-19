@@ -3,6 +3,7 @@ import { EResourceLevel, getImgUrl } from '@mode2/utils/img';
 import sdkUtils from '@mode2/utils/sdk';
 // import { InputProps } from '@libs/components/Input';
 import tailwindVariables from '@libs/plugins/tailwindcss/tailwind.variables';
+
 export * from './img/index';
 export * from './sdk/index';
 /**
@@ -18,9 +19,12 @@ export const adaptHtmlFontSize: (screens?: Record<string, string>) => void = (
   const phonePoint = parseInt(screens['phone']?.replace('px', '')) || 375;
   const setRem = () => {
     document.documentElement.style.fontSize = `${
-      window.innerWidth < phonePoint ? window.innerWidth / (375 / 16) : 16
+      window.innerWidth < phonePoint
+        ? window.innerWidth / (phonePoint / 16)
+        : 16
     }px`;
   };
+
   setRem();
   window.onresize = () => {
     setRem();
@@ -90,6 +94,54 @@ export const formatMoney = (
     minimumFractionDigits: includeDecimal ? decimals : 0, // 保留的最小小數位數。如果数字的小数部分不足该位數，則補0
     maximumFractionDigits: includeDecimal ? decimals : 0, // 保留的最大小數位數。超出部分将被捨去（四捨五入）。
   });
+};
+
+/**
+ * 格式化金額字串
+ * @author Odin
+ * 依照 K, M, B 進行數字的縮寫，如果不滿1000則依照formatMoney的邏輯處理，縮寫後有小數點的情況依照 param{includeDecimal} 以及 param{decimals} 做處理
+ * @param num - 需要格式化的数值
+ * @param includeDecimal - 是否顯示小數部分(default false)
+ * @param decimals - 保留幾位小数（default 2）
+ * @example [1] 如'123.456789' => '₹123' | includeDecimal=true => '₹123.45' | includeDecimal=true && decimals=7 => '₹123.4567890'
+ * @example [2] 如'1234.56789' => '₹1K' | includeDecimal=true => '₹1.23K' | includeDecimal=true && decimals=7 => '₹1.2345678K'
+ */
+export const formatMoneyAbbrev = (
+  num: number,
+  includeDecimal: boolean = false,
+  decimals: number = 2
+): string => {
+  const countryCurrency = import.meta.env['VITE_COUNTRY_CURRENCY'];
+  const locale = import.meta.env['VITE_COUNTRY_LOCALE'] || 'en-US';
+
+  const thresholds = [
+    { value: 1_000_000_000, suffix: 'B' },
+    { value: 1_000_000, suffix: 'M' },
+    { value: 1_000, suffix: 'K' },
+  ];
+
+  for (const { value, suffix } of thresholds) {
+    if (num >= value) {
+      let formattedNum = num / value;
+      if (!includeDecimal) {
+        formattedNum = Math.floor(formattedNum); // 無條件捨去小數
+      } else {
+        formattedNum = Number(formattedNum.toFixed(decimals)); // 控制小數位數
+      }
+
+      return (
+        new Intl.NumberFormat(locale, {
+          style: 'currency',
+          currency: countryCurrency,
+          minimumFractionDigits: includeDecimal ? decimals : 0,
+          maximumFractionDigits: includeDecimal ? decimals : 0,
+        }).format(formattedNum) + suffix
+      );
+    }
+  }
+
+  // 數字小於 1K，完全遵循 formatMoney 的小數顯示規則
+  return formatMoney(num, includeDecimal, decimals);
 };
 
 /**
@@ -354,7 +406,7 @@ export const getParams = (
     | Record<string, string>
     | URLSearchParams
     | undefined,
-  state: { [x: string]: string | number | undefined },
+  state: { [x: string]: string | number | undefined }
 ): IDefaultParams => {
   const params: IDefaultParams = {};
 
@@ -392,4 +444,20 @@ export const getParams = (
   // console.log('@@@===> params', params);
 
   return params;
+};
+
+/**
+ * 根據時間過濾數組 1天 7天 30天
+ * @param data 數組對象
+ * @param days 默認1天
+ * @returns
+ */
+export const filterDataByDays = <T extends { timestamp: number }>(
+  data: T[],
+  days: number = 1
+): T[] => {
+  const now = Math.floor(Date.now() / 1000); // 当前时间的时间戳（秒）
+  const cutoffTimestamp = now - days * 24 * 60 * 60; // 当前时间减去指定天数的时间戳（秒）
+
+  return data.filter((item) => item.timestamp >= cutoffTimestamp);
 };

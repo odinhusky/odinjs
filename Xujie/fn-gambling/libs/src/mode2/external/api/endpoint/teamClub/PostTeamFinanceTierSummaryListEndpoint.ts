@@ -29,6 +29,28 @@ export interface TeamFinanceTierSummaryItemResult {
   joinTime: number; // 加入時間，前端排序
 }
 
+// TODO Ronan mock delete
+const mockData: TeamFinanceTierSummaryItemResult[] = [
+  {
+    avatarId: '1',
+    avatarFrameId: '1',
+    displayName: 'Player One',
+    tier: 1,
+    depositAmount: 1000,
+    commissionAmount: 100,
+    joinTime: 1625097600,
+  },
+  {
+    avatarId: '2',
+    avatarFrameId: '2',
+    displayName: 'Player Two',
+    tier: 2,
+    depositAmount: 2000,
+    commissionAmount: 200,
+    joinTime: 1625184000,
+  },
+];
+
 /**
  * for 俱樂部 - 下線查詢
  * @param builder
@@ -56,6 +78,8 @@ const transformResponse = (
   response: ResponseStructure<TeamFinanceTierSummaryResponse[]>
 ): TeamFinanceTierSummaryItemResult[] => {
   const resp = response?.Body;
+
+  if (!resp?.length) return mockData;
 
   return (
     resp?.map((item) => {

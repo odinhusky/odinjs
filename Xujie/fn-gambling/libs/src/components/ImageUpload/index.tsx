@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { cx } from '@libs/commonUtils';
 import { EResourceLevel, getImgUrl } from '@libs/mode2/utils';
-import { message } from 'antd';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import { t } from 'i18next';
+import { useMessageStore } from '@mode2/zustand/components/messageStore';
 
 interface ImageUploadProps {
   imageUrl?: string;
@@ -37,14 +37,18 @@ const ImageUpload = (props: ImageUploadProps) => {
         .join(' and ');
 
       if (!allowedFileTypes.includes(file.type)) {
-        message.info(
-          `Only ${allowedFileTypesList} images are allowed to be uploaded`
-        );
+        useMessageStore
+          .getState()
+          .info(
+            `Only ${allowedFileTypesList} images are allowed to be uploaded`
+          );
         return;
       }
 
       if (file.size > maxFileSize) {
-        message.info(`The file size cannot exceed ${maxFileSize / 1024}KB`);
+        useMessageStore
+          .getState()
+          .info(`The file size cannot exceed ${maxFileSize / 1024}KB`);
         return;
       }
 

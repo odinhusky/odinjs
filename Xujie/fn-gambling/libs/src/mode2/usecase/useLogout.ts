@@ -15,6 +15,7 @@ import { LOGOUT_URL } from '@mode2API/urls';
 import { fetchBatch } from '@libs/commonUtils';
 import { initData } from '@mode2API/requestInitData';
 import { usePlatformInfoStore } from '@mode2/zustand/platform/platformInfoStore';
+import { UserRoleType } from '../@types/userRoleTypes';
 
 const handleSetGuestProfileForSaleSmartChat = () => {
   const packagename = import.meta.env['VITE_PACKAGENAME'];
@@ -93,7 +94,7 @@ export const logout = () => {
   sdkUtils.removeStorage(AppLocalStorageKey.TOKEN);
   sdkUtils.removeStorage(AppLocalStorageKey.USER_ID);
   // reset 相關資料
-  console.log('@@@===> logout');
+  // console.log('@@@===> logout');
   resetDataAfterLogout();
 
   // 重新設置 smartChatProfile
@@ -101,6 +102,9 @@ export const logout = () => {
 
   // 重新設置 Sentry 定位使用者資訊
   handleSentryGuestUser();
+
+  // Reset Use Role
+  useUserProfileStore.getState().setUserRole(UserRoleType.GUEST);
 
   // 登出回首頁
   // navToHallPage();

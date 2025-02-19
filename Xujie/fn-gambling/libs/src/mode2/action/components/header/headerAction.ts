@@ -10,6 +10,8 @@ import {
   handleMyDrawerActionClick,
   handlePrivacyPolicyLinkActionClick,
   handleMyPageActionClick,
+  handleInBoxActionClick,
+  handleLuckyWheelActionClick,
 } from '@mode2/action/components/header/actionType';
 import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
@@ -30,6 +32,7 @@ import {
 } from '@mode2/usecase/useNavPageClick';
 import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
 import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
+import { feedBackPageTabIdObj } from '@mode2/@types/feedBackPageTab';
 
 export type ActionClickPayloadMap = {
   [handleLoginActionClick]: { type: LoginFormType };
@@ -42,6 +45,8 @@ export type ActionClickPayloadMap = {
   [handleMyDrawerActionClick]: void;
   [handlePrivacyPolicyLinkActionClick]: void;
   [handleMyPageActionClick]: void;
+  [handleInBoxActionClick]: void;
+  [handleLuckyWheelActionClick]: void;
 };
 
 export interface HandleHeaderOnEventProps<T extends keyof ActionClickPayloadMap>
@@ -53,7 +58,12 @@ const inGamePages: string[] = [
 ];
 export const useHeaderAction = () => {
   const navigate = useNavigateClick();
-  const { navToLoginPage, navToMyPage } = useNavPageClick();
+  const {
+    navToLoginPage,
+    navToMyPage,
+    navToFeedbackPage,
+    navToRechargeWheelPage,
+  } = useNavPageClick();
   const setIsShowForgotPasswordModal = useIsShowLoginModalStore(
     (state) => state.setIsShowForgotPasswordModal
   );
@@ -72,7 +82,7 @@ export const useHeaderAction = () => {
     [handleLoginActionClick]: ({ type }) => {
       handleGlobalClick({
         target: handleLoginActionClick,
-        callback: () => navToLoginPage(true, type),
+        callback: () => navToLoginPage(35, true, type),
       });
     },
     [handleForgotPasswordActionClick]: () => {
@@ -86,7 +96,7 @@ export const useHeaderAction = () => {
         target: handleHomeActionClick,
         callback: () => {
           if (isShowLoginModal) {
-            navToLoginPage(false);
+            navToLoginPage(34, false);
           }
           navigate(BasePagePathObj.HallPage);
         },
@@ -151,7 +161,7 @@ export const useHeaderAction = () => {
       handleGlobalClick({
         target: handlePrivacyPolicyLinkActionClick,
         callback: () => {
-          navToLoginPage(false);
+          navToLoginPage(33, false);
           navigate(BasePagePathObj.PolicyPage);
         },
       });
@@ -161,6 +171,22 @@ export const useHeaderAction = () => {
         target: handlePrivacyPolicyLinkActionClick,
         callback: () => {
           navToMyPage();
+        },
+      });
+    },
+    [handleInBoxActionClick]: () => {
+      handleGlobalClick({
+        target: handleInBoxActionClick,
+        callback: () => {
+          navToFeedbackPage('', { state: { tab: feedBackPageTabIdObj.INBOX } });
+        },
+      });
+    },
+    [handleLuckyWheelActionClick]: () => {
+      handleGlobalClick({
+        target: handleLuckyWheelActionClick,
+        callback: () => {
+          navToRechargeWheelPage();
         },
       });
     },

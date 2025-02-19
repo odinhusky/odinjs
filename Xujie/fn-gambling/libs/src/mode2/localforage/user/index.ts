@@ -6,9 +6,10 @@ export enum UserLocalforageStoreKeys {
   FIRST_CHARGE = 'firstChargeData',
   DEPOSIT_ADVERTISEMENT = 'depositAdvertisement',
   LAST_HIGH_BONUS_LIMITED_TIME = 'lastHighBonusLimitedTime',
-  COUNT_DOWN = 'countDown', 
+  COUNT_DOWN = 'countDown',
   BONUS_POPUP_INFO = 'bonusPopupInfo',
   INVITE_TIME = 'inviteTime',
+  RECENT_GAME_LIST = 'recentGameList',
 }
 
 interface UserLocalForageInstancePool {

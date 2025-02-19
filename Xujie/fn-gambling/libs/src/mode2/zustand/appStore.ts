@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 
-
 interface RealTimeH5Version {
   isNewVersion: boolean;
   lastModified: string | null;
@@ -22,6 +21,10 @@ interface AppStoreType {
   setReqClientParameter: (clientParameter: string) => void;
   realTimeH5Version: RealTimeH5Version;
   setRealTimeH5Version: (version: RealTimeH5Version) => void;
+
+  temporaryReferralCode: string; // 一次性作用
+  setTemporaryReferralCode: (value: string) => void;
+
   clear: () => void;
 }
 
@@ -45,14 +48,18 @@ export const useAppStore = create<AppStoreType>((set) => ({
   realTimeH5Version: {
     isNewVersion: false,
     lastModified: null,
-    eTag: null
+    eTag: null,
   },
-  setRealTimeH5Version: (version) => set(() => ({ realTimeH5Version: version })),
+  setRealTimeH5Version: (version) =>
+    set(() => ({ realTimeH5Version: version })),
+  temporaryReferralCode: '',
+  setTemporaryReferralCode: (value) =>
+    set(() => ({ temporaryReferralCode: value })),
   clear: () =>
     set(() => ({
       isAndroidFirstInteractionSuccess: false,
       pushToken: '',
       isUpdatePushToken: false,
-      reqClientParameter: ''
-    }))
+      reqClientParameter: '',
+    })),
 }));

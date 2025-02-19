@@ -1,0 +1,3 @@
+export const TOAST_DURATION_TIMEOUT = 1000;
+export const TOAST_HIDE_TIMEOUT = 1000;
+export const TOAST_REMOVE_TIMEOUT = 1000;

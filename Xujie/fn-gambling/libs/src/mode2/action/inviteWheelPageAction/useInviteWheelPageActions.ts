@@ -2,13 +2,14 @@ import handleAction from '@mode2/action/common/handleAction';
 import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
 import {
+  handleInviteWheelClipboardReferralCodeClick,
   handleInviteWheelPageCashOutClickAction,
   handleInviteWheelPageNavToRecordClickAction,
   handleInviteWheelPageNavToRuleClickAction,
   handleInviteWheelPageNavToShareClickAction,
+  handleInviteWheelPageOpenRuleModalClickAction,
   handleInviteWheelSpinButtonClick,
 } from '@mode2/action/inviteWheelPageAction/actionType';
-import handleGlobalScroll from '@mode2/action/handleGlobalScroll';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
 import { SharePosterType } from '@mode2/zustand/page/sharePageStore';
 import { ActivityRulesContentTypes } from '@mode2/zustand/page/activityRulesPageStore';
@@ -23,8 +24,15 @@ import {
 import {
   useInviteWheelPageAnimateStore,
   useInviteWheelPageStoreStore,
+  useInviteWheelRuleModalStore,
 } from '@libs/mode2/zustand/page/inviteWheelPageStore';
 import useInviteWheel from '@libs/mode2/usecase/page/inviteWheel/useInviteWheelWithdraw';
+import sdkUtils from '@mode2/utils/sdk';
+import { AdjustEventKey } from '@mode2/utils/sdk/persistant/adjust/AdjustEventKey';
+import { ClipboardState, useClipboard } from '@libs/commonUtils';
+import { useToastStore } from '@mode2/zustand/components/toastStore';
+import { useTranslation } from 'react-i18next';
+import handleGlobalClick from '@mode2/action/handleGlobalClick';
 
 type ActionClickPayloadMap = {
   [handleInviteWheelPageNavToShareClickAction]: void;
@@ -34,6 +42,8 @@ type ActionClickPayloadMap = {
   [handleInviteWheelPageNavToRuleClickAction]: void;
   [handleInviteWheelPageNavToRecordClickAction]: void;
   [handleInviteWheelSpinButtonClick]: { isSpin: boolean };
+  [handleInviteWheelClipboardReferralCodeClick]: { code: string; link: string };
+  [handleInviteWheelPageOpenRuleModalClickAction]: void;
 };
 
 export interface HandleInviteWheelClickProps<
@@ -43,9 +53,9 @@ export interface HandleInviteWheelClickProps<
 export const useInviteWheelPageActions = () => {
   const { navToSharePage, navToActivityRulePage, navToActivityRecordPage } =
     useNavPageClick();
-
+  const { copyToClipboard } = useClipboard();
   const { onInviteWheelWithdraw } = useInviteWheel();
-
+  const { t } = useTranslation();
   const setIsAnimating = useInviteWheelPageAnimateStore(
     (state) => state.setIsAnimating
   );
@@ -53,9 +63,9 @@ export const useInviteWheelPageActions = () => {
     (state) => state.resetSpinWheel
   );
   const spinWheel = useInviteWheelPageStoreStore((state) => state.spinWheel);
-  const setSpinFastTotate = useInviteWheelPageStoreStore(
-    (state) => state.setSpinFastTotate
-  );
+  // const setSpinFastTotate = useInviteWheelPageStoreStore(
+  //   (state) => state.setSpinFastTotate
+  // );
 
   const setIsShowInviteWheelTipsModal = useInviteWheelPageStoreStore(
     (state) => state.setIsShowInviteWheelTipsModal
@@ -65,9 +75,13 @@ export const useInviteWheelPageActions = () => {
   //   (state) => state.inviteWheelPortalInfo
   // );
 
+  const showInviteWheelRuleModal = useInviteWheelRuleModalStore(
+    (state) => state.showInviteWheelRuleModal
+  );
+
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
     [handleInviteWheelPageNavToShareClickAction]: () => {
-      handleGlobalScroll({
+      handleGlobalClick({
         target: handleInviteWheelPageNavToShareClickAction,
         callback: () => {
           navToSharePage('', { state: { tab: SharePosterType.SHAREINVITE } });
@@ -75,7 +89,7 @@ export const useInviteWheelPageActions = () => {
       });
     },
     [handleInviteWheelPageCashOutClickAction]: ({ isWithdrawal }) => {
-      handleGlobalScroll({
+      handleGlobalClick({
         target: handleInviteWheelPageCashOutClickAction,
         callback: () => {
           if (isWithdrawal) {
@@ -87,9 +101,10 @@ export const useInviteWheelPageActions = () => {
       });
     },
     [handleInviteWheelPageNavToRuleClickAction]: () => {
-      handleGlobalScroll({
+      handleGlobalClick({
         target: handleInviteWheelPageNavToRuleClickAction,
         callback: () => {
+          showInviteWheelRuleModal();
           navToActivityRulePage(``, {
             state: {
               tab: ActivityRulesContentTypes.INVITE_WHEEL_RULES_CONTENT,
@@ -99,7 +114,7 @@ export const useInviteWheelPageActions = () => {
       });
     },
     [handleInviteWheelPageNavToRecordClickAction]: () => {
-      handleGlobalScroll({
+      handleGlobalClick({
         target: handleInviteWheelPageNavToRecordClickAction,
         callback: () => {
           navToActivityRecordPage(``, {
@@ -111,13 +126,35 @@ export const useInviteWheelPageActions = () => {
       });
     },
     [handleInviteWheelSpinButtonClick]: ({ isSpin }) => {
-      handleGlobalScroll({
+      handleGlobalClick({
         target: handleInviteWheelSpinButtonClick,
         callback: () => {
           if (isSpin) {
             spinWheel();
-            setSpinFastTotate(true);
+            // setSpinFastTotate(true);
           }
+        },
+      });
+    },
+
+    [handleInviteWheelClipboardReferralCodeClick]: ({ code, link }) => {
+      handleGlobalClick({
+        target: handleInviteWheelClipboardReferralCodeClick,
+        callback: () => {
+          sdkUtils.sendEvent(AdjustEventKey.CLICK_SHARE);
+          copyToClipboard(link, true).then((state) => {
+            if (state.state === ClipboardState.SUCCESS) {
+              useToastStore.getState().showToast(t('Copy Success')); // TODO i18n
+            }
+          });
+        },
+      });
+    },
+    [handleInviteWheelPageOpenRuleModalClickAction]: () => {
+      handleGlobalClick({
+        target: handleInviteWheelPageOpenRuleModalClickAction,
+        callback: () => {
+          showInviteWheelRuleModal();
         },
       });
     },

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { usePostLoginMutation } from '../external/api';
+import { usePostLoginMutation, usePostOtpLoginMutation } from '../external/api';
 import { AdjustEventKey } from '../utils/sdk/persistant/adjust/AdjustEventKey';
 import { AppLocalStorageKey } from '@mode2/utils/sdk/persistant/storageKey';
 import sdkUtils from '../utils/sdk';
@@ -8,6 +8,10 @@ import { FetchMyIp } from '@libs/commonUtils';
 import { LoginPayload } from '@mode2API/endpoint/user/PostLoginEndpoint';
 import { Form } from 'antd';
 import { useLoadingStore } from '../zustand/components/loadingStore';
+import { useUserProfileStore } from '../zustand/user/userProfileStore';
+import { useOTPCountDownStore } from '../zustand/components/OTPCountDownStore';
+import handleGlobalClick from '../action/handleGlobalClick';
+import { useAppStore } from '@mode2/zustand/appStore';
 
 interface LoginProps {
   successCallback?: () => void; // 登入成功的 callback
@@ -17,8 +21,14 @@ interface LoginProps {
 export const useLogin = ({ successCallback, failCallback }: LoginProps) => {
   const setIsLogin = useIsLoginStore((state) => state.setIsLogin);
 
+  const setUserRole = useUserProfileStore((state) => state.setUserRole);
+
+  const otpId = useOTPCountDownStore((state) => state.otpId);
+
   const [postLogin, { data: loginResult, isSuccess: isLoginSuccess }] =
     usePostLoginMutation();
+  const [postOtpLogin, { data: optLoginResult, isSuccess: isOptLoginSuccess }] =
+    usePostOtpLoginMutation();
 
   useEffect(() => {
     FetchMyIp.doFetchMyIp();
@@ -36,6 +46,9 @@ export const useLogin = ({ successCallback, failCallback }: LoginProps) => {
       sdkUtils.sendEvent(AdjustEventKey.LOGIN);
       sdkUtils.setStorage(AppLocalStorageKey.TOKEN, loginResult.token);
       sdkUtils.removeStorage(AppLocalStorageKey.REFERRAL_CODE);
+      useAppStore.getState().setTemporaryReferralCode('');
+      if (loginResult.userRole) setUserRole(loginResult.userRole);
+
       setIsLogin(true);
       successCallback?.();
     } else {
@@ -44,16 +57,54 @@ export const useLogin = ({ successCallback, failCallback }: LoginProps) => {
     }
   }, [isLoginSuccess, loginResult]);
 
+  const optLogin = (values: LoginPayload) => {
+    setShowLoading(true);
+    const data = {
+      ...values,
+      otpCode: values.verifyCode || '',
+      otpId: otpId || '',
+    };
+    postOtpLogin(data).finally(() => {
+      setShowLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    if (isOptLoginSuccess && optLoginResult?.token) {
+      sdkUtils.sendEvent(AdjustEventKey.LOGIN);
+      sdkUtils.setStorage(AppLocalStorageKey.TOKEN, optLoginResult.token);
+      sdkUtils.removeStorage(AppLocalStorageKey.REFERRAL_CODE);
+      useAppStore.getState().setTemporaryReferralCode('');
+      if (optLoginResult.userRole) setUserRole(optLoginResult.userRole);
+
+      setIsLogin(true);
+      successCallback?.();
+    } else {
+      setIsLogin(false);
+      failCallback?.();
+    }
+  }, [isOptLoginSuccess, optLoginResult]);
+
   const [form] = Form.useForm();
   const [submittable, setSubmittable] = useState(false);
   const values = Form.useWatch([], form);
   const [policyCheck, setPolicyCheck] = useState(true);
   const togglePolicyCheck = () => {
-    setPolicyCheck((pre) => !pre);
+    handleGlobalClick({
+      target: 'handlePolicyCheckClick',
+      callback: () => {
+        setPolicyCheck((pre) => !pre);
+      },
+    });
   };
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => {
-    setPasswordVisible((pre) => !pre);
+    handleGlobalClick({
+      target: 'handlePasswordVisibilityClick',
+      callback: () => {
+        setPasswordVisible((pre) => !pre);
+      },
+    });
   };
 
   useEffect(() => {
@@ -72,6 +123,7 @@ export const useLogin = ({ successCallback, failCallback }: LoginProps) => {
 
   return {
     login,
+    optLogin,
     form,
     policyCheck,
     setPolicyCheck,

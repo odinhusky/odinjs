@@ -11,6 +11,7 @@ import {
   RecordPageBalanceRecordTabs,
   RecordPageTabs,
 } from '@mode2/zustand/page/recordPageStore';
+import { ActivityPageTabType } from '@mode2/@types/activityPageTabType';
 
 interface DeepLinkData {
   path: BasePagePaths;
@@ -66,6 +67,15 @@ const mapDeepLinkPath: Record<string, DeepLinkData> = {
   },
   '/rechargeWheel': { path: BasePagePathObj.RechargeWheelPage },
   '/inviteWheel': { path: BasePagePathObj.InviteWheelPage },
+  '/giftCode': { path: BasePagePathObj.GiftCodeRedeemPage },
+  '/vip': {
+    path: BasePagePathObj.ActivityPage,
+    options: {
+      state: {
+        tab: ActivityPageTabType.VIP,
+      },
+    },
+  },
 };
 
 /**

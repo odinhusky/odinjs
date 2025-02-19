@@ -67,6 +67,7 @@ export const useSharePageAction = () => {
       handleGlobalClick({
         target: handleSharePageClipboardClick,
         callback: () => {
+          // TODO Ronan [IN][V6]文案是否有所不同
           const copywriter = {
             [SharePosterType.SHARETEAMCLUB]: `Your friend has sent you ${formatMoney(
               inviteDailyRule.commission

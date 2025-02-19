@@ -13,6 +13,14 @@ type MessageListRequest = {
   pageSize: number; // deg 20
 };
 
+type Attachments = {
+  reward: number;
+  icon: string;
+  isClaim: number;
+  isLock: number;
+  expireTime: number;
+};
+
 interface MessageInfoResponse {
   userId?: number;
   id?: number;
@@ -28,6 +36,9 @@ interface MessageInfoResponse {
     | 'FORWARD_RECHARGE'
     | 'FORWARD_PERSONAL_INFO'
     | 'FORWARD_BANK_CARD';
+
+  // [IN][V6]新增
+  attachments: Attachments[];
 }
 
 interface MessageListResponse {
@@ -58,6 +69,8 @@ export type MessageInfoResult = {
   isRead: boolean;
   createdAt: number;
   action: MessageActionResult;
+  
+  attachments: Attachments[];
 };
 
 export type MessageListResult = {
@@ -103,6 +116,9 @@ const transformResponse = (
         isRead: item?.read === true,
         createdAt: item?.createdAt || 0,
         action: item?.confirmAction || 'CLOSE',
+
+        // [IN][V6]新增
+        attachments: item.attachments || [],
       };
     }) || [];
 

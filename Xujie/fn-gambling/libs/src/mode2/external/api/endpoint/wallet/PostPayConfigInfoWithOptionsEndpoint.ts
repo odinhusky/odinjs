@@ -63,6 +63,7 @@ export type PayChannelInfoResult = {
   maxCashBackRate: number; // 當前渠道最大回饋率
   payActivation: PayActivationResult; // 是否使用內部開啟支付方式， iframe open || usdt adds
   // isInternalPayOpen: boolean; // 是否使用內部開啟支付方式， iframe open
+  maxRebateAmount: number; // 當前渠道產品最大回扣金額
 };
 
 export type PayConfigInfoWithOptionsResult = {
@@ -117,6 +118,7 @@ const transformResponse = (
     });
     const amounts = options.map((item) => item.amount);
     const cashBackRates = options.map((item) => item.cashBackRate);
+    const rebateAmounts = options.map((item) => item.rebateAmount);
 
     return {
       payLimit: {
@@ -133,6 +135,7 @@ const transformResponse = (
       options: options,
       maxCashBackRate: Math.max(...cashBackRates),
       payActivation: PayActivationResult.EXTERNAL,
+      maxRebateAmount: Math.max(...rebateAmounts),
       // payActivation:
       //   {
       //     tpay_upi: PayActivationResult.UPI,

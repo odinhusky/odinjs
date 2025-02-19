@@ -30,6 +30,8 @@ interface UsageScenarios {
 interface BottomNavigationStoreTypes {
   isDisplayBottomNavigation: boolean;
   setDisplayBottomNavigation: (isDisplay: boolean) => void;
+  isMobileExclusiveDisplay: boolean;
+  setMobileExclusiveDisplay: (isDisplay: boolean) => void;
   // bottomNavigationList: BottomNavigationUnit[];
   // setBottomNavigationList: (list: BottomNavigationUnit[]) => void;
   usageScenariosList: UsageScenarios[];
@@ -41,6 +43,9 @@ export const useBottomNavigationStore = create<BottomNavigationStoreTypes>(
     isDisplayBottomNavigation: false,
     setDisplayBottomNavigation: (isDisplay) =>
       set(() => ({ isDisplayBottomNavigation: isDisplay })),
+    isMobileExclusiveDisplay: false,
+    setMobileExclusiveDisplay: (isDisplay) =>
+      set(() => ({ isMobileExclusiveDisplay: isDisplay })),
     // bottomNavigationList: [] as BottomNavigationUnit[],
     // setBottomNavigationList: (list) =>
     //   set(() => ({ bottomNavigationList: list })),

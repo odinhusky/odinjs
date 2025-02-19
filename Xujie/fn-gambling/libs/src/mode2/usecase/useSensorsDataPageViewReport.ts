@@ -247,6 +247,12 @@ const mapPageViewData: Record<BasePagePaths | string, ViewPageData> = {
     event_name: 'invite_wheel',
     isNeedState: false,
   },
+  [BasePagePathObj.GiftCodeRedeemPage]: {
+    params: '',
+    description: '禮品代碼兌換',
+    event_name: 'gift_code_redeem',
+    isNeedState: false,
+  },
 };
 
 const mapParamsKey: Record<BasePagePaths | string, string> = {

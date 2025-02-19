@@ -24,6 +24,8 @@ export type ActivityRecordPageStoreTypes = {
   setTabIndex: (index: ActivityRecordPageTypes) => void;
   listSort: SortTypes;
   setListSort: (map: SortTypes) => void;
+  inviteWithdrawalTotalRewards: number;
+  setInviteWithdrawalTotalRewards: (rewards: number) => void;
   inviteWithdrawalHistoryList: InviteWithdrawItemResult[];
   setInviteWithdrawalHistoryList: (arr: InviteWithdrawItemResult[]) => void;
   rechargeRewardRecordList: WheelSpinHistoryResult[];
@@ -40,6 +42,9 @@ export const useActivityRecordPageStore =
         tabIndex: ActivityRecordPageTypes.DEFAULT,
         setTabIndex: (index: ActivityRecordPageTypes) =>
           set(() => ({ tabIndex: index })),
+        inviteWithdrawalTotalRewards: 0,
+        setInviteWithdrawalTotalRewards: (rewards) =>
+          set(() => ({ inviteWithdrawalTotalRewards: rewards })),
         inviteWithdrawalHistoryList: [] as InviteWithdrawItemResult[],
         setInviteWithdrawalHistoryList: (arr: InviteWithdrawItemResult[]) =>
           set(() => ({ inviteWithdrawalHistoryList: arr })),

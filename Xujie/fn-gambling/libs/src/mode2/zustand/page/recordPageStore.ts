@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { ClipboardInfo, ClipboardState } from '@commonUtils/hooks/useClipboard';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
 import { FundDetailItemResult } from '@mode2API/endpoint/record/PostFundDetailEndpoint';
 import { RechargeRecordItemResult } from '@mode2API/endpoint/record/PostRechargeRecordsEndpoint';
 import { WithdrawRecordItemResult } from '@mode2API/endpoint/record/PostWithdrawRecordsEndpoint';
@@ -29,12 +28,10 @@ export interface useRecordPageStoreTypes {
   setTabIndex: (index: RecordPageTabs) => void;
 }
 
-export const useRecordPageStore = create<useRecordPageStoreTypes>()(
-  devtoolsAndPersistWrapper('[page store] useRecordPageStore', (set) => ({
-    tabIndex: RecordPageTabs.RECORD,
-    setTabIndex: (index) => set(() => ({ tabIndex: index })),
-  }))
-);
+export const useRecordPageStore = create<useRecordPageStoreTypes>()((set) => ({
+  tabIndex: RecordPageTabs.RECORD,
+  setTabIndex: (index) => set(() => ({ tabIndex: index })),
+}));
 
 // - Balance Record Component
 
@@ -54,33 +51,25 @@ export interface useRecordPageBalanceRecordStoreTypes {
 }
 
 export const useRecordPageBalanceRecordStore =
-  create<useRecordPageBalanceRecordStoreTypes>()(
-    devtoolsAndPersistWrapper(
-      '[page store] useRecordPageBalanceRecordStore',
-      (set) => ({
-        fundTransferRecordList: [] as FundDetailItemResult[],
-        setFundTransferRecords: (list) =>
-          set(() => ({ fundTransferRecordList: list })),
-        rechargeRecordList: [] as RechargeRecordItemResult[],
-        setRechargeRecords: (list) => set(() => ({ rechargeRecordList: list })),
-        withdrawRecordList: [] as WithdrawRecordItemResult[],
-        setWthdrawRecords: (list) => set(() => ({ withdrawRecordList: list })),
-        listSwitchTabList: [] as I18NContent[],
-        setListSwitchTabList: (list) =>
-          set(() => ({ listSwitchTabList: list })),
-        activeListSwitchTabIndex:
-          RecordPageBalanceRecordTabs.FUND_TRANSFER_RECORD,
-        setActiveListSwitchTabIndex: (index) =>
-          set(() => ({ activeListSwitchTabIndex: index })),
-        clipboardResult: {
-          state: ClipboardState.INCOMPLETE,
-          message: '',
-        },
-        setClipboardResult: (result) =>
-          set(() => ({ clipboardResult: result })),
-      })
-    )
-  );
+  create<useRecordPageBalanceRecordStoreTypes>()((set) => ({
+    fundTransferRecordList: [] as FundDetailItemResult[],
+    setFundTransferRecords: (list) =>
+      set(() => ({ fundTransferRecordList: list })),
+    rechargeRecordList: [] as RechargeRecordItemResult[],
+    setRechargeRecords: (list) => set(() => ({ rechargeRecordList: list })),
+    withdrawRecordList: [] as WithdrawRecordItemResult[],
+    setWthdrawRecords: (list) => set(() => ({ withdrawRecordList: list })),
+    listSwitchTabList: [] as I18NContent[],
+    setListSwitchTabList: (list) => set(() => ({ listSwitchTabList: list })),
+    activeListSwitchTabIndex: RecordPageBalanceRecordTabs.FUND_TRANSFER_RECORD,
+    setActiveListSwitchTabIndex: (index) =>
+      set(() => ({ activeListSwitchTabIndex: index })),
+    clipboardResult: {
+      state: ClipboardState.INCOMPLETE,
+      message: '',
+    },
+    setClipboardResult: (result) => set(() => ({ clipboardResult: result })),
+  }));
 
 // - Balance Report Component
 export const recordPageReportButtonsGroupColors = {
@@ -125,25 +114,18 @@ export interface useRecordPageBalanceReportStoreTypes {
 }
 
 export const useRecordPageBalanceReportStore =
-  create<useRecordPageBalanceReportStoreTypes>()(
-    devtoolsAndPersistWrapper(
-      '[page store] useRecordPageBalanceReportStore',
-      (set) => ({
-        reportTimeTabList: [] as I18NContent[],
-        setReportTimeTabList: (list) =>
-          set(() => ({ reportTimeTabList: list })),
-        activeReportTimeTabIndex: RecordPageReportTimeTabs.TODAY,
-        setActiveReportTimeTabIndex: (index) =>
-          set(() => ({ activeReportTimeTabIndex: index })),
-        reportGameList: [] as RecordPageReportGameUnit[],
-        setReportGameList: (list) => set(() => ({ reportGameList: list })),
-        selectProgressInfo:
-          null as RecordPageReportSelectedProgressInfoUnit | null,
-        setSelectProgressInfo: (value) =>
-          set(() => ({ selectProgressInfo: value })),
-      })
-    )
-  );
+  create<useRecordPageBalanceReportStoreTypes>()((set) => ({
+    reportTimeTabList: [] as I18NContent[],
+    setReportTimeTabList: (list) => set(() => ({ reportTimeTabList: list })),
+    activeReportTimeTabIndex: RecordPageReportTimeTabs.TODAY,
+    setActiveReportTimeTabIndex: (index) =>
+      set(() => ({ activeReportTimeTabIndex: index })),
+    reportGameList: [] as RecordPageReportGameUnit[],
+    setReportGameList: (list) => set(() => ({ reportGameList: list })),
+    selectProgressInfo: null as RecordPageReportSelectedProgressInfoUnit | null,
+    setSelectProgressInfo: (value) =>
+      set(() => ({ selectProgressInfo: value })),
+  }));
 
 interface RecordPageBalanceReportActionsStoreTypes {
   gameTypeListActions: (() => void)[];
@@ -156,3 +138,31 @@ export const useRecordPageBalanceReportActionsStore =
     setGameTypeListActions: (list) =>
       set(() => ({ gameTypeListActions: list })),
   }));
+
+// -------------- [IN][V6]新增 start  -------------------
+
+export enum RecordPageHeaderTabs {
+  DETAIL = 'Detail',
+  WITHDRAWAL = 'Withdrawal',
+}
+
+export enum RecordPageDeatilTabs {
+  ALL = 'All',
+  INCOMES = 'Incomes',
+  EXPENSE = 'Expense',
+}
+export interface useRecordPageHeaderTabsStoreTypes {
+  headerTabIndex: RecordPageHeaderTabs;
+  setHeaderTabIndex: (index: RecordPageHeaderTabs) => void;
+  recordPageDeatilTabIndex: RecordPageDeatilTabs;
+  setRecordPageDeatilTabIndex: (index: RecordPageDeatilTabs) => void;
+}
+
+export const useRecordPageHeaderTabsStore =
+  create<useRecordPageHeaderTabsStoreTypes>()((set) => ({
+    headerTabIndex: RecordPageHeaderTabs.DETAIL,
+    setHeaderTabIndex: (index) => set(() => ({ headerTabIndex: index })),
+    recordPageDeatilTabIndex: RecordPageDeatilTabs.ALL,
+    setRecordPageDeatilTabIndex: (index) => set(() => ({ recordPageDeatilTabIndex: index })),
+  }));
+// -------------- [IN][V6]新增 end  ---------------------

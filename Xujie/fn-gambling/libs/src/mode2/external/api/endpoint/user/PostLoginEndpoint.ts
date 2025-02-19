@@ -3,6 +3,7 @@ import { LOGIN_URL } from '../../urls';
 import { ExternalEndpoint } from '../../types';
 import { ResponseStructure } from '../ResponseStructure';
 import sdkUtils from '@mode2/utils/sdk/index';
+import { UserRoleType } from '@mode2/@types/userRoleTypes';
 
 interface LoginRequest {
   password: string;
@@ -11,6 +12,7 @@ interface LoginRequest {
   captchaId?: string;
   platform?: string;
   verifyCode?: string;
+  referralCode?: string;
 }
 
 interface LoginResponse {
@@ -20,17 +22,20 @@ interface LoginResponse {
 export interface LoginPayload {
   phone: string;
   password: string;
+  verifyCode?: string;
+  referralCode?: string;
 }
 
 type LoginResult = {
   token: string;
+  userRole: UserRoleType;
 };
 
 /** 獲取登入token */
 export const PostLoginEndpoint = (builder: ExternalEndpoint) =>
   builder.mutation<LoginResult | undefined, LoginPayload>({
     query: (data: LoginPayload) => {
-      const { phone, password } = data;
+      const { phone, password, referralCode} = data;
       const reqData: LoginRequest = {
         appId: sdkUtils.getAppId(),
         captchaId: '', // TODO 登录暂时用不到
@@ -38,8 +43,8 @@ export const PostLoginEndpoint = (builder: ExternalEndpoint) =>
         platform: import.meta.env['VITE_PACKAGENAME'],
         username: phone,
         verifyCode: '', // TODO 登录暂时用不到
+        referralCode: referralCode,
       };
-
       return {
         method: 'post',
         url: LOGIN_URL,
@@ -59,5 +64,6 @@ const transformResponse = (
 
   return {
     token: resp?.Token || '',
+    userRole: UserRoleType.USER,
   };
 };

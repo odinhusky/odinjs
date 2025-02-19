@@ -110,7 +110,7 @@ export const POST_PLAYER_UPDATE_AVATAR_URL = '/v1/api/player/updateAvatar';
 // export const POST_PAY_BANKTYPE_URL = '/v1/api/pay/bankType';
 // export const POST_VIPSMOBILES_URL = '/v1/api/apk/vipsmobiles';
 // export const POST_GIFT_ORIENTATION_URL = '/v1/api/gift/orientation';
-// export const POST_GIFT_RANDOM_URL = '/v1/api/gift/Random';
+
 // export const POST_GIFT_MESSAGE_URL = '/v1/api/gift/message';
 // export const POST_GIFT_DELETE_URL = '/v1/api/gift/delete';
 // export const POST_SIGNIN_PLAYER_URL = '/v1/api/signIn/player';
@@ -143,6 +143,8 @@ export const POST_DOWNLOAD_RECEIVE_PRIZE_URL =
 export const POST_PIGGY_BANK_WITHDRAW_URL =
   '/v1/api/active/piggy-bank-withdraw';
 export const POST_PIGGY_BANK_DETAIL_URL = '/v1/api/active/piggy-bank-detail';
+export const POST_GIFT_RANDOM_URL = '/v1/api/gift/random'; // 禮品代碼兌換
+
 // export const POST_TURN_RATE_CONFIG_URL = '/v1/api/active/turn-rate-config';
 // export const POST_ACTIVE_NEW_PLAYER_URL = '/v1/api/active/new-player';
 // export const POST_ACTIVE_TURN_RECEIVE_PRIZE_URL =
@@ -246,3 +248,19 @@ export const POST_RECHARGE_UPDATE_RECEIPT_URL =
 export const POST_RECHARGE_UPLOAD_RECEIPT_URL =
   '/v2/api/recharge/uploadReceipt'; // 充值订单上传收据附件
 // - 上報 UTR 相關 End ===========
+
+// - 訪客模式 相關 Start ===========
+export const POST_PLAYER_BIND_ACCOUNT_URL = '/v2/api/player/bindAccount'; //訪客帳戶綁定
+
+export const POST_PLAYER_BIND_REFER_CODE_URL = '/v2/api/player/bindReferCode'; //邀請碼綁定
+export const POST_PLAYER_VISITOR_LOGIN_CHECK_URL =
+  '/v2/api/player/visitorLoginCheck'; //訪客模式登入檢核
+
+// - 訪客模式 相關 End ===========
+
+export const POST_PLAYER_OTP_LOGIN_URL = '/v2/api/player/otpLogin'; //一次性密碼登入
+
+// - [V6] 新增 Start ===========
+export const POST_WITHDRAW_OPTIONS_URL = '/v2/api/pay/withdrawOptions';
+
+// - [V6] 新增 End ===========

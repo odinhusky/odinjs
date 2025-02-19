@@ -6,7 +6,7 @@ export interface Common {
   initAfter(): void;
 
   productName(): string;
-  
+
   countryName(): string;
 
   getH5VersionName(): string;
@@ -97,4 +97,9 @@ export interface Common {
   isPwaInstalled(): boolean;
 
   loggerClientSendEvent(payload: ILogPayload): void;
+
+  /**
+   * 是開發模式
+   */
+  isDevelopDebug(): boolean;
 }

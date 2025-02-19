@@ -52,6 +52,7 @@ export const useRoutesInterceptor = () => {
     const queryParams = new URLSearchParams(location.search);
     const referralCode = queryParams.get('referral_code');
     if (referralCode) {
+      useAppStore.getState().setTemporaryReferralCode(referralCode);
       sdkUtils.setStorage(AppLocalStorageKey.REFERRAL_CODE, referralCode);
     }
 

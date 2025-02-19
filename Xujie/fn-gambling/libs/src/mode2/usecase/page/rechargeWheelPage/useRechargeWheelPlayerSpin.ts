@@ -6,13 +6,19 @@ import {
 } from '@libs/mode2/@types/rechargeWheelLevelTypes';
 import { usePostWheelPlayerSpinMutation } from '@libs/mode2/external/api';
 import { WheelSegmentCategoryResult } from '@libs/mode2/external/api/endpoint/wheel/PostWheelConfigEndpoint';
+import { useRechargeWheelTabStore } from '@libs/mode2/zustand/components/rechargeWheelTabStore';
 import useMode2RechargeWheelPageStore from '@libs/mode2/zustand/page/rechargeWheelPage';
 import { get, isArray, isEmpty, isNumber } from 'lodash';
+import { useEffect } from 'react';
 
 export const useRechargeWheelPlayerSpin = () => {
   const [
     triggerSpin,
-    { data: playerSpinedData, isSuccess: isPostWheelPlayerSpinSuccess },
+    {
+      data: playerSpinedData,
+      isSuccess: isPostWheelPlayerSpinSuccess,
+      isError: isPostWheelPlayerSpinError,
+    },
   ] = usePostWheelPlayerSpinMutation();
 
   const spinWheelCount = useMode2RechargeWheelPageStore(
@@ -25,6 +31,10 @@ export const useRechargeWheelPlayerSpin = () => {
 
   const wheelLevelConfigObj = useMode2RechargeWheelPageStore(
     (state) => state.wheelLevelConfigObj
+  );
+
+  const activeRechargeActiveTab = useRechargeWheelTabStore(
+    (state) => state.activeRechargeActiveTab
   );
 
   const setSpinedRewardLevel = useMode2RechargeWheelPageStore(
@@ -45,6 +55,14 @@ export const useRechargeWheelPlayerSpin = () => {
 
   const addSpinedAPIDoneCount = useMode2RechargeWheelPageStore(
     (state) => state.addSpinedAPIDoneCount
+  );
+
+  const setIsAnimatingObj = useMode2RechargeWheelPageStore(
+    (state) => state.setIsAnimatingObj
+  );
+
+  const setIsCurrentWheelSlowSpin = useMode2RechargeWheelPageStore(
+    (state) => state.setIsCurrentWheelSlowSpin
   );
 
   useUpdateEffect(() => {
@@ -137,6 +155,14 @@ export const useRechargeWheelPlayerSpin = () => {
       addSpinedAPIDoneCount();
     }
   }, [isPostWheelPlayerSpinSuccess, playerSpinedData, wheelLevelConfigObj]);
+
+  // 如果失敗的話則讓他繼續轉動
+  useEffect(() => {
+    if (isPostWheelPlayerSpinError) {
+      setIsAnimatingObj(activeRechargeActiveTab, false);
+      setIsCurrentWheelSlowSpin(true);
+    }
+  }, [isPostWheelPlayerSpinError]);
 };
 
 export default useRechargeWheelPlayerSpin;

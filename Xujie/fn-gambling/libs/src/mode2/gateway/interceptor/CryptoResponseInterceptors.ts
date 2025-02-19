@@ -1,13 +1,17 @@
 import { AxiosInstance } from 'axios';
 import sdkUtils from '../../utils/sdk/index';
-import { message } from 'antd';
 import { logout } from '@mode2/usecase/useLogout';
 import { AppLocalStorageKey } from '@mode2/utils/sdk/persistant/storageKey';
 import {
   apiErrorLoggerEvent,
   apiExceptionLoggerEvent,
 } from '@mode2/usecase/useLoggerClient';
+import { useMessageStore } from '@mode2/zustand/components/messageStore';
 
+// 略過error message 封裝
+const showErrorMessage = (url: string, errorMessage: string) => {
+  useMessageStore.getState().error(errorMessage);
+};
 export const setupCryptoResponseInterceptors = (instance: AxiosInstance) => {
   const isEnableCrypto = import.meta.env['VITE_ENABLE_ENCODE_DECODE'] === '1';
   instance.interceptors.response.use(
@@ -42,7 +46,7 @@ export const setupCryptoResponseInterceptors = (instance: AxiosInstance) => {
       }
       if (response.data?.Code !== 200) {
         // 有錯誤就 Toast，才能確保 [請求API時機, 請求參數，回應結構] 正確性
-        message.error(`${response.data?.Msg}`);
+        showErrorMessage(response.config?.url || '', response.data?.Msg);
         apiErrorLoggerEvent(
           `${response.config.url}`,
           response.status,
@@ -53,8 +57,11 @@ export const setupCryptoResponseInterceptors = (instance: AxiosInstance) => {
       return response;
     },
     (error) => {
-      message.error(
-        `${error['response']['status']}--${error['message'] || 'server error'}`
+      showErrorMessage(
+        '',
+        `${error['response']?.['status']}--${
+          error['message'] || 'server error'
+        }`
       );
       apiExceptionLoggerEvent(error);
       return Promise.reject();

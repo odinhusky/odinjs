@@ -62,6 +62,9 @@ export interface InviteWheelPageStoreTypes {
   refreshInfoNumber: number; // 刷新資料
   setRefreshInfoNumber: () => void;
 
+  inviteWheelSpinToastFinish: boolean;
+  setInviteWheelSpinToastFinish: (isFinish: boolean) => void;
+
   resetState: () => void;
 }
 
@@ -85,6 +88,7 @@ const inviteWheelPageDefault = {
   cashOutRewardDifference: 500,
   isParticipated: true,
   refreshInfoNumber: -1,
+  inviteWheelSpinToastFinish: true,
 };
 
 export const useInviteWheelPageStoreStore = create<InviteWheelPageStoreTypes>(
@@ -162,9 +166,27 @@ export const useInviteWheelPageStoreStore = create<InviteWheelPageStoreTypes>(
       set(() => ({
         refreshInfoNumber: get().refreshInfoNumber + 1,
       })),
+    setInviteWheelSpinToastFinish: (isFinish) =>
+      set(() => ({
+        inviteWheelSpinToastFinish: isFinish,
+      })),
     resetState: () =>
       set(() => ({
         ...inviteWheelPageDefault,
       })),
+  })
+);
+
+interface InviteWheelRuleModalType {
+  isDisplay: boolean;
+  showInviteWheelRuleModal: () => void;
+  dismissInviteWheelRuleModal: () => void;
+}
+
+export const useInviteWheelRuleModalStore = create<InviteWheelRuleModalType>(
+  (set) => ({
+    isDisplay: false,
+    showInviteWheelRuleModal: () => set(() => ({ isDisplay: true })),
+    dismissInviteWheelRuleModal: () => set(() => ({ isDisplay: false })),
   })
 );

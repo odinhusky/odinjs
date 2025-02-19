@@ -45,7 +45,7 @@ const useActivityCenterAction = () => {
           // TODO Yaleen 進入紅包雨 或進入任何活動中心之前，需要判斷是否登入
           // 进入活动中心 活动前两小时-显示活动规则 活动前一小时-显示活动说明  活动中-显示活动中心
           if (!sdkUtils.isCurrentLogin()) {
-            navToLoginPage();
+            navToLoginPage(38);
             return;
           }
           setCurrentActivityData(type);

@@ -225,7 +225,9 @@ export const WebStrategy: Common &
 
   setupNativePassiveInteractions(): void {},
 
-  setupNativeDeepLink(callback: (path: string, queryString: string) => void): void {
+  setupNativeDeepLink(
+    callback: (path: string, queryString: string) => void
+  ): void {
     window.webDeepLink = async (path: string, queryString?: string) => {
       callback(path, queryString || '');
     };

@@ -48,6 +48,7 @@ export const useHomeStrategy = () => {
     navToTeamClubPage,
     navToInviteWheelPage,
     navToRechargeWheelPage,
+    navToGiftCodeRedeemPage,
   } = useNavPageClick();
 
   const setIsShowRebateRewardModal = useRebateRewardModalStore(
@@ -64,9 +65,7 @@ export const useHomeStrategy = () => {
         navToWalletPage();
         break;
       case AnnouncementType.TELEGRAM:
-        if (!isEmpty(payload.linkUrl)) {
-          sdkUtils.openBrowser(payload.linkUrl || '');
-        }
+        navToGiftCodeRedeemPage();
         break;
       case AnnouncementType.SIGN:
         // TODO
@@ -80,7 +79,7 @@ export const useHomeStrategy = () => {
         if (sdkUtils.isCurrentLogin()) {
           setIsShowRebateRewardModal(true);
         } else {
-          navToLoginPage();
+          navToLoginPage(26);
         }
         break;
       case AnnouncementType.RED_PACKET:
@@ -109,14 +108,14 @@ export const useHomeStrategy = () => {
         break;
       case AnnouncementType.ENTER_GAME:
         if (!sdkUtils.isCurrentLogin()) {
-          navToLoginPage();
+          navToLoginPage(25);
         } else if (payload.gameObj) {
           onEnterGame(payload.gameObj);
         }
         break;
       case AnnouncementType.ENTER_DIRECTORY:
         if (!sdkUtils.isCurrentLogin()) {
-          navToLoginPage();
+          navToLoginPage(24);
         } else if (payload.gameObj) {
           onEnterGame(payload.gameObj);
         }

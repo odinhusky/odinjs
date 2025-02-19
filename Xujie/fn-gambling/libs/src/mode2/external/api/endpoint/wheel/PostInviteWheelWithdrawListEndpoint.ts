@@ -22,6 +22,7 @@ export interface InviteWithdrawItemResult {
 }
 
 export interface InviteWheelWithdrawResult {
+  totalRewards: number;
   inviteWithdrawList: InviteWithdrawItemResult[];
 }
 
@@ -60,7 +61,13 @@ const transformResponse = (
     }) || [];
 
   const sortedListDesc = inviteWithdrawList.sort((a, b) => b.time - a.time);
+  const totalRewards =
+    inviteWithdrawList?.reduce(
+      (rewards, item) => (rewards || 0) + (item.amount || 0),
+      0
+    ) || 0;
   return {
+    totalRewards: totalRewards,
     inviteWithdrawList: sortedListDesc,
   };
 };

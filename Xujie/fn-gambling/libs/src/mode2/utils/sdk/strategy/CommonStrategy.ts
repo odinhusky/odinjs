@@ -85,7 +85,7 @@ export const CommonStrategy: Common = {
     this.initAfter();
   },
 
-  initAfter(): void { },
+  initAfter(): void {},
 
   productName(): string {
     return import.meta.env['VITE_PLATFORM'] || '';
@@ -94,9 +94,9 @@ export const CommonStrategy: Common = {
   countryName(): string {
     const code: string = import.meta.env['VITE_COUNTRY_CODE'];
     const name: { [key: string]: string } = {
-      'IN': 'India',
-      'PK': 'Pakistan',
-      'BD': 'Bangladesh',
+      IN: 'India',
+      PK: 'Pakistan',
+      BD: 'Bangladesh',
     };
     return name[code] || '';
   },
@@ -222,5 +222,9 @@ export const CommonStrategy: Common = {
   },
   loggerClientSendEvent(payload: ILogPayload): void {
     loggerClient.logEvent(payload);
+  },
+
+  isDevelopDebug(): boolean {
+    return import.meta.env['VITE_MODE'] !== 'prod';
   },
 };

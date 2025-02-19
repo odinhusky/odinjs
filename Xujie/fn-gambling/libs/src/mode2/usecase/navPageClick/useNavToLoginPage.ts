@@ -13,6 +13,7 @@ import { NavigateFunction } from 'react-router/dist/lib/hooks';
  * @param navigate
  */
 export const useNavToLoginPage = (
+  flag: number,
   show: boolean = true,
   type: LoginFormType = LoginFormType.LOGIN,
   navigate: NavigateFunction

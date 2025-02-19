@@ -59,6 +59,7 @@ interface GameResponse {
   IsGame?: number;
   Type?: number;
   IsHot?: number;
+  IsNew?: number;
   IsNotBet?: number;
   IsEnterLobby?: number;
   IsMaintain?: number;
@@ -231,6 +232,7 @@ const mapGameListInfo = (raw: GameResponse[] | undefined) => {
           platformId: item?.PlatformId,
           gameId: item.GameId || 0,
           isHotGame: item.IsHot === 1,
+          isNewGame: item.IsNew === 1,
           isMaintain: item?.IsMaintain === 1,
           maintainTime:
             item?.MaintainTime && item?.MaintainTime !== '0'
@@ -335,15 +337,19 @@ interface BroadcastResponse {
 
 const mapBroadcastJson = (broadcastJson?: string) => {
   const jsonArr = getHtml(broadcastJson || '[]');
-  const items: BroadcastResponse[] = JSON.parse(jsonArr);
-  return items.map((item: BroadcastResponse) => {
-    const type =
-      broadcastTypeMapping[item.Type || ''] || BroadcastTypeResult.UNKNOWN;
-    return {
-      type: type,
-      broadcastText: item.Content || '',
-    };
-  });
+  try {
+    const items: BroadcastResponse[] = JSON.parse(jsonArr);
+    return items.map((item: BroadcastResponse) => {
+      const type =
+        broadcastTypeMapping[item.Type || ''] || BroadcastTypeResult.UNKNOWN;
+      return {
+        type: type,
+        broadcastText: item.Content || '',
+      };
+    });
+  } catch (e) {
+    return [];
+  }
 };
 
 const transformResponse = (

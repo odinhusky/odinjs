@@ -1,7 +1,7 @@
 export enum AnnouncementType {
   FIRST_CHARGE = 'FIRST_CHARGE', //	1	首充	–
   RECHARGING = 'RECHARGING', //	2	复充	–
-  TELEGRAM = 'TELEGRAM', //	3	拉群	–
+  TELEGRAM = 'TELEGRAM', //	3	拉群	& GiftCode
   SIGN = 'SIGN', //	4	签到	–
   INVITE_NEW_PLAYER = 'INVITE_NEW_PLAYER', //	5	邀请新客活动	–
   PIGGY_BANK = 'PIGGY_BANK', //	6	存錢罐	–

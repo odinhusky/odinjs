@@ -16,7 +16,7 @@ import userLocalForage, {
 import { useRedDotStore } from '@libs/mode2/zustand/redDotStore';
 import { today } from '@libs/constant/date';
 
-const disabledBottomNavigationPageList = [
+export const disabledBottomNavigationPageList = [
   BasePagePathObj.GamePage,
   BasePagePathObj.GameLobbyPage,
   BasePagePathObj.MoreGamePage,
@@ -28,14 +28,14 @@ const disabledBottomNavigationPageList = [
   BasePagePathObj.RewardsDetail,
   BasePagePathObj.FullOrderDetailPage,
   BasePagePathObj.ActivityRecordPage,
+  BasePagePathObj.GiftCodeRedeemPage,
+  BasePagePathObj.AccountPage,
+  BasePagePathObj.SettingPage,
+  BasePagePathObj.OrderDetailPage,
 ] as const;
 
 export const useBottomNavigationBase = () => {
   const realTimeH5Version = useAppStore((state) => state.realTimeH5Version);
-
-  // const setBottomNavigationList = useBottomNavigationStore(
-  //   (state) => state.setBottomNavigationList
-  // );
 
   const setDisplayBottomNavigation = useBottomNavigationStore(
     (state) => state.setDisplayBottomNavigation
@@ -58,11 +58,11 @@ export const useBottomNavigationBase = () => {
   );
 
   useEffect(() => {
+    const isDisabled = !(
+      disabledBottomNavigationPageList as readonly BasePagePaths[]
+    ).includes(location.pathname as BasePagePaths);
     setDisplayBottomNavigation(
-      (breakPoint.isMobile || breakPoint.isTablet) &&
-        !(
-          disabledBottomNavigationPageList as readonly BasePagePaths[]
-        ).includes(location.pathname as BasePagePaths)
+      (breakPoint.isMobile || breakPoint.isTablet) && isDisabled
     );
   }, [location, breakPoint]);
 

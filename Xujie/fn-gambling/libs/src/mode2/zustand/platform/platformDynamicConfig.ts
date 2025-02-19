@@ -10,6 +10,7 @@ export interface PlatformDynamicConfigStoreTypes {
   setDisplayRegisterReward: (isDisplay: boolean) => void;
   maxWheelReward: number; // 輪盤最大獎勵，廣告金額
   setMaxWheelReward: (reward: number) => void;
+  adGiftBonusRange: { min: number; max: number };
 }
 
 export const usePlatformDynamicConfigStore =
@@ -25,4 +26,8 @@ export const usePlatformDynamicConfigStore =
       set(() => ({ isDisplayRegisterReward: isDisplay })),
     maxWheelReward: 500,
     setMaxWheelReward: (reward) => set(() => ({ maxWheelReward: reward })),
+    adGiftBonusRange: {
+      min: 7,
+      max: 7777,
+    },
   }));

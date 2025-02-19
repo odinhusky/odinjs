@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import useNavigateInterceptor from '@mode2/usecase/navPageClick/useNavigateInterceptor';
 import { LoginFormType } from '@mode2/zustand/loginStore';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
@@ -8,19 +7,25 @@ import useNavToLoginPage from '@mode2/usecase/navPageClick/useNavToLoginPage';
 import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
 import { ActivityRulesContentTypes } from '@mode2/zustand/page/activityRulesPageStore';
 import { To } from 'react-router';
+import useShouldNavigate from '@mode2/usecase/navPageClick/useShouldNavigate';
 
 /**
  * 未登入的訪客，導航決策
  */
 export const useGuestNavPageClickStrategy = () => {
-  const navigate = useNavigate();
+  const navigate = useShouldNavigate();
 
   const { toFeedBackPageInBoxTab } = useNavigateInterceptor();
   const navToLoginPage = (
+    flag: number,
     show: boolean = true,
     type: LoginFormType = LoginFormType.LOGIN
   ) => {
-    useNavToLoginPage(show, type, navigate);
+    console.log(
+      '@@@===> navToLoginPage',
+      JSON.stringify({ flag, show, type }, null, 2)
+    );
+    useNavToLoginPage(flag, show, type, navigate);
   };
 
   /**
@@ -39,18 +44,18 @@ export const useGuestNavPageClickStrategy = () => {
    */
   const navToWalletPage = (query: string = '', options?: NavigateOptions) => {
     if (options?.state?.tab === WalletPageTabType.WITHDRAW) {
-      navToLoginPage();
+      navToLoginPage(19);
     } else {
       navigate(`${BasePagePathObj.WalletPage}${query}`, options);
     }
   };
 
   const navToInvitePage = (query: string = '', options?: NavigateOptions) => {
-    navToLoginPage();
+    navToLoginPage(18);
   };
 
   const navToMyPage = (query: string = '', options?: NavigateOptions) => {
-    navToLoginPage();
+    navToLoginPage(17);
   };
 
   /**
@@ -60,7 +65,7 @@ export const useGuestNavPageClickStrategy = () => {
    */
   const navToActivityPage = (query: string = '', options?: NavigateOptions) => {
     if (options?.state?.tab === ActivityPageTabType.VIP) {
-      navToLoginPage();
+      navToLoginPage(16);
     } else {
       navigate(`${BasePagePathObj.ActivityPage}${query}`, options);
     }
@@ -80,25 +85,25 @@ export const useGuestNavPageClickStrategy = () => {
       options?.state?.tab ===
       ActivityRulesContentTypes.RED_ENVELOPE_RAIN_RULES_CONTENT
     ) {
-      navToLoginPage();
+      navToLoginPage(15);
     } else {
       navigate(`${BasePagePathObj.ActivityRulePage}${query}`, options);
     }
   };
 
   const navToRecordPage = (query: string = '', options?: NavigateOptions) => {
-    navToLoginPage();
+    navToLoginPage(14);
   };
 
   const navToChangePasswordPage = (
     query: string = '',
     options?: NavigateOptions
   ) => {
-    navToLoginPage();
+    navToLoginPage(2);
   };
 
   const navToBindKYCPage = (query: string = '', options?: NavigateOptions) => {
-    navToLoginPage();
+    navToLoginPage(13);
   };
 
   /**
@@ -111,65 +116,104 @@ export const useGuestNavPageClickStrategy = () => {
     if (toFeedBackPageInBoxTab(options)) {
       navigate(`${BasePagePathObj.FeedBackPage}${query}`, options);
     } else {
-      navToLoginPage();
+      navToLoginPage(12);
     }
   };
 
   const navToTeamClubPage = (query: string = '', options?: NavigateOptions) => {
-    navToLoginPage();
+    navToLoginPage(11);
   };
 
   const navToRewardsDetailPage = (
     query: string = '',
     options?: NavigateOptions
   ) => {
-    navToLoginPage();
+    navToLoginPage(10);
   };
 
   const navToSubordinateDataPage = (
     query: string = '',
     options?: NavigateOptions
   ) => {
-    navToLoginPage();
+    navToLoginPage(9);
   };
 
   const navToSharePage = (query: string = '', options?: NavigateOptions) => {
-    navToLoginPage();
+    navToLoginPage(8);
   };
 
   const navToInviteWheelPage = (
     query: string = '',
     options?: NavigateOptions
   ) => {
-    navToLoginPage();
+    navToLoginPage(7);
   };
 
   const navToRechargeWheelPage = (
     query: string = '',
     options?: NavigateOptions
   ) => {
-    navToLoginPage();
+    navToLoginPage(6);
   };
 
   const navToRechargeWheelRecordsPage = (
     query: string = '',
     options?: NavigateOptions
   ) => {
-    navToLoginPage();
+    navToLoginPage(5);
   };
 
   const navToActivityRecordPage = (
     query: string = '',
     options?: NavigateOptions
   ) => {
-    navToLoginPage();
+    navToLoginPage(0);
   };
   const navToFullOrderDetailPage = (
     query: string = '',
     options?: NavigateOptions
   ) => {
-    navToLoginPage();
+    navToLoginPage(3);
   };
+
+  const navToGiftCodeRedeemPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navToLoginPage(4);
+  };
+
+  // ---- new foe v6 start ----
+  const navToAccountPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {};
+
+  const navToWalletGuidePage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navToLoginPage(74);
+  };
+
+  const navToSettingPage = (query: string = '', options?: NavigateOptions) => {
+    navToLoginPage(75);
+  };
+
+  const navToGameSupplierListPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.GameSupplierListPage}${query}`, options);
+  };
+
+  const navToOrderDetailPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navToLoginPage(76);
+  };
+  // ---- new foe v6 end ----
 
   const mapRoutesNavTo = (
     to: To,
@@ -235,6 +279,24 @@ export const useGuestNavPageClickStrategy = () => {
       case BasePagePathObj.FullOrderDetailPage:
         navToFullOrderDetailPage(query, options);
         break;
+      case BasePagePathObj.GiftCodeRedeemPage:
+        navToGiftCodeRedeemPage(query, options);
+        break;
+      case BasePagePathObj.AccountPage:
+        navToAccountPage(query, options);
+        break;
+      case BasePagePathObj.WalletGuidePage:
+        navToWalletGuidePage(query, options);
+        break;
+      case BasePagePathObj.SettingPage:
+        navToSettingPage(query, options);
+        break;
+      case BasePagePathObj.GameSupplierListPage:
+        navToGameSupplierListPage(query, options);
+        break;
+      case BasePagePathObj.OrderDetailPage:
+        navToOrderDetailPage(query, options);
+        break;
       default:
         navigate(`${path}${query}`, options);
     }
@@ -262,6 +324,12 @@ export const useGuestNavPageClickStrategy = () => {
     navToRechargeWheelRecordsPage,
     navToActivityRecordPage,
     navToFullOrderDetailPage,
+    navToGiftCodeRedeemPage,
+    navToAccountPage,
+    navToWalletGuidePage,
+    navToSettingPage,
+    navToGameSupplierListPage,
+    navToOrderDetailPage,
   };
 };
 

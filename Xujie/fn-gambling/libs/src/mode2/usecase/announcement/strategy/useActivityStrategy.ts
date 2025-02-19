@@ -47,6 +47,7 @@ export const useActivityStrategy = () => {
     navToTeamClubPage,
     navToInviteWheelPage,
     navToRechargeWheelPage,
+    navToGiftCodeRedeemPage,
   } = useNavPageClick();
 
   const setIsShowRebateRewardModal = useRebateRewardModalStore(
@@ -65,9 +66,7 @@ export const useActivityStrategy = () => {
         navToWalletPage();
         break;
       case AnnouncementType.TELEGRAM:
-        if (!isEmpty(payload.linkUrl)) {
-          sdkUtils.openBrowser(payload.linkUrl || '');
-        }
+        navToGiftCodeRedeemPage();
         break;
       case AnnouncementType.SIGN:
         // TODO
@@ -81,7 +80,7 @@ export const useActivityStrategy = () => {
         if (sdkUtils.isCurrentLogin()) {
           setIsShowRebateRewardModal(true);
         } else {
-          navToLoginPage();
+          navToLoginPage(30);
         }
         break;
       case AnnouncementType.RED_PACKET:
@@ -95,7 +94,7 @@ export const useActivityStrategy = () => {
             }
           );
         } else {
-          navToLoginPage();
+          navToLoginPage(29);
         }
         break;
       case AnnouncementType.DOWNLOAD:
@@ -114,14 +113,14 @@ export const useActivityStrategy = () => {
         break;
       case AnnouncementType.ENTER_GAME:
         if (!sdkUtils.isCurrentLogin()) {
-          navToLoginPage();
+          navToLoginPage(28);
         } else if (payload.gameObj) {
           onEnterGame(payload.gameObj);
         }
         break;
       case AnnouncementType.ENTER_DIRECTORY:
         if (!sdkUtils.isCurrentLogin()) {
-          navToLoginPage();
+          navToLoginPage(27);
         } else if (payload.gameObj) {
           onEnterGame(payload.gameObj);
         }

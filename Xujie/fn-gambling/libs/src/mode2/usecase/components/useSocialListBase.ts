@@ -193,7 +193,31 @@ export const useSocialListBase = () => {
         scenarios: SocialScenarios.SHARE,
         socialList: [telegramIcon, whatsappIcon],
       };
-      setUsageScenariosList([footerList, inviteList, teamClubList, shareList]);
+
+      const v6VersionShareList = {
+        scenarios: SocialScenarios.V6_VERSION_SHARE,
+        socialList: [whatsappIcon, telegramIcon, facebookIcon],
+      };
+
+      const aboutUsList = {
+        scenarios: SocialScenarios.ABOUT_US,
+        socialList: [
+          telegramIcon,
+          whatsappIcon,
+          instagramIcon,
+          twitterIcon,
+          youtubeIcon,
+        ],
+      };
+
+      setUsageScenariosList([
+        footerList,
+        inviteList,
+        teamClubList,
+        shareList,
+        v6VersionShareList,
+        aboutUsList,
+      ]);
     }
   }, [usageScenariosList]);
 };

@@ -18,6 +18,14 @@ const now = new Date();
  */
 
 interface IDatePickerProps {
+  className?: string;
+  pickerViewClassName?: string;
+  btnsClassName?: string;
+  btnCommonClassName?: string;
+  primaryBtnClassName?: string;
+  secondaryBtnClassName?: string;
+  primaryTextClassName?: string;
+  secondaryTextClassName?: string;
   styles?: React.CSSProperties;
   precision?: Precision; // default day. || 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' ...
   onDateChange: (message: Date) => void;
@@ -58,7 +66,8 @@ export const DatePicker = (props: IDatePickerProps) => {
           {
             'fixed bottom-0 left-0 right-0': isMobile,
             'max-w-[60%]': !isMobile,
-          }
+          },
+          props.className
         )}
       >
         <DatePickerView
@@ -70,7 +79,8 @@ export const DatePicker = (props: IDatePickerProps) => {
             }
           }
           className={cx(
-            'h-1/3 touch-none bgi-[var(--bg-sidebar)] flex-row-reverse'
+            'h-1/3 touch-none bgi-[var(--bg-sidebar)] flex-row-reverse',
+            props.pickerViewClassName
           )}
           defaultValue={now}
           value={value}
@@ -80,18 +90,30 @@ export const DatePicker = (props: IDatePickerProps) => {
           onChange={handleChange}
         />
 
-        <div className="flex gap-7 mb-4">
+        <div className={cx('flex gap-7 mb-4', props.btnsClassName)}>
           <button
-            className="flex-1 text-lg font-medium rounded-[100px] h-10 bgi-text-[var(--grayscale-100)] bgi-[var(--grayscale-30)]"
+            className={cx(
+              'flex-1 text-lg font-medium rounded-[100px] h-10 bgi-text-[var(--grayscale-100)] bgi-[var(--grayscale-30)]',
+              props.btnCommonClassName,
+              props.secondaryBtnClassName
+            )}
             onClick={() => handleClose(false)}
           >
-            {t('datepicker_button_cancel')}
+            <span className={cx(props.secondaryTextClassName)}>
+              {t('datepicker_button_cancel')}
+            </span>
           </button>
           <button
-            className="flex-1 text-lg rounded-[100px] h-10 bgi-text-[var(--grayscale-100)] bgi-[var(--base-1-main)]"
+            className={cx(
+              'flex-1 text-lg rounded-[100px] h-10 bgi-text-[var(--grayscale-100)] bgi-[var(--base-1-main)]',
+              props.btnCommonClassName,
+              props.primaryBtnClassName
+            )}
             onClick={() => handleClose(false, value)}
           >
-            {t('datepicker_button_confirm')}
+            <span className={cx(props.primaryTextClassName)}>
+              {t('datepicker_button_confirm')}
+            </span>
           </button>
         </div>
       </div>

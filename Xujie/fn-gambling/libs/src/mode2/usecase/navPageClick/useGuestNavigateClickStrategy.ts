@@ -1,13 +1,13 @@
-import { useNavigate } from 'react-router-dom';
 import { To } from 'react-router';
 import { NavigateOptions } from 'react-router/dist/lib/context';
 import useGuestNavPageClickStrategy from '@mode2/usecase/navPageClick/useGuestNavPageClickStrategy';
+import useShouldNavigate from '@mode2/usecase/navPageClick/useShouldNavigate';
 
 /**
  * 未登入的訪客，導航決策
  */
 export const useGuestNavigateClickStrategy = () => {
-  const navigate = useNavigate();
+  const navigate = useShouldNavigate();
   const { mapRoutesNavTo } = useGuestNavPageClickStrategy();
 
   return (to: To | number, options?: NavigateOptions) => {

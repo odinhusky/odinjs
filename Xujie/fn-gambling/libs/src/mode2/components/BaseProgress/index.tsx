@@ -1,5 +1,5 @@
 import { cx } from '@libs/commonUtils';
-import { XY_CENTER, remToPx } from '@libs/constant/style';
+import { remToPx } from '@libs/constant/style';
 import React from 'react';
 
 interface BaseProgressProps {

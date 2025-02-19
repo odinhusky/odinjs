@@ -8,6 +8,7 @@ export interface ServiceInfo {
   icon: string;
   onActionClick: () => void;
   className?: string;
+  link?: string;
 }
 
 export enum CustomerServiceScenarios {
@@ -17,6 +18,7 @@ export enum CustomerServiceScenarios {
   FOOTER = 'FOOTER',
   FEEDBACK = 'FEEDBACK',
   FAB = 'FAB',
+  GIFT_CODE = 'GIFT_CODE',
 }
 
 interface UsageScenarios {

@@ -2,6 +2,7 @@ import { POST_PLAYER_MAIN_INFO_URL } from '../../urls';
 import { ExternalEndpoint } from '../../types';
 import { ResponseStructure } from '../ResponseStructure';
 import { extractApiMoneyString } from '@libs/commonUtils/extractApiMoneyString';
+import { UserRoleType } from '@mode2/@types/userRoleTypes';
 
 export interface IMainInfoResponse {
   PlayerId?: number; // 20005193
@@ -31,6 +32,7 @@ export interface IMainInfoResponse {
   Lazy?: boolean;
   PasswordExpired?: boolean;
   IsLowBalance?: boolean;
+  IsVisitor?: boolean;
 }
 
 /** 獲取已登入的玩家資料 */
@@ -50,21 +52,6 @@ export const PostPlayerMainInfoEndpoint = (builder: ExternalEndpoint) =>
     transformResponse,
   });
 
-const defaultResult = {
-  nickname: '',
-  playerName: '',
-  isLevelPopup: false,
-  realPhone: '',
-  playerId: 0,
-  avatarOrder: '1',
-  avatarFrameOrder: '',
-  level: 0,
-  totalAssets: 0,
-  needDownloadReceivePrize: false,
-  isPasswordExp: false,
-  isLowBalance: false,
-};
-
 export type PlayerMainInfoResult = {
   nickname: string;
   playerName: string;
@@ -78,30 +65,27 @@ export type PlayerMainInfoResult = {
   needDownloadReceivePrize: boolean;
   isPasswordExp: boolean;
   isLowBalance: boolean;
+  userRole: UserRoleType;
 };
 
 const transformResponse = (
   response: ResponseStructure<IMainInfoResponse>
 ): PlayerMainInfoResult => {
   const resp = response?.Body;
-
-  if (resp) {
-    const result = {
-      nickname: resp?.Nickname || '',
-      playerName: resp?.PlayerName || '',
-      isLevelPopup: resp.IsLevelPopup || defaultResult.isLevelPopup,
-      realPhone: resp.RealPhone || defaultResult.realPhone,
-      playerId: resp.PlayerId || defaultResult.playerId,
-      avatarOrder: resp.Avatar || defaultResult.avatarOrder,
-      avatarFrameOrder: resp.AvatarFrame || defaultResult.avatarFrameOrder,
-      level: resp.Level || defaultResult.level,
-      totalAssets: extractApiMoneyString(resp?.TotalAssets || '0'),
-      needDownloadReceivePrize: resp.DownloadRedPacketStatus === 1,
-      isPasswordExp: resp?.PasswordExpired || false,
-      isLowBalance: resp?.IsLowBalance || false,
-    };
-
-    return result;
-  }
-  return defaultResult;
+  return {
+    nickname: resp?.Nickname || '',
+    playerName: resp?.PlayerName || '',
+    isLevelPopup: resp?.IsLevelPopup || false,
+    realPhone: resp?.RealPhone || '',
+    playerId: resp?.PlayerId || 0,
+    avatarOrder: resp?.Avatar || '1',
+    avatarFrameOrder: resp?.AvatarFrame || '',
+    level: resp?.Level || 0,
+    totalAssets: extractApiMoneyString(resp?.TotalAssets || '0'),
+    needDownloadReceivePrize: resp?.DownloadRedPacketStatus === 1,
+    isPasswordExp: resp?.PasswordExpired || false,
+    isLowBalance: resp?.IsLowBalance || false,
+    userRole:
+      resp?.IsVisitor === false ? UserRoleType.USER : UserRoleType.PLAYER,
+  };
 };

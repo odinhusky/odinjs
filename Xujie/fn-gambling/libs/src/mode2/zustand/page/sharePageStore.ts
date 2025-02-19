@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
 
 export enum SharePosterType {
   SHARETEAMCLUB = 0, // 俱樂部分享
@@ -30,10 +29,10 @@ export interface Mode2SharePageStoreTypes {
 }
 
 export const useMode2SharePageStore = create<Mode2SharePageStoreTypes>()(
-  devtoolsAndPersistWrapper('[page store] useMode2SharePageStore', (set) => ({
+  (set) => ({
     sharePosterList: [] as string[],
     setSharePosterList: (list) => set(() => ({ sharePosterList: list })),
     currentShareType: SharePosterType.SHARETEAMCLUB,
     setCurrentShareType: (value) => set(() => ({ currentShareType: value })),
-  }))
+  })
 );

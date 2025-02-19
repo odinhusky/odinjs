@@ -6,37 +6,44 @@ import { useImageCache } from '@mode2/usecase/useImageCache';
 import isEqual from 'lodash/isEqual';
 import { isEmpty } from 'lodash';
 
-const ImageIcon = ({ src }: { src: string }) => {
-  const defIcon = getImgUrl(EResourceLevel.SHARED, `icon_others`);
-  const [isError, setError] = useState(false);
-  return isError ? (
-    <img src={defIcon} className={`w-full h-full`} />
-  ) : (
-    <img
-      src={src}
-      className={`w-full h-full`}
-      onError={() => {
-        setError(true);
-      }}
-    />
-  );
-};
+export const ImageIcon = memo(
+  ({ src }: { src: string }) => {
+    const defIcon = getImgUrl(EResourceLevel.SHARED, `icon_others`);
+    const [isError, setError] = useState(false);
+    return isError ? (
+      <img src={defIcon} className={`w-full h-full`} />
+    ) : (
+      <img
+        src={src}
+        className={`w-full h-full`}
+        onError={() => {
+          setError(true);
+        }}
+      />
+    );
+  },
+  (prevProps, nextProps) => {
+    return isEqual(prevProps, nextProps);
+  }
+);
 
-const Icon = ({
+export interface BaseIconProps {
+  className?: string;
+  imgClassName?: string;
+  name: string;
+  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  color?: string;
+  level?: EResourceLevel;
+  isActive?: boolean;
+}
+
+const BaseIcon = ({
   className,
   name,
   onClick,
-  // size,
   color,
   level,
-}: {
-  className?: string;
-  name: string;
-  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  level?: EResourceLevel;
-  color?: string;
-  // size?: string;
-}) => {
+}: BaseIconProps) => {
   // const decisionSize =
   //   size === 'auto' ? size : size?.includes('%') ? size : `${size}px`;
 
@@ -80,6 +87,6 @@ const Icon = ({
   );
 };
 
-export default memo(Icon, (prevProps, nextProps) => {
+export default memo(BaseIcon, (prevProps, nextProps) => {
   return isEqual(prevProps, nextProps);
 });

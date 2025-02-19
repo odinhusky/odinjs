@@ -1,5 +1,4 @@
 import { useCallback, useEffect } from 'react';
-import { message } from 'antd';
 import { useDeepEffect } from '@libs/commonUtils';
 import {
   usePostRechargeUpdateReceiptMutation,
@@ -8,10 +7,11 @@ import {
 import { useMode2FullOrderDetailPageStore } from '@libs/mode2/zustand/page/fullOrderDetailPageStore';
 import { useLoadingStore } from '@libs/mode2/zustand/components/loadingStore';
 import { fileToBase64 } from '../utils';
-import { useNavigate } from 'react-router-dom';
+import { useNavigateClick } from '@mode2/usecase/useNavPageClick';
+import { useMessageStore } from '@mode2/zustand/components/messageStore';
 
 export const useFullOrder = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigateClick();
   const [
     postRechargeUploadReceipt,
     { data: uploadInfo, isLoading: isUploadLoading },
@@ -34,7 +34,7 @@ export const useFullOrder = () => {
 
   useDeepEffect(() => {
     if (isSuccess && data) {
-      message.success(data.result);
+      useMessageStore.getState().success(data.result);
 
       setTimeout(() => {
         navigate(-1);

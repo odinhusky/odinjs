@@ -73,6 +73,11 @@ export const useMode2FeedBackPageInBoxData = () => {
     setInBoxPageNumber(0);
   }, [activeTabId]);
 
+  useEffect(() => {
+    setIsEndOfInBoxPageList(false);
+    setInBoxPageNumber(0);
+  }, []);
+
   // 處理 UnRead Notice Count
   // useDeepEffect(() => {
   //   if (isUnReadCountSuccess && !isEmpty(unReadCountData)) {

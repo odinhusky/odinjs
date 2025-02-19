@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { isEmpty } from 'lodash';
-import { message } from 'antd';
 import useDeepEffect from './useDeepEffect';
 import { useTranslation } from 'react-i18next';
+import { useMessageStore } from '@mode2/zustand/components/messageStore';
 
 export enum ClipboardState {
   INCOMPLETE = 'INCOMPLETE', // 未開始
@@ -46,6 +46,8 @@ export const useClipboard = () => {
     message: '',
   });
 
+  const [isCustomizeMessage, setCustomizeMessage] = useState(false);
+
   const reset = (resetInterval: number) => {
     setTimeout(() => {
       const incomplete = generate(ClipboardState.INCOMPLETE, '');
@@ -67,17 +69,21 @@ export const useClipboard = () => {
 
   useDeepEffect(() => {
     if (clipboard.state === ClipboardState.SUCCESS) {
-      const successMessage = message.success(t('toast_copied_successfully'));
+      const successMessage = () =>
+        !isCustomizeMessage &&
+        useMessageStore.getState().success(t('toast_copied_successfully'));
       if (clipboard.resetInterval !== 0) {
         setTimeout(() => successMessage(), clipboard.resetInterval);
       }
     } else if (clipboard.state === ClipboardState.FAIL) {
-      const failMessage = message.error(clipboard.state);
+      const failMessage = () =>
+        !isCustomizeMessage &&
+        useMessageStore.getState().error(clipboard.state);
       if (clipboard.resetInterval !== 0) {
         setTimeout(() => failMessage(), clipboard.resetInterval);
       }
     }
-  }, [clipboard]);
+  }, [clipboard, isCustomizeMessage]);
 
   const fallbackCopyTextToClipboard = (
     text: string,
@@ -134,8 +140,10 @@ export const useClipboard = () => {
    */
   const copyToClipboard = async (
     text: string,
+    isCustomizeMessage: boolean = false,
     resetInterval: number = 2000
   ): Promise<ClipboardInfo> => {
+    setCustomizeMessage(isCustomizeMessage);
     if (isEmpty(text.trim())) {
       const fail = generate(
         ClipboardState.FAIL,

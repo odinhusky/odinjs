@@ -9,16 +9,11 @@ import {
 import { usePlatformNotifyStore } from '@mode2/zustand/platform/platformNotifyStore';
 import { usePlatformServicesStore } from '@mode2/zustand/platform/platformServicesStore';
 import { usePlatformInfoStore } from '@mode2/zustand/platform/platformInfoStore';
-import {
-  AnnouncementResult,
-  CarouselItemResult,
-} from '@mode2API/endpoint/user/PostHomeEndpoint';
-import { getFileNameByUrl } from '@commonUtils/getFileNameByUrl';
+import { AnnouncementResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
 import { usePlatformDynamicConfigStore } from '@mode2/zustand/platform/platformDynamicConfig';
 import sdkUtils from '@mode2/utils/sdk';
 import { AppLocalStorageKey } from '@mode2/utils/sdk/persistant/storageKey';
 import { isEmpty } from 'lodash';
-import { EResourceLevel, getImgUrl } from '../utils';
 
 export const useGameList = () => {
   const [postHome, { data: homeInfo, isSuccess: isHomeInfoSuccessState }] =

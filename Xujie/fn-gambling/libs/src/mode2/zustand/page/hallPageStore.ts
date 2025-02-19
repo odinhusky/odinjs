@@ -11,6 +11,7 @@ import {
 import { ActionClickPayloadMap as HallPageActionClickPayloadMap } from '@mode2/action/hallPageAction/useHallPageActions';
 import { VoidAction } from '@mode2/@types/commonTypes';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
+import { AnnouncementType } from '@mode2/@types/announcementType';
 
 // - /////////////// Download Banner ///////////////////////
 export interface Mode2HallPageDownloadBannerStoreTypes {
@@ -52,7 +53,15 @@ export interface useMode2BannerStoreTypes {
 
 export const useMode2BannerStore = create<useMode2BannerStoreTypes>()(
   devtoolsAndPersistWrapper('[page store] useMode2BannerStore', (set) => ({
-    bannerList: [] as AnnouncementItem[],
+    bannerList: [
+      {
+        type: AnnouncementType.UNKNOWN,
+        bannerUrl: '',
+        title: '',
+        showInSidebar: false,
+        showInMyPage: false,
+      },
+    ] as AnnouncementItem[],
     setBannerList: (list) => set(() => ({ bannerList: list })),
   }))
 );
@@ -219,6 +228,7 @@ export const fillGameListItemMissingValues = (
     gameName: '',
     platformId: 0,
     isHotGame: false,
+    isNewGame: false,
     isFavorite: false,
     isMaintain: false,
     maintainTime: '',
@@ -258,6 +268,7 @@ export type GameListItemResult = {
   gameName: string;
   platformId: number;
   isHotGame: boolean;
+  isNewGame: boolean;
   isFavorite: boolean;
   isMaintain: boolean;
   maintainTime: string;
@@ -269,6 +280,7 @@ export type GameListItemResult = {
 };
 
 export type Mode2GameListConfig = {
+  tabId?: HallPageTabIDType;
   list: GameListItemResult[];
   tabName: I18NContent;
   iconName: string;
@@ -281,6 +293,7 @@ export type Mode2GameListConfig = {
   showGameName?: boolean;
   isShowHoverMask: boolean;
   isSupplierGameList?: boolean;
+  isLastConfig?: boolean;
 };
 
 export type ExcludeLobbyHallPageTabIDType = Exclude<HallPageTabIDType, 'lobby'>;

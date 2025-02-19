@@ -91,7 +91,7 @@ export const useFeedBackPageActions = () => {
             tabId === feedBackPageTabIdObj.INBOX &&
             !sdkUtils.isCurrentLogin()
           ) {
-            navToLoginPage();
+            navToLoginPage(32);
           } else {
             setActiveTabId(tabId);
           }

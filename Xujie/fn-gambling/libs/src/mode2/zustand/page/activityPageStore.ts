@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { AnnouncementResult } from '../../external/api/endpoint/main/PostAnnouncementInfoEndpoint';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
 import { ActivityPageTabType } from '@mode2/@types/activityPageTabType';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
 
@@ -55,18 +54,13 @@ export interface useMode2ActivityListStoreTypes {
 }
 
 export const useMode2ActivityListStore =
-  create<useMode2ActivityListStoreTypes>()(
-    devtoolsAndPersistWrapper(
-      '[page store] useMode2ActivityListStore',
-      (set) => ({
-        originalActivityList: [] as ActivityUnit[],
-        setOriginalActivityList: (list) =>
-          set(() => ({ originalActivityList: list })),
-        activityList: [] as ActivityUnit[],
-        setActivityList: (list) => set(() => ({ activityList: list })),
-      })
-    )
-  );
+  create<useMode2ActivityListStoreTypes>()((set) => ({
+    originalActivityList: [] as ActivityUnit[],
+    setOriginalActivityList: (list) =>
+      set(() => ({ originalActivityList: list })),
+    activityList: [] as ActivityUnit[],
+    setActivityList: (list) => set(() => ({ activityList: list })),
+  }));
 
 // interface ActivityActionsStoreTypes {
 //   activityActionList: VoidAction[];

@@ -6,13 +6,14 @@ import { formatMoney } from '@mode2/utils';
 import { useTranslation } from 'react-i18next';
 import { useInviteWheelPageStoreStore } from '@mode2/zustand/page/inviteWheelPageStore';
 import { useToastStore } from '@mode2/zustand/components/toastStore';
+import { useEffect } from 'react';
 
 /**
  * 邀請輪盤控制邏輯
  */
 export const useInviteSpinWheelBase = () => {
   const { t } = useTranslation();
-  const [postInviteWheelSpin, { data, isSuccess, isLoading }] =
+  const [postInviteWheelSpin, { data, isSuccess, isLoading, isError }] =
     usePostInviteWheelSpinMutation();
 
   const inviteWheelPortalInfo = useInviteWheelPageStoreStore(
@@ -28,9 +29,7 @@ export const useInviteSpinWheelBase = () => {
   const setSpinedReward = useInviteWheelPageStoreStore(
     (state) => state.setSpinedReward
   );
-  const spinFastTotate = useInviteWheelPageStoreStore(
-    (state) => state.spinFastTotate
-  );
+
   const setSpinFastTotate = useInviteWheelPageStoreStore(
     (state) => state.setSpinFastTotate
   );
@@ -41,43 +40,77 @@ export const useInviteSpinWheelBase = () => {
 
   const showToast = useToastStore((state) => state.showToast);
 
+  const setInviteWheelSpinToastFinish = useInviteWheelPageStoreStore(
+    (state) => state.setInviteWheelSpinToastFinish
+  );
+  const inviteWheelSpinToastFinish = useInviteWheelPageStoreStore(
+    (state) => state.inviteWheelSpinToastFinish
+  );
+  const resetSpinWheel = useInviteWheelPageStoreStore(
+    (state) => state.resetSpinWheel
+  );
   useDeepEffect(() => {
     // API取得的reward 找出 對應的 index
     const wheelSegments = get(inviteWheelPortalInfo, 'wheelSegments', []);
-    // const cumulativeReward = get(inviteWheelPortalInfo, 'cumulativeReward', 0); // 累積獎勵
 
     const segmentIndex = wheelSegments.findIndex(
       (item) =>
         Array.isArray(item.value) && item.value.includes(data?.reward || 0)
     );
 
-    if (isSuccess && data) {
-      setSpinedIndex(segmentIndex);
-      setSpinedReward(data.reward);
-
-      // Show Toast
-      const winPrizeToastId = uuidv4();
-      showToast(
-        t('spin_and_share_wheel_win_prize_toast', {
-          rewardAmount: formatMoney(data.reward, true),
-        }),
-        (id) => {
-          if (id === winPrizeToastId) {
-            // Toast 消失後刷新資料
-            setRefreshInfoNumber();
-          }
-        },
-        winPrizeToastId
-      );
-    }
-  }, [data, isSuccess]);
-
-  useDeepEffect(() => {
-    if (spinFastTotate && spinWheelCount === 1) {
-      postInviteWheelSpin();
+    if (isSuccess) {
       setSpinFastTotate(false);
     }
-  }, [spinWheelCount, isLoading]);
+
+    if (isSuccess && data && !inviteWheelSpinToastFinish) {
+      if (segmentIndex >= 0) {
+        setSpinedIndex(segmentIndex);
+      }
+      setSpinedReward(data.reward);
+
+      // 延遲刷新
+      setTimeout(() => {
+        // Show Toast
+        const winPrizeToastId = uuidv4();
+        showToast(
+          t('spin_and_share_wheel_win_prize_toast', {
+            rewardAmount: formatMoney(data.reward, true),
+          }),
+          (id) => {
+            if (id === winPrizeToastId) {
+              // Toast 消失後刷新資料
+              setRefreshInfoNumber();
+              setInviteWheelSpinToastFinish(true);
+            }
+          },
+          winPrizeToastId
+        );
+      }, 1000);
+    }
+  }, [data, isSuccess, inviteWheelSpinToastFinish]);
+
+  useDeepEffect(() => {
+    if (isError) {
+      setSpinFastTotate(false);
+      setInviteWheelSpinToastFinish(true);
+      resetSpinWheel();
+    }
+  }, [isError]);
+
+  useDeepEffect(() => {
+    if (spinWheelCount >= 1 && !isLoading && inviteWheelSpinToastFinish) {
+      postInviteWheelSpin();
+      setSpinFastTotate(true);
+      setInviteWheelSpinToastFinish(false);
+    }
+  }, [spinWheelCount, isLoading, inviteWheelSpinToastFinish]);
+
+  useEffect(() => {
+    return () => {
+      setSpinFastTotate(false);
+      setInviteWheelSpinToastFinish(true);
+    };
+  }, []);
 };
 
 export default useInviteSpinWheelBase;

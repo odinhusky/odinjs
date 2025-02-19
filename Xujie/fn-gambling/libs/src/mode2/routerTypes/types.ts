@@ -28,6 +28,7 @@ export const BasePagePathObj = {
   RechargeWheelRecordsPage: '/rechargeWheelRecords', // 邀請輪盤
 
   ActivityRecordPage: '/activityRecord', // 记录
+  GiftCodeRedeemPage: '/giftCodeRedeem', // 禮品代碼兌換頁面
 
   // UTR(交易明細) 上報功能
   FullOrderDetailPage: '/fullOrderDetail',
@@ -39,6 +40,12 @@ export const BasePagePathObj = {
   CustomizeCheckoutPage: '/checkout', // 自定義收銀台
   PopPage: '/pop', // 邀請頁面
   ActivityRulePage: '/activity-rule',
+
+  AccountPage: '/account',
+  WalletGuidePage: '/wallet-guide',
+  SettingPage: '/setting',
+  GameSupplierListPage: '/game-supplier-list',
+  OrderDetailPage: '/order-detail',
 } as const;
 
 export const BasePagePathOrders: string[] = Object.values(BasePagePathObj);

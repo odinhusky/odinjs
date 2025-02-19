@@ -14,3 +14,12 @@ export const handleWalletPageWithdrawTabCheckOrderClick =
 
 export const handleWalletPageRechargeBonusSwitchClick =
   'handleWalletPageRechargeBonusSwitchClick';
+
+export const handleWalletPageOpenOnlineServiceActionClick =
+  'handleWalletPageOpenOnlineServiceActionClick';
+
+export const handleWalletPageUseGuideActionClick =
+  'handleWalletPageUseGuideActionClick';
+
+export const handleWalletPageRechargeTabCheckOrderDeatilClick =
+  'handleWalletPageRechargeTabCheckOrderDeatilClick';

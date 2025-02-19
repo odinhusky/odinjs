@@ -111,9 +111,10 @@ export const useImageCache = {
     if (!cacheData) {
       // 進入异步操作
       this.asyncHandleCacheData(url, GAME_IMAGE_CACHE_DURATION);
+      return url;
     }
     // 不等待，直接 return
-    return useImageCacheStore.getState().getByKey(url) || url;
+    return cacheData || url;
   },
   getIconByCache(src: string, color: string): string {
     const version = `_${String(import.meta.env['VITE_ICON_VERSION'] || '')}`;
@@ -124,9 +125,10 @@ export const useImageCache = {
     if (!cacheData) {
       // 進入异步操作
       this.asyncHandleCacheData(src, ICON_CACHE_DURATION, true, version);
+      return src;
     }
     // 不等待，直接 return
-    return useImageCacheStore.getState().getByKey(keyName) || src;
+    return cacheData || src;
   },
   async asyncHandleIconCache(src: string, color: string, data: Blob | null) {
     const version = `_${String(import.meta.env['VITE_ICON_VERSION'] || '')}`;

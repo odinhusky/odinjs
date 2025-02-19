@@ -11,6 +11,7 @@ interface AffixHeaderBottomWrapperProps {
   offset?: number;
   onChange?: (affixed?: boolean) => void;
   children: ReactNode;
+  isAllBpAffix?: boolean;
 }
 
 /**
@@ -21,6 +22,7 @@ interface AffixHeaderBottomWrapperProps {
  * @param {number} offsetBottom - 直接給予 offsetBottom 的屬性，權重次高，跟 hasBottomNav 併用則此 prop 設定無效。
  * @param {number} offset - 可為正整數或負整數，用於調節細微無法計算的部分。
  * @param {Function} onChange -  Affix 元件的客製化方法。
+ * @param {boolean} isAllBpAffix -  是否所斷點都需要 affix
  * @description //! 特別需要注意的是，在外部使用時，如果針對 children 有針對 y 軸的 margin(mt || my) 進行操作，則應該將該操作的樣式包在 AffixHeaderBottomWrapper 外層之容器，否則會造成浮動時的樣式不如預期，例如過高或是過低被 Header 擋住。
  * @example <div className={cx('mt-6')}>
  *  <AffixHeaderBottomWrapper>
@@ -38,11 +40,11 @@ export const AffixHeaderBottomWrapper = ({
   offsetTop: offsetTopProps,
   offset = 0,
   onChange: onChangeProps,
+  isAllBpAffix = false,
   children,
 }: AffixHeaderBottomWrapperProps) => {
   const { isMobile, isTablet } = useBreakPoint();
-
-  const AffixWrapper = isMobile || isTablet ? Affix : React.Fragment;
+  const isDefaultBreakPoint = isMobile || isTablet;
 
   const [isAffixed, setIsAffixed] = useState(false);
 
@@ -54,7 +56,10 @@ export const AffixHeaderBottomWrapper = ({
   const rootClassName = rootClassNameProps ? rootClassNameProps : '';
   const onChange = onChangeProps instanceof Function ? onChangeProps : () => {};
 
-  const shouldAffixBp = isMobile || isTablet;
+  const shouldAffixBp = isAllBpAffix ? true : isDefaultBreakPoint;
+
+  const AffixWrapper =
+    isAllBpAffix || isDefaultBreakPoint ? Affix : React.Fragment;
 
   const givenProps = shouldAffixBp
     ? {
