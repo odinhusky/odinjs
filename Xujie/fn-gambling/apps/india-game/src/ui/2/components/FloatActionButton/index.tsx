@@ -1,10 +1,7 @@
 import { FloatButton } from 'antd';
 import cx from '@commonUtils/cx';
 import { EResourceLevel, getImgUrl } from '@mode2/utils';
-import {
-  FloatActionButton as FloatActionButtonObj,
-  useFloatActionButtonListStore,
-} from '@mode2/zustand/components/floatActionButtonStore';
+import { useFloatActionButtonListStore } from '@mode2/zustand/components/floatActionButtonStore';
 import useFloatActionButtonAction from '@mode2/action/components/floatActionButton/useFloatActionButtonAction';
 import { handleFABDrawerActionClick } from '@mode2/action/components/floatActionButton/acitonType';
 import { BackTopButton } from '@components/BackTopButton';
@@ -12,75 +9,18 @@ import { BackTopButton } from '@components/BackTopButton';
 import { ServicesTypeResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
 import { useMemo } from 'react';
 import { useFloatActionButtonBase } from '@/hooks/components/useFloatActionButtonBase';
-import RedDot from '@components/RedDot';
 import { useBreakPoint } from '@libs/commonUtils';
 import { useRebateRewardModalStore } from '@mode2/zustand/components/rebateRewardModalStore';
 import ActivityCenterButton from '@components/ActivityCenterButton';
 import { useIsLoginStore } from '@mode2/zustand/loginStore';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
-import { isEmpty } from 'lodash';
-import Icon from '@mode2/components/Icon';
-
-const ActionButton = ({
-  item,
-  styles,
-  imageClassName,
-  imgType = '',
-}: {
-  item: FloatActionButtonObj;
-  styles?: React.CSSProperties;
-  imageClassName?: string;
-  imgType?: string;
-}) => {
-  return (
-    <div
-      key={item.type}
-      className={cx(
-        'bg-shadow-[var(--inset-shadow)] rounded-full',
-        'w-10 h-10 mobile:w-14 mobile:h-14',
-        'flex justify-center items-center',
-        'cursor-pointer',
-        'relative',
-        item.className
-      )}
-      style={styles}
-    >
-      {isEmpty(imgType) ? (
-        <Icon
-          name={`${item.icon}_default`}
-          className={cx(
-            'rounded-full',
-            'object-contain',
-            'w-full h-full',
-            'hover:brightness-[1.15]',
-            'active:brightness-[0.85]',
-            imageClassName
-          )}
-        />
-      ) : (
-        <img
-          src={getImgUrl(EResourceLevel.V, item.icon, imgType)}
-          className={cx(
-            'rounded-full',
-            'object-contain',
-            'w-full h-full',
-            'hover:brightness-[1.15]',
-            'active:brightness-[0.85]',
-            imageClassName
-          )}
-          alt={item.label}
-        />
-      )}
-      {item?.isShowRedDot ? (
-        <RedDot type="img" className={'absolute top-[3px] right-[5px]'} />
-      ) : null}
-    </div>
-  );
-};
+import { FloatingBubble, FloatingBubbleProps } from 'antd-mobile';
+import { useTemplateLayoutStore } from '@libs/mode2/zustand/template/templateLayoutStore';
+import ActionButton from './components/ActionButton';
 
 export const FloatActionButton = () => {
   useFloatActionButtonBase();
-  const { isDesktop } = useBreakPoint();
+  const { isDesktop, isMobile } = useBreakPoint();
   const { navToLoginPage } = useNavPageClick();
 
   const fabConfig = useFloatActionButtonListStore((state) => state.fabConfig);
@@ -100,6 +40,14 @@ export const FloatActionButton = () => {
     (state) => state.setIsShowRebateRewardModal
   );
   const isLogin = useIsLoginStore((state) => state.isLogin);
+
+  const bottomNavigationElMetrics = useTemplateLayoutStore(
+    (state) => state.bottomNavigationElMetrics
+  );
+
+  const headerElMetrics = useTemplateLayoutStore(
+    (state) => state.headerElMetrics
+  );
 
   const moneyBoxBtnItemConfig = {
     icon: 'piggy_bank',
@@ -155,7 +103,7 @@ export const FloatActionButton = () => {
     if (isLogin) {
       setIsShowRebateRewardModal(true);
     } else {
-      navToLoginPage();
+      navToLoginPage(62);
     }
   };
 
@@ -165,14 +113,48 @@ export const FloatActionButton = () => {
     });
   };
 
+  // 替換浮動的按鈕實作(antd-mobile 的 FloatingBubble)
+  const FloatWrapper: React.ElementType =
+    fabConfig.isDraggable && isMobile ? FloatingBubble : FloatButton.Group;
+
+  const FloatWrapperProps = useMemo(
+    () =>
+      fabConfig.isDraggable && isMobile
+        ? ({
+            axis: 'xy',
+            magnetic: 'x',
+            style: {
+              position: 'relative',
+              zIndex: 10,
+              '--initial-position-bottom': `${
+                (bottomNavigationElMetrics?.height || 0) + 16
+              }px`,
+              '--initial-position-right': '16px',
+              '--background': 'transparent',
+
+              // edge-distance 是 padding，可以依照 padding 的規則設定
+              '--edge-distance': `${
+                (headerElMetrics?.height || 0) + 16
+              }px 16px ${(bottomNavigationElMetrics?.height || 0) + 16}px 16px`,
+            },
+          } as FloatingBubbleProps)
+        : ({
+            rootClassName: '',
+            className: cx(
+              'w-auto end-0 bottom-[68px] mobile:bottom-[76px] shadow-none flex items-end flex-col mr-2'
+            ),
+            shape: 'square',
+          } as React.ComponentProps<typeof FloatButton.Group>),
+    [
+      headerElMetrics?.height,
+      bottomNavigationElMetrics?.height,
+      fabConfig.isDraggable,
+      isMobile,
+    ]
+  );
+
   return fabConfig.isFeatureSupport ? (
-    <FloatButton.Group
-      rootClassName={''}
-      className={cx(
-        'w-auto end-0 bottom-[68px] shadow-none flex flex-col items-end'
-      )}
-      shape="square"
-    >
+    <FloatWrapper {...FloatWrapperProps}>
       <div className={'flex flex-row justify-center items-center'}>
         {/* 桌面版水平收合按鈕 */}
         {isShowDrawerControlBar && !isDesktop ? (
@@ -213,6 +195,6 @@ export const FloatActionButton = () => {
       </div>
       {/* 觸發紅包雨按鈕 */}
       {isOpenDrawer && <ActivityCenterButton className="p-2" />}
-    </FloatButton.Group>
+    </FloatWrapper>
   ) : null;
 };

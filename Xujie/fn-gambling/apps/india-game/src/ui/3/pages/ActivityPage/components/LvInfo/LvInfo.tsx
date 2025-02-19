@@ -26,8 +26,8 @@ export const LvInfo = ({
         {t('activity_VIP_cards_deposit_amount')} {formatMoney(deposit)}
       </div>
       {!hiddenProcess && (
-        <div className="flex flex-row font-semibold gap-2">
-          <div>V{curLv}</div>
+        <div className="flex flex-row items-center font-semibold gap-2">
+          <div className="text-xxs">V{curLv}</div>
           <div className="w-full relative">
             <Progress
               className="vip-level-progress"
@@ -39,7 +39,9 @@ export const LvInfo = ({
             </div>
           </div>
 
-          <div>{curLv >= maxLv ? 'Max' : 'V' + (curLv + 1)}</div>
+          <div className="text-xxs">
+            {curLv >= maxLv ? 'Max' : 'V' + (curLv + 1)}
+          </div>
         </div>
       )}
     </div>

@@ -10,6 +10,9 @@ import { EResourceLevel, getImgUrl } from '@mode2/utils';
 import { useRef } from 'react';
 import { useToastStore } from '@mode2/zustand/components/toastStore';
 import { useTranslation } from 'react-i18next';
+import useBindPlayerPhoneModalStore from '@libs/mode2/zustand/modal/BindPlayerPhoneModal';
+import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
+import { UserRoleType } from '@libs/mode2/@types/userRoleTypes';
 
 const InvitationWheel = () => {
   const { t } = useTranslation();
@@ -40,6 +43,12 @@ const InvitationWheel = () => {
   );
 
   const showToast = useToastStore((state) => state.showToast);
+
+  const setShowBindPlayerPhoneModal = useBindPlayerPhoneModalStore(
+    (state) => state.setShowBindPlayerPhoneModal
+  );
+
+  const userRole = useUserProfileStore((state) => state.userRole);
 
   // 可以參與轉盤邏輯
   const isSpin =
@@ -95,10 +104,16 @@ const InvitationWheel = () => {
             ),
           }}
           handleClickTrigger={() => {
+            if (userRole === UserRoleType.PLAYER) {
+              setShowBindPlayerPhoneModal(true);
+              return;
+            }
+
             if (!isSpin) {
               showToast(t(tipsMessageI18n));
               return;
             }
+
             handleInviteWheelAction({
               actionName: handleInviteWheelSpinButtonClick,
               payload: { isSpin: true },

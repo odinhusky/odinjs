@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
-import { useRoutesInterceptor } from '@mode2/usecase/useRoutesInterceptor';
+import { useRoutesInterceptor } from '@mode2/usecase/router/useRoutesInterceptor';
 
 export const UndefinedRoute = () => {
   const location = useLocation();
@@ -15,3 +15,5 @@ export const UndefinedRoute = () => {
 
   return <Navigate to={BasePagePathObj.HallPage}></Navigate>;
 };
+
+export default UndefinedRoute;

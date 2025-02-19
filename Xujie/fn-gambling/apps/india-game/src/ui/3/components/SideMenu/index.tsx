@@ -1,9 +1,8 @@
 import { EResourceLevel, getImgUrl } from '@mode2/utils';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import LangueSelect from '@components/LangueSelect';
-import { useMenuBase } from '@/hooks/components/useMenuBase';
 import { Layout } from 'antd';
 import cx from '@commonUtils/cx';
 import { useTemplateLayoutStore } from '@mode2/zustand/template/templateLayoutStore';
@@ -14,38 +13,23 @@ import {
 import { useEffect, useMemo } from 'react';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
 import { useBreakPoint } from '@libs/commonUtils';
-import { KYC_PERSONAL_STATE } from '@libs/constant/KYC';
-import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
-import { ActivityPageTabType } from '@mode2/@types/activityPageTabType';
 import { QuitButton } from '@components/QuitButton';
 import RedDot from '@components/RedDot';
-import { RecordPageTabs } from '@mode2/zustand/page/recordPageStore';
+
 import { FLEX_COL, FLEX_ITEMS_CENTER } from '@libs/constant/style';
-import { TeamClubPageTabType } from '@libs/mode2/@types/teamClubPageTabType';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
 import userLocalForage, {
   UserLocalforageStoreKeys,
 } from '@mode2/localforage/user';
 import { useRedDotStore } from '@libs/mode2/zustand/redDotStore';
 import { today } from '@libs/constant/date';
+import {
+  MenuScenarios,
+  useMenuListStore,
+} from '@libs/mode2/zustand/components/menuListStore';
+import { useMenuBase } from '@/hooks/components/useMenuBase';
 
 const { Sider } = Layout;
-
-interface SubMenuItem {
-  label: string;
-  action: () => void;
-  isShowRedDot?: boolean;
-  isHide?: boolean;
-}
-
-interface MenuGroup {
-  label: string;
-  icon: string;
-  action?: () => void;
-  children?: SubMenuItem[];
-  isShowRedDot?: boolean;
-  isHide?: boolean;
-}
 
 export const SideMenu = () => {
   const { t } = useTranslation();
@@ -54,159 +38,11 @@ export const SideMenu = () => {
     (state) => state.headerElMetrics
   );
   const { handleMenuRouter, handleLogout } = useMenuBase();
-  // const setCurSwitchContentTabId = useWalletPageSwitchContentTabsStore(
-  //   (state) => state.setCurSwitchContentTabId
-  // );
-  // const setInviteCurTab = useMode2InviteTabStore(
-  //   (state) => state.setInviteCurTab
-  // );
-  // const isEnableRankingReward = usePlatformDynamicConfigStore(
-  //   (state) => state.isEnableRankingReward
-  // );
 
   const inviteTimeRedDot = useRedDotStore((state) => state.inviteTimeRedDot);
   const setInviteTimeRedDot = useRedDotStore(
     (state) => state.setInviteTimeRedDot
   );
-
-  const groups: MenuGroup[] = [
-    {
-      label: 'leftnav_home',
-      icon: 'ic_home',
-      action: () => handleMenuRouter(BasePagePathObj.HallPage),
-    },
-    {
-      label: 'leftnav_wallet',
-      icon: 'ic_wallet',
-      action: () => {
-        handleMenuRouter(BasePagePathObj.WalletPage);
-      },
-      children: [
-        {
-          label: 'wallet_nav_deposit',
-          action: () => {
-            handleMenuRouter(BasePagePathObj.WalletPage, {
-              state: { tab: WalletPageTabType.DEPOSIT },
-            });
-          },
-        },
-        {
-          label: 'wallet_nav_withdraw',
-          action: () => {
-            handleMenuRouter(BasePagePathObj.WalletPage, {
-              state: { tab: WalletPageTabType.WITHDRAW },
-            });
-          },
-        },
-      ],
-    },
-    {
-      label: 'leftnav_earn',
-      icon: 'ic_earn_money',
-      isShowRedDot: inviteTimeRedDot,
-      action: () => {
-        handleMenuRouter(BasePagePathObj.TeamClubPage, {
-          state: { tab: TeamClubPageTabType.MY_REWARDS },
-        });
-      },
-      children: [
-        {
-          label: 'earn_tab_1',
-          action: () => {
-            userLocalForage.setItem(
-              UserLocalforageStoreKeys.INVITE_TIME,
-              today
-            );
-            setInviteTimeRedDot(false);
-            handleMenuRouter(BasePagePathObj.TeamClubPage, {
-              state: { tab: TeamClubPageTabType.SHARE_FOR_BONUS },
-            });
-          },
-        },
-        {
-          label: 'earn_tab_2',
-          action: () => {
-            handleMenuRouter(BasePagePathObj.TeamClubPage, {
-              state: { tab: TeamClubPageTabType.MY_REWARDS },
-            });
-          },
-        },
-        {
-          label: 'earn_tab_3',
-          action: () => {
-            handleMenuRouter(BasePagePathObj.TeamClubPage, {
-              state: { tab: TeamClubPageTabType.INVITE_REWARDS },
-            });
-          },
-        },
-        {
-          label: 'earn_tab_4',
-          action: () => {
-            handleMenuRouter(BasePagePathObj.TeamClubPage, {
-              state: { tab: TeamClubPageTabType.RULES },
-            });
-          },
-          // isHide: !isEnableRankingReward,
-        },
-      ],
-    },
-    {
-      label: 'leftnav_activity',
-      icon: 'ic_activity',
-      action: () => {
-        handleMenuRouter(BasePagePathObj.ActivityPage, {
-          state: { tab: ActivityPageTabType.ACTIVITY },
-        });
-      },
-      children: [
-        {
-          label: 'leftnav_activity',
-          action: () => {
-            handleMenuRouter(BasePagePathObj.ActivityPage, {
-              state: { tab: ActivityPageTabType.ACTIVITY },
-            });
-          },
-        },
-        {
-          label: 'leftnav_vip',
-          action: () => {
-            handleMenuRouter(BasePagePathObj.ActivityPage, {
-              state: { tab: ActivityPageTabType.VIP },
-            });
-          },
-        },
-      ],
-    },
-    {
-      label: 'leftnav_account',
-      icon: 'ic_user',
-      children: [
-        {
-          label: 'leftnav_personal_information',
-          action: () =>
-            handleMenuRouter(BasePagePathObj.BindKYCPage, {
-              state: { tab: KYC_PERSONAL_STATE },
-            }),
-        },
-        {
-          label: 'leftnav_balance_record',
-          action: () => {
-            handleMenuRouter(BasePagePathObj.RecordPage, {
-              state: { tab: RecordPageTabs.RECORD },
-            });
-          },
-        },
-        {
-          label: 'leftnav_balance_report',
-          action: () => {
-            handleMenuRouter(BasePagePathObj.RecordPage, {
-              state: { tab: RecordPageTabs.REPORT },
-            });
-          },
-        },
-      ],
-    },
-  ];
 
   useEffect(() => {
     userLocalForage
@@ -215,6 +51,14 @@ export const SideMenu = () => {
         setInviteTimeRedDot(inviteTime !== today);
       });
   }, [inviteTimeRedDot]);
+
+  const menuUsageScenariosList = useMenuListStore(
+    (state) => state.menuUsageScenariosList
+  );
+  const groups =
+    menuUsageScenariosList.find((item) => {
+      return item.scenarios === MenuScenarios.TEAM_CLUB_SIDE_MENU;
+    })?.menuList || [];
 
   const usageScenariosList = useCustomerServiceListStore(
     (state) => state.usageScenariosList

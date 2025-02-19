@@ -23,11 +23,13 @@ import { useToastStore } from '@libs/mode2/zustand/components/toastStore';
 import { useTranslation } from 'react-i18next';
 import { DEFAULT_DEBOUNCE_DELAY } from '@constant/functionParams';
 import { debounce } from 'lodash';
+import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
 
 interface RechargeWheelsProps {}
 
 export const RechargeWheels = ({}: RechargeWheelsProps) => {
   const { t } = useTranslation();
+  const refreshUserData = useUserProfileStore((state) => state.refreshUserData);
 
   const rechargeWheelsRefsObj: Record<
     RechargeWheelType,
@@ -168,6 +170,7 @@ export const RechargeWheels = ({}: RechargeWheelsProps) => {
           setIsCurrentWheelSlowSpin(true);
           setIsAnimatingObj(activeRechargeActiveTab, false);
           refreshPostPlayerProgressCount();
+          if (spinedRewardIsMoney) refreshUserData();
         },
       });
     }

@@ -4,7 +4,7 @@ import {
   BottomNavigationScenarios,
   useBottomNavigationStore,
 } from '@mode2/zustand/components/bottomNavigationStore';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import { useTranslation } from 'react-i18next';
 import RedDot from '@components/RedDot';

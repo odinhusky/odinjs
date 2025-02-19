@@ -7,7 +7,7 @@ import isEqual from 'lodash/isEqual';
 import { handleWalletActionClick } from '@libs/mode2/action/components/header/actionType';
 import { useBreakPoint } from '@libs/commonUtils';
 import BaseSecondaryBtn from '@components/BaseSecondaryBtn';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 
 export const HeaderDepositButton = memo(
   ({

@@ -10,7 +10,7 @@ import { cx } from '@libs/commonUtils/cx';
 
 import { useRecordPageBalanceRecordStore } from '@mode2/zustand/page/recordPageStore';
 import NoData from '@components/NoData';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 const recordStateI18nKeyMapping: Record<RechargeRecordStatus, string> = {
   [RechargeRecordStatus.PROCESSING]:

@@ -1,7 +1,7 @@
 import cx from '@commonUtils/cx';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useBreakPoint } from '@libs/commonUtils';
 import './index.scss';
 import { useWalletPageRechargeContentStore } from '@mode2/zustand/page/WalletPage/walletPageRechargeContentStore';

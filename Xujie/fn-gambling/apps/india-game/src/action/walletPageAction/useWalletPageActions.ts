@@ -2,8 +2,10 @@ import {
   handleWalletPageRechargeAmountChange,
   handleWalletPageRechargeAmountClearClick,
   handleWalletPageRechargeContentDepositBtnClick,
+  handleWalletPageRechargeContentWeakTipsModalPrimaryBtnClick,
   handleWalletPageWithdrawAmountInputValueChange,
   handleWalletPageWithdrawAmountInputValueClear,
+  handleWalletPageWithdrawAmountSelected,
   handleWalletPageWithdrawBtnClick,
   handleWalletPageWithdrawPasswordInputValueChange,
   handleWalletPageWithdrawPasswordInputValueClear,
@@ -22,18 +24,26 @@ import { useWithdraw } from '@/usecase/useWithdraw';
 import { useUserVerifyState } from '@/usecase/useUserVerifyState';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
 import sdkUtils from '@mode2/utils/sdk';
+import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
+import { UserRoleType } from '@libs/mode2/@types/userRoleTypes';
+import {
+  useWithdrawStore,
+  WithdrawOptItem,
+} from '@/zustand/wallet/useWithdrawStore';
 
-type ActionClickPayloadMap = {
+export type ActionClickPayloadMap = {
   [handleWalletPageRechargeAmountChange]: { value: string };
   [handleWalletPageRechargeAmountClearClick]: void;
   [handleWalletPageWithdrawAmountInputValueChange]: { value: string };
   [handleWalletPageWithdrawAmountInputValueClear]: void;
   [handleWalletPageWithdrawPasswordInputValueChange]: { password: string };
   [handleWalletPageWithdrawPasswordInputValueClear]: void;
-  [handleWalletPageWithdrawBtnClick]: void;
+  [handleWalletPageWithdrawBtnClick]: { isPasswordless: boolean };
   [handleWalletPageRechargeContentDepositBtnClick]: {
-    isRechargeFromGame: boolean;
+    isRechargeFromGame?: boolean;
   };
+  [handleWalletPageRechargeContentWeakTipsModalPrimaryBtnClick]: void;
+  [handleWalletPageWithdrawAmountSelected]: { item: WithdrawOptItem };
 };
 
 export interface HandleWalletPageClickProps<
@@ -44,12 +54,17 @@ export const useWalletPageActions = () => {
   const { mapRoutesNavTo, navToLoginPage } = useNavPageClick();
 
   const { onRecharge } = useRecharge();
-  const { onWithdraw } = useWithdraw();
+  const { onWithdraw, onPasswordlessWithdraw, isWithdrawSuccess } =
+    useWithdraw();
   const { requiredVerifyBeforeRecharging, checkIsBankFirstBind } =
     useUserVerifyState();
 
   const setRechargeAmount = useRechargeStore(
     (state) => state.setRechargeAmount
+  );
+
+  const setIsDepositWeakTipsModalShow = useRechargeStore(
+    (state) => state.setIsDepositWeakTipsModalShow
   );
 
   // set 當前支付通道
@@ -69,6 +84,32 @@ export const useWalletPageActions = () => {
   const setWithdrawPasswordInputValue = useWalletPageWithdrawContentStore(
     (state) => state.setWithdrawPasswordInputValue
   );
+
+  // 抽出執行充值的邏輯
+  const handleDeposit = () => {
+    if (!sdkUtils.isCurrentLogin()) {
+      navToLoginPage(66);
+    } else if (!requiredVerifyBeforeRecharging()) {
+      onRecharge();
+    } else {
+      mapRoutesNavTo(BasePagePathObj.BindKYCPage, '', {
+        state: { tab: KYC_PERSONAL_STATE },
+      });
+    }
+  };
+
+  // 抽出點擊後判斷的邏輯，怕寫在 actionClickObj 中 userRole 不會變動，造成判斷失誤
+  const handleJudgeDepositClick = () => {
+    const userRole = useUserProfileStore.getState().userRole;
+    console.log('@@===> handleJudgeDepositClick userRole', userRole);
+    if (userRole === UserRoleType.PLAYER) {
+      // 讓 WeakTipsModal 出現
+      setIsDepositWeakTipsModalShow(true);
+    } else {
+      // 如果是 Guest 或是 User 則由這個 function 判斷
+      handleDeposit();
+    }
+  };
 
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
     // [handleWalletPageSwitchTabClick]: ({ id }) => {
@@ -127,6 +168,25 @@ export const useWalletPageActions = () => {
         },
       });
     },
+    [handleWalletPageWithdrawAmountSelected]: ({ item }) => {
+      handleGlobalClick({
+        target: handleWalletPageWithdrawAmountSelected,
+        callback: () => {
+          useWithdrawStore.setState((state) => {
+            const withdrawOptions = state.withdrawOptions.map((opt) =>
+              opt.amount === item.amount && opt.index === item.index
+                ? { ...opt, isActive: true }
+                : { ...opt, isActive: false }
+            );
+            return {
+              withdrawOptions: withdrawOptions,
+            };
+          });
+          setWithdrawAmountInputValue(`${item.amount}`);
+        },
+      });
+    },
+
     [handleWalletPageWithdrawAmountInputValueClear]: () => {
       handleGlobalClick({
         target: handleWalletPageWithdrawAmountInputValueClear,
@@ -161,7 +221,7 @@ export const useWalletPageActions = () => {
     //     },
     //   });
     // },
-    [handleWalletPageWithdrawBtnClick]: () => {
+    [handleWalletPageWithdrawBtnClick]: ({ isPasswordless }) => {
       handleGlobalClick({
         target: handleWalletPageWithdrawBtnClick,
         callback: () => {
@@ -181,7 +241,11 @@ export const useWalletPageActions = () => {
               state: { tab: KYC_BOTH_STATE },
             });
           } else {
-            onWithdraw();
+            if (isPasswordless) {
+              onPasswordlessWithdraw();
+            } else {
+              onWithdraw();
+            }
           }
         },
       });
@@ -192,15 +256,16 @@ export const useWalletPageActions = () => {
       handleGlobalClick({
         target: handleWalletPageRechargeContentDepositBtnClick,
         callback: () => {
-          if (!sdkUtils.isCurrentLogin()) {
-            navToLoginPage();
-          } else if (!requiredVerifyBeforeRecharging()) {
-            onRecharge();
-          } else {
-            mapRoutesNavTo(BasePagePathObj.BindKYCPage, '', {
-              state: { tab: KYC_PERSONAL_STATE },
-            });
-          }
+          handleJudgeDepositClick();
+        },
+      });
+    },
+    [handleWalletPageRechargeContentWeakTipsModalPrimaryBtnClick]: () => {
+      handleGlobalClick({
+        target: handleWalletPageRechargeContentWeakTipsModalPrimaryBtnClick,
+        callback: () => {
+          handleDeposit();
+          setIsDepositWeakTipsModalShow(false);
         },
       });
     },

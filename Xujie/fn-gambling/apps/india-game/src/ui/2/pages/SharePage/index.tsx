@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { cx } from '@libs/commonUtils';
 import { SocialScenarios } from '@libs/mode2/zustand/components/socialListStore';
 import { SocialList } from '@components/SocialList';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { EResourceLevel, getImgUrl } from '@libs/mode2/utils';
 import { QRCode } from 'antd';
 import useSharePageAction from '@mode2/action/sharePageAction/useSharePageAction';

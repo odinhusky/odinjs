@@ -12,7 +12,7 @@ import { useMode2HallPageModalStore } from '@mode2/zustand/page/hallPageStore';
 import { t } from 'i18next';
 import dayjs from 'dayjs';
 import Checkbox from '@mode2/components/Checkbox';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import useBonusAnnounceModelActions from '@mode2/action/bonusAnnounceModelAction/useBonusAnnounceModelActions';
 import {
   handleBonusAnnounceCloseClick,
@@ -23,12 +23,13 @@ import { BaseCacheImg } from '@mode2/components/BaseCacheImg';
 import useBonusAnnounceModelBase from '@mode2/usecase/modal/bonusAnnounceModel/useBonusAnnounceModelBase';
 import AnimationFlipNumbers from '@components/AnimationFlipNumbers';
 import { useBreakPoint } from '@libs/commonUtils';
-import { FlipNumbersResType } from '@components/AnimationFlipNumbers/AnimationFlipNumbersDigit';
+
 import { ParsingAnnouncementResult } from '@mode2/usecase/announcement/useParsingAnnouncementsContent';
 import { CarouselItemResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
 import userLocalForage, {
   UserLocalforageStoreKeys,
 } from '@mode2/localforage/user';
+import { FlipNumbersResType } from '@components/AnimationFlipNumbersDigit';
 
 const CloseButton = ({
   customClass,

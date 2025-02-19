@@ -12,7 +12,7 @@ import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletP
 import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
 import { cx } from '@libs/commonUtils';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 const RechargeNoticeModal = () => {
   const { t } = useTranslation();

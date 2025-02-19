@@ -8,7 +8,7 @@ import {
   WithdrawRecordItemResult,
   WithdrawRecordStatus,
 } from '@mode2API/endpoint/record/PostWithdrawRecordsEndpoint';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useEffect, useRef, useState } from 'react';
 import { useBreakPoint } from '@libs/commonUtils';
 import { isEmpty } from 'lodash';
@@ -178,7 +178,7 @@ const RecordWithdrawalItemMessage = (item: WithdrawRecordItemResult) => {
 
   return isDisplayMessage ? (
     <div
-      className="bgi-[var(--state-error-50)] flex 
+      className="bgi-[var(--state-error-50)] flex
           mobile:gap-3 gap-2 mobile:py-3 mobile:px-6 py-1 px-2
           p-1 items-center"
     >

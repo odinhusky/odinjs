@@ -10,7 +10,7 @@ import {
   handleMyPageHomeBtnClick,
   handleMyPageUserInfoAvatarSaveBtnClick,
 } from '@libs/mode2/action/myPageAction/acitonType';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
 import { getAvatarFrameOrder } from '@libs/commonUtils';
 

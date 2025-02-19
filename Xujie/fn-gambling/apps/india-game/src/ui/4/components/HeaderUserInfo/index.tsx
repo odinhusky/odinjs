@@ -9,7 +9,7 @@ import isEqual from 'lodash/isEqual';
 import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
 import { memo } from 'react';
 import { useBreakPoint } from '@libs/commonUtils';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import Avatar from '@components/Avatar';
 
 /**

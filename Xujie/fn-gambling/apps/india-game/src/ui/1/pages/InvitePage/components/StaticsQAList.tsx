@@ -1,7 +1,7 @@
 import cx from '@commonUtils/cx';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import { FLEX_COL, FLEX_ITEMS_CENTER } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useMode2InvitePageStaticsStore } from '@mode2/zustand/page/invitePageStore';
 import { isValidElement } from 'react';
 import { useTranslation } from 'react-i18next';

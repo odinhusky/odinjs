@@ -2,14 +2,17 @@ import { BasePagePaths } from '@mode2/routerTypes/types';
 import { useMenuAction } from '@mode2/action/components/menu/menuAction';
 import { handleMenuRouterActionClick } from '@mode2/action/components/menu/actionType';
 import { NavigateOptions } from 'react-router';
-import { logout } from '@libs/mode2/usecase/useLogout';
 import { useShowMenuStore } from '@libs/mode2/zustand/menuStore';
 import { useNavigateClick } from '@libs/mode2/usecase/useNavPageClick';
 import { useMyPageStore } from '@mode2/zustand/page/myPageStore';
+import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
 
 export const useMenuBase = () => {
   const navigate = useNavigateClick();
   const { handleMenuClick } = useMenuAction();
+  const setIsLogoutWeakTipsModalShow = useUserProfileStore(
+    (state) => state.setIsLogoutWeakTipsModalShow
+  );
 
   const handleMenuRouter = (path: BasePagePaths, options?: NavigateOptions) => {
     handleMenuClick({
@@ -27,9 +30,10 @@ export const useMenuBase = () => {
       actionName: handleMenuRouterActionClick,
       payload: {
         callback: () => {
+          console.log('!! handleLogout');
           useShowMenuStore.getState().closeMenu();
           useMyPageStore.getState().setOpenMyDrawer(false);
-          logout();
+          setIsLogoutWeakTipsModalShow(true);
         },
       },
     });

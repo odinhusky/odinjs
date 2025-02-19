@@ -3,7 +3,7 @@ import { formatMoney } from '@mode2/utils';
 import { useRecordPageBalanceReportStore } from '@mode2/zustand/page/recordPageStore';
 import { useTranslation } from 'react-i18next';
 import renderI18N from '@libs/commonUtils/renderI18N';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 // TODO Ethan UI Style [RWD] 手機樣式多檢查
 export const RecordPageReportButtonsGroup = () => {

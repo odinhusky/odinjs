@@ -10,6 +10,9 @@ export const handleWalletPageWithdrawAmountInputValueChange =
 export const handleWalletPageWithdrawAmountInputValueClear =
   'handleWalletPageWithdrawAmountInputValueClear';
 
+export const handleWalletPageWithdrawAmountSelected =
+  'handleWalletPageWithdrawAmountSelected';
+
 export const handleWalletPageWithdrawPasswordInputValueChange =
   'handleWalletPageWithdrawPasswordInputValueChange';
 
@@ -21,3 +24,6 @@ export const handleWalletPageWithdrawBtnClick =
 
 export const handleWalletPageRechargeContentDepositBtnClick =
   'handleWalletPageRechargeContentDepositBtnClick';
+
+export const handleWalletPageRechargeContentWeakTipsModalPrimaryBtnClick =
+  'handleWalletPageRechargeContentWeakTipsModalPrimaryBtnClick';

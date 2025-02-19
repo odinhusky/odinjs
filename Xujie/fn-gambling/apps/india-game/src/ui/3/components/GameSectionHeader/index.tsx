@@ -4,7 +4,7 @@ import { cx } from '@libs/commonUtils';
 import { EResourceLevel, getImgUrl } from '@mode2/utils';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 
 interface GameSectionHeaderProps {
   iconSrc: string;

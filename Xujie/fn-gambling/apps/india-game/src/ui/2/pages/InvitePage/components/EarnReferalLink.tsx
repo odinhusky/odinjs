@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { cx } from '@libs/commonUtils';
 import { FLEX_CENTER, FLEX_COL, FLEX_ITEMS_CENTER } from '@libs/constant/style';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 export const EarnReferalLink = () => {
   const { t } = useTranslation();

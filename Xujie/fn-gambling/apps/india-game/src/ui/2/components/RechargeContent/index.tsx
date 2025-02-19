@@ -20,7 +20,7 @@ import RechargeNoticeModal from '@modals/RechargeNoticeModal';
 import { PayChannelAmountOptions } from '@components/PayChannelAmountOptions';
 import { isEmpty } from 'lodash';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import AffixBottomWrapper from '@mode2/components/AffixBottomWrapper';
 import { useWalletPageRechargeContentStore } from '@mode2/zustand/page/WalletPage/walletPageRechargeContentStore';
 import useWalletPageBaseActions from '@mode2/action/walletPageAction/useWalletPageBaseActions';

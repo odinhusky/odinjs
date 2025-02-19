@@ -5,7 +5,7 @@ import { ILoginModalProps } from '@/hooks/modals/useLoginForm';
 import { RegisterPayload } from '@mode2/external/api/endpoint/user/PostRegisterEndpoint';
 import useRegisterForm from '@/hooks/modals/useRegisterForm';
 import { useTranslation } from 'react-i18next';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import useHeaderAction from '@libs/mode2/action/components/header/headerAction';
 import { handleLoginActionClick } from '@libs/mode2/action/components/header/actionType';
 import { LoginFormType } from '@libs/mode2/zustand/loginStore';
@@ -97,7 +97,7 @@ const RegisterForm = (props: ILoginModalProps) => {
           rules={[
             {
               required: true,
-              validator: (_, value) => validator.verifyCode(value),
+              validator: (_, value) => validator.captchaCode(value),
             },
           ]}
         >

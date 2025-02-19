@@ -1,6 +1,6 @@
 import { Trans, useTranslation } from 'react-i18next';
 import { cx } from '@libs/commonUtils';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useEffect, useRef } from 'react';
 import {
   RechargeCard,

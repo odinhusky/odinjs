@@ -1,12 +1,10 @@
-import {
-  handleMyPageVIPDetailBtnClick,
-} from '@mode2/action/myPageAction/acitonType';
+import { handleMyPageVIPDetailBtnClick } from '@mode2/action/myPageAction/acitonType';
 import useMyPageActions from '@mode2/action/myPageAction/useMyPageActions';
 import { EResourceLevel, formatMoney, getImgUrl } from '@mode2/utils';
 import { useMyPageStore } from '@mode2/zustand/page/myPageStore';
 import { Progress } from 'antd';
 import { useTranslation } from 'react-i18next';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 export const MyPageVIPBlock = () => {
   const { t } = useTranslation();

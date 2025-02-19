@@ -9,6 +9,7 @@ import { useMyPageStore } from '@mode2/zustand/page/myPageStore';
 import { Progress } from 'antd';
 import { useTranslation } from 'react-i18next';
 import MyPageTabButton from '@components/MyPageTabButton';
+import cx from '@commonUtils/cx';
 
 export const MyPageVIPBlock = () => {
   const { t } = useTranslation();
@@ -35,7 +36,11 @@ export const MyPageVIPBlock = () => {
         </div>
       </div>
 
-      <div className="text-[var(--grayscale-100)] my-3">
+      <div
+        className={cx(
+          'text-[var(--grayscale-100)] text-base mobile:text-lg font-medium my-3'
+        )}
+      >
         <div>
           {t('earn_money_statistics_bonus_info_table_header_bet_amount')}
         </div>

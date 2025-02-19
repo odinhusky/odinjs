@@ -6,7 +6,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
 import renderI18N from '@libs/commonUtils/renderI18N';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 export const WalletPageSwitchTabs = () => {
   const { t } = useTranslation();

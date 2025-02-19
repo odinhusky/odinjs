@@ -1,0 +1,11 @@
+.ant-tooltip-content {
+  background: var(--base-2-variant11) !important;
+
+  .ant-tooltip-inner {
+    color: var(--base-2-variant1) !important;
+    background: var(--base-2-variant1) !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+}

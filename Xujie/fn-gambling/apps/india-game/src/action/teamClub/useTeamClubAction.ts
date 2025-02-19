@@ -124,7 +124,7 @@ export const useTeamClubAction = () => {
               state: { tab: TeamClubPageTabType.SHARE_FOR_BONUS },
             });
           } else {
-            navToLoginPage();
+            navToLoginPage(67);
           }
         },
       });

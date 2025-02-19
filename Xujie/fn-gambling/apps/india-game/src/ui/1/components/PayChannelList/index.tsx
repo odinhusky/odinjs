@@ -1,6 +1,6 @@
 import cx from '@commonUtils/cx';
 import { useTranslation } from 'react-i18next';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import './index.scss';
 import { FLEX_ITEMS_CENTER } from '@libs/constant/style';
 import { useWalletPageRechargeContentStore } from '@mode2/zustand/page/WalletPage/walletPageRechargeContentStore';

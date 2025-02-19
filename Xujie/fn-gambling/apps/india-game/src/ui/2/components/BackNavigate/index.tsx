@@ -2,7 +2,7 @@ import { useBreakPoint } from '@libs/commonUtils';
 import useBackBase from '@/ui/hooks/components/useBackBase';
 import cx from '@commonUtils/cx';
 import { useTranslation } from 'react-i18next';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 interface BackNavigateProps {
   title?: string;

@@ -1,8 +1,8 @@
 import { cx, useBreakPoint } from '@libs/commonUtils';
 import { FLEX_CENTER, X_CENTER } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
-const CloseBtnUnit = ({
+export const CloseBtnUnit = ({
   onClose,
   customClass,
 }: {

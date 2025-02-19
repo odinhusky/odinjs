@@ -1,7 +1,6 @@
-import { useLocation } from 'react-router';
 import { EResourceLevel, getImgUrl } from '@mode2/utils';
 import { useTranslation } from 'react-i18next';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import LangueSelect from '@components/LangueSelect';
 import { useMenuBase } from '@/hooks/components/useMenuBase';
 import Drawer from '@mode2/components/Drawer';
@@ -14,16 +13,15 @@ import {
 } from '@libs/mode2/zustand/components/customerServiceListStore';
 import { BasePagePathObj } from '@libs/mode2/routerTypes/types';
 import { useEffect, useMemo, useState } from 'react';
-import { useMode2ActivitySwitchPageStore } from '@mode2/zustand/page/activityPageStore';
 import { useBreakPoint } from '@libs/commonUtils';
-import { ActivityPageTabType } from '@mode2/@types/activityPageTabType';
 import { FLEX_COL } from '@libs/constant/style';
-import { TeamClubPageTabType } from '@libs/mode2/@types/teamClubPageTabType';
 import { QuitButton } from '@components/QuitButton';
+import {
+  MenuScenarios,
+  useMenuListStore,
+} from '@libs/mode2/zustand/components/menuListStore';
 
 export const DrawerMenu = () => {
-  const location = useLocation();
-
   const isShowMenu = useShowMenuStore((state) => state.isShowMenu);
   const closeMenu = useShowMenuStore((state) => state.closeMenu);
   const { t } = useTranslation();
@@ -38,10 +36,6 @@ export const DrawerMenu = () => {
       )?.customerServiceList || []
     );
   }, [usageScenariosList]);
-  const setActivityPageIdx = useMode2ActivitySwitchPageStore(
-    (state) => state.setPageIdx
-  );
-  const pageIdx = useMode2ActivitySwitchPageStore((state) => state.pageIdx);
 
   const activity = [
     {
@@ -54,37 +48,15 @@ export const DrawerMenu = () => {
     },
   ];
 
-  const groups = [
-    {
-      label: 'leftnav_vip',
-      icon: 'ic_vip',
-      active:
-        location.pathname === BasePagePathObj.ActivityPage &&
-        pageIdx === ActivityPageTabType.VIP,
-      action: () => {
-        setActivityPageIdx(ActivityPageTabType.VIP);
-        handleMenuRouter(BasePagePathObj.ActivityPage, {
-          state: { tab: ActivityPageTabType.VIP },
-        });
-      },
-    },
-    {
-      label: 'leftnav_account',
-      icon: 'ic_user',
-      active: location.pathname === BasePagePathObj.MyPage,
-      action: () => handleMenuRouter(BasePagePathObj.MyPage),
-    },
-    {
-      label: 'leftnav_earn_money',
-      icon: 'ic_earn_money',
-      active: location.pathname === BasePagePathObj.TeamClubPage,
-      action: () =>
-        handleMenuRouter(BasePagePathObj.TeamClubPage, {
-          state: { tab: TeamClubPageTabType.MY_REWARDS },
-        }),
-    },
-  ];
+  const menuUsageScenariosList = useMenuListStore(
+    (state) => state.menuUsageScenariosList
+  );
+  const groups =
+    menuUsageScenariosList.find((item) => {
+      return item.scenarios === MenuScenarios.TEAM_CLUB_DRAWER_MENU;
+    })?.menuList || [];
 
+  // TODO Ronan 關注 useObserverElementMetrics
   const [paddingTop, setPaddingTop] = useState(0);
   useEffect(() => {
     const headerEl = document.getElementsByTagName('header')[0];

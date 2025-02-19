@@ -3,6 +3,8 @@ import { LoginFormType } from '@mode2/zustand/loginStore';
 
 import useLogin from '@mode2/usecase/useLogin';
 import { useTranslation } from 'react-i18next';
+import { useUserState } from '@/usecase/useUserState';
+import { OTPCodeValidator } from '@/validator/antdValidator';
 
 export interface ILoginModalProps {
   open?: boolean;
@@ -15,11 +17,16 @@ export interface ILoginModalProps {
 const useLoginForm = (props: ILoginModalProps) => {
   const { t } = useTranslation();
 
+  const OTPCodeValidatorInstance = OTPCodeValidator(t);
+
+  const { refreshUserState } = useUserState();
+
   const { onClose, onSuccess } = props;
   const baseLoginFormState = useLogin({
     successCallback: () => {
       onClose?.();
       onSuccess?.();
+      refreshUserState();
     },
   });
 
@@ -45,6 +52,7 @@ const useLoginForm = (props: ILoginModalProps) => {
         }
         return Promise.resolve();
       },
+      verifyCode: OTPCodeValidatorInstance.otpCode,
     }),
     []
   );

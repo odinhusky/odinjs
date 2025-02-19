@@ -2,7 +2,7 @@ import { cx } from '@libs/commonUtils';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import { FLEX_CENTER, FLEX_COL, FLEX_ITEMS_CENTER } from '@libs/constant/style';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { Progress } from 'antd';
 import { useTranslation } from 'react-i18next';
 

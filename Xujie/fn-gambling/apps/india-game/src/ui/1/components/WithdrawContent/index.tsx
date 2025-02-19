@@ -28,8 +28,9 @@ import BasePrimaryBtn from '@components/BasePrimaryBtn';
 import { WithdrawNoteDescription } from '@components/WithdrawNoteDescription';
 import { useWithdrawStore } from '@/zustand/wallet/useWithdrawStore';
 import { useUserState } from '@/usecase/useUserState';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import AffixBottomWrapper from '@mode2/components/AffixBottomWrapper';
+import handleGlobalClick from '@libs/mode2/action/handleGlobalClick';
 import useWalletPageBaseActions from '@mode2/action/walletPageAction/useWalletPageBaseActions';
 import {
   handleWalletPageWithdrawModifierClick,
@@ -105,6 +106,9 @@ export const WithdrawContent = () => {
   const handleWithdraw = () => {
     handleWalletPageClick({
       actionName: handleWalletPageWithdrawBtnClick,
+      payload: {
+        isPasswordless: false,
+      },
     });
   };
 
@@ -447,7 +451,14 @@ export const WithdrawContent = () => {
                 disabled
               }
               debounceTimer={500}
-              onClick={() => form.submit()}
+              onClick={() => {
+                handleGlobalClick({
+                  target: 'handleIndiaU1WithdrawContentFormSubmit',
+                  callback: () => {
+                    form.submit();
+                  },
+                });
+              }}
               children={t('wallet_withdraw_btn_extract')}
             />
           </div>

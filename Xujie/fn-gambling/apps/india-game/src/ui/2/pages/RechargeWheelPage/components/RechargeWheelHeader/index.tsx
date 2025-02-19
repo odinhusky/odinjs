@@ -6,9 +6,9 @@ import {
 import useRechargeWheelAction from '@mode2/action/rechargeWheel/useRechargeWheelAction';
 import AnimationFlipNumbers from '@components/AnimationFlipNumbers';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
-import { cx, useBreakPoint } from '@libs/commonUtils';
+import { cx } from '@libs/commonUtils';
 import { DEFAULT_BG, FLEX_CENTER, FLEX_COL } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { EResourceLevel, formatMoney, getImgUrl } from '@libs/mode2/utils';
 import { useTranslation } from 'react-i18next';
 import useMode2RechargeWheelPageStore from '@libs/mode2/zustand/page/rechargeWheelPage';

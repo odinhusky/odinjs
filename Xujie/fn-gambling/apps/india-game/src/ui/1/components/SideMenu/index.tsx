@@ -1,7 +1,7 @@
 import { formatMoney } from '@mode2/utils';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import LangueSelect from '@components/LangueSelect';
 import { useMenuBase } from '@/hooks/components/useMenuBase';
 import { Layout } from 'antd';
@@ -13,14 +13,7 @@ import {
 } from '@libs/mode2/zustand/components/customerServiceListStore';
 import { useMemo } from 'react';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
-import { useMode2ActivitySwitchPageStore } from '@mode2/zustand/page/activityPageStore';
-import { useMode2InviteTabStore } from '@libs/mode2/zustand/page/invitePageStore';
 import { useBreakPoint } from '@libs/commonUtils';
-import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
-import { InvitePageTabType } from '@mode2/@types/invitePageTabTyp';
-import { ActivityPageTabType } from '@mode2/@types/activityPageTabType';
-import { RecordPageTabs } from '@mode2/zustand/page/recordPageStore';
-import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import { usePlatformInfoStore } from '@libs/mode2/zustand/platform/platformInfoStore';
 import { usePlatformNotifyStore } from '@libs/mode2/zustand/platform/platformNotifyStore';
@@ -30,6 +23,10 @@ import {
   handleMenuAnnouncementsActionClick,
   handleMenuPlatformItemActionClick,
 } from '@libs/mode2/action/components/menu/actionType';
+import {
+  useMenuListStore,
+  MenuScenarios,
+} from '@libs/mode2/zustand/components/menuListStore';
 
 const { Sider } = Layout;
 
@@ -40,115 +37,15 @@ export const SideMenu = () => {
     (state) => state.headerElMetrics
   );
   const { handleMenuRouter, handleLogout } = useMenuBase();
-  const setCurSwitchContentTabId = useWalletPageSwitchContentTabsStore(
-    (state) => state.setCurSwitchContentTabId
-  );
-  const setInviteCurTab = useMode2InviteTabStore(
-    (state) => state.setInviteCurTab
-  );
 
-  const groups = useMemo(() => {
-    return [
-      {
-        label: 'wallet_nav_deposit',
-        param: '',
-        icon: 'ic_wallet',
-        iconColor: '',
-        action: () => {
-          setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
-          handleMenuRouter(BasePagePathObj.WalletPage);
-        },
-      },
-      {
-        label: 'wallet_nav_withdraw',
-        param: '',
-        icon: 'ic_withdraw',
-        iconColor: '',
-        action: () => {
-          setCurSwitchContentTabId(WalletPageTabType.WITHDRAW);
-          handleMenuRouter(BasePagePathObj.WalletPage);
-        },
-      },
-      {
-        label: 'leftnav_invite_earn',
-        param: '10000',
-        icon: 'ic_earn_money',
-        iconColor: 'var(--base-1-main)',
-        action: () => {
-          setInviteCurTab(InvitePageTabType.EARN);
-          handleMenuRouter(BasePagePathObj.InvitePage);
-        },
-      },
-      {
-        label: 'leftnav_recharge_bonus',
-        param: '5',
-        icon: 'ic_deposit',
-        iconColor: 'var(--base-1-main)',
-        action: () => {
-          setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
-          handleMenuRouter(BasePagePathObj.WalletPage);
-        },
-      },
-      {
-        label: 'leftnav_bonus_monthly',
-        param: '99999',
-        icon: 'ic_vip',
-        iconColor: 'var(--base-1-main)',
-        action: () => {
-          setActivityPageIdx(ActivityPageTabType.VIP);
-          handleMenuRouter(BasePagePathObj.ActivityPage, {
-            state: { tab: ActivityPageTabType.VIP },
-          });
-        },
-      },
-      {
-        label: 'leftnav_loss_in_cash_back',
-        param: '2',
-        icon: 'ic_activity',
-        iconColor: '',
-        action: () => {
-          setActivityPageIdx(ActivityPageTabType.ACTIVITY);
-          handleMenuRouter(BasePagePathObj.ActivityPage, {
-            state: { tab: ActivityPageTabType.ACTIVITY },
-          });
-        },
-      },
-      {
-        label: 'leftnav_activity',
-        param: '',
-        icon: 'ic_activity',
-        iconColor: '',
-        action: () => {
-          setActivityPageIdx(ActivityPageTabType.ACTIVITY);
-          handleMenuRouter(BasePagePathObj.ActivityPage, {
-            state: { tab: ActivityPageTabType.ACTIVITY },
-          });
-        },
-      },
-      {
-        label: 'leftnav_balance_record',
-        param: '',
-        icon: 'ic_balance_record',
-        iconColor: '',
-        action: () => {
-          handleMenuRouter(BasePagePathObj.RecordPage, {
-            state: { tab: RecordPageTabs.RECORD },
-          });
-        },
-      },
-      {
-        label: 'leftnav_balance_report',
-        param: '',
-        icon: 'ic_balance_report',
-        iconColor: '',
-        action: () => {
-          handleMenuRouter(BasePagePathObj.RecordPage, {
-            state: { tab: RecordPageTabs.REPORT },
-          });
-        },
-      },
-    ];
-  }, []);
+  const menuUsageScenariosList = useMenuListStore(
+    (state) => state.menuUsageScenariosList
+  );
+  const groups =
+    menuUsageScenariosList.find((item) => {
+      return item.scenarios === MenuScenarios.IN_MODE1_COMMON_MENU;
+    })?.menuList || [];
+
   const usageScenariosList = useCustomerServiceListStore(
     (state) => state.usageScenariosList
   );
@@ -159,9 +56,7 @@ export const SideMenu = () => {
       )?.customerServiceList || []
     );
   }, [usageScenariosList]);
-  const setActivityPageIdx = useMode2ActivitySwitchPageStore(
-    (state) => state.setPageIdx
-  );
+
   const sidebarPlatformItems = usePlatformInfoStore(
     (state) => state.sidebarPlatformItems
   );
@@ -272,7 +167,10 @@ export const SideMenu = () => {
                 <button
                   key={item.label + '_' + index}
                   className="flex gap-2 rounded p-2 items-center"
-                  onClick={item.action}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    item.action && item.action();
+                  }}
                 >
                   <Icon
                     className="h-6 w-6"

@@ -1,4 +1,4 @@
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import {
   EResourceLevel,
   formatCountdownTime,

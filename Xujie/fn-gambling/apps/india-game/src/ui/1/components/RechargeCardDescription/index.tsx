@@ -6,6 +6,7 @@ import { ReactNode, useMemo, useState } from 'react';
 import TutorialModal from '@modals/TutorialModal';
 import { isNull } from 'lodash';
 import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
+import handleGlobalClick from '@libs/mode2/action/handleGlobalClick';
 import { useWalletPageRechargeContentStore } from '@mode2/zustand/page/WalletPage/walletPageRechargeContentStore';
 import {
   RechargeCard,
@@ -24,7 +25,14 @@ const TutorialLink = ({ children }: { children: ReactNode }) => {
           'bgi-text-[var(--state-warn-main)] relative cursor-pointer',
           'after:w-[calc(100%_-_0.3rem)] after:h-[1px] after:left-0.5 after:bottom-0 after:bgi-[var(--state-warn-main)] after:absolute'
         )}
-        onClick={() => setShowTutorial(true)}
+        onClick={() => {
+          handleGlobalClick({
+            target: 'handleTutorialLinkClick',
+            callback: () => {
+              setShowTutorial(true);
+            },
+          });
+        }}
       >
         {children}
       </span>

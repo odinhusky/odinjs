@@ -1,5 +1,5 @@
 import { cx } from '@libs/commonUtils';
-import { EResourceLevel, formatMoney, getImgUrl } from '@mode2/utils';
+import { EResourceLevel, formatNumber, getImgUrl } from '@mode2/utils';
 
 export interface VipTableProps {
   theadTitles: string[];
@@ -40,7 +40,7 @@ export const VipTable = ({
             <div
               className={cx(
                 'ml-[8px] font-normal flex h-3 w-5 mobile:h-4 mobile:w-9 rounded bgi-[var(--base-2-main)] justify-center items-center bgi-text-[var(--grayscale-10)]',
-                'text-xxxs mobile:text-xxs'
+                'text-xs mobile:text-sm'
               )}
             >
               {`V${value}`}
@@ -51,10 +51,10 @@ export const VipTable = ({
     } else {
       const colData =
         index === 0
-          ? `VIP ${value}`
+          ? `L${value}`
           : index === clearFormatMoneyIndex
           ? value
-          : formatMoney(value);
+          : formatNumber(value);
       return colData;
     }
   };
@@ -76,7 +76,7 @@ export const VipTable = ({
 
       {datas.map((rowData, rowIndex) => {
         const rowDataContainerClass =
-          'flex justify-between gap-3 py-2 px-px se:px-2 phone:px-3 font-medium text-xxxs se:text-xxs phone:text-xs mobile:text-base';
+          'flex justify-between gap-3 py-2 px-1 mobile:px-2 tablet:px-3 font-medium text-xs mobile:text-sm phone:text-xs mobile:text-base';
         return (
           <div
             key={rowIndex}

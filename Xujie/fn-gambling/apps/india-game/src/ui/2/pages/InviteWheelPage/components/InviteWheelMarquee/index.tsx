@@ -1,7 +1,7 @@
 import cx from '@commonUtils/cx';
 import { useInviteWheelPageStoreStore } from '@mode2/zustand/page/inviteWheelPageStore';
 import Marquee from 'react-fast-marquee';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import { formatMoney } from '@libs/mode2/utils';
 import { useTranslation } from 'react-i18next';
 import AffixHeaderBottomWrapper from '@mode2/components/AffixHeaderBottomWrapper';

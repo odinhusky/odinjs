@@ -10,7 +10,7 @@ import { SocialList } from '@components/SocialList';
 import { SocialScenarios } from '@mode2/zustand/components/socialListStore';
 import sdkUtils from '@mode2/utils/sdk';
 import { useTranslation } from 'react-i18next';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import { cx } from '@libs/commonUtils';
 import { FLEX_CENTER } from '@libs/constant/style';
 

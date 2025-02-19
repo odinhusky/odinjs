@@ -4,7 +4,7 @@ import { EResourceLevel, getImgUrl } from '@libs/mode2/utils';
 import AnimationFlipNumbersDigit, {
   FlipNumbersResType,
   sizeStyle,
-} from './AnimationFlipNumbersDigit';
+} from '@components/AnimationFlipNumbersDigit';
 
 interface AnimationFlipNumbersProps {
   numbers: string; // 只能包含 0~9 的數字字串,以及.

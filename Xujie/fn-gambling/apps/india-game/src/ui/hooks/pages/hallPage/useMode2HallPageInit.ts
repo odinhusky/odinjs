@@ -69,7 +69,7 @@ export const useMode2HallPageInit = () => {
   }, [curTab]);
 
   useEffect(() => {
-    if (sdkUtils.isCurrentLogin()) {
+    if (sdkUtils.isCurrentLogin() && addOrRemoveFavoriteSuccessCount > 0) {
       postGameCollections();
     }
   }, [addOrRemoveFavoriteSuccessCount]);

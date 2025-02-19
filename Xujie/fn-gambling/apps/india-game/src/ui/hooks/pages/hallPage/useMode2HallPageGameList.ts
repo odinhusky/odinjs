@@ -25,8 +25,9 @@ export const useMode2HallPageGameList = () => {
   const tabList = useMode2HallPageTabsStore((state) => state.tabList);
   const favoriteGameList = useGameListStore((state) => state.favoriteGameList);
 
-  const { hotGameList, platformGameMap } = useGameListStore();
-  const { platformItems } = usePlatformInfoStore();
+  const hotGameList = useGameListStore((state) => state.hotGameList);
+  const platformGameMap = useGameListStore((state) => state.hotGameList);
+  const platformItems = usePlatformInfoStore((state) => state.platformItems);
 
   const setCurTab = useMode2HallPageTabsStore((state) => state.setCurTab);
   const setGameList = useMode2HallPageGameListStore(
@@ -66,6 +67,7 @@ export const useMode2HallPageGameList = () => {
 
     const gameListObj: GameListsObjType = {
       [HallPageIdObj.HOT]: {
+        tabId: HallPageIdObj.HOT,
         list: hotGameList || [],
         tabName: { i18nKey: 'home_game_title_hot_game' }, // Hot
         iconName: 'ic_popular',
@@ -84,6 +86,7 @@ export const useMode2HallPageGameList = () => {
         },
       },
       [HallPageIdObj.CASINO]: {
+        tabId: HallPageIdObj.CASINO,
         list: casinoList || [],
         tabName: { i18nKey: 'home_game_title_casino_game' }, // Casino
         iconName: 'ic_casino',
@@ -101,6 +104,7 @@ export const useMode2HallPageGameList = () => {
         },
       },
       [HallPageIdObj.FAVORITE]: {
+        tabId: HallPageIdObj.FAVORITE,
         list: favoriteGameList,
         tabName: { i18nKey: 'home_game_zone_favorite' }, // Favorite
         iconName: 'ic_favorite',
@@ -117,6 +121,7 @@ export const useMode2HallPageGameList = () => {
         },
       },
       [HallPageIdObj.ORIGINAL]: {
+        tabId: HallPageIdObj.ORIGINAL,
         list: originalsList || [],
         tabName: { i18nKey: 'home_game_title_original_game' }, // Original
         iconName: 'ic_original',
@@ -133,6 +138,7 @@ export const useMode2HallPageGameList = () => {
         },
       },
       [HallPageIdObj.SLOTS]: {
+        tabId: HallPageIdObj.SLOTS,
         list: slotsList || [],
         tabName: { i18nKey: 'home_game_title_slots_game' }, // Slots
         iconName: 'ic_slots',
@@ -149,6 +155,7 @@ export const useMode2HallPageGameList = () => {
         },
       },
       [HallPageIdObj.GAME]: {
+        tabId: HallPageIdObj.GAME,
         list: gamesList || [],
         tabName: { i18nKey: 'home_game_zone_game' }, // Game
         iconName: 'ic_game',
@@ -165,6 +172,7 @@ export const useMode2HallPageGameList = () => {
         },
       },
       [HallPageIdObj.FISHING]: {
+        tabId: HallPageIdObj.FISHING,
         list: fishingsList || [],
         tabName: { i18nKey: 'home_game_title_fishing_game' }, // Fishing
         iconName: 'ic_fishing',
@@ -181,6 +189,7 @@ export const useMode2HallPageGameList = () => {
         },
       },
       [HallPageIdObj.SPORTS]: {
+        tabId: HallPageIdObj.SPORTS,
         list: sportsList || [],
         tabName: { i18nKey: 'home_game_title_sports_game' }, // Sports
         iconName: 'ic_sports',
@@ -211,8 +220,10 @@ export const useMode2HallPageGameList = () => {
     });
 
     // 最後組出來的 GameList
+    // lobbyGameList 就是全部遊戲的列表都拿
     const gameList =
-      curTab === HallPageIdObj.LOBBY
+      curTab === HallPageIdObj.LOBBY ||
+      import.meta.env['VITE_V_VERSION'] === 'v6'
         ? [...lobbyGameList]
         : [gameListObj[curTab]];
 

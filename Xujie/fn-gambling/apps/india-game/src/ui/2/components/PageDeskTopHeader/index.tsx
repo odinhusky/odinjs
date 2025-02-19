@@ -6,7 +6,7 @@ import { isEqual } from 'lodash';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import renderI18N from '@commonUtils/renderI18N';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 interface PageDeskTopHeaderPropsType {
   headerTitle: I18NContent;
   onBack?: () => void;

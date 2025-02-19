@@ -1,8 +1,9 @@
 import { IBackBtn } from './types';
 import { cx, useBreakPoint } from '@libs/commonUtils';
 import { FLEX_ITEMS_CENTER } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
+// ! Not using
 const BackBtn = (props: IBackBtn) => {
   const { onClick, title, mTitle, className } = props;
   const { isDesktop } = useBreakPoint();

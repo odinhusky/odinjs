@@ -3,6 +3,8 @@ import { BasePagePaths } from '@mode2/routerTypes/types';
 import TemplateLayout from '@templates/TemplateLayout';
 import useObserverDeviceBreakPoint from '@mode2/usecase/device/useObserverDeviceBreakPoint';
 import useAuthRouterGuard from '@mode2/usecase/router/useAuthRouterGuard';
+import { useObserverLocation } from '@mode2/usecase/location/useObserverLocation';
+import ROUTE_WHITE_LIST from '@router/WhiteList';
 
 export const Layout: FunctionComponent<{
   component: FunctionComponent;
@@ -10,8 +12,10 @@ export const Layout: FunctionComponent<{
   hasTemp?: boolean;
 }> = ({ component: Component, hasTemp = true }) => {
   const TemplateWrapper = hasTemp ? TemplateLayout : React.Fragment;
+
+  useObserverLocation();
   useObserverDeviceBreakPoint();
-  useAuthRouterGuard();
+  useAuthRouterGuard(ROUTE_WHITE_LIST);
 
   return (
     // <Suspense fallback={<Loading />}>

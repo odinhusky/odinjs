@@ -2,7 +2,7 @@ import cx from '@commonUtils/cx';
 import Mode2Table from '@mode2/components/Table';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 export * from '@mode2/components/Table';
 
 const Table: typeof Mode2Table = ({ fetchData, ...rest }) => {

@@ -7,7 +7,7 @@ import cx from '@commonUtils/cx';
 import { useRechargeStore } from '@/zustand/wallet/rechargeStore';
 import useWalletPageActions from '@/action/walletPageAction/useWalletPageActions';
 import { memo } from 'react';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useWalletPageRechargeContentStore } from '@mode2/zustand/page/WalletPage/walletPageRechargeContentStore';
 
 export const WalletRechargeInput = memo(() => {

@@ -2,7 +2,7 @@ import NoData from '@components/NoData';
 import cx from '@libs/commonUtils/cx';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import { rechargeWheelLevelTypeMapping } from '@libs/mode2/@types/rechargeWheelLevelTypes';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { WheelSpinHistoryResult } from '@libs/mode2/external/api/endpoint/wheel/PostWheelPlayerSpinHistoryListEndpoint';
 import {
   EResourceLevel,

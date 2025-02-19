@@ -1,6 +1,6 @@
 import { cx } from '@libs/commonUtils';
 import { FLEX_ITEMS_CENTER } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 interface InfoHintProps {
   hintText: string;

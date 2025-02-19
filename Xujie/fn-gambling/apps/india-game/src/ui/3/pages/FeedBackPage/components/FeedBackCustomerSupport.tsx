@@ -17,7 +17,7 @@ import {
 } from '@libs/constant/style';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 export const FeedBackCustomerSupport = () => {
   const { t } = useTranslation();

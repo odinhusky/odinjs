@@ -23,7 +23,7 @@ import {
 import { handleTeamClubLevelSummaryDetailButtonClick } from '@/action/teamClub/acitonType';
 import { useTeamClubAction } from '@/action/teamClub/useTeamClubAction';
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
-import QuestionTooltip from '../QuestionTooltip';
+import QuestionTooltip from '@components/QuestionTooltip';
 
 export const TeamClubLevelSummary = () => {
   const { t } = useTranslation();

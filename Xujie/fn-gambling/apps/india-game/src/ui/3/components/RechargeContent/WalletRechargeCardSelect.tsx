@@ -1,5 +1,5 @@
 import { cx } from '@libs/commonUtils';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useTranslation } from 'react-i18next';
 import { useWalletPageRechargeContentStore } from '@mode2/zustand/page/WalletPage/walletPageRechargeContentStore';
 import {

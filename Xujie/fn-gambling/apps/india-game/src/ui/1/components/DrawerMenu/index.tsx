@@ -1,6 +1,6 @@
 import { formatMoney } from '@mode2/utils';
 import { useTranslation } from 'react-i18next';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import LangueSelect from '@components/LangueSelect';
 import { useMenuBase } from '@/hooks/components/useMenuBase';
 import { useShowMenuStore } from '@mode2/zustand/menuStore';
@@ -12,18 +12,8 @@ import {
 } from '@libs/mode2/zustand/components/customerServiceListStore';
 import { BasePagePathObj } from '@libs/mode2/routerTypes/types';
 import { useMemo } from 'react';
-import { useMode2ActivitySwitchPageStore } from '@mode2/zustand/page/activityPageStore';
 import { useBreakPoint } from '@libs/commonUtils';
-import { ActivityPageTabType } from '@mode2/@types/activityPageTabType';
 import { FLEX_COL } from '@libs/constant/style';
-import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
-import { WalletPageTabType } from '@libs/mode2/@types/walletPageTabType';
-import { useMode2InviteTabStore } from '@libs/mode2/zustand/page/invitePageStore';
-import { InvitePageTabType } from '@libs/mode2/@types/invitePageTabTyp';
-import {
-  RecordPageTabs,
-  useRecordPageStore,
-} from '@libs/mode2/zustand/page/recordPageStore';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import { usePlatformInfoStore } from '@mode2/zustand/platform/platformInfoStore';
 import { usePlatformNotifyStore } from '@mode2/zustand/platform/platformNotifyStore';
@@ -34,6 +24,10 @@ import {
 import useMenuAction from '@mode2/action/components/menu/menuAction';
 import { GameListItemResult } from '@mode2/zustand/page/hallPageStore';
 import { Drawer } from 'antd';
+import {
+  useMenuListStore,
+  MenuScenarios,
+} from '@libs/mode2/zustand/components/menuListStore';
 
 export const DrawerMenu = () => {
   const { t } = useTranslation();
@@ -46,16 +40,6 @@ export const DrawerMenu = () => {
   const usageScenariosList = useCustomerServiceListStore(
     (state) => state.usageScenariosList
   );
-  const setActivityPageIdx = useMode2ActivitySwitchPageStore(
-    (state) => state.setPageIdx
-  );
-  const setCurSwitchContentTabId = useWalletPageSwitchContentTabsStore(
-    (state) => state.setCurSwitchContentTabId
-  );
-  const setInviteCurTab = useMode2InviteTabStore(
-    (state) => state.setInviteCurTab
-  );
-  const setTabIndex = useRecordPageStore((state) => state.setTabIndex);
   const serviceList = useMemo(() => {
     return (
       usageScenariosList.find(
@@ -82,106 +66,13 @@ export const DrawerMenu = () => {
 
   const { handleMenuClick } = useMenuAction();
 
-  const groups = useMemo(() => {
-    return [
-      {
-        label: 'wallet_nav_deposit',
-        param: '',
-        icon: 'ic_wallet',
-        iconColor: '',
-        action: () => {
-          setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
-          handleMenuRouter(BasePagePathObj.WalletPage);
-        },
-      },
-      {
-        label: 'wallet_nav_withdraw',
-        param: '',
-        icon: 'ic_withdraw',
-        iconColor: '',
-        action: () => {
-          setCurSwitchContentTabId(WalletPageTabType.WITHDRAW);
-          handleMenuRouter(BasePagePathObj.WalletPage);
-        },
-      },
-      {
-        label: 'leftnav_invite_earn',
-        param: '10000',
-        icon: 'ic_earn_money',
-        iconColor: 'var(--base-1-main)',
-        action: () => {
-          setInviteCurTab(InvitePageTabType.EARN);
-          handleMenuRouter(BasePagePathObj.InvitePage);
-        },
-      },
-      {
-        label: 'leftnav_recharge_bonus',
-        param: '5',
-        icon: 'ic_deposit',
-        iconColor: 'var(--base-1-main)',
-        action: () => {
-          setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
-          handleMenuRouter(BasePagePathObj.WalletPage);
-        },
-      },
-      {
-        label: 'leftnav_bonus_monthly',
-        param: '99999',
-        icon: 'ic_vip',
-        iconColor: 'var(--base-1-main)',
-        action: () => {
-          setActivityPageIdx(ActivityPageTabType.VIP);
-          handleMenuRouter(BasePagePathObj.ActivityPage, {
-            state: { tab: ActivityPageTabType.VIP },
-          });
-        },
-      },
-      {
-        label: 'leftnav_loss_in_cash_back',
-        param: '2',
-        icon: 'ic_activity',
-        iconColor: '',
-        action: () => {
-          setActivityPageIdx(ActivityPageTabType.ACTIVITY);
-          handleMenuRouter(BasePagePathObj.ActivityPage, {
-            state: { tab: ActivityPageTabType.ACTIVITY },
-          });
-        },
-      },
-      {
-        label: 'leftnav_activity',
-        param: '',
-        icon: 'ic_activity',
-        iconColor: '',
-        action: () => {
-          setActivityPageIdx(ActivityPageTabType.ACTIVITY);
-          handleMenuRouter(BasePagePathObj.ActivityPage, {
-            state: { tab: ActivityPageTabType.ACTIVITY },
-          });
-        },
-      },
-      {
-        label: 'leftnav_balance_record',
-        param: '',
-        icon: 'ic_balance_record',
-        iconColor: '',
-        action: () => {
-          setTabIndex(RecordPageTabs.RECORD);
-          handleMenuRouter(BasePagePathObj.RecordPage);
-        },
-      },
-      {
-        label: 'leftnav_balance_report',
-        param: '',
-        icon: 'ic_balance_report',
-        iconColor: '',
-        action: () => {
-          setTabIndex(RecordPageTabs.REPORT);
-          handleMenuRouter(BasePagePathObj.RecordPage);
-        },
-      },
-    ];
-  }, []);
+  const menuUsageScenariosList = useMenuListStore(
+    (state) => state.menuUsageScenariosList
+  );
+  const groups =
+    menuUsageScenariosList.find((item) => {
+      return item.scenarios === MenuScenarios.IN_MODE1_COMMON_MENU;
+    })?.menuList || [];
 
   const fillPlaceholder = (items: GameListItemResult[], columns: number) => {
     const remainder = items.length % columns;

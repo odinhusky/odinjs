@@ -5,10 +5,16 @@ import { getAvatarOrder } from '@libs/commonUtils';
 import LazyImage from '@components/LazyImage';
 import cx from '@commonUtils/cx';
 
-interface AvatarProps {
+export interface AvatarProps {
+  rootClassName?: string;
   className?: string;
+  isShowVIP?: boolean;
   alt?: string;
   onClick?: () => void;
+  // Avatar 3 的 props
+  isShowRedDot?: boolean;
+  // isShowVIP?: boolean;
+  isGuest?: boolean;
 }
 
 export const Avatar = memo((props: AvatarProps) => {

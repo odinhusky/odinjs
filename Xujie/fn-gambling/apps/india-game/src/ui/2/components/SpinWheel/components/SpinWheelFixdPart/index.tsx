@@ -12,7 +12,8 @@ export interface FixPartClassNameObj {
   container?: string;
   frame?: string;
   button?: string;
-  buttonText?: string;
+  buttonSpinClass?: string;
+  buttonTextClass?: string;
 }
 
 interface SpinWheelFixedPartProps {
@@ -93,6 +94,8 @@ export const SpinWheelFixedPart = ({
           <SpinWheelInviteButton
             isFreeSpin={buttonInfo?.isFreeSpin || false}
             remainSpin={buttonInfo.remainSpin}
+            buttonSpinClass={fixPartClassNameObj?.buttonSpinClass}
+            buttonTextClass={fixPartClassNameObj?.buttonTextClass}
           />
         )}
       </button>

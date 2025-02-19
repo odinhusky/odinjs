@@ -5,7 +5,7 @@ import TeamClubLevelProgress from './TeamClubLevelProgress';
 import { t } from 'i18next';
 import { clubLevelTable } from '@pages/TeamClubPage/const';
 import { useMode2SubordinateDataPageStore } from '@libs/mode2/zustand/page/SubordinateDataStore';
-import QuestionTooltip from '@pages/TeamClubPage/components/QuestionTooltip';
+import QuestionTooltip from '@components/QuestionTooltip';
 
 export const TeamClubLevelSummary = () => {
   const currentClubLevelData = useMode2SubordinateDataPageStore(

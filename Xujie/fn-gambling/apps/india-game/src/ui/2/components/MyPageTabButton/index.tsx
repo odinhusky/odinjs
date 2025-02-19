@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import cx from '@commonUtils/cx';
 import { memo } from 'react';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';

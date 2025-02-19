@@ -4,13 +4,16 @@ import {
   RechargeRecordItemResult,
   RechargeRecordStatus,
 } from '@mode2API/endpoint/record/PostRechargeRecordsEndpoint';
-import { handleRecordPageCopyOrderNumberClick, handleRecordPageToFullOrderPageClick } from '@mode2/action/recordPageAction/acitonType';
+import {
+  handleRecordPageCopyOrderNumberClick,
+  handleRecordPageToFullOrderPageClick,
+} from '@mode2/action/recordPageAction/acitonType';
 import { useRecordPageActions } from '@mode2/action/recordPageAction/useRecordPageActions';
 import { cx } from '@libs/commonUtils/cx';
 
 import { useRecordPageBalanceRecordStore } from '@mode2/zustand/page/recordPageStore';
 import NoData from '@components/NoData';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 const recordStateI18nKeyMapping: Record<RechargeRecordStatus, string> = {
   [RechargeRecordStatus.PROCESSING]:
@@ -101,14 +104,17 @@ const RecordRechargeItemBody = (item: RechargeRecordItemResult) => {
         </div>
       </div>
       {/* TODO i18n */}
-      <div className="bgi-text-[var(--linear-2)] bgi-border-b-[var(--linear-2)] cursor-pointer" onClick={() => {
-        handleRecordPageClick({
-          actionName: handleRecordPageToFullOrderPageClick,
-          payload: {
-            value: item.orderNumber,
-          },
-        })
-      }}>
+      <div
+        className="bgi-text-[var(--linear-2)] bgi-border-b-[var(--linear-2)] cursor-pointer"
+        onClick={() => {
+          handleRecordPageClick({
+            actionName: handleRecordPageToFullOrderPageClick,
+            payload: {
+              value: item.orderNumber,
+            },
+          });
+        }}
+      >
         {t('UTR')}
       </div>
     </div>

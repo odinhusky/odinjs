@@ -13,7 +13,7 @@ import cx from '@commonUtils/cx';
 import useInvitePageActions from '@mode2/action/invitePageAction/useInvitePageActions';
 import { handleInvitePageStatisticsDetailCustomerServiceClick } from '@mode2/action/invitePageAction/actionType';
 import { useBreakPoint } from '@libs/commonUtils';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 export const StaticsSpecialDetail = () => {
   const { t } = useTranslation();

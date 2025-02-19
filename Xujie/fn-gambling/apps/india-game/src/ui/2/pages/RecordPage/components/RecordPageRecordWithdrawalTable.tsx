@@ -8,7 +8,7 @@ import {
   WithdrawRecordItemResult,
   WithdrawRecordStatus,
 } from '@mode2API/endpoint/record/PostWithdrawRecordsEndpoint';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useEffect, useRef, useState } from 'react';
 import { useBreakPoint } from '@libs/commonUtils';
 import { isEmpty } from 'lodash';

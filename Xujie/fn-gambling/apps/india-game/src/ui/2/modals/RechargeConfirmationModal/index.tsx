@@ -16,7 +16,7 @@ import {
   handleRechargeInToGameClick,
 } from '@/action/rechargeConfirmationAction/acitonType';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 const StarMark = () => {
   return (

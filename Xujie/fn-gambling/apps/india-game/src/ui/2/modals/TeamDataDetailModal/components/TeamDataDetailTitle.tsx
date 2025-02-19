@@ -1,7 +1,7 @@
 import useTeamDataDetailModalAction from '@libs/mode2/action/teamDataDetailModalAction/useTeamDataDetailModalAction';
 import { handleTeamDataDetailModalCloseBtnClick } from '@libs/mode2/action/teamDataDetailModalAction/actionType';
 import { useTranslation } from 'react-i18next';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 export const TeamDataDetailTitle = () => {
   const { t } = useTranslation();

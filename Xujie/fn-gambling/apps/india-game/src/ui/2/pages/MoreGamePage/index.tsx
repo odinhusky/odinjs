@@ -15,17 +15,19 @@ import useBannerListBase from '@mode2/usecase/components/useBannerListBase';
 
 const DesktopGameLogo = memo(() => {
   const { isDesktop } = useBreakPoint();
-  const manufacturer = useMoreGamePageStoreStore((state) => state.manufacturer);
-  const manufacturerLogoUrl = useMoreGamePageStoreStore(
-    (state) => state.manufacturerLogoUrl
+  const activeManufacturer = useMoreGamePageStoreStore(
+    (state) => state.activeManufacturer
+  );
+  const activeManufacturerLogoUrl = useMoreGamePageStoreStore(
+    (state) => state.activeManufacturerLogoUrl
   );
   const moreGameLogo = getImgUrl(
     EResourceLevel.SHARED,
-    `manufacturer/logo_${manufacturer.toLowerCase()}`
+    `manufacturer/logo_${activeManufacturer.toLowerCase()}`
   );
   return isDesktop ? (
     <img
-      src={manufacturerLogoUrl || moreGameLogo}
+      src={activeManufacturerLogoUrl || moreGameLogo}
       className={cx('h-9 max-h-9 mb-5')}
       alt="game-logo"
     />

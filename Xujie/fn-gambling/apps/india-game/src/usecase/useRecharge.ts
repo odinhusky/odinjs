@@ -3,7 +3,6 @@ import {
   usePostRechargeIntoGameMutation,
 } from '@mode2API/index';
 import { useCallback } from 'react';
-import { message } from 'antd';
 import { PayRechargeRequest } from '@mode2API/endpoint/info/PostPayRechargeEndpoint';
 import { useDeepEffect } from '@libs/commonUtils';
 import {
@@ -23,6 +22,7 @@ import {
   RechargeCard,
   useWalletPageRechargeCardStore,
 } from '@mode2/zustand/page/WalletPage/useWalletPageRechargeCardStore';
+import { useMessageStore } from '@mode2/zustand/components/messageStore';
 
 export const useRecharge = () => {
   const setShowLoading = useLoadingStore((status) => status.setShowLoading);
@@ -167,7 +167,9 @@ export const useRecharge = () => {
         setIsShowRechargeContent(false);
         setIsShowRechargeConfirmationModal(false);
       } else {
-        message.info(rechargeIntoGameResult.rechargeResultMsg);
+        useMessageStore
+          .getState()
+          .info(rechargeIntoGameResult.rechargeResultMsg);
       }
     }
   }, [isRechargeIntoGameSuccess, rechargeIntoGameResult]);

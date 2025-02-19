@@ -4,7 +4,8 @@ import sdkUtils from '@mode2/utils/sdk';
 import BaseSecondaryBtn from '@components/BaseSecondaryBtn';
 import { cx } from '@libs/commonUtils';
 import { FLEX_CENTER, FLEX_ITEMS_CENTER } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
+import handleGlobalClick from '@libs/mode2/action/handleGlobalClick';
 
 const ApkDownloadBanner = () => {
   const { t } = useTranslation();
@@ -19,15 +20,20 @@ const ApkDownloadBanner = () => {
   const appName = `${sdkUtils.productName()} APP`;
 
   const handleDownloadClick = () => {
-    const shouldPreventApkDownload =
-      sdkUtils.isPwaInstalled() ||
-      sdkUtils.isInNative() ||
-      sdkUtils.isIOSKernel();
+    handleGlobalClick({
+      target: 'handleApkDownloadBannerDownloadButtonClick',
+      callback: () => {
+        const shouldPreventApkDownload =
+          sdkUtils.isPwaInstalled() ||
+          sdkUtils.isInNative() ||
+          sdkUtils.isIOSKernel();
 
-    if (!shouldPreventApkDownload) {
-      const url = import.meta.env.VITE_DOWNLOAD_APK_URL;
-      window.open(url, '_blank');
-    }
+        if (!shouldPreventApkDownload) {
+          const url = import.meta.env.VITE_DOWNLOAD_APK_URL;
+          window.open(url, '_blank');
+        }
+      },
+    });
   };
 
   const needDownloadApk =
@@ -90,7 +96,14 @@ const ApkDownloadBanner = () => {
             'border-t-transparent border-l-transparent',
             'bgi-[var(--grayscale-80)]'
           )}
-          onClick={() => setIsShowDownloadBanner(false)}
+          onClick={() => {
+            handleGlobalClick({
+              target: 'handleApkDownloadBannerCloseIconClick',
+              callback: () => {
+                setIsShowDownloadBanner(false);
+              },
+            });
+          }}
           children={
             <Icon
               className="absolute w-4 h-4 right-[12%] bottom-[12%]"

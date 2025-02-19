@@ -3,7 +3,7 @@ import { cx } from '@libs/commonUtils';
 import { FLEX_CENTER, FLEX_ITEMS_CENTER } from '@libs/constant/style';
 import { handleFeedBackPageInBoxMessageClick } from '@libs/mode2/action/feedBackPageAction/acitonType';
 import useFeedBackPageActions from '@libs/mode2/action/feedBackPageAction/useFeedBackPageActions';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { MessageInfoResult } from '@libs/mode2/external/api/endpoint/message/PostMessageListEndpoint';
 import { formatDate } from '@libs/mode2/utils';
 import { forwardRef } from 'react';

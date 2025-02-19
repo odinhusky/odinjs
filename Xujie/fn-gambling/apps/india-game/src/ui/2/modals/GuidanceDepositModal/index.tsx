@@ -3,7 +3,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import React from 'react';
 import { EResourceLevel, getImgUrl } from '@mode2/utils';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import cx from '@commonUtils/cx';
 import { useGuidanceDepositModalActions } from '@mode2/action/model/GuidanceDepositModal/useGuidanceDepositModalActions';
 import {

@@ -1,7 +1,7 @@
 import BaseModal from '@libs/components/Modal';
 import useLeaveGameConfirmModalStore from '@mode2/zustand/components/leaveGameConfirmModalStore';
 import { useLeaveGame } from '@mode2/usecase/useLeaveGame';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { cx } from '@libs/commonUtils';
 import { useTranslation } from 'react-i18next';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';

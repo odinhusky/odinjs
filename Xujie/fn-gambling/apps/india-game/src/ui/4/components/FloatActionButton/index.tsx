@@ -1,328 +1,98 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { FloatButton } from 'antd';
-import Draggable from 'react-draggable';
-import cx from '@commonUtils/cx';
-import { EResourceLevel, getImgUrl } from '@mode2/utils';
-import {
-  useFloatActionButtonListStore,
-  FloatActionButton as FloatActionButtonObj,
-} from '@mode2/zustand/components/floatActionButtonStore';
-import { BackTopButton } from '@components/BackTopButton';
-import { useBreakPoint } from '@commonUtils/hooks';
+import { useCallback, useMemo } from 'react';
+import './index.scss';
+import { useFloatActionButtonListStore } from '@mode2/zustand/components/floatActionButtonStore';
 
 import { ServicesTypeResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
 import { useFloatActionButtonBase } from '@/hooks/components/useFloatActionButtonBase';
-import RedDot from '@components/RedDot';
-import { useRebateRewardModalStore } from '@mode2/zustand/components/rebateRewardModalStore';
-import ActivityCenterButton from '@components/ActivityCenterButton';
-import { useIsLoginStore } from '@mode2/zustand/loginStore';
-import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
-import dayjs from 'dayjs';
-import Icon from '@mode2/components/Icon';
-import { isEmpty } from 'lodash';
-
-const CLICK_THRESHOLD = 150; // 拖曳距離150以下為點擊事件
-
-const ActionButton = ({
-  item,
-  styles,
-  imageClassName,
-  imgType = '',
-  onAnimationEnd = () => {},
-}: {
-  item: FloatActionButtonObj;
-  styles?: React.CSSProperties;
-  imageClassName?: string;
-  imgType?: string;
-  onAnimationEnd?: () => void;
-}) => {
-  return (
-    <div
-      key={item.type}
-      className={cx(
-        'bg-shadow-[var(--inset-shadow)] rounded-full',
-        'h-10 w-10',
-        'flex justify-center items-center',
-        'cursor-pointer',
-        'relative',
-        item.className
-      )}
-      style={styles}
-      onClick={item.onActionClick}
-      onAnimationEnd={onAnimationEnd}
-    >
-      {isEmpty(imgType) ? (
-        <Icon
-          name={`${item.icon}_default`}
-          className={cx(
-            'rounded-full',
-            'object-contain',
-            'w-full h-full',
-            'hover:brightness-[1.15]',
-            'active:brightness-[0.85]',
-            imageClassName
-          )}
-        />
-      ) : (
-        <img
-          src={getImgUrl(EResourceLevel.V, item.icon, imgType)}
-          className={cx(
-            'rounded-full',
-            'object-contain',
-            'w-full h-full',
-            'hover:brightness-[1.15]',
-            'active:brightness-[0.85]',
-            imageClassName
-          )}
-          alt={item.label}
-        />
-      )}
-
-      {item?.isShowRedDot ? (
-        <RedDot type="img" className={'absolute top-[3px] right-[5px]'} />
-      ) : null}
-    </div>
-  );
-};
+import { FloatingBubble, FloatingBubbleProps } from 'antd-mobile';
+import { useTemplateLayoutStore } from '@libs/mode2/zustand/template/templateLayoutStore';
+import { useLocationStore } from '@mode2/zustand/locationStore';
+import { BasePagePathObj } from '@mode2/routerTypes/types';
+import { EResourceLevel, getImgUrl } from '@mode2/utils';
 
 export const FloatActionButton = () => {
   useFloatActionButtonBase();
-
-  const { isDesktop } = useBreakPoint();
-  const { navToLoginPage } = useNavPageClick();
-
-  const [isExpandActions, setIsExpandActions] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false); // 控制動畫狀態
-  const fabConfig = useFloatActionButtonListStore((state) => state.fabConfig);
-
-  const isShowDrawerControlBar = useFloatActionButtonListStore(
-    (state) => state.isShowDrawerControlBar
-  );
-  const isOpenDrawer = useFloatActionButtonListStore(
-    (state) => state.isOpenDrawer
-  );
-  const currentCash = useRebateRewardModalStore((state) => state.currentCash);
-  const { setIsShowRebateRewardModal } = useRebateRewardModalStore();
+  const location = useLocationStore((state) => state.location);
   const fabList = useFloatActionButtonListStore((state) => state.fabList);
-  const isLogin = useIsLoginStore((state) => state.isLogin);
+  const bottomNavigationElMetrics = useTemplateLayoutStore(
+    (state) => state.bottomNavigationElMetrics
+  );
+  const headerElMetrics = useTemplateLayoutStore(
+    (state) => state.headerElMetrics
+  );
 
-  // 可水平收合的按鈕群組or單一按鈕
-  const showButtonGroup = isDesktop && isShowDrawerControlBar;
+  // const iconMapping: Record<ServicesTypeResult | string, string> = {
+  //   IN_BOX: 'fab_inbox',
+  //   [ServicesTypeResult.WHATS_APP]: 'fab_whatsapp',
+  //   [ServicesTypeResult.INSTAGRAM]: 'fab_instagram',
+  //   [ServicesTypeResult.TELEGRAM]: 'fab_telegram',
+  //   [ServicesTypeResult.LIVE_CHAT]: 'fab_livechat',
+  //   [ServicesTypeResult.YOUTUBE]: 'fab_youtube',
+  //   [ServicesTypeResult.FACEBOOK]: 'fab_facebook',
+  //   [ServicesTypeResult.TIKTOK]: 'fab_tiktok',
+  //   [ServicesTypeResult.TWITTER]: 'fab_twitter',
+  //   [ServicesTypeResult.UNKNOWN]: '',
+  // };
 
-  // 可展開和收縮的抽屜按鈕
-  const showExpandDrawerButton = !isDesktop && isShowDrawerControlBar;
+  const liveChatObj = fabList.find(
+    (item) => item.type === ServicesTypeResult.LIVE_CHAT
+  );
+  const isDisplay = useMemo(() => {
+    return location?.pathname === BasePagePathObj.HallPage;
+  }, [location]);
 
-  const moneyBoxBtnItemConfig = {
-    icon: 'piggy_bank',
-    label: 'MoneyBox',
-    type: 'MONEY_BOX',
-    isShowRedDot: currentCash > 0,
-    onActionClick: () => handleMoneyBoxBtnClick(),
-  };
+  const headerHeight = useMemo(() => {
+    const height = headerElMetrics?.height || 86;
+    return height + 8;
+  }, [headerElMetrics]);
 
-  const iconMapping: Record<ServicesTypeResult | string, string> = {
-    IN_BOX: 'fab_inbox',
-    [ServicesTypeResult.WHATS_APP]: 'fab_whatsapp',
-    [ServicesTypeResult.INSTAGRAM]: 'fab_instagram',
-    [ServicesTypeResult.TELEGRAM]: 'fab_telegram',
-    [ServicesTypeResult.LIVE_CHAT]: 'fab_livechat',
-    [ServicesTypeResult.YOUTUBE]: 'fab_youtube',
-    [ServicesTypeResult.FACEBOOK]: 'fab_facebook',
-    [ServicesTypeResult.TIKTOK]: 'fab_tiktok',
-    [ServicesTypeResult.TWITTER]: 'fab_twitter',
-    [ServicesTypeResult.UNKNOWN]: '',
-  };
+  const bottomNavHeight = useMemo(() => {
+    const height = bottomNavigationElMetrics?.height || 100;
+    return height + 8;
+  }, [bottomNavigationElMetrics]);
 
-  const fabItems = useMemo(() => {
-    if (!fabList.length) return [];
-
-    if (fabList.length > 1) {
-      const specifiedOrder = [
-        ServicesTypeResult.LIVE_CHAT,
-        'IN_BOX',
-        ServicesTypeResult.WHATS_APP,
-        ServicesTypeResult.TELEGRAM,
-        ServicesTypeResult.INSTAGRAM,
-        ServicesTypeResult.YOUTUBE,
-      ];
-
-      fabList.sort((a, b) => {
-        const indexA = specifiedOrder.indexOf(a.type);
-        const indexB = specifiedOrder.indexOf(b.type);
-
-        return indexA - indexB;
-      });
-    }
-
-    return fabList.map((item) => {
+  const floatWrapperProps = useCallback(
+    (offset: number = 1) => {
       return {
-        ...item,
-        icon: iconMapping[item.type] || '',
-      };
-    });
-  }, [fabList]);
+        axis: 'xy',
+        magnetic: 'x',
+        style: {
+          position: 'relative',
+          zIndex: 100,
+          '--initial-position-bottom': `${bottomNavHeight + offset}px`,
+          '--initial-position-right': '16px',
+          '--background': 'transparent',
+          // edge-distance 是 padding，可以依照 padding 的規則設定
+          '--edge-distance': `${headerHeight}px 16px ${bottomNavHeight}px 16px`,
+        },
+        className: 'float-action-button',
+      } as FloatingBubbleProps;
+    },
+    [headerElMetrics, bottomNavigationElMetrics]
+  );
 
-  const totalButtonsAmount = fabItems.length;
-
-  const handleMoneyBoxBtnClick = () => {
-    if (isLogin) {
-      setIsShowRebateRewardModal(true);
-    } else {
-      navToLoginPage();
-    }
-  };
-
-  // 展開或收合前要先等動畫播完
-  const toggleVisibility = () => {
-    setIsAnimating(true);
-  };
-
-  // 動畫結束後再切換顯示狀態
-  const handleAnimationEnd = () => {
-    if (isAnimating) {
-      setIsAnimating(false);
-      setIsExpandActions(!isExpandActions);
-    }
-  };
-
-  const renderButtons = () => {
-    if (showExpandDrawerButton) {
-      const mainButtonItem = {
-        icon: 'fab_add',
-        type: 'Toggle drawer button',
-        label: isExpandActions ? 'Collapse Button' : 'Expand Button',
-        onActionClick: () => toggleVisibility(),
-        className: 'h-12 w-12',
-
-        // 內部的Inbox item是否有未讀通知
-        isShowRedDot: fabItems[1].isShowRedDot && !isExpandActions,
-      };
-
-      return (
-        <>
-          {isExpandActions &&
-            fabItems.map((item, index) => {
-              return (
-                <ActionButton
-                  key={item.type + '-' + index}
-                  item={{
-                    ...item,
-                    className: cx('animate__animated', {
-                      'animate__bounceOutDown animate__200ms':
-                        showExpandDrawerButton && isAnimating,
-                      'animate__bounceInUp animate__500ms':
-                        showExpandDrawerButton && !isAnimating,
-                    }),
-                  }}
-                  styles={{
-                    transition: `all 0.3s ease ${
-                      (totalButtonsAmount - index) * 0.1
-                    }s `,
-                    pointerEvents: isExpandActions ? 'auto' : 'none',
-                  }}
-                  onAnimationEnd={handleAnimationEnd} //動畫結束事件
-                />
-              );
-            })}
-
-          <ActionButton
-            item={mainButtonItem}
-            imageClassName={cx('transition-all duration-300 ease-in-out', {
-              '-rotate-45': isExpandActions,
-            })}
-          />
-        </>
-      );
-    }
-
-    return fabItems.map((item, index) => {
-      return <ActionButton key={item.type + '-' + index} item={item} />;
-    });
-  };
-
-  // 存錢罐通知
-  const renderMoneyBoxBtn = () => {
-    if (fabConfig.isShowMoneyBoxBtn) {
-      return (
-        <ActionButton
-          item={{
-            ...moneyBoxBtnItemConfig,
-            className: cx('animate__animated', {
-              'animate__bounceOutDown animate__200ms':
-                showExpandDrawerButton && isAnimating,
-              'animate__bounceInUp animate__500ms':
-                showExpandDrawerButton && !isAnimating,
-            }),
-          }}
-          imgType={'.gif'}
-          styles={{
-            transition: `all 0.3s ease ${totalButtonsAmount * 0.1}s`,
-          }}
-          onAnimationEnd={handleAnimationEnd} //動畫結束事件
-        />
-      );
-    }
-    return null;
-  };
-
-  const startTimeRef = useRef<number>(-1);
-
-  // 判斷單一按鈕點擊
-  const handleSingleItemClickAction = useCallback(() => {
-    if (fabItems.length === 1) {
-      fabItems[0].onActionClick();
-    }
-  }, [fabItems]);
-
-  return fabConfig.isFeatureSupport ? (
-    <Draggable
-      disabled={!fabConfig.isDraggable}
-      cancel=".click-only" // 指定有這個 class 的元素不會觸發拖曳
-      key={JSON.stringify(fabConfig)} // 當頁面變化時會重新渲染回到預設位置
-      bounds="parent" // 限制拖動範圍
-      onStart={() => {
-        startTimeRef.current = dayjs().valueOf();
-      }}
-      onStop={() => {
-        const distance = dayjs().valueOf() - startTimeRef.current;
-        if (distance <= CLICK_THRESHOLD) {
-          handleSingleItemClickAction();
-        }
-      }}
-    >
-      <FloatButton.Group
-        rootClassName={''}
-        className={cx(
-          'w-auto end-0 bottom-[68px] mobile:bottom-[76px] shadow-none flex items-end flex-col mr-2'
-        )}
-        shape="square"
-      >
-        <div
-          className={cx('flex flex-col justify-center gap-1 tablet:gap-2', {
-            'w-14 h-auto justify-end p-1 rounded-full bgi-[var(--transparent-gray-70)] bg-shadow-[var(--float-button-group-shadow)]':
-              (showExpandDrawerButton && isExpandActions) ||
-              (isDesktop && fabConfig.isDrawerStyle),
-            'grid gap-3': !showExpandDrawerButton,
-            'w-auto p-2 items-center': isOpenDrawer,
-            'w-0 px-0': !isOpenDrawer,
-            'mb-2': showButtonGroup,
-          })}
+  return isDisplay ? (
+    <>
+      {liveChatObj && (
+        <FloatingBubble
+          {...floatWrapperProps()}
+          onClick={liveChatObj.onActionClick}
         >
-          {renderMoneyBoxBtn()}
+          <img
+            className={'w-[80px] h-[80px]'}
+            alt={'live_chat'}
+            src={getImgUrl(EResourceLevel.V, 'float_1')}
+          />
+        </FloatingBubble>
+      )}
 
-          {renderButtons()}
-
-          {showButtonGroup ? (
-            <div className="place-self-center">
-              {' '}
-              <BackTopButton className="rounded-full w-12 h-12" />
-            </div>
-          ) : null}
-        </div>
-
-        {/* 觸發紅包雨按鈕 */}
-        {isOpenDrawer && <ActivityCenterButton />}
-      </FloatButton.Group>
-    </Draggable>
+      {/*<FloatingBubble {...floatWrapperProps(80 + 28)}>*/}
+      {/*  <div*/}
+      {/*    className={cx('flex flex-col justify-center gap-1 tablet:gap-2', {})}*/}
+      {/*  >*/}
+      {/*    {'TODO 排行榜'}*/}
+      {/*  </div>*/}
+      {/*</FloatingBubble>*/}
+    </>
   ) : null;
 };

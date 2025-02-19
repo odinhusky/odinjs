@@ -16,7 +16,7 @@ import {
   handleLoginActionClick,
   handleMenuActionClick,
 } from '@mode2/action/components/header/actionType';
-import GammerInfo from '../../components/GammerInfo';
+import GammerInfo from '@components/GammerInfo';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
 import { useObserverElementMetrics } from '@commonUtils/hooks/useObserverElementMetrics';
 import { useTemplateLayoutStore } from '@mode2/zustand/template/templateLayoutStore';
@@ -33,7 +33,7 @@ import { HeaderUserInfo } from '@components/HeaderUserInfo';
 import { HeaderWalletBalanceSummary } from '@components/HeaderWalletBalanceSummary';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
 import BaseSecondaryBtn from '@components/BaseSecondaryBtn';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import { HeaderSystemLogo } from '@components/HeaderSystemLogo';
 
 export const BackIcon = memo((props: { onBack?: () => void }) => {
@@ -95,20 +95,22 @@ const Title = memo(
 );
 
 const GameLogo = memo(() => {
-  const manufacturer = useMoreGamePageStoreStore((state) => state.manufacturer);
-  const manufacturerLogoUrl = useMoreGamePageStoreStore(
-    (state) => state.manufacturerLogoUrl
+  const activeManufacturer = useMoreGamePageStoreStore(
+    (state) => state.activeManufacturer
+  );
+  const activeManufacturerLogoUrl = useMoreGamePageStoreStore(
+    (state) => state.activeManufacturerLogoUrl
   );
   const moreGameLogo = getImgUrl(
     EResourceLevel.SHARED,
-    `manufacturer/logo_${manufacturer.toLowerCase()}`
+    `manufacturer/logo_${activeManufacturer.toLowerCase()}`
   );
   return (
     <img
-      src={manufacturerLogoUrl || moreGameLogo}
+      src={activeManufacturerLogoUrl || moreGameLogo}
       className={cx(
         'h-8 max-h-8 w-auto pt-1 pb-1',
-        manufacturerLogoUrl ? 'pt-0 pb-0 h-auto' : ''
+        activeManufacturerLogoUrl ? 'pt-0 pb-0 h-auto' : ''
       )}
       alt="game-logo"
     />
@@ -196,7 +198,7 @@ const HeadLeft = memo(
         return (
           <>
             <BackIcon onBack={props.onBack} />
-            <HeaderSystemLogo onSystemLogoClick={props.onSystemLogoClick} />
+            <HeaderSystemLogo />
           </>
         );
       case EHeaderType.MoreGame: // 更多遊戲頁面
@@ -207,18 +209,14 @@ const HeadLeft = memo(
             ) : (
               <BackIcon onBack={props.onBack} />
             )}
-            {isDesktop ? (
-              <HeaderSystemLogo onSystemLogoClick={props.onSystemLogoClick} />
-            ) : (
-              <GameLogo />
-            )}
+            {isDesktop ? <HeaderSystemLogo /> : <GameLogo />}
           </>
         );
       default: //首頁 遊戲畫面
         return (
           <>
             {isDesktop ? <div className="w-6" /> : <MenuIcon />}
-            <HeaderSystemLogo onSystemLogoClick={props.onSystemLogoClick} />
+            <HeaderSystemLogo />
           </>
         );
     }
@@ -292,44 +290,48 @@ const HeadRight = memo(
 );
 
 export const Header = memo(
-  forwardRef<HTMLDivElement, Partial<IConfig>>((props: Partial<IConfig>, ref:Ref<HTMLDivElement>) => {
-    const location = useLocation();
-    const { isDesktop } = useBreakPoint();
-    const { config } = useHeaderBase(props);
-    const { isShowLoginModal } = useIsShowLoginModalStore();
+  forwardRef<HTMLDivElement, Partial<IConfig>>(
+    (props: Partial<IConfig>, ref: Ref<HTMLDivElement>) => {
+      const location = useLocation();
+      const { isDesktop } = useBreakPoint();
+      const { config } = useHeaderBase(props);
+      const { isShowLoginModal } = useIsShowLoginModalStore();
 
-    const isHomePage = location.pathname === BasePagePathObj.HallPage;
-    const isShowGammerInfoPopup = isHomePage && !isShowLoginModal;
+      const isHomePage = location.pathname === BasePagePathObj.HallPage;
+      const isShowGammerInfoPopup = isHomePage && !isShowLoginModal;
 
-    return config.type === EHeaderType.Null ? <></> : (
-      <header
-        ref={ref}
-        className={cx(
-          'header-content',
-          FLEX_ITEMS_CENTER,
-          'justify-between',
-          'w-full h-11 mobile:h-14',
-          'bgi-[var(--grayscale-00)]',
-          'px-2 py-0',
-          'shrink-0',
-          'top-0 z-40',
-          isDesktop ? 'fixed' : 'sticky'
-        )}
-      >
-        <div className={cx(FLEX_ITEMS_CENTER, 'gap-2')}>
-          <HeadLeft {...config} />
-        </div>
-        <div className={cx(FLEX_ITEMS_CENTER, 'gap-2')}>
-          <HeadRight
-            type={config.type}
-            onDepositClick={config.onDepositClick}
-          />
-        </div>
+      return config.type === EHeaderType.Null ? (
+        <></>
+      ) : (
+        <header
+          ref={ref}
+          className={cx(
+            'header-content',
+            FLEX_ITEMS_CENTER,
+            'justify-between',
+            'w-full h-11 mobile:h-14',
+            'bgi-[var(--grayscale-00)]',
+            'px-2 py-0',
+            'shrink-0',
+            'top-0 z-40',
+            isDesktop ? 'fixed' : 'sticky'
+          )}
+        >
+          <div className={cx(FLEX_ITEMS_CENTER, 'gap-2')}>
+            <HeadLeft {...config} />
+          </div>
+          <div className={cx(FLEX_ITEMS_CENTER, 'gap-2')}>
+            <HeadRight
+              type={config.type}
+              onDepositClick={config.onDepositClick}
+            />
+          </div>
 
-        {isShowGammerInfoPopup && <GammerInfo />}
-      </header>
-    );
-  }),
+          {isShowGammerInfoPopup && <GammerInfo />}
+        </header>
+      );
+    }
+  ),
   (prevProps, nextProps) => {
     return isEqual(prevProps, nextProps);
   }

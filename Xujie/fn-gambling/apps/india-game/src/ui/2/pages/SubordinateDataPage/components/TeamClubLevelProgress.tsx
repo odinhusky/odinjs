@@ -1,6 +1,6 @@
 import { cx } from '@libs/commonUtils';
 import { FLEX_COL, FLEX_ITEMS_CENTER } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { formatMoney } from '@mode2/utils';
 
 interface TeamClubLevelProgressProps {

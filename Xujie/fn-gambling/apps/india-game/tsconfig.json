@@ -3,7 +3,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "allowJs": false,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "strict": true,
@@ -21,8 +21,10 @@
       "@modals/*": ["apps/india-game/src/ui/2/modals/*"],
       "@pages/*": ["apps/india-game/src/ui/2/pages/*"],
       "@components/*": ["apps/india-game/src/ui/2/components/*"],
+      "@router/*": ["apps/india-game/src/router/2/*"],
       "@templates/*": ["apps/india-game/src/ui/2/templates/*"],
-     
+      "@apps/*": ["apps/india-game/src/ui/2/apps/*"],
+
       "@/*": ["apps/india-game/src/*"],
       "@transform/*": ["apps/india-game/src/external/transform/*"]
     }

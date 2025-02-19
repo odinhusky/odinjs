@@ -12,23 +12,25 @@ import { useEffect } from 'react';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
 import { KYC_BOTH_STATE } from '@constant/KYC';
 import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
-import { useNavigateClick } from '@mode2/usecase/useNavPageClick';
+import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
 import CustomizeCheckoutPage from '@pages/CustomizeCheckoutPage';
 import { useUserVerifyState } from '@/usecase/useUserVerifyState';
 import WalletPageDesktopHeader from '@pages/WalletPage/components/WalletPageDesktopHeader';
 import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
 import RechargeNoticeModal from '@modals/RechargeNoticeModal';
 import WithdrawContent from '@components/WithdrawContent';
+import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 
 const WalletPage = () => {
   useWalletPageBase();
 
-  const navigate = useNavigateClick();
+  const { navToBindKYCPage } = useNavPageClick();
   const { checkIsBankFirstBind } = useUserVerifyState();
 
   const curSwitchContentTabId = useWalletPageSwitchContentTabsStore(
     (state) => state.curSwitchContentTabId
   );
+  const userRole = useUserProfileStore((state) => state.userRole);
 
   const rechargeStatus = useRechargeStore((state) => state.rechargeStatus);
 
@@ -37,11 +39,12 @@ const WalletPage = () => {
       curSwitchContentTabId === WalletPageTabType.WITHDRAW &&
       checkIsBankFirstBind()
     ) {
-      navigate(BasePagePathObj.BindKYCPage, {
+      navToBindKYCPage('', {
         state: { tab: KYC_BOTH_STATE, from: BasePagePathObj.WalletPage },
       });
     }
-  }, [curSwitchContentTabId]);
+  }, [curSwitchContentTabId, userRole]);
+
   return rechargeStatus === RechargeStatusResult.INTERNAL ? (
     <InternalPayContent id={'pay-iframe'} title={'pay iframe'} />
   ) : rechargeStatus === RechargeStatusResult.CUSTOMIZED ? (

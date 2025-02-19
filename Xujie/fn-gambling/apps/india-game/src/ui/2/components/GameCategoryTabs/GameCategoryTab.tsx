@@ -1,7 +1,7 @@
 import { cx, handleScrollToElementLeft } from '@libs/commonUtils';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import { FLEX_CENTER } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import {
   HallPageTab,
   useHallPageActionsStore,

@@ -10,6 +10,7 @@ import { useDeepEffect } from '@commonUtils/hooks';
 import sdkUtils from '@mode2/utils/sdk';
 import { useCallback } from 'react';
 import { AppSchemeData } from '@constant/AppSchemeData';
+import { useTranslation } from 'react-i18next';
 
 export const useCustomerServiceListBase = () => {
   const { handleCustomerServiceClick } = useCustomerServiceAction();
@@ -17,6 +18,7 @@ export const useCustomerServiceListBase = () => {
   const setUsageScenariosList = useCustomerServiceListStore(
     (state) => state.setUsageScenariosList
   );
+  const { t } = useTranslation();
 
   const findLink = useCallback(
     (type: ServicesTypeResult, def: string): string => {
@@ -26,12 +28,11 @@ export const useCustomerServiceListBase = () => {
     [servicesList]
   );
 
-
   const getOfficialUrl = (type: ServicesTypeResult): string => {
     const key = type.toLowerCase().replace('_', '');
     const schemeData = AppSchemeData[key];
     return schemeData?.url || '';
-  }
+  };
 
   useDeepEffect(() => {
     const linkData: Record<
@@ -40,15 +41,24 @@ export const useCustomerServiceListBase = () => {
     > = {
       [ServicesTypeResult.WHATS_APP]: {
         isLink: true,
-        target: findLink(ServicesTypeResult.WHATS_APP, getOfficialUrl(ServicesTypeResult.WHATS_APP)),
+        target: findLink(
+          ServicesTypeResult.WHATS_APP,
+          getOfficialUrl(ServicesTypeResult.WHATS_APP)
+        ),
       },
       [ServicesTypeResult.INSTAGRAM]: {
         isLink: true,
-        target: findLink(ServicesTypeResult.INSTAGRAM, getOfficialUrl(ServicesTypeResult.INSTAGRAM)),
+        target: findLink(
+          ServicesTypeResult.INSTAGRAM,
+          getOfficialUrl(ServicesTypeResult.INSTAGRAM)
+        ),
       },
       [ServicesTypeResult.TELEGRAM]: {
         isLink: true,
-        target: findLink(ServicesTypeResult.TELEGRAM, getOfficialUrl(ServicesTypeResult.TELEGRAM)),
+        target: findLink(
+          ServicesTypeResult.TELEGRAM,
+          getOfficialUrl(ServicesTypeResult.TELEGRAM)
+        ),
       },
       [ServicesTypeResult.LIVE_CHAT]: {
         isLink: true,
@@ -56,20 +66,31 @@ export const useCustomerServiceListBase = () => {
       },
       [ServicesTypeResult.YOUTUBE]: {
         isLink: true,
-        target: findLink(ServicesTypeResult.YOUTUBE, getOfficialUrl(ServicesTypeResult.YOUTUBE)),
+        target: findLink(
+          ServicesTypeResult.YOUTUBE,
+          getOfficialUrl(ServicesTypeResult.YOUTUBE)
+        ),
       },
       [ServicesTypeResult.FACEBOOK]: {
         isLink: true,
         target: findLink(
-          ServicesTypeResult.FACEBOOK, getOfficialUrl(ServicesTypeResult.FACEBOOK)),
+          ServicesTypeResult.FACEBOOK,
+          getOfficialUrl(ServicesTypeResult.FACEBOOK)
+        ),
       },
       [ServicesTypeResult.TIKTOK]: {
         isLink: true,
-        target: findLink(ServicesTypeResult.TIKTOK, getOfficialUrl(ServicesTypeResult.TIKTOK)),
+        target: findLink(
+          ServicesTypeResult.TIKTOK,
+          getOfficialUrl(ServicesTypeResult.TIKTOK)
+        ),
       },
       [ServicesTypeResult.TWITTER]: {
         isLink: true,
-        target: findLink(ServicesTypeResult.TWITTER, getOfficialUrl(ServicesTypeResult.TWITTER)),
+        target: findLink(
+          ServicesTypeResult.TWITTER,
+          getOfficialUrl(ServicesTypeResult.TWITTER)
+        ),
       },
       [ServicesTypeResult.UNKNOWN]: { isLink: true, target: '' },
     };
@@ -240,6 +261,22 @@ export const useCustomerServiceListBase = () => {
       customerServiceList: [liveChatInfo],
     };
 
+    const giftCodeScenarios = {
+      scenarios: CustomerServiceScenarios.GIFT_CODE,
+      customerServiceList: [
+        {
+          ...telegramInfo,
+          label: t('gift_code_channel_1'),
+          link: getOfficialUrl(ServicesTypeResult.TELEGRAM),
+        },
+        {
+          ...whatsAppInfo,
+          label: t('gift_code_channel_2'),
+          link: getOfficialUrl(ServicesTypeResult.WHATS_APP),
+        },
+      ],
+    };
+
     setUsageScenariosList([
       fabScenarios,
       drawerMenuScenarios,
@@ -247,6 +284,7 @@ export const useCustomerServiceListBase = () => {
       inviteScenarios,
       footerScenarios,
       feedbackScenarios,
+      giftCodeScenarios,
     ]);
   }, [servicesList]);
 };

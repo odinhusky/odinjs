@@ -2,7 +2,7 @@ import './index.scss';
 import useMode2MyPageBase from '@mode2/usecase/page/myPage/useMode2MyPageBase';
 import QuickLineCellButtons from '@components/QuickLineCellButtons';
 import useMyPageActions from '@mode2/action/myPageAction/useMyPageActions';
-import { handleMyPageLogoutBtnClick } from '@mode2/action/myPageAction/acitonType';
+import { handleLogoutBtnClick } from '@mode2/action/myPageAction/acitonType';
 import MyPageBannerBtn from './components/MyPageBannerBtn';
 import MyPageVIPBlock from './components/MyPageVIPBlock';
 import MyPageUserInfo from './components/MyPageUserInfo';
@@ -35,7 +35,7 @@ const MyPage = () => {
         )}
         onClick={() => {
           handleMyPageClick({
-            actionName: handleMyPageLogoutBtnClick,
+            actionName: handleLogoutBtnClick,
           });
         }}
       />

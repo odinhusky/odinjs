@@ -7,7 +7,7 @@ import useRebateRewardModalAction from '@mode2/action/rebateRewardModalAction/us
 import { handleCollectRewardBtnClick } from '@mode2/action/rebateRewardModalAction/actionType';
 import { useTranslation } from 'react-i18next';
 import { useImgUrlByBreakPoint } from '@libs/commonUtils';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import sdkUtils from '@mode2/utils/sdk';
 
 /** 存錢罐 */

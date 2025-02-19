@@ -6,7 +6,7 @@ import {
 import { useMemo } from 'react';
 import cx from '@commonUtils/cx';
 import { ServicesTypeResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 
 const CustomerServiceButton = (item: ServiceInfo) => {
   return (

@@ -15,6 +15,8 @@ import { PAY_CONTENT_MAP } from './const';
 import { useBreakPoint } from '@libs/commonUtils';
 import useCustomizeCheckoutPageFooterSetting from '@/ui/hooks/pages/customizeCheckoutPage/useCustomizeCheckoutPageFooterSetting';
 import { usePageResetFloatActionButton } from '@/ui/hooks/pages/usePageResetFloatActionButton';
+import { BasePagePathObj } from '@libs/mode2/routerTypes/types';
+import { useLocation } from 'react-router';
 
 const useCustomizeCheckout = () => {
   // === CustomizeCheckoutPage Footer Setting
@@ -31,6 +33,8 @@ const useCustomizeCheckout = () => {
     (state) => state.setRechargeStatus
   );
   const config = useHeaderStore((state) => state.config);
+  const thisPath = BasePagePathObj.CustomizeCheckoutPage;
+  const location = useLocation();
   const setConfig = useHeaderStore((state) => state.setConfig);
   const [initConfig] = useState(config);
   const [UTR, setUTR] = useState('');
@@ -68,12 +72,14 @@ const useCustomizeCheckout = () => {
   }, [isPayFinish, UTR]);
 
   useEffect(() => {
-    setConfig({
-      type: isDesktop ? EHeaderType.Main : EHeaderType.Common,
-      title: { i18nKey: title },
-      onBack: handleBack,
-    });
-    return () => setConfig(initConfig);
+    if (location.pathname === thisPath) {
+      setConfig({
+        type: isDesktop ? EHeaderType.Main : EHeaderType.Common,
+        title: { i18nKey: title },
+        onBack: handleBack,
+      });
+      return () => setConfig(initConfig);
+    }
   }, [isDesktop, handleBack]);
 
   useEffect(() => {

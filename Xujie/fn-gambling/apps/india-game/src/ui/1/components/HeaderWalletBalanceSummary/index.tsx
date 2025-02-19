@@ -5,7 +5,7 @@ import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
 import isEqual from 'lodash/isEqual';
 import { memo } from 'react';
 import { useUserState } from '@/usecase/useUserState';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 
 /**
  * 錢包餘額

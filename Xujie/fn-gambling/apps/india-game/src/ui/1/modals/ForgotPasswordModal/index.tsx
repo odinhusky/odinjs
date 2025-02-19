@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { message, notification } from 'antd';
+import { notification } from 'antd';
 import cx from '@commonUtils/cx';
 import BaseModal from '@mode2/components/Modal';
 import { useIsShowLoginModalStore } from '@mode2/zustand/loginStore';
 import Input from '@mode2/components/Input';
 import Form from '@mode2/components/Form';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { ForgotPasswordValidator } from '@/validator/antdValidator';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
 import {
   usePostForgetPasswordMutation,
   usePostSendOtpMutation,
 } from '@mode2API/index';
+import { useMessageStore } from '@mode2/zustand/components/messageStore';
 
 // 再次獲取驗證碼需等待秒數
 const OTP_CODE_COUNTDOWN = 120;
@@ -74,7 +75,7 @@ export const ForgotPasswordModal = () => {
     if (phoneInputValue) {
       triggerSendOtp({ mobile: phoneInputValue });
     } else {
-      message.info(t('toast_mobile_phone_cannot_be_empty'));
+      useMessageStore.getState().info(t('toast_mobile_phone_cannot_be_empty'));
     }
   };
 
@@ -104,7 +105,7 @@ export const ForgotPasswordModal = () => {
 
   useEffect(() => {
     if (sendOtpData?.otpId) {
-      message.info(t('toast_the_verification_code'));
+      useMessageStore.getState().info(t('toast_the_verification_code'));
       setIsSendOtpSuccess(true);
       setCountdown(OTP_CODE_COUNTDOWN);
 

@@ -4,7 +4,7 @@ import { useBreakPoint } from '@libs/commonUtils';
 import useTemplateLayoutActions from '@mode2/action/templateLayoutAction/useTemplateLayoutActions';
 import { handleTemplateLayoutCloseMyDrawerBtnClick } from '@mode2/action/templateLayoutAction/acitonType';
 import MyPage from '@pages/MyPage';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 export const MyDrawer = () => {
   const { isMobile } = useBreakPoint();

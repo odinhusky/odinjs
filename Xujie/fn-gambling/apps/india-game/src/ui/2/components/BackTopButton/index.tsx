@@ -1,4 +1,4 @@
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import cx from '@commonUtils/cx';
 import useBackTopButtonAction from '@mode2/action/components/backTopButton/useFloatActionButtonAction';
 import { handleBackTopButtonActionClick } from '@mode2/action/components/backTopButton/acitonType';

@@ -13,7 +13,7 @@ import { useGameItemBase } from '@mode2/usecase/useGameItemBase';
 import { FLEX_CENTER, FLEX_COL } from '@libs/constant/style';
 import { isEqual } from 'lodash';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 interface GameItemProps {
   item: GameListItemResult;
@@ -126,7 +126,7 @@ export const GameItem = memo((props: GameItemProps) => {
 
       onCollect(newItem);
     } else {
-      navToLoginPage();
+      navToLoginPage(55);
     }
   };
 
@@ -135,7 +135,7 @@ export const GameItem = memo((props: GameItemProps) => {
     // 維修中禁止點擊
     if (!item.isMaintain) {
       if (item.enterGameType !== EnterGameType.DIRECTORY && !isLogin) {
-        navToLoginPage();
+        navToLoginPage(54);
       } else {
         onEnterGame(item);
       }

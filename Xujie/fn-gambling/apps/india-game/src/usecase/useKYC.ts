@@ -12,12 +12,12 @@ import { usePostBankSaveMutation } from '@/external/api/index';
 import sdkUtils from '@libs/mode2/utils/sdk';
 import { AdjustEventKey } from '@libs/mode2/utils/sdk/persistant/adjust/AdjustEventKey';
 import { KYC_BOTH_STATE, KYC_PERSONAL_STATE } from '@constant/KYC';
-import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useUserVerifyState } from '@/usecase/useUserVerifyState';
 import { useUserState } from '@/usecase/useUserState';
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 import { useNavigateClick } from '@mode2/usecase/useNavPageClick';
+import { useMessageStore } from '@mode2/zustand/components/messageStore';
 
 export const useKYC = () => {
   const { t } = useTranslation();
@@ -25,6 +25,7 @@ export const useKYC = () => {
   const location = useLocation();
   const checkType = location.state ? location.state?.tab : KYC_BOTH_STATE;
   const { refreshUserState } = useUserState();
+
   const userVerifyState = useUserVerifyState();
   const [
     postBankSave,
@@ -186,7 +187,7 @@ export const useKYC = () => {
   useEffect(() => {
     if (isBankSaveSuccess) {
       sdkUtils.sendEvent(AdjustEventKey.BANK_CARD_BINDING);
-      message.success(t('toast_payment_info_saved'));
+      useMessageStore.getState().success(t('toast_payment_info_saved'));
       refreshUserState();
 
       setTimeout(() => {
@@ -200,7 +201,7 @@ export const useKYC = () => {
   useEffect(() => {
     if (isPlayerInfoSuccess) {
       sdkUtils.sendEvent(AdjustEventKey.RECHARGE_INFO_VERIFICATION);
-      message.success(t('toast_payment_info_saved'));
+      useMessageStore.getState().success(t('toast_payment_info_saved'));
       refreshUserState();
 
       if (isShowBankAccountBlock) {

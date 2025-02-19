@@ -13,7 +13,7 @@ import {
 } from '@libs/mode2/zustand/components/customerServiceListStore';
 import { ManufacturerList } from '@components/ManufacturerList';
 import { useFooterStore } from '@libs/mode2/zustand/components/footerStore';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useStatisticsPlayerMutation } from '@libs/mode2/external/api';
 import RollNumber from '@libs/mode2/components/RollNumber';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';

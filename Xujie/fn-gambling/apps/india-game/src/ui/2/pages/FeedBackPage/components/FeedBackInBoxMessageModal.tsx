@@ -1,7 +1,7 @@
 import { cx } from '@libs/commonUtils';
 import BaseModal from '@libs/components/Modal';
 import { FLEX_CENTER, FLEX_COL } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useMode2FeedBackPageInBoxStore } from '@libs/mode2/zustand/page/feedbackPageStore';
 import { formatDate } from '@libs/mode2/utils';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';

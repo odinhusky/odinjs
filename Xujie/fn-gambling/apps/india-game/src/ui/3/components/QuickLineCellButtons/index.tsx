@@ -1,46 +1,37 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LineBtnUnit, useMyPageStore } from '@mode2/zustand/page/myPageStore';
+import {
+  MyPageBtnListScenarios,
+  useMyPageStore,
+} from '@mode2/zustand/page/myPageStore';
 import renderI18N from '@commonUtils/renderI18N';
 import cx from '@commonUtils/cx';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import RedDot from '@components/RedDot';
-import { handleMyPageTeamClubLineBtnClick } from '@mode2/action/myPageAction/acitonType';
-import useMyPageActions from '@mode2/action/myPageAction/useMyPageActions';
 
 const QuickLineCellButtons = memo(() => {
   const { t } = useTranslation();
-  const lineBtnList = useMyPageStore((state) => state.lineBtnList);
-  const { handleMyPageClick } = useMyPageActions();
-  const teamClubButton: LineBtnUnit = {
-    iconName: 'earn_money',
-    name: { i18nKey: 'leftnav_earn' },
-    isBorder: true,
-
-    isShowRedDot: false,
-    isShowArrow: true,
-    onAction: () => {
-      handleMyPageClick({
-        actionName: handleMyPageTeamClubLineBtnClick,
-      });
-    },
-  };
-
-  const lineBtnItems = useMemo(() => {
-    return lineBtnList.map((item) => {
-      const isEarn = item.name.i18nKey === 'account_menu_earn_money';
-      return isEarn ? teamClubButton : { ...item };
-    });
-  }, [lineBtnList]);
+  const usageScenariosList = useMyPageStore(
+    (state) => state.usageScenariosList
+  );
+  const lineBtnList =
+    usageScenariosList.find((item) => {
+      return item.scenarios === MyPageBtnListScenarios.GIFT_CODE;
+    })?.usageScenariosList || [];
 
   return (
-    <div className="flex flex-col my-4 bgi-[var(--grayscale-10)] rounded p-3">
-      {lineBtnItems.map((item) => {
+    <div
+      className={cx(
+        'flex flex-col my-4 bgi-[var(--grayscale-10)] rounded p-3',
+        'text-sm font-medium mobile:text-base'
+      )}
+    >
+      {lineBtnList.map((item) => {
         return (
           <button
             key={`LineBtn - ${renderI18N(item.name, t)} - ${item.iconName}`}
             className={cx('', {
-              'bgi-[var(--base-2-main)] rounded-lg pb-px': item.isBorder,
+              'bgi-border-b-[var(--base-2-main)] pb-px': item.isBorder,
             })}
             onClick={item.onAction}
           >

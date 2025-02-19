@@ -28,7 +28,7 @@ import BasePrimaryBtn from '@components/BasePrimaryBtn';
 import { WithdrawNoteDescription } from '@components/WithdrawNoteDescription';
 import { useWithdrawStore } from '@/zustand/wallet/useWithdrawStore';
 import { useUserState } from '@/usecase/useUserState';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import AffixBottomWrapper from '@mode2/components/AffixBottomWrapper';
 import useWalletPageBaseActions from '@mode2/action/walletPageAction/useWalletPageBaseActions';
 import {
@@ -105,6 +105,9 @@ export const WithdrawContent = () => {
   const handleWithdraw = () => {
     handleWalletPageClick({
       actionName: handleWalletPageWithdrawBtnClick,
+      payload: {
+        isPasswordless: false,
+      },
     });
   };
 

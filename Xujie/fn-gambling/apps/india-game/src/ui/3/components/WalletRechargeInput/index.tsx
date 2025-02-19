@@ -6,7 +6,7 @@ import {
   handleWalletPageRechargeAmountChange,
   handleWalletPageRechargeAmountClearClick,
 } from '@/action/walletPageAction/acitonType';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import { memo } from 'react';
 import { formatMoney } from '@mode2/utils';
 import { useWalletPageRechargeContentStore } from '@mode2/zustand/page/WalletPage/walletPageRechargeContentStore';

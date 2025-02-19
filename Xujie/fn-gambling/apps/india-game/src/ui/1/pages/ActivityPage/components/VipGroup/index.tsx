@@ -22,8 +22,9 @@ import useActivityPageActions, {
 import { handleVipRecieveLevelRewardClick } from '@libs/mode2/action/activityPageAction/actionType';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import { FLEX_CENTER, FLEX_COL } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import useMyVipContentBase from '@mode2/usecase/page/activityPage/useMyVipContentBase';
+import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
 
 const VipGroup = () => {
   useMyVipContentBase();
@@ -34,7 +35,7 @@ const VipGroup = () => {
   const swiperRef = useRef<SwiperCore | null>(null);
 
   const vipInfos = useMyPageStore((state) => state.vipInfos);
-  const vipLevel = useMyPageStore((state) => state.vipLevel);
+  const vipLevel = useUserProfileStore((state) => state.level);
   const vipProgressPercent = useMyPageStore(
     (state) => state.vipProgressPercent
   );

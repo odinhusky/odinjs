@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import renderI18N from '@commonUtils/renderI18N';
 import cx from '@commonUtils/cx';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import RedDot from '@components/RedDot';
 import useMyPageActions from '@mode2/action/myPageAction/useMyPageActions';
 import { useMode2InviteTabStore } from '@mode2/zustand/page/invitePageStore';

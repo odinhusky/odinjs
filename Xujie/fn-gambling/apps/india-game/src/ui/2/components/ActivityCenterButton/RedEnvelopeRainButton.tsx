@@ -3,7 +3,7 @@ import {
   handleFloatActivityOnHomClose,
 } from '@libs/mode2/action/activityCenterAction/acitonType';
 import useActivityCenterAction from '@libs/mode2/action/activityCenterAction/useActivityCenterAction';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useActivityCountdown } from '@libs/mode2/usecase/useActivityCenterBase';
 import {
   EResourceLevel,

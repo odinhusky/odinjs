@@ -2,7 +2,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
 import sdkUtils from '@mode2/utils/sdk';
 import { useEffect } from 'react';
-import { useRoutesInterceptor } from '@mode2/usecase/useRoutesInterceptor';
+import { useRoutesInterceptor } from '@mode2/usecase/router/useRoutesInterceptor';
 import useAvoidApkRecycling from '@mode2/usecase/useAvoidApkRecycling';
 
 export const OfficialRoute = (props: { children: JSX.Element }) => {

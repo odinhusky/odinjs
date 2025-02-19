@@ -1,5 +1,8 @@
 import { NAME_REGEX } from '@libs/constant/regex';
 import { TFunction } from 'i18next';
+
+const passwordRegex = /^(?!.*\s)[\s\S]{4,13}$/;
+
 export const KYCValidator = {
   bankAccount: (value: string, t: TFunction) => {
     if (!value) {
@@ -41,7 +44,6 @@ export const KYCValidator = {
     return Promise.resolve();
   },
   password: (value: string, t: TFunction) => {
-    const passwordRegex = /^(?!.*\s)[\s\S]{4,13}$/;
     if (!value) {
       return Promise.reject(t('toast_password_cannot_be_empty'));
     }
@@ -65,7 +67,6 @@ export const ForgotPasswordValidator = {
     return Promise.resolve();
   },
   password: (value: string, t: TFunction) => {
-    const passwordRegex = /^(?!.*\s)[\s\S]{4,13}$/;
     if (!value) {
       return Promise.reject(t('toast_password_cannot_be_empty'));
     }
@@ -117,3 +118,63 @@ export const FullOrderDetailValidator = {
     return Promise.resolve();
   },
 };
+
+export const GiftCodeRedeemValidator = {
+  giftCode: (value: string, t: TFunction) => {
+    if (!value) {
+      return Promise.reject(t('gift_code_popup_input_placeholder'));
+    }
+
+    return Promise.resolve();
+  },
+};
+
+export const CommonEmptyValidator = {
+  inputValue: (value: string, t: TFunction) => {
+    if (!value) {
+      return Promise.reject(t('toast_field_cannot_be_empty'));
+    }
+
+    return Promise.resolve();
+  },
+};
+
+export const OTPCodeValidator = (t: TFunction) => ({
+  otpCode: (value: string) => {
+    if (!value) {
+      return Promise.reject(t('toast_field_cannot_be_empty'));
+    }
+    if (value.length !== 6) {
+      return Promise.reject(
+        t('sign_in_popup_new_password_input_hint_enter_verification_code')
+      );
+    }
+    return Promise.resolve();
+  },
+});
+
+export const PasswordValidator = (t: TFunction) => ({
+  password: (value: string) => {
+    if (!value) {
+      return Promise.reject(t('toast_password_cannot_be_empty'));
+    }
+    if (!passwordRegex.test(value)) {
+      return Promise.reject(t('toast_password_hint'));
+    }
+    return Promise.resolve();
+  },
+  confirmPassword: (value: string, getFieldValue: (name: string) => string) => {
+    if (!value) {
+      return Promise.reject(t('toast_field_cannot_be_empty'));
+    }
+
+    if (!passwordRegex.test(value)) {
+      return Promise.reject(t('toast_password_hint'));
+    }
+
+    if (value !== getFieldValue('password')) {
+      return Promise.reject(t('toast_confirm_password_not_match'));
+    }
+    return Promise.resolve();
+  },
+});

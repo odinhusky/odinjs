@@ -7,7 +7,7 @@ import 'swiper/css/pagination';
 import { useRef, useState } from 'react';
 import { EResourceLevel, getImgUrl } from '@libs/mode2/utils';
 import { cx } from '@libs/commonUtils';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { TUTORIAL_DATA_MAP } from './const';
 import { PayActivationResult } from '@mode2API/endpoint/wallet/PostPayConfigInfoWithOptionsEndpoint';
 import { useTranslation } from 'react-i18next';

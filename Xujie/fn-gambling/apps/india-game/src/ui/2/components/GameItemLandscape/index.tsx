@@ -13,7 +13,7 @@ import LazyImage from '@components/LazyImage';
 import { useGameItemBase } from '@mode2/usecase/useGameItemBase';
 import { FLEX_CENTER, FLEX_COL } from '@libs/constant/style';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 interface GameItemProps {
   item: GameListItemResult;
@@ -78,7 +78,7 @@ export const GameItemLandscape = memo((props: GameItemProps) => {
 
       onCollect(newItem);
     } else {
-      navToLoginPage(true);
+      navToLoginPage(59, true);
     }
   };
 
@@ -87,7 +87,7 @@ export const GameItemLandscape = memo((props: GameItemProps) => {
     // 維修中禁止點擊
     if (!item.isMaintain) {
       if (item.enterGameType !== EnterGameType.DIRECTORY && !isLogin) {
-        navToLoginPage(true);
+        navToLoginPage(58, true);
       } else {
         onEnterGame(item);
       }

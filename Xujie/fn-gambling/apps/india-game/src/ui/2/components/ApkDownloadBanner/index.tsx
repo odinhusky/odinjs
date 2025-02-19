@@ -4,7 +4,7 @@ import sdkUtils from '@mode2/utils/sdk';
 import BaseSecondaryBtn from '@components/BaseSecondaryBtn';
 import { cx } from '@libs/commonUtils';
 import { FLEX_ITEMS_CENTER } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 const ApkDownloadBanner = () => {
   const { t } = useTranslation();

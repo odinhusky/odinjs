@@ -1,7 +1,7 @@
 import { cx } from '@libs/commonUtils';
 import { handleSubordinateDataLevelClick } from '@libs/mode2/action/subordinateDataAction/actionType';
 import useSubordinateDataClickActions from '@libs/mode2/action/subordinateDataAction/useSubordinateDataClickActions';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { formatNumber } from '@libs/mode2/utils';
 import { useMode2SubordinateDataPageStore } from '@libs/mode2/zustand/page/SubordinateDataStore';
 import { t } from 'i18next';

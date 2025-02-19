@@ -9,7 +9,7 @@ import {
   handleWalletActionClick,
 } from '@libs/mode2/action/components/header/actionType';
 import { useBreakPoint } from '@libs/commonUtils';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 
 /**
  * 充值按鈕

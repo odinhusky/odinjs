@@ -9,7 +9,7 @@ import { Footer } from '@components/Footer';
 
 import { FloatActionButton } from '@components/FloatActionButton';
 import BottomNavigation from '@components/BottomNavigation';
-import ModalLayout from '@/templates/ModalLayout';
+import ModalLayout from '@templates/ModalLayout';
 
 import { useBottomNavigationStore } from '@mode2/zustand/components/bottomNavigationStore';
 

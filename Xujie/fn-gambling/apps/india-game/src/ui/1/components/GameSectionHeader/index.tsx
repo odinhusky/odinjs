@@ -3,7 +3,7 @@ import { Swiper as SwiperClass } from 'swiper/types';
 import { cx } from '@libs/commonUtils';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
 import renderI18N from '@libs/commonUtils/renderI18N';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useEffect, useState } from 'react';
 import { FLEX_CENTER } from '@libs/constant/style';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';

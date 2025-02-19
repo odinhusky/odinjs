@@ -56,6 +56,7 @@
     #fe1720 51.19%,
     #de099f 85.23%
   );
+  --linear-8: linear-gradient(105.36deg, #0a4d40 0%, #0b2c22 100%);
   --linear-8-main: linear-gradient(180deg, #be923a 0%, #ba3105 100%);
   --linear-8-light: linear-gradient(180deg, #f7ae04 0%, #ffbf00 100%);
   --linear-8-dark: linear-gradient(180deg, #a97b29 0%, #a42f07 100%);
@@ -73,6 +74,8 @@
     rgba(190, 144, 58, 0.5) 0%,
     rgba(187, 54, 9, 0.5) 100%
   );
+
+  --linear-10-main: linear-gradient(180deg, #ff4242 0%, #c30201 100%);
 
   /* state */
   --state-warn-main: linear-gradient(180deg, #ffa441 0%, #fe8b34 100%);

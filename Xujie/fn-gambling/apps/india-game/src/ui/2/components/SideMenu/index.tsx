@@ -1,7 +1,7 @@
 import { EResourceLevel } from '@mode2/utils';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import LangueSelect from '@components/LangueSelect';
 import { useMenuBase } from '@/hooks/components/useMenuBase';
 import { Layout } from 'antd';
@@ -13,42 +13,16 @@ import {
 } from '@libs/mode2/zustand/components/customerServiceListStore';
 import { useMemo } from 'react';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
-import { useMode2ActivitySwitchPageStore } from '@mode2/zustand/page/activityPageStore';
-import { useMode2InviteTabStore } from '@libs/mode2/zustand/page/invitePageStore';
 import { useBreakPoint } from '@libs/commonUtils';
-import { KYC_PERSONAL_STATE } from '@libs/constant/KYC';
-import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
-import { InvitePageTabType } from '@mode2/@types/invitePageTabTyp';
-import { ActivityPageTabType } from '@mode2/@types/activityPageTabType';
 import { QuitButton } from '@components/QuitButton';
 import RedDot from '@components/RedDot';
-import { RecordPageTabs } from '@mode2/zustand/page/recordPageStore';
-import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
 import { FLEX_COL, FLEX_ITEMS_CENTER } from '@libs/constant/style';
-import { usePlatformDynamicConfigStore } from '@libs/mode2/zustand/platform/platformDynamicConfig';
-import { useRedDotStore } from '@libs/mode2/zustand/redDotStore';
-import userLocalForage, {
-  UserLocalforageStoreKeys,
-} from '@mode2/localforage/user';
-import { today } from '@libs/constant/date';
+import {
+  MenuScenarios,
+  useMenuListStore,
+} from '@libs/mode2/zustand/components/menuListStore';
 
 const { Sider } = Layout;
-
-interface SubMenuItem {
-  label: string;
-  action: () => void;
-  isShowRedDot?: boolean;
-  isHide?: boolean;
-}
-
-interface MenuGroup {
-  label: string;
-  icon: string;
-  action?: () => void;
-  children?: SubMenuItem[];
-  isShowRedDot?: boolean;
-  isHide?: boolean;
-}
 
 export const SideMenu = () => {
   const { t } = useTranslation();
@@ -57,154 +31,14 @@ export const SideMenu = () => {
     (state) => state.headerElMetrics
   );
   const { handleMenuRouter, handleLogout } = useMenuBase();
-  const setCurSwitchContentTabId = useWalletPageSwitchContentTabsStore(
-    (state) => state.setCurSwitchContentTabId
-  );
-  const setInviteCurTab = useMode2InviteTabStore(
-    (state) => state.setInviteCurTab
-  );
-  const isEnableRankingReward = usePlatformDynamicConfigStore(
-    (state) => state.isEnableRankingReward
-  );
 
-  const inviteTimeRedDot = useRedDotStore((state) => state.inviteTimeRedDot);
-  const setInviteTimeRedDot = useRedDotStore(
-    (state) => state.setInviteTimeRedDot
+  const menuUsageScenariosList = useMenuListStore(
+    (state) => state.menuUsageScenariosList
   );
-
-  const groups: MenuGroup[] = [
-    {
-      label: 'leftnav_home',
-      icon: 'ic_home',
-      action: () => handleMenuRouter(BasePagePathObj.HallPage),
-    },
-    {
-      label: 'leftnav_wallet',
-      icon: 'ic_wallet',
-      action: () => {
-        handleMenuRouter(BasePagePathObj.WalletPage);
-      },
-      children: [
-        {
-          label: 'wallet_nav_deposit',
-          action: () => {
-            setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
-            handleMenuRouter(BasePagePathObj.WalletPage);
-          },
-        },
-        {
-          label: 'wallet_nav_withdraw',
-          action: () => {
-            setCurSwitchContentTabId(WalletPageTabType.WITHDRAW);
-            handleMenuRouter(BasePagePathObj.WalletPage);
-          },
-        },
-      ],
-    },
-    {
-      label: 'leftnav_earn_money',
-      icon: 'ic_earn_money',
-      isShowRedDot: inviteTimeRedDot,
-      action: () => {
-        handleMenuRouter(BasePagePathObj.InvitePage);
-      },
-      children: [
-        {
-          label: 'leftnav_earn',
-          action: () => {
-            userLocalForage.setItem(
-              UserLocalforageStoreKeys.INVITE_TIME,
-              today
-            );
-            setInviteTimeRedDot(false);
-
-            setInviteCurTab(InvitePageTabType.EARN);
-            handleMenuRouter(BasePagePathObj.InvitePage);
-          },
-        },
-        {
-          label: 'leftnav_statistics',
-          action: () => {
-            setInviteCurTab(InvitePageTabType.STATISTICS);
-            handleMenuRouter(BasePagePathObj.InvitePage);
-          },
-        },
-        {
-          label: 'leftnav_team_data',
-          action: () => {
-            setInviteCurTab(InvitePageTabType.TEAM_DATA);
-            handleMenuRouter(BasePagePathObj.InvitePage);
-          },
-        },
-        {
-          label: 'leftnav_ranking_list',
-          action: () => {
-            setInviteCurTab(InvitePageTabType.RANKING_LIST);
-            handleMenuRouter(BasePagePathObj.InvitePage);
-          },
-          isHide: !isEnableRankingReward,
-        },
-      ],
-    },
-    {
-      label: 'leftnav_activity',
-      icon: 'ic_activity',
-      action: () => {
-        handleMenuRouter(BasePagePathObj.ActivityPage, {
-          state: { tab: ActivityPageTabType.ACTIVITY },
-        });
-      },
-      children: [
-        {
-          label: 'leftnav_activity',
-          action: () => {
-            setActivityPageIdx(ActivityPageTabType.ACTIVITY);
-            handleMenuRouter(BasePagePathObj.ActivityPage, {
-              state: { tab: ActivityPageTabType.ACTIVITY },
-            });
-          },
-        },
-        {
-          label: 'leftnav_vip',
-          action: () => {
-            setActivityPageIdx(ActivityPageTabType.VIP);
-            handleMenuRouter(BasePagePathObj.ActivityPage, {
-              state: { tab: ActivityPageTabType.VIP },
-            });
-          },
-        },
-      ],
-    },
-    {
-      label: 'leftnav_account',
-      icon: 'ic_user',
-      children: [
-        {
-          label: 'leftnav_personal_information',
-          action: () =>
-            handleMenuRouter(BasePagePathObj.BindKYCPage, {
-              state: { tab: KYC_PERSONAL_STATE },
-            }),
-        },
-        {
-          label: 'leftnav_balance_record',
-          action: () => {
-            handleMenuRouter(BasePagePathObj.RecordPage, {
-              state: { tab: RecordPageTabs.RECORD },
-            });
-          },
-        },
-        {
-          label: 'leftnav_balance_report',
-          action: () => {
-            handleMenuRouter(BasePagePathObj.RecordPage, {
-              state: { tab: RecordPageTabs.REPORT },
-            });
-          },
-        },
-      ],
-    },
-  ];
+  const groups =
+    menuUsageScenariosList.find((item) => {
+      return item.scenarios === MenuScenarios.DEFAULT_SIDE_MENU;
+    })?.menuList || [];
 
   const usageScenariosList = useCustomerServiceListStore(
     (state) => state.usageScenariosList
@@ -216,9 +50,6 @@ export const SideMenu = () => {
       )?.customerServiceList || []
     );
   }, [usageScenariosList]);
-  const setActivityPageIdx = useMode2ActivitySwitchPageStore(
-    (state) => state.setPageIdx
-  );
 
   const isNotInGamePage =
     location.pathname !== BasePagePathObj.GamePage &&
@@ -304,7 +135,10 @@ export const SideMenu = () => {
                             'cursor-pointer',
                             'px-3 py-2'
                           )}
-                          onClick={child.action}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            child.action && child.action();
+                          }}
                         >
                           <span className="bgi-text-[var(--base-2-main)]">
                             {t(child.label)}

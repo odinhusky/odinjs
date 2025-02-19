@@ -1,4 +1,4 @@
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useTranslation } from 'react-i18next';
 
 interface LoadMoreButtonProps {

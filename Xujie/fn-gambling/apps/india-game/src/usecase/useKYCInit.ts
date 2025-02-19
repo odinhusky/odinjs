@@ -1,5 +1,5 @@
-import { useDeepEffect } from '@libs/commonUtils';
-import { useEffect } from 'react';
+import { useDeepEffect, useUpdateEffect } from '@libs/commonUtils';
+import { useCallback, useEffect } from 'react';
 import { usePostPlayerInformationMutation } from '@libs/mode2/external/api';
 import { useIsLoginStore } from '@mode2/zustand/loginStore';
 import { useKycDataStore } from '@/zustand/kyc/useKycDataStore';
@@ -45,9 +45,18 @@ export const useKYCInit = () => {
   const setDailyWithdrawLimit = useWithdrawStore(
     (state) => state.setDailyWithdrawLimit
   );
+
   const setWithdrawProgress = useWithdrawStore(
     (state) => state.setWithdrawProgress
   );
+
+  const setWithdrawLimit = useWithdrawStore((state) => state.setWithdrawLimit);
+
+  const handleRefreshPlayerInformation = useCallback(() => {
+    if (isLogin) {
+      postPlayerInformation();
+    }
+  }, [isLogin]);
 
   useDeepEffect(() => {
     if (playerInfo) {
@@ -68,7 +77,14 @@ export const useKYCInit = () => {
           100,
         100
       );
+
       setWithdrawProgress(withdrawProgress);
+      setWithdrawLimit({
+        remainingWithdrawLimit: playerInfo.remainingWithdrawLimit,
+        maxWithdraw: playerInfo.maxWithdraw,
+        remainingBetToWithdraw: playerInfo.remainingBetToWithdraw,
+        withdrawTimes: playerInfo.withdrawTimes,
+      });
     }
   }, [playerInfo]);
 
@@ -76,11 +92,9 @@ export const useKYCInit = () => {
     setIsAPIPlayerInformationLoading(isLoading);
   }, [isLoading]);
 
-  useEffect(() => {
-    if (isLogin) {
-      postPlayerInformation();
-    }
-  }, [isLogin, refreshKycInitCount]);
+  useUpdateEffect(() => {
+    handleRefreshPlayerInformation();
+  }, [refreshKycInitCount]);
 };
 
 export default useKYCInit;

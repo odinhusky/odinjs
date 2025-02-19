@@ -9,7 +9,7 @@ import { useReminderModalStore } from '@libs/mode2/zustand/components/reminderMo
 import { useReminderModalAction } from '@mode2/action/reminderModalAction/useReminderModalAction';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
 import { cx } from '@libs/commonUtils';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 /**登录/注册成功 充值popup */
 export const ReminderModal = () => {

@@ -1,101 +1,133 @@
 :root {
-  --font-family: 'Inter', sans-serif;
+  --font-family: 'Noto Sans Devanagari';
+
+  /* background */
+  --background-light: linear-gradient(180deg, #4f0006 0%, #520107 100%);
+  --background-middle: linear-gradient(180deg, #280000 0%, #4f0005 100%);
+  --background-dark: linear-gradient(180deg, #280000 0%, #300000 100%);
 
   /* base */
-  --base-1-main: linear-gradient(180deg, #fd7f22 0%, #a72100 100%);
-  --base-1-light: linear-gradient(180deg, #eeb959 0%, #925a23 100%);
-  --base-1-dark: linear-gradient(180deg, #edb143 0%, #743c05 100%);
-  --base-1-50: linear-gradient(
+  --base-1-main: #ffe777;
+  --base-1-variant1: linear-gradient(180deg, #fffbad 0%, #eabc4a 100%);
+  --base-1-variant2: #beaa63;
+  --base-1-variant3: linear-gradient(
     180deg,
-    rgba(241, 121, 44, 0.5) 0%,
-    rgba(224, 9, 4, 0.5) 100%
+    #fff6d0 0%,
+    #e6ca65 47.5%,
+    #e4ad4a 67%,
+    #c19039 86.5%,
+    #e3af45 100%
   );
+  --base-1-variant4: linear-gradient(270deg, #e8cfa6 0%, #af8553 100%);
+  --base-1-variant5: linear-gradient(
+    180deg,
+    #f4c75c 55.5%,
+    #bb700f 67.5%,
+    #bb700f 82.5%,
+    #e6af1e 90.5%
+  );
+  --base-1-variant6: #eee555;
+  --base-1-variant7: linear-gradient(180deg, #ecbd61 0%, #bf7015 100%);
+  --base-1-variant8: linear-gradient(
+    180deg,
+    #fef79d 28.07%,
+    #d87323 69.38%,
+    #ce5d17 80.21%
+  );
+  --base-1-40: #653715;
+  --base-1-50: #804d14;
+  --base-1-60: #9e6f45;
+  --base-1-90: #e1c097;
 
-  --base-2-main: linear-gradient(180deg, #ffa722 0%, #ff753e 100%);
-  --base-2-light: linear-gradient(180deg, #e4d096 0%, #e1ab4a 100%);
-  --base-2-dark: linear-gradient(180deg, #c5b279 0%, #c28d2b 100%);
-  --base-2-50: linear-gradient(
+  --base-2-variant1: linear-gradient(180deg, #f998a3 0%, #f998a3 100%);
+  --base-2-variant2: linear-gradient(180deg, #be6970 0%, #be6970 100%);
+  --base-2-variant3: linear-gradient(180deg, #c02c3c 0%, #c5253d 100%);
+  --base-2-variant4: linear-gradient(180deg, #9b1500 0%, #7c0108 100%);
+  --base-2-variant5: linear-gradient(
     180deg,
-    rgba(224, 203, 139, 0.5) 0%,
-    rgba(221, 158, 45, 0.5) 100%
+    #7a000d 0%,
+    #68000b 50%,
+    #590600 100%
   );
-
-  --base-3-main: linear-gradient(180deg, #44ded5 0%, #1a56e5 100%);
-  --base-3-light: linear-gradient(180deg, #5adeda 0%, #3779d7 100%);
-  --base-3-dark: linear-gradient(180deg, #3bc0bb 0%, #1a5db8 100%);
-  --base-3-50: linear-gradient(
+  --base-2-variant6: #6e141d;
+  --base-2-variant7: #631c22;
+  --base-2-variant8: #530409;
+  --base-2-variant9: linear-gradient(180deg, #300000 0%, #510007 100%);
+  --base-2-variant10: #480004;
+  --base-2-variant11: #320104;
+  --base-2-variant12: linear-gradient(180deg, #3f1609 0%, #250103 100%);
+  --base-2-variant13: #260000;
+  --base-2-variant14: linear-gradient(180deg, #891908 0%, #2b0100 100%);
+  --base-2-variant15: linear-gradient(
     180deg,
-    rgba(68, 222, 213, 0.5) 0%,
-    rgba(26, 99, 209, 0.5) 100%
+    #2a0001 0%,
+    #9a1e02 95%,
+    #fa6f2c 100%
   );
-
-  --base-4-main: linear-gradient(180deg, #ffa441 0%, #fe8b34 100%);
-  --base-4-light: linear-gradient(180deg, #ffbd75 0%, #fea867 100%);
-  --base-4-dark: linear-gradient(180deg, #f38c1b 0%, #f2700d 100%);
-  --base-4-50: linear-gradient(
-    180deg,
-    rgba(255, 164, 65, 0.5) 0%,
-    rgba(254, 139, 52, 0.5) 100%
-  );
-
-  /* linear */
-  --linear-1: linear-gradient(180deg, rgba(204, 101, 71, 0.2) 0%, #75361c 100%);
-  --linear-2: linear-gradient(180deg, #faf4d7 0%, #c49f5c 100%);
-  --linear-3: linear-gradient(
-    90deg,
-    rgba(217, 217, 217, 0) 0%,
-    #ffd687 50%,
-    rgba(217, 217, 217, 0) 100%
-  );
-  --linear-4: linear-gradient(270deg, rgba(76, 64, 57, 0) 0%, #c19f65 100%);
-  --linear-5: linear-gradient(270deg, #fe8b34 0%, rgba(254, 139, 52, 0) 100%);
-  --linear-6: linear-gradient(105.36deg, #0cb696 0.79%, #4777ea 98.42%);
-  --linear-7: linear-gradient(
-    50.29deg,
-    #fec537 17.15%,
-    #fe1720 51.19%,
-    #de099f 85.23%
-  );
-  --linear-8-main: linear-gradient(180deg, #4a1e13 0%, #5c3328 100%);
-  --linear-8-light: linear-gradient(180deg, #613a30 0%, #704c42 100%);
-  --linear-8-dark: linear-gradient(180deg, #421b12 0%, #512d23 100%);
-  --linear-8-50: linear-gradient(
-    180deg,
-    rgba(74, 30, 19, 0.5) 0%,
-    rgba(92, 51, 40, 0.5) 100%
-  );
+  --base-2-variant16: #700107;
 
   /* state */
-  --state-error-main: #f83b3a;
-  --state-error-light: #f95352;
-  --state-error-dark: #da3433;
-  --state-error-50: #f83b3a80;
-  --state-success-main: #63cf30;
-  --state-success-light: #76d549;
-  --state-success-dark: #57b62a;
-  --state-success-50: #63cf3080;
-  --state-warn-main: linear-gradient(180deg, #ffa441 0%, #fe8b34 100%);
-  --state-warn-light: linear-gradient(180deg, #e49d51 0%, #e48b48 100%);
-  --state-warn-dark: linear-gradient(180deg, #c57f32 0%, #c56c29 100%);
-  --state-warn-50: linear-gradient(
-    180deg,
-    rgba(255, 164, 65, 0.5) 0%,
-    rgba(254, 139, 52, 0.5) 100%
-  );
+  --state-error-main: #f62b27;
+  --state-error-variant1: #b31e18;
+  --state-warning-main: linear-gradient(180deg, #e69931 0%, #e69927 100%);
+  --state-warning-variant1: linear-gradient(180deg, #f3b457 0%, #f3b457 100%);
+  --state-success-main: #44c524;
 
-  /* game */
-  --game-1-main: #37b4fb;
-  --game-1-light: #4fbdfb;
-  --game-1-dark: #309edd;
-  --game-1-50: rgba(55, 180, 251, 0.5);
-  --game-2-main: #9243f3;
-  --game-2-light: #ac6ff6;
-  --game-2-dark: #740ff0;
-  --game-2-50: rgba(146, 67, 243, 0.5);
-  --game-3-main: #c01db1;
-  --game-3-light: #c838ba;
-  --game-3-dark: #a91a9c;
-  --game-3-50: rgba(192, 29, 177, 0.5);
+  /* linear */
+  --linear-1: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 30%,
+    rgba(255, 255, 255, 0.1) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  --linear-2: linear-gradient(
+    180deg,
+    #b4b2b5 0%,
+    #6f6f6f 62%,
+    #5a5a5a 90%,
+    #8c8c8c 99.5%
+  );
+  --linear-3: linear-gradient(270deg, #ff8f00 0%, #f61100 100%);
+  --linear-4: linear-gradient(90deg, #216bf8 0%, #2797ff 100%);
+  --linear-5: linear-gradient(121.13deg, #18f3ff 5.99%, #0461ff 99.99%);
+  --linear-6: linear-gradient(
+    90deg,
+    rgba(128, 15, 13, 0) 0%,
+    rgba(128, 15, 13, 0.7) 20%,
+    rgba(128, 15, 13, 0.7) 80%,
+    rgba(128, 15, 13, 0.0588235) 100%
+  );
+  --linear-7: linear-gradient(
+    90deg,
+    rgba(209, 167, 125, 0) 0%,
+    #d1a77d 20%,
+    #d1a77d 80%,
+    rgba(209, 167, 125, 0) 100%
+  );
+  --linear-8: linear-gradient(
+    90deg,
+    #734001 31.64%,
+    rgba(115, 64, 1, 0) 93.64%
+  );
+  --linear-9: linear-gradient(
+    90deg,
+    #2f374e 31.64%,
+    rgba(47, 55, 78, 0) 93.64%
+  );
+  --linear-10: linear-gradient(90deg, #520805 31.64%, rgba(82, 8, 5, 0) 93.64%);
+  --linear-11: linear-gradient(
+    180deg,
+    #faf7f8 0%,
+    #adadad 68%,
+    #848382 87%,
+    #c8c8c8 99.5%
+  );
+  --linear-12: linear-gradient(180deg, #11051a 50%, rgba(82, 8, 5, 0) 100%);
+  --linear-13: linear-gradient(90deg, #f8836e 0%, #f9fd6d 100%);
+  --linear-14: linear-gradient(90deg, #cc341c 0%, #ffa42e 100%);
+  --linear-15: linear-gradient(180deg, #ebd281 0%, #5c3d21 100%);
+
 
   /* grayscale */
   --grayscale-00: #000000;
@@ -135,27 +167,16 @@
   --transparent-gray-20: rgba(0, 0, 0, 0.2);
   --transparent-gray-10: rgba(0, 0, 0, 0.1);
 
-  /* background */
-  --bg-main: linear-gradient(180deg, #262626 0%, #231f1e 100%);
-  --bg-sidebar: linear-gradient(270deg, #302d2c 0%, #272220 100%);
-  --bg-home-tab-bar: linear-gradient(180deg, #282828 0%, #000000 100%);
-  /* boxShadow */
-  --inset-shadow: 0px 4px 4px 0px #cccccc40 inset,
-    0px -4px 4px 0px #33333340 inset;
+  /* shadow */
+  --box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
+  --box-shadow-bottom: 0px 3px 1px 0px rgba(66, 1, 7, 1),
+    0px -2px 8px 0px rgba(66, 1, 7, 0.4);
 
-  --title-line: linear-gradient(
-    90deg,
-    rgba(217, 217, 217, 0) 0%,
-    #ffd687 50%,
-    rgba(217, 217, 217, 0) 100%
-  );
+  --horizon-tab-inset-shadow: 0px -4px 4px -2px #ffffff26 inset;
+  --horizon-tab-shadow: 0px 0px 4px 0px #00000040;
+  --progress-inset-shadow: 0px 2px 2px 0px #00000040 inset;
+  --progress-inset-shadow: 0px 1px 1px 0px #ffffff40;
+  --swiper-bullets-inset-shadow: 0px -1px 1px 0px #3d1515 inset;
 
-  --primary-10: rgba(32, 21, 51, 1);
-
-  --official-btn1: linear-gradient(90deg, #3374ff 0%, #00c6e9 100%);
-  --official-btn1-hover: linear-gradient(90deg, #00c6e9 0%, #3374ff 100%);
-  --official-btn2: linear-gradient(90deg, #ff8400 0%, #ff4d36 100%);
-  --official-btn2-hover: linear-gradient(90deg, #ff4d36 0%, #ff8400 100%);
-  --official-text: #5839e4;
-  --primary-20: rgba(56, 36, 83, 1);
+  --bg-main: linear-gradient(180deg, #280000 0%, #4f0005 100%);
 }

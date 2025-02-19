@@ -1,104 +1,36 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FloatButton } from 'antd';
-import Draggable from 'react-draggable';
 import cx from '@commonUtils/cx';
-import { EResourceLevel, getImgUrl } from '@mode2/utils';
-import {
-  useFloatActionButtonListStore,
-  FloatActionButton as FloatActionButtonObj,
-} from '@mode2/zustand/components/floatActionButtonStore';
+import { useFloatActionButtonListStore } from '@mode2/zustand/components/floatActionButtonStore';
 import { BackTopButton } from '@components/BackTopButton';
 import { useBreakPoint } from '@commonUtils/hooks';
 
 import { ServicesTypeResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
 import { useFloatActionButtonBase } from '@/hooks/components/useFloatActionButtonBase';
-import RedDot from '@components/RedDot';
 import { useRebateRewardModalStore } from '@mode2/zustand/components/rebateRewardModalStore';
 import ActivityCenterButton from '@components/ActivityCenterButton';
 import { useIsLoginStore } from '@mode2/zustand/loginStore';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
-import dayjs from 'dayjs';
-import Icon from '@mode2/components/Icon';
-import { isEmpty } from 'lodash';
 import useMode2RechargeWheelPageStore from '@libs/mode2/zustand/page/rechargeWheelPage';
-
-const CLICK_THRESHOLD = 150; // 拖曳距離150以下為點擊事件
-
-const ActionButton = ({
-  item,
-  styles,
-  imageClassName,
-  imgType = '',
-  onAnimationEnd = () => {},
-}: {
-  item: FloatActionButtonObj;
-  styles?: React.CSSProperties;
-  imageClassName?: string;
-  imgType?: string;
-  onAnimationEnd?: () => void;
-}) => {
-  return (
-    <div
-      key={item.type}
-      className={cx(
-        'rounded-full',
-        'h-12 w-12',
-        'flex justify-center items-center',
-        'cursor-pointer',
-        'relative',
-        item.className,
-        {
-          'bg-shadow-[var(--inset-shadow)]': !isEmpty(item.label),
-        }
-      )}
-      style={styles}
-      onClick={item.onActionClick}
-      onAnimationEnd={onAnimationEnd}
-    >
-      {isEmpty(imgType) ? (
-        <Icon
-          name={`${item.icon}_default`}
-          className={cx(
-            'rounded-full',
-            'object-contain',
-            'w-full h-full',
-            'hover:brightness-[1.15]',
-            'active:brightness-[0.85]',
-            imageClassName
-          )}
-        />
-      ) : (
-        <img
-          src={getImgUrl(EResourceLevel.V, item.icon, imgType)}
-          className={cx(
-            'rounded-full',
-            'object-contain',
-            'w-full h-full',
-            'hover:brightness-[1.15]',
-            'active:brightness-[0.85]',
-            imageClassName
-          )}
-          alt={item.label}
-        />
-      )}
-
-      {item?.isShowRedDot ? (
-        <RedDot type="img" className={'absolute top-[3px] right-[5px]'} />
-      ) : null}
-    </div>
-  );
-};
+import { FloatingBubble, FloatingBubbleProps } from 'antd-mobile';
+import { useTemplateLayoutStore } from '@libs/mode2/zustand/template/templateLayoutStore';
+import ActionButton from './components/ActionButton';
+import { useLocation } from 'react-router';
+import { BasePagePathObj } from '@libs/mode2/routerTypes/types';
+import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 
 export const FloatActionButton = () => {
   useFloatActionButtonBase();
 
-  const { navToRechargeWheelPage } = useNavPageClick();
+  const location = useLocation();
 
-  const { isDesktop } = useBreakPoint();
+  const { navToRechargeWheelPage } = useNavPageClick();
+  const { isDesktop, isMobile } = useBreakPoint();
   const { navToLoginPage } = useNavPageClick();
 
   const [isExpandActions, setIsExpandActions] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false); // 控制動畫狀態
+
   const fabConfig = useFloatActionButtonListStore((state) => state.fabConfig);
 
   const isShowDrawerControlBar = useFloatActionButtonListStore(
@@ -111,6 +43,15 @@ export const FloatActionButton = () => {
   const { setIsShowRebateRewardModal } = useRebateRewardModalStore();
   const fabList = useFloatActionButtonListStore((state) => state.fabList);
   const isLogin = useIsLoginStore((state) => state.isLogin);
+  const userRole = useUserProfileStore((state) => state.userRole);
+
+  const bottomNavigationElMetrics = useTemplateLayoutStore(
+    (state) => state.bottomNavigationElMetrics
+  );
+
+  const headerElMetrics = useTemplateLayoutStore(
+    (state) => state.headerElMetrics
+  );
 
   // 充值輪盤所有等級的剩餘次數物件
   const wheelRemainSpinNumberObj = useMode2RechargeWheelPageStore(
@@ -146,7 +87,7 @@ export const FloatActionButton = () => {
       isShowRedDot: isLogin && remainSpinNumber > 0,
       onActionClick: () => navToRechargeWheelPage(),
     }),
-    [remainSpinNumber, isLogin]
+    [remainSpinNumber, isLogin, userRole]
   );
 
   const iconMapping: Record<ServicesTypeResult | string, string> = {
@@ -183,8 +124,8 @@ export const FloatActionButton = () => {
       });
     }
 
-    // 插入空白按鈕
-    if (!isDesktop) {
+    // 插入空白按鈕，為了符合設計墊高一格按鈕的空間
+    if (!isDesktop && location.pathname !== BasePagePathObj.WalletPage) {
       fabList.splice(2, 0, {
         label: '',
         type: '',
@@ -209,7 +150,7 @@ export const FloatActionButton = () => {
     if (isLogin) {
       setIsShowRebateRewardModal(true);
     } else {
-      navToLoginPage();
+      navToLoginPage(52);
     }
   };
 
@@ -328,69 +269,77 @@ export const FloatActionButton = () => {
     return null;
   };
 
-  const startTimeRef = useRef<number>(-1);
+  // 替換浮動的按鈕實作(antd-mobile 的 FloatingBubble)
+  const FloatWrapper: React.ElementType =
+    fabConfig.isDraggable && isMobile ? FloatingBubble : FloatButton.Group;
 
-  // 判斷單一按鈕點擊
-  const handleSingleItemClickAction = useCallback(() => {
-    if (fabItems.length === 1) {
-      fabItems[0].onActionClick();
-    }
-  }, [fabItems]);
+  const FloatWrapperProps = useMemo(
+    () =>
+      fabConfig.isDraggable && isMobile
+        ? ({
+            axis: 'xy',
+            magnetic: 'x',
+            style: {
+              position: 'relative',
+              zIndex: 10,
+              '--initial-position-bottom': `${
+                (bottomNavigationElMetrics?.height || 0) + 16
+              }px`,
+              '--initial-position-right': '16px',
+              '--background': 'transparent',
+
+              // edge-distance 是 padding，可以依照 padding 的規則設定
+              '--edge-distance': `${
+                (headerElMetrics?.height || 0) + 16
+              }px 16px ${(bottomNavigationElMetrics?.height || 0) + 16}px 16px`,
+            },
+          } as FloatingBubbleProps)
+        : ({
+            rootClassName: '',
+            className: cx(
+              'w-auto end-0 bottom-[68px] mobile:bottom-[76px] shadow-none flex items-end flex-col mr-2'
+            ),
+            shape: 'square',
+          } as React.ComponentProps<typeof FloatButton.Group>),
+    [
+      headerElMetrics?.height,
+      bottomNavigationElMetrics?.height,
+      fabConfig.isDraggable,
+      isMobile,
+    ]
+  );
 
   return fabConfig.isFeatureSupport ? (
-    <Draggable
-      disabled={!fabConfig.isDraggable}
-      cancel=".click-only" // 指定有這個 class 的元素不會觸發拖曳
-      key={JSON.stringify(fabConfig)} // 當頁面變化時會重新渲染回到預設位置
-      bounds="parent" // 限制拖動範圍
-      onStart={() => {
-        startTimeRef.current = dayjs().valueOf();
-      }}
-      onStop={() => {
-        const distance = dayjs().valueOf() - startTimeRef.current;
-        if (distance <= CLICK_THRESHOLD) {
-          handleSingleItemClickAction();
-        }
-      }}
-    >
-      <FloatButton.Group
-        rootClassName={''}
-        className={cx(
-          'w-auto end-0 bottom-[68px] mobile:bottom-[76px] shadow-none flex items-end flex-col mr-2'
-        )}
-        shape="square"
+    <FloatWrapper {...FloatWrapperProps}>
+      <div
+        className={cx('flex flex-col justify-center gap-1 tablet:gap-2', {
+          'h-auto justify-end rounded-full p-1 bgi-[var(--transparent-gray-70)] bg-shadow-[var(--float-button-group-shadow)]':
+            (showExpandDrawerButton && isExpandActions) ||
+            (isDesktop && fabConfig.isDrawerStyle),
+          'grid gap-3': !showExpandDrawerButton,
+          'w-auto p-2 items-center': isOpenDrawer,
+          'w-0 px-0': !isOpenDrawer,
+          'mb-2': showButtonGroup,
+          'max-h-[278px] rounded-[20px] flex-wrap': !isDesktop,
+          '!w-[116px]': !isDesktop && showExpandDrawerButton && isExpandActions,
+        })}
       >
-        <div
-          className={cx('flex flex-col justify-center gap-1 tablet:gap-2', {
-            'h-auto justify-end rounded-full p-1 bgi-[var(--transparent-gray-70)] bg-shadow-[var(--float-button-group-shadow)]':
-              (showExpandDrawerButton && isExpandActions) ||
-              (isDesktop && fabConfig.isDrawerStyle),
-            'grid gap-3': !showExpandDrawerButton,
-            'w-auto p-2 items-center': isOpenDrawer,
-            'w-0 px-0': !isOpenDrawer,
-            'mb-2': showButtonGroup,
-            'max-h-[278px] rounded-[20px] flex-wrap': !isDesktop,
-            '!w-[116px]':
-              !isDesktop && showExpandDrawerButton && isExpandActions,
-          })}
-        >
-          {renderRechargeWheelBtn()}
+        {renderRechargeWheelBtn()}
 
-          {renderMoneyBoxBtn()}
+        {renderMoneyBoxBtn()}
 
-          {renderButtons()}
+        {renderButtons()}
 
-          {showButtonGroup ? (
-            <div className="place-self-center">
-              {' '}
-              <BackTopButton className="rounded-full w-12 h-12" />
-            </div>
-          ) : null}
-        </div>
+        {showButtonGroup ? (
+          <div className="place-self-center">
+            {' '}
+            <BackTopButton className="rounded-full w-12 h-12" />
+          </div>
+        ) : null}
+      </div>
 
-        {/* 觸發紅包雨按鈕 */}
-        {isOpenDrawer && <ActivityCenterButton />}
-      </FloatButton.Group>
-    </Draggable>
+      {/* 觸發紅包雨按鈕 */}
+      {isOpenDrawer && <ActivityCenterButton />}
+    </FloatWrapper>
   ) : null;
 };

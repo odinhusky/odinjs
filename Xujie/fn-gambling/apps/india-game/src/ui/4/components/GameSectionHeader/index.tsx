@@ -4,10 +4,11 @@ import { cx } from '@libs/commonUtils';
 import { EResourceLevel, getImgUrl } from '@mode2/utils';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
 import renderI18N from '@libs/commonUtils/renderI18N';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useEffect, useState } from 'react';
 import { FLEX_CENTER } from '@libs/constant/style';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
+import handleGlobalClick from '@libs/mode2/action/handleGlobalClick';
 
 interface GameSectionHeaderProps {
   iconSrc: string;
@@ -28,15 +29,25 @@ const GameSectionHeader = (props: GameSectionHeaderProps) => {
   const [isNextBtnDisabled, setIsNextBtnDisabled] = useState(false);
 
   const handleSlidePrev = () => {
-    if (props.swiperRef?.current) {
-      props.swiperRef.current.slidePrev();
-    }
+    handleGlobalClick({
+      target: 'handleGameSectionHeaderSlidePrev',
+      callback: () => {
+        if (props.swiperRef?.current) {
+          props.swiperRef.current.slidePrev();
+        }
+      },
+    });
   };
 
   const handleSlideNext = () => {
-    if (props.swiperRef?.current) {
-      props.swiperRef.current.slideNext();
-    }
+    handleGlobalClick({
+      target: 'handleGameSectionHeaderSlideNext',
+      callback: () => {
+        if (props.swiperRef?.current) {
+          props.swiperRef.current.slideNext();
+        }
+      },
+    });
   };
 
   /**

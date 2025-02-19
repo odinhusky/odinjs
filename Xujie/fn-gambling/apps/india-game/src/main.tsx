@@ -1,5 +1,5 @@
 import * as ReactDOM from 'react-dom/client';
-import App from './app';
+
 import '@plugins/i18next/i18next';
 import sdkUtils from '@mode2/utils/sdk';
 import { adaptHtmlFontSize, replaceHtmlProductInformation } from '@mode2/utils';
@@ -7,9 +7,9 @@ import 'animate.css';
 import { useAppStore } from '@mode2/zustand/appStore';
 import { useImageCache } from '@mode2/usecase/useImageCache';
 import VConsole from 'vconsole';
+import App from '@apps/App';
 
-import.meta.env.VITE_MODE !== 'prod' && new VConsole();
-
+// sdkUtils.isDevelopDebug() && new VConsole();
 adaptHtmlFontSize();
 replaceHtmlProductInformation();
 

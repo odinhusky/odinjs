@@ -7,7 +7,7 @@ import {
   useHallPageActionsStore,
   HallPageIdObj,
 } from '@mode2/zustand/page/hallPageStore';
-import { isArray } from 'lodash';
+import { cloneDeep, isArray } from 'lodash';
 import { handleHallPageTabClick } from '@mode2/action/hallPageAction/actionType';
 import useHallPageActions from '@mode2/action/hallPageAction/useHallPageActions';
 import { useGameListStore } from '@mode2/zustand/gameListStore';
@@ -187,14 +187,21 @@ export const useMode2HallPageTabs = () => {
   );
 
   useDeepEffect(() => {
-    const actionList = mixTabList.map((item) => () => {
+    let list = cloneDeep(mixTabList);
+
+    // v6 版本沒有 Lobby Tab
+    if (import.meta.env['VITE_V_VERSION'] === 'v6') {
+      list = list.slice(2); // 移除 lobby 以及 hot 的標籤
+    }
+
+    const actionList = list.map((item) => () => {
       handleHallPageClick({
         actionName: item.actionName,
         payload: item?.payload,
       });
     });
 
-    setTabList(mixTabList);
+    setTabList(list);
     setHallPageTabActionList(actionList);
   }, [mixTabList]);
 };

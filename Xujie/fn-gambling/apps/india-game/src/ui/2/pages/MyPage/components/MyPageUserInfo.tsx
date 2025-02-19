@@ -14,7 +14,7 @@ import { cx } from '@libs/commonUtils';
 import Avatar from '@components/Avatar';
 import AvatarFrame from '@components/AvatarFrame';
 import { XY_CENTER } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 export const MyPageUserInfo = memo(() => {
   const playerName = useUserProfileStore((state) => state.playerName);

@@ -14,8 +14,12 @@ import useActivityCenterBase from '@libs/mode2/usecase/useActivityCenterBase';
 
 import useClearCacheStorage from '@mode2/usecase/useClearCacheStorage';
 import useAvoidApkRecycling from '@mode2/usecase/useAvoidApkRecycling';
+import useRecentGameList from '@mode2/usecase/useRecentGameList';
 import { useBottomNavigationBase } from '@mode2/usecase/components/useBottomNavigationBase';
 import useRechargeWheelPlayerProgress from '@libs/mode2/usecase/page/rechargeWheelPage/useRechargeWheelPlayerProgress';
+import useUserInfo from '@libs/mode2/usecase/useUserInfo';
+import useMenuListBase from '@mode2/usecase/components/useMenuListBase';
+import { usePromoteHomeBase } from '@mode2/usecase/usePromoteHomeBase';
 
 export const useTemplateLayoutBase = () => {
   /**
@@ -27,8 +31,14 @@ export const useTemplateLayoutBase = () => {
   // 移動到這裡，API 太亂，很多地方需要 CustomerService
   useGameList();
 
+  // API: mainInfo, userInfo 的掛載
+  useUserInfo();
+
   // KYC 初始化
   useKYCInit();
+
+  // 菜單列表
+  useMenuListBase();
 
   useCustomerServiceListBase();
 
@@ -43,6 +53,9 @@ export const useTemplateLayoutBase = () => {
 
   // 浮動按鈕
   useFloatActionButtonBase();
+
+  // 需要的邀請連結 & code
+  usePromoteHomeBase();
 
   // 活动中心
   useActivityCenterBase();
@@ -87,4 +100,7 @@ export const useTemplateLayoutBase = () => {
   // 移動到這裡因為首頁的 FloatButton 也要該資料
   // === Recharge Wheel Current Deposit & spinProgress
   useRechargeWheelPlayerProgress();
+
+  // Recent
+  useRecentGameList();
 };

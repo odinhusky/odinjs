@@ -1,6 +1,7 @@
 import cx from '@commonUtils/cx';
 import { FLEX_CENTER } from '@libs/constant/style';
 import {
+  SocialInfo,
   SocialScenarios,
   useSocialListStore,
 } from '@mode2/zustand/components/socialListStore';
@@ -14,10 +15,15 @@ import { useMemo } from 'react';
 export const SocialList = (props: {
   scenarios: SocialScenarios;
   className?: string;
+  iconOuterClassName?: string;
   iconClassName?: string;
   classNameLabel?: string;
   classNameUnit?: string;
   isShowLabelFromProps?: boolean;
+  classNameUnitBox?: string;
+  isShowLabel?: boolean; // 顯示文本
+  children?: React.ReactNode; //
+  extraList?: SocialInfo[];
 }) => {
   const usageScenariosList = useSocialListStore(
     (state) => state.usageScenariosList

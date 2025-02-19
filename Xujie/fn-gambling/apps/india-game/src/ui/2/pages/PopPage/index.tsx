@@ -1,5 +1,5 @@
 import cx from '@libs/commonUtils/cx';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { BasePagePathObj } from '@libs/mode2/routerTypes/types';
 import {
   useNavigateClick,
@@ -75,7 +75,7 @@ const PopPage = () => {
   const handleToLogin = () => {
     navigate(BasePagePathObj.HallPage);
     if (!sdkUtils.isCurrentLogin()) {
-      navToLoginPage(true, LoginFormType.REGISTER);
+      navToLoginPage(57, true, LoginFormType.REGISTER);
     }
   };
 

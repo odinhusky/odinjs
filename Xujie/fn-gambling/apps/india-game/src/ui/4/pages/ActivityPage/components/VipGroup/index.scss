@@ -1,0 +1,28 @@
+.vip-group {
+  .activity-page-vip-info {
+    @apply flex flex-col gap-4 rounded p-6
+  }
+
+  .vip-card-slide {
+    &.swiper-slide {
+      height: auto !important;
+      width: auto !important;
+
+      .vip-card {
+        @apply w-full h-40 transition-all duration-[0.5s] ease-[ease-in-out];
+      }
+    }
+
+
+
+    &.swiper-slide-active {
+      .vip-card {
+        @apply w-full h-44;
+      }
+    }
+  }
+
+  .swiper-wrapper {
+    @apply items-end;
+  }
+}

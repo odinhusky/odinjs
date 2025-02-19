@@ -2,17 +2,23 @@ import { ILoginModalProps } from './useLoginForm';
 import { useMemo } from 'react';
 import useRegister from '@mode2/usecase/useRegister';
 import { useTranslation } from 'react-i18next';
+import { useUserState } from '@/usecase/useUserState';
+import { OTPCodeValidator } from '@/validator/antdValidator';
 
 const useRegisterForm = (props: ILoginModalProps) => {
   const { t } = useTranslation();
   const { onClose, onSuccess } = props;
+  const { refreshUserState } = useUserState();
 
   const baseRegisterFormState = useRegister({
     successCallback: () => {
       onClose?.();
       onSuccess?.();
+      refreshUserState();
     },
   });
+
+  const OTPCodeValidatorInstance = OTPCodeValidator(t);
 
   const validator = useMemo(
     () => ({
@@ -36,11 +42,14 @@ const useRegisterForm = (props: ILoginModalProps) => {
         }
         return Promise.resolve();
       },
-      verifyCode: (value: string) => {
-        if (value.length !== 4) {
-          //TODO yaleen 缺少i18next
-          //return Promise.reject();
+      optCode: OTPCodeValidatorInstance.otpCode,
+      captchaCode: (value: string) => {
+        if (!value) {
+          return Promise.reject(t('toast_field_cannot_be_empty'));
         }
+        // if (value.length < 4) {
+        //   return Promise.reject();
+        // }
         return Promise.resolve();
       },
     }),

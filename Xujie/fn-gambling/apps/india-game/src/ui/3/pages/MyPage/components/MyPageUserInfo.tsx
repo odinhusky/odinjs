@@ -14,7 +14,7 @@ import { cx } from '@libs/commonUtils';
 import Avatar from '@components/Avatar';
 import AvatarFrame from '@components/AvatarFrame';
 import { XY_CENTER } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 export const MyPageUserInfo = memo(() => {
   const playerName = useUserProfileStore((state) => state.playerName);
@@ -70,7 +70,12 @@ export const MyPageUserInfo = memo(() => {
         </div>
       </div>
 
-      <div className="flex items-center bgi-text-[var(--base-2-main)] justify-center font-medium text-center gap-1 mt-3">
+      <div
+        className={cx(
+          'flex items-center justify-center gap-1 mt-3',
+          'bgi-text-[var(--base-2-main)] text-center text-base mobile:text-lg font-medium'
+        )}
+      >
         <div>{formatMoney(totalAssets, true)}</div>
         <div>{t('account_menu_surplus')}</div>
       </div>

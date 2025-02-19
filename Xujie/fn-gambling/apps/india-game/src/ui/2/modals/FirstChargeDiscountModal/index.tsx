@@ -6,7 +6,7 @@ import {
   formatCountdownTime,
   getImgUrl,
 } from '@libs/mode2/utils';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useTranslation } from 'react-i18next';
 import useFirstChargeModalBase from '@libs/mode2/usecase/useFirstChargeModalBase';
 import useFirstChargeModalAction from '@libs/mode2/action/firstChargeModalAction/useFirstChargeModalAction';

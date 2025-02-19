@@ -1,7 +1,7 @@
 import { cx } from '@libs/commonUtils';
 import { FLEX_ITEMS_CENTER } from '@libs/constant/style';
 import { VoidAction } from '@libs/mode2/@types/commonTypes';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { CSSProperties, forwardRef } from 'react';
 import Marquee, { MarqueeProps } from 'react-fast-marquee';
 

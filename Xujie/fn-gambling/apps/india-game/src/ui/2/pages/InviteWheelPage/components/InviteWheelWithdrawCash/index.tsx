@@ -10,7 +10,7 @@ import {
 import { useInviteWheelPageStoreStore } from '@mode2/zustand/page/inviteWheelPageStore';
 import AnimationFlipNumbers from '@components/AnimationFlipNumbers';
 import { formatCountdownTime, formatNumber } from '@mode2/utils';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 
 const InviteWheelWithdrawCash = () => {
   const { handleInviteWheelAction } = useInviteWheelPageActions();

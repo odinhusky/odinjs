@@ -21,15 +21,16 @@
   }
 }
 
-.team_club_tooltip {
-  .ant-tooltip-inner {
-    @apply py-2 px-3;
-  }
+// 抽出去到元件內部
+// .team_club_tooltip {
+//   .ant-tooltip-inner {
+//     @apply py-2 px-3;
+//   }
 
-  .ant-tooltip-arrow {
-    @apply hidden;
-  }
-}
+//   .ant-tooltip-arrow {
+//     @apply hidden;
+//   }
+// }
 
 .team_club_progress_container {
   .ant-progress-bg.ant-progress-bg-outer {

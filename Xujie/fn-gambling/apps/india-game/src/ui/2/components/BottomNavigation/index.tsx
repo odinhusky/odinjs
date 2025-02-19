@@ -9,7 +9,7 @@ import RedDot from '@components/RedDot';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import { FLEX_CENTER, FLEX_ITEMS_CENTER } from '@libs/constant/style';
 import { forwardRef, memo, Ref } from 'react';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import useBottomNavigationActions from '@mode2/action/components/bottomNavigation/useBottomNavigationAction';
 import { handleBottomNavigationButtonClick } from '@mode2/action/components/bottomNavigation/acitonType';
 

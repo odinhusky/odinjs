@@ -8,7 +8,7 @@ import {
   handleCheckoutPageSuccessOKClick,
 } from '@libs/mode2/action/checkoutPageAction/actionType';
 import useCheckoutPageActions from '@libs/mode2/action/checkoutPageAction/useCheckoutPageActions';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { PayCheckoutDetailStateResult } from '@libs/mode2/external/api/endpoint/wallet/GetPayCheckoutDetailEndpoint';
 
 const PayResult = ({

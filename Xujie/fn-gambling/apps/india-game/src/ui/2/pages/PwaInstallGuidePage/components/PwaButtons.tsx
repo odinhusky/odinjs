@@ -1,7 +1,7 @@
 import cx from '@libs/commonUtils/cx';
 import { IPwa } from '..';
 import { useToastStore } from '@libs/mode2/zustand/components/toastStore';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 interface BeforeInstallPromptEvent extends Event {
   // 这里应该包含事件的具体属性和方法

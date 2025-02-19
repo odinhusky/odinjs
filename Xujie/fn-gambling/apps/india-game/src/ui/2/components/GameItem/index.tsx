@@ -1,4 +1,4 @@
-import { MouseEvent, useRef, useState, memo } from 'react';
+import { MouseEvent, useRef, useState, memo, forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import './index.scss';
 import cx from '@commonUtils/cx';
@@ -14,7 +14,7 @@ import { useGameItemBase } from '@mode2/usecase/useGameItemBase';
 import { FLEX_CENTER, FLEX_COL } from '@libs/constant/style';
 import isEqual from 'lodash/isEqual';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 interface GameItemProps {
   item: GameListItemResult;
@@ -80,200 +80,207 @@ const LoadErrorWatermark = memo(
   }
 );
 
-export const GameItem = memo((props: GameItemProps) => {
-  const { navToLoginPage } = useNavPageClick();
-  const { item, showGameName, isShowHoverMask } = props;
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { t } = useTranslation();
-  const { onEnterGame, onCollect, isShowName } = useGameItemBase();
+export const GameItem = memo(
+  forwardRef<HTMLDivElement, GameItemProps>((props, ref) => {
+    const { navToLoginPage } = useNavPageClick();
+    const { item, showGameName, isShowHoverMask } = props;
+    const containerRef = useRef<HTMLDivElement>(null);
+    const { t } = useTranslation();
+    const { onEnterGame, onCollect, isShowName } = useGameItemBase();
 
-  const favoriteGameIds = useGameListStore((state) => state.favoriteGameIds);
+    const favoriteGameIds = useGameListStore((state) => state.favoriteGameIds);
 
-  const isLogin = useIsLoginStore((state) => state.isLogin);
+    const isLogin = useIsLoginStore((state) => state.isLogin);
 
-  const [hover, setHover] = useState(false);
+    const [hover, setHover] = useState(false);
 
-  const [isLoadError, setLoadError] = useState(false);
+    const [isLoadError, setLoadError] = useState(false);
 
-  const displayName = item.name || item.platform || item.gameName;
-  const hasGameId = item.gameId !== undefined;
+    const displayName = item.name || item.platform || item.gameName;
+    const hasGameId = item.gameId !== undefined;
 
-  // 只有直接進入遊戲的item才能被加入最愛
-  const canAddToFavorites =
-    hasGameId && item.enterGameType === EnterGameType.DIRECT;
-  const shouldShowGameName = isShowName(item, showGameName);
+    // 只有直接進入遊戲的item才能被加入最愛
+    const canAddToFavorites =
+      hasGameId && item.enterGameType === EnterGameType.DIRECT;
+    const shouldShowGameName = isShowName(item, showGameName);
 
-  // 只有會直接進入的遊戲才需要顯示hot字樣
-  const shouldShowHotGameText =
-    item.isHotGame &&
-    item.enterGameType === EnterGameType.DIRECT &&
-    !!item?.coverImageSrc?.length;
+    // 只有會直接進入的遊戲才需要顯示hot字樣
+    const shouldShowHotGameText =
+      item.isHotGame &&
+      item.enterGameType === EnterGameType.DIRECT &&
+      !!item?.coverImageSrc?.length;
 
-  const isFavorite = favoriteGameIds.includes(item.gameId);
+    const isFavorite = favoriteGameIds.includes(item.gameId);
 
-  const favoriteImgUrl = getImgUrl(
-    EResourceLevel.V,
-    `btn_favorite_${isFavorite ? 'active' : 'unactive'}`
-  );
+    const favoriteImgUrl = getImgUrl(
+      EResourceLevel.V,
+      `btn_favorite_${isFavorite ? 'active' : 'unactive'}`
+    );
 
-  const handleAddToFavoriteClick = (e: MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    if (isLogin) {
-      // - 因為不會根據 加入/移除 我的最愛，就去重打所有的GameList API，所以透過這種方式改寫現在最真實我的最愛的狀態
-      const newItem = {
-        ...item,
-        isFavorite,
-      };
+    const handleAddToFavoriteClick = (e: MouseEvent<HTMLDivElement>) => {
+      e.stopPropagation();
+      if (isLogin) {
+        // - 因為不會根據 加入/移除 我的最愛，就去重打所有的GameList API，所以透過這種方式改寫現在最真實我的最愛的狀態
+        const newItem = {
+          ...item,
+          isFavorite,
+        };
 
-      onCollect(newItem);
-    } else {
-      navToLoginPage(true);
-    }
-  };
-
-  /** 除了點擊後進入遊戲目錄的item之外,都需要先登入 */
-  const handleEnterGameClick = () => {
-    // 維修中禁止點擊
-    if (!item.isMaintain) {
-      if (item.enterGameType !== EnterGameType.DIRECTORY && !isLogin) {
-        navToLoginPage(true);
+        onCollect(newItem);
       } else {
-        onEnterGame(item);
+        navToLoginPage(61, true);
       }
-    }
-  };
+    };
 
-  const handleImageLoadOnError = () => {
-    setLoadError(true);
-  };
+    /** 除了點擊後進入遊戲目錄的item之外,都需要先登入 */
+    const handleEnterGameClick = () => {
+      // 維修中禁止點擊
+      if (!item.isMaintain) {
+        if (item.enterGameType !== EnterGameType.DIRECTORY && !isLogin) {
+          navToLoginPage(60, true);
+        } else {
+          onEnterGame(item);
+        }
+      }
+    };
 
-  const renderFallBackImage = () => {
-    const fallbackImg = getImgUrl(EResourceLevel.V, 'game_item_cover_fallback');
+    const handleImageLoadOnError = () => {
+      setLoadError(true);
+    };
+
+    const renderFallBackImage = () => {
+      const fallbackImg = getImgUrl(
+        EResourceLevel.V,
+        'game_item_cover_fallback'
+      );
+
+      return (
+        <img
+          src={fallbackImg}
+          alt="Fallback"
+          className={cx('absolute rounded-lg w-full h-full object-cover')}
+        />
+      );
+    };
 
     return (
-      <img
-        src={fallbackImg}
-        alt="Fallback"
-        className={cx('absolute rounded-lg w-full h-full object-cover')}
-      />
-    );
-  };
-
-  return (
-    <div
-      className={cx('relative', FLEX_COL, 'h-full w-full', {
-        'cursor-default pointer-event-none': item.isMaintain,
-        'cursor-pointer': !item.isMaintain,
-      })}
-      onMouseOver={() => setHover(true)}
-      onMouseOut={() => setHover(false)}
-      onClick={handleEnterGameClick}
-      ref={containerRef}
-    >
-      <div className={cx('relative', props.imageClassName)}>
-        {/** 使用”h-full w-full object-cover“確保圖片是等比例縮放, 並自動裁減掉超出部分 */}
-        {isLoadError ? (
-          renderFallBackImage()
-        ) : (
-          <LazyImage
-            src={item.coverImageSrc}
-            className={cx('absolute rounded-lg w-full h-full object-cover')}
-            ref={containerRef}
-            onError={() => {
-              handleImageLoadOnError();
-            }}
-          />
-        )}
-
-        {/* 圖片載入失效 浮水印 */}
-        <LoadErrorWatermark
-          isDisplay={isLoadError}
-          displayName={displayName}
-          isMaintain={item.isMaintain}
-        />
-
-        {shouldShowHotGameText && (
-          <div
-            className={cx(
-              'font-medium',
-              'text-xs mobile:text-sm',
-              'w-10 h-4',
-              'mobile:w-[45px] mobile:h-5',
-              'rounded-tl-lg rounded-br-lg',
-              'bgi-[var(--state-error-main)]',
-              FLEX_CENTER,
-              'absolute top-0 left-0'
+      <div ref={ref}>
+        <div
+          className={cx('relative', FLEX_COL, 'h-full w-full', {
+            'cursor-default pointer-event-none': item.isMaintain,
+            'cursor-pointer': !item.isMaintain,
+          })}
+          onMouseOver={() => setHover(true)}
+          onMouseOut={() => setHover(false)}
+          onClick={handleEnterGameClick}
+          ref={containerRef}
+        >
+          <div className={cx('relative', props.imageClassName)}>
+            {/** 使用”h-full w-full object-cover“確保圖片是等比例縮放, 並自動裁減掉超出部分 */}
+            {isLoadError ? (
+              renderFallBackImage()
+            ) : (
+              <LazyImage
+                src={item.coverImageSrc}
+                className={cx('absolute rounded-lg w-full h-full object-cover')}
+                ref={containerRef}
+                onError={() => {
+                  handleImageLoadOnError();
+                }}
+              />
             )}
-          >
-            <span className="bgi-text-[var(--grayscale-100)]">HOT</span>
-          </div>
-        )}
 
-        {canAddToFavorites && !item.isMaintain && (
-          <div
-            className={cx(
-              'w-8 h-11 absolute top-0 right-3 z-20 cursor-pointer'
+            {/* 圖片載入失效 浮水印 */}
+            <LoadErrorWatermark
+              isDisplay={isLoadError}
+              displayName={displayName}
+              isMaintain={item.isMaintain}
+            />
+
+            {shouldShowHotGameText && (
+              <div
+                className={cx(
+                  'font-medium',
+                  'text-xs mobile:text-sm',
+                  'w-10 h-4',
+                  'mobile:w-[45px] mobile:h-5',
+                  'rounded-tl-lg rounded-br-lg',
+                  'bgi-[var(--state-error-main)]',
+                  FLEX_CENTER,
+                  'absolute top-0 left-0'
+                )}
+              >
+                <span className="bgi-text-[var(--grayscale-100)]">HOT</span>
+              </div>
             )}
-            onMouseOver={(e) => e.stopPropagation()}
-            onClick={(e) => handleAddToFavoriteClick(e)}
-          >
-            <img src={favoriteImgUrl} alt="collect" />
-          </div>
-        )}
 
-        {((isShowHoverMask && hover) || item.isMaintain) && (
-          <>
-            <div className="bg-hover rounded-lg"></div>
+            {canAddToFavorites && !item.isMaintain && (
+              <div
+                className={cx(
+                  'w-8 h-11 absolute top-0 right-3 z-20 cursor-pointer'
+                )}
+                onMouseOver={(e) => e.stopPropagation()}
+                onClick={(e) => handleAddToFavoriteClick(e)}
+              >
+                <img src={favoriteImgUrl} alt="collect" />
+              </div>
+            )}
+
+            {((isShowHoverMask && hover) || item.isMaintain) && (
+              <>
+                <div className="bg-hover rounded-lg"></div>
+                <div
+                  className={cx(
+                    'bgi-text-[var(--linear-2)]',
+                    'w-full h-full',
+                    'absolute left-0 top-0 z-10',
+                    FLEX_CENTER,
+                    'box-border',
+                    'text-sm mobile:text-base',
+                    'font-medium text-center'
+                  )}
+                >
+                  {item.isMaintain ? (
+                    <div className="flex flex-col justify-center items-center p-1">
+                      <Icon
+                        className={cx(
+                          'w-12 h-12 mobile:w-[72px] mobile:h-[72px] mb-1'
+                        )}
+                        name="game_card_maintenance"
+                      />
+                      <div>
+                        {item.maintainTime !== ''
+                          ? item.maintainTime
+                          : t('maintenance')}
+                      </div>
+                    </div>
+                  ) : (
+                    displayName
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+
+          {shouldShowGameName && (
             <div
               className={cx(
                 'bgi-text-[var(--linear-2)]',
-                'w-full h-full',
-                'absolute left-0 top-0 z-10',
-                FLEX_CENTER,
-                'box-border',
+                'mt-1 mobile:mt-2',
                 'text-sm mobile:text-base',
-                'font-medium text-center'
+                'font-medium text-center',
+                'text-ellipsis whitespace-nowrap',
+                'overflow-hidden',
+                'shrink-0'
               )}
             >
-              {item.isMaintain ? (
-                <div className="flex flex-col justify-center items-center p-1">
-                  <Icon
-                    className={cx(
-                      'w-12 h-12 mobile:w-[72px] mobile:h-[72px] mb-1'
-                    )}
-                    name="game_card_maintenance"
-                  />
-                  <div>
-                    {item.maintainTime !== ''
-                      ? item.maintainTime
-                      : t('maintenance')}
-                  </div>
-                </div>
-              ) : (
-                displayName
-              )}
+              {displayName}
             </div>
-          </>
-        )}
-      </div>
-
-      {shouldShowGameName && (
-        <div
-          className={cx(
-            'bgi-text-[var(--linear-2)]',
-            'mt-1 mobile:mt-2',
-            'text-sm mobile:text-base',
-            'font-medium text-center',
-            'text-ellipsis whitespace-nowrap',
-            'overflow-hidden',
-            'shrink-0'
           )}
-        >
-          {displayName}
         </div>
-      )}
-    </div>
-  );
-});
+      </div>
+    );
+  })
+);
 
 export default GameItem;

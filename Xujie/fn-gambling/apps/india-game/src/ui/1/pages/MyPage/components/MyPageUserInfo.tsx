@@ -13,7 +13,7 @@ import { memo } from 'react';
 import { cx } from '@libs/commonUtils';
 import Avatar from '@components/Avatar';
 import { XY_CENTER } from '@libs/constant/style';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import MyPageTabButton from '@/ui/1/components/MyPageTabButton';
 import AvatarFrame from '@components/AvatarFrame';
 import { useWithdrawStore } from '@/zustand/wallet/useWithdrawStore';

@@ -6,7 +6,11 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
 import renderI18N from '@libs/commonUtils/renderI18N';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
+import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
+import { UserRoleType } from '@libs/mode2/@types/userRoleTypes';
+import useBindPlayerPhoneModalStore from '@libs/mode2/zustand/modal/BindPlayerPhoneModal';
+import { useEffect } from 'react';
 
 export const WalletPageSwitchTabs = () => {
   const { t } = useTranslation();
@@ -19,6 +23,16 @@ export const WalletPageSwitchTabs = () => {
 
   const curSwitchContentTabId = useWalletPageSwitchContentTabsStore(
     (state) => state.curSwitchContentTabId
+  );
+
+  const userRole = useUserProfileStore((state) => state.userRole);
+
+  useEffect(() => {
+    console.log('!! userRole=>', userRole);
+  }, [userRole]);
+
+  const setShowBindPlayerPhoneModal = useBindPlayerPhoneModalStore(
+    (state) => state.setShowBindPlayerPhoneModal
   );
 
   return (

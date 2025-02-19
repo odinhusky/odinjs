@@ -7,6 +7,7 @@ import useTemplateLayoutActions from '@mode2/action/templateLayoutAction/useTemp
 import { handleTemplateLayoutCloseMyDrawerBtnClick } from '@mode2/action/templateLayoutAction/acitonType';
 import MyPage from '@pages/MyPage';
 import { useEffect, useState } from 'react';
+import handleGlobalClick from '@libs/mode2/action/handleGlobalClick';
 
 export const MyDrawer = () => {
   const { isMobile } = useBreakPoint();
@@ -20,7 +21,12 @@ export const MyDrawer = () => {
   const isOpen = openMyDrawer && !isMobile;
 
   const onClose = () => {
-    setAnimOut('animate__animated animate__slideOutRight animate__faster');
+    handleGlobalClick({
+      target: 'handleIndiaU1MyDrawerClose',
+      callback: () => {
+        setAnimOut('animate__animated animate__slideOutRight animate__faster');
+      },
+    });
   };
 
   useEffect(() => {

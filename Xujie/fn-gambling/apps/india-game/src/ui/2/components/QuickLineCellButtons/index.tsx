@@ -1,14 +1,23 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMyPageStore } from '@mode2/zustand/page/myPageStore';
+import {
+  MyPageBtnListScenarios,
+  useMyPageStore,
+} from '@mode2/zustand/page/myPageStore';
 import renderI18N from '@commonUtils/renderI18N';
 import cx from '@commonUtils/cx';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import RedDot from '@components/RedDot';
 
 const QuickLineCellButtons = memo(() => {
   const { t } = useTranslation();
-  const lineBtnList = useMyPageStore((state) => state.lineBtnList);
+  const usageScenariosList = useMyPageStore(
+    (state) => state.usageScenariosList
+  );
+  const lineBtnList =
+    usageScenariosList.find((item) => {
+      return item.scenarios === MyPageBtnListScenarios.DEFAULT;
+    })?.usageScenariosList || [];
 
   return (
     <div className="btnItems">

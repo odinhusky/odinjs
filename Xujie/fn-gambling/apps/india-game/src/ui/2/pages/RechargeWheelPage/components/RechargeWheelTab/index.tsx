@@ -2,7 +2,7 @@ import { cx } from '@libs/commonUtils';
 import { FLEX_CENTER, XY_CENTER } from '@libs/constant/style';
 import { handleRechargeWheelTabClick } from '@libs/mode2/action/rechargeWheel/acitonType';
 import useRechargeWheelAction from '@libs/mode2/action/rechargeWheel/useRechargeWheelAction';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { EResourceLevel, formatMoney, getImgUrl } from '@libs/mode2/utils';
 import { RechargeWheelType } from '@libs/mode2/zustand/components/rechargeWheelTabStore';
 import useMode2RechargeWheelPageStore from '@libs/mode2/zustand/page/rechargeWheelPage';
@@ -82,7 +82,7 @@ export const RechargeWheelTab = ({
       {!isActive && remainNum > 0 ? (
         <div className={cx('w-[14px]', 'absolute top-1 right-2 z-[1]')}>
           <img
-            src={getImgUrl(EResourceLevel.V, 'red_dot')}
+            src={getImgUrl(EResourceLevel.V, 'ic_red_dot')}
             alt="Red dot hint image"
             className={cx('w-[14px] h-[14px]')}
           />

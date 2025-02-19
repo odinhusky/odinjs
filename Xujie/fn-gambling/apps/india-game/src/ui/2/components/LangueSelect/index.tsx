@@ -5,7 +5,7 @@ import './index.scss';
 import { cx } from '@libs/commonUtils';
 import { FLEX_ITEMS_CENTER } from '@libs/constant/style';
 import { EN, HI } from '@/constant';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 const LangueSelect = ({
   className,

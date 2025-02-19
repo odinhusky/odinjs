@@ -8,11 +8,12 @@ import {
   WithdrawRecordItemResult,
   WithdrawRecordStatus,
 } from '@mode2API/endpoint/record/PostWithdrawRecordsEndpoint';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useEffect, useRef, useState } from 'react';
 import { useBreakPoint } from '@libs/commonUtils';
 import { isEmpty } from 'lodash';
 import NoData from '@components/NoData';
+import handleGlobalClick from '@libs/mode2/action/handleGlobalClick';
 
 const recordStateI18nKeyMapping: Record<WithdrawRecordStatus, string> = {
   [WithdrawRecordStatus.PROCESSING]:
@@ -173,7 +174,12 @@ const RecordWithdrawalItemMessage = (item: WithdrawRecordItemResult) => {
   }, [isDisplayMessage]);
 
   const handleToggle = () => {
-    setIsExpanded((prevState) => !prevState);
+    handleGlobalClick({
+      target: 'handleRecordWithdrawalItemMessageToggle',
+      callback: () => {
+        setIsExpanded((prevState) => !prevState);
+      },
+    });
   };
 
   return isDisplayMessage ? (

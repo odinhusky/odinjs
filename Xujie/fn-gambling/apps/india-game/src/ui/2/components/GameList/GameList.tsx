@@ -18,6 +18,10 @@ import { GameListItemResult } from '@mode2/zustand/page/hallPageStore';
 import GameSectionHeader from '@components/GameSectionHeader';
 import { get } from 'lodash';
 import { LoadMoreButton } from '@components/LoadMoreButton';
+import {
+  casinoGameImgAspectClassMode2,
+  normalGameImgAspectClassMode2,
+} from '@libs/constant/gameItemRatio';
 
 /**
  * 獲取需要顯示的遊戲列表資料
@@ -61,8 +65,8 @@ export const GameList = (props: Mode2GameListConfig) => {
     : 'grid-cols-1';
   const casinoSlidesPerView = isDesktop ? 3 : isTablet ? 2 : 1;
 
-  const casinoGameImgAspectClass = 'aspect-[2.2483]'; // 344x153
-  const normalGameImgAspectClass = 'aspect-[0.713]'; // 106.66x149.52
+  const casinoGameImgAspectClass = casinoGameImgAspectClassMode2; // 344x153
+  const normalGameImgAspectClass = normalGameImgAspectClassMode2; // 106.66x149.52
 
   const gridContainerClass = props.isException ? gridColException : gridCol;
   const gameItemAspectClass = props.isException

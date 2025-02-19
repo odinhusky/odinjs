@@ -26,10 +26,11 @@ import {
   useWalletPageRechargeCardStore,
   useWalletRechargeHighBonusStore,
 } from '@mode2/zustand/page/WalletPage/useWalletPageRechargeCardStore';
-import Icon from '@mode2/components/Icon';
+import Icon from '@components/Icon';
 import useWalletPageBaseActions from '@mode2/action/walletPageAction/useWalletPageBaseActions';
 import { handleWalletPageRechargeTabCheckOrderClick } from '@mode2/action/walletPageAction/acitonType';
 import { useBreakPoint } from '@libs/commonUtils';
+import RechargeWeakTipsModal from '../../../5/components/RechargeContent/components/RechargeWeakTipsModal';
 
 export const RechargeContent = ({
   isRechargeFromGame = false,
@@ -171,7 +172,10 @@ export const RechargeContent = ({
           />
         </div>
       </AffixBottomWrapper>
+
       <RechargeNoticeModal />
+
+      <RechargeWeakTipsModal handleWalletPageClick={handleWalletPageClick} />
     </div>
   );
 };

@@ -12,7 +12,7 @@ import {
 } from '@mode2/action/components/header/actionType';
 import { LoginFormType } from '@mode2/zustand/loginStore';
 import useHeaderAction from '@mode2/action/components/header/headerAction';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import BasePrimaryBtn from '@components/BasePrimaryBtn';
 import { cx } from '@libs/commonUtils';
 

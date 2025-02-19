@@ -10,7 +10,6 @@ import { EResourceLevel, getImgUrl } from '@mode2/utils';
 import { PinduoduoFreeDrawModal } from './models/PinduoduoFreeDrawModal';
 import InviteWheelTipsModal from './components/InviteWheelTipsModal';
 import InviteWheelResetTips from './components/InviteWheelResetTips';
-import useInviteWheelPageInit from '@mode2/usecase/page/inviteWheel/useInviteWheelPageInit';
 
 const InviteWheelPage = () => {
   useInviteWheelPageBase();

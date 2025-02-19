@@ -34,6 +34,8 @@ export interface RechargeStoreTypes {
   rechargeResult: RechargeResult;
   setRechargeResult: (result: RechargeResult) => void;
   finishRecharge: () => void;
+  isDepositWeakTipsModalShow: boolean;
+  setIsDepositWeakTipsModalShow: (isShow: boolean) => void;
 }
 const defaultRechargeResult: RechargeResult = {
   rechargeUrl: '',
@@ -75,4 +77,10 @@ export const useRechargeStore = create<RechargeStoreTypes>((set) => ({
       state.rechargeResult = defaultRechargeResult;
       return { ...state };
     }),
+
+  isDepositWeakTipsModalShow: false,
+  setIsDepositWeakTipsModalShow: (isShow) =>
+    set(() => ({
+      isDepositWeakTipsModalShow: isShow,
+    })),
 }));

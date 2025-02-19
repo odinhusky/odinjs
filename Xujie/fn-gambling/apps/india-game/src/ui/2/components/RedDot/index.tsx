@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { cx } from '@libs/commonUtils';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 
 interface RedDotProps {
   type?: 'img' | 'css';
@@ -14,7 +14,7 @@ export const RedDot = memo(({ type = 'css', size, className }: RedDotProps) => {
 
   return type === 'img' ? (
     <Icon
-      name="red_dot"
+      name="ic_red_dot"
       className={cx(
         'red_dot',
         widthClass,

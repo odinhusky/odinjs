@@ -7,8 +7,14 @@ import { EN } from '@/constant';
 import { AppLocalStorageKey } from '@mode2/utils/sdk/persistant/storageKey';
 import sdkUtils from '@mode2/utils/sdk';
 
-const { VITE_COUNTRY_CODE, VITE_I18N_LOAD_S3, VITE_S3_PATH } = import.meta.env;
+const { VITE_COUNTRY_CODE, VITE_I18N_LOAD_S3, VITE_S3_PATH, VITE_I18N_MODE } =
+  import.meta.env;
 
+const translations = import.meta.glob('@langs/**/*.json', { eager: true });
+const overrideHi =
+  translations[`/plugins/i18next/langs/${VITE_I18N_MODE}/hi.json`] ?? {};
+const overrideEn =
+  translations[`/plugins/i18next/langs/${VITE_I18N_MODE}/en.json`] ?? {};
 // 初始化 i18next
 i18next
   .use(HttpApi)
@@ -25,10 +31,16 @@ i18next
       VITE_I18N_LOAD_S3 === 'false'
         ? {
             hi: {
-              translation: { ...hi },
+              translation: {
+                ...hi,
+                ...overrideHi,
+              },
             },
             en: {
-              translation: { ...en },
+              translation: {
+                ...en,
+                ...overrideEn,
+              },
             },
           }
         : undefined,

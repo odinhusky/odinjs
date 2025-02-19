@@ -8,7 +8,7 @@ import { handleRecordPageCopyOrderNumberClick } from '@mode2/action/recordPageAc
 import { useRecordPageActions } from '@mode2/action/recordPageAction/useRecordPageActions';
 import { cx } from '@libs/commonUtils/cx';
 import { useRecordPageBalanceRecordStore } from '@mode2/zustand/page/recordPageStore';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import NoData from '@components/NoData';
 
 const recordStateI18nKeyMapping: Record<RechargeRecordStatus, string> = {

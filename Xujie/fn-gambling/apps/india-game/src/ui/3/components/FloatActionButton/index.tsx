@@ -1,87 +1,19 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FloatButton } from 'antd';
-import Draggable from 'react-draggable';
 import cx from '@commonUtils/cx';
-import { EResourceLevel, getImgUrl } from '@mode2/utils';
-import {
-  FloatActionButton as FloatActionButtonObj,
-  useFloatActionButtonListStore,
-} from '@mode2/zustand/components/floatActionButtonStore';
+import { useFloatActionButtonListStore } from '@mode2/zustand/components/floatActionButtonStore';
 import { BackTopButton } from '@components/BackTopButton';
 import { useBreakPoint } from '@commonUtils/hooks';
-
 import { ServicesTypeResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
 import { useFloatActionButtonBase } from '@/hooks/components/useFloatActionButtonBase';
-import RedDot from '@components/RedDot';
 import { useRebateRewardModalStore } from '@mode2/zustand/components/rebateRewardModalStore';
 import ActivityCenterButton from '@components/ActivityCenterButton';
 import { useIsLoginStore } from '@mode2/zustand/loginStore';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
 import useActivityCenterStore from '@mode2/zustand/components/activityCenterStore';
-import dayjs from 'dayjs';
-import Icon from '@mode2/components/Icon';
-import { isEmpty } from 'lodash';
-
-const CLICK_THRESHOLD = 150; // 拖曳距離150以下為點擊事件
-
-const ActionButton = ({
-  item,
-  styles,
-  imageClassName,
-  imgType = '',
-}: {
-  item: FloatActionButtonObj;
-  styles?: React.CSSProperties;
-  imageClassName?: string;
-  imgType?: string;
-}) => {
-  return (
-    <div
-      key={item.type}
-      className={cx(
-        'bg-shadow-[var(--inset-shadow)] rounded-full',
-        'w-10 h-10 mobile:w-14 mobile:h-14',
-        'flex justify-center items-center',
-        'cursor-pointer',
-        'relative',
-        item.className
-      )}
-      style={styles}
-      onClick={item.onActionClick}
-    >
-      {isEmpty(imgType) ? (
-        <Icon
-          name={`${item.icon}_default`}
-          className={cx(
-            'rounded-full',
-            'object-contain',
-            'w-full h-full',
-            'hover:brightness-[1.15]',
-            'active:brightness-[0.85]',
-            imageClassName
-          )}
-        />
-      ) : (
-        <img
-          src={getImgUrl(EResourceLevel.V, item.icon, imgType)}
-          className={cx(
-            'rounded-full',
-            'object-contain',
-            'w-full h-full',
-            'hover:brightness-[1.15]',
-            'active:brightness-[0.85]',
-            imageClassName
-          )}
-          alt={item.label}
-        />
-      )}
-
-      {item?.isShowRedDot ? (
-        <RedDot type="img" className={'absolute top-[3px] right-[5px]'} />
-      ) : null}
-    </div>
-  );
-};
+import ActionButton from './components/ActionButton';
+import { useTemplateLayoutStore } from '@libs/mode2/zustand/template/templateLayoutStore';
+import { FloatingBubble, FloatingBubbleProps } from 'antd-mobile';
 
 export const FloatActionButton = () => {
   useFloatActionButtonBase();
@@ -99,6 +31,15 @@ export const FloatActionButton = () => {
     (state) => state.isOpenDrawer
   );
   const currentCash = useRebateRewardModalStore((state) => state.currentCash);
+
+  const bottomNavigationElMetrics = useTemplateLayoutStore(
+    (state) => state.bottomNavigationElMetrics
+  );
+
+  const headerElMetrics = useTemplateLayoutStore(
+    (state) => state.headerElMetrics
+  );
+
   const { setIsShowRebateRewardModal } = useRebateRewardModalStore();
   const fabList = useFloatActionButtonListStore((state) => state.fabList);
   const isLogin = useIsLoginStore((state) => state.isLogin);
@@ -172,7 +113,7 @@ export const FloatActionButton = () => {
     if (isLogin) {
       setIsShowRebateRewardModal(true);
     } else {
-      navToLoginPage();
+      navToLoginPage(56);
     }
   };
 
@@ -261,76 +202,84 @@ export const FloatActionButton = () => {
     });
   };
 
-  const startTimeRef = useRef<number>(-1);
+  // 替換浮動的按鈕實作(antd-mobile 的 FloatingBubble)
+  const FloatWrapper: React.ElementType =
+    fabConfig.isDraggable && isMobile ? FloatingBubble : FloatButton.Group;
 
-  // 判斷單一按鈕點擊
-  const handleSingleItemClickAction = useCallback(() => {
-    if (fabItems.length === 1) {
-      fabItems[0].onActionClick();
-    }
-  }, [fabItems]);
+  const FloatWrapperProps = useMemo(
+    () =>
+      fabConfig.isDraggable && isMobile
+        ? ({
+            axis: 'xy',
+            magnetic: 'x',
+            style: {
+              position: 'relative',
+              zIndex: 10,
+              '--initial-position-bottom': `${
+                (bottomNavigationElMetrics?.height || 0) + 16
+              }px`,
+              '--initial-position-right': '16px',
+              '--background': 'transparent',
+
+              // edge-distance 是 padding，可以依照 padding 的規則設定
+              '--edge-distance': `${
+                (headerElMetrics?.height || 0) + 16
+              }px 16px ${(bottomNavigationElMetrics?.height || 0) + 16}px 16px`,
+            },
+          } as FloatingBubbleProps)
+        : ({
+            rootClassName: '',
+            className: cx(
+              'w-auto end-0 bottom-[68px] mobile:bottom-[76px] shadow-none flex items-end flex-col mr-2'
+            ),
+            shape: 'square',
+          } as React.ComponentProps<typeof FloatButton.Group>),
+    [
+      headerElMetrics?.height,
+      bottomNavigationElMetrics?.height,
+      fabConfig.isDraggable,
+      isMobile,
+    ]
+  );
 
   return fabConfig.isFeatureSupport ? (
-    <Draggable
-      disabled={!fabConfig.isDraggable}
-      cancel=".click-only" // 指定有這個 class 的元素不會觸發拖曳
-      key={JSON.stringify(fabConfig)} // 當頁面變化時會重新渲染回到預設位置
-      bounds="parent" // 限制拖動範圍
-      onStart={() => {
-        startTimeRef.current = dayjs().valueOf();
-      }}
-      onStop={() => {
-        const distance = dayjs().valueOf() - startTimeRef.current;
-        if (distance <= CLICK_THRESHOLD) {
-          handleSingleItemClickAction();
-        }
-      }}
-    >
-      <FloatButton.Group
-        rootClassName={''}
-        className={cx('w-auto end-0 shadow-none', {
-          'bottom-[68px]': !showExpandDrawerButton,
-          'bottom-[84px] mobile:bottom-[92px]': showExpandDrawerButton,
-        })}
-        shape="square"
+    <FloatWrapper {...FloatWrapperProps}>
+      <div
+        className={cx(
+          'flex flex-col justify-center gap-2 tablet:gap-3 p-2 items-center',
+          {
+            'w-auto items-end':
+              isOpenDrawer &&
+              showExpandDrawerButton &&
+              shouldShowActivityCenterBtn,
+          }
+        )}
       >
-        <div
-          className={cx(
-            'flex flex-col justify-center gap-2 tablet:gap-3 p-2 items-center',
-            {
-              'w-auto items-end':
-                isOpenDrawer &&
-                showExpandDrawerButton &&
-                shouldShowActivityCenterBtn,
-            }
-          )}
-        >
-          {/* 存錢罐通知 */}
-          {fabConfig.isShowMoneyBoxBtn && (
-            <ActionButton
-              item={moneyBoxBtnItemConfig}
-              imgType={'.gif'}
-              styles={{
-                transition: 'all 0.3s ease 0.1s',
-                ...(showExpandDrawerButton && isExpandActions
-                  ? calculateExpandBtnPosition(0)
-                  : {}),
-              }}
-            />
-          )}
+        {/* 存錢罐通知 */}
+        {fabConfig.isShowMoneyBoxBtn && (
+          <ActionButton
+            item={moneyBoxBtnItemConfig}
+            imgType={'.gif'}
+            styles={{
+              transition: 'all 0.3s ease 0.1s',
+              ...(showExpandDrawerButton && isExpandActions
+                ? calculateExpandBtnPosition(0)
+                : {}),
+            }}
+          />
+        )}
 
-          <div className="flex flex-col gap-1 mobile:gap-2">
-            {renderButtons()}
-          </div>
-
-          {/* 觸發紅包雨按鈕 */}
-          {isOpenDrawer && shouldShowActivityCenterBtn && (
-            <ActivityCenterButton />
-          )}
-
-          {showButtonGroup ? <BackTopButton /> : null}
+        <div className="flex flex-col gap-1 mobile:gap-2">
+          {renderButtons()}
         </div>
-      </FloatButton.Group>
-    </Draggable>
+
+        {/* 觸發紅包雨按鈕 */}
+        {isOpenDrawer && shouldShowActivityCenterBtn && (
+          <ActivityCenterButton />
+        )}
+
+        {showButtonGroup ? <BackTopButton /> : null}
+      </div>
+    </FloatWrapper>
   ) : null;
 };

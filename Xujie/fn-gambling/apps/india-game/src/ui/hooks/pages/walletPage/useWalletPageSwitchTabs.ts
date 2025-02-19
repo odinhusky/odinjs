@@ -12,6 +12,8 @@ import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletP
 import { useUserVerifyState } from '@/usecase/useUserVerifyState';
 import useWalletPageBaseActions from '@mode2/action/walletPageAction/useWalletPageBaseActions';
 import { handleWalletPageSwitchTabClick } from '@mode2/action/walletPageAction/acitonType';
+import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
+import { UserRoleType } from '@mode2/@types/userRoleTypes';
 
 export const useWalletPageSwitchTabs = () => {
   const { handleWalletPageBaseClick } = useWalletPageBaseActions();
@@ -32,7 +34,16 @@ export const useWalletPageSwitchTabs = () => {
 
   // $ Tab Id init
   useEffect(() => {
-    if (location.state?.tab) setCurSwitchContentTabId(location.state.tab);
+    if (location.state?.tab) {
+      if (
+        location.state?.tab === WalletPageTabType.WITHDRAW &&
+        useUserProfileStore.getState().userRole === UserRoleType.PLAYER
+      ) {
+        /* empty */
+      } else {
+        setCurSwitchContentTabId(location.state.tab);
+      }
+    }
   }, [location.state]);
 
   // $ Switch Tab List Init

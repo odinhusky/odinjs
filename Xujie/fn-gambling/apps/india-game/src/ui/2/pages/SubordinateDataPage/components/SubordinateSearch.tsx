@@ -1,4 +1,4 @@
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import Input from '@libs/mode2/components/Input';
 import { formatDate } from '@libs/mode2/utils';
 import { useMode2SubordinateDataPageStore } from '@libs/mode2/zustand/page/SubordinateDataStore';

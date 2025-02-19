@@ -1,6 +1,6 @@
 import './index.scss';
 import isEqual from 'lodash/isEqual';
-import Icon from '@libs/mode2/components/Icon';
+import Icon from '@components/Icon';
 import { useMemo } from 'react';
 import { Progress } from 'antd';
 import { renderI18N } from '@libs/commonUtils/renderI18N';
@@ -63,7 +63,7 @@ const BetBalanceReportProgress = () => {
                           borderRadius: '4px',
                           border: '1px solid var(--grayscale-70)',
                         }
-                      : {border: '1px solid #00000000'}
+                      : { border: '1px solid #00000000' }
                   }
                 />
               </div>
@@ -80,7 +80,9 @@ const BetBalanceReportProgress = () => {
                       mobile:py-1 mobile:px-4 p-1
                       shadow-[0px_0px_4px_0px_#00000040]"
                 >
-                  <div className="mobile:text-sm text-xs font-medium bgi-text-[var(--grayscale-100)]">{selectProgressInfoName}</div>
+                  <div className="mobile:text-sm text-xs font-medium bgi-text-[var(--grayscale-100)]">
+                    {selectProgressInfoName}
+                  </div>
                   <div className="mobile:text-base text-xs mobile:font-medium font-semibold bgi-text-[var(--linear-2)]">
                     {formatMoney(selectProgressInfo.balance, true)}
                   </div>
