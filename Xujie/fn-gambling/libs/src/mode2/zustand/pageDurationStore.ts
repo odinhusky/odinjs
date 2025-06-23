@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 
 interface LastPageDurationInfo {
   from: string;

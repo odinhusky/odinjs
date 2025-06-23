@@ -1,4 +1,4 @@
-import { handlePolicyPageDesktopHeaderBackBtnClick } from './actionType';
+import { handlePolicyPageDesktopHeaderBackBtnClick } from '@mode2/action/actionTypes';
 import { HandleClickProps } from '../common/handleClickProps';
 import { ActionClickObjType } from '../common/actionClickObjetType';
 import handleGlobalClick from '../handleGlobalClick';

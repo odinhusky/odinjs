@@ -6,7 +6,7 @@ import {
   useMenuListStore,
 } from '@libs/mode2/zustand/components/menuListStore';
 import { useNavigateClick } from '../useNavPageClick';
-import { handleMenuRouterActionClick } from '@libs/mode2/action/components/menu/actionType';
+import { handleMenuRouterActionClick } from '@mode2/action/actionTypes';
 import useMenuAction from '@libs/mode2/action/components/menu/menuAction';
 import { useShowMenuStore } from '@libs/mode2/zustand/menuStore';
 import { NavigateOptions } from 'react-router';

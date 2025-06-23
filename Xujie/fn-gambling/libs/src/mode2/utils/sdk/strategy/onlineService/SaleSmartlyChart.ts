@@ -2,7 +2,7 @@ import {
   OnlineServiceProvide,
   UserChatProfile,
 } from '@mode2/utils/sdk/interface/OnlineServiceProvide';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 export interface SaleSmartlyUserProfile extends UserChatProfile {
   userName: string;

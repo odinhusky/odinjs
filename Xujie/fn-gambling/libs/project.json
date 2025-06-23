@@ -10,7 +10,7 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/apps/india-game/dev_v6/2.01.65/libs"
+        "outputPath": "dist/apps/india-game/dev_v6/2.01.282/libs"
       }
     },
     "test": {

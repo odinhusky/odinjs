@@ -4,7 +4,7 @@ import {
   handleActivityDescriptionClose,
   handleFloatActivityOnHomClick,
   handleFloatActivityOnHomClose,
-} from './acitonType';
+} from '@mode2/action/actionTypes';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
 import handleGlobalClick from '@mode2/action/handleGlobalClick';
 import handleAction from '@mode2/action/common/handleAction';
@@ -18,8 +18,10 @@ import sdkUtils from '@mode2/utils/sdk';
 import { ActivityRulesContentTypes } from '@mode2/zustand/page/activityRulesPageStore';
 
 type ActionClickPayloadMap = {
-  [handleFloatActivityOnHomClick]: ECampaignType;
-  [handleFloatActivityOnHomClose]: ECampaignType;
+  // [handleFloatActivityOnHomClick]: ECampaignType;
+  // [handleFloatActivityOnHomClose]: ECampaignType;
+  [handleFloatActivityOnHomClick]: { type: ECampaignType };
+  [handleFloatActivityOnHomClose]: { type: ECampaignType };
   [handleActivityDescriptionClose]: number;
   [handleActivityCenterClose]: number;
 };
@@ -38,9 +40,10 @@ const useActivityCenterAction = () => {
     setShowActivityDescriptionModal,
   } = useActivityCenterStore();
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
-    [handleFloatActivityOnHomClick]: (type) => {
+    [handleFloatActivityOnHomClick]: ({ type }) => {
       handleGlobalClick({
         target: handleFloatActivityOnHomClick,
+        payload: { type },
         callback: () => {
           // TODO Yaleen 進入紅包雨 或進入任何活動中心之前，需要判斷是否登入
           // 进入活动中心 活动前两小时-显示活动规则 活动前一小时-显示活动说明  活动中-显示活动中心
@@ -76,7 +79,7 @@ const useActivityCenterAction = () => {
         },
       });
     },
-    [handleFloatActivityOnHomClose]: (type) => {
+    [handleFloatActivityOnHomClose]: ({ type }) => {
       handleGlobalClick({
         target: handleFloatActivityOnHomClose,
         callback: () => {

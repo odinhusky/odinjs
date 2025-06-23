@@ -2,7 +2,7 @@ import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
 import handleGlobalClick from '@mode2/action/handleGlobalClick';
 import handleAction from '@mode2/action/common/handleAction';
-import { handleBackTopButtonActionClick } from '@mode2/action/components/backTopButton/acitonType';
+import { handleBackTopButtonActionClick } from '@mode2/action/actionTypes';
 import { useElementScroll } from '@commonUtils/useElementScroll';
 
 type ActionClickPayloadMap = {
@@ -21,6 +21,7 @@ const useBackTopButtonAction = () => {
     [handleBackTopButtonActionClick]: ({ targetElementId }) => {
       handleGlobalClick({
         target: handleBackTopButtonActionClick,
+        payload: { targetElementId },
         callback: () => {
           scrollToTop(targetElementId);
         },

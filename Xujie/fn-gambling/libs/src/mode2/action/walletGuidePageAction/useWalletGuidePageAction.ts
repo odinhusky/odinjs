@@ -1,7 +1,7 @@
 import {
   handleWalletGuidePageRewardsButtonClickAction,
   handleWalletGuidePageTabSelected,
-} from './acitonType';
+} from '@mode2/action/actionTypes';
 
 import handleGlobalClick from '../handleGlobalClick';
 
@@ -10,6 +10,7 @@ import { HandleClickProps } from '../common/handleClickProps';
 import handleAction from '../common/handleAction';
 import { WalletGuideTutorialsType } from '@mode2/@types/walletGuideTutorialsType';
 import { useWalletGuidePageStore } from '@mode2/zustand/page/WalletGuidePage/useWalletGuidePageStore';
+import useTutorialReward from '@libs/mode2/usecase/wallet/useTutorialReward';
 
 type ActionClickPayloadMap = {
   [handleWalletGuidePageTabSelected]: { tab: WalletGuideTutorialsType };
@@ -25,10 +26,13 @@ export const useWalletGuidePageActions = () => {
     (state) => state.setTutorialsTab
   );
 
+  const { claimReward } = useTutorialReward();
+
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
     [handleWalletGuidePageTabSelected]: ({ tab }) => {
       handleGlobalClick({
         target: handleWalletGuidePageTabSelected,
+        payload: { tab },
         callback: () => {
           setTutorialsTab(tab);
         },
@@ -38,7 +42,9 @@ export const useWalletGuidePageActions = () => {
       handleGlobalClick({
         target: handleWalletGuidePageRewardsButtonClickAction,
         callback: () => {
-          // TODO Evan 領取任務獎勵
+          // TODO Evan check 領取 支付影片教學獎勵會用到，影片教學暫時已隱藏
+          // 2025/04/28 確認要打開此功能
+          claimReward();
         },
       });
     },

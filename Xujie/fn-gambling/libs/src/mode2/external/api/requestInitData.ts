@@ -2,7 +2,6 @@ import sdkUtils from '../../utils/sdk/index';
 import { Md5 } from 'ts-md5';
 import { RequestStructure } from '@mode2API/endpoint/RequestStructure';
 import sortKeys from 'sort-keys';
-import { FetchMyIp } from '@commonUtils/fetchMyIp';
 import { useAppStore } from '@mode2/zustand/appStore';
 import { useFetchMyIpStore } from '@mode2/zustand/fetchMyIpStore';
 
@@ -26,7 +25,7 @@ export const initData = async (reqData: ConfigData) => {
   const hashPrefix: string = '1000001'; // 不可動
   // NOTICE reqData的key必须按照A-Z进行排序
   const md5str: string =
-    hashPrefix + timeStamp + JSON.stringify(sortKeys(reqData));
+    hashPrefix + timeStamp + JSON.stringify(sortKeys(reqData, { deep: true }));
 
   const os: string = sdkUtils.getOs();
   const sign: string = Md5.hashStr(md5str);
@@ -42,6 +41,7 @@ export const initData = async (reqData: ConfigData) => {
   const client: string = useAppStore.getState().reqClientParameter;
   const apkVersion = sdkUtils.getAppVersionName();
   const h5Version = sdkUtils.getH5VersionName();
+  const appDeviceId: string = sdkUtils.getWebDeviceId();
   const data = {
     os,
     sign,
@@ -57,6 +57,7 @@ export const initData = async (reqData: ConfigData) => {
     client,
     apkVersion,
     h5Version,
+    appDeviceId,
   };
   return data;
 };

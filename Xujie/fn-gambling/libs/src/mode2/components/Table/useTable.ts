@@ -32,16 +32,18 @@ export const useTable = <T, S>(
   }, [searchData]);
 
   useEffect(() => {
-    setIsLoading(true);
-    service(triggerData).then((data) => {
-      setIsLoading(false);
-      setDataSource((pre) =>
-        triggerData.page === 1 || fetchType === 'pagination'
-          ? data
-          : [...pre, ...data]
-      );
-      data.length < limit && setFinish(true);
-    });
+    if (!isLoading) {
+      setIsLoading(true);
+      service(triggerData).then((data) => {
+        setIsLoading(false);
+        setDataSource((pre) =>
+          triggerData.page === 1 || fetchType === 'pagination'
+            ? data
+            : [...pre, ...data]
+        );
+        data.length < limit && setFinish(true);
+      });
+    }
   }, [triggerData]);
 
   const fetchData = async (current?: number) => {
@@ -59,11 +61,17 @@ export const useTable = <T, S>(
     }
   };
 
+  const resetDataSource = () => {
+    setDataSource([]);
+    setFinish(false);
+  };
+
   return {
     dataSource,
     fetchData,
     isFinish,
     isLoading,
     current: triggerData.page,
+    resetDataSource,
   };
 };

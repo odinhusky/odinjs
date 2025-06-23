@@ -14,6 +14,14 @@ export enum SocialScenarios {
   SHARE = 'SHARE',
   V6_VERSION_SHARE = 'V6_VERSION_SHARE',
   ABOUT_US = 'ABOUT_US',
+  NOTHING = 'NOTHING',
+}
+
+export enum SocialUnitImageType {
+  OUTLINE = 'outline', // 空心
+  FILL = 'fill', // 默認 實心,
+  COLOR = 'color', // 彩色
+  // 需要再加
 }
 
 interface UsageScenarios {

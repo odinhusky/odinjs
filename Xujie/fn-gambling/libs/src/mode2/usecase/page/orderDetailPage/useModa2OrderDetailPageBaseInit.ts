@@ -1,5 +1,4 @@
 import {
-  EOrderDetailPageType,
   IOrderDetailListType,
   useMode2OrderDetailPageStore,
 } from '@libs/mode2/zustand/page/orderDetailPageStore';
@@ -11,13 +10,19 @@ import {
 import { useDeepEffect } from '@libs/commonUtils';
 import { useRecordPageBalanceRecordStore } from '@libs/mode2/zustand/page/recordPageStore';
 import { filterDataByDays } from '@libs/mode2/utils';
+import { useWalletPageSwitchContentTabsStore } from '@libs/mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
+import { WalletPageTabType } from '@libs/mode2/@types/walletPageTabType';
 
 export const useModa2OrderDetailPageBaseInit = () => {
-  const orderDetailPageType = useMode2OrderDetailPageStore(
-    (state) => state.orderDetailPageType
+  // orderDetailPageType 应该用不到了 改为 curSwitchContentTabId
+  const curSwitchContentTabId = useWalletPageSwitchContentTabsStore(
+    (state) => state.curSwitchContentTabId
   );
-  const setOrderDetailList = useMode2OrderDetailPageStore(
-    (state) => state.setOrderDetailList
+  const orderListTabIndex = useMode2OrderDetailPageStore(
+    (state) => state.orderListTabIndex
+  );
+  const setOrderList = useMode2OrderDetailPageStore(
+    (state) => state.setOrderList
   );
 
   const setRechargeRecords = useRecordPageBalanceRecordStore(
@@ -27,26 +32,22 @@ export const useModa2OrderDetailPageBaseInit = () => {
     (state) => state.setWthdrawRecords
   );
 
-  const [triggerFetchRechargeRecord, { data: rechargeRecordData }] =
+  const [postRechargeRecords, { data: rechargeRecordData }] =
     usePostRechargeRecordsMutation();
-  const [triggerFetchWithdrawRecord, { data: withdrawRecordData }] =
+  const [postWithdrawRecords, { data: withdrawRecordData }] =
     usePostWithdrawRecordsMutation();
 
   useDeepEffect(() => {
     if (rechargeRecordData) {
-      console.log(
-        '@@@==> History recharge',
-        rechargeRecordData.rechargeRecords[0]
-      );
       const list = filterDataByDays(
         rechargeRecordData.rechargeRecords,
-        1
+        orderListTabIndex || 1
       ) as unknown as IOrderDetailListType[];
-      setOrderDetailList(list);
+      setOrderList(list);
 
       setRechargeRecords(rechargeRecordData.rechargeRecords);
     }
-  }, [rechargeRecordData]);
+  }, [rechargeRecordData, orderListTabIndex]);
 
   useDeepEffect(() => {
     if (withdrawRecordData) {
@@ -58,7 +59,7 @@ export const useModa2OrderDetailPageBaseInit = () => {
         withdrawRecordData.withdrawRecords,
         1
       ) as unknown as IOrderDetailListType[];
-      setOrderDetailList(list);
+      setOrderList(list);
 
       setWthdrawRecords(withdrawRecordData.withdrawRecords);
     }
@@ -66,13 +67,13 @@ export const useModa2OrderDetailPageBaseInit = () => {
 
   // 已確認過充值紀錄和提現紀錄頁後端一次性回應1000條數據，暫時由前端進行1天、7天、30天的過濾
   useEffect(() => {
-    console.log('@@@==> History  orderDetailPageType', orderDetailPageType);
-    if (orderDetailPageType === EOrderDetailPageType.RECHARGE) {
-      triggerFetchRechargeRecord({ page: 1, limit: 30 });
-    } else if (orderDetailPageType === EOrderDetailPageType.WITHDRAW) {
-      triggerFetchWithdrawRecord({ page: 1, limit: 30 });
+    console.log('@@@==> History curSwitchContentTabId', curSwitchContentTabId);
+    if (curSwitchContentTabId === WalletPageTabType.DEPOSIT) {
+      postRechargeRecords({ page: 1, limit: 1000 });
+    } else if (curSwitchContentTabId === WalletPageTabType.WITHDRAW) {
+      postWithdrawRecords({ page: 1, limit: 30 });
     }
-  }, [orderDetailPageType]);
+  }, [curSwitchContentTabId]);
 };
 
 export default useModa2OrderDetailPageBaseInit;

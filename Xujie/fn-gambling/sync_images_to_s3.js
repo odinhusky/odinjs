@@ -31,7 +31,7 @@ console.log(`Secret Access Key: ${secretAccessKey}`);
 
 // 增加連線控制，避免 timeout , sockets limit
 const customHttpHandler = new NodeHttpHandler({
-  connectionTimeout: 10000, // 增加连接超时时间（毫秒）
+  connectionTimeout: 50000, // 增加连接超时时间（毫秒）
   socketTimeout: 30000, // 增加 socket 超时时间
   maxSockets: 5000, // 提高 socket 并发上限
 });
@@ -137,7 +137,10 @@ function uploadAllFiles(dirPath, basename) {
   files.forEach((file) => {
     const filePath = path.join(dirPath, file);
     if (fs.statSync(filePath).isFile()) {
-      const uploadFilePath = filePath.replace(rootPath, '');
+      const uploadFilePath = filePath
+        .replace(rootPath, '')
+        .split(path.sep)
+        .join('/');
       uploadFile(filePath, uploadFilePath);
     } else if (fs.statSync(filePath).isDirectory()) {
       const basename = path.basename(filePath);

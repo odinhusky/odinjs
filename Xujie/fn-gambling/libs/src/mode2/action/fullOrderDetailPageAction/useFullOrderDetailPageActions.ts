@@ -6,7 +6,7 @@ import {
   handleFullOrderDetailPageConfirmClick,
   handleFullOrderDetailPageInputClick,
   handleFullOrderDetailPageUploadClick,
-} from './actionType';
+} from '@mode2/action/actionTypes';
 import { useMode2FullOrderDetailPageStore } from '@libs/mode2/zustand/page/fullOrderDetailPageStore';
 import { useFullOrder } from '@mode2/usecase/useFullOrder';
 
@@ -34,6 +34,7 @@ export const useFullOrderDetailPageActions = () => {
     [handleFullOrderDetailPageInputClick]: ({ value }) => {
       handleGlobalClick({
         target: handleFullOrderDetailPageInputClick,
+        payload: { value },
         callback: () => {
           setDefaultValues({ ...defaultValues, confirmCode: value });
         },

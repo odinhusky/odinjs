@@ -1,11 +1,9 @@
 import { ExternalEndpoint } from '@mode2API/types';
-import {
-  POST_PLAYER_BIND_REFER_CODE_URL,
-  POST_PLAYER_VISITOR_LOGIN_CHECK_URL,
-} from '@mode2API/urls';
+import { POST_PLAYER_VISITOR_LOGIN_CHECK_URL } from '@mode2API/urls';
 import { ResponseStructure } from '@mode2API/endpoint/ResponseStructure';
 import { UserRoleType } from '@mode2/@types/userRoleTypes';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import { getPlaceAdvertisementInfo } from '@mode2API/base/placeAdvertisementInfo';
 
 interface VisitorLoginCheckResponse {
   Token?: string;
@@ -27,7 +25,7 @@ export const PostVisitorLoginCheckEndpoint = (builder: ExternalEndpoint) =>
       return {
         method: 'post',
         url: POST_PLAYER_VISITOR_LOGIN_CHECK_URL,
-        data: {},
+        data: { ...getPlaceAdvertisementInfo() },
       };
     },
     transformResponse,

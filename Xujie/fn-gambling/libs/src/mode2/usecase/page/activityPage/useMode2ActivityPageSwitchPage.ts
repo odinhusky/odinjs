@@ -2,8 +2,10 @@ import { useDeepEffect } from '@commonUtils/hooks';
 import { useMode2ActivitySwitchPageStore } from '@mode2/zustand/page/activityPageStore';
 
 import useActivityPageActions from '@mode2/action/activityPageAction/useActivityPageActions';
-import { handleSwitchTabClick } from '@mode2/action/activityPageAction/actionType';
+import { handleSwitchTabClick } from '@mode2/action/actionTypes';
 import { ActivityPageTabType } from '@mode2/@types/activityPageTabType';
+import { useStayTracker } from '@libs/commonUtils/stayTracker/useStayTracker';
+import { BasePagePathObj } from '@libs/mode2/routerTypes/types';
 
 export const useMode2ActivityPageSwitchPage = () => {
   const { handleActivityPageClick } = useActivityPageActions();
@@ -12,6 +14,11 @@ export const useMode2ActivityPageSwitchPage = () => {
   const setSwitchList = useMode2ActivitySwitchPageStore(
     (state) => state.setSwitchList
   );
+
+  useStayTracker({
+    page: BasePagePathObj.TeamClubPage,
+    tab: pageIdx,
+  });
 
   useDeepEffect(() => {
     const switchList = [

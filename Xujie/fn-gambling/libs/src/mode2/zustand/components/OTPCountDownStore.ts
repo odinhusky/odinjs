@@ -7,6 +7,7 @@ export enum OTPCountDownKeys {
   REGISTER = 'register',
   BIND_PLAYER_PHONE_MODAL_COUNTDOWN = 'BindPlayerPhoneModalCountDown',
   FORGOT_PASSWORD = 'ForgotPassword',
+  SET_OTP_LOGIN = 'setOtpLogin', // AccountPage --> AccountDetailModal
 }
 
 interface OTPCountDownStoreTypes {

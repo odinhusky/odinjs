@@ -13,6 +13,7 @@ export class LoggerClient {
   }
 
   public logEvent(payload: ILogPayload) {
+    console.log('[CollectionLogger] logEvent', payload);
     const command = new AddLogCommand(this.receiver, payload);
     this.invoker.setCommand(command);
     this.invoker.invoke();

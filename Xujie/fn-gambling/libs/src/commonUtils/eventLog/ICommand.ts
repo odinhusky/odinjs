@@ -1,6 +1,6 @@
-export interface ICommand<T = void> {
-  execute(): T;
-}
+// export interface ICommand<T = void> {
+//   execute(): T;
+// }
 
 export interface ILogPayload<TEntry = ILogEntry> {
   caller: string;
@@ -22,8 +22,9 @@ export interface ILoggerReceiver<
   TLogPayload = ILogPayload,
   TLogs = Record<string, string>
 > {
-  saveLog(logData: TLogPayload): Promise<void>;
+  lock: boolean;
+  saveLog(logData: TLogPayload): void;
   getLogs(): Promise<TLogs>;
   clearLog(keys: string[]): void;
-  reportLogs(reports: TLogs, callback?: (keys: string[]) => void): void;
+  reportLogs(): void;
 }

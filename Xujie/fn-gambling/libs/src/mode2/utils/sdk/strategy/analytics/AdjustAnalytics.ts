@@ -5,7 +5,7 @@ import {
   IErrorPayload,
   IEventPayload,
 } from '../../interface/Analytics';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import LogLevel = Adjust.LogLevel;
 
 // 定義額外的類型

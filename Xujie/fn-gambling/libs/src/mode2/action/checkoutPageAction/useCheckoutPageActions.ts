@@ -7,7 +7,7 @@ import {
   handleCheckoutPageToCustomerServiceClick,
   handleCheckoutPageShowTutorialClick,
   handleCheckoutPageCloseTutorialClick,
-} from './actionType';
+} from '@mode2/action/actionTypes';
 import handleGlobalClick from '../handleGlobalClick';
 
 import { ActionClickObjType } from '../common/actionClickObjetType';
@@ -17,6 +17,7 @@ import { useClipboard } from '@commonUtils/hooks/useClipboard';
 
 import { usePostPayCheckoutConfirmMutation } from '@mode2API/index';
 import { PayCheckoutConfirmRequest } from '@libs/mode2/external/api/endpoint/wallet/PostPayCheckoutConfirmEndpoint';
+import { INV6 } from '@libs/constant/versions';
 
 type ActionClickPayloadMap = {
   [handleCheckoutPageCopyClick]: {
@@ -50,8 +51,15 @@ export const useCheckoutPageActions = () => {
       handleGlobalClick({
         target: handleCheckoutPageCopyClick + `_${target}`,
         callback: () => {
-          copyToClipboard(value);
+          copyToClipboard(value, {
+            successMessage:
+              import.meta.env['VITE_V_VERSION'] === INV6
+                ? 'spin_and_share_wheel_copied_toast'
+                : '',
+            resetInterval: 100,
+          });
         },
+        debounceTimer: 300,
       });
     },
     [handleCheckoutPageUTRConfirmClick]: ({ data, onFinally, onSuccess }) => {

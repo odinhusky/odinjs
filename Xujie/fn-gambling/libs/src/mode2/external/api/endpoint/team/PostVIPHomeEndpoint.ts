@@ -16,6 +16,7 @@ interface VipInfoResponse {
   Received?: number; // 0
   ReceivedMonth?: number; // 0
   DailyBettingRebateRate?: number; // 每日投注返水率
+  FreeDailyWithdrawals?: number; // 每日免費提現
 }
 
 interface VIPHomeResponse {
@@ -30,6 +31,7 @@ interface VIPHomeResponse {
   WithdrawAmount?: string; // "5000.00"
   WithdrawRate?: string; // "0.030"
   VipInfos?: VipInfoResponse[];
+  RewardDamaTimes?: number; // 打碼
 }
 
 /** VIP等級, VIP列表資料, 已充值金額, 投注金額百分比 */
@@ -64,6 +66,7 @@ export type VipInfo = {
   upgradeBonusRecieveStatus: BonusRecieveStatus;
   monthlyRewardRecieveStatus: BonusRecieveStatus;
   withdrawTimes: number;
+  freeDailyWithdrawals: number;
 };
 
 type VIPHomeResult = {
@@ -72,7 +75,9 @@ type VIPHomeResult = {
   betAmountPercent: number;
 
   rechargeAmount: number;
+  lackRechargeAmount: number;
   vipInfos: VipInfo[];
+  rewardDamaTimes: number;
 };
 
 const defaultResult = {
@@ -80,7 +85,8 @@ const defaultResult = {
   vipPercent: 0,
   betAmountPercent: 0,
   rechargeAmount: 0,
-
+  lackRechargeAmount: 0,
+  rewardDamaTimes: 0,
   vipInfos: [],
 };
 
@@ -108,12 +114,16 @@ const transformResponse = (
       (rechargeAmount / vipRechargeTurnover) * 100,
       100
     );
+
     return {
       vipLevel: resp?.VipLevel || defaultResult.vipLevel,
       vipPercent: vipPercent,
       betAmountPercent: betAmountPercent,
       rechargeAmount: extractApiMoneyString(resp?.RechargeAmount || '0'),
-
+      lackRechargeAmount: extractApiMoneyString(
+        resp?.LackRechargeAmount || '0'
+      ),
+      rewardDamaTimes: resp?.RewardDamaTimes || 0,
       vipInfos:
         resp.VipInfos?.map((item) => ({
           level: item?.Level || 0,
@@ -132,6 +142,7 @@ const transformResponse = (
             item?.ReceivedMonth || 0
           ),
           withdrawTimes: item?.WithdrawTimes || 0,
+          freeDailyWithdrawals: item?.FreeDailyWithdrawals || 0,
         })) || defaultResult.vipInfos,
     };
   }

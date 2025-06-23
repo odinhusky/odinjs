@@ -7,10 +7,18 @@ import {
   apiExceptionLoggerEvent,
 } from '@mode2/usecase/useLoggerClient';
 import { useMessageStore } from '@mode2/zustand/components/messageStore';
+import { POST_GIFT_RANDOM_URL } from '@mode2API/urls';
 
 // 略過error message 封裝
+const env = import.meta.env['VITE_V_VERSION'];
+const SkipErrorMessageWhitelistMapping: Record<string, string[]> = {
+  ['v6']: [POST_GIFT_RANDOM_URL],
+};
 const showErrorMessage = (url: string, errorMessage: string) => {
-  useMessageStore.getState().error(errorMessage);
+  const skipWhitelist = SkipErrorMessageWhitelistMapping[env] || [];
+  if (!skipWhitelist.includes(url)) {
+    useMessageStore.getState().error(errorMessage);
+  }
 };
 export const setupCryptoResponseInterceptors = (instance: AxiosInstance) => {
   const isEnableCrypto = import.meta.env['VITE_ENABLE_ENCODE_DECODE'] === '1';
@@ -42,17 +50,20 @@ export const setupCryptoResponseInterceptors = (instance: AxiosInstance) => {
       if (response.data?.Code === 5005 || response.data?.Code === 50005) {
         sdkUtils.removeStorage(AppLocalStorageKey.TOKEN);
         logout();
-        return Promise.reject();
+        return Promise.reject(response.data);
       }
       if (response.data?.Code !== 200) {
         // 有錯誤就 Toast，才能確保 [請求API時機, 請求參數，回應結構] 正確性
         showErrorMessage(response.config?.url || '', response.data?.Msg);
+        const traceId =
+          response.headers['trace-id'] || response.headers['x-trace-id'];
         apiErrorLoggerEvent(
           `${response.config.url}`,
           response.status,
-          response.data
+          response.data,
+          traceId
         );
-        return Promise.reject();
+        return Promise.reject(response.data);
       }
       return response;
     },
@@ -64,7 +75,8 @@ export const setupCryptoResponseInterceptors = (instance: AxiosInstance) => {
         }`
       );
       apiExceptionLoggerEvent(error);
-      return Promise.reject();
+
+      return Promise.reject(error);
     }
   );
 };

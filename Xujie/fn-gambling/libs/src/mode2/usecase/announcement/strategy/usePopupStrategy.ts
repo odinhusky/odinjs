@@ -13,11 +13,14 @@ import { ActivityRulesContentTypes } from '@mode2/zustand/page/activityRulesPage
 import { ActivityPageTabType } from '@mode2/@types/activityPageTabType';
 import { TeamClubPageTabType } from '@mode2/@types/teamClubPageTabType';
 import { usePostDownloadAwardStartMutation } from '@mode2API/index';
+import { useActivityDetailPageStore } from '@mode2/zustand/page/ActivityDetailPage/useActivityDetailPageStore';
 
 // TODO Evan 測試完成 移除沒定義的action
 export const PopupAnnouncementsTypeMappingStrategy: {
   [key: string]: AnnouncementType;
 } = {
+  '999': AnnouncementType.DYNAMIC_ACTIVITY, //999
+  '0': AnnouncementType.NOTHING, //  無行為
   '1': AnnouncementType.FIRST_CHARGE, // 導航到 wallet
   '2': AnnouncementType.RECHARGING, // 導航到 wallet
   '3': AnnouncementType.TELEGRAM, // open telegram
@@ -37,6 +40,19 @@ export const PopupAnnouncementsTypeMappingStrategy: {
   '17': AnnouncementType.WHATS_APP, // open whatsapp
   '18': AnnouncementType.RANKINGS, // nav 排行榜
   '19': AnnouncementType.INVITE_REWARD, // nav team_club 邀请奖励
+
+  '20': AnnouncementType.WATCH_VIDEO, // 20 看影片拿獎勵金
+  '21': AnnouncementType.WEEK_LUCKY_BONUS, //21 週儲值活動
+  '22': AnnouncementType.SURPRISE_REWARD, //22 驚喜獎勵
+  '23': AnnouncementType.VIP_REBATE, //23 VIP返利
+  '24': AnnouncementType.WINNINGS_SHARE, //24
+  '25': AnnouncementType.GIFT_CODE, //25
+  '26': AnnouncementType.PUBLISH_AND_SHARE, //26
+  '27': AnnouncementType.NEW_PLAYER_TASK, // 27
+  '28': AnnouncementType.DAILY_TASK, // 28
+  '29': AnnouncementType.LOW_BALANCE_RECHARGE, // 29
+  '32': AnnouncementType.LOW_BALANCE_RESCUE_BOX, // 32
+  '33': AnnouncementType.DEPOSIT_JACKPOT_WHEEL, //33
 };
 
 export const usePopupStrategy = () => {
@@ -51,6 +67,8 @@ export const usePopupStrategy = () => {
     navToInviteWheelPage,
     navToRechargeWheelPage,
     navToGiftCodeRedeemPage,
+    navToVipPage,
+    navToActivityDetailPage,
   } = useNavPageClick();
 
   const setIsShowRebateRewardModal = useRebateRewardModalStore(
@@ -179,7 +197,12 @@ export const usePopupStrategy = () => {
         }
         break;
       case AnnouncementType.VIP:
-        navToActivityPage('', { state: { tab: ActivityPageTabType.VIP } });
+        // for [V6]
+        if (import.meta.env['VITE_V_VERSION'] === 'v6') {
+          navToVipPage();
+        } else {
+          navToActivityPage('', { state: { tab: ActivityPageTabType.VIP } });
+        }
         break;
       case AnnouncementType.INVITE_WHEEL:
         if (!sdkUtils.isCurrentLogin()) {
@@ -210,6 +233,31 @@ export const usePopupStrategy = () => {
             state: { tab: TeamClubPageTabType.INVITE_REWARDS },
           });
         }
+        break;
+
+      case AnnouncementType.WATCH_VIDEO:
+        break;
+      case AnnouncementType.WEEK_LUCKY_BONUS:
+        break;
+      case AnnouncementType.SURPRISE_REWARD:
+        break;
+      case AnnouncementType.VIP_REBATE:
+        break;
+      case AnnouncementType.DYNAMIC_ACTIVITY:
+        useActivityDetailPageStore
+          .getState()
+          .setCurrentAnnouncementType(AnnouncementType.DYNAMIC_ACTIVITY);
+        useActivityDetailPageStore
+          .getState()
+          .setCurrentOrderId(payload.mataData.orderId);
+        navToActivityDetailPage('', {
+          state: {
+            tab: AnnouncementType.DYNAMIC_ACTIVITY,
+            orderId: payload.mataData.orderId,
+          },
+        });
+        break;
+      case AnnouncementType.NOTHING:
         break;
       case AnnouncementType.UNKNOWN:
         break;

@@ -1,6 +1,6 @@
 import handleAction from '../common/handleAction';
 import handleGlobalClick from '../handleGlobalClick';
-import { handleSettingPageSwitchClick } from '../settingPageAction/actionType';
+import { handleSettingPageSwitchClick } from '@mode2/action/actionTypes';
 import { ActionClickObjType } from '../common/actionClickObjetType';
 import { HandleClickProps } from '../common/handleClickProps';
 import {
@@ -24,6 +24,7 @@ export const useSettingPageAction = () => {
     [handleSettingPageSwitchClick]: ({ value }) => {
       handleGlobalClick({
         target: handleSettingPageSwitchClick,
+        payload: { value },
         callback: () => {
           setMusicSwitch(value);
         },

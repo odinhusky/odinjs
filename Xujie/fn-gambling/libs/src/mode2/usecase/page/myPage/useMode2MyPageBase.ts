@@ -6,15 +6,16 @@ import {
   handleMyPageBankDetailActionClick,
   handleMyPageChangePasswordLineBtnClick,
   handleMyPageCustomerSupportLineBtnClick,
+  handleMyPageDownloadAppLineBtnClick,
   handleMyPageEarnMoneyLineBtnClick,
   handleMyPageFAQLineBtnClick,
   handleMyPageGiftCodeLineBtnClick,
+  handleMyPageMissionActionClick,
   handleMyPageMyInfoActionClick,
   handleMyPagePersonalInformationLineBtnClick,
   handleMyPageReloadVersionLineBtnClick,
   handleMyPageTeamClubLineBtnClick,
-  handleMyPagSettingActionClick,
-} from '@mode2/action/myPageAction/acitonType';
+} from '@mode2/action/actionTypes';
 import useMyPageActions from '@mode2/action/myPageAction/useMyPageActions';
 import {
   LineBtnUnit,
@@ -29,6 +30,8 @@ import sdkUtils from '@mode2/utils/sdk';
 import { useAppStore } from '@mode2/zustand/appStore';
 import { useBreakPoint, useDeepEffect } from '@libs/commonUtils';
 import { AccountPageTypes } from '@libs/mode2/zustand/page/accountPageStore';
+import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
+import { useTemplateLayoutStore } from '@libs/mode2/zustand/template/templateLayoutStore';
 
 export const useMode2MyPageBase = () => {
   // === MyPage Header Setting
@@ -54,14 +57,22 @@ export const useMode2MyPageBase = () => {
   );
 
   const setRechargeAmount = useMyPageStore((state) => state.setRechargeAmount);
-  const setVipLevel = useMyPageStore((state) => state.setVipLevel);
+  const setVipProgressPercent = useMyPageStore(
+    (state) => state.setVipProgressPercent
+  );
+  const setLackRechargeAmount = useMyPageStore(
+    (state) => state.setLackRechargeAmount
+  );
+  const setVipRewardDama = useMyPageStore((state) => state.setVipRewardDama);
 
   useEffect(() => {
     if (!vipHome) return;
 
     setBetProgressPercent(vipHome.betAmountPercent);
     setRechargeAmount(vipHome.rechargeAmount);
-    setVipLevel(vipHome.vipLevel);
+    setVipProgressPercent(vipHome.vipPercent);
+    setLackRechargeAmount(vipHome.lackRechargeAmount);
+    setVipRewardDama(vipHome.rewardDamaTimes);
   }, [vipHome]);
 
   // - Line Button List ======================================
@@ -70,7 +81,26 @@ export const useMode2MyPageBase = () => {
     (state) => state.setUsageScenariosList
   );
 
+  const missionTipCount = useTemplateLayoutStore(
+    (state) => state.missionTipCount
+  );
+
+  const realPhone = useUserProfileStore((state) => state.realPhone);
+  const hasSetPassword = useUserProfileStore((state) => state.hasSetPassword);
+  const bindReferralCode = useUserProfileStore(
+    (state) => state.bindReferralCode
+  );
   const realTimeH5Version = useAppStore((state) => state.realTimeH5Version);
+  const shouldShowDownloadAppButton =
+    !sdkUtils.isPwaInstalled() &&
+    !sdkUtils.isInNative() &&
+    !sdkUtils.isIOSKernel();
+  // 未綁定電話、未設置密碼、未綁定推薦碼的提示數量
+  const showInfoUnreadCount = [
+    !realPhone,
+    !hasSetPassword,
+    !bindReferralCode,
+  ].filter(Boolean).length;
 
   const activityButton: LineBtnUnit = {
     iconName: 'activity',
@@ -83,6 +113,7 @@ export const useMode2MyPageBase = () => {
         actionName: handleMyPageActivityLineBtnClick,
       });
     },
+    unReadCount: 0,
   };
 
   const earnMoneyButton: LineBtnUnit = {
@@ -96,6 +127,7 @@ export const useMode2MyPageBase = () => {
         actionName: handleMyPageEarnMoneyLineBtnClick,
       });
     },
+    unReadCount: 0,
   };
 
   const teamClubButton: LineBtnUnit = {
@@ -110,6 +142,7 @@ export const useMode2MyPageBase = () => {
         actionName: handleMyPageTeamClubLineBtnClick,
       });
     },
+    unReadCount: 0,
   };
 
   const giftCodeButton: LineBtnUnit = {
@@ -123,12 +156,13 @@ export const useMode2MyPageBase = () => {
         actionName: handleMyPageGiftCodeLineBtnClick,
       });
     },
+    unReadCount: 0,
   };
 
   // 個人詳細信息
-  const myInfoButton = {
+  const myInfoButton: LineBtnUnit = {
     iconName: 'info',
-    name: { i18nKey: 'My info' },
+    name: { i18nKey: 'profile_my_info_page_title' },
     isBorder: true,
     isShowRedDot: false,
     isShowArrow: true,
@@ -138,11 +172,28 @@ export const useMode2MyPageBase = () => {
         payload: { value: AccountPageTypes.MYINFO },
       });
     },
+    unReadCount: 0,
   };
 
-  const balanceDetailButtton = {
+  // 任務中心
+  const missionButton: LineBtnUnit = {
+    iconName: 'mission',
+    name: { i18nKey: 'profile_task_page_title' },
+    isBorder: true,
+    isShowRedDot: false,
+    isShowArrow: true,
+    onAction: () => {
+      handleMyPageClick({
+        actionName: handleMyPageMissionActionClick,
+        // payload: { value: AccountPageTypes.MYINFO },
+      });
+    },
+    unReadCount: 0,
+  };
+
+  const balanceDetailButtton: LineBtnUnit = {
     iconName: 'bank',
-    name: { i18nKey: 'Balance details' },
+    name: { i18nKey: 'profile_balance_details_item' },
     isBorder: true,
     isShowRedDot: false,
     isShowArrow: true,
@@ -151,11 +202,12 @@ export const useMode2MyPageBase = () => {
         actionName: handleMyPageBankDetailActionClick,
       });
     },
+    unReadCount: 0,
   };
 
-  const aboutButtton = {
+  const aboutButtton: LineBtnUnit = {
     iconName: 'aboutus',
-    name: { i18nKey: 'About us' },
+    name: { i18nKey: 'profile_about_us_item' },
     isBorder: true,
     isShowRedDot: false,
     isShowArrow: true,
@@ -164,24 +216,26 @@ export const useMode2MyPageBase = () => {
         actionName: handleMyPageAboutUsActionClick,
       });
     },
+    unReadCount: 0,
   };
 
-  const settinglButtton = {
-    iconName: 'setting',
-    name: { i18nKey: 'Setting' },
-    isBorder: true,
-    isShowRedDot: false,
-    isShowArrow: true,
-    onAction: () => {
-      handleMyPageClick({
-        actionName: handleMyPagSettingActionClick,
-      });
-    },
-  };
+  // TODO Evan 無作用先移除
+  // const settinglButtton = {
+  //   iconName: 'setting',
+  //   name: { i18nKey: 'profile_settings_item' },
+  //   isBorder: true,
+  //   isShowRedDot: false,
+  //   isShowArrow: true,
+  //   onAction: () => {
+  //     handleMyPageClick({
+  //       actionName: handleMyPagSettingActionClick,
+  //     });
+  //   },
+  // };
 
-  const customerSupportButton = {
+  const customerSupportButton: LineBtnUnit = {
     iconName: 'customer_support',
-    name: { i18nKey: 'Live support' },
+    name: { i18nKey: 'profile_live_support_item' },
     isBorder: true,
     isShowRedDot: false,
     isShowArrow: true,
@@ -190,6 +244,35 @@ export const useMode2MyPageBase = () => {
         actionName: handleMyPageCustomerSupportLineBtnClick,
       });
     },
+    unReadCount: 0,
+  };
+
+  const reloadH5VersionButton: LineBtnUnit = {
+    iconName: 'reload',
+    name: { i18nKey: 'account_menu_refresh_version' },
+    isBorder: false,
+    isShowRedDot: realTimeH5Version.isNewVersion,
+    isShowArrow: false,
+    onAction: () => {
+      handleMyPageClick({
+        actionName: handleMyPageReloadVersionLineBtnClick,
+      });
+    },
+    unReadCount: realTimeH5Version.isNewVersion ? 1 : 0,
+  };
+
+  const downloadAppButton: LineBtnUnit = {
+    iconName: 'download_app',
+    name: { i18nKey: 'account_menu_download_app' },
+    isBorder: false,
+    isShowRedDot: false,
+    isShowArrow: true,
+    onAction: () => {
+      handleMyPageClick({
+        actionName: handleMyPageDownloadAppLineBtnClick,
+      });
+    },
+    unReadCount: 0,
   };
 
   const fixedList: LineBtnUnit[] = [
@@ -204,6 +287,7 @@ export const useMode2MyPageBase = () => {
           actionName: handleMyPagePersonalInformationLineBtnClick,
         });
       },
+      unReadCount: 0,
     },
     {
       iconName: 'bank_account', // 還不知道 icon 叫什麼名字
@@ -217,6 +301,7 @@ export const useMode2MyPageBase = () => {
           actionName: handleMyPageBankAccountLineBtnClick,
         });
       },
+      unReadCount: 0,
     },
     {
       iconName: 'change_password',
@@ -229,6 +314,7 @@ export const useMode2MyPageBase = () => {
           actionName: handleMyPageChangePasswordLineBtnClick,
         });
       },
+      unReadCount: 0,
     },
     {
       iconName: 'question',
@@ -241,9 +327,10 @@ export const useMode2MyPageBase = () => {
           actionName: handleMyPageFAQLineBtnClick,
         });
       },
+      unReadCount: 0,
     },
     {
-      iconName: 'customer_support',
+      iconName: 'customer_support_1',
       name: { i18nKey: 'account_menu_customer_support' },
       isBorder: true,
       isShowRedDot: false,
@@ -253,6 +340,7 @@ export const useMode2MyPageBase = () => {
           actionName: handleMyPageCustomerSupportLineBtnClick,
         });
       },
+      unReadCount: 0,
     },
     {
       iconName: 'reload',
@@ -265,6 +353,7 @@ export const useMode2MyPageBase = () => {
           actionName: handleMyPageReloadVersionLineBtnClick,
         });
       },
+      unReadCount: 0,
     },
   ];
 
@@ -290,12 +379,23 @@ export const useMode2MyPageBase = () => {
     const v6VersionDefaultScenarios = {
       scenarios: MyPageBtnListScenarios.V6_VERSION_DEFAULT,
       usageScenariosList: [
-        myInfoButton,
+        {
+          ...myInfoButton,
+          isShowRedDot: showInfoUnreadCount > 0,
+          unReadCount: showInfoUnreadCount,
+        },
+        {
+          ...missionButton,
+          isShowRedDot: Number(missionTipCount) > 0,
+          unReadCount: missionTipCount,
+        },
         balanceDetailButtton,
         customerSupportButton,
         giftCodeButton,
         aboutButtton,
-        settinglButtton,
+        ...(shouldShowDownloadAppButton ? [downloadAppButton] : []),
+        reloadH5VersionButton,
+        // settinglButtton, TODO Evan 無作用先移除
       ],
     };
 
@@ -304,7 +404,7 @@ export const useMode2MyPageBase = () => {
       giftCodeScenarios,
       v6VersionDefaultScenarios,
     ]);
-  }, [realTimeH5Version]);
+  }, [realTimeH5Version, missionTipCount, showInfoUnreadCount]);
 
   useEffect(() => {
     postVIPHome();

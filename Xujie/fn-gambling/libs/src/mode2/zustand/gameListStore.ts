@@ -2,11 +2,10 @@ import { create } from 'zustand';
 import { GameListItemResult } from '@libs/mode2/zustand/page/hallPageStore';
 import { GameListCatagory } from '@mode2API/endpoint/user/PostHomeEndpoint';
 import { usePlatformInfoStore } from '@mode2/zustand/platform/platformInfoStore';
-import { devtoolsAndPersistWrapper } from './middlewareWrapper';
 import { WinGameItemResult } from '@mode2API/endpoint/game/PostGameHomeEndpoint';
 import { DeviceBreakPointType } from '@libs/commonUtils';
 import { generateGameList } from '@libs/constant/gameListDummyData';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
 /** 攤平所有Game, 方便未來進行全域搜索 */
 export const computeFlatAllGameItem = () => {
@@ -113,6 +112,10 @@ export const computeAllGameList = (bp: DeviceBreakPointType) => {
 };
 
 export interface GameListStoreTypes {
+  allGameList: GameListItemResult[] | null;
+  setAllGameList: (list: GameListItemResult[]) => void;
+  allGameListFromPostGameAllEndpoint: GameListItemResult[] | null;
+  setAllGameListFromPostGameAllEndpoint: (list: GameListItemResult[]) => void;
   hotGameList: GameListItemResult[] | null;
   setHotGameList: (list: GameListItemResult[]) => void;
   winGameList: WinGameItemResult[];
@@ -132,6 +135,7 @@ export interface GameListStoreTypes {
   setFavoriteGameList: (list: GameListItemResult[]) => void;
   addOrRemoveFavoriteSuccessCount: number; // 每當有加入/移除我的最愛成功的時候，數字會累加
   triggerFavoriteAction: () => void; // 累加數字
+  clear: () => void;
 }
 
 export interface GameListInitStoreTypes {
@@ -145,6 +149,8 @@ export const useGameListInitStore = create<GameListInitStoreTypes>((set) => ({
 }));
 
 const defaultGameListData = {
+  allGameList: [], // 包含 enterGameType 1, 2, 3，目前不是真的所有的遊戲打平
+  allGameListFromPostGameAllEndpoint: [],
   hotGameList: null as GameListItemResult[] | null,
   winGameList: [] as WinGameItemResult[],
   winGamesIndex: 0,
@@ -166,26 +172,29 @@ const defaultGameListData = {
  * 遊戲列表相關
  * [熱門遊戲，遊戲列表，收藏遊戲列表]
  */
-export const useGameListStore = create<GameListStoreTypes>()(
-  devtoolsAndPersistWrapper(
-    '[gameList store] useGameListStore',
-    (set, get) => ({
-      ...cloneDeep(defaultGameListData),
-      setHotGameList: (list) => set(() => ({ hotGameList: list })),
-      setWinGameList: (list) => set(() => ({ winGameList: list })),
-      setWinGamesIndex: (idx) => set(() => ({ winGamesIndex: idx })),
-      setPlatformGameMap: (map) => set(() => ({ platformGameMap: map })),
-      setIsHomeInfoSuccess: (bool) => set(() => ({ isHomeInfoSuccess: bool })),
-      setFavoriteGameList: (list) =>
-        set(() => ({
-          favoriteGameIds: list.map((item) => item.gameId),
-          favoriteGameList: list,
-        })),
-      triggerFavoriteAction: () =>
-        set(() => ({
-          addOrRemoveFavoriteSuccessCount:
-            get().addOrRemoveFavoriteSuccessCount + 1,
-        })),
-    })
-  )
-);
+export const useGameListStore = create<GameListStoreTypes>()((set, get) => ({
+  ...cloneDeep(defaultGameListData),
+  setAllGameList: (list) => set(() => ({ allGameList: list })),
+  setAllGameListFromPostGameAllEndpoint: (list) =>
+    set(() => ({ allGameListFromPostGameAllEndpoint: list })),
+  setHotGameList: (list) => set(() => ({ hotGameList: list })),
+  setWinGameList: (list) => set(() => ({ winGameList: list })),
+  setWinGamesIndex: (idx) => set(() => ({ winGamesIndex: idx })),
+  setPlatformGameMap: (map) => set(() => ({ platformGameMap: map })),
+  setIsHomeInfoSuccess: (bool) => set(() => ({ isHomeInfoSuccess: bool })),
+  setFavoriteGameList: (list) =>
+    set(() => ({
+      favoriteGameIds: list.map((item) => item.gameId),
+      favoriteGameList: list,
+    })),
+  triggerFavoriteAction: () =>
+    set(() => ({
+      addOrRemoveFavoriteSuccessCount:
+        get().addOrRemoveFavoriteSuccessCount + 1,
+    })),
+  clear: () =>
+    set(() => ({
+      favoriteGameIds: [],
+      favoriteGameList: [],
+    })),
+}));

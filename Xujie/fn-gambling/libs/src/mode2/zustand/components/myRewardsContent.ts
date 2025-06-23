@@ -13,6 +13,7 @@ export interface TeamLevelUnit {
   betRebateRate: number;
   firstDepositRebates: number;
   maxRewards: number;
+  clubTitle: string;
 }
 
 export interface TeamClubLevelSummaryStoreTypes {
@@ -45,6 +46,8 @@ export interface TeamClubWithDrawStoreTypes {
   setTodayReward: (todayReward: number) => void;
   totalReward: number;
   setTotalReward: (totalReward: number) => void;
+  currentTeamTotalBets: number;
+  setCurrentTeamTotalBets: (currentTeamTotalBets: number) => void;
   refreshTeamInformationCount: number;
   setRefreshTeamInformationCount: () => void;
 }
@@ -62,6 +65,9 @@ export const useTeamClubWithDrawStore = create<TeamClubWithDrawStoreTypes>(
     setTodayReward: (todayReward) => set(() => ({ todayReward })),
     totalReward: 0,
     setTotalReward: (totalReward) => set(() => ({ totalReward })),
+    currentTeamTotalBets: 0,
+    setCurrentTeamTotalBets: (currentTeamTotalBets) =>
+      set(() => ({ currentTeamTotalBets })),
     refreshTeamInformationCount: 0,
     setRefreshTeamInformationCount: () =>
       set(() => ({

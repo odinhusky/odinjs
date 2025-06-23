@@ -6,7 +6,7 @@ import {
   handleMenuAnnouncementsActionClick,
   handleMenuPlatformItemActionClick,
   handleMenuRouterActionClick,
-} from './actionType';
+} from '@mode2/action/actionTypes';
 import { GameListItemResult } from '@mode2/zustand/page/hallPageStore';
 import { useGameItemBase } from '@mode2/usecase/useGameItemBase';
 import { useShowMenuStore } from '@mode2/zustand/menuStore';
@@ -49,6 +49,7 @@ export const useMenuAction = () => {
     [handleMenuPlatformItemActionClick]: ({ item }) => {
       handleGlobalClick({
         target: handleMenuPlatformItemActionClick,
+        payload: { item },
         callback: () => {
           onEnterGame(item);
           closeMenu();
@@ -62,10 +63,12 @@ export const useMenuAction = () => {
     [handleMenuAnnouncementsActionClick]: ({ item }) => {
       handleGlobalClick({
         target: handleMenuAnnouncementsActionClick,
+        payload: { item },
         callback: () => {
           onAnnouncementAction(AnnouncementScenariosType.HOME, {
             type: item.type,
             gameObj: item.gameObj,
+            mataData: item,
           });
           closeMenu();
         },

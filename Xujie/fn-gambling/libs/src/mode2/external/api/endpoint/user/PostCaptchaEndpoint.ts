@@ -1,7 +1,7 @@
 import { POST_GET_CAPTCHA_URL } from '../../urls';
 import { ResponseStructure } from '../ResponseStructure';
 import { ExternalEndpoint } from '../../types';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 // api resp.Body
 // 使用 ResponseStructure包裝結構

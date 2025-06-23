@@ -4,7 +4,7 @@ import {
   PayOptionsResult,
 } from '@mode2API/endpoint/wallet/PostPayConfigInfoWithOptionsEndpoint';
 import { create } from 'zustand';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 // 支付通道，選項
 export interface PayOptionItem extends PayOptionsResult {
@@ -54,11 +54,13 @@ export interface WalletPageRechargeContentStoreTypes {
   setCurrentOptRebateAmount: (rebateAmount: number) => void;
   currentOptCashBackRate: number;
   setCurrentOptCashBackRate: (cashBackRate: number) => void;
+  presetSelectionProductAmount: number | null;
+  setPresetSelectionProductAmount: (amount: number | null) => void;
   reset: () => void;
 }
 
 export const useWalletPageRechargeContentStore =
-  create<WalletPageRechargeContentStoreTypes>((set) => ({
+  create<WalletPageRechargeContentStoreTypes>((set, get) => ({
     rechargeLimitStr: ['', ''],
     setRechargeLimitStr: (stringArr) =>
       set(() => ({ rechargeLimitStr: stringArr })),
@@ -117,8 +119,14 @@ export const useWalletPageRechargeContentStore =
         if (isEmpty(info.options)) {
           return {};
         }
+        const presetAmount = get().presetSelectionProductAmount;
+
+        const presetOption = info.options.find(
+          (v) => v.amount === presetAmount
+        );
+        console.log('@@@===>evan.info.options', info.options, presetAmount);
         const recommendOptions = info.options.find((v) => v.recommended);
-        const opt = recommendOptions || info.options[0] || null;
+        const opt = presetOption || recommendOptions || info.options[0] || null;
         if (opt) {
           return {
             currentPayOption: opt,
@@ -137,6 +145,9 @@ export const useWalletPageRechargeContentStore =
     currentOptCashBackRate: 0,
     setCurrentOptCashBackRate: (cashBackRate) =>
       set(() => ({ currentOptCashBackRate: cashBackRate })),
+    presetSelectionProductAmount: null,
+    setPresetSelectionProductAmount: (amount) =>
+      set(() => ({ presetSelectionProductAmount: amount })),
     reset: () =>
       set((state) => {
         const resetPayChannel = state.allPayChannelActionItems.find(
@@ -152,6 +163,7 @@ export const useWalletPageRechargeContentStore =
           currentPayOptionItems: payOptionItems,
           currentPayOption: optionItem || state.currentPayOption,
           currentOptIndexKey: optionItemIndexKey,
+          presetSelectionProductAmount: null,
         };
       }),
   }));

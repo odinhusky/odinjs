@@ -1,4 +1,4 @@
-export const BasePagePathObj = {
+const BasePagePath = {
   HallPage: '/hall',
   ActivityPage: '/activity',
   InviteWheelPage: '/inviteWheel', // 邀請輪盤
@@ -44,10 +44,38 @@ export const BasePagePathObj = {
   AccountPage: '/account',
   WalletGuidePage: '/wallet-guide',
   SettingPage: '/setting',
-  GameSupplierListPage: '/game-supplier-list',
+  // GameSupplierListPage: '/game-supplier-list',
   OrderDetailPage: '/order-detail',
+  VipPage: '/vip',
+  VipBonusPage: '/vip-bonus',
+  RankingPage: '/ranking',
+
+  ActivityDetailPage: '/activity_detail',
+  TaskCenterPage: '/task_center',
+  SearchGamePage: '/search_game',
+
+  LottiePreviewPage: '/lottie_preview',
+  InboxDetailPage: '/inbox_detail',
+
+  RechargeSecretPage: '/recharge_secret', // 特殊充值通道
+  LowBalanceRescueBoxPage: '/lowBalanceRescueBox',
 } as const;
 
+const VersionRectifyNamingMapping: Record<
+  string,
+  Partial<Record<keyof typeof BasePagePath, string>>
+> = {
+  v6: {
+    FeedBackPage: '/inBox',
+  },
+};
+
+const version = import.meta.env['VITE_V_VERSION'];
+// BasePagePathObj 定義結果
+export const BasePagePathObj = {
+  ...BasePagePath,
+  ...(VersionRectifyNamingMapping[version] || {}),
+};
 export const BasePagePathOrders: string[] = Object.values(BasePagePathObj);
 
 export type BasePagePathObjKeyTypes = keyof typeof BasePagePathObj;

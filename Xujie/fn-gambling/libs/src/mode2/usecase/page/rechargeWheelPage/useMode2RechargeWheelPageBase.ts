@@ -3,7 +3,6 @@ import { useMode2PageResetFloatActionButton } from '../useMode2PageResetFloatAct
 import useRechargeFooterSetting from './useRechargeFooterSetting';
 import useRechargeWheelPageConfig from './useRechargeWheelPageConfig';
 import useRechargeWheelPageHeaderSetting from './useRechargeWheelPageHeaderSetting';
-import useRechargeWheelPlayerProgress from './useRechargeWheelPlayerProgress';
 import useRechargeWheelPlayerSpin from './useRechargeWheelPlayerSpin';
 import { useEffect } from 'react';
 

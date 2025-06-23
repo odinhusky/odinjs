@@ -1,4 +1,5 @@
-import { debounce, has } from 'lodash';
+import debounce from 'lodash/debounce';
+import has from 'lodash/has';
 import { ActionClickObjType } from './actionClickObjetType';
 import { useCallback } from 'react';
 
@@ -30,15 +31,16 @@ export const handleAction = <
   }
 };
 
-export const useDebounceAction = <T extends (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void>(
-	callback: T,
-	delay: number
+export const useDebounceAction = <
+  T extends (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+>(
+  callback: T,
+  delay: number,
+  deps: React.DependencyList = []
 ) => {
-	if (delay === 0) {
-		return callback;
-	}
-
-	return useCallback(debounce(callback, delay), [callback, delay]);
+  return delay === 0
+    ? callback
+    : useCallback(debounce(callback, delay), [callback, delay, ...deps]);
 };
 
 export default handleAction;

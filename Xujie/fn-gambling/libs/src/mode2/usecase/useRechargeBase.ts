@@ -1,8 +1,8 @@
 import { useLazyGetPayCheckoutDetailQuery } from '@mode2API/index';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { useEffect, useRef, useState } from 'react';
 import { PayCheckoutDetailStateResult } from '../external/api/endpoint/wallet/GetPayCheckoutDetailEndpoint';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 
 type PayCheckoutData = { txId?: string; url?: string };
 

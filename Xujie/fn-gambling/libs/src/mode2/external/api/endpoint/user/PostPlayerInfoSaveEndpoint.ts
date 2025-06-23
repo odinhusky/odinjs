@@ -44,32 +44,35 @@ type PlayerInfoSaveResponse = {
 export const PostPlayerInfoSaveEndpoint = (builder: ExternalEndpoint) =>
   builder.mutation<PlayerInfoSaveResult, UIPlayerInfoSaveRequest>({
     query: (data: UIPlayerInfoSaveRequest) => {
-      const reqData: ApiPlayerInfoSaveRequest = sortKeys({
-        bankCode: data?.bankCode || '',
-        email: '',
-        ifsc: data.ifsc || '',
-        mobile: data.phone,
-        name: data.realName || '',
-        nickname: data.userName,
-        password: data?.password ? Md5.hashStr(data.password) : '',
-        payType: 'BANK_TRANSFER',
-        repeatPassword: data?.repeatPassword
-          ? Md5.hashStr(data.repeatPassword)
-          : data?.password
-          ? Md5.hashStr(data.password)
-          : '',
+      const reqData: ApiPlayerInfoSaveRequest = sortKeys(
+        {
+          bankCode: data?.bankCode || '',
+          email: '',
+          ifsc: data.ifsc || '',
+          mobile: data.phone,
+          name: data.realName || '',
+          nickname: data.userName,
+          password: data?.password ? Md5.hashStr(data.password) : '',
+          payType: 'BANK_TRANSFER',
+          repeatPassword: data?.repeatPassword
+            ? Md5.hashStr(data.repeatPassword)
+            : data?.password
+            ? Md5.hashStr(data.password)
+            : '',
 
-        ...(data.isBindAll
-          ? {
-              bankName: '',
-              lazyPassword: '',
-            }
-          : {
-              withoutPayment: true,
-              lazyPassword: '',
-              bankName: '',
-            }),
-      });
+          ...(data.isBindAll
+            ? {
+                bankName: '',
+                lazyPassword: '',
+              }
+            : {
+                withoutPayment: true,
+                lazyPassword: '',
+                bankName: '',
+              }),
+        },
+        { deep: true }
+      );
 
       return {
         method: 'post',

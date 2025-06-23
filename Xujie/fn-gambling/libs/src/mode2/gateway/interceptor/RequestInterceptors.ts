@@ -14,7 +14,7 @@ export const setupRequestInterceptors = (instance: AxiosInstance) => {
     },
     (error) => {
       useMessageStore.getState().error(`${error['message'] || 'server error'}`);
-      return Promise.reject();
+      return Promise.reject(error);
     }
   );
 };

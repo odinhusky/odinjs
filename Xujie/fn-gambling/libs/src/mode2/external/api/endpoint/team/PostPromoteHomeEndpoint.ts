@@ -83,7 +83,7 @@ export type PromoteHomeResult = {
   teamMemberSummary: TeamMemberSummaryResult;
   salaryRewardSummary: RewardSummaryResult;
   rankingRewardSummary: RewardSummaryResult;
-  referralInfo: ReferralResult;
+  // referralInfo: ReferralResult;
   isEnableRankingReward: boolean;
 };
 
@@ -116,10 +116,10 @@ const transformResponse = (
       thisWeekReward: resp?.ThisWeekRankingReward || 0,
       lastWeekReward: resp?.LastWeekRankingReward || 0,
     },
-    referralInfo: {
-      code: resp?.ReferralCode || '',
-      link: resp?.ReferralLink || '',
-    },
+    // referralInfo: {
+    //   code: resp?.ReferralCode || '',
+    //   link: resp?.ReferralLink || '',
+    // },
     isEnableRankingReward: resp?.IsPlayerWeekRankingRewardEnable || false,
   };
 };

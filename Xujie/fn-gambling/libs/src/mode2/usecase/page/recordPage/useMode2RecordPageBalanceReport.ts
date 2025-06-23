@@ -1,5 +1,5 @@
 import { usePostReportGameTypeBetAmountMutation } from '@mode2/external/api';
-import { handleRecordPageReportProgressClick } from '@mode2/action/recordPageAction/acitonType';
+import { handleRecordPageReportProgressClick } from '@mode2/action/actionTypes';
 import useRecordPageActions from '@mode2/action/recordPageAction/useRecordPageActions';
 import {
   RecordPageReportGameUnit,

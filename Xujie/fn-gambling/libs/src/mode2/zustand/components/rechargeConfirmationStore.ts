@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtoolsWrapper } from '../middlewareWrapper';
 
 export interface RebateRewardModalStoreTypes {
   isShowRechargeConfirmationModal: boolean;
@@ -7,13 +6,8 @@ export interface RebateRewardModalStoreTypes {
 }
 
 export const useRechargeConfirmationModalStore =
-  create<RebateRewardModalStoreTypes>()(
-    devtoolsWrapper(
-      '[component store] useRechargeConfirmationModalStore',
-      (set) => ({
-        isShowRechargeConfirmationModal: false,
-        setIsShowRechargeConfirmationModal: (value) =>
-          set(() => ({ isShowRechargeConfirmationModal: value })),
-      })
-    )
-  );
+  create<RebateRewardModalStoreTypes>()((set) => ({
+    isShowRechargeConfirmationModal: false,
+    setIsShowRechargeConfirmationModal: (value) =>
+      set(() => ({ isShowRechargeConfirmationModal: value })),
+  }));

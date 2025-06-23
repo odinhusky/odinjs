@@ -6,11 +6,9 @@ import {
   handleAccountPageModalClose,
   handleAccountPageNicknameChange,
   handleAccountPageSaveGenderClick,
-  handleAccountPageSaveInviteCodeClick,
-  handleAccountPageSaveLoginPasswordClick,
-  handleAccountPageSaveNicknameClick,
+  handleAccountPageShowBindPlayerPhoneModalClick,
   handleAccountPageShowModalClick,
-} from './acitonType';
+} from '@mode2/action/actionTypes';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
 import handleGlobalClick from '@mode2/action/handleGlobalClick';
 import handleAction from '@mode2/action/common/handleAction';
@@ -19,15 +17,21 @@ import {
   AccountPageModalTitleTypes,
   useAccountPageStore,
 } from '@libs/mode2/zustand/page/accountPageStore';
-import { message } from 'antd';
 import { useClipboard } from '@libs/commonUtils';
+import { usePostUpdateGenderMutation } from '@libs/mode2/external/api';
+import { useEffect } from 'react';
+import useBindPlayerPhoneModalStore, {
+  BindType,
+} from '@libs/mode2/zustand/modal/BindPlayerPhoneModal';
+import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
+import { useMessageStore } from '@libs/mode2/zustand/components/messageStore';
+import { useTranslation } from 'react-i18next';
+import { INV6 } from '@libs/constant/versions';
 
 type ActionClickPayloadMap = {
   [handleAccountPageShowModalClick]: { value: AccountPageModalTitleTypes };
   [handleAccountPageCopyClick]: { value: string };
   [handleAccountPageModalClose]: void;
-  [handleAccountPageSaveInviteCodeClick]: void;
-  [handleAccountPageSaveLoginPasswordClick]: void;
   [handleAccountPageSaveGenderClick]: { gender: AccountPageGenderTypes };
   [handleAccountPageNicknameChange]: { value: string };
   [handleAccountPageInviteChange]: { value: string };
@@ -35,7 +39,7 @@ type ActionClickPayloadMap = {
     value: string;
     type: string;
   };
-  [handleAccountPageSaveNicknameClick]: void;
+  [handleAccountPageShowBindPlayerPhoneModalClick]: void;
 };
 
 export interface HandleAccountPageOnEventProps<
@@ -43,35 +47,67 @@ export interface HandleAccountPageOnEventProps<
 > extends HandleClickProps<T, ActionClickPayloadMap> {}
 
 const useAccountPageAction = () => {
+  const { t } = useTranslation();
   // const {} = useNavPageClick();
   const setModalTitle = useAccountPageStore((state) => state.setModalTitle);
   const setShowEditModal = useAccountPageStore(
     (state) => state.setShowEditModal
   );
+  const realPhone = useUserProfileStore((state) => state.realPhone);
   const setNickname = useAccountPageStore((state) => state.setNickname);
   const setGender = useAccountPageStore((state) => state.setGender);
   const setReferCode = useAccountPageStore((state) => state.setReferCode);
   const loginForm = useAccountPageStore((state) => state.loginForm);
   const setLoginForm = useAccountPageStore((state) => state.setLoginForm);
+  const setShowBindPlayerPhoneModal = useBindPlayerPhoneModalStore(
+    (state) => state.setShowBindPlayerPhoneModal
+  );
+  const setBindType = useBindPlayerPhoneModalStore(
+    (state) => state.setBindType
+  );
+  const refreshUserData = useUserProfileStore((state) => state.refreshUserData);
 
   const { copyToClipboard } = useClipboard();
+
+  const [trigger, { isSuccess }] = usePostUpdateGenderMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      useMessageStore
+        .getState()
+        .success(t('profile_my_info_select_gender_success_toast'));
+      refreshUserData();
+      setShowEditModal(false);
+    }
+  }, [isSuccess]);
 
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
     [handleAccountPageShowModalClick]: ({ value }) => {
       handleGlobalClick({
         target: handleAccountPageShowModalClick,
+        payload: { value },
         callback: () => {
           setShowEditModal(true);
           setModalTitle(value);
+
+          setLoginForm({ ...loginForm, phone: realPhone || '' });
         },
       });
     },
     [handleAccountPageCopyClick]: ({ value }) => {
       handleGlobalClick({
         target: handleAccountPageCopyClick,
+        payload: { value },
         callback: () => {
-          copyToClipboard(value);
+          copyToClipboard(value, {
+            successMessage:
+              import.meta.env['VITE_V_VERSION'] === INV6
+                ? 'spin_and_share_wheel_copied_toast'
+                : '',
+            resetInterval: 100,
+          });
         },
+        debounceTimer: 300,
       });
     },
     [handleAccountPageModalClose]: () => {
@@ -82,47 +118,21 @@ const useAccountPageAction = () => {
         },
       });
     },
-    [handleAccountPageSaveInviteCodeClick]: () => {
-      handleGlobalClick({
-        target: handleAccountPageSaveInviteCodeClick,
-        callback: () => {
-          // TODO
-          message.info(`TODO 綁定邀請碼 `);
-        },
-      });
-    },
-    [handleAccountPageSaveLoginPasswordClick]: () => {
-      handleGlobalClick({
-        target: handleAccountPageSaveLoginPasswordClick,
-        callback: () => {
-          // TODO
-          message.info(`TODO 綁定登錄密碼 `);
-        },
-      });
-    },
+
     [handleAccountPageSaveGenderClick]: ({ gender }) => {
       handleGlobalClick({
         target: handleAccountPageSaveGenderClick,
+        payload: { gender },
         callback: () => {
-          // TODO
-          message.info(`TODO 修改性別 ${gender}`);
-          setShowEditModal(false);
           setGender(gender);
-        },
-      });
-    },
-    [handleAccountPageSaveNicknameClick]: () => {
-      handleGlobalClick({
-        target: handleAccountPageSaveNicknameClick,
-        callback: () => {
-          // TODO
-          message.info(`TODO 編輯暱稱 `);
+          trigger({ gender });
         },
       });
     },
     [handleAccountPageNicknameChange]: ({ value }) => {
       handleGlobalClick({
         target: handleAccountPageNicknameChange,
+        payload: { value },
         callback: () => {
           setNickname(value);
         },
@@ -131,6 +141,7 @@ const useAccountPageAction = () => {
     [handleAccountPageInviteChange]: ({ value }) => {
       handleGlobalClick({
         target: handleAccountPageInviteChange,
+        payload: { value },
         callback: () => {
           setReferCode(value);
         },
@@ -139,8 +150,18 @@ const useAccountPageAction = () => {
     [handleAccountPageLoginPasswordChange]: ({ value, type }) => {
       handleGlobalClick({
         target: handleAccountPageLoginPasswordChange,
+        payload: { value, type },
         callback: () => {
           setLoginForm({ ...loginForm, [type]: value });
+        },
+      });
+    },
+    [handleAccountPageShowBindPlayerPhoneModalClick]: () => {
+      handleGlobalClick({
+        target: handleAccountPageShowBindPlayerPhoneModalClick,
+        callback: () => {
+          setShowBindPlayerPhoneModal(true);
+          setBindType(BindType.BIND_PHONE);
         },
       });
     },

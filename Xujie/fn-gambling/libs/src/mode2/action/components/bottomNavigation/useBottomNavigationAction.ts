@@ -1,8 +1,7 @@
 import {
   handleBottomNavigationButtonClick,
   handleMobileExclusiveNavButtonClick,
-} from '@mode2/action/components/bottomNavigation/acitonType';
-import { handleFeedBackPageTabClick } from '@mode2/action/feedBackPageAction/acitonType';
+} from '@mode2/action/actionTypes';
 import handleGlobalClick from '@mode2/action/handleGlobalClick';
 import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import handleAction from '@mode2/action/common/handleAction';
@@ -12,6 +11,8 @@ import { useDeviceStore } from '@mode2/zustand/deviceStore';
 import { useMyPageStore } from '@mode2/zustand/page/myPageStore';
 import sdkUtils from '@mode2/utils/sdk';
 import { NavigateOptions } from 'react-router/dist/lib/context';
+import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
+import { useRouterPenddingDataStore } from '@libs/mode2/zustand/routerPenddingDataStore';
 
 type ActionClickPayloadMap = {
   [handleBottomNavigationButtonClick]: {
@@ -36,14 +37,23 @@ export interface HandleBottomNavigationOnEventProps<
   T extends keyof ActionClickPayloadMap
 > extends HandleClickProps<T, ActionClickPayloadMap> {}
 
+const refreshUserDataPages = new Set<BasePagePaths>([
+  BasePagePathObj.HallPage,
+  BasePagePathObj.MyPage,
+]);
 export const useBottomNavigationActions = () => {
   const { navToLoginPage, mapRoutesNavTo } = useNavPageClick();
   const setOpenMyDrawer = useMyPageStore((state) => state.setOpenMyDrawer);
+  const refreshUserData = useUserProfileStore((state) => state.refreshUserData);
+  const clearAllPaths = useRouterPenddingDataStore(
+    (state) => state.clearAllPaths
+  );
 
   const actionClickObj: ActionClickObjType = {
     [handleBottomNavigationButtonClick]: ({ navigateTarget, options }) => {
       handleGlobalClick({
         target: handleBottomNavigationButtonClick,
+        payload: { navigateTarget, options },
         callback: () => {
           const isMobile = useDeviceStore.getState().isMobile;
           if (!isMobile && navigateTarget === BasePagePathObj.MyPage) {
@@ -55,12 +65,16 @@ export const useBottomNavigationActions = () => {
           } else {
             mapRoutesNavTo(navigateTarget, '', options);
           }
+
+          // 清除所有路由(Tab)數據
+          clearAllPaths();
         },
       });
     },
     [handleMobileExclusiveNavButtonClick]: ({ navigateTarget, options }) => {
       handleGlobalClick({
         target: handleMobileExclusiveNavButtonClick,
+        payload: { navigateTarget, options },
         callback: () => {
           if (navigateTarget === BasePagePathObj.MyPage) {
             if (sdkUtils.isCurrentLogin()) {
@@ -71,6 +85,12 @@ export const useBottomNavigationActions = () => {
           } else {
             mapRoutesNavTo(navigateTarget, '', options);
           }
+          if (refreshUserDataPages.has(navigateTarget)) {
+            refreshUserData();
+          }
+
+          // 清除所有路由(Tab)數據
+          clearAllPaths();
         },
       });
     },

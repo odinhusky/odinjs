@@ -5,14 +5,14 @@ import {
   useWalletRechargeHighBonusStore,
 } from '@mode2/zustand/page/WalletPage/useWalletPageRechargeCardStore';
 
-import dayjs from 'dayjs';
-import { isEmpty } from 'lodash';
+import dayjs from '@commonUtils/localizedDayjs';
+import isEmpty from 'lodash/isEmpty';
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 import { useWalletPageRechargeContentStore } from '@mode2/zustand/page/WalletPage/walletPageRechargeContentStore';
 import {
   handleWalletPagePayPayChannelOtpClick,
   handleWalletPageSetPayChannelClick,
-} from '@mode2/action/walletPageAction/acitonType';
+} from '@mode2/action/actionTypes';
 import useWalletPageBaseActions from '@mode2/action/walletPageAction/useWalletPageBaseActions';
 import userLocalForage, {
   UserLocalforageStoreKeys,

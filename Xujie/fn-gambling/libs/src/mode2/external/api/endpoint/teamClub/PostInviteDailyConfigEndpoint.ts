@@ -6,12 +6,14 @@ export interface InviteDailyConfigResponse {
   num?: number;
   commission?: number;
   validInviteAmount?: number;
+  inviteeReward?: number;
 }
 
 export interface InviteDailyConfigResult {
   dailyValidInvitees: number; // 每日邀請數量 ,"num": 10,
   commission: number; // 佣金, "commission": 40,
   validInviteRebates: number; // 有效邀請獎勵, "validInviteAmount": 100
+  rewardForInvitee: number; // 受邀者可得到的獎勵
 }
 
 /**
@@ -40,6 +42,7 @@ const transformResponse = (
     dailyValidInvitees: resp?.num || 0,
     commission: resp?.commission || 0,
     validInviteRebates: resp?.validInviteAmount || 0,
+    rewardForInvitee: resp?.inviteeReward || 0,
   };
 };
 

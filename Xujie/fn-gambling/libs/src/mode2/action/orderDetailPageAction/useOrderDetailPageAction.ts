@@ -1,5 +1,4 @@
 import {
-  EOrderDetailPageType,
   IOrderDetailListType,
   TOrderDetailTabUnitValue,
   useMode2OrderDetailPageStore,
@@ -8,12 +7,20 @@ import { ActionClickObjType } from '../common/actionClickObjetType';
 import handleAction from '../common/handleAction';
 import { HandleClickProps } from '../common/handleClickProps';
 import handleGlobalClick from '../handleGlobalClick';
-import { handleOrderDetailPageTabClick } from './actionType';
+import {
+  handleOrderDetailPageShowModal,
+  handleOrderDetailPageTabClick,
+} from '@mode2/action/actionTypes';
 import { filterDataByDays } from '@libs/mode2/utils';
 import { useRecordPageBalanceRecordStore } from '@libs/mode2/zustand/page/recordPageStore';
+import { WalletPageTabType } from '@libs/mode2/@types/walletPageTabType';
+import { useWalletPageSwitchContentTabsStore } from '@libs/mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
+import { useRouterPenddingDataStore } from '@libs/mode2/zustand/routerPenddingDataStore';
+import { BasePagePathObj } from '@libs/mode2/routerTypes/types';
 
 type ActionClickPayloadMap = {
   [handleOrderDetailPageTabClick]: { value: TOrderDetailTabUnitValue };
+  [handleOrderDetailPageShowModal]: { orderId: string; detail: string };
 };
 
 export interface HandleOrderDetailPageActionProps<
@@ -21,14 +28,24 @@ export interface HandleOrderDetailPageActionProps<
 > extends HandleClickProps<T, ActionClickPayloadMap> {}
 
 export const useOrderDetailPageAction = () => {
-  const orderDetailPageType = useMode2OrderDetailPageStore(
-    (state) => state.orderDetailPageType
+  const curSwitchContentTabId = useWalletPageSwitchContentTabsStore(
+    (state) => state.curSwitchContentTabId
   );
-  const setOrderDetailTabIndex = useMode2OrderDetailPageStore(
-    (state) => state.setOrderDetailTabIndex
+
+  const setOrderListTabIndex = useMode2OrderDetailPageStore(
+    (state) => state.setOrderListTabIndex
   );
-  const setOrderDetailList = useMode2OrderDetailPageStore(
-    (state) => state.setOrderDetailList
+  const setOrderList = useMode2OrderDetailPageStore(
+    (state) => state.setOrderList
+  );
+  const setCurrentOrderId = useMode2OrderDetailPageStore(
+    (state) => state.setCurrentOrderId
+  );
+  const setShowOrderDetailModal = useMode2OrderDetailPageStore(
+    (state) => state.setShowOrderDetailModal
+  );
+  const setOrderDetail = useMode2OrderDetailPageStore(
+    (state) => state.setOrderDetail
   );
   const rechargeRecordList = useRecordPageBalanceRecordStore(
     (state) => state.rechargeRecordList
@@ -36,18 +53,20 @@ export const useOrderDetailPageAction = () => {
   const withdrawRecordList = useRecordPageBalanceRecordStore(
     (state) => state.withdrawRecordList
   );
+  const setRouterPenddingData = useRouterPenddingDataStore(
+    (state) => state.setRouterPenddingData
+  );
 
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
     [handleOrderDetailPageTabClick]: ({ value }) => {
       handleGlobalClick({
         target: handleOrderDetailPageTabClick,
+        payload: { value },
         callback: () => {
-          setOrderDetailTabIndex(value);
-
-          console.log('@@===> handleOrderDetailPageTabClick', value);
+          setOrderListTabIndex(value);
 
           const list =
-            orderDetailPageType === EOrderDetailPageType.RECHARGE
+            curSwitchContentTabId === WalletPageTabType.DEPOSIT
               ? (filterDataByDays(
                   rechargeRecordList,
                   value
@@ -57,8 +76,27 @@ export const useOrderDetailPageAction = () => {
                   value
                 ) as unknown as IOrderDetailListType[]);
 
-          console.log('@@===> handleOrderDetailPageTabClick', value, list);
-          setOrderDetailList(list);
+          setOrderList(list);
+
+          setRouterPenddingData(BasePagePathObj.OrderDetailPage, {
+            tab: value.toString(),
+          });
+        },
+      });
+    },
+    [handleOrderDetailPageShowModal]: ({ orderId, detail }) => {
+      handleGlobalClick({
+        target: handleOrderDetailPageShowModal,
+        payload: { orderId, detail },
+        callback: () => {
+          try {
+            const obj = JSON.parse(decodeURIComponent(detail));
+            setOrderDetail(obj);
+          } catch (error) {
+            console.log(error);
+          }
+          setCurrentOrderId(orderId);
+          setShowOrderDetailModal(true);
         },
       });
     },

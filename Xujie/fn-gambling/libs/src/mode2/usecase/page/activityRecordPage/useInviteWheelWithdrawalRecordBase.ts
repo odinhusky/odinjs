@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 export const useInviteWheelWithdrawalRecordBase = () => {
   // const tabIndex = useActivityRecordPageStore((state) => state.tabIndex);
-  const [postInviteWheelWithdrawInformation, { data, isSuccess }] =
+  const [postInviteWheelWithdrawInformation, { data, isSuccess, isLoading }] =
     usePostInviteWheelWithdrawListMutation();
   // const initData = async () => {
   //   await postInviteWheelWithdrawInformation();
@@ -18,8 +18,17 @@ export const useInviteWheelWithdrawalRecordBase = () => {
     (state) => state.setInviteWithdrawalHistoryList
   );
 
+  const setIsTableLoading = useActivityRecordPageStore(
+    (state) => state.setIsTableLoading
+  );
+
   useEffect(() => {
     postInviteWheelWithdrawInformation();
+
+    return () => {
+      setInviteWithdrawalTotalRewards(0);
+      setInviteWithdrawalHistoryList([]);
+    };
   }, []);
 
   useEffect(() => {
@@ -29,6 +38,10 @@ export const useInviteWheelWithdrawalRecordBase = () => {
       setInviteWithdrawalHistoryList(data.inviteWithdrawList);
     }
   }, [isSuccess, data]);
+
+  useEffect(() => {
+    setIsTableLoading(isLoading);
+  }, [isLoading]);
 };
 
 export default useInviteWheelWithdrawalRecordBase;

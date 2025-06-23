@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
 import { InviteWithdrawItemResult } from '@libs/mode2/external/api/endpoint/wheel/PostInviteWheelWithdrawListEndpoint';
 import { WheelSpinHistoryResult } from '@libs/mode2/external/api/endpoint/wheel/PostWheelPlayerSpinHistoryListEndpoint';
 
@@ -7,6 +6,7 @@ export enum ActivityRecordPageTypes {
   DEFAULT = -1,
   INVITE_WHEEL_WITHDRAWAL_RECORD_CONTENT,
   RECHARGE_WHEEL_REWARDS_RECORD_CONTENT,
+  MISSION_REWARDS_RECORD_CONTENT,
 }
 
 export enum SortNameTypes {
@@ -32,29 +32,28 @@ export type ActivityRecordPageStoreTypes = {
   setRechargeRewardRecordList: (arr: WheelSpinHistoryResult[]) => void;
   totalRewards: number;
   setTotalRewards: (value: number) => void;
+  isTableLoading: boolean;
+  setIsTableLoading: (value: boolean) => void;
 };
 
 export const useActivityRecordPageStore =
-  create<ActivityRecordPageStoreTypes>()(
-    devtoolsAndPersistWrapper(
-      '[page store] useActivityRecordPageStore',
-      (set) => ({
-        tabIndex: ActivityRecordPageTypes.DEFAULT,
-        setTabIndex: (index: ActivityRecordPageTypes) =>
-          set(() => ({ tabIndex: index })),
-        inviteWithdrawalTotalRewards: 0,
-        setInviteWithdrawalTotalRewards: (rewards) =>
-          set(() => ({ inviteWithdrawalTotalRewards: rewards })),
-        inviteWithdrawalHistoryList: [] as InviteWithdrawItemResult[],
-        setInviteWithdrawalHistoryList: (arr: InviteWithdrawItemResult[]) =>
-          set(() => ({ inviteWithdrawalHistoryList: arr })),
-        rechargeRewardRecordList: [] as WheelSpinHistoryResult[],
-        setRechargeRewardRecordList: (arr: WheelSpinHistoryResult[]) =>
-          set(() => ({ rechargeRewardRecordList: arr })),
-        listSort: {} as SortTypes,
-        setListSort: (map: SortTypes) => set(() => ({ listSort: map })),
-        totalRewards: 0,
-        setTotalRewards: (value) => set(() => ({ totalRewards: value })),
-      })
-    )
-  );
+  create<ActivityRecordPageStoreTypes>()((set) => ({
+    tabIndex: ActivityRecordPageTypes.DEFAULT,
+    setTabIndex: (index: ActivityRecordPageTypes) =>
+      set(() => ({ tabIndex: index })),
+    inviteWithdrawalTotalRewards: 0,
+    setInviteWithdrawalTotalRewards: (rewards) =>
+      set(() => ({ inviteWithdrawalTotalRewards: rewards })),
+    inviteWithdrawalHistoryList: [] as InviteWithdrawItemResult[],
+    setInviteWithdrawalHistoryList: (arr: InviteWithdrawItemResult[]) =>
+      set(() => ({ inviteWithdrawalHistoryList: arr })),
+    rechargeRewardRecordList: [] as WheelSpinHistoryResult[],
+    setRechargeRewardRecordList: (arr: WheelSpinHistoryResult[]) =>
+      set(() => ({ rechargeRewardRecordList: arr })),
+    listSort: {} as SortTypes,
+    setListSort: (map: SortTypes) => set(() => ({ listSort: map })),
+    totalRewards: 0,
+    setTotalRewards: (value) => set(() => ({ totalRewards: value })),
+    isTableLoading: true,
+    setIsTableLoading: (value) => set(() => ({ isTableLoading: value })),
+  }));

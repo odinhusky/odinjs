@@ -1,7 +1,7 @@
 import { ExternalEndpoint } from '@mode2API/types';
 import { POST_PLAYER_EVENT_REPORT_URL } from '@mode2API/urls';
 import { ResponseStructure } from '@mode2API/endpoint/ResponseStructure';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 export interface PlayerEventReportRequest {
   event: string;

@@ -37,7 +37,7 @@ export const useInvitePageHeaderSetting = () => {
               }
             : {
                 i18nKey: 'earn_money_earn_header_invite_earn',
-                i18nOption: { amount: formatMoney(10000) },
+                i18nOption: { amount: formatMoney({ value: 10000 }) },
               },
           onBack: showLastData ? () => setShowLastData(false) : undefined,
         });

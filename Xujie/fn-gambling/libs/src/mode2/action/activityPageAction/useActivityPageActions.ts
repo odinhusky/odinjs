@@ -2,16 +2,19 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   handleActivityUnitClick,
+  handleMyBonusTabSwitchClick,
   handleSwitchTabClick,
   handleVipMyBounusClick,
   handleVipRecieveLevelRewardClick,
-} from './actionType';
+} from '@mode2/action/actionTypes';
 
 import handleGlobalClick from '../handleGlobalClick';
 import sdkUtils from '@mode2/utils/sdk';
 import {
   ActivityUnit,
+  EMyBonusTabList,
   useMode2ActivitySwitchPageStore,
+  useMode2MyBonusListStore,
 } from '@libs/mode2/zustand/page/activityPageStore';
 import {
   usePostVIPHomeMutation,
@@ -29,7 +32,6 @@ import useAnnouncementActionBase, {
   AnnouncementScenariosType,
 } from '@mode2/usecase/announcement/useAnnouncementActionBase';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
-import { message } from 'antd';
 
 export enum VipRewardType {
   UPGRADE = 'upgrade',
@@ -45,6 +47,7 @@ type ActionClickPayloadMap = {
   };
   [handleVipRecieveLevelRewardClick]: { type: VipRewardType | string };
   [handleVipMyBounusClick]: void;
+  [handleMyBonusTabSwitchClick]: { value: EMyBonusTabList };
 };
 
 export interface HandleActivityPageClickProps<
@@ -53,7 +56,7 @@ export interface HandleActivityPageClickProps<
 
 export const useActivityPageActions = () => {
   const { t } = useTranslation();
-  const { navToLoginPage } = useNavPageClick();
+  const { navToLoginPage, navToVipBonusPage } = useNavPageClick();
 
   const { onAnnouncementAction } = useAnnouncementActionBase();
 
@@ -67,24 +70,27 @@ export const useActivityPageActions = () => {
     useVIPReceiveBoxMutation();
   const [triggerVipReceiveMonthlyReward, { data: recieveMonthlyRewardResult }] =
     useVIPReceiveMonthlyAwardMutation();
-  const [triggerVIPHome, { data: vipHome }] = usePostVIPHomeMutation();
+  const [postVIPHome, { data: vipHome }] = usePostVIPHomeMutation();
 
   const setVipTableDatas = useMyPageStore((state) => state.setVipTableDatas);
-  const setShowVIPMyBonusModal = useMyPageStore(
-    (state) => state.setShowVIPMyBonusModal
+  const setVipRewardDama = useMyPageStore((state) => state.setVipRewardDama);
+  const setMyBonusTabIndex = useMode2MyBonusListStore(
+    (state) => state.setMyBonusTabIndex
   );
 
   useEffect(() => {
     if (!vipHome) return;
     setVipTableDatas(vipHome.vipInfos);
+    setVipRewardDama(vipHome.rewardDamaTimes);
   }, [vipHome]);
+
   useEffect(() => {
     if (
       recieveUpgradeRewardResult?.isReceiveSuccess ||
       recieveMonthlyRewardResult?.isReceiveSuccess
     ) {
       showToast(t('toast_received_successfully'));
-      triggerVIPHome();
+      postVIPHome();
     }
   }, [recieveUpgradeRewardResult, recieveMonthlyRewardResult]);
 
@@ -92,6 +98,7 @@ export const useActivityPageActions = () => {
     [handleSwitchTabClick]: ({ idx }) => {
       handleGlobalClick({
         target: handleSwitchTabClick,
+        payload: { idx },
         callback: () => {
           // 避免訪客模式進入 MyVipContent
           if (idx === ActivityPageTabType.VIP && !sdkUtils.isCurrentLogin()) {
@@ -106,11 +113,13 @@ export const useActivityPageActions = () => {
     [handleActivityUnitClick]: ({ item }) => {
       handleGlobalClick({
         target: handleActivityUnitClick,
+        payload: { item },
         callback: () => {
           onAnnouncementAction(AnnouncementScenariosType.ACTIVITY, {
             type: item.type,
             gameObj: item.gameObj,
             linkUrl: item.linkUrl,
+            mataData: item,
           });
         },
       });
@@ -118,6 +127,7 @@ export const useActivityPageActions = () => {
     [handleVipRecieveLevelRewardClick]: ({ type }) => {
       handleGlobalClick({
         target: handleVipRecieveLevelRewardClick,
+        payload: { type },
         callback: () => {
           if (type === VipRewardType.UPGRADE) triggerVipReceiveUpgradeReward();
           else if (type === VipRewardType.MONTHLY)
@@ -129,8 +139,16 @@ export const useActivityPageActions = () => {
       handleGlobalClick({
         target: handleVipMyBounusClick,
         callback: () => {
-          message.info('TODO new Page or Modal & api');
-          setShowVIPMyBonusModal(true);
+          navToVipBonusPage();
+        },
+      });
+    },
+    [handleMyBonusTabSwitchClick]: ({ value }) => {
+      handleGlobalClick({
+        target: handleMyBonusTabSwitchClick,
+        payload: { value },
+        callback: () => {
+          setMyBonusTabIndex(value);
         },
       });
     },

@@ -16,8 +16,8 @@ export const useMode2SettingPageHeaderSetting = () => {
   useEffect(() => {
     // 音乐设定 ｜ 关于我们（社群列表）
     const tabData: { [key: string]: string } = {
-      [SettingPageTypes.MUSIC_SETTING]: 'setting',
-      [SettingPageTypes.SOCIALLIST]: 'About us',
+      [SettingPageTypes.MUSIC_SETTING]: 'profile_settings_page_title',
+      [SettingPageTypes.SOCIALLIST]: 'profile_about_us_item',
     };
     const { tab } = params;
 

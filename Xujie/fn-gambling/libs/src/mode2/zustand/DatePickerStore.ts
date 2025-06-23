@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from './middlewareWrapper';
 
 export interface ShowDatePickerStoreTypes {
   isShowDatePicker: boolean;
@@ -7,12 +6,9 @@ export interface ShowDatePickerStoreTypes {
 }
 
 export const useShowDatePickerStore = create<ShowDatePickerStoreTypes>()(
-  devtoolsAndPersistWrapper(
-    '[DatePicker store] useShowDatePickerStore',
-    (set) => ({
-      isShowDatePicker: false,
-      setDatePicker: (isShowDatePicker) =>
-        set(() => ({ isShowDatePicker: isShowDatePicker })),
-    })
-  )
+  (set) => ({
+    isShowDatePicker: false,
+    setDatePicker: (isShowDatePicker) =>
+      set(() => ({ isShowDatePicker: isShowDatePicker })),
+  })
 );

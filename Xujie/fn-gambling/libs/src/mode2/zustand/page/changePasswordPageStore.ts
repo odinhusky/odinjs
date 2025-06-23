@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
 
 export type ChangePasswordPageStoreTypes = {
   data: boolean;
@@ -13,27 +12,22 @@ export type ChangePasswordPageStoreTypes = {
 };
 
 export const useMode2ChangePasswordPageStore =
-  create<ChangePasswordPageStoreTypes>()(
-    devtoolsAndPersistWrapper(
-      '[page store] useMode2ChangePasswordPageStore',
-      (set) => ({
-        data: false,
-        setIsFirstModify: (data) => set(() => ({ data })),
-        currentPasswordInputValue: '',
-        setCurrentPasswordInputValue: (value) =>
-          set(() => ({
-            currentPasswordInputValue: value,
-          })),
-        newPasswordInputValue: '',
-        setNewPasswordInputValue: (value) =>
-          set(() => ({
-            newPasswordInputValue: value,
-          })),
-        confirmPasswordInputValue: '',
-        setConfirmPasswordInputValue: (value) =>
-          set(() => ({
-            confirmPasswordInputValue: value,
-          })),
-      })
-    )
-  );
+  create<ChangePasswordPageStoreTypes>()((set) => ({
+    data: false,
+    setIsFirstModify: (data) => set(() => ({ data })),
+    currentPasswordInputValue: '',
+    setCurrentPasswordInputValue: (value) =>
+      set(() => ({
+        currentPasswordInputValue: value,
+      })),
+    newPasswordInputValue: '',
+    setNewPasswordInputValue: (value) =>
+      set(() => ({
+        newPasswordInputValue: value,
+      })),
+    confirmPasswordInputValue: '',
+    setConfirmPasswordInputValue: (value) =>
+      set(() => ({
+        confirmPasswordInputValue: value,
+      })),
+  }));

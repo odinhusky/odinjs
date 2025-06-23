@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import sdkUtils from '@mode2/utils/sdk';
-import { devtoolsWrapper } from './middlewareWrapper';
 
 export enum LoginFormType {
   LOGIN = 'login',
@@ -70,9 +69,7 @@ export interface IsLoginStoreTypes {
   setIsLogin: (value: boolean) => void;
 }
 
-export const useIsLoginStore = create<IsLoginStoreTypes>()(
-  devtoolsWrapper('[login store] useIsLoginStore', (set) => ({
-    isLogin: sdkUtils.isCurrentLogin(),
-    setIsLogin: (value) => set(() => ({ isLogin: value })),
-  }))
-);
+export const useIsLoginStore = create<IsLoginStoreTypes>()((set) => ({
+  isLogin: sdkUtils.isCurrentLogin(),
+  setIsLogin: (value) => set(() => ({ isLogin: value })),
+}));

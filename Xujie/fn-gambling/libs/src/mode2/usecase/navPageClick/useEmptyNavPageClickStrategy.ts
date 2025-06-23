@@ -147,15 +147,53 @@ export const useEmptyNavPageClickStrategy = () => {
     options?: NavigateOptions
   ) => {};
 
-  const navToGameSupplierListPage = (
-    query: string = '',
-    options?: NavigateOptions
-  ) => {};
-
   const navToOrderDetailPage = (
     query: string = '',
     options?: NavigateOptions
   ) => {};
+
+  const navToVipPage = (query: string = '', options?: NavigateOptions) => {};
+
+  const navToVipBonusPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {};
+
+  const navToRankingPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {};
+
+  const navToActivityDetailPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {};
+
+  const navToTaskCenterPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {};
+
+  const navToSearchGamePage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {};
+
+  const navToInboxDetailPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {};
+
+  const navToRechargeSecretPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {};
+
+  const navToLowBalanceRescueBoxPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {};
+
   // ---- new foe v6 end ----
 
   const mapRoutesNavTo = (
@@ -234,11 +272,32 @@ export const useEmptyNavPageClickStrategy = () => {
       case BasePagePathObj.SettingPage:
         navToSettingPage(query, options);
         break;
-      case BasePagePathObj.GameSupplierListPage:
-        navToGameSupplierListPage(query, options);
-        break;
       case BasePagePathObj.OrderDetailPage:
         navToOrderDetailPage(query, options);
+        break;
+      case BasePagePathObj.VipPage:
+        navToVipPage(query, options);
+        break;
+      case BasePagePathObj.VipBonusPage:
+        navToVipBonusPage(query, options);
+        break;
+      case BasePagePathObj.RankingPage:
+        navToRankingPage(query, options);
+        break;
+      case BasePagePathObj.ActivityDetailPage:
+        navToActivityDetailPage(query, options);
+        break;
+      case BasePagePathObj.TaskCenterPage:
+        navToTaskCenterPage(query, options);
+        break;
+      case BasePagePathObj.InboxDetailPage:
+        navToInboxDetailPage(query, options);
+        break;
+      case BasePagePathObj.RechargeSecretPage:
+        navToRechargeSecretPage(query, options);
+        break;
+      case BasePagePathObj.LowBalanceRescueBoxPage:
+        navToLowBalanceRescueBoxPage(query, options);
         break;
       default:
         navigate(`${path}${query}`, options);
@@ -271,8 +330,16 @@ export const useEmptyNavPageClickStrategy = () => {
     navToAccountPage,
     navToWalletGuidePage,
     navToSettingPage,
-    navToGameSupplierListPage,
     navToOrderDetailPage,
+    navToVipPage,
+    navToVipBonusPage,
+    navToRankingPage,
+    navToActivityDetailPage,
+    navToTaskCenterPage,
+    navToSearchGamePage,
+    navToInboxDetailPage,
+    navToRechargeSecretPage,
+    navToLowBalanceRescueBoxPage,
   };
 };
 

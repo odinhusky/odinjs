@@ -1,6 +1,5 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 import {
   ORDER,
   OrderType,
@@ -30,34 +29,38 @@ export interface Mode2TeamClubSubordinateDataStoreTypes {
   ) => void;
   teamMemberSummaryData: TeamMemberSummaryResult;
   setTeamMemberSummaryData: (value: TeamMemberSummaryResult) => void;
+
+  refreshUserDataCount: number;
+  refreshUserData: () => void;
 }
 
 export const useMode2SubordinateDataPageStore =
-  create<Mode2TeamClubSubordinateDataStoreTypes>()(
-    devtoolsAndPersistWrapper(
-      '[page store] useMode2SubordinateDataPageStore',
-      (set) => ({
-        mobile: '',
-        setMobile: (mobile) => set(() => ({ mobile: mobile })),
-        sortByTier: 0,
-        setSortByTier: (value: number) => set(() => ({ sortByTier: value })),
-        sortByJoinTime: ORDER.DESC as OrderType,
-        setSortByJoinTime: (value: OrderType) =>
-          set(() => ({ sortByJoinTime: value })),
-        sortByCommission: ORDER.DEFAULT as OrderType,
-        setSortByCommission: (value: OrderType) =>
-          set(() => ({ sortByCommission: value })),
-        datePicker: defaultJoinTime,
-        setDatePicker: (value) => set(() => ({ datePicker: value })),
-        currentClubLevelData: {} as TeamLevelUnit,
-        setCurrentClubLevelData: (value) =>
-          set(() => ({ currentClubLevelData: value })),
-        teamFinanceTierSummaryList: [] as TeamFinanceTierSummaryItemResult[],
-        setTeamFinanceTierSummaryList: (list) =>
-          set(() => ({ teamFinanceTierSummaryList: list })),
-        teamMemberSummaryData: {} as TeamMemberSummaryResult,
-        setTeamMemberSummaryData: (value) =>
-          set(() => ({ teamMemberSummaryData: value })),
-      })
-    )
-  );
+  create<Mode2TeamClubSubordinateDataStoreTypes>()((set, get) => ({
+    mobile: '',
+    setMobile: (mobile) => set(() => ({ mobile: mobile })),
+    sortByTier: 0,
+    setSortByTier: (value: number) => set(() => ({ sortByTier: value })),
+    sortByJoinTime: ORDER.DESC as OrderType,
+    setSortByJoinTime: (value: OrderType) =>
+      set(() => ({ sortByJoinTime: value })),
+    sortByCommission: ORDER.DEFAULT as OrderType,
+    setSortByCommission: (value: OrderType) =>
+      set(() => ({ sortByCommission: value })),
+    datePicker: defaultJoinTime,
+    setDatePicker: (value) => set(() => ({ datePicker: value })),
+    currentClubLevelData: {} as TeamLevelUnit,
+    setCurrentClubLevelData: (value) =>
+      set(() => ({ currentClubLevelData: value })),
+    teamFinanceTierSummaryList: [] as TeamFinanceTierSummaryItemResult[],
+    setTeamFinanceTierSummaryList: (list) =>
+      set(() => ({ teamFinanceTierSummaryList: list })),
+    teamMemberSummaryData: {} as TeamMemberSummaryResult,
+    setTeamMemberSummaryData: (value) =>
+      set(() => ({ teamMemberSummaryData: value })),
+
+    refreshUserDataCount: 0,
+    refreshUserData: () =>
+      set(() => ({
+        refreshUserDataCount: get().refreshUserDataCount + 1,
+      })),
+  }));

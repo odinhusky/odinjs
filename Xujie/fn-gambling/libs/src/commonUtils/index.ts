@@ -13,3 +13,7 @@ export * from './isTailwindTextClass';
 export * from './handleScrollToElementTop';
 export * from './handleScrollToElementLeft';
 export * from './isSafari';
+export * from './maskMiddle4';
+export * from './toUnixTimestamp';
+export * from './isUseOtherInfoWhenAntdFormInputValidate';
+export * from './removeDuplicates';

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 import sdkUtils from '@libs/mode2/utils/sdk';
 import userLocalForage, {
   UserLocalforageStoreKeys,

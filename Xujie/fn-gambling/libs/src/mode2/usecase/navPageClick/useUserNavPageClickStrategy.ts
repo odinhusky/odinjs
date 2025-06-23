@@ -6,6 +6,8 @@ import useNavToLoginPage from '@mode2/usecase/navPageClick/useNavToLoginPage';
 import { To } from 'react-router';
 import useShouldNavigate from '@mode2/usecase/navPageClick/useShouldNavigate';
 import { KYC_BOTH_STATE } from '@constant/KYC';
+import posthog from 'posthog-js';
+import { PostHogFeatureTypes } from '@mode2/utils/sdk/strategy/analytics/PostHogAnalytics';
 
 /**
  * 已經登入的使用者，導航決策
@@ -30,6 +32,11 @@ const useUserNavPageClickStrategy = () => {
   };
 
   const navToWalletPage = (query: string = '', options?: NavigateOptions) => {
+    // Evan for [V6] 行為特例， 短解
+    if (import.meta.env['VITE_V_VERSION'] === 'v6') {
+      navigate(`${BasePagePathObj.WalletPage}${query}`, options);
+      return;
+    }
     if (toWalletPageWithdrawTab(options)) {
       navigate(`${BasePagePathObj.WalletPage}${query}`, options);
     } else {
@@ -156,19 +163,82 @@ const useUserNavPageClickStrategy = () => {
     navigate(`${BasePagePathObj.SettingPage}${query}`, options);
   };
 
-  const navToGameSupplierListPage = (
-    query: string = '',
-    options?: NavigateOptions
-  ) => {
-    navigate(`${BasePagePathObj.GameSupplierListPage}${query}`, options);
-  };
-
   const navToOrderDetailPage = (
     query: string = '',
     options?: NavigateOptions
   ) => {
     navigate(`${BasePagePathObj.OrderDetailPage}${query}`, options);
   };
+
+  const navToVipPage = (query: string = '', options?: NavigateOptions) => {
+    navigate(`${BasePagePathObj.VipPage}${query}`, options);
+  };
+
+  const navToVipBonusPage = (query: string = '', options?: NavigateOptions) => {
+    navigate(`${BasePagePathObj.VipBonusPage}${query}`, options);
+  };
+
+  const navToRankingPage = (query: string = '', options?: NavigateOptions) => {
+    navigate(`${BasePagePathObj.RankingPage}${query}`, options);
+  };
+
+  const navToActivityDetailPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.ActivityDetailPage}${query}`, options);
+  };
+
+  const navToTaskCenterPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.TaskCenterPage}${query}`, options);
+  };
+
+  const navToSearchGamePage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.SearchGamePage}${query}`, options);
+  };
+
+  const navToInboxDetailPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.InboxDetailPage}${query}`, options);
+  };
+
+  const navToRechargeSecretPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    const secretRechargeEnabled = posthog.isFeatureEnabled(
+      PostHogFeatureTypes.secretRecharge.flag
+    );
+    if (secretRechargeEnabled) {
+      navigate(`${BasePagePathObj.RechargeSecretPage}${query}`, options);
+    } else {
+      navToHallPage();
+    }
+  };
+
+  const navToLowBalanceRescueBoxPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    const lowBalanceRescueBoxEnabled = posthog.isFeatureEnabled(
+      PostHogFeatureTypes.lowBalanceRescueBox.flag
+    );
+
+    if (lowBalanceRescueBoxEnabled) {
+      navigate(`${BasePagePathObj.LowBalanceRescueBoxPage}${query}`, options);
+    } else {
+      navToHallPage();
+    }
+  };
+
   // ---- new foe v6 end ----
 
   const mapRoutesNavTo = (
@@ -247,11 +317,35 @@ const useUserNavPageClickStrategy = () => {
       case BasePagePathObj.SettingPage:
         navToSettingPage(query, options);
         break;
-      case BasePagePathObj.GameSupplierListPage:
-        navToGameSupplierListPage(query, options);
-        break;
       case BasePagePathObj.OrderDetailPage:
         navToOrderDetailPage(query, options);
+        break;
+      case BasePagePathObj.VipPage:
+        navToVipPage(query, options);
+        break;
+      case BasePagePathObj.VipBonusPage:
+        navToVipBonusPage(query, options);
+        break;
+      case BasePagePathObj.RankingPage:
+        navToRankingPage(query, options);
+        break;
+      case BasePagePathObj.ActivityDetailPage:
+        navToActivityDetailPage(query, options);
+        break;
+      case BasePagePathObj.TaskCenterPage:
+        navToTaskCenterPage(query, options);
+        break;
+      case BasePagePathObj.SearchGamePage:
+        navToSearchGamePage(query, options);
+        break;
+      case BasePagePathObj.InboxDetailPage:
+        navToInboxDetailPage(query, options);
+        break;
+      case BasePagePathObj.RechargeSecretPage:
+        navToRechargeSecretPage(query, options);
+        break;
+      case BasePagePathObj.LowBalanceRescueBoxPage:
+        navToLowBalanceRescueBoxPage(query, options);
         break;
       default:
         navigate(`${path}${query}`, options);
@@ -284,8 +378,16 @@ const useUserNavPageClickStrategy = () => {
     navToAccountPage,
     navToWalletGuidePage,
     navToSettingPage,
-    navToGameSupplierListPage,
     navToOrderDetailPage,
+    navToVipPage,
+    navToVipBonusPage,
+    navToRankingPage,
+    navToActivityDetailPage,
+    navToTaskCenterPage,
+    navToSearchGamePage,
+    navToInboxDetailPage,
+    navToRechargeSecretPage,
+    navToLowBalanceRescueBoxPage,
   };
 };
 

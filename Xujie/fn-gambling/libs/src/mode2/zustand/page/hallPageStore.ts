@@ -4,29 +4,31 @@ import {
   AnnouncementResult,
   BroadcastItemResult,
 } from '@mode2API/endpoint/user/PostHomeEndpoint';
-import {
-  devtoolsAndPersistWrapper,
-  devtoolsWrapper,
-} from '../middlewareWrapper';
 import { ActionClickPayloadMap as HallPageActionClickPayloadMap } from '@mode2/action/hallPageAction/useHallPageActions';
 import { VoidAction } from '@mode2/@types/commonTypes';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
 import { AnnouncementType } from '@mode2/@types/announcementType';
+import { ElementMetrics, defElementMetrics } from '@libs/commonUtils';
 
 // - /////////////// Download Banner ///////////////////////
 export interface Mode2HallPageDownloadBannerStoreTypes {
   isShowDownloadBanner: boolean;
   setIsShowDownloadBanner: (value: boolean) => void;
+
+  shouldShowDownloadBanner: boolean;
+  setShouldShowDownloadBanner: (value: boolean) => void;
 }
 
 export const useMode2HallPageDownloadBannerStore =
-  create<Mode2HallPageDownloadBannerStoreTypes>()(
-    devtoolsWrapper('store [useMode2HallPageDownloadBannerStore]', (set) => ({
-      isShowDownloadBanner: true,
-      setIsShowDownloadBanner: (value) =>
-        set(() => ({ isShowDownloadBanner: value })),
-    }))
-  );
+  create<Mode2HallPageDownloadBannerStoreTypes>()((set) => ({
+    isShowDownloadBanner: true,
+    setIsShowDownloadBanner: (value) =>
+      set(() => ({ isShowDownloadBanner: value })),
+
+    shouldShowDownloadBanner: true,
+    setShouldShowDownloadBanner: (value) =>
+      set(() => ({ shouldShowDownloadBanner: value })),
+  }));
 
 // - /////////////// Bonus Modal ///////////////////////
 export interface Mode2HallPageModalStoreTypes {
@@ -35,12 +37,10 @@ export interface Mode2HallPageModalStoreTypes {
 }
 
 export const useMode2HallPageModalStore =
-  create<Mode2HallPageModalStoreTypes>()(
-    devtoolsWrapper('store [useMode2HallPageModalStore]', (set) => ({
-      isShowBonusModal: false,
-      setIsShowBonusModal: (value) => set(() => ({ isShowBonusModal: value })),
-    }))
-  );
+  create<Mode2HallPageModalStoreTypes>()((set) => ({
+    isShowBonusModal: false,
+    setIsShowBonusModal: (value) => set(() => ({ isShowBonusModal: value })),
+  }));
 
 // - /////////////// Banner ///////////////////////
 
@@ -52,7 +52,7 @@ export interface useMode2BannerStoreTypes {
 }
 
 export const useMode2BannerStore = create<useMode2BannerStoreTypes>()(
-  devtoolsAndPersistWrapper('[page store] useMode2BannerStore', (set) => ({
+  (set) => ({
     bannerList: [
       {
         type: AnnouncementType.UNKNOWN,
@@ -63,21 +63,21 @@ export const useMode2BannerStore = create<useMode2BannerStoreTypes>()(
       },
     ] as AnnouncementItem[],
     setBannerList: (list) => set(() => ({ bannerList: list })),
-  }))
-);
-
-interface AnnouncementActionsStoreTypes {
-  bannerActionList: VoidAction[];
-  setBannerActionList: (list: VoidAction[]) => void;
-}
-
-// Actions 的行為就不做資料固化
-export const useMode2BannerActionsStore = create<AnnouncementActionsStoreTypes>(
-  (set) => ({
-    bannerActionList: [] as VoidAction[],
-    setBannerActionList: (list) => set(() => ({ bannerActionList: list })),
   })
 );
+
+// interface AnnouncementActionsStoreTypes {
+//   bannerActionList: VoidAction[];
+//   setBannerActionList: (list: VoidAction[]) => void;
+// }
+//
+// // Actions 的行為就不做資料固化
+// export const useMode2BannerActionsStore = create<AnnouncementActionsStoreTypes>(
+//   (set) => ({
+//     bannerActionList: [] as VoidAction[],
+//     setBannerActionList: (list) => set(() => ({ bannerActionList: list })),
+//   })
+// );
 
 // - //////////////// Marquee //////////////////////
 export interface BroadcastItem extends BroadcastItemResult {}
@@ -90,12 +90,12 @@ export interface useMode2MarqueeListType {
 }
 
 export const useMode2MarqueeListStore = create<useMode2MarqueeListType>()(
-  devtoolsAndPersistWrapper('store [useMode2MarqueeListStore]', (set) => ({
+  (set) => ({
     marqueeList: [] as BroadcastItem[],
     setMarqueeList: (list) => set(() => ({ marqueeList: list })),
     fontColor: '#ffffff',
     setFontColor: (color) => set(() => ({ fontColor: color })),
-  }))
+  })
 );
 
 interface marqueeActionsStoreTypes {
@@ -179,17 +179,12 @@ export interface useMode2TabsType {
   setTabList: (list: HallPageTab[]) => void;
 }
 
-export const useMode2HallPageTabsStore = create<useMode2TabsType>()(
-  devtoolsAndPersistWrapper(
-    '[page store] useMode2HallPageTabsStore',
-    (set) => ({
-      curTab: HallPageIdObj.LOBBY as HallPageTabIDType,
-      setCurTab: (tabID) => set(() => ({ curTab: tabID })),
-      tabList: [] as HallPageTab[],
-      setTabList: (list) => set(() => ({ tabList: list })),
-    })
-  )
-);
+export const useMode2HallPageTabsStore = create<useMode2TabsType>()((set) => ({
+  curTab: HallPageIdObj.LOBBY as HallPageTabIDType,
+  setCurTab: (tabID) => set(() => ({ curTab: tabID })),
+  tabList: [] as HallPageTab[],
+  setTabList: (list) => set(() => ({ tabList: list })),
+}));
 interface HallPageActionsStoreTypes {
   hallPageTabActionList: VoidAction[];
   setHallPageTabActionList: (list: VoidAction[]) => void;
@@ -198,17 +193,14 @@ interface HallPageActionsStoreTypes {
 }
 
 export const useHallPageActionsStore = create<HallPageActionsStoreTypes>()(
-  devtoolsWrapper(
-    '[MyPage Action store] useMyPageActionsStore',
-    (set, get) => ({
-      hallPageTabActionList: {} as VoidAction[],
-      setHallPageTabActionList: (list) =>
-        set(() => ({ hallPageTabActionList: list })),
-      scrollToTabsCount: 0,
-      addScrollToTabsCount: () =>
-        set(() => ({ scrollToTabsCount: get().scrollToTabsCount + 1 })),
-    })
-  )
+  (set, get) => ({
+    hallPageTabActionList: {} as VoidAction[],
+    setHallPageTabActionList: (list) =>
+      set(() => ({ hallPageTabActionList: list })),
+    scrollToTabsCount: 0,
+    addScrollToTabsCount: () =>
+      set(() => ({ scrollToTabsCount: get().scrollToTabsCount + 1 })),
+  })
 );
 
 // - //////////////// HallPageGameList //////////////////////
@@ -308,31 +300,44 @@ export interface useMode2HallPageGameListType {
   setGameList: (list: Mode2GameListConfig[]) => void;
   platformList: Mode2GameListConfig[];
   setPlatformList: (list: Mode2GameListConfig[]) => void;
+  hallGameItemElementRef: RefObject<HTMLDivElement> | null;
+  hallGameItemElMetrics: ElementMetrics;
+  setHallGameItemElMetrics: (
+    hallGameItemElMetrics: RefObject<HTMLDivElement> | null,
+    elMetrics: ElementMetrics
+  ) => void;
 }
 
 export const useMode2HallPageGameListStore =
-  create<useMode2HallPageGameListType>()(
-    devtoolsAndPersistWrapper(
-      '[store useMode2HallPageGameListStore]',
-      (set) => ({
-        gameList: [] as Mode2GameListConfig[],
-        setGameList: (list) => set(() => ({ gameList: list })),
-        platformList: [] as Mode2GameListConfig[],
-        setPlatformList: (list) => set(() => ({ platformList: list })),
-      })
-    )
-  );
+  create<useMode2HallPageGameListType>()((set) => ({
+    gameList: [] as Mode2GameListConfig[],
+    setGameList: (list) => set(() => ({ gameList: list })),
+    platformList: [] as Mode2GameListConfig[],
+    setPlatformList: (list) => set(() => ({ platformList: list })),
+
+    hallGameItemElementRef: null as RefObject<HTMLDivElement> | null,
+    hallGameItemElMetrics: defElementMetrics,
+    setHallGameItemElMetrics: (ref, elMetrics) =>
+      set(() => ({
+        hallGameItemElementRef: ref,
+        hallGameItemElMetrics: elMetrics,
+      })),
+  }));
 
 // - //////////////// HallPageStore //////////////////////
 
 export interface useMode2HallPageType {
   isRefresh: boolean;
   setIsRefresh: (bool: boolean) => void;
+
+  isHallPageAffixed: boolean;
+  setIsHallPageAffixed: (bool: boolean) => void;
 }
 
-export const useMode2HallPageStore = create<useMode2HallPageType>()(
-  devtoolsWrapper('[page useMode2HallPageStore]', (set) => ({
-    isRefresh: false,
-    setIsRefresh: (bool) => set(() => ({ isRefresh: bool })),
-  }))
-);
+export const useMode2HallPageStore = create<useMode2HallPageType>()((set) => ({
+  isRefresh: false,
+  setIsRefresh: (bool) => set(() => ({ isRefresh: bool })),
+
+  isHallPageAffixed: false,
+  setIsHallPageAffixed: (bool) => set(() => ({ isHallPageAffixed: bool })),
+}));

@@ -8,10 +8,8 @@ import { usePostTeamInviteInformationMutation } from '@mode2API/index';
 import sdkUtils from '@mode2/utils/sdk';
 
 export const useInviteRewardsBase = () => {
-  const [
-    postTeamInviteInformation,
-    { data: teamInviteInformationData, isSuccess, isLoading },
-  ] = usePostTeamInviteInformationMutation();
+  const [postTeamInviteInformation, { data: teamInviteInformationData }] =
+    usePostTeamInviteInformationMutation();
 
   const setTotalInvitationRewards = useInviteRewardsContentStore(
     (state) => state.setTotalInvitationRewards
@@ -28,6 +26,10 @@ export const useInviteRewardsBase = () => {
   const setRewardPerInvite = useInviteRewardsContentStore(
     (state) => state.setRewardPerInvite
   );
+
+  const setRewardForInvitee = useInviteRewardsContentStore(
+    (state) => state.setRewardForInvitee
+  );
   const setDailyInviteLimit = useInviteRewardsContentStore(
     (state) => state.setDailyInviteLimit
   );
@@ -43,6 +45,12 @@ export const useInviteRewardsBase = () => {
   const setValidMilestoneProgress = useInviteRewardsContentStore(
     (state) => state.setValidMilestoneProgress
   );
+  const setInviteRewardsClaimAll = useInviteRewardsContentStore(
+    (state) => state.setInviteRewardsClaimAll
+  );
+  const refreshInviteRewardsCount = useInviteRewardsContentStore(
+    (state) => state.refreshInviteRewardsCount
+  );
 
   const clear = useInviteRewardsContentStore((state) => state.clear);
 
@@ -52,20 +60,23 @@ export const useInviteRewardsBase = () => {
     } else {
       clear();
     }
-  }, []);
+  }, [refreshInviteRewardsCount]);
 
   useDeepEffect(() => {
     if (teamInviteInformationData) {
       const data = teamInviteInformationData;
+      console.log('@@@===> teamInviteInformationData', data);
 
       setTotalInvitationRewards(data.totalInvitationRewards);
       setTotalInvitees(data.totalInvitees);
       setValidInvitees(data.validInvitees);
       setRewardPerInvite(data.rewardPerInvite);
+      setRewardForInvitee(data.rewardForInvitee);
       setDailyValidInvitees(data.dailyValidInvitees);
       setDailyInviteLimit(data.dailyInviteLimit);
       setMaxInvitees(data.maxInviteCount);
       setMaxInvitationRewards(data.maxInviteRewards);
+      setInviteRewardsClaimAll(data.primaryStatus);
 
       const inviteesLevelMilestoneItems: InviteesLevelMilestoneItem[] =
         data.inviteesLevelMilestoneRules.map((item, index) => {

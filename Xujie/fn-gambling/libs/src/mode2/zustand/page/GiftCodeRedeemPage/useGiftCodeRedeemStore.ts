@@ -10,6 +10,13 @@ export enum GiftCodeRedeemScenarios {
   UNKNOWN = 'UNKNOWN',
 }
 
+// 兌換結果顯示方式
+export enum GiftCodeRedeemResultScenarios {
+  TOAST = 'Toast',
+  MODAL = 'Modal',
+  UNKNOWN = 'UNKNOWN',
+}
+
 export interface GiftCodeRedeemStoreTypes {
   redeemGiftCodeSubmitObj: {
     scenarios: GiftCodeRedeemScenarios;
@@ -34,6 +41,13 @@ export interface GiftCodeRedeemStoreTypes {
   setShowMaxLimitModal: (value: boolean) => void;
   redeemDescList: IRedeemDescList[];
   setRedeemDescList: (value: IRedeemDescList[]) => void;
+
+  showRedeemResultModal: boolean;
+  setShowRedeemResultModal: (value: boolean) => void;
+  errorMessage: string;
+  setErrorMessage: (message: string) => void;
+  redeemAmount: number;
+  setRedeemAmount: (amount: number) => void;
 }
 
 export const useGiftCodeRedeemStore = create<GiftCodeRedeemStoreTypes>(
@@ -78,5 +92,15 @@ export const useGiftCodeRedeemStore = create<GiftCodeRedeemStoreTypes>(
     redeemDescList: [],
     setRedeemDescList: (value: IRedeemDescList[]) =>
       set(() => ({ redeemDescList: value })),
+
+    showRedeemResultModal: false,
+    setShowRedeemResultModal: (value: boolean) =>
+      set(() => ({ showRedeemResultModal: value })),
+    errorMessage: '',
+    setErrorMessage: (message: string) =>
+      set(() => ({ errorMessage: message })),
+    redeemAmount: 0,
+    setRedeemAmount: (amount: number) =>
+      set(() => ({ redeemAmount: amount })),
   })
 );

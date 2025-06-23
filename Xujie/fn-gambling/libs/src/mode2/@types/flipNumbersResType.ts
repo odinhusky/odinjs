@@ -1,0 +1,5 @@
+export enum FlipNumbersResType {
+  AMOUNT_NUMBER = 'AMOUNT_NUMBER',
+  AMOUNT_NUMBER_V2 = 'AMOUNT_NUMBER_V2',
+  NUMBER = 'NUMBER',
+}

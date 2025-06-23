@@ -6,7 +6,9 @@ import {
   useMode2FeedBackPageInBoxStore,
   useMode2FeedBackPageTabStore,
 } from '@libs/mode2/zustand/page/feedbackPageStore';
-import { cloneDeep, get, isEmpty } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 import { useEffect } from 'react';
 
 export const useMode2FeedBackPageInBoxData = () => {
@@ -30,9 +32,13 @@ export const useMode2FeedBackPageInBoxData = () => {
     (state) => state.setInBoxPageNumber
   );
 
+  const setInboxLoading = useMode2FeedBackPageInBoxStore(
+    (state) => state.setInboxLoading
+  );
+
   const [
     triggerFetchMessageList,
-    { isSuccess: isInBoxMsgSuccess, data: inBoxMsgData },
+    { isSuccess: isInBoxMsgSuccess, data: inBoxMsgData, isLoading },
   ] = usePostMessageListMutation();
 
   // 發送 API
@@ -71,12 +77,14 @@ export const useMode2FeedBackPageInBoxData = () => {
   useEffect(() => {
     setIsEndOfInBoxPageList(false);
     setInBoxPageNumber(0);
+    setInBoxPageList([]);
   }, [activeTabId]);
 
   useEffect(() => {
-    setIsEndOfInBoxPageList(false);
-    setInBoxPageNumber(0);
-  }, []);
+    // TODO Ronan 進入頁面會重複請求2-3次
+    // setInboxLoading(isLoading);
+    setInboxLoading(false);
+  }, [isLoading]);
 
   // 處理 UnRead Notice Count
   // useDeepEffect(() => {

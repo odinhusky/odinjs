@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
 export enum SharePosterType {
-  SHARETEAMCLUB = 0, // 俱樂部分享
-  SHAREINVITE = 1, // 邀請分享
+  SHARETEAMCLUB = 0, // 國際俱樂部分享
+  SHAREINVITE = 1, // 邀請輪盤分享
 }
 
 interface Poster {

@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
 import { DeviceBreakPointType } from '@libs/commonUtils';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
 
@@ -30,29 +29,26 @@ interface FooterStoreTypes {
   setDisplayConfig: (config: DeviceBreakPointType) => void;
 }
 
-export const useFooterStore = create<FooterStoreTypes>()(
-  devtoolsAndPersistWrapper('[component store] useFooterStore', (set) => ({
-    isDisplayFooter: true,
-    setDisplayFooter: (isDisplay) =>
-      set(() => ({ isDisplayFooter: isDisplay })),
-    copyrightInfo: '',
-    setCopyrightInfo: (src) => set(() => ({ copyrightInfo: src })),
-    introduction: [] as string[],
-    setIntroduction: (list) => set(() => ({ introduction: list })),
-    versionInfo: '',
-    setVersionInfo: (src) => set(() => ({ versionInfo: src })),
-    hyperlinks: [] as LinkInfo[],
-    setHyperlinks: (list) => set(() => ({ hyperlinks: list })),
-    manufacturerList: [] as string[],
-    setManufacturerList: (list) => set(() => ({ manufacturerList: list })),
-    customerServiceTitle: '',
-    setCustomerServiceTitle: (title) =>
-      set(() => ({ customerServiceTitle: title })),
-    displayConfig: {
-      isDesktop: false,
-      isMobile: false,
-      isTablet: false,
-    },
-    setDisplayConfig: (config) => set(() => ({ displayConfig: config })),
-  }))
-);
+export const useFooterStore = create<FooterStoreTypes>()((set) => ({
+  isDisplayFooter: true,
+  setDisplayFooter: (isDisplay) => set(() => ({ isDisplayFooter: isDisplay })),
+  copyrightInfo: '',
+  setCopyrightInfo: (src) => set(() => ({ copyrightInfo: src })),
+  introduction: [] as string[],
+  setIntroduction: (list) => set(() => ({ introduction: list })),
+  versionInfo: '',
+  setVersionInfo: (src) => set(() => ({ versionInfo: src })),
+  hyperlinks: [] as LinkInfo[],
+  setHyperlinks: (list) => set(() => ({ hyperlinks: list })),
+  manufacturerList: [] as string[],
+  setManufacturerList: (list) => set(() => ({ manufacturerList: list })),
+  customerServiceTitle: '',
+  setCustomerServiceTitle: (title) =>
+    set(() => ({ customerServiceTitle: title })),
+  displayConfig: {
+    isDesktop: false,
+    isMobile: false,
+    isTablet: false,
+  },
+  setDisplayConfig: (config) => set(() => ({ displayConfig: config })),
+}));

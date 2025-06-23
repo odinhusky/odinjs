@@ -4,12 +4,18 @@ import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 
 export enum UserLocalforageStoreKeys {
   FIRST_CHARGE = 'firstChargeData',
+  RANKING_ACTIVITY = 'rankingActivityData',
+  TASK_LIST = 'taskListData',
   DEPOSIT_ADVERTISEMENT = 'depositAdvertisement',
   LAST_HIGH_BONUS_LIMITED_TIME = 'lastHighBonusLimitedTime',
   COUNT_DOWN = 'countDown',
   BONUS_POPUP_INFO = 'bonusPopupInfo',
   INVITE_TIME = 'inviteTime',
   RECENT_GAME_LIST = 'recentGameList',
+  INVITE_WHEEL_MODAL = 'InviteWheelModal',
+  REPORT_EVENTS = 'ReportEvents',
+  STAYT_RACKER = 'stayTrackerLogs',
+  BIND_PLAYER_PHONE_WEAK_TIPS = 'bindPlayerPhoneWeakTips',
 }
 
 interface UserLocalForageInstancePool {

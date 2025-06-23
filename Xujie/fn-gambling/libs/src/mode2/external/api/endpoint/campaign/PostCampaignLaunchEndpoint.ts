@@ -1,9 +1,11 @@
 import { POST_CAMPAIGN_LAUNCH_URL } from '../../urls';
 import { ExternalEndpoint } from '../../types';
 import { ResponseStructure } from '../ResponseStructure';
+
 export enum ECampaignType {
   RED_ENVELOPE_RAIN = 'RED_ENVELOPE_RAIN',
 }
+
 export interface CampaignLaunchItem {
   detailUrl?: string;
   displayEndTime?: string;
@@ -28,6 +30,7 @@ export interface CampaignLaunchItem {
     }[];
   };
 }
+
 export type CampaignLaunchResponse = CampaignLaunchItem[];
 
 /** 活动列表 */
@@ -64,6 +67,162 @@ export type CampaignLaunchItemResult = {
       bonusOdds: number;
     }[];
   };
+};
+
+const getRules = () => {
+  return [
+    {
+      level: 1,
+      account: 10,
+      bonusOdds: 0.001,
+    },
+    {
+      level: 2,
+      account: 30,
+      bonusOdds: 0.004,
+    },
+    {
+      level: 3,
+      account: 50,
+      bonusOdds: 0.007,
+    },
+    {
+      level: 4,
+      account: 70,
+      bonusOdds: 0.01,
+    },
+    {
+      level: 5,
+      account: 90,
+      bonusOdds: 0.013,
+    },
+    {
+      level: 6,
+      account: 110,
+      bonusOdds: 0.016,
+    },
+    {
+      level: 7,
+      account: 130,
+      bonusOdds: 0.019,
+    },
+    {
+      level: 8,
+      account: 150,
+      bonusOdds: 0.022,
+    },
+    {
+      level: 9,
+      account: 170,
+      bonusOdds: 0.025,
+    },
+    {
+      level: 10,
+      account: 300,
+      bonusOdds: 0.03,
+    },
+    {
+      level: 11,
+      account: 500,
+      bonusOdds: 0.07,
+    },
+    {
+      level: 12,
+      account: 700,
+      bonusOdds: 0.11,
+    },
+
+    {
+      level: 13,
+      account: 900,
+      bonusOdds: 0.15,
+    },
+    {
+      level: 14,
+      account: 1100,
+      bonusOdds: 0.19,
+    },
+    {
+      level: 15,
+      account: 1300,
+      bonusOdds: 0.23,
+    },
+    {
+      level: 16,
+      account: 1500,
+      bonusOdds: 0.37,
+    },
+    {
+      level: 17,
+      account: 1700,
+      bonusOdds: 0.51,
+    },
+    {
+      level: 18,
+      account: 1900,
+      bonusOdds: 0.65,
+    },
+    {
+      level: 19,
+      account: 2100,
+      bonusOdds: 0.79,
+    },
+    {
+      level: 20,
+      account: 2300,
+      bonusOdds: 0.93,
+    },
+    {
+      level: 21,
+      account: 2600,
+      bonusOdds: 1.07,
+    },
+    {
+      level: 22,
+      account: 2900,
+      bonusOdds: 1.21,
+    },
+    {
+      level: 23,
+      account: 3200,
+      bonusOdds: 1.35,
+    },
+    {
+      level: 24,
+      account: 3500,
+      bonusOdds: 1.49,
+    },
+    {
+      level: 25,
+      account: 3800,
+      bonusOdds: 1.63,
+    },
+    {
+      level: 26,
+      account: 4100,
+      bonusOdds: 1.78,
+    },
+    {
+      level: 27,
+      account: 4400,
+      bonusOdds: 1.93,
+    },
+    {
+      level: 28,
+      account: 4700,
+      bonusOdds: 2.08,
+    },
+    {
+      level: 29,
+      account: 5000,
+      bonusOdds: 2.23,
+    },
+    {
+      level: 30,
+      account: 5300,
+      bonusOdds: 2.38,
+    },
+  ];
 };
 
 export type CampaignLaunchResult = CampaignLaunchItemResult[];
@@ -122,159 +281,7 @@ const transformResponse = (
             }) || [],
           // maxRewardAmount: item.displayConfig?.maxRewardAmount || 0,
           maxRewardAmount: 888888, // TODO Evan 第一階段都先 mock data
-          rules: [
-            {
-              level: 1,
-              account: 10,
-              bonusOdds: 0.001,
-            },
-            {
-              level: 2,
-              account: 30,
-              bonusOdds: 0.004,
-            },
-            {
-              level: 3,
-              account: 50,
-              bonusOdds: 0.007,
-            },
-            {
-              level: 4,
-              account: 70,
-              bonusOdds: 0.01,
-            },
-            {
-              level: 5,
-              account: 90,
-              bonusOdds: 0.013,
-            },
-            {
-              level: 6,
-              account: 110,
-              bonusOdds: 0.016,
-            },
-            {
-              level: 7,
-              account: 130,
-              bonusOdds: 0.019,
-            },
-            {
-              level: 8,
-              account: 150,
-              bonusOdds: 0.022,
-            },
-            {
-              level: 9,
-              account: 170,
-              bonusOdds: 0.025,
-            },
-            {
-              level: 10,
-              account: 300,
-              bonusOdds: 0.03,
-            },
-            {
-              level: 11,
-              account: 500,
-              bonusOdds: 0.07,
-            },
-            {
-              level: 12,
-              account: 700,
-              bonusOdds: 0.011,
-            },
-
-            {
-              level: 13,
-              account: 900,
-              bonusOdds: 0.015,
-            },
-            {
-              level: 14,
-              account: 1100,
-              bonusOdds: 0.019,
-            },
-            {
-              level: 15,
-              account: 1300,
-              bonusOdds: 0.023,
-            },
-            {
-              level: 16,
-              account: 1500,
-              bonusOdds: 0.037,
-            },
-            {
-              level: 17,
-              account: 1700,
-              bonusOdds: 0.051,
-            },
-            {
-              level: 18,
-              account: 1900,
-              bonusOdds: 0.065,
-            },
-            {
-              level: 19,
-              account: 2100,
-              bonusOdds: 0.079,
-            },
-            {
-              level: 20,
-              account: 2300,
-              bonusOdds: 0.093,
-            },
-            {
-              level: 21,
-              account: 2600,
-              bonusOdds: 1.07,
-            },
-            {
-              level: 22,
-              account: 2900,
-              bonusOdds: 1.21,
-            },
-            {
-              level: 23,
-              account: 3200,
-              bonusOdds: 1.35,
-            },
-            {
-              level: 24,
-              account: 3500,
-              bonusOdds: 1.49,
-            },
-            {
-              level: 25,
-              account: 3800,
-              bonusOdds: 1.63,
-            },
-            {
-              level: 26,
-              account: 4100,
-              bonusOdds: 1.78,
-            },
-            {
-              level: 27,
-              account: 4400,
-              bonusOdds: 1.93,
-            },
-            {
-              level: 28,
-              account: 4700,
-              bonusOdds: 2.08,
-            },
-            {
-              level: 29,
-              account: 5000,
-              bonusOdds: 2.23,
-            },
-            {
-              level: 30,
-              account: 5300,
-              bonusOdds: 2.38,
-            },
-          ],
+          rules: getRules(),
         },
       };
     }) || []

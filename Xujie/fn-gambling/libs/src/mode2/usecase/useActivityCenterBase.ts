@@ -5,11 +5,12 @@ import useActivityCenterStore, {
   ICurrentActivityData,
   IRedEnvelopeRainResult,
 } from '../zustand/components/activityCenterStore';
-import { useIsLoginStore } from '../zustand/loginStore';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 import { useLocation } from 'react-router';
 import { BasePagePathObj } from '../routerTypes/types';
 import { ECampaignType } from '../external/api/endpoint/campaign/PostCampaignLaunchEndpoint';
+import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
+import { UserRoleType } from '@mode2/@types/userRoleTypes';
 
 export const useActivityCountdown = (data: ICurrentActivityData) => {
   const refreshActivityResult = useActivityCenterStore(
@@ -63,54 +64,51 @@ export const useActivityCountdown = (data: ICurrentActivityData) => {
 };
 
 const useActivityCenterBase = () => {
-  const { setActiveOnHomeList, campaignList, setCampaignList } =
-    useActivityCenterStore((state) => ({
-      setActiveOnHomeList: state.setActiveOnHomeList,
-      campaignList: state.campaignList,
-      setCampaignList: state.setCampaignList,
-    }));
-  const [postCampaignLaunch] = usePostCampaignLaunchMutation();
-  const isLogin = useIsLoginStore((state) => state.isLogin);
-
-  useEffect(() => {
-    if (isLogin) {
-      if (campaignList.length) return;
-      postCampaignLaunch().then((res) => {
-        if ('data' in res && res.data) {
-          setCampaignList(res.data);
-        }
-      });
-    } else {
-      setCampaignList([]);
-    }
-  }, [isLogin]);
-
   const location = useLocation();
+  const setActiveOnHomeList = useActivityCenterStore(
+    (state) => state.setActiveOnHomeList
+  );
+  const campaignList = useActivityCenterStore((state) => state.campaignList);
+  const setCampaignList = useActivityCenterStore(
+    (state) => state.setCampaignList
+  );
 
-  // const redEnvelopeRainResult = useActivityCenterStore(
-  //   (state) => state.redEnvelopeRainResult
-  // );
-  // const setShowActivityCenterModal = useActivityCenterStore(
-  //   (state) => state.setShowActivityCenterModal
-  // );
-  // const setCurrentActivityData = useActivityCenterStore(
-  //   (state) => state.setCurrentActivityData
-  // );
+  const [postCampaignLaunch, { data, isSuccess }] =
+    usePostCampaignLaunchMutation();
 
-  // useEffect(() => {
-  //   if (redEnvelopeRainResult?.isAutoOpen) {
-  //     setCurrentActivityData(redEnvelopeRainResult.type);
-  //     setShowActivityCenterModal(true);
-  //   }
-  // }, [redEnvelopeRainResult?.isAutoOpen]);
+  const userRole = useUserProfileStore((state) => state.userRole);
+
+  const refreshCampaignListCount = useActivityCenterStore(
+    (state) => state.refreshCampaignListCount
+  );
 
   useEffect(() => {
-    if (location.pathname === BasePagePathObj.HallPage && isLogin) {
+    if (data && isSuccess) {
+      setCampaignList(data);
+    }
+  }, [data, isSuccess]);
+
+  // 角色改變刷新
+  useEffect(() => {
+    useActivityCenterStore.getState().refreshCampaignList();
+  }, [userRole]);
+
+  // 使用在 useTemplateLayoutBase 其他地方需要資料刷新
+  // 用 useActivityCenterStore.getState().refreshCampaignList() 方式刷新
+  useEffect(() => {
+    const userRole = useUserProfileStore.getState().userRole;
+    if ([UserRoleType.USER, UserRoleType.PLAYER].includes(userRole)) {
+      postCampaignLaunch();
+    }
+  }, [refreshCampaignListCount]);
+
+  useEffect(() => {
+    if (location.pathname === BasePagePathObj.HallPage) {
       setActiveOnHomeList(campaignList.filter((v) => v.showOnHomePopup));
     } else {
       setActiveOnHomeList([]);
     }
-  }, [campaignList, location, isLogin]);
+  }, [campaignList, location]);
 };
 
 export default useActivityCenterBase;

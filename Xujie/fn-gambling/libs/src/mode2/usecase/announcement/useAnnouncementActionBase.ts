@@ -3,17 +3,23 @@ import { GameListItemResult } from '@mode2/zustand/page/hallPageStore';
 import useActivityStrategy from '@mode2/usecase/announcement/strategy/useActivityStrategy';
 import usePopupStrategy from '@mode2/usecase/announcement/strategy/usePopupStrategy';
 import useHomeStrategy from '@mode2/usecase/announcement/strategy/useHomeStrategy';
+import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
+import useGuestAllAnnouncementStrategy from '@mode2/usecase/announcement/strategy/useGuestAllAnnouncementStrategy';
+import { UserRoleType } from '@mode2/@types/userRoleTypes';
+import { ParsingAnnouncementResult } from '@mode2/usecase/announcement/useParsingAnnouncementsContent';
 
 export enum AnnouncementScenariosType {
   HOME = 'HOME',
   POPUP = 'POPUP',
   ACTIVITY = 'ACTIVITY',
+  ALL = 'ALL',
 }
 
 export interface ActionPayload {
   type: AnnouncementType;
   gameObj?: GameListItemResult;
   linkUrl?: string;
+  mataData: ParsingAnnouncementResult;
 }
 
 /**
@@ -31,6 +37,14 @@ export const useAnnouncementActionBase = () => {
   const { onAction: onHomeStrategyAction } = useHomeStrategy();
   const { onAction: onPopupStrategyAction } = usePopupStrategy();
   const { onAction: onActivityStrategyAction } = useActivityStrategy();
+  const { onAction: onGuestStrategyAction } = useGuestAllAnnouncementStrategy();
+
+  const isV6Guest = () => {
+    return (
+      import.meta.env['VITE_V_VERSION'] === 'v6' &&
+      useUserProfileStore.getState().userRole === UserRoleType.GUEST
+    );
+  };
 
   /**
    * 依照 使用情境
@@ -41,6 +55,11 @@ export const useAnnouncementActionBase = () => {
     type: AnnouncementScenariosType,
     payload: ActionPayload
   ) => {
+    if (isV6Guest()) {
+      onGuestStrategyAction(payload);
+      return;
+    }
+
     switch (type) {
       case AnnouncementScenariosType.HOME:
         onHomeStrategyAction(payload);

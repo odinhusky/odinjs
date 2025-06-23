@@ -1,4 +1,5 @@
 import { Md5 } from 'ts-md5';
+import { v4 as uuidv4 } from 'uuid';
 
 type Hasher = (input: string, seed: number) => number;
 
@@ -145,11 +146,24 @@ class Fingerprint {
     }
 
     const data = components.join('###');
-
+    const uuid = this.getUUid();
     if (this.hasher) {
-      return Md5.hashStr(this.numberToUUID(this.hasher(data, 31)));
+      return Md5.hashStr(`${uuid}${this.numberToUUID(this.hasher(data, 31))}`);
     } else {
-      return Md5.hashStr(this.numberToUUID(this.murmurhash3_32_gc(data, 31)));
+      return Md5.hashStr(
+        `${uuid}${this.numberToUUID(this.murmurhash3_32_gc(data, 31))}`
+      );
+    }
+  }
+
+  getUUid(): string {
+    const uuid: string | null = window.localStorage.getItem('device_id');
+    if (uuid === null) {
+      const _uuid = uuidv4();
+      window.localStorage.setItem('device_id', _uuid);
+      return _uuid;
+    } else {
+      return window.localStorage.getItem('device_id') || '';
     }
   }
 

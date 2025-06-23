@@ -1,6 +1,6 @@
 // import { create } from 'zustand';
 // import { devtoolsAndPersistWrapper, devtoolsWrapper } from '@mode2/zustand/middlewareWrapper';
-// import { cloneDeep } from 'lodash';
+// import cloneDeep from 'lodash/cloneDeep';
 //
 // interface PersonalInfoKycData {
 //   id: number;

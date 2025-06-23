@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import useDeepEffect from './useDeepEffect';
 import { imageStore } from '@libs/mode2/localforage/stroe';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 
 type CacheData<F> = {
   data: F;

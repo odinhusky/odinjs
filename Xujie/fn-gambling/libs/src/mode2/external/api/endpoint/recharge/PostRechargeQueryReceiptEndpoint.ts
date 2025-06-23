@@ -28,7 +28,7 @@ export interface RechargeQueryReceiptResult {
   rejectMessage: string; // 拒絕原因
 }
 
-const receiptStateMapping: Record<number, RechargeReceiptState> = {
+export const receiptStateMapping: Record<number, RechargeReceiptState> = {
   [-1]: RechargeReceiptState.UNCOMPLETED,
   [0]: RechargeReceiptState.PROCESSING,
   [1]: RechargeReceiptState.COMPLETED,

@@ -8,6 +8,9 @@ import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
 import { ActivityRulesContentTypes } from '@mode2/zustand/page/activityRulesPageStore';
 import { To } from 'react-router';
 import useShouldNavigate from '@mode2/usecase/navPageClick/useShouldNavigate';
+import { useWalletPageStore } from '@mode2/zustand/page/WalletPage/walletPageStore';
+import { WalletDashboardType } from '@mode2/@types/walletDashboardTypes';
+import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
 
 /**
  * 未登入的訪客，導航決策
@@ -43,7 +46,19 @@ export const useGuestNavPageClickStrategy = () => {
    * @param options
    */
   const navToWalletPage = (query: string = '', options?: NavigateOptions) => {
-    if (options?.state?.tab === WalletPageTabType.WITHDRAW) {
+    // Evan for [V6] 行為特例
+    if (import.meta.env['VITE_V_VERSION'] === 'v6') {
+      navToLoginPage(19);
+      return;
+    }
+    const dashboardType = useWalletPageStore.getState().displayDashboardType;
+    const switchContentTabId =
+      useWalletPageSwitchContentTabsStore.getState().curSwitchContentTabId;
+    if (
+      options?.state?.tab === WalletPageTabType.WITHDRAW ||
+      switchContentTabId === WalletPageTabType.WITHDRAW ||
+      dashboardType === WalletDashboardType.BALANCE
+    ) {
       navToLoginPage(19);
     } else {
       navigate(`${BasePagePathObj.WalletPage}${query}`, options);
@@ -85,7 +100,8 @@ export const useGuestNavPageClickStrategy = () => {
       options?.state?.tab ===
       ActivityRulesContentTypes.RED_ENVELOPE_RAIN_RULES_CONTENT
     ) {
-      navToLoginPage(15);
+      // navToLoginPage(15);
+      navigate(`${BasePagePathObj.ActivityRulePage}${query}`, options);
     } else {
       navigate(`${BasePagePathObj.ActivityRulePage}${query}`, options);
     }
@@ -183,6 +199,13 @@ export const useGuestNavPageClickStrategy = () => {
     navToLoginPage(4);
   };
 
+  const navToSearchGamePage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.SearchGamePage}${query}`, options);
+  };
+
   // ---- new foe v6 start ----
   const navToAccountPage = (
     query: string = '',
@@ -200,19 +223,60 @@ export const useGuestNavPageClickStrategy = () => {
     navToLoginPage(75);
   };
 
-  const navToGameSupplierListPage = (
-    query: string = '',
-    options?: NavigateOptions
-  ) => {
-    navigate(`${BasePagePathObj.GameSupplierListPage}${query}`, options);
-  };
-
   const navToOrderDetailPage = (
     query: string = '',
     options?: NavigateOptions
   ) => {
     navToLoginPage(76);
   };
+
+  const navToVipPage = (query: string = '', options?: NavigateOptions) => {
+    navToLoginPage(77);
+  };
+
+  const navToVipBonusPage = (query: string = '', options?: NavigateOptions) => {
+    navToLoginPage(78);
+  };
+
+  const navToRankingPage = (query: string = '', options?: NavigateOptions) => {
+    navToLoginPage(95);
+  };
+
+  const navToActivityDetailPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navToLoginPage(95);
+  };
+
+  const navToTaskCenterPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navToLoginPage(96);
+  };
+
+  const navToInboxDetailPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navToLoginPage(97);
+  };
+
+  const navToRechargeSecretPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navToLoginPage(98);
+  };
+
+  const navToLowBalanceRescueBoxPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navToLoginPage(98);
+  };
+
   // ---- new foe v6 end ----
 
   const mapRoutesNavTo = (
@@ -291,11 +355,35 @@ export const useGuestNavPageClickStrategy = () => {
       case BasePagePathObj.SettingPage:
         navToSettingPage(query, options);
         break;
-      case BasePagePathObj.GameSupplierListPage:
-        navToGameSupplierListPage(query, options);
-        break;
       case BasePagePathObj.OrderDetailPage:
         navToOrderDetailPage(query, options);
+        break;
+      case BasePagePathObj.VipPage:
+        navToVipPage(query, options);
+        break;
+      case BasePagePathObj.VipBonusPage:
+        navToVipBonusPage(query, options);
+        break;
+      case BasePagePathObj.RankingPage:
+        navToRankingPage(query, options);
+        break;
+      case BasePagePathObj.ActivityDetailPage:
+        navToActivityDetailPage(query, options);
+        break;
+      case BasePagePathObj.TaskCenterPage:
+        navToTaskCenterPage(query, options);
+        break;
+      case BasePagePathObj.SearchGamePage:
+        navToSearchGamePage(query, options);
+        break;
+      case BasePagePathObj.InboxDetailPage:
+        navToInboxDetailPage(query, options);
+        break;
+      case BasePagePathObj.RechargeSecretPage:
+        navToRechargeSecretPage(query, options);
+        break;
+      case BasePagePathObj.LowBalanceRescueBoxPage:
+        navToLowBalanceRescueBoxPage(query, options);
         break;
       default:
         navigate(`${path}${query}`, options);
@@ -328,8 +416,16 @@ export const useGuestNavPageClickStrategy = () => {
     navToAccountPage,
     navToWalletGuidePage,
     navToSettingPage,
-    navToGameSupplierListPage,
     navToOrderDetailPage,
+    navToVipPage,
+    navToVipBonusPage,
+    navToRankingPage,
+    navToActivityDetailPage,
+    navToTaskCenterPage,
+    navToSearchGamePage,
+    navToInboxDetailPage,
+    navToRechargeSecretPage,
+    navToLowBalanceRescueBoxPage,
   };
 };
 

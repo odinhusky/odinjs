@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 export const getFileNameAndExt = (file: string) => {
   const fileName = file.split('.').slice(0, -1).join('.');

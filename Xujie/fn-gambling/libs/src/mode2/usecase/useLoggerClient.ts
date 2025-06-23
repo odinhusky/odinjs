@@ -1,4 +1,5 @@
 import sdkUtils from '@mode2/utils/sdk';
+import dayjs from '@commonUtils/localizedDayjs';
 
 /**
  * API resp error 專用
@@ -9,12 +10,21 @@ import sdkUtils from '@mode2/utils/sdk';
 export const apiErrorLoggerEvent = async (
   url: string,
   status: number,
-  data: unknown
+  data: unknown,
+  traceId: string = ''
 ) => {
   try {
     const entry = {
       event: 'api',
-      params: `${url}, ${status}, ${data?.toString()}`,
+      params: {
+        url: url,
+        status: status,
+        time: dayjs().unix(),
+        resp: data,
+      },
+      // params: `${url}, ${status}, ${dayjs().unix()}, ${JSON.stringify(
+      //   data || '{}'
+      // )}`,
     };
     const payload = {
       caller: 'web',
@@ -22,7 +32,7 @@ export const apiErrorLoggerEvent = async (
       version: sdkUtils.getAppVersionName(),
       level: 'error',
       entry: entry,
-      traceId: '',
+      traceId: traceId,
       spanId: '',
       stackTrace: null,
     };
@@ -40,7 +50,11 @@ export const apiExceptionLoggerEvent = async (error: unknown) => {
   try {
     const entry = {
       event: 'apiException',
-      params: `${error?.toString()}`,
+      params: JSON.stringify({
+        time: dayjs().unix(),
+        error: error,
+      }),
+      // params: ` ${dayjs().unix()}, ${JSON.stringify(error || '{}')}`,
     };
     const payload = {
       caller: 'web',
@@ -70,7 +84,14 @@ export const errorHandlerLoggerEvent = async (
   try {
     const entry = {
       event: 'errorHandler',
-      params: `${error?.toString()}, ${componentStack}`,
+      params: JSON.stringify({
+        componentStack: componentStack,
+        time: dayjs().unix(),
+        error: error,
+      }),
+      // params: ` ${dayjs().unix()}, ${JSON.stringify(
+      //   error || '{}'
+      // )}, ${componentStack}`,
     };
     const payload = {
       caller: 'web',

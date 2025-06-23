@@ -15,6 +15,7 @@ export interface ValidatorType {
 }
 
 export const validator: ValidatorType = {
+  // 棄用，依照國家環境
   username: (value: string) => {
     if (!value) {
       return new Error('please input username');
@@ -24,6 +25,7 @@ export const validator: ValidatorType = {
     }
     return;
   },
+  // 棄用，依照國家環境
   mobile: (value: string) => {
     if (!value) {
       return new Error('please input mobile');
@@ -42,12 +44,14 @@ export const validator: ValidatorType = {
     }
     return;
   },
+  // 棄用，依照國家環境
   bankCode: (value: string) => {
     if (!value) {
       return new Error('please input bankCode');
     }
     return;
   },
+  // 棄用，依照國家環境
   lazyPassword: (value: string) => {
     if (!value) {
       return new Error('please input lazyPassword');
@@ -57,6 +61,7 @@ export const validator: ValidatorType = {
     }
     return;
   },
+  // 棄用，依照國家環境
   password: (value: string) => {
     if (!value) {
       return new Error('please input password');

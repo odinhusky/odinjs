@@ -9,6 +9,7 @@ import {
 } from '@libs/mode2/zustand/components/OTPCountDownStore';
 import { usePostSendOtpMutation } from '@libs/mode2/external/api';
 import { useMessageStore } from '@libs/mode2/zustand/components/messageStore';
+import { useDebounceAction } from '@libs/mode2/action/common/handleAction';
 
 export const OTPCountDown = ({
   className,
@@ -16,12 +17,14 @@ export const OTPCountDown = ({
   duration,
   mobile,
   getMobileFn,
+  i18nKey = 'toast_the_verification_code',
 }: {
   className?: string;
   currentKey: OTPCountDownKeys;
   duration?: number;
   mobile?: string;
   getMobileFn?: () => string;
+  i18nKey?: string;
 }) => {
   const { t } = useTranslation();
 
@@ -32,7 +35,7 @@ export const OTPCountDown = ({
 
   const [isCountingDown, setIsCountingDown] = useState<boolean>(false);
 
-  const [triggerSendOtp, { data: sendOtpData }] = usePostSendOtpMutation();
+  const [postSendOtp, { data: sendOtpData }] = usePostSendOtpMutation();
 
   useEffect(() => {
     return () => {
@@ -57,12 +60,12 @@ export const OTPCountDown = ({
       return;
     }
 
-    triggerSendOtp({ mobile: mobilePhone || '' });
+    postSendOtp({ mobile: mobilePhone || '' });
   };
 
   useEffect(() => {
     if (sendOtpData?.otpId) {
-      useMessageStore.getState().info(t('toast_the_verification_code'));
+      useMessageStore.getState().info(t(i18nKey));
       handleStartCountdown();
       setOtpId(sendOtpData?.otpId);
     }
@@ -88,6 +91,8 @@ export const OTPCountDown = ({
     }
   };
 
+  const handleClick = useDebounceAction(handleSendOtpClick, 500);
+
   return (
     <div
       className={cx(
@@ -102,7 +107,7 @@ export const OTPCountDown = ({
         className={cx('w-full h-full text-sm flex justify-center items-center')}
         onClick={(e) => {
           e.preventDefault();
-          handleSendOtpClick();
+          handleClick();
         }}
       >
         {remainSec && remainSec > 0 ? (

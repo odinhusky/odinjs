@@ -7,7 +7,7 @@ import {
   handleRecordPageSwitchRecordListTabClick,
   handleRecordPageTabClick,
   handleRecordPageHeaderTabIndexClick,
-} from './acitonType';
+} from '@mode2/action/actionTypes';
 
 import handleGlobalClick from '../handleGlobalClick';
 import {
@@ -29,6 +29,7 @@ import {
   useNavigateClick,
   useNavPageClick,
 } from '@mode2/usecase/useNavPageClick';
+import { INV6 } from '@libs/constant/versions';
 
 type ActionClickPayloadMap = {
   [handleRecordPageTabClick]: { index: RecordPageTabs };
@@ -86,6 +87,7 @@ export const useRecordPageActions = () => {
     [handleRecordPageTabClick]: ({ index }) => {
       handleGlobalClick({
         target: handleRecordPageTabClick,
+        payload: { index },
         callback: () => {
           setTabIndex(index);
         },
@@ -94,8 +96,8 @@ export const useRecordPageActions = () => {
     [handleRecordPageSwitchRecordListTabClick]: ({ index }) => {
       handleGlobalClick({
         target: handleRecordPageSwitchRecordListTabClick,
+        payload: { index },
         callback: () => {
-          // TODO 刷新列表
           setActiveListSwitchTabIndex(index);
         },
       });
@@ -103,6 +105,7 @@ export const useRecordPageActions = () => {
     [handleRecordPageReportTabClick]: ({ index }) => {
       handleGlobalClick({
         target: handleRecordPageReportTabClick,
+        payload: { index },
         callback: () => {
           setActiveReportTimeTabIndex(index);
         },
@@ -111,6 +114,7 @@ export const useRecordPageActions = () => {
     [handleRecordPageReportProgressClick]: ({ progressInfo }) => {
       handleGlobalClick({
         target: handleRecordPageReportProgressClick,
+        payload: { progressInfo },
         callback: () => {
           setSelectProgressInfo(progressInfo);
         },
@@ -119,9 +123,17 @@ export const useRecordPageActions = () => {
     [handleRecordPageCopyOrderNumberClick]: ({ text }) => {
       handleGlobalClick({
         target: handleRecordPageCopyOrderNumberClick,
+        payload: { text },
         callback: () => {
-          copyToClipboard(text);
+          copyToClipboard(text, {
+            successMessage:
+              import.meta.env['VITE_V_VERSION'] === INV6
+                ? 'spin_and_share_wheel_copied_toast'
+                : '',
+            resetInterval: 100,
+          });
         },
+        debounceTimer: 300,
       });
     },
     [handleRecordPageDesktopHeaderBackBtnClick]: () => {
@@ -135,6 +147,7 @@ export const useRecordPageActions = () => {
     [handleRecordPageToFullOrderPageClick]: ({ value }) => {
       handleGlobalClick({
         target: handleRecordPageToFullOrderPageClick,
+        payload: { value },
         callback: () => {
           navToFullOrderDetailPage('', { state: { orderId: value } });
         },
@@ -143,6 +156,7 @@ export const useRecordPageActions = () => {
     [handleRecordPageHeaderTabIndexClick]: ({ index }) => {
       handleGlobalClick({
         target: handleRecordPageHeaderTabIndexClick,
+        payload: { index },
         callback: () => {
           setHeaderTabIndex(index);
         },

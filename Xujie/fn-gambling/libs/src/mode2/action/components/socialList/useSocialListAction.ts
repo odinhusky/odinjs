@@ -1,12 +1,12 @@
 import handleGlobalClick from '@mode2/action/handleGlobalClick';
 import sdkUtils from '@mode2/utils/sdk';
-import { handleSocialActionClick } from '@mode2/action/components/socialList/acitonType';
+import { handleSocialActionClick } from '@mode2/action/actionTypes';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
 import handleAction from '@mode2/action/common/handleAction';
 import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import { SchemeData } from '@constant/AppSchemeData';
-import { useMode2InviteEarnStore } from '@mode2/zustand/page/invitePageStore';
 import { useNavigateClick } from '@mode2/usecase/useNavPageClick';
+import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
 
 export enum ActionType {
   LINK,
@@ -33,6 +33,7 @@ export const useSocialAction = () => {
     [handleSocialActionClick]: ({ type, appScheme, target }) => {
       handleGlobalClick({
         target: handleSocialActionClick,
+        payload: { type, appScheme, target },
         callback: () => {
           switch (type) {
             case ActionType.LINK:
@@ -49,8 +50,7 @@ export const useSocialAction = () => {
               break;
             case ActionType.POST:
               if (appScheme) {
-                const link =
-                  useMode2InviteEarnStore.getState().referralInfo.link; // 當前邀請連結碼
+                const link = useUserProfileStore.getState().referralLink; // 當前邀請連結碼
                 const postLink = appScheme.postShareLink(
                   encodeURIComponent(link),
                   ''

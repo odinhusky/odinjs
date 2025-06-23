@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import useRegister from '../useRegister';
 import generateUniqueNumber from '@libs/commonUtils/generateUniqueNumber';
 import { useIsLoginStore } from '@mode2/zustand/loginStore';
+import { useAppDeviceEventStore } from '@mode2/zustand/platform/appDeviceEventStore';
+import { AppDeviceEvent } from '@mode2API/endpoint/event/PostDeviceEventEndpoint';
 
 interface UsePlayerRegisterProps {
   refreshUserState: VoidFunction; // 重新整理的 function
@@ -53,6 +55,7 @@ export const usePlayerRegister = ({
   // 有拿到成功回給訊息的話就設定 userRole 以及 token，不然就自動幫他註冊
   useUpdateEffect(() => {
     if (isVisitorLoginCheckSuccess) {
+      useAppDeviceEventStore.getState().setAppEvents([AppDeviceEvent.LOGIN]);
       // 設定 userRole
       if (visitorLoginCheckData?.userRole)
         setUserRole(visitorLoginCheckData.userRole);
@@ -71,6 +74,7 @@ export const usePlayerRegister = ({
           {
             ...VISITOR_REGISTER_VALUES,
             referralCode:
+              sdkUtils.getAppReferralCode() ||
               sdkUtils.getStorage(AppLocalStorageKey.REFERRAL_CODE) ||
               undefined,
             phone: generateUniqueNumber(),

@@ -19,7 +19,7 @@ import {
   handleTeamClubPageTabClick,
   handleTeamClubPageTotalInvitesClick,
   handleTeamClubPageTotalRewardsClick,
-} from './actionType';
+} from '@mode2/action/actionTypes';
 import handleGlobalClick from '../handleGlobalClick';
 import {
   CustomerServiceScenarios,
@@ -32,6 +32,9 @@ import sdkUtils from '@mode2/utils/sdk';
 import { useDownloadSnapshotElement } from '@commonUtils/hooks/useDownloadSnapshotElement';
 import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
 import { ActivityRulesContentTypes } from '@mode2/zustand/page/activityRulesPageStore';
+import { useRouterPenddingDataStore } from '@libs/mode2/zustand/routerPenddingDataStore';
+import { BasePagePathObj } from '@libs/mode2/routerTypes/types';
+import { INV6 } from '@libs/constant/versions';
 
 type ActionClickPayloadMap = {
   [handleTeamClubPageTabClick]: { tabId: TeamClubPageTabType };
@@ -68,6 +71,9 @@ export const useTeamClubPageActions = () => {
   const setClipboardLinkResult = useMode2TeamClubPageShareForBonusStore(
     (state) => state.setClipboardLinkResult
   );
+  const setRouterPenddingData = useRouterPenddingDataStore(
+    (state) => state.setRouterPenddingData
+  );
 
   const { clipboard, copyToClipboard } = useClipboard();
   const { downloadElementAsImage } =
@@ -92,8 +98,10 @@ export const useTeamClubPageActions = () => {
     [handleTeamClubPageTabClick]: ({ tabId }) => {
       handleGlobalClick({
         target: handleTeamClubPageTabClick,
+        payload: { tabId },
         callback: () => {
           setCurTab(tabId);
+          setRouterPenddingData(BasePagePathObj.TeamClubPage, { tab: tabId });
         },
       });
     },
@@ -117,17 +125,26 @@ export const useTeamClubPageActions = () => {
     [handleTeamClubPageClipboardRecommendedLinkClick]: ({ link }) => {
       handleGlobalClick({
         target: handleTeamClubPageClipboardRecommendedLinkClick,
+        payload: { link },
         callback: () => {
-          copyToClipboard(link).then((state) => {
+          copyToClipboard(link, {
+            successMessage:
+              import.meta.env['VITE_V_VERSION'] === INV6
+                ? 'spin_and_share_wheel_copied_toast'
+                : '',
+            resetInterval: 100,
+          }).then((state) => {
             sdkUtils.sendEvent(AdjustEventKey.CLICK_SHARE);
             setClipboardLinkResult(state);
           });
         },
+        debounceTimer: 300,
       });
     },
     [handleTeamClubPageClipboardRecommendedCodeClick]: ({ code }) => {
       handleGlobalClick({
         target: handleTeamClubPageClipboardRecommendedCodeClick,
+        payload: { code },
         callback: () => {
           copyToClipboard(code).then((state) => {
             sdkUtils.sendEvent(AdjustEventKey.CLICK_SHARE);

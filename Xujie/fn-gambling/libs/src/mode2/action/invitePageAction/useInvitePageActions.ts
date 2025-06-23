@@ -3,13 +3,14 @@ import {
   handleInvitePageClipboardRecommendedLinkClick,
   handleInvitePageContactNowClick,
   handleInvitePageDesktopHeaderBackBtnClick,
+  handleInvitePageEarnTabLeanMoreClick,
   handleInvitePageRankingListLastWeekBtnClick,
   handleInvitePageSaveRecommendedBarCodeClick,
   handleInvitePageStaticsQAClick,
+  handleInvitePageStatisticsDetailCustomerServiceClick,
   handleInvitePageTabClick,
   handleInvitePageTeamDataDetailBtnClick,
-  handleInvitePageEarnTabLeanMoreClick, handleInvitePageStatisticsDetailCustomerServiceClick
-} from './actionType';
+} from '@mode2/action/actionTypes';
 import handleGlobalClick from '../handleGlobalClick';
 import {
   useMode2InviteEarnStore,
@@ -35,6 +36,7 @@ import { ServicesTypeResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
 import { useNavigateClick } from '@mode2/usecase/useNavPageClick';
 import { useTeamDataDetailModalStore } from '@libs/mode2/zustand/components/teamDataDetailModalStore';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
+import { INV6 } from '@libs/constant/versions';
 
 type ActionClickPayloadMap = {
   [handleInvitePageEarnTabLeanMoreClick]: void;
@@ -106,6 +108,7 @@ export const useInvitePageActions = () => {
     [handleInvitePageTabClick]: ({ tabId }) => {
       handleGlobalClick({
         target: handleInvitePageTabClick,
+        payload: { tabId },
         callback: () => {
           setInviteCurTab(tabId);
         },
@@ -122,6 +125,7 @@ export const useInvitePageActions = () => {
     [handleInvitePageStaticsQAClick]: ({ qaIndex }) => {
       handleGlobalClick({
         target: handleInvitePageStaticsQAClick,
+        payload: { qaIndex },
         callback: () => {
           setExpandedIndex(qaIndex);
         },
@@ -138,17 +142,26 @@ export const useInvitePageActions = () => {
     [handleInvitePageClipboardRecommendedLinkClick]: ({ link }) => {
       handleGlobalClick({
         target: handleInvitePageClipboardRecommendedLinkClick,
+        payload: { link },
         callback: () => {
-          copyToClipboard(link).then((state) => {
+          copyToClipboard(link, {
+            successMessage:
+              import.meta.env['VITE_V_VERSION'] === INV6
+                ? 'spin_and_share_wheel_copied_toast'
+                : '',
+            resetInterval: 100,
+          }).then((state) => {
             sdkUtils.sendEvent(AdjustEventKey.CLICK_SHARE);
             setClipboardLinkResult(state);
           });
         },
+        debounceTimer: 300,
       });
     },
     [handleInvitePageClipboardRecommendedCodeClick]: ({ code }) => {
       handleGlobalClick({
         target: handleInvitePageClipboardRecommendedCodeClick,
+        payload: { code },
         callback: () => {
           copyToClipboard(code).then((state) => {
             sdkUtils.sendEvent(AdjustEventKey.CLICK_SHARE);
@@ -201,7 +214,7 @@ export const useInvitePageActions = () => {
           navigate(BasePagePathObj.FeedBackPage);
         },
       });
-    }
+    },
   };
 
   const handleInvitePageClick = <T extends keyof ActionClickPayloadMap>({

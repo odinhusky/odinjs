@@ -13,14 +13,16 @@ import {
   defaultJoinTime,
   useMode2SubordinateDataPageStore,
 } from '@libs/mode2/zustand/page/SubordinateDataStore';
-import { get } from 'lodash';
+import get from 'lodash/get';
 import { useEffect, useState } from 'react';
 
 type TSortBy = 'joinTime' | 'commissionAmount' | 'displayName';
 
 const useMode2SubordinateDataPageInit = () => {
-  const [postTeamMemberSummary, { data: teamMemberSummaryData }] =
-    usePostTeamMemberSummaryMutation();
+  const [
+    postTeamMemberSummary,
+    { data: teamMemberSummaryData, isSuccess: isPostTeamMemberSummarySuccess },
+  ] = usePostTeamMemberSummaryMutation();
   const [postTeamFinanceTier, { data: teamFinanceTierList }] =
     usePostTeamFinanceTierSummaryListMutation();
   const [
@@ -67,6 +69,9 @@ const useMode2SubordinateDataPageInit = () => {
   );
   const setTeamFinanceTierSummaryList = useMode2SubordinateDataPageStore(
     (state) => state.setTeamFinanceTierSummaryList
+  );
+  const refreshUserDataCount = useMode2SubordinateDataPageStore(
+    (state) => state.refreshUserDataCount
   );
 
   /**
@@ -119,6 +124,7 @@ const useMode2SubordinateDataPageInit = () => {
             isHighest: index + 1 === arr.length,
             id: `level config ${item.level}`,
             clubLevel: item.level + 1,
+            clubTitle: '', // 下级数据不需要显示标题
           })
         );
 
@@ -129,15 +135,17 @@ const useMode2SubordinateDataPageInit = () => {
   }, [teamInformationData, isPostTeamInformationSuccess]);
 
   useEffect(() => {
-    if (teamMemberSummaryData) {
+    if (isPostTeamMemberSummarySuccess && teamMemberSummaryData) {
       const level = get(teamMemberSummaryData, 'level') || 0;
-      const data = teamList.filter((item) => item.level === level)[0];
-      data.currentBets = teamTotalBets;
-      setCurrentClubLevelData(data);
-
+      if (teamList.length > 0) {
+        const data = teamList.filter((item) => item.level === level)[0];
+        data.currentBets = teamTotalBets;
+        setCurrentClubLevelData(data);
+      }
+      
       setTeamMemberSummaryData(teamMemberSummaryData);
     }
-  }, [teamMemberSummaryData]);
+  }, [teamMemberSummaryData, isPostTeamMemberSummarySuccess]);
 
   useEffect(() => {
     getSortBy();
@@ -172,6 +180,13 @@ const useMode2SubordinateDataPageInit = () => {
   useEffect(() => {
     initData();
   }, []);
+
+  // 監聽
+  useEffect(() => {
+    if (refreshUserDataCount > 0) {
+      postTeamMemberSummary();
+    }
+  }, [refreshUserDataCount]);
 
   useEffect(() => {
     setCurrentClubLevelData({} as TeamLevelUnit);

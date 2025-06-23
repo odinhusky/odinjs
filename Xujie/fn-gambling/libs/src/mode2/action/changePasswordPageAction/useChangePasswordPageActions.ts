@@ -3,7 +3,7 @@ import {
   handleChangePasswordNewPasswordInputValueChange,
   handleChangePasswordPageCurrentPasswordInputValueChange,
   handleChangePasswordSaveBtnClick,
-} from './actionType';
+} from '@mode2/action/actionTypes';
 import sdkUtils from '@libs/mode2/utils/sdk';
 import handleAction from '../common/handleAction';
 import handleGlobalClick from '../handleGlobalClick';
@@ -68,6 +68,7 @@ export const useChangePasswordPageActions = () => {
     [handleChangePasswordPageCurrentPasswordInputValueChange]: ({ value }) => {
       handleGlobalClick({
         target: handleChangePasswordPageCurrentPasswordInputValueChange,
+        payload: { value },
         callback: () => {
           setCurrentPasswordInputValue(value);
         },
@@ -77,6 +78,7 @@ export const useChangePasswordPageActions = () => {
     [handleChangePasswordNewPasswordInputValueChange]: ({ value }) => {
       handleGlobalClick({
         target: handleChangePasswordNewPasswordInputValueChange,
+        payload: { value },
         callback: () => {
           setNewPasswordInputValue(value);
         },
@@ -86,6 +88,7 @@ export const useChangePasswordPageActions = () => {
     [handleChangePasswordConfirmPasswordInputValueChange]: ({ value }) => {
       handleGlobalClick({
         target: handleChangePasswordConfirmPasswordInputValueChange,
+        payload: { value },
         callback: () => {
           setConfirmPasswordInputValue(value);
         },
@@ -95,6 +98,7 @@ export const useChangePasswordPageActions = () => {
     [handleChangePasswordSaveBtnClick]: ({ oldPassword, newPassword }) => {
       handleGlobalClick({
         target: handleChangePasswordSaveBtnClick,
+        payload: { oldPassword, newPassword },
         callback: () => {
           // console.log('-------------------', oldPassword, newPassword);
           postChangePassword({
@@ -123,12 +127,12 @@ export const useChangePasswordPageActions = () => {
   const [disabled, setDisabled] = useState(false);
   useEffect(() => {
     setDisabled(isLoading);
-  }, [isLoading])
+  }, [isLoading]);
 
   return {
     actionClickObj,
     handleChangePasswordPageClick,
-    disabled
+    disabled,
   };
 };
 

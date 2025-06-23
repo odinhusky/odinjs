@@ -6,7 +6,7 @@ import { useNavPageClick } from '@mode2/usecase/useNavPageClick';
 import {
   handleGuidanceDepositModalCloseClickAction,
   handleGuidanceDepositModalNavToWalletAction,
-} from '@mode2/action/model/GuidanceDepositModal/actionType';
+} from '@mode2/action/actionTypes';
 import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
 import { useGuidanceDepositModalStore } from '@mode2/zustand/modal/GuidanceDepositModal/useGuidanceDepositModalStore';
 

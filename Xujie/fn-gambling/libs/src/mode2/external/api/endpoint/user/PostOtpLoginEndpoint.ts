@@ -2,11 +2,13 @@ import { ExternalEndpoint } from '@mode2API/types';
 import { POST_PLAYER_OTP_LOGIN_URL } from '@mode2API/urls';
 import { ResponseStructure } from '@mode2API/endpoint/ResponseStructure';
 import { UserRoleType } from '@mode2/@types/userRoleTypes';
+import { getPlaceAdvertisementInfo } from '@mode2API/base/placeAdvertisementInfo';
 
 export interface OtpLoginRequest {
   otpCode: string;
   otpId: string;
   referralCode?: string;
+  pushToken: string;
 }
 
 interface OtpLoginResponse {
@@ -26,6 +28,7 @@ export const PostOtpLoginEndpoint = (builder: ExternalEndpoint) =>
         url: POST_PLAYER_OTP_LOGIN_URL,
         data: {
           ...request,
+          ...getPlaceAdvertisementInfo(),
         },
       };
     },

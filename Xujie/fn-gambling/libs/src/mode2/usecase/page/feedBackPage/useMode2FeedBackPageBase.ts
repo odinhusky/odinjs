@@ -5,6 +5,8 @@ import useMode2FeedBackPageTabList from './useMode2FeedBackPageTabList';
 import useMode2FeedBackType from './useMode2FeedBackType';
 import useFeedBackPageFooterSetting from './useFeedBackPageFooterSetting';
 import { useMode2PageResetFloatActionButton } from '../useMode2PageResetFloatActionButton';
+import { useEffect } from 'react';
+import { useInboxMessageStore } from '@mode2/zustand/user/inboxMessageStore';
 
 export const useFeedBackPageBase = () => {
   // ==== FeedBack 頁 Tab List
@@ -28,5 +30,11 @@ export const useFeedBackPageBase = () => {
   // === Page FloatActionButton reset
   // usePageResetFloatActionButton();
   useMode2PageResetFloatActionButton();
+
+  useEffect(() => {
+    return () => {
+      useInboxMessageStore.getState().refreshNotifyUnread();
+    };
+  }, []);
 };
 export default useFeedBackPageBase;

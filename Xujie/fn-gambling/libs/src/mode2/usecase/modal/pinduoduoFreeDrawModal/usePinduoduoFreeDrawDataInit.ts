@@ -34,6 +34,11 @@ const usePinduoduoFreeDrawDataInit = () => {
     if (isShowPinduoduoFreeDrawModal) {
       setPinduoduoFreeDrawModalVisible(true);
     }
+
+    return () => {
+      // A帳號在未開禮物盒狀態後切換B帳號(已開禮物盒狀態)，進輪盤會顯示開啟禮物盒
+      setPinduoduoFreeDrawModalVisible(false);
+    };
   }, [isShowPinduoduoFreeDrawModal]);
 
   useUpdateDeepEffect(() => {

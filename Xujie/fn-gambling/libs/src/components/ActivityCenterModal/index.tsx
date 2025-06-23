@@ -6,7 +6,7 @@ import useActivityCenterStore from '@mode2/zustand/components/activityCenterStor
 import { CampaignLaunchItem } from '@libs/mode2/external/api/endpoint/campaign/PostCampaignLaunchEndpoint';
 import { EMessageType } from '@libs/commonUtils/hooks/useActivityMessage/types';
 import useActivityCenterAction from '@libs/mode2/action/activityCenterAction/useActivityCenterAction';
-import { handleActivityCenterClose } from '@libs/mode2/action/activityCenterAction/acitonType';
+import { handleActivityCenterClose } from '@mode2/action/actionTypes';
 import sdkUtils from '@libs/mode2/utils/sdk';
 import { AppLocalStorageKey } from '@libs/mode2/utils/sdk/persistant/storageKey';
 
@@ -57,11 +57,13 @@ const ActivityCenterIframe = ({ data }: { data: CampaignLaunchItem }) => {
   );
 };
 const ActivityCenterModal = () => {
-  const { currentActivityData, isShowActivityCenterModal } =
-    useActivityCenterStore((state) => ({
-      currentActivityData: state.currentActivityData,
-      isShowActivityCenterModal: state.isShowActivityCenterModal,
-    }));
+  const currentActivityData = useActivityCenterStore(
+    (state) => state.currentActivityData
+  );
+  const isShowActivityCenterModal = useActivityCenterStore(
+    (state) => state.isShowActivityCenterModal
+  );
+
   return isShowActivityCenterModal && currentActivityData ? (
     <BaseModal>
       <ActivityCenterIframe data={currentActivityData} />

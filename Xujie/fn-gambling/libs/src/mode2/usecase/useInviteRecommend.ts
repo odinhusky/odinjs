@@ -4,7 +4,7 @@ import {
 } from '@mode2/zustand/page/invitePageStore';
 import { useEffect } from 'react';
 import { usePlatformDynamicConfigStore } from '@mode2/zustand/platform/platformDynamicConfig';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 
 export const useInviteRecommend = () => {
   const refreshPromoteHomeData = useMode2InviteEarnStore(
@@ -14,9 +14,6 @@ export const useInviteRecommend = () => {
     (state) => state.promoteHomeData
   );
 
-  const setReferralInfo = useMode2InviteEarnStore(
-    (state) => state.setReferralInfo
-  );
   const setLastFetchTime = useMode2InviteEarnStore(
     (state) => state.setLastFetchTime
   );
@@ -48,7 +45,6 @@ export const useInviteRecommend = () => {
   useEffect(() => {
     if (promoteHomeData) {
       setLastFetchTime(dayjs().valueOf());
-      setReferralInfo(promoteHomeData.referralInfo);
       setEnableRankingReward(promoteHomeData.isEnableRankingReward);
       setRateInfo(promoteHomeData.rateInfo);
       const { teamMemberSummary, salaryRewardSummary, rankingRewardSummary } =

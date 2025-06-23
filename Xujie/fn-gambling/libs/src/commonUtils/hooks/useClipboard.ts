@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import useDeepEffect from './useDeepEffect';
 import { useTranslation } from 'react-i18next';
 import { useMessageStore } from '@mode2/zustand/components/messageStore';
@@ -16,6 +16,12 @@ export type ClipboardInfo = {
   resetInterval?: number;
 };
 
+export interface CopyOptions {
+  resetInterval?: number; // 複製成功後，重置狀態的時間，單位為秒，預設為 2 秒
+  successMessage?: string; // 複製成功時的訊息
+  failMessage?: string; // 複製失敗時的訊息
+}
+
 /**
  * 複製文字到剪貼簿
  *
@@ -27,7 +33,7 @@ export type ClipboardInfo = {
  * const { clipboard, copyToClipboard } = useClipboard();
  *
  * @example
- * copyToClipboard({text});
+ * copyToClipboard(text, {});
  *
  * @example
  * useEffect(() => {
@@ -46,8 +52,6 @@ export const useClipboard = () => {
     message: '',
   });
 
-  const [isCustomizeMessage, setCustomizeMessage] = useState(false);
-
   const reset = (resetInterval: number) => {
     setTimeout(() => {
       const incomplete = generate(ClipboardState.INCOMPLETE, '');
@@ -55,39 +59,55 @@ export const useClipboard = () => {
     }, resetInterval);
   };
 
+  /**
+   * 生成提示的信息
+   * @param state
+   * @param message
+   * @param resetInterval
+   * @returns
+   */
   const generate = (
     state: ClipboardState,
-    message: string,
+    message: string | undefined,
     resetInterval: number = 2000
   ): ClipboardInfo => {
     return {
       state: state,
-      message: message,
+      message: t(message || 'toast_copied_successfully'),
       resetInterval: resetInterval,
     };
   };
 
-  useDeepEffect(() => {
-    if (clipboard.state === ClipboardState.SUCCESS) {
-      const successMessage = () =>
-        !isCustomizeMessage &&
-        useMessageStore.getState().success(t('toast_copied_successfully'));
-      if (clipboard.resetInterval !== 0) {
-        setTimeout(() => successMessage(), clipboard.resetInterval);
-      }
-    } else if (clipboard.state === ClipboardState.FAIL) {
-      const failMessage = () =>
-        !isCustomizeMessage &&
-        useMessageStore.getState().error(clipboard.state);
-      if (clipboard.resetInterval !== 0) {
-        setTimeout(() => failMessage(), clipboard.resetInterval);
-      }
+  /**
+   * 显示Toast
+   * @param message 默认t('toast_copied_successfully')
+   * @param state
+   * @returns
+   */
+  const showMessage = (message: string, state: ClipboardState) => {
+    const messageStore = useMessageStore.getState();
+    if (state === ClipboardState.SUCCESS) {
+      messageStore.success(message || t('toast_copied_successfully'));
+    } else if (state === ClipboardState.FAIL) {
+      messageStore.error(message);
+    } else {
+      console.log('clipboard state is unknown')
     }
-  }, [clipboard, isCustomizeMessage]);
+  };
+
+  useDeepEffect(() => {
+    if (clipboard.resetInterval !== 0) {
+      setTimeout(() => {
+        showMessage(clipboard.message, clipboard.state);
+      }, clipboard.resetInterval);
+    }
+  }, [clipboard]);
+
+  const failMessage = 'Fallback: Failed to copy text';
 
   const fallbackCopyTextToClipboard = (
     text: string,
-    resetInterval: number = 2000
+    options?: CopyOptions
   ): Promise<ClipboardInfo> => {
     const textArea = document.createElement('textarea');
     textArea.value = text;
@@ -106,26 +126,22 @@ export const useClipboard = () => {
     textArea.focus();
     textArea.select();
 
+    const { resetInterval = 2000, successMessage } = options || {};
+
     try {
       const successful = document.execCommand('copy');
       if (successful) {
-        const success = generate(ClipboardState.SUCCESS, text);
+        const success = generate(ClipboardState.SUCCESS, successMessage);
         setClipboardInfo(success);
         reset(resetInterval);
         return Promise.reject(success);
       } else {
-        const fail = generate(
-          ClipboardState.FAIL,
-          `Fallback: Failed to copy text`
-        );
+        const fail = generate(ClipboardState.FAIL, failMessage);
         return Promise.reject(fail);
       }
     } catch (error) {
-      console.error('Fallback: Failed to copy text:', error);
-      const fail = generate(
-        ClipboardState.FAIL,
-        `Fallback: Failed to copy text: ${error}`
-      );
+      console.error(failMessage, error);
+      const fail = generate(ClipboardState.FAIL, `${failMessage}: ${error}`);
       setClipboardInfo(fail);
       return Promise.reject(fail);
     } finally {
@@ -140,30 +156,31 @@ export const useClipboard = () => {
    */
   const copyToClipboard = async (
     text: string,
-    isCustomizeMessage: boolean = false,
-    resetInterval: number = 2000
+    options?: CopyOptions
   ): Promise<ClipboardInfo> => {
-    setCustomizeMessage(isCustomizeMessage);
+    const { resetInterval = 2000 } = options || {};
+
     if (isEmpty(text.trim())) {
-      const fail = generate(
-        ClipboardState.FAIL,
-        'Fallback: Failed to copy text: is Empty'
-      );
+      const fail = generate(ClipboardState.FAIL, `${failMessage}: is Empty`);
       setClipboardInfo(fail);
       return Promise.reject(fail);
     }
     if (navigator.clipboard) {
       try {
         await navigator.clipboard.writeText(text);
-        const success = generate(ClipboardState.SUCCESS, text);
+        const success = generate(
+          ClipboardState.SUCCESS,
+          options?.successMessage,
+          resetInterval
+        );
         setClipboardInfo(success);
         reset(resetInterval);
         return Promise.resolve(success);
       } catch (error) {
-        return fallbackCopyTextToClipboard(text, resetInterval);
+        return fallbackCopyTextToClipboard(text, options);
       }
     } else {
-      return fallbackCopyTextToClipboard(text, resetInterval);
+      return fallbackCopyTextToClipboard(text, options);
     }
   };
 

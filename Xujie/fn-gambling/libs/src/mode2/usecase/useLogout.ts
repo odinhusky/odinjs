@@ -14,8 +14,14 @@ import { useMyPageStore } from '@mode2/zustand/page/myPageStore';
 import { LOGOUT_URL } from '@mode2API/urls';
 import { fetchBatch } from '@libs/commonUtils';
 import { initData } from '@mode2API/requestInitData';
-import { usePlatformInfoStore } from '@mode2/zustand/platform/platformInfoStore';
 import { UserRoleType } from '../@types/userRoleTypes';
+import {
+  PostHogEventPayload,
+  PostHogPayloadType,
+} from '@mode2/utils/sdk/strategy/analytics/PostHogAnalytics';
+import useLowBalanceRechargeModalStore from '@mode2/zustand/modal/LowBalanceRechargeModal';
+import useLowBalanceRescueBoxModalStore from '@mode2/zustand/modal/LowBalanceRescueBoxModal';
+import useDepositJackpotWheelModalStore from '../zustand/modal/DepositJackpotWheelModal';
 
 const handleSetGuestProfileForSaleSmartChat = () => {
   const packagename = import.meta.env['VITE_PACKAGENAME'];
@@ -43,6 +49,12 @@ const handleSentryGuestUser = () => {
     severityLevel: 'info',
     profile: JSON.stringify(userInfo),
   });
+
+  sdkUtils.sendAnalyticsEvent<PostHogEventPayload>({
+    event: 'posthog.logout',
+    postHogType: PostHogPayloadType.LOGOUT,
+    parameter: '',
+  });
 };
 
 const resetDataAfterLogout = () => {
@@ -52,13 +64,41 @@ const resetDataAfterLogout = () => {
   // kyc
   // useKycDataStore.getState().resetKycData();
   // 遊戲收藏
-  useGameListStore.getState().setFavoriteGameList([]);
+  // useGameListStore.getState().setFavoriteGameList([]);
   // 站內信
-  useMode2FeedBackPageInBoxStore.getState().setNoticeUnreadCount(0);
-  useMode2FeedBackPageInBoxStore.getState().setMailUnreadCount(0);
+  // useMode2FeedBackPageInBoxStore.getState().setNoticeUnreadCount(0);
+  // useMode2FeedBackPageInBoxStore.getState().setMailUnreadCount(0);
   // user profile
-  useUserProfileStore.getState().clear();
-  useMyPageStore.getState().clear();
+  // useUserProfileStore.getState().clear();
+  // useMyPageStore.getState().clear();
+
+  // 使用者相關
+  const resetUserDataFromClear = [
+    // 遊戲收藏
+    useGameListStore.getState().clear,
+    // 站內信
+    useMode2FeedBackPageInBoxStore.getState().clear,
+    // user profile
+    useUserProfileStore.getState().clear,
+    useMyPageStore.getState().clear,
+  ];
+
+  resetUserDataFromClear.forEach((clear) => clear());
+
+  // 限時優惠相關
+  const resetLimitedOffersEndTime = [
+    useLowBalanceRechargeModalStore.getState()
+      .upLowBalanceRechargeLimitedOffersEndTime,
+    useLowBalanceRescueBoxModalStore.getState()
+      .upLowBalanceRescueBoxLimitedOffersEndTime,
+    useDepositJackpotWheelModalStore.getState()
+      .setDoubleBuffRechargeBonusLimitedEndTime,
+    useDepositJackpotWheelModalStore.getState()
+      .setDepositJackpotWheelRemainSpin,
+  ];
+
+  resetLimitedOffersEndTime.forEach((setEndTime) => setEndTime(0));
+
   // 清除 indexDB 中固化的資料
   // usePlatformInfoStore.getState().clear();
 };

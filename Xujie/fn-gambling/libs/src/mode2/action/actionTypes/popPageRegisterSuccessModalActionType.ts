@@ -1,0 +1,11 @@
+export const handlepopPageRegitsterSuccessModalPlayInBrowserBtnClick =
+  'handlepopPageRegitsterSuccessModalPlayInBrowserBtnClick';
+
+export const handlepopPageRegitsterSuccessModalDownLoadAppBtnClick =
+  'handlepopPageRegitsterSuccessModalDownLoadAppBtnClick';
+
+export const handlepopPageRegitsterSuccessModalCloseIconClick =
+  'handlepopPageRegitsterSuccessModalCloseIconClick';
+
+export const handlepopPageLecutreModalCloseIconClick =
+  'handlepopPageLecutreModalCloseIconClick';

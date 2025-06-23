@@ -105,6 +105,7 @@ const mapGameListInfo = (raw: GameResponse[]) => {
         item?.MaintainTime && item?.MaintainTime !== '0'
           ? item.MaintainTime
           : '',
+      platform: item?.Manufacturer || item?.Name || '', // hotgame 沒有 platform，前端友善防呆
       coverImageSrc: item?.HotLogo || '',
       manufacturerLogoUrl: item?.NameLogo || '',
       manufacturer: item?.Manufacturer || '',

@@ -99,6 +99,54 @@ import { PostPlayerBindAccountEndpoint } from '@mode2API/endpoint/user/PostPlaye
 import { PostOtpLoginEndpoint } from '@mode2API/endpoint/user/PostOtpLoginEndpoint';
 import { PostPlayerBindReferCodeEndpoint } from '@mode2API/endpoint/user/PostPlayerBindReferCodeEndpoint';
 import { PostWithdrawOptionsEndpoint } from '@mode2API/endpoint/wallet/PostWithdrawOptionsEndpoint';
+import { PostUpdateGenderEndpoint } from './endpoint/user/PostUpdateGender';
+import { PostVipRewardHistoryEndpoint } from '@mode2API/endpoint/team/PostVipRewardHistoryEndpoint';
+import { PostPopInviteRegisterAdConfigEndpoint } from '@mode2API/endpoint/invite/PostPopInviteRegisterAdConfigEndpoint';
+import PostTeamNoticeReadEndpoint from '@mode2API/endpoint/teamClub/PostTeamNoticeReadEndpoint';
+import PostGameRecentPlayEndpoint from '@mode2API/endpoint/game/PostGameRecentPlayEndpoint';
+import { PostRechargeDetailEndpoint } from '@mode2API/endpoint/record/PostRechargeDetailEndpoint';
+import { PostRechargeTutorialRewardClaimEndpoint } from '@mode2API/endpoint/recharge/PostRechargeTutorialRewardClaimEndpoint';
+import { PostTeamInvitationRewardClaimEndpoint } from '@mode2API/endpoint/team/PostTeamInvitationRewardClaimEndpoint';
+import { PostTeamInvitationRewardClaimAllEndpoint } from '@mode2API/endpoint/team/PostTeamInvitationRewardClaimAllEndpoint';
+import { PostActiveClaimSurpriseRewardEndpoint } from '@mode2API/endpoint/active/PostActiveClaimSurpriseRewardEndpoint';
+import { PostVipClaimRewardEndpoint } from '@mode2API/endpoint/active/PostVipClaimRewardEndpoint';
+import { PostMessagesDeleteAllReadEndpoint } from '@mode2API/endpoint/message/PostMessagesDeleteAllReadEndpoint';
+import { PostMessagesClaimEndpoint } from '@mode2API/endpoint/message/PostMessagesClaimEndpoint';
+import { PostMessagesDeleteEndpoint } from '@mode2API/endpoint/message/PostMessagesDeleteEndpoint';
+import PostRankingMyRewardsEndpoint from '@mode2API/endpoint/ranking/PostRankingMyRewardsEndpoint';
+import PostRankingOngoingEndpoint from '@mode2API/endpoint/ranking/PostRankingOngoingEndpoint';
+import PostRankingHistoryEndpoint from '@mode2API/endpoint/ranking/PostRankingHistoryEndpoint';
+import PostRankingRulesEndpoint from '@mode2API/endpoint/ranking/PostRankingRulesEndpoint';
+import { PostPromoteRankingJackpotEndpoint } from '@mode2API/endpoint/promotepParameter/PostPromoteRankingJackpotEndpoint';
+import { PostPromoteWinningShareEndpoint } from '@mode2API/endpoint/promotepParameter/PostPromoteWinningShareEndpoint';
+import { PostPromoteSurpriseRewardEndpoint } from '@mode2API/endpoint/promotepParameter/PostPromoteSurpriseRewardEndpoint';
+import { PostPromoteVipRebateEndpoint } from '@mode2API/endpoint/promotepParameter/PostPromoteVipRebateEndpoint';
+import { PostPromoteFirstChargeEndpoint } from '@mode2API/endpoint/promotepParameter/PostPromoteFirstChargeEndpoint';
+import { PostPromoteInviteWheelEndpoint } from '@mode2API/endpoint/promotepParameter/PostPromoteInviteWheelEndpoint';
+import { PostMissionClaimEndpoint } from '@mode2API/endpoint/mission/PostMissionClaimEndpoint';
+import { PostMissionClaimBoxEndpoint } from '@mode2API/endpoint/mission/PostMissionClaimBoxEndpoint';
+import { PostMissionOngoingEndpoint } from '@mode2API/endpoint/mission/PostMissionOngoingEndpoint';
+import { PostMissionTipNumbersEndpoint } from '@mode2API/endpoint/mission/PostMissionTipNumbersEndpoint';
+import { PostMissionHistoryEndpoint } from '@mode2API/endpoint/mission/PostMissionHistoryEndpoint';
+import { PostPromoteDailyMissionEndpoint } from '@mode2API/endpoint/promotepParameter/PostPromoteDailyMissionEndpoint';
+import { PostPromoteNewPlayerBonusEndpoint } from '@mode2API/endpoint/promotepParameter/PostPromoteNewPlayerBonusEndpoint';
+import { PostRechargeTutorialStatusEndpoint } from '@mode2API/endpoint/active/PostRechargeTutorialStatusEndpoint';
+import { axiosNoWrapperQuery } from '@mode2/gateway/axiosNoWrapperQuery';
+import { PostPixelEventEndpoint } from '@mode2API/endpoint/event/PostPixelEventEndpoint';
+import { PostEventAdjustPatchEndpoint } from '@mode2API/endpoint/event/PostEventAdjustPatchEndpoint';
+import { PostGameAllEndpoint } from '@mode2API/endpoint/game/PostGameAllEndpoint';
+import { PostDeviceEventEndpoint } from '@mode2API/endpoint/event/PostDeviceEventEndpoint';
+import { PutMmpUpdateEndpoint } from '@mode2API/endpoint/event/PutMmpUpdateEndpoint';
+import { PostPayBrokenConfigEndpoint } from '@mode2API/endpoint/wallet/PostPayBrokenConfigEndpoint';
+import { PostPayBrokenRechargeEndpoint } from '@mode2API/endpoint/recharge/PostPayBrokenRechargeEndpoint';
+import { PostPayAddOnConfigEndpoint } from '@mode2API/endpoint/recharge/PostPayAddOnConfigEndpoint';
+import { PostPayAddOnPostponeEndpoint } from '@mode2API/endpoint/recharge/PostPayAddOnPostponeEndpoint';
+import { PostPayInboxConfigEndpoint } from '@mode2API/endpoint/wallet/PostPayInboxConfigEndpoint';
+import { PostPayInboxRechargeEndpoint } from '@mode2API/endpoint/recharge/PostPayInboxRechargeEndpoint';
+import { PostBrokenBoxInfoEndpoint } from '@mode2API/endpoint/brokenBox/PostBrokenBoxInfoEndpoint';
+import { PostBrokenBoxClaimEndpoint } from '@mode2API/endpoint/brokenBox/PostBrokenBoxClaimEndpoint';
+import PostPromotePrizeWheelEndpoint from '@mode2API/endpoint/promotepParameter/PostPromotePrizeWheelEndpoint';
+import PostWheelPrizeSpinEndpoint from '@mode2API/endpoint/wheel/PostWheelPrizeSpinEndpoint';
 
 export const baseCryptoAPI = createApi({
   reducerPath: 'baseCryptoApi',
@@ -334,6 +382,59 @@ export const baseAPI = createApi({
 
     // - [V6] 新增 Start ===========
     postWithdrawOptions: PostWithdrawOptionsEndpoint(builder),
+    PostUpdateGender: PostUpdateGenderEndpoint(builder),
+    postVipRewardHistory: PostVipRewardHistoryEndpoint(builder),
+    postPopInviteRegisterAdConfig:
+      PostPopInviteRegisterAdConfigEndpoint(builder),
+    postTeamNoticeRead: PostTeamNoticeReadEndpoint(builder),
+    postGameRecentPlay: PostGameRecentPlayEndpoint(builder),
+    postRechargeDetail: PostRechargeDetailEndpoint(builder),
+    postRechargeTutorialRewardClaim:
+      PostRechargeTutorialRewardClaimEndpoint(builder),
+    postTeamInvitationRewardClaim:
+      PostTeamInvitationRewardClaimEndpoint(builder),
+    postTeamInvitationRewardClaimAll:
+      PostTeamInvitationRewardClaimAllEndpoint(builder),
+    postActiveClaimSurpriseReward:
+      PostActiveClaimSurpriseRewardEndpoint(builder),
+    postVipClaimReward: PostVipClaimRewardEndpoint(builder),
+    postMessagesClaim: PostMessagesClaimEndpoint(builder),
+    postMessagesDeleteAllRead: PostMessagesDeleteAllReadEndpoint(builder),
+    postMessagesDelete: PostMessagesDeleteEndpoint(builder),
+    postRankingOngoing: PostRankingOngoingEndpoint(builder),
+    postRankingMyRewards: PostRankingMyRewardsEndpoint(builder),
+    postRankingHistory: PostRankingHistoryEndpoint(builder),
+    postRankingRules: PostRankingRulesEndpoint(builder),
+    postPromoteRankingJackpot: PostPromoteRankingJackpotEndpoint(builder),
+    postPromoteWinningShare: PostPromoteWinningShareEndpoint(builder),
+    postPromoteSurpriseReward: PostPromoteSurpriseRewardEndpoint(builder),
+    postPromoteVipRebate: PostPromoteVipRebateEndpoint(builder),
+    postPromoteFirstCharge: PostPromoteFirstChargeEndpoint(builder),
+    postPromoteInviteWheel: PostPromoteInviteWheelEndpoint(builder),
+
+    postMissionOngoing: PostMissionOngoingEndpoint(builder),
+    postMissionClaim: PostMissionClaimEndpoint(builder),
+    postMissionClaimBox: PostMissionClaimBoxEndpoint(builder),
+    postMissionTipNumbers: PostMissionTipNumbersEndpoint(builder),
+    postMissionHistory: PostMissionHistoryEndpoint(builder),
+
+    postPromoteDailyMission: PostPromoteDailyMissionEndpoint(builder),
+    postPromoteNewPlayerBonus: PostPromoteNewPlayerBonusEndpoint(builder),
+    postRechargeTutorialStatus: PostRechargeTutorialStatusEndpoint(builder),
+    postEventAdjustPatch: PostEventAdjustPatchEndpoint(builder),
+    postGameAll: PostGameAllEndpoint(builder),
+    postDeviceEvent: PostDeviceEventEndpoint(builder),
+    putMmpUpdate: PutMmpUpdateEndpoint(builder),
+    postPayBrokenConfig: PostPayBrokenConfigEndpoint(builder),
+    postPayBrokenRecharge: PostPayBrokenRechargeEndpoint(builder),
+    postPayAddOnConfig: PostPayAddOnConfigEndpoint(builder),
+    postPayAddOnPostpone: PostPayAddOnPostponeEndpoint(builder),
+    postPayInboxConfig: PostPayInboxConfigEndpoint(builder),
+    postPayInboxRecharge: PostPayInboxRechargeEndpoint(builder),
+    postBrokenBoxInfo: PostBrokenBoxInfoEndpoint(builder),
+    postBrokenBoxClaim: PostBrokenBoxClaimEndpoint(builder),
+    postPromotePrizeWheel: PostPromotePrizeWheelEndpoint(builder),
+    postWheelPrizeSpin: PostWheelPrizeSpinEndpoint(builder),
     // - [V6] 新增 End ===========
   }),
 });
@@ -401,5 +502,70 @@ export const {
 
   // - [V6] 新增 Start ===========
   usePostWithdrawOptionsMutation,
+  usePostUpdateGenderMutation,
+  usePostVipRewardHistoryMutation,
+  usePostPopInviteRegisterAdConfigMutation,
+  usePostTeamNoticeReadMutation,
+  usePostGameRecentPlayMutation,
+  usePostRechargeDetailMutation,
+  usePostRechargeTutorialRewardClaimMutation,
+  usePostTeamInvitationRewardClaimMutation,
+  usePostTeamInvitationRewardClaimAllMutation,
+  usePostActiveClaimSurpriseRewardMutation,
+  usePostVipClaimRewardMutation,
+  usePostMessagesClaimMutation,
+  usePostMessagesDeleteAllReadMutation,
+  usePostMessagesDeleteMutation,
+  usePostRankingOngoingMutation,
+  usePostRankingMyRewardsMutation,
+  usePostRankingHistoryMutation,
+  usePostRankingRulesMutation,
+  usePostPromoteRankingJackpotMutation,
+  usePostPromoteWinningShareMutation,
+  usePostPromoteSurpriseRewardMutation,
+  usePostPromoteVipRebateMutation,
+  usePostPromoteFirstChargeMutation,
+  usePostPromoteInviteWheelMutation,
+
+  // 任務中心
+  usePostMissionOngoingMutation,
+  usePostMissionClaimMutation,
+  usePostMissionClaimBoxMutation,
+  usePostMissionTipNumbersMutation,
+  usePostMissionHistoryMutation,
+  usePostPromoteDailyMissionMutation,
+  usePostPromoteNewPlayerBonusMutation,
+  usePostRechargeTutorialStatusMutation,
+  usePostEventAdjustPatchMutation,
+  usePostGameAllMutation,
+  usePostDeviceEventMutation,
+  usePutMmpUpdateMutation,
+  usePostPayBrokenConfigMutation,
+  usePostPayBrokenRechargeMutation,
+  usePostPayAddOnConfigMutation,
+  usePostPayAddOnPostponeMutation,
+
+  usePostPayInboxConfigMutation,
+  usePostPayInboxRechargeMutation,
+
+  usePostBrokenBoxInfoMutation,
+  usePostBrokenBoxClaimMutation,
+  usePostPromotePrizeWheelMutation,
+  usePostWheelPrizeSpinMutation,
   // - [V6] 新增 End ===========
 } = baseAPI;
+
+// 無包裝 body
+export const baseNoWrapperAPI = createApi({
+  reducerPath: 'baseNoWrapperApi',
+  baseQuery: axiosNoWrapperQuery({
+    baseUrl: '',
+  }),
+  refetchOnReconnect: true,
+  refetchOnFocus: false,
+  endpoints: (builder) => ({
+    postPixelEvent: PostPixelEventEndpoint(builder),
+  }),
+});
+
+export const { usePostPixelEventMutation } = baseNoWrapperAPI;

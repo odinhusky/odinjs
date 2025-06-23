@@ -1,6 +1,6 @@
 import { useFooterStore } from '@mode2/zustand/components/footerStore';
 import { useDeepEffect } from '@libs/commonUtils';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 export const useManufacturerListBase = () => {
   const setManufacturerList = useFooterStore(

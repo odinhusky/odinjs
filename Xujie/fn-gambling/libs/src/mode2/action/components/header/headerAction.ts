@@ -12,7 +12,8 @@ import {
   handleMyPageActionClick,
   handleInBoxActionClick,
   handleLuckyWheelActionClick,
-} from '@mode2/action/components/header/actionType';
+  handleWalletDashboardBalanceActionClick,
+} from '@mode2/action/actionTypes';
 import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
 
@@ -33,6 +34,8 @@ import {
 import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
 import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
 import { feedBackPageTabIdObj } from '@mode2/@types/feedBackPageTab';
+import { useWalletPageStore } from '@mode2/zustand/page/WalletPage/walletPageStore';
+import { WalletDashboardType } from '@mode2/@types/walletDashboardTypes';
 
 export type ActionClickPayloadMap = {
   [handleLoginActionClick]: { type: LoginFormType };
@@ -47,6 +50,7 @@ export type ActionClickPayloadMap = {
   [handleMyPageActionClick]: void;
   [handleInBoxActionClick]: void;
   [handleLuckyWheelActionClick]: void;
+  [handleWalletDashboardBalanceActionClick]: void;
 };
 
 export interface HandleHeaderOnEventProps<T extends keyof ActionClickPayloadMap>
@@ -63,6 +67,7 @@ export const useHeaderAction = () => {
     navToMyPage,
     navToFeedbackPage,
     navToRechargeWheelPage,
+    navToWalletPage,
   } = useNavPageClick();
   const setIsShowForgotPasswordModal = useIsShowLoginModalStore(
     (state) => state.setIsShowForgotPasswordModal
@@ -77,11 +82,14 @@ export const useHeaderAction = () => {
     (state) => state.setCurSwitchContentTabId
   );
   const { isShowLoginModal } = useIsShowLoginModalStore();
-
+  const setDisplayDashboardType = useWalletPageStore(
+    (state) => state.setDisplayDashboardType
+  );
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
     [handleLoginActionClick]: ({ type }) => {
       handleGlobalClick({
         target: handleLoginActionClick,
+        payload: { type },
         callback: () => navToLoginPage(35, true, type),
       });
     },
@@ -127,9 +135,7 @@ export const useHeaderAction = () => {
         callback: () => {
           setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
           if (location.pathname !== BasePagePathObj.WalletPage) {
-            navigate(BasePagePathObj.WalletPage, {
-              state: { tab: WalletPageTabType.DEPOSIT },
-            });
+            navToWalletPage('', { state: { tab: WalletPageTabType.DEPOSIT } });
           }
 
           // if (inGamePages.includes(location.pathname)) {
@@ -187,6 +193,16 @@ export const useHeaderAction = () => {
         target: handleLuckyWheelActionClick,
         callback: () => {
           navToRechargeWheelPage();
+        },
+      });
+    },
+    [handleWalletDashboardBalanceActionClick]: () => {
+      handleGlobalClick({
+        target: handleWalletDashboardBalanceActionClick,
+        callback: () => {
+          setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
+          setDisplayDashboardType(WalletDashboardType.BALANCE);
+          navToWalletPage('', { state: { tab: WalletPageTabType.DEPOSIT } });
         },
       });
     },

@@ -12,6 +12,8 @@ import { useUserProfileStore } from '../zustand/user/userProfileStore';
 import { useOTPCountDownStore } from '../zustand/components/OTPCountDownStore';
 import handleGlobalClick from '../action/handleGlobalClick';
 import { useAppStore } from '@mode2/zustand/appStore';
+import { useAppDeviceEventStore } from '@mode2/zustand/platform/appDeviceEventStore';
+import { AppDeviceEvent } from '@mode2API/endpoint/event/PostDeviceEventEndpoint';
 
 interface LoginProps {
   successCallback?: () => void; // 登入成功的 callback
@@ -31,7 +33,7 @@ export const useLogin = ({ successCallback, failCallback }: LoginProps) => {
     usePostOtpLoginMutation();
 
   useEffect(() => {
-    FetchMyIp.doFetchMyIp();
+    // FetchMyIp.doFetchMyIp();
   }, []);
 
   const login = (values: LoginPayload) => {
@@ -43,6 +45,7 @@ export const useLogin = ({ successCallback, failCallback }: LoginProps) => {
 
   useEffect(() => {
     if (isLoginSuccess && loginResult?.token) {
+      useAppDeviceEventStore.getState().setAppEvents([AppDeviceEvent.LOGIN]);
       sdkUtils.sendEvent(AdjustEventKey.LOGIN);
       sdkUtils.setStorage(AppLocalStorageKey.TOKEN, loginResult.token);
       sdkUtils.removeStorage(AppLocalStorageKey.REFERRAL_CODE);
@@ -57,12 +60,15 @@ export const useLogin = ({ successCallback, failCallback }: LoginProps) => {
     }
   }, [isLoginSuccess, loginResult]);
 
+  const pushToken = useAppStore.getState().pushToken;
+
   const optLogin = (values: LoginPayload) => {
     setShowLoading(true);
     const data = {
       ...values,
       otpCode: values.verifyCode || '',
       otpId: otpId || '',
+      pushToken: pushToken,
     };
     postOtpLogin(data).finally(() => {
       setShowLoading(false);
@@ -71,6 +77,7 @@ export const useLogin = ({ successCallback, failCallback }: LoginProps) => {
 
   useEffect(() => {
     if (isOptLoginSuccess && optLoginResult?.token) {
+      useAppDeviceEventStore.getState().setAppEvents([AppDeviceEvent.LOGIN]);
       sdkUtils.sendEvent(AdjustEventKey.LOGIN);
       sdkUtils.setStorage(AppLocalStorageKey.TOKEN, optLoginResult.token);
       sdkUtils.removeStorage(AppLocalStorageKey.REFERRAL_CODE);
@@ -86,7 +93,7 @@ export const useLogin = ({ successCallback, failCallback }: LoginProps) => {
   }, [isOptLoginSuccess, optLoginResult]);
 
   const [form] = Form.useForm();
-  const [submittable, setSubmittable] = useState(false);
+  // const [submittable, setSubmittable] = useState(false); // 沒有用到的變數
   const values = Form.useWatch([], form);
   const [policyCheck, setPolicyCheck] = useState(true);
   const togglePolicyCheck = () => {
@@ -108,10 +115,9 @@ export const useLogin = ({ successCallback, failCallback }: LoginProps) => {
   };
 
   useEffect(() => {
-    form
-      .validateFields({ validateOnly: true })
-      .then(() => setSubmittable(true))
-      .catch(() => setSubmittable(false));
+    form.validateFields({ validateOnly: true });
+    // .then(() => setSubmittable(true))
+    // .catch(() => setSubmittable(false));
   }, [form, values]);
   const isShowLoading = useLoadingStore((state) => state.isShowLoading);
   const setShowLoading = useLoadingStore((state) => state.setShowLoading);

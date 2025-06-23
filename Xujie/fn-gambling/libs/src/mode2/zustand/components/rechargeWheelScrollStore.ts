@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtoolsWrapper } from '../middlewareWrapper';
 
 export interface NewsTickerMarqueeUnit {
   id: string;
@@ -12,10 +11,8 @@ export interface RebateRewardModalStoreTypes {
 }
 
 export const useRechargeWheelScrollStore =
-  create<RebateRewardModalStoreTypes>()(
-    devtoolsWrapper('[component store] useRechargeWheelScrollStore', (set) => ({
-      newsTickerMarqueeList: [],
-      setNewsTickerMarqueeList: (list) =>
-        set(() => ({ newsTickerMarqueeList: list })),
-    }))
-  );
+  create<RebateRewardModalStoreTypes>()((set) => ({
+    newsTickerMarqueeList: [],
+    setNewsTickerMarqueeList: (list) =>
+      set(() => ({ newsTickerMarqueeList: list })),
+  }));

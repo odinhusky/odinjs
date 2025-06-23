@@ -44,7 +44,7 @@ const transformResponse = (
   return {
     fileBase64: resp?.fileBase64 || '',
     fileExtension: resp?.fileExtension || '',
-    confirmCode: resp?.ocrConfirmCode || '',
+    confirmCode: String(resp?.ocrConfirmCode ?? '').replace(/\s+/g, ''),
   };
 };
 

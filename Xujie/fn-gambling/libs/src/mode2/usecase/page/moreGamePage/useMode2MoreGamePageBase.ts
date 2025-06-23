@@ -22,6 +22,7 @@ interface GetGameListByPageProps {
 
 interface MoreGamePageParams {
   manufacturer: string;
+  platform: string;
   manufacturerLogoUrl: string;
   type: string;
   platformId?: number;
@@ -29,6 +30,7 @@ interface MoreGamePageParams {
 
 const defaultParams: MoreGamePageParams = {
   manufacturer: '',
+  platform: '',
   manufacturerLogoUrl: '',
   type: '',
 };
@@ -50,10 +52,21 @@ export const useMode2MoreGamePageBase = () => {
 
     if (location.search) {
       const parsedParams = queryString.parse(location.search);
+      // return {
+      //   ...defaultParams,
+      //   ...parsedParams,
+      // } as MoreGamePageParams;
+
       return {
         ...defaultParams,
-        ...parsedParams,
-      } as MoreGamePageParams;
+        manufacturer: String(parsedParams['manufacturer'] ?? ''),
+        platform: String(parsedParams['platform'] ?? ''),
+        manufacturerLogoUrl: String(parsedParams['manufacturerLogoUrl'] ?? ''),
+        type: String(parsedParams['type'] ?? ''),
+        platformId: parsedParams['platformId']
+          ? Number(parsedParams['platformId'])
+          : undefined,
+      };
     }
     return defaultParams;
   };
@@ -72,20 +85,16 @@ export const useMode2MoreGamePageBase = () => {
     (state) => state.setActiveManufacturer
   );
 
+  const setActivePlatform = useMoreGamePageStoreStore(
+    (state) => state.setActivePlatform
+  );
+
   const setActiveManufacturerLogoUrl = useMoreGamePageStoreStore(
     (state) => state.setActiveManufacturerLogoUrl
   );
 
-  const activePlatformId = useMoreGamePageStoreStore(
-    (state) => state.activePlatformId
-  );
-
   const setActivePlatformId = useMoreGamePageStoreStore(
     (state) => state.setActivePlatformId
-  );
-
-  const activePlatformType = useMoreGamePageStoreStore(
-    (state) => state.activePlatformType
   );
 
   const setActivePlatformType = useMoreGamePageStoreStore(
@@ -128,7 +137,7 @@ export const useMode2MoreGamePageBase = () => {
     if (allLoaded && page >= 2) return;
     postGameSearch({
       gameName: '',
-      gameType: activePlatformType,
+      gameType: Number(search.type),
       limit: pageSize,
       manufacturer: activeManufacturer,
       page,
@@ -148,6 +157,7 @@ export const useMode2MoreGamePageBase = () => {
   // 第一次進來透過 router 帶 options，把這個 options 內容是為目前 active 的遊戲廠商
   useEffect(() => {
     if (search.manufacturer) setActiveManufacturer(search.manufacturer);
+    if (search.platform) setActivePlatform(search.platform);
     if (search.manufacturerLogoUrl)
       setActiveManufacturerLogoUrl(search.manufacturerLogoUrl);
     if (search.platformId) {
@@ -159,8 +169,8 @@ export const useMode2MoreGamePageBase = () => {
   }, [search.platformId, search.manufacturer, search.manufacturerLogoUrl]);
 
   // 透過 page 以及 activeManufacture activePlatformType pageSize 來控制拿到對應廠商的遊戲列表以及數量
-  useUpdateEffect(() => {
-    if (isBreakPointFlagLoaded) {
+  useEffect(() => {
+    if (isBreakPointFlagLoaded && activeManufacturer) {
       getGameByPage({ page: 1 });
     }
 

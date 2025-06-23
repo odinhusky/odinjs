@@ -1,10 +1,10 @@
 import { EResourceLevel, getImgUrl } from '@libs/mode2/utils';
 import IconTint from '../../../components/IconTint';
-import React, { memo, useState } from 'react';
+import React, { CSSProperties, memo, useState } from 'react';
 import { cx } from '@libs/commonUtils';
 import { useImageCache } from '@mode2/usecase/useImageCache';
 import isEqual from 'lodash/isEqual';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 export const ImageIcon = memo(
   ({ src }: { src: string }) => {
@@ -35,6 +35,7 @@ export interface BaseIconProps {
   color?: string;
   level?: EResourceLevel;
   isActive?: boolean;
+  style?: CSSProperties | undefined;
 }
 
 const BaseIcon = ({

@@ -1,8 +1,7 @@
 import { RefObject } from 'react';
 import { create } from 'zustand';
 import { GameListItemResult } from './hallPageStore';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import { MoreGamePageTabType } from '@libs/mode2/@types/moreGamePageTabType';
 
 export interface ModifyPageFormData {
@@ -38,6 +37,10 @@ export interface usMoreGamePageStoreTypes {
   setActivePlatformId: (id: number) => void;
   activeManufacturer: string;
   setActiveManufacturer: (manufacturer: string) => void;
+
+  activePlatform: string;
+  setActivePlatform: (platform: string) => void;
+
   activeManufacturerLogoUrl: string;
   setActiveManufacturerLogoUrl: (logo: string) => void;
   activePlatformType: number;
@@ -49,76 +52,76 @@ export interface usMoreGamePageStoreTypes {
 }
 
 export const useMoreGamePageStoreStore = create<usMoreGamePageStoreTypes>()(
-  devtoolsAndPersistWrapper(
-    '[page store] useMoreGamePageStoreStore',
-    (set, get) => ({
-      activeHorizonTab: MoreGamePageTabType.ALL,
-      setActiveHorizonTab: (tabName) =>
-        set(() => ({
-          activeHorizonTab: tabName,
-        })),
-      page: 1,
-      setPage: (page) => set(() => ({ page })),
-      moreGameList: [] as GameListItemResult[],
-      setMoreGameList: (values) =>
-        set((state: usMoreGamePageStoreTypes) => ({
-          moreGameList:
-            values instanceof Function ? values(state.moreGameList) : values,
-        })),
-      recentGameList: [] as GameListItemResult[],
-      setRecentGameList: (values) =>
-        set((state: usMoreGamePageStoreTypes) => ({
-          recentGameList:
-            values instanceof Function ? values(state.recentGameList) : values,
-        })),
-      addRecentGameList: (item) =>
-        set(() => {
-          const updatedList: GameListItemResult[] = cloneDeep(
-            get().recentGameList
-          );
+  (set, get) => ({
+    activeHorizonTab: MoreGamePageTabType.ALL,
+    setActiveHorizonTab: (tabName) =>
+      set(() => ({
+        activeHorizonTab: tabName,
+      })),
+    page: 1,
+    setPage: (page) => set(() => ({ page })),
+    moreGameList: [] as GameListItemResult[],
+    setMoreGameList: (values) =>
+      set((state: usMoreGamePageStoreTypes) => ({
+        moreGameList:
+          values instanceof Function ? values(state.moreGameList) : values,
+      })),
+    recentGameList: [] as GameListItemResult[],
+    setRecentGameList: (values) =>
+      set((state: usMoreGamePageStoreTypes) => ({
+        recentGameList:
+          values instanceof Function ? values(state.recentGameList) : values,
+      })),
+    addRecentGameList: (item) =>
+      set(() => {
+        const updatedList: GameListItemResult[] = cloneDeep(
+          get().recentGameList
+        );
 
-          const existingIndex = updatedList.findIndex(
-            (gameItem) => gameItem.gameId === item.gameId
-          );
+        const existingIndex = updatedList.findIndex(
+          (gameItem) => gameItem.gameId === item.gameId
+        );
 
-          if (typeof existingIndex === 'number' && existingIndex !== -1) {
-            updatedList.splice(existingIndex, 1);
-          }
+        if (typeof existingIndex === 'number' && existingIndex !== -1) {
+          updatedList.splice(existingIndex, 1);
+        }
 
-          updatedList.unshift({ ...item });
+        updatedList.unshift({ ...item });
 
-          return { recentGameList: updatedList };
-        }),
-      allLoaded: false,
-      setAllLoaded: (bool) => set(() => ({ allLoaded: bool })),
-      activePlatformId: 0,
-      setActivePlatformId: (id) =>
-        set(() => ({
-          activePlatformId: id,
-        })),
-      activeManufacturer: '',
-      setActiveManufacturer: (manufacturer) =>
-        set(() => ({ activeManufacturer: manufacturer })),
-      activeManufacturerLogoUrl: '',
-      setActiveManufacturerLogoUrl: (logo) =>
-        set(() => ({
-          activeManufacturerLogoUrl: logo,
-        })),
-      activePlatformType: 0,
-      setActivePlatformType: (type) =>
-        set(() => ({ activePlatformType: type })),
+        return { recentGameList: updatedList };
+      }),
+    allLoaded: false,
+    setAllLoaded: (bool) => set(() => ({ allLoaded: bool })),
+    activePlatformId: 0,
+    setActivePlatformId: (id) =>
+      set(() => ({
+        activePlatformId: id,
+      })),
+    activePlatform: '',
+    setActivePlatform: (platform) => set(() => ({ activePlatform: platform })),
 
-      isMoreGameLoading: false,
-      setIsMoreGameLoading: (isLoading) =>
-        set(() => ({ isMoreGameLoading: isLoading })),
+    activeManufacturer: '',
+    setActiveManufacturer: (manufacturer) =>
+      set(() => ({ activeManufacturer: manufacturer })),
 
-      scrollIntersectingCount: 0,
-      addScrollIntersectingCount: () =>
-        set(() => ({
-          scrollIntersectingCount: get().scrollIntersectingCount + 1,
-        })),
-    })
-  )
+    activeManufacturerLogoUrl: '',
+    setActiveManufacturerLogoUrl: (logo) =>
+      set(() => ({
+        activeManufacturerLogoUrl: logo,
+      })),
+    activePlatformType: 0,
+    setActivePlatformType: (type) => set(() => ({ activePlatformType: type })),
+
+    isMoreGameLoading: false,
+    setIsMoreGameLoading: (isLoading) =>
+      set(() => ({ isMoreGameLoading: isLoading })),
+
+    scrollIntersectingCount: 0,
+    addScrollIntersectingCount: () =>
+      set(() => ({
+        scrollIntersectingCount: get().scrollIntersectingCount + 1,
+      })),
+  })
 );
 
 export interface usMoreGamePageRefsTypes {

@@ -5,7 +5,7 @@ import React from 'react';
 import useLeaveModalStore from '@libs/mode2/zustand/components/leaveModalStore';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import useLeaveModalActions from '@libs/mode2/action/leaveModalAction/useLeaveModalActions';
-import { handleLeaveModalBtnClick } from '@libs/mode2/action/leaveModalAction/actionType';
+import { handleLeaveModalBtnClick } from '@mode2/action/actionTypes';
 import BaseIcon from '@mode2/components/BaseIcon';
 
 export interface LeaveModalProps {

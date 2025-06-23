@@ -2,7 +2,7 @@ import handleGlobalClick from '@mode2/action/handleGlobalClick';
 import {
   handleFooterHyperlinkActionClick,
   handleFooterSocialActionClick,
-} from '@mode2/action/components/footer/acitonType';
+} from '@mode2/action/actionTypes';
 import sdkUtils from '@mode2/utils/sdk';
 import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
@@ -30,6 +30,7 @@ export const useFooterAction = () => {
     [handleFooterHyperlinkActionClick]: ({ isLink, target }) => {
       handleGlobalClick({
         target: handleFooterHyperlinkActionClick,
+        payload: { isLink, target },
         callback: () => {
           if (isLink) {
             sdkUtils.openBrowser(target);
@@ -42,6 +43,7 @@ export const useFooterAction = () => {
     [handleFooterSocialActionClick]: ({ isLink, target }) => {
       handleGlobalClick({
         target: handleFooterSocialActionClick,
+        payload: { isLink, target },
         callback: () => {
           // TODO
         },

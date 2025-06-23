@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { GameListItemResult } from '@mode2/zustand/page/hallPageStore';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
 
 export interface PlatformInfoStoreTypes {
   platformItems: GameListItemResult[];
@@ -18,15 +17,13 @@ const initialUsePlatformInfoStoreData = {
 /**
  * 平台資訊相關
  */
-export const usePlatformInfoStore = create<PlatformInfoStoreTypes>()(
-  devtoolsAndPersistWrapper('[platform store] usePlatformInfoStore', (set) => ({
-    ...initialUsePlatformInfoStoreData,
-    setPlatformItems: (list) => set(() => ({ platformItems: list })),
-    setSidebarPlatformItems: (list) =>
-      set(() => ({ sidebarPlatformItems: list })),
-    clear: () =>
-      set(() => ({
-        ...initialUsePlatformInfoStoreData,
-      })),
-  }))
-);
+export const usePlatformInfoStore = create<PlatformInfoStoreTypes>()((set) => ({
+  ...initialUsePlatformInfoStoreData,
+  setPlatformItems: (list) => set(() => ({ platformItems: list })),
+  setSidebarPlatformItems: (list) =>
+    set(() => ({ sidebarPlatformItems: list })),
+  clear: () =>
+    set(() => ({
+      ...initialUsePlatformInfoStoreData,
+    })),
+}));

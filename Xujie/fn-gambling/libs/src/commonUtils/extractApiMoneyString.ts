@@ -5,6 +5,9 @@
  * '₹4,001.00' => 4001.00
  */
 export const extractApiMoneyString = (currencyString: string): number => {
+  if (typeof currencyString !== 'string') {
+    return currencyString;
+  }
   // 移除非數字、小数點和負號的字符，同時忽略千分位逗號和貨幣符號
   const cleanedString = currencyString.replace(/[^0-9.-]+/g, '');
   const number = parseFloat(cleanedString);

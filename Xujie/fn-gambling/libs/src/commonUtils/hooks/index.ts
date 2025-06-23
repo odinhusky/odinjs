@@ -1,4 +1,5 @@
 export * from './useDeepEffect';
+export * from './useDebouncedEffect';
 export * from './useBreakPoint';
 export * from './useImgUrlByBreakPoint';
 export * from './useCacheData';
@@ -10,3 +11,7 @@ export * from './useUpdateDeepEffect';
 export * from './useDurationCountDown';
 export * from './useGivenTimeCountDown';
 export * from './useDebounceValue';
+export * from './useEffectOnce';
+export * from './useIncrementalUpdate';
+export * from './useMillisecondCountdown';
+export * from './useWebShare';

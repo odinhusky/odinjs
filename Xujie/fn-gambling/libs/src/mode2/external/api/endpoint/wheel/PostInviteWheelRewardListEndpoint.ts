@@ -6,6 +6,8 @@ interface InviteWheelRewardResponse {
   rewardAmount?: number;
   rewardType?: number;
   rewardedTime?: number;
+  rewardedPlayer?: string; // for [V6] 增加 下級 暱稱
+  playerAvatar?: string; // for [V6] 增加 下級 頭像
 }
 
 export enum InviteWheelRewardType {
@@ -17,6 +19,8 @@ export enum InviteWheelRewardType {
 export interface InviteWheelRewardResult {
   amount: number;
   time: number;
+  name: string;
+  avatarId: string;
   type: InviteWheelRewardType;
 }
 
@@ -61,6 +65,8 @@ const transformResponse = (
         amount: item.rewardAmount || 0,
         time: item.rewardedTime || 0,
         type: type,
+        name: item.rewardedPlayer || '',
+        avatarId: item.playerAvatar || '0',
       };
     }) || [];
   const sortedListDesc = rewardList.sort((a, b) => b.time - a.time);

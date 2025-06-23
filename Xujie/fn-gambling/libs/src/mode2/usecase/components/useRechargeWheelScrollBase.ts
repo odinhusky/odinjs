@@ -3,7 +3,7 @@ import { useDeepEffect } from '@libs/commonUtils';
 import { usePostWheelNewsTickerListMutation } from '@libs/mode2/external/api';
 import { formatMoney } from '@libs/mode2/utils';
 import { useRechargeWheelScrollStore } from '@libs/mode2/zustand/components/rechargeWheelScrollStore';
-import { get, isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { useTranslation } from 'react-i18next';
 
 export const useRechargeWheelScrollBase = () => {
@@ -26,9 +26,9 @@ export const useRechargeWheelScrollBase = () => {
         .filter((item) => item.winAmount > 0)
         .map((item, index) => ({
           id: `newsTickerList - ${index}`,
-          broadcastText: `${item.name} ${t('wins')} ${formatMoney(
-            item.winAmount || 0
-          )}`,
+          broadcastText: `${item.name} ${t('wins')} ${formatMoney({
+            value: item.winAmount || 0,
+          })}`,
         }));
 
       if (handledNewsTickerList && !isEmpty(handledNewsTickerList))

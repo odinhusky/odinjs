@@ -7,7 +7,7 @@ import useSocialAction, {
 } from '@mode2/action/components/socialList/useSocialListAction';
 import { EResourceLevel, getImgUrl } from '@mode2/utils';
 import { AppSchemeData, SchemeData } from '@constant/AppSchemeData';
-import { handleSocialActionClick } from '@mode2/action/components/socialList/acitonType';
+import { handleSocialActionClick } from '@mode2/action/actionTypes';
 import { useEffect } from 'react';
 
 export const useSocialListBase = () => {
@@ -186,7 +186,10 @@ export const useSocialListBase = () => {
 
       const teamClubList = {
         scenarios: SocialScenarios.TEAM_CLUB,
-        socialList: [whatsappIcon, facebookIcon, telegramIcon, instagramIcon],
+        socialList:
+          import.meta.env['VITE_V_VERSION'] === 'v6'
+            ? [whatsappIcon, telegramIcon]
+            : [whatsappIcon, facebookIcon, telegramIcon, instagramIcon],
       };
 
       const shareList = {
@@ -196,18 +199,17 @@ export const useSocialListBase = () => {
 
       const v6VersionShareList = {
         scenarios: SocialScenarios.V6_VERSION_SHARE,
-        socialList: [whatsappIcon, telegramIcon, facebookIcon],
+        socialList: [whatsappIcon, telegramIcon],
       };
 
       const aboutUsList = {
         scenarios: SocialScenarios.ABOUT_US,
-        socialList: [
-          telegramIcon,
-          whatsappIcon,
-          instagramIcon,
-          twitterIcon,
-          youtubeIcon,
-        ],
+        socialList: [telegramIcon, whatsappIcon],
+      };
+
+      const nothingShareList = {
+        scenarios: SocialScenarios.NOTHING,
+        socialList: [],
       };
 
       setUsageScenariosList([
@@ -217,6 +219,7 @@ export const useSocialListBase = () => {
         shareList,
         v6VersionShareList,
         aboutUsList,
+        nothingShareList,
       ]);
     }
   }, [usageScenariosList]);

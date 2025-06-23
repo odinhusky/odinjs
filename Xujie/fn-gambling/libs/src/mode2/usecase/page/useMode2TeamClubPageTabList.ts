@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { handleTeamClubPageTabClick } from '@mode2/action/teamClubPageAction/actionType';
+import { handleTeamClubPageTabClick } from '@mode2/action/actionTypes';
 import useTeamClubPageActions from '@mode2/action/teamClubPageAction/useTeamClubPageActions';
 import {
   TeamClubPageTabConfig,
@@ -12,6 +12,8 @@ import userLocalForage, {
 } from '@mode2/localforage/user';
 import { today } from '@libs/constant/date';
 import { useRedDotStore } from '@libs/mode2/zustand/redDotStore';
+import { useStayTracker } from '@libs/commonUtils/stayTracker/useStayTracker';
+import { BasePagePathObj } from '@libs/mode2/routerTypes/types';
 
 export const useMode2TeamClubPageTabList = () => {
   const curTab = useMode2TeamClubPageStore((state) => state.curTab);
@@ -19,6 +21,11 @@ export const useMode2TeamClubPageTabList = () => {
   const setTeamClubTabActionList = useMode2TeamClubPageActionsStore(
     (state) => state.setTeamClubTabActionList
   );
+
+  useStayTracker({
+    page: BasePagePathObj.TeamClubPage,
+    tab: curTab,
+  });
 
   const { handleTeamClubPageClick } = useTeamClubPageActions();
 

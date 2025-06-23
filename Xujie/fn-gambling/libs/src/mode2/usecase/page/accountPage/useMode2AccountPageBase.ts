@@ -13,18 +13,17 @@ export const useMode2AccountPageBase = () => {
 
   useMode2AccountPageHeaderSetting();
 
-  const id = useUserProfileStore((state) => state.id);
-  const nickname = useUserProfileStore((state) => state.nickname);
   const setTabIndex = useAccountPageStore((state) => state.setTabIndex);
+
+  const displayUserName = useUserProfileStore((state) => state.displayUserName);
+  const realPhone = useUserProfileStore((state) => state.realPhone);
   const setNickname = useAccountPageStore((state) => state.setNickname);
+  const loginForm = useAccountPageStore((state) => state.loginForm);
+  const setLoginForm = useAccountPageStore((state) => state.setLoginForm);
 
   const params = getParams(['tab'], location.search, location.state);
 
   useEffect(() => {
-    setNickname(nickname ? nickname : `Player${id}`);
-
-    console.log('@@===> params', params);
-
     const { tab } = params;
     if (tab != undefined) {
       setTabIndex(tab as AccountPageTypes);
@@ -32,6 +31,20 @@ export const useMode2AccountPageBase = () => {
 
     return () => {};
   }, []);
+
+  useEffect(() => {
+    if (displayUserName) {
+      setNickname(displayUserName);
+    }
+
+    if (realPhone) {
+      setLoginForm({ ...loginForm, phone: realPhone });
+    }
+
+    console.log('@@===> params', params, realPhone);
+
+    return () => {};
+  }, [displayUserName, realPhone]);
 };
 
 export default useMode2AccountPageBase;

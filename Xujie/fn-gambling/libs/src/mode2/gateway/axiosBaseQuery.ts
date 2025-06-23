@@ -6,6 +6,8 @@ import { setupResponseInterceptors } from './interceptor/ResponseInterceptors';
 import { AppLocalStorageKey } from '@mode2/utils/sdk/persistant/storageKey';
 import sdkUtils from './../utils/sdk/index';
 import { setupAxiosInstanceLoggerInterceptors } from '@mode2/gateway/interceptor/AxiosInstanceLoggerInterceptors';
+import { ResponseStructure } from '@mode2API/endpoint/ResponseStructure';
+import { setupAxiosInstanceLoadingBarInterceptors } from '@mode2/gateway/interceptor/LoadingBarInterceptors';
 
 type BaseQuery = {
   url: string;
@@ -30,9 +32,10 @@ export const axiosBaseQuery =
         timeout: 15000,
       });
       // 設置攔截器
-      setupAxiosInstanceLoggerInterceptors(axiosInstance);
+      setupAxiosInstanceLoadingBarInterceptors(axiosInstance);
       setupRequestInterceptors(axiosInstance);
       setupResponseInterceptors(axiosInstance);
+      setupAxiosInstanceLoggerInterceptors(axiosInstance);
       const token = sdkUtils.getStorage(AppLocalStorageKey.TOKEN) || '';
       const lang = sdkUtils.getStorage(AppLocalStorageKey.LANG) || 'en-US';
 
@@ -49,8 +52,9 @@ export const axiosBaseQuery =
       return { data: result.data };
     } catch (axiosError) {
       const err = axiosError as AxiosError;
+      const respStructure = axiosError as ResponseStructure<unknown>;
       return {
-        error: err?.message || 'error',
+        error: err?.message || respStructure.Msg || 'error',
       };
     }
   };

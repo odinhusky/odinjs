@@ -3,7 +3,7 @@ import handleGlobalClick from '../handleGlobalClick';
 import {
   handleReminderModalCloseBtnClick,
   handleReminderModalDepositNowBtnClick,
-} from './actionType';
+} from '@mode2/action/actionTypes';
 import { BasePagePathObj } from '@libs/mode2/routerTypes/types';
 import { ActionClickObjType } from '../common/actionClickObjetType';
 import { HandleClickProps } from '../common/handleClickProps';

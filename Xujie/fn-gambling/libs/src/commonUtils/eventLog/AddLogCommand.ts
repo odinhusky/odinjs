@@ -1,7 +1,7 @@
-import { LOG_MAX_LIMIT } from '../../mode2/@types/eventLogType';
-import { ICommand, ILoggerReceiver, ILogPayload } from './ICommand';
+import { ILoggerReceiver, ILogPayload } from './ICommand';
+import { ICommand } from '@libs/design/commandPattern/ICommand';
 
-export class AddLogCommand implements ICommand<void> {
+export class AddLogCommand implements ICommand {
   private receiver: ILoggerReceiver;
   private payload: ILogPayload;
 
@@ -11,15 +11,6 @@ export class AddLogCommand implements ICommand<void> {
   }
 
   public execute(): void {
-    this.receiver.saveLog(this.payload).then(() => {
-      this.checkLogCount();
-    });
-  }
-
-  private async checkLogCount() {
-    const logs = await this.receiver.getLogs();
-    if (Object.keys(logs).length >= LOG_MAX_LIMIT) {
-      this.receiver.reportLogs(logs);
-    }
+    this.receiver.saveLog(this.payload);
   }
 }

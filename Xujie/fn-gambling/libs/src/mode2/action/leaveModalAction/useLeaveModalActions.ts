@@ -3,7 +3,7 @@ import { ActionClickObjType } from '../common/actionClickObjetType';
 import handleAction from '../common/handleAction';
 import { HandleClickProps } from '../common/handleClickProps';
 import handleGlobalClick from '../handleGlobalClick';
-import { handleLeaveModalBtnClick } from './actionType';
+import { handleLeaveModalBtnClick } from '@mode2/action/actionTypes';
 import { useNavigateClick } from '@libs/mode2/usecase/useNavPageClick';
 
 enum LeaveModalBtnType {
@@ -36,6 +36,7 @@ export const useLeaveModalActions = () => {
     [handleLeaveModalBtnClick]: ({ value, page }) => {
       handleGlobalClick({
         target: handleLeaveModalBtnClick,
+        payload: { value, page },
         callback: () => {
           console.log('@@===> handleLeaveModalLeaveClick', value);
           if (value === LeaveModalBtnType.EXIT) {

@@ -8,10 +8,8 @@ import { useLocationStore } from '@mode2/zustand/locationStore';
  */
 export const useObserverLocation = () => {
   const location = useLocation();
-  const setLocation = useLocationStore((state) => state.setLocation);
 
   useEffect(() => {
-    // console.log('@@@===> useObserverLocation', location);
-    setLocation(location);
+    useLocationStore.getState().setLocation(location);
   }, [location]);
 };

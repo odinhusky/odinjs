@@ -20,13 +20,24 @@ const sdkUtils: Common &
   Push<MessagePayload, Unsubscribe | undefined, PushExtra> &
   OnlineServiceProvide<SaleSmartlyUserProfile> &
   State = (() => {
-  if (window.android) {
+  // Evan 有些 apk 的 JSBridge 空間命名一樣是 window.android
+  // 比如TG apk 內建的 WebView 也是用 window.android 作為JS交互的空間命名
+  // 需增加更多決策判斷
+  if (window.android && window.android.getChannelID) {
     return AndroidStrategy;
-  } else if (window.ios) {
+  } else if (window.ios && window.ios.getChannelID) {
     return IosStrategy;
   } else {
     return WebStrategy;
   }
+
+  // if (window.android) {
+  //   return AndroidStrategy;
+  // } else if (window.ios) {
+  //   return IosStrategy;
+  // } else {
+  //   return WebStrategy;
+  // }
 })();
 
 export default sdkUtils;

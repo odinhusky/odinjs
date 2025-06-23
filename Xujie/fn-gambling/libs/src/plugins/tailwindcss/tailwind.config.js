@@ -202,6 +202,34 @@ export default {
           '50%': { transform: 'scale(1.1)' },
           '100%': { transform: 'scale(1)' },
         },
+
+        // [V6] 排行榜動畫
+        'flicker-rotate': {
+          '0%': { opacity: '0.4', transform: 'rotate(-10deg)' },
+          '50%': { opacity: '0.8', transform: 'rotate(10deg)' },
+          '100%': { opacity: '0.4', transform: 'rotate(-10deg)' },
+        },
+        'shine-r-20': {
+          '0%': { left: '-50%', transform: 'translateX(-100%) rotate(20deg)' },
+          '100%': { left: '120%', transform: 'translateX(200%) rotate(20deg)' },
+        },
+        'star-pulse': {
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.04)' },
+          '57.14%': { transform: 'scale(1)' }, // 0.8s / 1.4s ≈ 57.14%
+          '100%': { transform: 'scale(1)' },
+        },
+        'coins-pulse': {
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.1)' },
+          '57.14%': { transform: 'scale(1)' }, // 0.8s / 1.4s ≈ 57.14%
+          '100%': { transform: 'scale(1)' },
+        },
+        'clound-bouncing': {
+          '0%': { transform: 'translateY(0%)' },
+          '50%': { transform: 'translateY(-0.5rem)' }, // 約 0.35s / 0.7s
+          '100%': { transform: 'translateY(0%)' },
+        },
       },
       animation: {
         marquee: 'marquee 15s linear infinite',
@@ -214,12 +242,20 @@ export default {
         'spin-reverse': 'spin-reverse 0.5s linear infinite',
         'up-baloon': 'up-baloon 3s linear infinite',
         'wheel-prev-spin-infinitely':
-          'wheel-prev-spin-infinitely 10s linear infinite',
+          'wheel-prev-spin-infinitely 20s linear infinite',
         'pulse-scale-infinitely': 'pulse-scale 1s linear infinite',
+
+        // [V6] 排行榜動畫
+        'flicker-rotate': 'flicker-rotate 2s ease-in-out infinite',
+        'shine-r-20': 'shine-r-20 2s linear infinite',
+        'star-pulse': 'star-pulse 1.4s ease-in-out infinite',
+        'coins-pulse': 'coins-pulse 1.4s ease-in-out infinite',
+        'clound-bouncing': 'clound-bouncing 2s ease-in-out infinite',
       },
     },
   },
   plugins: [
+    require('tailwindcss-textshadow'),
     plugin(async function ({
       addBase,
       addUtilities,
@@ -239,6 +275,18 @@ export default {
           content: 'counter(item-counter) ". "',
           marginRight: 'calc(0.75rem)',
         },
+
+        '.dots-item': {
+          // position: 'relative',
+          display: 'grid',
+          gridTemplateColumns: 'auto 1fr', // 自动分配编号和内容的空间
+          counterIncrement: 'item-counter',
+        },
+        '.dots-item:before': {
+          content: '" ∙"',
+          marginRight: 'calc(0.75rem)',
+        },
+
         // '.after-rounded': {
         //   '::after': {
         //     borderRadius: '0.25rem', // 圆角边
@@ -266,7 +314,7 @@ export default {
           'font-size': '10px',
           'line-height': '12px',
         },
-        'text-3xxl': {
+        '.text-3xxl': {
           'font-size': '32px',
           'line-height': '36px',
         },
@@ -282,6 +330,16 @@ export default {
         },
         '.bg-size-100': {
           'background-size': '100% 100%',
+        },
+        '.bgi-text-border': {
+          position: 'relative',
+          '&::before': {
+            content: 'attr(data-stroke)',
+            position: 'absolute',
+            zIndex: -1,
+            WebkitTextStroke: '1px black',
+            textStroke: '1px black',
+          },
         },
       });
       matchUtilities({
@@ -381,11 +439,55 @@ export default {
             };
           }
         },
+        'bgi-border-2': (value) => {
+          if (isLinearGradient(value, rootVariables)) {
+            return {
+              position: 'relative',
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                top: '-2px',
+                bottom: '-2px',
+                left: '-2px',
+                right: '-2px',
+                display: 'block',
+                border: '2px solid transparent',
+                background: `${value} border-box`,
+                WebkitMask:
+                  'linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0)',
+                WebkitMaskComposite: 'xor',
+                maskComposite: 'exclude',
+                borderRadius: 'inherit',
+                pointerEvents: 'none',
+              },
+            };
+          } else {
+            return {
+              borderColor: value,
+            };
+          }
+        },
 
         'bgi-after-zIndex': (zindex) => {
           return {
             '&::after': {
               zIndex: `${zindex}`,
+            },
+          };
+        },
+        'bgi-text-border': (value) => {
+          const [color = 'black', strokeWidth = '1px'] = value
+            ? value.split(',')
+            : [];
+
+          return {
+            position: 'relative',
+            '&::before': {
+              content: 'attr(data-stroke)',
+              position: 'absolute',
+              zIndex: -1,
+              WebkitTextStroke: `${strokeWidth} ${color}`,
+              textStroke: `${strokeWidth} ${color}`,
             },
           };
         },

@@ -31,9 +31,9 @@ export const useMode2RecordPageBalanceRecord = () => {
 
   const [triggerFetchFundTransterRecord, { data: fundTransferData }] =
     usePostFundDetailMutation();
-  const [triggerFetchRechargeRecord, { data: rechargeRecordData }] =
+  const [postRechargeRecords, { data: rechargeRecordData }] =
     usePostRechargeRecordsMutation();
-  const [triggerFetchWithdrawRecord, { data: withdrawRecordData }] =
+  const [postWithdrawRecords, { data: withdrawRecordData }] =
     usePostWithdrawRecordsMutation();
 
   useEffect(() => {
@@ -82,12 +82,12 @@ export const useMode2RecordPageBalanceRecord = () => {
     } else if (
       activeListSwitchTabIndex === RecordPageBalanceRecordTabs.ADD_CASH_RECORD
     ) {
-      triggerFetchRechargeRecord({ page: 1, limit: 30 });
+      postRechargeRecords({ page: 1, limit: 1000 });
     } else if (
       activeListSwitchTabIndex ===
       RecordPageBalanceRecordTabs.WITHDRAWALS_RECORD
     ) {
-      triggerFetchWithdrawRecord({ page: 1, limit: 30 });
+      postWithdrawRecords({ page: 1, limit: 30 });
     }
   }, [activeListSwitchTabIndex]);
 };

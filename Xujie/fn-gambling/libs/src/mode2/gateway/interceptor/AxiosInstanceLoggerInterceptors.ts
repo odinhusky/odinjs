@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 import sdkUtils from '@mode2/utils/sdk';
 import {
   SentryEventPayload,
@@ -49,11 +49,11 @@ export const setupAxiosInstanceLoggerInterceptors = (
   instance.interceptors.request.use(
     async (config) => {
       const metadata = { startTime: dayjs().valueOf() }; // 添加开始时间戳
-      config = {...config, ...metadata}
+      config = { ...config, ...metadata };
       return config;
     },
-    () => {
-      return Promise.reject();
+    (error) => {
+      return Promise.reject(error);
     }
   );
 
@@ -64,7 +64,7 @@ export const setupAxiosInstanceLoggerInterceptors = (
     },
     (error) => {
       sendEvent(error);
-      return Promise.reject();
+      return Promise.reject(error);
     }
   );
 };

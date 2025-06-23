@@ -19,6 +19,7 @@ export enum CustomerServiceScenarios {
   FEEDBACK = 'FEEDBACK',
   FAB = 'FAB',
   GIFT_CODE = 'GIFT_CODE',
+  ABOUT_US = 'ABOUT_US',
 }
 
 interface UsageScenarios {

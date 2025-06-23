@@ -12,10 +12,15 @@ interface InviteWheelConfigResponse {
   value?: string; // 會有 "100" , "10~100" 兩種格式
 }
 
+interface RuleDetailResponse {
+  effectiveRechargeAmount?: number;
+  rewardDamaTimes?: number;
+}
+
 interface InviteWheelPortalInfoResponse {
   countDown?: number;
-  cumulativeReward?: number;
-  withdrawRequire?: number;
+  cumulativeReward?: number; // 499
+  withdrawRequire?: number; // 500
   freeSpinCountDown?: number;
   // remindFreeSpin?: number;
   remindSpin?: number;
@@ -23,6 +28,7 @@ interface InviteWheelPortalInfoResponse {
   wheelConfig?: InviteWheelConfigResponse[];
   withdrawable?: boolean;
   isParticipated?: boolean;
+  ruleDetail?: RuleDetailResponse;
 }
 
 export interface WheelSegment {
@@ -53,6 +59,8 @@ export interface InviteWheelPortalInfoResult {
   completionRate: number; // 提取目標完成率
   isParticipated: boolean;
   spinType: InviteWheelSpinType;
+  effectiveRechargeAmount: number; //
+  rewardDamaTimes: number;
 }
 
 export const DEFAULT_EVENT_COUNT_DOWN = 259200;
@@ -95,15 +103,18 @@ const transformResponse = (
       };
     }) || [];
 
-  const completionRate = Math.floor(
-    (cumulativeReward / withdrawRequire || 0) * 100
-  );
+  // TODO Evan check 已確認只有 InviteWheelTipsModal 用到
+  // const completionRate = Math.floor(
+  //   (cumulativeReward / withdrawRequire || 0) * 100
+  // );
+  const completionRate = (cumulativeReward / withdrawRequire || 0) * 100;
+
   const remainingReward =
     cumulativeReward > withdrawRequire ? 0 : withdrawRequire - cumulativeReward;
 
   // 可以 cash out
   const isWithdrawal =
-    resp?.withdrawable === true && withdrawRequire >= cumulativeReward;
+    resp?.withdrawable === true && cumulativeReward >= withdrawRequire;
   // 可能小於 0 防呆
   const eventCountDown = (resp?.countDown || 0) < 0 ? 0 : resp?.countDown || 0;
   // 小於0 給預設，避免造成遞迴
@@ -117,7 +128,8 @@ const transformResponse = (
   return {
     cumulativeReward: cumulativeReward,
     withdrawRequire: withdrawRequire,
-    eventCountDown: isWithdrawal ? DEFAULT_EVENT_COUNT_DOWN : eventCountDown,
+    // eventCountDown: isWithdrawal ? DEFAULT_EVENT_COUNT_DOWN : eventCountDown,
+    eventCountDown: eventCountDown,
     isWithdrawal: isWithdrawal,
     wheelSegments: wheelSegments,
     nextFreeSpinCountDown: nextFreeSpinCountDown,
@@ -127,6 +139,8 @@ const transformResponse = (
     isParticipated:
       resp?.isParticipated === undefined ? true : resp.isParticipated,
     spinType: spinType,
+    effectiveRechargeAmount: resp?.ruleDetail?.effectiveRechargeAmount || 0,
+    rewardDamaTimes: resp?.ruleDetail?.rewardDamaTimes || 0,
   };
 };
 

@@ -65,6 +65,24 @@ export interface UserProfileStoreTypes {
   isLogoutWeakTipsModalShow: boolean;
   setIsLogoutWeakTipsModalShow: (isShow: boolean) => void;
 
+  gender: string;
+  setGender: (gender: string) => void;
+
+  hasSetPassword: boolean;
+  setHasSetPassword: (hasSetPassword: boolean) => void;
+
+  referralCode: string;
+  setReferralCode: (referralCode: string) => void;
+
+  referralLink: string;
+  setReferralLink: (referralLink: string) => void;
+
+  bindReferralCode: string;
+  setBindReferralCode: (bindReferralCode: string) => void;
+
+  displayUserName: string;
+  setDisplayUserName: (displayUserName: string) => void;
+
   clear: () => void;
 }
 
@@ -87,8 +105,15 @@ const defaultProfileStoreState = {
   isNewJoinNotice: false,
   refreshUserDataCount: 0, // 一變動就會去檢查是否登入，登入的話就去打 API MainInfo
   isAPIMainInfoLoading: false,
-  userRole: UserRoleType.NONE,
+  userRole: UserRoleType.GUEST,
   isLogoutWeakTipsModalShow: false,
+
+  gender: '',
+  hasSetPassword: false,
+  referralCode: '',
+  referralLink: '',
+  bindReferralCode: '',
+  displayUserName: 'Guest',
 };
 
 /**
@@ -160,6 +185,17 @@ export const useUserProfileStore = create<UserProfileStoreTypes>(
       set(() => ({
         isLogoutWeakTipsModalShow: isShow,
       })),
+
+    setGender: (gender) => set(() => ({ gender: gender })),
+
+    setHasSetPassword: (hasSetPassword) => set(() => ({ hasSetPassword })),
+
+    setReferralCode: (referralCode) => set(() => ({ referralCode: referralCode.toUpperCase() })),
+    setReferralLink: (referralLink) => set(() => ({ referralLink })),
+
+    setBindReferralCode: (bindReferralCode) =>
+      set(() => ({ bindReferralCode: bindReferralCode.toUpperCase() })),
+    setDisplayUserName: (displayUserName) => set(() => ({ displayUserName })),
 
     clear: () =>
       set(() => ({

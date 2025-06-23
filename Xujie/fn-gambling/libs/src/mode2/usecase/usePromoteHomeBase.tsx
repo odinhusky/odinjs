@@ -1,6 +1,6 @@
 import { usePostPromoteHomeMutation } from '@mode2API/index';
 import { useEffect } from 'react';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 import { useUpdateEffect } from '@libs/commonUtils';
 import { useIsLoginStore } from '@mode2/zustand/loginStore';
 import { useMode2InviteEarnStore } from '@mode2/zustand/page/invitePageStore';
@@ -13,10 +13,6 @@ export const usePromoteHomeBase = () => {
   const lastFetchTime = useMode2InviteEarnStore((state) => state.lastFetchTime);
   const setPromoteHomeData = useMode2InviteEarnStore(
     (state) => state.setPromoteHomeData
-  );
-
-  const setReferralInfo = useMode2InviteEarnStore(
-    (state) => state.setReferralInfo
   );
 
   const isLogin = useIsLoginStore((state) => state.isLogin);
@@ -34,7 +30,6 @@ export const usePromoteHomeBase = () => {
   useEffect(() => {
     if (isSuccess && data) {
       useMode2InviteEarnStore.getState().setLastFetchTime(dayjs().valueOf());
-      setReferralInfo(data.referralInfo);
       setPromoteHomeData(data);
     }
   }, [isSuccess, data]);

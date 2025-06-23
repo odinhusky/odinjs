@@ -6,7 +6,7 @@ import {
   RewardsDetailPageHeaderTabsTypes,
   useRewardsDetailStore,
 } from '@libs/mode2/zustand/page/rewardsDetailStore';
-import { handleRewardsDetailPageHeaderTypeClick } from './actionType';
+import { handleRewardsDetailPageHeaderTypeClick } from '@mode2/action/actionTypes';
 
 type ActionClickPayloadMap = {
   // 其他 ActionClickType 對應的參數類型
@@ -28,6 +28,7 @@ export const useRewardsDetailPageAction = () => {
     [handleRewardsDetailPageHeaderTypeClick]: ({ value }) => {
       handleGlobalClick({
         target: handleRewardsDetailPageHeaderTypeClick,
+        payload: { value },
         callback: () => {
           setHeaderTabIndex(value);
         },

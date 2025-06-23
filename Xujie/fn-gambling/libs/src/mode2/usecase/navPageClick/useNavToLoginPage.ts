@@ -11,6 +11,7 @@ import { NavigateFunction } from 'react-router/dist/lib/hooks';
  * @param show
  * @param type
  * @param navigate
+ * 先特例這邊解決[V6]
  */
 export const useNavToLoginPage = (
   flag: number,
@@ -19,10 +20,11 @@ export const useNavToLoginPage = (
   navigate: NavigateFunction
 ) => {
   const isMobile = useDeviceStore.getState().isMobile;
+  const version = import.meta.env['VITE_V_VERSION'] || '';
   const setIsShowLoginModal =
     useIsShowLoginModalStore.getState().setIsShowLoginModal;
   const setLoginType = useIsShowLoginModalStore.getState().setLoginType;
-  if (isMobile) {
+  if (isMobile || version === 'v6') {
     setIsShowLoginModal(false, type);
     navigate(`${BasePagePathObj.LoginPage}`, { state: { tab: type } });
   } else {

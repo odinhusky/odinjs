@@ -22,7 +22,7 @@
       "@mode2API/*": ["libs/src/mode2/external/api/*"],
       "@mode2Trans/*": ["libs/src/mode2/external/transform/*"],
       "@constant/*": ["libs/src/constant/*"]
-    }
+    },
   },
   "exclude": ["node_modules", "tmp"]
 }

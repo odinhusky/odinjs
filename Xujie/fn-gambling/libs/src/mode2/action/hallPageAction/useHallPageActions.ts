@@ -5,7 +5,8 @@ import {
   handleHallPageWithdrawBtnClick,
   handleMarqueeActionClick,
   handleHallPageBalanceRightArrowIconClick,
-} from './actionType';
+  handleHallPageFirstDepositBtnClick,
+} from '@mode2/action/actionTypes';
 
 import handleGlobalClick from '../handleGlobalClick';
 import {
@@ -44,6 +45,7 @@ export type ActionClickPayloadMap = {
   [handleHallPageDepositBtnClick]: void;
   [handleHallPageWithdrawBtnClick]: void;
   [handleHallPageBalanceRightArrowIconClick]: void;
+  [handleHallPageFirstDepositBtnClick]: void;
 };
 
 export interface HandleIndexClickProps<T extends keyof ActionClickPayloadMap>
@@ -107,15 +109,23 @@ export const useHallPageActions = () => {
     setFontColor(color);
   };
 
+  const handleNavToDepositPage = () => {
+    setDisplayDashboardType(WalletDashboardType.NONE);
+    setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
+    navToWalletPage('', { state: { tab: WalletPageTabType.DEPOSIT } });
+  };
+
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
     [handleBannerClickSwipe]: ({ item }) => {
       handleGlobalClick({
         target: handleBannerClickSwipe,
+        payload: { item },
         callback: () => {
           onAnnouncementAction(AnnouncementScenariosType.HOME, {
             type: item.type,
             gameObj: item.gameObj,
             linkUrl: item.linkUrl,
+            mataData: item,
           });
         },
       });
@@ -123,6 +133,7 @@ export const useHallPageActions = () => {
     [handleHallPageTabClick]: ({ tabId }) => {
       handleGlobalClick({
         target: handleHallPageTabClick,
+        payload: { tabId },
         callback: () => {
           setCurTab(tabId);
         },
@@ -131,6 +142,7 @@ export const useHallPageActions = () => {
     [handleMarqueeActionClick]: ({ item }) => {
       handleGlobalClick({
         target: handleMarqueeActionClick,
+        payload: { item },
         callback: () => {
           onHomeMarqueeAction(item);
         },
@@ -140,8 +152,9 @@ export const useHallPageActions = () => {
       handleGlobalClick({
         target: handleHallPageBalanceRightArrowIconClick,
         callback: () => {
-          // setDisplayDashboardType(WalletDashboardType.BALANCE);
-          navToWalletPage();
+          setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
+          setDisplayDashboardType(WalletDashboardType.BALANCE);
+          navToWalletPage('', { state: { tab: WalletPageTabType.DEPOSIT } });
         },
       });
     },
@@ -149,10 +162,17 @@ export const useHallPageActions = () => {
       handleGlobalClick({
         target: handleHallPageDepositBtnClick,
         callback: () => {
-          // setDisplayDashboardType(WalletDashboardType.NONE);
-          setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
-
-          navToWalletPage();
+          console.log('@@@===> handleHallPageDepositBtnClick');
+          handleNavToDepositPage();
+        },
+      });
+    },
+    [handleHallPageFirstDepositBtnClick]: () => {
+      handleGlobalClick({
+        target: handleHallPageFirstDepositBtnClick,
+        callback: () => {
+          console.log('@@@===> handleHallPageFirstDepositBtnClick');
+          handleNavToDepositPage();
         },
       });
     },
@@ -160,10 +180,9 @@ export const useHallPageActions = () => {
       handleGlobalClick({
         target: handleHallPageWithdrawBtnClick,
         callback: () => {
-          // setDisplayDashboardType(WalletDashboardType.NONE);
+          setDisplayDashboardType(WalletDashboardType.NONE);
           setCurSwitchContentTabId(WalletPageTabType.WITHDRAW);
-
-          navToWalletPage();
+          navToWalletPage('', { state: { tab: WalletPageTabType.WITHDRAW } });
         },
       });
     },

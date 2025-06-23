@@ -3,9 +3,8 @@ import sdkUtils from '@mode2/utils/sdk/index';
 import { ExternalEndpoint } from '../../types';
 import { REGISTER_URL } from '../../urls';
 import { ResponseStructure } from '../ResponseStructure';
-import { LoginPayload } from '@mode2API/endpoint/user/PostLoginEndpoint';
 import { UserRoleType } from '@mode2/@types/userRoleTypes';
-import { isEmpty } from 'lodash';
+import { getPlaceAdvertisementInfo } from '@mode2API/base/placeAdvertisementInfo';
 
 interface RegisterRequest {
   appId: string;
@@ -84,13 +83,14 @@ export const PostRegisterEndpoint = (builder: ExternalEndpoint) =>
         isVisitor: isVisitor,
         optCode: optCode,
         optId: optId,
+        ...getPlaceAdvertisementInfo()
       };
 
       return {
         method: 'post',
         url: REGISTER_URL,
         data: {
-          reqData,
+          reqData
         },
       };
     },

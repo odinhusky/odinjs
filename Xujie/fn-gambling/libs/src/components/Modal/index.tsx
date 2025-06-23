@@ -1,13 +1,15 @@
+import { cx } from '@libs/commonUtils';
 import { useBaseModalStore } from '@libs/mode2/zustand/baseModalStore';
 import * as React from 'react';
 // import { Modal } from "antd";
-import { useEffect, useMemo, useState } from 'react';
+import {CSSProperties, useEffect, useMemo, useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 type IModalProps = {
   children?: JSX.Element;
   className?: string;
   onClick?: VoidFunction;
+  style?: CSSProperties | undefined;
 };
 
 const BaseModal = (props: IModalProps) => {
@@ -43,8 +45,18 @@ const BaseModal = (props: IModalProps) => {
     <div id="baseModal" data-id={current}>
       {isShow && (
         <div
-          className={`z-[1005] fixed left-0 top-0 right-0 bottom-0 flex flex-col items-center justify-center bgi-[var(--transparent-gray-60)] ${props.className}`}
-          onClick={props?.onClick}
+          className={cx(
+            'z-[1005] fixed left-0 top-0 right-0 bottom-0',
+            'flex flex-col items-center justify-center',
+            'bgi-[var(--transparent-gray-60)]',
+            props.className
+          )}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              props?.onClick?.();
+            }
+          }}
+          style={{...props?.style}}
         >
           {props.children}
         </div>

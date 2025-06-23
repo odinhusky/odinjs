@@ -20,7 +20,7 @@ export interface PlayerInformationResponse {
   LimitAmount?: string; // "142410.00"
   WithdrawAmount?: string; // "10165.60"
   TotalAssets?: string; // "152,575.60"
-  WithdrawTimes?: number; //提現次數
+  // WithdrawTimes?: number; //提現次數
   WithdrawRate?: string; // "0.030"
   MaxWithdraw?: string; // "100,000.00" VIP提現上限
   Turnover?: string; // "13936.20"
@@ -32,6 +32,7 @@ export interface PlayerInformationResponse {
   Loading?: boolean;
   IsRisk?: boolean;
   RemainingWithdrawLimit?: string; // 當日剩餘可提現金額
+  TodayFreeDailyWithdrawals?: number; // 免手續費提現次數
 }
 
 export interface RechargeAccountResponse {
@@ -99,7 +100,7 @@ export type PlayerInfoResult = {
   requireTurnover: number;
   remainingWithdrawLimit: number;
   remainingBetToWithdraw: number;
-  withdrawTimes: number;
+  freeDailyWithdrawals: number;
 };
 
 const defaultBankAccountInfo = {
@@ -123,7 +124,8 @@ const defaultResult = {
   maxWithdraw: 0,
   remainingWithdrawLimit: 0,
   remainingBetToWithdraw: 0,
-  withdrawTimes: 0,
+  freeDailyWithdrawals: 0,
+  // withdrawTimes: 0,
 };
 
 const mapBankAccountInfo = (raw: WithdrawAccountResponse) => {
@@ -175,7 +177,8 @@ const transformResponse = (
         resp?.RemainingWithdrawLimit || '0'
       ),
       remainingBetToWithdraw: remainingBetToWithdraw,
-      withdrawTimes: resp?.WithdrawTimes || 0,
+      // withdrawTimes: resp?.WithdrawTimes || 0,
+      freeDailyWithdrawals: resp?.TodayFreeDailyWithdrawals || 0,
     };
   }
   return defaultResult;

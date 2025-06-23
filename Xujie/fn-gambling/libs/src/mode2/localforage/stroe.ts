@@ -30,9 +30,18 @@ export const eventLoggerReportStore = localforage.createInstance({
   name: LocalforageNameKeys.EVENT_LOGGER_REPORT,
 });
 
+export const appEventFlagStore = localforage.createInstance({
+  name: LocalforageNameKeys.APP_EVENT_FLAG,
+});
+
 // 創建存放 count Down 的 store
 export const countDownStore = userLocalForage.getInstance(
   UserLocalforageStoreKeys.COUNT_DOWN
+);
+
+// 創建 上報事件 的 store
+export const reportStore = userLocalForage.getInstance(
+  UserLocalforageStoreKeys.REPORT_EVENTS
 );
 
 // 刪除舊有的資料庫，過一陣子再拿掉

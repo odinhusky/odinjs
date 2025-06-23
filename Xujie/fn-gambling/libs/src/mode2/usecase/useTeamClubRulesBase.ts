@@ -11,7 +11,6 @@ import {
   TeamClubUpgradeRequired,
   useTeamClubRulesStore,
 } from '@mode2/zustand/page/teamClubRulesPageStore';
-import sdkUtils from '@mode2/utils/sdk';
 import { TeamLevelConfigItemResult } from '@mode2API/endpoint/teamClub/PostTeamLevelConfigEndpoint';
 
 export const useTeamClubRulesBase = () => {

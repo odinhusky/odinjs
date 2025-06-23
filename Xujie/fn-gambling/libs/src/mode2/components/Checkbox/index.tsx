@@ -9,6 +9,8 @@ interface CheckboxProps {
   className?: string;
   textClassName?: string;
   iconClassName?: string;
+  checkName?: string;
+  uncheckName?: string;
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({
@@ -18,10 +20,18 @@ const Checkbox: React.FC<CheckboxProps> = ({
   className,
   textClassName,
   iconClassName,
+  checkName,
+  uncheckName,
 }) => {
-  const checkStateIconSrc = checked
-    ? getImgUrl(EResourceLevel.V, 'icon_checkbox_checked')
-    : getImgUrl(EResourceLevel.V, 'icon_checkbox_uncheck');
+  const checkedSrc = checkName
+    ? checkName
+    : getImgUrl(EResourceLevel.ICONS, 'icon_checkbox_checked');
+
+  const unCheckSrc = uncheckName
+    ? uncheckName
+    : getImgUrl(EResourceLevel.ICONS, 'icon_checkbox_uncheck');
+
+  const checkStateIconSrc = checked ? checkedSrc : unCheckSrc;
 
   return (
     <label className={cx('flex items-center cursor-pointer', className)}>
@@ -38,10 +48,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
       />
       {label && (
         <span
-          className={cx(
-            'text-base ml-3 font-medium text-white',
-            textClassName
-          )}
+          className={cx('text-base ml-3 font-medium text-white', textClassName)}
         >
           {label}
         </span>

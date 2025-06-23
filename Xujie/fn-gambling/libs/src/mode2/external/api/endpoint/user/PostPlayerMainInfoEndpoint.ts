@@ -33,6 +33,12 @@ export interface IMainInfoResponse {
   PasswordExpired?: boolean;
   IsLowBalance?: boolean;
   IsVisitor?: boolean;
+
+  Gender: string; // M 男性，F 女性
+  HasSetPassword: boolean; // 是否綁定密碼
+  ReferralCode: string; // 本人的推薦碼
+  BindReferralCode: string; // 綁定的推薦碼
+  VipRechargeAmount: string; // 升級所需金額
 }
 
 /** 獲取已登入的玩家資料 */
@@ -66,6 +72,13 @@ export type PlayerMainInfoResult = {
   isPasswordExp: boolean;
   isLowBalance: boolean;
   userRole: UserRoleType;
+
+  gender: string;
+  hasSetPassword: boolean; // 是否綁定密碼
+  referralCode: string; // 本人的推薦碼
+  bindReferralCode: string; // 綁定的推薦碼
+
+  upgradeRequiredAmount: number; // 升級所需金額
 };
 
 const transformResponse = (
@@ -87,5 +100,13 @@ const transformResponse = (
     isLowBalance: resp?.IsLowBalance || false,
     userRole:
       resp?.IsVisitor === false ? UserRoleType.USER : UserRoleType.PLAYER,
+
+    gender: resp?.Gender || '',
+    hasSetPassword: resp?.HasSetPassword || false,
+    referralCode: (resp?.ReferralCode || '').toUpperCase(),
+    bindReferralCode: (resp?.BindReferralCode || '').toUpperCase(),
+    upgradeRequiredAmount: extractApiMoneyString(
+      resp?.VipRechargeAmount || '0'
+    ),
   };
 };

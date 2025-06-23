@@ -2,28 +2,90 @@ import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import {
   handleFirstChargeModalClose,
   handleFirstChargeModalNotShowTodayClick,
+  handleFirstChargeModalSelectedProductClick,
   handleFirstChargeModalToWalletClick,
-} from './acitonType';
+} from '@mode2/action/actionTypes';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
 import handleGlobalClick from '@mode2/action/handleGlobalClick';
 import handleAction from '@mode2/action/common/handleAction';
-import useFirstChargeModalBase from '@libs/mode2/usecase/useFirstChargeModalBase';
+import { LocalFirstChargeData } from '@libs/mode2/usecase/useFirstChargeModalBase';
 import { useMode2FirstChargeModalStore } from '@libs/mode2/zustand/components/firstChargeStore';
+import sdkUtils from '@libs/mode2/utils/sdk';
+import dayjs from '@commonUtils/localizedDayjs';
+import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
+import userLocalForage, {
+  UserLocalforageStoreKeys,
+} from '@mode2/localforage/user';
+import HallAdModelInvoker from '@libs/mode2/usecase/announcement/command/HallAdModelInvoker';
+import { useWalletPageStore } from '@libs/mode2/zustand/page/WalletPage/walletPageStore';
+import { WalletDashboardType } from '@libs/mode2/@types/walletDashboardTypes';
+import { useWalletPageSwitchContentTabsStore } from '@libs/mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
+import { WalletPageTabType } from '@libs/mode2/@types/walletPageTabType';
+import { useNavPageClick } from '@libs/mode2/usecase/useNavPageClick';
+import { useWalletPageRechargeContentStore } from '@mode2/zustand/page/WalletPage/walletPageRechargeContentStore';
 
 type ActionClickPayloadMap = {
   [handleFirstChargeModalClose]: void;
   [handleFirstChargeModalNotShowTodayClick]: { value: boolean };
   [handleFirstChargeModalToWalletClick]: void;
+  [handleFirstChargeModalSelectedProductClick]: { amount: number };
 };
 
 export interface HandleFirstChargeModalOnEventProps<
   T extends keyof ActionClickPayloadMap
-> extends HandleClickProps<T, ActionClickPayloadMap> { }
+> extends HandleClickProps<T, ActionClickPayloadMap> {}
 
 const useFirstChargeModalAction = () => {
-  const { handleClose, hanldeClick } = useFirstChargeModalBase();
+  const { navToWalletPage } = useNavPageClick();
 
-  const setIsNotShowToday = useMode2FirstChargeModalStore(state => state.setIsNotShowToday);
+  const setIsNotShowToday = useMode2FirstChargeModalStore(
+    (state) => state.setIsNotShowToday
+  );
+
+  const setIsShowFirstChargeDiscountModal = useMode2FirstChargeModalStore(
+    (state) => state.setIsShowFirstChargeDiscountModal
+  );
+
+  const firstChargeStore = userLocalForage.getInstance(
+    UserLocalforageStoreKeys.FIRST_CHARGE
+  );
+
+  const handleClose = async (isNext: boolean = true) => {
+    useMode2FirstChargeModalStore.getState().updateAppStartShownSeveralTimes();
+    const countdownTime =
+      useMode2FirstChargeModalStore.getState().countdownTime;
+    const isNotShowToday =
+      useMode2FirstChargeModalStore.getState().isNotShowToday;
+    const userId = useUserProfileStore.getState().id;
+
+    setIsShowFirstChargeDiscountModal(false);
+    const data: LocalFirstChargeData = {
+      expTime: countdownTime + dayjs().unix(),
+      closeTime: dayjs().unix(), // 剩餘時間
+      disableDuration: isNotShowToday ? dayjs().startOf('day').unix() : 0,
+    };
+
+    firstChargeStore.setItem(
+      userId.toString(),
+      sdkUtils.encryption(JSON.stringify(data))
+    );
+    if (isNext) {
+      HallAdModelInvoker.executeNext('19');
+    }
+  };
+
+  const handleClick = () => {
+    handleClose(false);
+    useWalletPageStore
+      .getState()
+      .setDisplayDashboardType(WalletDashboardType.NONE);
+    useWalletPageSwitchContentTabsStore
+      .getState()
+      .setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
+    navToWalletPage('', {
+      state: { tab: WalletPageTabType.DEPOSIT },
+    });
+  };
 
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
     [handleFirstChargeModalClose]: () => {
@@ -37,8 +99,9 @@ const useFirstChargeModalAction = () => {
     [handleFirstChargeModalNotShowTodayClick]: ({ value }) => {
       handleGlobalClick({
         target: handleFirstChargeModalNotShowTodayClick,
+        payload: { value },
         callback: () => {
-          setIsNotShowToday(value)
+          setIsNotShowToday(value);
         },
       });
     },
@@ -46,7 +109,23 @@ const useFirstChargeModalAction = () => {
       handleGlobalClick({
         target: handleFirstChargeModalToWalletClick,
         callback: () => {
-          hanldeClick();
+          handleClick();
+        },
+      });
+    },
+    [handleFirstChargeModalSelectedProductClick]: ({ amount }) => {
+      handleGlobalClick({
+        target: handleFirstChargeModalSelectedProductClick,
+        payload: { amount },
+        callback: () => {
+          console.log(
+            '@@@===>evan.handleFirstChargeModalSelectedProductClick',
+            amount
+          );
+          useWalletPageRechargeContentStore
+            .getState()
+            .setPresetSelectionProductAmount(amount);
+          handleClick();
         },
       });
     },

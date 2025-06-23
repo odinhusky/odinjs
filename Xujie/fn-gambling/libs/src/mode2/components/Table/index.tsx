@@ -8,6 +8,7 @@ import React, {
 import cx from '@commonUtils/cx';
 import { useTranslation } from 'react-i18next';
 export { useTable } from './useTable';
+
 /**
  * 定义了一个泛型类型 ITableColumn，用于描述无限表格的列属性
  * T 是泛型参数，表示该列数据对象的类型
@@ -98,6 +99,14 @@ export interface ITableProps<T> {
     iconColor?: string;
   };
   noData?: ReactNode;
+  /**
+   * 没有数据的时候是否显示thead 默认不显示
+   * 以往沒有數據時, 整個table都會none，[IN][V6]沒有數據時也需要顯示thead
+   * @default false
+   */
+  isShowThead?: boolean;
+  isLoading?: boolean;
+  skeleton?: ReactNode;
 }
 
 /**
@@ -107,7 +116,7 @@ export interface ITableProps<T> {
  * @param props 组件属性
  * @returns 渲染后的表格组件
  */
-const ModeTable = <T,>({
+export const ModeTable = <T,>({
   columns,
   dataSource,
   pageSize = 30,
@@ -125,17 +134,32 @@ const ModeTable = <T,>({
   totalCount = dataSource.length,
   tbodyRef = useRef<HTMLTableSectionElement>(null),
   noData = <>noData</>,
+  isShowThead = false,
+  isLoading = false,
+  skeleton = <></>,
 }: ITableProps<T>) => {
   const { t } = useTranslation();
+
+  const loadingRef = useRef(false);
+
   const handleOnScroll = (e: React.UIEvent<HTMLTableSectionElement>) => {
+    if (loadingRef.current || isLoading) return;
+
     const bottom =
       e.currentTarget.scrollHeight -
       e.currentTarget.scrollTop -
       e.currentTarget.clientHeight;
     if (bottom < pageSize) {
+      loadingRef.current = true;
+
       fetchData && fetchData();
     }
   };
+  useEffect(() => {
+    if (!isLoading) {
+      loadingRef.current = false;
+    }
+  }, [isLoading]);
   useEffect(() => {
     if (tbodyRef.current?.scrollHeight !== undefined) {
       const scrollbarVisible =
@@ -150,15 +174,15 @@ const ModeTable = <T,>({
     }
   }, [dataSource]);
 
-  return dataSource.length === 0 ? (
+  return dataSource.length === 0 && !isShowThead ? (
     <div className="mx-auto">{noData}</div>
   ) : (
     <>
-      <table className={cx('mode-table', classNames.table)}>
-        <thead className={cx('table-thead', classNames.thead)}>
-          <tr className={cx('table-thead-tr', classNames.theadTr)}>
+      <div className={cx('mode-table', classNames.table)}>
+        <div className={cx('table-thead', classNames.thead)}>
+          <div className={cx('table-thead-tr', classNames.theadTr)}>
             {columns.map((col, index) => (
-              <th
+              <div
                 key={col.title + index.toString()}
                 className={cx(
                   'table-thead-th',
@@ -167,12 +191,12 @@ const ModeTable = <T,>({
                 )}
               >
                 {isValidElement(col.title) ? col.title : t(col.title as string)}
-              </th>
+              </div>
             ))}
-          </tr>
-        </thead>
+          </div>
+        </div>
 
-        <tbody
+        <div
           className={cx('table-tbody', classNames.tbody)}
           ref={tbodyRef}
           onScroll={handleOnScroll}
@@ -183,12 +207,12 @@ const ModeTable = <T,>({
               : data[rowKey];
 
             return (
-              <tr
-                key={trKey as string}
+              <div
+                key={String(trKey) + Math.random() + new Date().getTime()}
                 className={cx('table-tbody-tr', classNames.tbodyTr)}
               >
                 {columns.map((col, index) => (
-                  <td
+                  <div
                     key={col.dataIndex.toString() + index.toString()}
                     className={cx(
                       'table-tbody-td text-nowrap',
@@ -198,13 +222,19 @@ const ModeTable = <T,>({
                     {col.render
                       ? col.render(data, dataIndex, index)
                       : (data[col.dataIndex] as ReactNode)}
-                  </td>
+                  </div>
                 ))}
-              </tr>
+              </div>
             );
           })}
-        </tbody>
-      </table>
+
+          {isLoading ? <div>{skeleton}</div> : null}
+
+          {!isLoading && isShowThead && dataSource.length === 0 ? (
+            <div className="mx-auto">{noData}</div>
+          ) : null}
+        </div>
+      </div>
     </>
   );
 };

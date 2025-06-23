@@ -8,7 +8,6 @@ import { AdjustEventKey } from '../utils/sdk/persistant/adjust/AdjustEventKey';
 import { AppLocalStorageKey } from '@mode2/utils/sdk/persistant/storageKey';
 import sdkUtils from '../utils/sdk';
 import { useIsLoginStore } from '../zustand/loginStore';
-import { FetchMyIp } from '@libs/commonUtils';
 import { useAppStore } from '@mode2/zustand/appStore';
 import { useReminderModalStore } from '../zustand/components/reminderModalStore';
 import { useLoadingStore } from '../zustand/components/loadingStore';
@@ -16,9 +15,12 @@ import { Form } from 'antd';
 
 import { useDebounceAction } from '../action/common/handleAction';
 import { useUserProfileStore } from '../zustand/user/userProfileStore';
-import { get } from 'lodash';
+import get from 'lodash/get';
 import { useOTPCountDownStore } from '../zustand/components/OTPCountDownStore';
 import handleGlobalClick from '../action/handleGlobalClick';
+import { useAppDeviceEventStore } from '@mode2/zustand/platform/appDeviceEventStore';
+import { AppDeviceEvent } from '@mode2API/endpoint/event/PostDeviceEventEndpoint';
+
 interface RegisterProps {
   successCallback?: () => void; // 登入成功的 callback
   failCallback?: () => void; // 登入失敗的 callback
@@ -45,7 +47,7 @@ export const useRegister = ({
   const [postRegister, { data, isSuccess, status }] = usePostRegisterMutation();
 
   useEffect(() => {
-    FetchMyIp.doFetchMyIp();
+    // FetchMyIp.doFetchMyIp();
   }, []);
 
   const register = (values: RegisterPayload, isVisitor: boolean = false) => {
@@ -54,6 +56,7 @@ export const useRegister = ({
       'referralCode',
       sdkUtils.getStorage(AppLocalStorageKey.REFERRAL_CODE) || undefined
     );
+
     const pushToken = useAppStore.getState().pushToken;
 
     setShowLoading(true);
@@ -73,6 +76,7 @@ export const useRegister = ({
 
   useEffect(() => {
     if (isSuccess && data?.token) {
+      useAppDeviceEventStore.getState().setAppEvents([AppDeviceEvent.LOGIN]);
       sdkUtils.sendEvent(AdjustEventKey.REGISTER);
       sdkUtils.setStorage(AppLocalStorageKey.TOKEN, data.token);
       setShowReminderModal(data.isShowPopup);

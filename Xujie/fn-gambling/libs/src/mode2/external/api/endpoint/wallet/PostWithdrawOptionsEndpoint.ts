@@ -4,19 +4,25 @@ import { ResponseStructure } from '@mode2API/endpoint/ResponseStructure';
 
 interface PostWithdrawOptionItemResponse {
   amount?: number;
+  fee?: number;
 }
 
 export interface PostWithdrawOptionsResponse {
   options?: PostWithdrawOptionItemResponse[];
+  withdrawAmount?: number; // 提现手续费
+  withdrawRate?: number; // 提现手续费率
 }
 
 export interface WithdrawOptItemResul {
   index: number;
   amount: number;
+  fee: number;
 }
 
 export interface PostWithdrawOptionsResult {
   optItems: WithdrawOptItemResul[];
+  // fee: number;
+  // feeRate: number;
 }
 
 export const PostWithdrawOptionsEndpoint = (builder: ExternalEndpoint) =>
@@ -40,7 +46,12 @@ const transformResponse = (
       return {
         index: index,
         amount: item?.amount || 0,
+        fee: item?.fee || 0,
       };
     }) || [];
-  return { optItems: optItems };
+  return {
+    optItems: optItems,
+    // fee: resp?.withdrawAmount || 0,
+    // feeRate: resp?.withdrawRate || 0.0,
+  };
 };

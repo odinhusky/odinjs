@@ -1,5 +1,5 @@
 import { useFetchMyIpStore } from '@mode2/zustand/fetchMyIpStore';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { fetchBatch } from '@commonUtils/fetchBatch';
 
 interface FetchMyIpResponse {
@@ -15,7 +15,6 @@ type FetchMyIpResult = {
 };
 
 export const FetchMyIp = {
-
   async doFetchMyIp(): Promise<FetchMyIpResult> {
     const store = useFetchMyIpStore.getState();
     if (!isEmpty(store.ip) || store.isFetching) {
@@ -24,8 +23,8 @@ export const FetchMyIp = {
 
     const apis: string[] = [
       'https://api.ip.sb/geoip',
-      'https://www.iplocate.io/api/lookup',
-      'https://api.db-ip.com/v2/free/self'
+      // 'https://www.iplocate.io/api/lookup',
+      'https://api.db-ip.com/v2/free/self',
     ];
 
     store.setFetching(true);
@@ -64,5 +63,5 @@ export const FetchMyIp = {
       return { ip: '', country: '' };
       // console.error('Error fetching IP or country:', error.message);
     }
-  }
+  },
 };

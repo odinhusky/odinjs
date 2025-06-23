@@ -1,9 +1,17 @@
 import { useImageCacheStore } from '@mode2/zustand/useImageCacheStore';
 import { axiosGetBatch } from '@libs/commonUtils';
 import { imageStore } from '@mode2/localforage/stroe';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
+import PreloadResourcesInvoker from './preloadResources/command/PreloadResourcesInvoker';
+import {
+  ExtraDynamicResourceLevels,
+  PreloadResourcesCommand,
+  PreloadType,
+} from './preloadResources/command/PreloadResourcesCommand';
+import { v4 as uuidv4 } from 'uuid';
+import { EResourceLevel } from '@mode2/utils';
 
-interface CacheData {
+export interface CacheData {
   data: Blob;
   lastUpdateTime: number;
 }
@@ -13,10 +21,22 @@ interface ImageResult {
   data: CacheData; // 图像的 Blob 数据，可能为 null
 }
 
-const GAME_IMAGE_CACHE_DURATION: number = Number(
+export const GAME_IMAGE_CACHE_DURATION: number = Number(
   import.meta.env['VITE_GAME_IMAGE_CACHE_DURATION'] || 604800000
 );
-const ICON_CACHE_DURATION: number = -1;
+export const ICON_CACHE_DURATION: number = -1;
+
+const countryCode = (import.meta.env['VITE_COUNTRY_CODE'] || '').toLowerCase();
+const vVersion = import.meta.env['VITE_V_VERSION'];
+const levels = [
+  // EResourceLevel.V,
+  EResourceLevel.LOGO,
+  EResourceLevel.BANNER,
+  // EResourceLevel.SHARED,
+  EResourceLevel.POPUP_BANNER,
+  EResourceLevel.ICONS,
+  EResourceLevel.NUMBER_IMGS,
+];
 
 /**
  * 不要轉成 hook
@@ -62,9 +82,9 @@ export const useImageCache = {
     version: string = ''
   ) {
     if (
-      src.startsWith(`${window.location.origin}/resources/')`) ||
+      src.startsWith(`${window.location.origin}/resources/`) ||
       src.startsWith('/resources') ||
-      src.startsWith(`${window.location.origin}/static/')`) ||
+      src.startsWith(`${window.location.origin}/static/`) ||
       src.startsWith('/static') ||
       src.startsWith('/images') ||
       isLocalRes
@@ -101,16 +121,56 @@ export const useImageCache = {
         } catch (e) {
           console.error('Handle Cache Data Error', e);
         }
+      } else {
+        useImageCacheStore
+          .getState()
+          .setImageCache({ [keyName]: URL.createObjectURL(cachedItem.data) });
       }
     }
   },
 
+  matchedLevel(isLocal: boolean, url: string): PreloadType {
+    if (isLocal) {
+      const level = levels.find((level) =>
+        url.includes(`${countryCode}/${vVersion}/${level}/`)
+      );
+      const vlevel = url.includes(`${countryCode}/${vVersion}/`)
+        ? EResourceLevel.V
+        : undefined;
+      return level
+        ? level
+        : vlevel
+        ? vlevel
+        : ExtraDynamicResourceLevels.DYNAMIC;
+    } else {
+      return ExtraDynamicResourceLevels.DYNAMIC;
+    }
+  },
   getByCache(url: string): string {
-    const cacheData = useImageCacheStore.getState().getByKey(url);
     // 如果沒有，進入 asyncHandleCacheData 執行 緩存作業
+    const isLocal = url.startsWith('/images') || url.startsWith('/resources');
+    const version = isLocal
+      ? `_${String(import.meta.env['VITE_IMAGE_VERSION'] || '')}`
+      : '';
+    const keyName = isLocal ? `${url}${version}` : `${url}`;
+    const cacheData = useImageCacheStore.getState().getByKey(keyName);
     if (!cacheData) {
+      const preloadType = this.matchedLevel(isLocal, url);
+      PreloadResourcesInvoker.addUnshiftCommand(
+        new PreloadResourcesCommand({
+          orderId: uuidv4(),
+          src: url,
+          type: preloadType,
+        })
+      );
+
       // 進入异步操作
-      this.asyncHandleCacheData(url, GAME_IMAGE_CACHE_DURATION);
+      // this.asyncHandleCacheData(
+      //   url,
+      //   GAME_IMAGE_CACHE_DURATION,
+      //   isLocal,
+      //   version
+      // );
       return url;
     }
     // 不等待，直接 return

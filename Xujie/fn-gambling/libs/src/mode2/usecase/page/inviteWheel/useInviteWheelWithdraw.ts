@@ -42,7 +42,7 @@ const useInviteWheel = () => {
     if (isSuccess) {
       showToast(
         t('spin_and_share_wheel_cash_out_toast', {
-          maxWheelReward: formatMoney(maxWheelReward),
+          maxWheelReward: formatMoney({ value: maxWheelReward }),
         }),
         () => {
           setRefreshInfoNumber();

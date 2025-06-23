@@ -1,7 +1,6 @@
 import { RefObject } from 'react';
 import { create } from 'zustand';
 import { FormRef } from '../../@types/formTypes';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
 
 export interface ModifyPageFormData {
   phone: string;
@@ -15,12 +14,10 @@ export interface ModifyPageStoreTypes {
   setPersonalID: (id: string) => void;
 }
 
-export const useModifyPageStore = create<ModifyPageStoreTypes>()(
-  devtoolsAndPersistWrapper('[page store] useModifyPageStore', (set) => ({
-    personalID: '',
-    setPersonalID: (id) => set(() => ({ personalID: id })),
-  }))
-);
+export const useModifyPageStore = create<ModifyPageStoreTypes>()((set) => ({
+  personalID: '',
+  setPersonalID: (id) => set(() => ({ personalID: id })),
+}));
 
 export interface ModifyPageRefsTypes {
   modifyPageFormRef: RefObject<FormRef> | null;

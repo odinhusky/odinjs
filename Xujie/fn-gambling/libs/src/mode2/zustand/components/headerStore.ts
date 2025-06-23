@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 export enum EHeaderType {
   Main = 'main',
@@ -24,6 +24,9 @@ export interface IConfig {
   onDepositClick?: () => void;
   render?: () => React.ReactNode | null;
   headerBgColor?: string;
+  headerBgImg?: string;
+  headerBgStyle?: CSSProperties | undefined;
+  templateBgColor?: string; // 先寫這裡， 之後再抽成 template them config [template , header , main content, .... ]
 }
 
 export const useHeaderStore = create<{

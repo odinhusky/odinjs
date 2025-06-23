@@ -2,7 +2,7 @@ import { useLocation } from 'react-router';
 import { useDepositAdvertisementStore } from '../zustand/components/depositAdvertisementStore';
 import { useUserProfileStore } from '../zustand/user/userProfileStore';
 import { useEffect, useMemo, useState } from 'react';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 import { BasePagePathObj } from '../routerTypes/types';
 
 const useDepositAdModalBase = () => {

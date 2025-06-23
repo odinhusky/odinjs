@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
 import { RechargeWheelType } from '../components/rechargeWheelTabStore';
 import {
   AnchorPointResult,
@@ -179,118 +178,122 @@ export interface Mode2RechargeWheelPageStoreTypes {
 
   isCurrentWheelSlowSpin: boolean;
   setIsCurrentWheelSlowSpin: (isCurrentWheelSlowSpin: boolean) => void;
+
+  isShowDepositInfo: boolean;
+  setIsShowDepositInfo: (isShowDepositInfo: boolean) => void;
 }
 
 export const useMode2RechargeWheelPageStore =
-  create<Mode2RechargeWheelPageStoreTypes>()(
-    devtoolsAndPersistWrapper(
-      '[page store] useMode2TeamClubPageShareForBonusStore',
-      (set, get) => ({
-        postPlayerProgressCount: 0,
-        refreshPostPlayerProgressCount: () =>
-          set(() => ({
-            postPlayerProgressCount: get().postPlayerProgressCount + 1,
-          })),
+  create<Mode2RechargeWheelPageStoreTypes>()((set, get) => ({
+    postPlayerProgressCount: 0,
+    refreshPostPlayerProgressCount: () =>
+      set(() => ({
+        postPlayerProgressCount: get().postPlayerProgressCount + 1,
+      })),
 
-        currentDeposit: 0,
-        setCurrentDeposit: (num) =>
-          set(() => ({
-            currentDeposit: num,
-          })),
+    currentDeposit: 0,
+    setCurrentDeposit: (num) =>
+      set(() => ({
+        currentDeposit: num,
+      })),
 
+    wheelRemainSpinNumberObj: {
+      ...defaultRechargeWheelNumberObj,
+    },
+    setWheelRemainSpinNumberObj: (wheelRemainSpinNumberObj) =>
+      set(() => ({
         wheelRemainSpinNumberObj: {
-          ...defaultRechargeWheelNumberObj,
+          ...get().wheelRemainSpinNumberObj,
+          ...wheelRemainSpinNumberObj,
         },
-        setWheelRemainSpinNumberObj: (wheelRemainSpinNumberObj) =>
-          set(() => ({
-            wheelRemainSpinNumberObj: {
-              ...get().wheelRemainSpinNumberObj,
-              ...wheelRemainSpinNumberObj,
-            },
-          })),
+      })),
 
-        rechargeWheelMaxReward: 0,
-        setRechargeWheelMaxReward: (rechargeWheelMaxReward) =>
-          set(() => ({ rechargeWheelMaxReward })),
+    rechargeWheelMaxReward: 0,
+    setRechargeWheelMaxReward: (rechargeWheelMaxReward) =>
+      set(() => ({ rechargeWheelMaxReward })),
 
+    wheelLevelConfigObj: {
+      ...defaultWheelLevelConfigObj,
+    },
+    setWheelLevelConfigObj: (wheelLevelConfigObj) =>
+      set(() => ({
         wheelLevelConfigObj: {
-          ...defaultWheelLevelConfigObj,
+          ...get().wheelLevelConfigObj,
+          ...wheelLevelConfigObj,
         },
-        setWheelLevelConfigObj: (wheelLevelConfigObj) =>
-          set(() => ({
-            wheelLevelConfigObj: {
-              ...get().wheelLevelConfigObj,
-              ...wheelLevelConfigObj,
-            },
-          })),
+      })),
 
-        progressConfigObj: { ...defaultProgressConfigObj },
-        setProgressConfigObj: (progressConfigObj) =>
-          set(() => ({
-            progressConfigObj: {
-              ...get().progressConfigObj,
-              ...progressConfigObj,
-            },
-          })),
-
-        spinWheelCount: 0,
-        spinWheel: () =>
-          set(() => ({
-            spinWheelCount: get().spinWheelCount + 1,
-          })),
-
-        spinWheelLevel: 'silver' as RechargeWheelType,
-        setSpinWheelLevel: (spinWheelLevel) =>
-          set(() => ({
-            spinWheelLevel,
-          })),
-
-        spinedRewardLevel: 'silver' as RechargeWheelType,
-        setSpinedRewardLevel: (spinedRewardLevel) =>
-          set(() => ({
-            spinedRewardLevel,
-          })),
-
-        spinedRewardIndex: 0,
-        setSpinedRewardIndex: (spinedRewardIndex) =>
-          set(() => ({
-            spinedRewardIndex,
-          })),
-
-        spinedRewardIsMoney: false,
-        setSpinedRewardIsMoney: (spinedRewardIsMoney) =>
-          set(() => ({
-            spinedRewardIsMoney,
-          })),
-
-        spinedRewardValue: 0,
-        setSpinedRewardValue: (spinedRewardValue) =>
-          set(() => ({
-            spinedRewardValue,
-          })),
-
-        spinedAPIDoneCount: 0,
-        addSpinedAPIDoneCount: () =>
-          set(() => ({
-            spinedAPIDoneCount: get().spinedAPIDoneCount + 1,
-          })),
-
-        isAnimatingObj: {
-          silver: false,
-          gold: false,
-          diamond: false,
-          supreme: false,
+    progressConfigObj: { ...defaultProgressConfigObj },
+    setProgressConfigObj: (progressConfigObj) =>
+      set(() => ({
+        progressConfigObj: {
+          ...get().progressConfigObj,
+          ...progressConfigObj,
         },
-        setIsAnimatingObj: (key, value) =>
-          set({ isAnimatingObj: { ...get().isAnimatingObj, [key]: value } }),
+      })),
 
-        isCurrentWheelSlowSpin: true,
-        setIsCurrentWheelSlowSpin: (isCurrentWheelSlowSpin) =>
-          set(() => ({
-            isCurrentWheelSlowSpin,
-          })),
-      })
-    )
-  );
+    spinWheelCount: 0,
+    spinWheel: () =>
+      set(() => ({
+        spinWheelCount: get().spinWheelCount + 1,
+      })),
+
+    spinWheelLevel: 'silver' as RechargeWheelType,
+    setSpinWheelLevel: (spinWheelLevel) =>
+      set(() => ({
+        spinWheelLevel,
+      })),
+
+    spinedRewardLevel: 'silver' as RechargeWheelType,
+    setSpinedRewardLevel: (spinedRewardLevel) =>
+      set(() => ({
+        spinedRewardLevel,
+      })),
+
+    spinedRewardIndex: 0,
+    setSpinedRewardIndex: (spinedRewardIndex) =>
+      set(() => ({
+        spinedRewardIndex,
+      })),
+
+    spinedRewardIsMoney: false,
+    setSpinedRewardIsMoney: (spinedRewardIsMoney) =>
+      set(() => ({
+        spinedRewardIsMoney,
+      })),
+
+    spinedRewardValue: 0,
+    setSpinedRewardValue: (spinedRewardValue) =>
+      set(() => ({
+        spinedRewardValue,
+      })),
+
+    spinedAPIDoneCount: 0,
+    addSpinedAPIDoneCount: () =>
+      set(() => ({
+        spinedAPIDoneCount: get().spinedAPIDoneCount + 1,
+      })),
+
+    isAnimatingObj: {
+      silver: false,
+      gold: false,
+      diamond: false,
+      supreme: false,
+    },
+    setIsAnimatingObj: (key, value) =>
+      set({ isAnimatingObj: { ...get().isAnimatingObj, [key]: value } }),
+
+    isCurrentWheelSlowSpin: true,
+    setIsCurrentWheelSlowSpin: (isCurrentWheelSlowSpin) =>
+      set(() => ({
+        isCurrentWheelSlowSpin,
+      })),
+
+    isShowDepositInfo: true,
+    setIsShowDepositInfo: (isShowDepositInfo) =>
+      set(() => ({
+        isShowDepositInfo,
+      })),
+  }));
 
 export default useMode2RechargeWheelPageStore;

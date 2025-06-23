@@ -4,8 +4,10 @@ import {
 } from '@libs/mode2/external/api/endpoint/campaign/PostCampaignLaunchEndpoint';
 import sdkUtils from '@libs/mode2/utils/sdk';
 import { AppLocalStorageKey } from '@libs/mode2/utils/sdk/persistant/storageKey';
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 import { create } from 'zustand';
+
 export enum ERedEnvelopRainStatus {
   TWO_HOUR_BEFORE_START = 'TWO_HOUR_BEFORE_START',
   ONE_HOUR_BEFORE_START = 'ONE_HOUR_BEFORE_START',
@@ -13,6 +15,7 @@ export enum ERedEnvelopRainStatus {
   IN_PROGRESS = 'IN_PROGRESS',
   NULL = 'NULL',
 }
+
 export interface IRedEnvelopeRainResult extends CampaignLaunchItemResult {
   id: number;
   type: ECampaignType.RED_ENVELOPE_RAIN;
@@ -32,6 +35,7 @@ interface IActivityTest2 extends CampaignLaunchItemResult {
   id: number;
   test: number;
 }
+
 export type ICurrentActivityData =
   | IRedEnvelopeRainResult
   | IActivityTest2
@@ -140,7 +144,9 @@ export const useActivityCenterStore = create<{
   redEnvelopeRainResult: IRedEnvelopeRainResult | null;
   refreshActivityResult: (type: ECampaignType) => void;
   hiddenActivityButton: (type: ECampaignType) => void;
-}>((set) => {
+  refreshCampaignListCount: number;
+  refreshCampaignList: () => void;
+}>((set, get) => {
   return {
     isShowActivityCenterModal: false,
     setShowActivityCenterModal: (isShowActivityCenterModal) =>
@@ -233,6 +239,11 @@ export const useActivityCenterStore = create<{
             return {};
         }
       }),
+    refreshCampaignListCount: 0,
+    refreshCampaignList: () =>
+      set(() => ({
+        refreshCampaignListCount: get().refreshCampaignListCount + 1,
+      })),
   };
 });
 

@@ -1,4 +1,4 @@
-import { handleInvitePageTabClick } from '@mode2/action/invitePageAction/actionType';
+import { handleInvitePageTabClick } from '@mode2/action/actionTypes';
 import useInvitePageActions from '@mode2/action/invitePageAction/useInvitePageActions';
 import {
   useMode2InvitePageActionsStore,

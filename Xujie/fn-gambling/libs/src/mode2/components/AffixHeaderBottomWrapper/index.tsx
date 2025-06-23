@@ -1,7 +1,7 @@
 import { cx, useBreakPoint } from '@libs/commonUtils';
 import { useTemplateLayoutStore } from '@libs/mode2/zustand/template/templateLayoutStore';
 import { Affix } from 'antd';
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 interface AffixHeaderBottomWrapperProps {
   notAffixContainerClass?: string;
@@ -72,8 +72,20 @@ export const AffixHeaderBottomWrapper = ({
       }
     : {};
 
+  // 監聽 Resize 變化，重新取得當下內容的寬高
+  const [affixKey, setAffixKey] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setAffixKey((prevKey) => prevKey + 1); // 重新渲染 Affix
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <AffixWrapper {...givenProps}>
+    <AffixWrapper key={affixKey} {...givenProps}>
       <div
         className={cx({
           [affixContainerClass]: shouldAffixBp && isAffixed,

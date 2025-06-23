@@ -21,6 +21,9 @@ export interface Mode2FullOrderDetailPageStoreTypes {
   setFullOrderFile: (value: string) => void;
   defaultValues: RechargeQueryReceiptResult;
   setDefaultValues: (value: RechargeQueryReceiptResult) => void;
+
+  rechargeQueryReceiptResult: RechargeQueryReceiptResult;
+  setRechargeQueryReceiptResult: (value: RechargeQueryReceiptResult) => void;
 }
 
 export const useMode2FullOrderDetailPageStore =
@@ -33,4 +36,8 @@ export const useMode2FullOrderDetailPageStore =
     setFullOrderFile: (value) => set(() => ({ fullOrderFile: value })),
     defaultValues: initDefaultValues,
     setDefaultValues: (value) => set(() => ({ defaultValues: value })),
+
+    rechargeQueryReceiptResult: {} as RechargeQueryReceiptResult,
+    setRechargeQueryReceiptResult: (value) =>
+      set(() => ({ rechargeQueryReceiptResult: value })),
   }));

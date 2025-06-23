@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { useAlternateAdjustADID } from '@mode2/usecase/platform/useAlternateAdjustADID';
 
 interface RealTimeH5Version {
   isNewVersion: boolean;
@@ -25,10 +26,15 @@ interface AppStoreType {
   temporaryReferralCode: string; // 一次性作用
   setTemporaryReferralCode: (value: string) => void;
 
+  alternateAdjustADID: boolean;
+  setAlternateAdjustADID: (value: boolean) => void;
+
+  newIntentDeepLinkWakeUpCount: number;
+  setNewIntentDeepLinkWakeUpCount: () => void;
   clear: () => void;
 }
 
-export const useAppStore = create<AppStoreType>((set) => ({
+export const useAppStore = create<AppStoreType>((set, get) => ({
   isAndroidFirstInteractionSuccess: false,
   setAndroidFirstInteractionSuccess: (state) =>
     set(() => ({ isAndroidFirstInteractionSuccess: state })),
@@ -55,6 +61,14 @@ export const useAppStore = create<AppStoreType>((set) => ({
   temporaryReferralCode: '',
   setTemporaryReferralCode: (value) =>
     set(() => ({ temporaryReferralCode: value })),
+  alternateAdjustADID: false,
+  setAlternateAdjustADID: (value) =>
+    set(() => ({ alternateAdjustADID: value })),
+  newIntentDeepLinkWakeUpCount: 0,
+  setNewIntentDeepLinkWakeUpCount: () =>
+    set(() => ({
+      newIntentDeepLinkWakeUpCount: get().newIntentDeepLinkWakeUpCount + 1,
+    })),
   clear: () =>
     set(() => ({
       isAndroidFirstInteractionSuccess: false,

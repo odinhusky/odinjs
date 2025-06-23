@@ -7,8 +7,9 @@ import { cx } from '@libs/commonUtils';
 import renderI18N from '@libs/commonUtils/renderI18N';
 import { InputProps } from '../Input';
 import { useTranslation } from 'react-i18next';
+import type { FormItemProps } from 'antd/es/form';
 
-type TInput = 'styles' | 'maxLength' | 'suffix' | 'prefix' | 'type';
+type TInput = 'styles' | 'maxLength' | 'suffix' | 'prefix' | 'type' | 'disabled';
 interface IFormInputProps extends Pick<InputProps, TInput> {
   name: string;
   title?: I18NContent; // Form.Item.Label
@@ -22,12 +23,15 @@ interface IFormInputProps extends Pick<InputProps, TInput> {
     title?: string;
     point?: string;
   };
+  formItemProps?: FormItemProps;
 }
 
 const FormInput = (props: IFormInputProps) => {
   const { t } = useTranslation();
 
   const { name, title, onValidator } = props;
+
+  console.log('!! name', name, props?.formItemProps);
 
   return (
     <Form.Item
@@ -54,6 +58,7 @@ const FormInput = (props: IFormInputProps) => {
             ]
           : []
       }
+      {...(props?.formItemProps || {})}
     >
       <div>
         {title ? (
@@ -89,6 +94,7 @@ const FormInput = (props: IFormInputProps) => {
           suffix={props.suffix}
           type={props.type}
           maxLength={props.maxLength}
+          disabled={props.disabled}
         />
       </div>
     </Form.Item>

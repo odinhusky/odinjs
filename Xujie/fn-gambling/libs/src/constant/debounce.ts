@@ -1,0 +1,2 @@
+export const DEBOUNCE_INTERVAL_1000 = 1000;
+export const DEBOUNCE_INTERVAL_500 = 500;

@@ -1,4 +1,4 @@
-import { handleBindKYCPageDesktopHeaderBackBtnClick } from './actionType';
+import { handleBindKYCPageDesktopHeaderBackBtnClick } from '@mode2/action/actionTypes';
 
 import handleGlobalClick from '../handleGlobalClick';
 

@@ -25,7 +25,8 @@ import {
 import { Push, PushExtra } from '@mode2/utils/sdk/interface/Push';
 import { NonePush } from '@mode2/utils/sdk/strategy/push/NonePush';
 import { MessagePayload, Unsubscribe } from 'firebase/messaging';
-import { has, isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import has from 'lodash/has';
 import {
   SaleSmartlyChat,
   SaleSmartlyUserProfile,
@@ -33,6 +34,13 @@ import {
 import { OnlineServiceProvide } from '@mode2/utils/sdk/interface/OnlineServiceProvide';
 import { State } from '@mode2/utils/sdk/interface/State';
 import { useAppStore } from '@mode2/zustand/appStore';
+import {
+  PostHogAnalytics,
+  PostHogEventPayload,
+} from '@mode2/utils/sdk/strategy/analytics/PostHogAnalytics';
+import { AppSetting } from '@mode2/@types/appSettingType';
+import { AppLaunchInfo } from '@mode2/@types/appLaunchInfoType';
+import sdkUtils from '@mode2/utils/sdk';
 
 export const IosStrategy: Common &
   DESCrypto &
@@ -50,11 +58,26 @@ export const IosStrategy: Common &
   // Common
   ...CommonStrategy,
 
+  downloadApp(query?: Record<string, any>): void {},
+
+  getAppReferralCode(): string | null {
+    const setting = this.getAppSetting();
+    if (
+      ['pop'].includes(setting?.downloadFrom || '') &&
+      setting?.referralCode
+    ) {
+      return setting.referralCode.toUpperCase();
+    } else {
+      return null;
+    }
+  },
+
   initAfter(): void {
     this.analyticsInits();
     this.initPush();
     this.initChat();
     this.initCheckWebPSupport();
+    this.initCheckAvifSupport();
   },
 
   // Push
@@ -86,10 +109,14 @@ export const IosStrategy: Common &
   analyticsInits: () => {
     SensorsAnalytics.init();
     SentryAnalytics.init();
+    PostHogAnalytics.init();
   },
 
   sendAnalyticsEvent<T extends IEventPayload>(payload: T): void {
     try {
+      if (has(payload, 'postHogType')) {
+        PostHogAnalytics.sendEvent(payload as unknown as PostHogEventPayload);
+      }
       if (has(payload, 'sentryType')) {
         SentryAnalytics.sendEvent(payload as unknown as SentryEventPayload);
       }
@@ -132,7 +159,11 @@ export const IosStrategy: Common &
   },
 
   getAppId(): string {
-    return window.ios.getChannelID();
+    if (window.ios.getChannelID) {
+      return window.ios.getChannelID();
+    } else {
+      return import.meta.env['VITE_CHANNEL_ID'];
+    }
   },
 
   getAppName(): string {
@@ -245,6 +276,52 @@ export const IosStrategy: Common &
     const count = badgeCount >= 0 ? badgeCount : 0;
     this.setStorage(AppLocalStorageKey.BADGER_COUNT, `${count}`);
     window.ios.updateNotificationBadge();
+  },
+
+  addEventWithReminder(datetime: string, message: string): void {},
+
+  getAppSetting(): AppSetting | null {
+    if (window.ios.getAppSetting) {
+      try {
+        const appSettingJson = window.ios.getAppSetting();
+        return JSON.parse(appSettingJson);
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  },
+
+  getAppLaunchInfo(): AppLaunchInfo | null {
+    if (window.ios.getAppLaunchInfo) {
+      try {
+        const appLaunchInfoJSon = window.ios.getAppLaunchInfo();
+        return JSON.parse(appLaunchInfoJSon);
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  },
+
+  isDeepLinkWakeUp(): boolean {
+    if (window.ios.isDeepLinkWakeUp) {
+      return window.ios.isDeepLinkWakeUp();
+    } else {
+      return false;
+    }
+  },
+
+  getDeepLinkAppSetting(): AppSetting | null {
+    if (window.ios.getDeepLinkQueryString) {
+      try {
+        const deepLinkQueryString = window.ios.getDeepLinkQueryString();
+        return JSON.parse(deepLinkQueryString);
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
   },
 
   // Storage

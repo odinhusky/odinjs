@@ -1,3 +1,6 @@
+import { AppSetting } from '@mode2/@types/appSettingType';
+import { AppLaunchInfo } from '@mode2/@types/appLaunchInfoType';
+
 export interface JsBridge {
   /**
    * 通知 native 已經初始成功
@@ -98,4 +101,53 @@ export interface JsBridge {
    * 更新未讀數
    */
   updateBadgeCount(badgeCount: number): void;
+
+  /**
+   * 新增帶有提醒功能的日立排程
+   * @param datetime
+   * @param message
+   */
+  addEventWithReminder(datetime: string, message: string): void;
+
+  /**
+   *   appId?: string; // 渠道 ID
+   *   deviceId?: string; // apk  in app webview deviceID
+   *   fbp?: string; // pixel
+   *   fbc?: string; // pixel
+   *   pixelId?: string; // pixel
+   *   accessToken?: string; // pixel
+   *
+   *   // Facebook 動態URL占位符
+   *   // 置入廣告動態網址參數
+   *   adId?: string;
+   *   adsetId?: string;
+   *   campaignId?: string;
+   *   adName?: string;
+   *   adsetName?: string;
+   *   campaignName?: string;
+   *   placement?: string;
+   *   siteSourceName?: string;
+   */
+  getAppSetting(): AppSetting | null;
+
+  /**
+   *   buildId?: string; // 動態包版 apk uuid
+   *   buildTime?: number; // 動態包版時間 EventTypeBuild EventType = 0 // 打包
+   *   firstInstallTime?: number; // EventTypeInstall EventType = 1 // 安装
+   *   lastUpdateTime?: number; // EventTypeForceUpdateTime EventType = 4 // 强更时间
+   *   firstLaunch?: number; // EventTypeLaunch EventType = 2 // 启动
+   *   lastLaunch?: number;
+   *   launchCount?: number;
+   */
+  getAppLaunchInfo(): AppLaunchInfo | null;
+
+  /**
+   * 是 deeplink 喚醒 app
+   */
+  isDeepLinkWakeUp(): boolean;
+
+  /**
+   * 從 廣告投放 deeplink 喚醒 app
+   */
+  getDeepLinkAppSetting(): AppSetting | null;
 }

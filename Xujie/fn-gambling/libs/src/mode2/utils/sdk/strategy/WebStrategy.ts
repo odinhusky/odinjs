@@ -32,7 +32,8 @@ import { MessagePayload, Unsubscribe } from 'firebase/messaging';
 // import { FirebasePush } from '@mode2/utils/sdk/strategy/push/FirebasePush';
 import { OneSignalPush } from '@mode2/utils/sdk/strategy/push/OneSignalPush';
 
-import { has, isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import has from 'lodash/has';
 import {
   SaleSmartlyChat,
   SaleSmartlyUserProfile,
@@ -43,6 +44,12 @@ import { WebLocalStorage } from '@libs/commonUtils/localStorage';
 import { useAppStore } from '@mode2/zustand/appStore';
 import console from 'node:console';
 import { usePlatformDynamicConfigStore } from '@mode2/zustand/platform/platformDynamicConfig';
+import {
+  PostHogAnalytics,
+  PostHogEventPayload,
+} from '@mode2/utils/sdk/strategy/analytics/PostHogAnalytics';
+import { AppSetting } from '@mode2/@types/appSettingType';
+import { AppLaunchInfo } from '@mode2/@types/appLaunchInfoType';
 
 const webLocalStorage = new WebLocalStorage<AppLocalStorageKey>();
 export const WebStrategy: Common &
@@ -61,11 +68,89 @@ export const WebStrategy: Common &
   // Common
   ...CommonStrategy,
 
+  getWebDeviceId(): string {
+    return '';
+  },
+
+  downloadApp(query?: Record<string, any>): void {
+    const queryData = {
+      appId: import.meta.env['VITE_V_VERSION'] === 'v6' ? '6007001' : '',
+      deviceId:
+        import.meta.env['VITE_V_VERSION'] === 'v6' ? this.getDeviceID() : '',
+      ...(query ? query : {}),
+    };
+
+    // 過濾空字串與 undefined、null 的屬性
+    const filtered = Object.fromEntries(
+      Object.entries(queryData).filter(
+        ([k, v]) => v !== '' && v !== undefined && v !== null
+      )
+    );
+    const queryString = new URLSearchParams(filtered).toString();
+    const fullQueryString = queryString ? '?' + queryString : '';
+    const url = `${import.meta.env['VITE_DOWNLOAD_APK_URL']}${fullQueryString}`;
+    console.log('@@@===>downloadApp', url);
+    this.openBrowser(url, '_blank');
+  },
+
+  wakeUpOrDownloadApp(query?: Record<string, any>): void {
+    const queryData = {
+      appId: import.meta.env['VITE_V_VERSION'] === 'v6' ? '6007001' : '',
+      deviceId:
+        import.meta.env['VITE_V_VERSION'] === 'v6' ? this.getDeviceID() : '',
+      ...(query ? query : {}),
+    };
+
+    // 過濾空字串與 undefined、null 的屬性
+    const filtered = Object.fromEntries(
+      Object.entries(queryData).filter(
+        ([k, v]) => v !== '' && v !== undefined && v !== null
+      )
+    );
+    const queryString = new URLSearchParams(filtered).toString();
+    const fullQueryString = queryString ? '?' + queryString : '';
+
+    // 不是android 內核，無法走deeplink 喚醒
+    if (this.isIOSKernel() || this.isMacOS() || this.isWindows()) {
+      this.downloadApp(query);
+      return;
+    }
+
+    // const packageName = import.meta.env['VITE_ADJUST_PACKAGE_NAME'];
+    const platform = import.meta.env['VITE_PACKAGENAME'];
+    // const scheme = `my${platform}`;
+    // const intent = `//app/hall${fullQueryString}`;
+    //
+    // const fallbackUrl = `${
+    //   import.meta.env['VITE_DOWNLOAD_APK_URL']
+    // }${fullQueryString}`;
+    // const intentUrl = `intent:${intent}#Intent;scheme=${scheme};package=${packageName};S.browser_fallback_url=${encodeURIComponent(
+    //   fallbackUrl
+    // )};end;`;
+    // console.log('@@@===>wakeUpOrDownloadApp', intentUrl);
+    // window.location.href = intentUrl;
+
+    const deppLink = `my${platform}://app/hall${fullQueryString}&wake_up_from=website`;
+    let link = `https://dl.7ind.com/dl/rd2`;
+    link += '?deep_link=' + encodeURIComponent(deppLink);
+    link +=
+      '&redirect=' +
+      encodeURIComponent(`https://dl.7ind.com/dl/latest.apk${fullQueryString}`);
+    console.log('@@@===> wakeUpOrDownloadApp', link);
+    this.openBrowser(link);
+    // window.location.href = link;
+  },
+
+  getAppReferralCode(): string | null {
+    return null;
+  },
+
   initAfter(): void {
     this.analyticsInits();
     this.initPush();
     this.initChat();
     this.initCheckWebPSupport();
+    this.initCheckAvifSupport();
     this.setupNativeDeepLink((path, queryString) => {});
   },
 
@@ -101,6 +186,7 @@ export const WebStrategy: Common &
     SensorsAnalytics.init();
     SentryAnalytics.init();
     AdjustAnalytics.init();
+    PostHogAnalytics.init();
 
     // for web  Adjust.Attribution
     AdjustAnalytics.extra.getAttribution().then((attribution) => {
@@ -115,7 +201,16 @@ export const WebStrategy: Common &
 
         // 拿出 promoteGameId
         const promoteGameId = Number(clickLabel['promoteGameId'] || '-1');
-        console.log('promoteGameId', promoteGameId);
+        const referralCode = clickLabel['referralCode'] || '';
+        console.log(
+          '@@@===> PWA AdjustAttribution.clickLabel',
+          JSON.stringify(clickLabel, null, 2)
+        );
+
+        if (referralCode !== '') {
+          useAppStore.getState().setTemporaryReferralCode(referralCode);
+          this.setStorage(AppLocalStorageKey.REFERRAL_CODE, referralCode);
+        }
         if (promoteGameId > 0) {
           this.setStorage(
             AppLocalStorageKey.PROMOTE_GAME_ID,
@@ -131,6 +226,9 @@ export const WebStrategy: Common &
 
   sendAnalyticsEvent<T extends IEventPayload>(payload: T): void {
     try {
+      if (has(payload, 'postHogType')) {
+        PostHogAnalytics.sendEvent(payload as unknown as PostHogEventPayload);
+      }
       if (has(payload, 'sentryType')) {
         SentryAnalytics.sendEvent(payload as unknown as SentryEventPayload);
       }
@@ -285,6 +383,24 @@ export const WebStrategy: Common &
   updateBadgeCount(badgeCount: number): void {
     const count = badgeCount >= 0 ? badgeCount : 0;
     this.setStorage(AppLocalStorageKey.BADGER_COUNT, `${count}`);
+  },
+
+  addEventWithReminder(datetime: string, message: string): void {},
+
+  getAppSetting(): AppSetting | null {
+    return null;
+  },
+
+  getAppLaunchInfo(): AppLaunchInfo | null {
+    return null;
+  },
+
+  isDeepLinkWakeUp(): boolean {
+    return false;
+  },
+
+  getDeepLinkAppSetting(): AppSetting | null {
+    return null;
   },
 
   getStorage: webLocalStorage.getStorage,

@@ -2,6 +2,16 @@ import { ExternalEndpoint } from '@mode2API/types';
 import { ResponseStructure } from '@mode2API/endpoint/ResponseStructure';
 import { POST_TEAM_MEMBER_SUMMARY_URL } from '@mode2API/urls';
 
+interface TeamDetailsResponse {
+  [key: string]: TeamDetailResponse;
+}
+
+interface TeamDetailResponse {
+  hasNew?: boolean;
+  tier?: number;
+  num?: number;
+}
+
 export interface TeamMemberSummaryResponse {
   totalNumberOfMembers?: number;
   level?: number;
@@ -13,6 +23,8 @@ export interface TeamMemberSummaryResponse {
   today?: number;
   yesterday?: number;
   latestMonth?: number;
+
+  teamDetails?: TeamDetailsResponse;
 }
 
 export interface SubordinateSummaryResult {
@@ -24,13 +36,15 @@ export interface SubordinateSummaryResult {
 export interface SubordinateLevelInfoResult {
   tier: number; // 下線層級
   members: number; //成員數量
+  hasNewMembers: boolean; // 是否有新成員加入
 }
 
 export interface TeamMemberSummaryResult {
   totalMembers: number; // 全部成員數量
   subordinateSummary: SubordinateSummaryResult; // 成員概要
-  subordinateLevelItems: SubordinateLevelInfoResult[]; // 依照下線層級顯示成員數量
+  subordinateLevelItems: SubordinateLevelInfoResult[]; // 依照下線層級顯示成員數量 & 是否有新成員加入
   level: number; // 當前等級
+  hasNewMembers: boolean; // 是否有新成員加入, 預設為 false, TeamClubPage的detail紅點會用到
 }
 
 /**
@@ -63,11 +77,19 @@ const transformResponse = (
   const tiers = [tier1, tier2, tier3];
 
   const subordinateLevelItems = tiers.map((item, index) => {
+    const hasNewMembers = resp?.teamDetails?.[`${index + 1}`]?.hasNew || false;
     return {
       tier: index + 1,
       members: item,
+      hasNewMembers: hasNewMembers,
     };
   });
+
+  // resp.teamDetails 的hasNew是否有为true的，给俱乐部显示红点使用
+  const hasNewMembers = subordinateLevelItems.some(
+    (item) => item.hasNewMembers
+  );
+
   return {
     totalMembers: resp?.totalNumberOfMembers || 0,
     level: resp?.level || 0,
@@ -77,6 +99,7 @@ const transformResponse = (
       thisMonthJoinCount: resp?.latestMonth || 0,
     },
     subordinateLevelItems: subordinateLevelItems,
+    hasNewMembers
   };
 };
 

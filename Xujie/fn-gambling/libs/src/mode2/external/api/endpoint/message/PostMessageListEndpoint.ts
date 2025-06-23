@@ -31,12 +31,7 @@ interface MessageInfoResponse {
   // deleted?: boolean;
   createdAt?: number;
   subTitle?: string;
-  confirmAction?:
-    | 'CLOSE'
-    | 'FORWARD_RECHARGE'
-    | 'FORWARD_PERSONAL_INFO'
-    | 'FORWARD_BANK_CARD';
-
+  confirmAction?: string;
   // [IN][V6]新增
   attachments: Attachments[];
 }
@@ -53,11 +48,30 @@ export enum MessageCategoryResult {
   MAIL = 'MAIL',
 }
 
-export type MessageActionResult =
-  | 'CLOSE'
-  | 'FORWARD_RECHARGE'
-  | 'FORWARD_PERSONAL_INFO'
-  | 'FORWARD_BANK_CARD';
+export enum MessageRewardClaimStatus {
+  CLAIMABLE = '可領取',
+  CLAIMED = '已領取OR已到期',
+  LOCKED = '未解鎖',
+  NONE = '',
+}
+
+export enum MessageActionResult {
+  CLOSE = 'CLOSE',
+  FORWARD_RECHARGE = 'FORWARD_RECHARGE',
+  FORWARD_PERSONAL_INFO = 'FORWARD_PERSONAL_INFO',
+  FORWARD_BANK_CARD = 'FORWARD_BANK_CARD',
+  FORWARD_SHARE_SPIN = 'FORWARD_SHARE_SPIN',
+  FORWARD_INBOX_RECHARGE = 'FORWARD_INBOX_RECHARGE',
+}
+
+const MessageActionMapping: Record<string, MessageActionResult> = {
+  ['CLOSE']: MessageActionResult.CLOSE,
+  ['FORWARD_RECHARGE']: MessageActionResult.FORWARD_RECHARGE,
+  ['FORWARD_PERSONAL_INFO']: MessageActionResult.FORWARD_PERSONAL_INFO,
+  ['FORWARD_BANK_CARD']: MessageActionResult.FORWARD_BANK_CARD,
+  ['FORWARD_SHARE_SPIN']: MessageActionResult.FORWARD_SHARE_SPIN,
+  ['FORWARD_INBOX_RECHARGE']: MessageActionResult.FORWARD_INBOX_RECHARGE,
+};
 
 export type MessageInfoResult = {
   indexKey: string;
@@ -69,8 +83,15 @@ export type MessageInfoResult = {
   isRead: boolean;
   createdAt: number;
   action: MessageActionResult;
-  
+  // [IN][V6]新增
+  isShowAttachments: boolean;
   attachments: Attachments[];
+  isLock: number;
+  isClaim: number;
+  reward: number;
+  expireTime: number;
+  isExpired: boolean;
+  status: MessageRewardClaimStatus;
 };
 
 export type MessageListResult = {
@@ -101,8 +122,41 @@ const transformResponse = (
 ): MessageListResult => {
   const resp = response.Body;
   const items = resp?.data || [];
+  // const items = mockData;
+
   const messages: MessageInfoResult[] =
     items.map((item) => {
+      // QA 已確認attachments多筆金額共同解鎖共同逾期，所以狀態取第一個即可
+      const list: Attachments[] =
+        item.attachments && item.attachments.length > 0 ? item.attachments : [];
+      const totalReward = list.reduce((sum, item) => sum + item.reward, 0);
+      const isShowAttachments = list.length > 0 ? true : false;
+      const detail = {
+        isLock: list[0]?.isLock || 0,
+        isClaim: list[0]?.isClaim || 0,
+        reward: totalReward,
+        expireTime: list[0]?.expireTime || 0,
+      };
+
+      const isExpired = detail.expireTime
+        ? new Date(detail.expireTime * 1000) < new Date()
+        : true;
+
+      let status: MessageRewardClaimStatus = MessageRewardClaimStatus.CLAIMABLE;
+      if (!isExpired && detail.isClaim === 0) {
+        status = MessageRewardClaimStatus.CLAIMABLE;
+      }
+      if (detail.isLock === 1) {
+        status = MessageRewardClaimStatus.LOCKED;
+      }
+      if (isExpired || detail.isClaim === 1) {
+        status = MessageRewardClaimStatus.CLAIMED;
+      }
+      status = isShowAttachments ? status : MessageRewardClaimStatus.NONE;
+
+      const actionResult =
+        MessageActionMapping[(item?.confirmAction || '').toUpperCase()] ||
+        MessageActionResult.CLOSE;
       return {
         indexKey: `${item?.id}_${item?.userId}_${item?.category}_${item?.createdAt}`,
         category:
@@ -115,10 +169,17 @@ const transformResponse = (
         content: item?.content || '',
         isRead: item?.read === true,
         createdAt: item?.createdAt || 0,
-        action: item?.confirmAction || 'CLOSE',
+        action: actionResult,
 
         // [IN][V6]新增
-        attachments: item.attachments || [],
+        attachments: list,
+        isShowAttachments,
+        isLock: detail.isLock,
+        isClaim: detail.isClaim,
+        reward: detail.reward,
+        expireTime: detail.expireTime,
+        isExpired,
+        status,
       };
     }) || [];
 

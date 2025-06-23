@@ -136,6 +136,50 @@ export const getRollupOptions: (
           }
           return `[ext]/[name]-${VITE_VERSION}.[ext]`; // 资源文件像 字体，图片等
         },
+
+        // TODO Ronan test
+        // 分包配置
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) return 'vendor-react';
+            if (id.includes('lodash')) return 'vendor-lodash';
+            if (id.includes('swiper')) return 'vendor-swiper';
+            if (id.includes('axios')) return 'vendor-axios';
+            if (id.includes('sentry')) return 'vendor-sentry';
+            if (id.includes('posthog')) return 'vendor-posthog';
+            if (id.includes('html2canvas')) return 'vendor-html2canvas';
+            if (id.includes('html-to-image')) return 'vendor-html-to-image';
+            if (id.includes('elliptic')) return 'vendor-elliptic';
+            if (id.includes('vite')) return 'vendor-vite';
+            if (id.includes('crypto')) return 'vendor-crypto';
+            if (id.includes('babel')) return 'vendor-babel';
+            if (id.includes('router')) return 'vendor-router';
+            if (id.includes('sensor')) return 'vendor-sensor';
+            if (id.includes('adjust')) return 'vendor-adjust';
+
+            if (id.includes('mordern-screenshot'))
+              return 'vendor-mordern-screenshot';
+
+            return 'vendor-others';
+          }
+
+          // i18next plugin 分出獨立包
+          if (id.includes('apps/india-game/plugins/i18next')) {
+            return 'plugin-i18next';
+          }
+
+          // if (id.includes('apps/india-game/src/components/')) {
+          //   const parts = id.split('src/components/')[1].split('/');
+          //   return `app-src-components-${parts[0]}`;
+          // }
+
+          // if (id.includes('apps/india-game/src/hooks/')) {
+          //   const parts = id.split('src/hooks/')[1].split('/');
+          //   return `app-src-hooks-${parts[0]}`;
+          // }
+
+          return undefined;
+        },
       },
     ],
   };
@@ -154,4 +198,102 @@ export const checkEnv = (env: Record<string, string>, keys: string[]) => {
   });
 
   return env;
+};
+
+export const setupComponentsUi2Mapping = (
+  env: Record<string, string>,
+  __dirname: string
+): Record<string, string> => {
+  const { VITE_MODE, VITE_V_VERSION } = checkEnv(env, [
+    'VITE_MODE',
+    'VITE_V_VERSION',
+  ]);
+
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const templateConfigPath = path.resolve(
+    __dirname,
+    VITE_MODE === 'dev'
+      ? `./src/setting/${`dev/${VITE_V_VERSION}`}/template_config.json`
+      : `./src/setting/template_config.json`
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const config = require(path.resolve(__dirname, templateConfigPath));
+
+  const generatePaths = (
+    sectionName: string,
+    entries: Record<string, string>
+  ): Record<string, string> => {
+    const output: Record<string, string> = {};
+
+    if (!entries) return {};
+
+    Object.entries(entries).forEach(([name, value]) => {
+      const basePath = `${sectionName}/${name}`;
+      const relativePath =
+        !value || value === '0'
+          ? `./src/ui2/${sectionName}/${name}`
+          : `./src/ui2/${sectionName}/${name}/${value}`;
+      output[`@${basePath}`] = path.resolve(__dirname, relativePath);
+    });
+
+    return output;
+  };
+  // 分别调用生成不同部分的路径
+  const apps = generatePaths('apps', config.apps);
+  const components = generatePaths('components', config.components);
+  const modals = generatePaths('modals', config.modals);
+  const pages = generatePaths('pages', config.pages);
+  const templates = generatePaths('templates', config.templates);
+  // const styles = generatePaths('styles', config.styles);
+  let styles = {};
+
+  if (config.styles) {
+    styles = {
+      '@styles': path.resolve(__dirname, `./src/ui2/styles/${config.styles}/`),
+    };
+    //
+    // const stylesFiles = fs.readdirSync(
+    //   path.resolve(__dirname, `./src/ui2/styles/${config.styles}`)
+    // );
+    // console.log('####===>stylesFiles', stylesFiles);
+    // const stylesRecord: Record<string, string> = Object.fromEntries(
+    //   stylesFiles.map((fileName) => {
+    //     return [`${config.styles}`, fileName];
+    //   })
+    // );
+    //
+    // console.log('####===>stylesRecord', stylesRecord);
+    // // styles = generatePaths('styles', stylesRecord);
+    // styles = {
+    //   '@styles': path.resolve(__dirname, `./src/ui2/styles/${config.styles}/`),
+    // };
+  }
+
+  let routes = {};
+  if (config.routes) {
+    const output: Record<string, string> = {};
+    Object.entries(config.routes).forEach(([name, value]) => {
+      const basePath = `${name}`;
+      output[`@router/${basePath}`] = path.resolve(
+        __dirname,
+        `./src/router/${value}/${basePath}`
+      );
+    });
+    routes = output;
+  }
+
+  const templateResult = {
+    ...apps,
+    ...components,
+    ...modals,
+    ...pages,
+    ...templates,
+    ...styles,
+    ...routes,
+  };
+
+  console.log('###===>', templateResult);
+
+  return templateResult;
 };

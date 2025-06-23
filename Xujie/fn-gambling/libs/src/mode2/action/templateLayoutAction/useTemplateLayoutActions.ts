@@ -1,4 +1,4 @@
-import { handleTemplateLayoutCloseMyDrawerBtnClick } from './acitonType';
+import { handleTemplateLayoutCloseMyDrawerBtnClick } from '@mode2/action/actionTypes';
 
 import handleGlobalClick from '../handleGlobalClick';
 

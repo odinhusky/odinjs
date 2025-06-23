@@ -1,7 +1,8 @@
 import { create } from 'zustand';
-import { AnnouncementResult } from '../../external/api/endpoint/main/PostAnnouncementInfoEndpoint';
 import { ActivityPageTabType } from '@mode2/@types/activityPageTabType';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
+import { VipRewardInfoResult } from '@libs/mode2/external/api/endpoint/team/PostVipRewardHistoryEndpoint';
+import { AnnouncementResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
 
 // - Switch Page List ===================================
 
@@ -74,3 +75,42 @@ export const useMode2ActivityListStore =
 //     setActivityActionList: (list) => set(() => ({ activityActionList: list })),
 //   })
 // );
+
+// - MyBonus List ===================================
+
+export enum EMyBonusTabList {
+  MONTH = 'Month',
+  ALL = 'All',
+}
+
+export const myBonusTabList = [
+  {
+    label: EMyBonusTabList.MONTH,
+  },
+  { label: EMyBonusTabList.ALL },
+];
+
+export interface useMode2MyBonusListStoreTypes {
+  myBonusTabIndex: EMyBonusTabList;
+  setMyBonusTabIndex: (value: EMyBonusTabList) => void;
+
+  myBonusList: VipRewardInfoResult[];
+  setMyBonusList: (list: VipRewardInfoResult[]) => void;
+
+  totalRewards: number;
+  setTotalRewards: (totalRewards: number) => void;
+}
+
+export const useMode2MyBonusListStore = create<useMode2MyBonusListStoreTypes>()(
+  (set) => ({
+    myBonusTabIndex: EMyBonusTabList.MONTH,
+    setMyBonusTabIndex: (value) => set(() => ({ myBonusTabIndex: value })),
+
+    myBonusList: [] as VipRewardInfoResult[],
+    setMyBonusList: (list) => set(() => ({ myBonusList: list })),
+
+    totalRewards: 0,
+    setTotalRewards: (totalRewards) => set(() => ({ totalRewards })),
+  })
+);
+// - MyBonus List ===================================

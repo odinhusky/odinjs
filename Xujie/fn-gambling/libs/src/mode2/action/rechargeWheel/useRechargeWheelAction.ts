@@ -4,7 +4,7 @@ import {
   handleRechargeDepositNowButtonClick,
   handleRechargeWheelTabClick,
   handleRechargeWheelSpinButtonClick,
-} from './acitonType';
+} from '@mode2/action/actionTypes';
 import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
 import handleGlobalClick from '@mode2/action/handleGlobalClick';
@@ -17,7 +17,6 @@ import {
   useRechargeWheelTabStore,
 } from '@libs/mode2/zustand/components/rechargeWheelTabStore';
 import { useToastStore } from '@libs/mode2/zustand/components/toastStore';
-import { capitalize, debounce } from 'lodash';
 import { RefObject, useCallback } from 'react';
 import {
   BASE_ROTATE_DEG,
@@ -29,11 +28,23 @@ import { formatMoney } from '@libs/mode2/utils';
 import { ActivityRecordPageTypes } from '@libs/mode2/zustand/page/activityRecordPageStore';
 import useMode2RechargeWheelPageStore from '@libs/mode2/zustand/page/rechargeWheelPage';
 import { useTranslation } from 'react-i18next';
-import {
-  DEFAULT_DEBOUNCE_DELAY,
-  DEFAULT_DEBOUNCE_OPTIONS,
-} from '@libs/constant/functionParams';
 import { v4 as uuidv4 } from 'uuid';
+import { WalletDashboardType } from '@libs/mode2/@types/walletDashboardTypes';
+import { useWalletPageStore } from '@libs/mode2/zustand/page/WalletPage/walletPageStore';
+import { useWalletPageSwitchContentTabsStore } from '@libs/mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
+
+interface HandleWheelSpinAnimationCallbackParams {
+  isMoney: boolean;
+}
+
+interface HandleWheelSpinAnimationParams {
+  ref: RefObject<HTMLDivElement>;
+  isMoney: boolean;
+  selectedIdx: number;
+  rewardAmount: number;
+  isShowToast?: boolean;
+  callback?: ({ isMoney }: HandleWheelSpinAnimationCallbackParams) => void;
+}
 
 type ActionClickPayloadMap = {
   [handleRechargeQuestionIconClick]: void;
@@ -75,6 +86,14 @@ export const useRechargeWheelAction = () => {
     (state) => state.setSpinWheelLevel
   );
 
+  const setDisplayDashboardType = useWalletPageStore(
+    (state) => state.setDisplayDashboardType
+  );
+
+  const setCurSwitchContentTabId = useWalletPageSwitchContentTabsStore(
+    (state) => state.setCurSwitchContentTabId
+  );
+
   // will remove
   // console.log('!! render');
 
@@ -84,14 +103,9 @@ export const useRechargeWheelAction = () => {
       selectedIdx,
       isMoney,
       rewardAmount,
+      isShowToast = true,
       callback,
-    }: {
-      ref: RefObject<HTMLDivElement>;
-      isMoney: boolean;
-      selectedIdx: number;
-      rewardAmount: number;
-      callback?: <T>(arg?: T) => void;
-    }) => {
+    }: HandleWheelSpinAnimationParams) => {
       // const selectedIdx = Math.floor(Math.random() * 9);
       const additionalDeg =
         90 + (selectedIdx * -RECHARGE_ZONE_DEG + -RECHARGE_ZONE_DEG_OFFSET);
@@ -110,27 +124,40 @@ export const useRechargeWheelAction = () => {
           if (ref.current) {
             // 結束後設定在停止的地方
             ref.current.style.transform = `rotate(${totalDeg}deg)`;
+
+            const callbackParams: HandleWheelSpinAnimationCallbackParams = {
+              isMoney,
+            };
+
             // 設定 rewardAmount 使其在動畫結束後出現
             if (isMoney) {
               const prizeToastId = uuidv4();
-              showToast(
-                t('deposit_wheel_win_prize_toast', {
-                  rewardAmount: formatMoney(rewardAmount || 200),
-                }),
-                (id) => {
-                  if (id === prizeToastId) callback?.();
-                },
-                prizeToastId
-              );
+              if (isShowToast) {
+                showToast(
+                  t('deposit_wheel_win_prize_toast', {
+                    rewardAmount: formatMoney({ value: rewardAmount || 200 }),
+                  }),
+                  (id) => {
+                    if (id === prizeToastId) callback?.(callbackParams);
+                  },
+                  prizeToastId
+                );
+              } else {
+                callback?.(callbackParams);
+              }
             } else {
-              const nextSpinToastId = uuidv4();
-              showToast(
-                t('deposit_wheel_win_next_spin_toast'),
-                (id) => {
-                  if (id === nextSpinToastId) callback?.();
-                },
-                nextSpinToastId
-              );
+              if (isShowToast) {
+                const nextSpinToastId = uuidv4();
+                showToast(
+                  t('deposit_wheel_win_next_spin_toast'),
+                  (id) => {
+                    if (id === nextSpinToastId) callback?.(callbackParams);
+                  },
+                  nextSpinToastId
+                );
+              } else {
+                callback?.(callbackParams);
+              }
             }
 
             // isAnimating 狀態個別更新
@@ -172,6 +199,10 @@ export const useRechargeWheelAction = () => {
       handleGlobalClick({
         target: handleRechargeDepositNowButtonClick,
         callback: () => {
+          if (import.meta.env['VITE_V_VERSION'] === 'v6') {
+            setDisplayDashboardType(WalletDashboardType.NONE);
+            setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
+          }
           navToWalletPage('', { state: { tab: WalletPageTabType.DEPOSIT } });
         },
       });
@@ -179,18 +210,22 @@ export const useRechargeWheelAction = () => {
     [handleRechargeWheelTabClick]: ({ type, isLocked }) => {
       handleGlobalClick({
         target: handleRechargeWheelTabClick,
+        payload: { type, isLocked },
         callback: () => {
+          console.log('clicked');
           if (isLocked && type === 'supreme') {
             showToast(t('deposit_wheel_coming_soon_toast'));
           } else {
             setActiveRechargeActiveTab(type);
           }
         },
+        debounceTimer: isLocked && type === 'supreme' ? 300 : 0,
       });
     },
     [handleRechargeWheelSpinButtonClick]: ({ type }) => {
       handleGlobalClick({
         target: handleRechargeWheelSpinButtonClick,
+        payload: { type },
         callback: () => {
           setSpinWheelLevel(type);
           spinWheel();

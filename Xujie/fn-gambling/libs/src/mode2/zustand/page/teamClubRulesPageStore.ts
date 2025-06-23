@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { InviteDailyConfigResult } from '@mode2API/endpoint/teamClub/PostInviteDailyConfigEndpoint';
 import { InviteTeamRewardRuleItemResult } from '@mode2API/endpoint/teamClub/PostInviteTeamRewardConfigEnpoint';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
 export interface TeamClubEstimatedRules {
   level: number;

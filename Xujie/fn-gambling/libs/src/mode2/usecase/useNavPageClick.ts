@@ -8,14 +8,12 @@ import useGuestNavPageClickStrategy from '@mode2/usecase/navPageClick/useGuestNa
 import { useMemo } from 'react';
 import { useUserProfileStore } from '../zustand/user/userProfileStore';
 import { UserRoleType } from '../@types/userRoleTypes';
-import useEmptyNavigateClickStrategy from '@mode2/usecase/navPageClick/useEmptyNavigateClickStrategy';
-import useEmptyNavPageClickStrategy from '@mode2/usecase/navPageClick/useEmptyNavPageClickStrategy';
 
 export const useNavigateClick = () => {
   const userNavigateClickStrategy = useUserNavigateClickStrategy();
   const playerNavigateClickStrategy = usePlayerNavigateClickStrategy();
   const guestNavigateClickStrategy = useGuestNavigateClickStrategy();
-  const emptyNavigateClickStrategy = useEmptyNavigateClickStrategy();
+  // const emptyNavigateClickStrategy = useEmptyNavigateClickStrategy();
 
   const userRole = useUserProfileStore((state) => state.userRole);
 
@@ -28,7 +26,7 @@ export const useNavigateClick = () => {
       case UserRoleType.GUEST:
         return guestNavigateClickStrategy;
       default:
-        return emptyNavigateClickStrategy;
+        return guestNavigateClickStrategy;
     }
   }, [userRole]);
 
@@ -47,7 +45,7 @@ export const useNavPageClick = () => {
   const userNavPageClickStrategy = useUserNavPageClickStrategy();
   const playerNavPageClickStrategy = usePlayerNavPageClickStrategy();
   const guestNavPageClickStrategy = useGuestNavPageClickStrategy();
-  const emptyNavPageClickStrategy = useEmptyNavPageClickStrategy();
+  // const emptyNavPageClickStrategy = useEmptyNavPageClickStrategy();
 
   const userRole = useUserProfileStore((state) => state.userRole);
 
@@ -60,7 +58,7 @@ export const useNavPageClick = () => {
       case UserRoleType.GUEST:
         return guestNavPageClickStrategy;
       default:
-        return emptyNavPageClickStrategy;
+        return guestNavPageClickStrategy;
     }
   }, [userRole]);
 

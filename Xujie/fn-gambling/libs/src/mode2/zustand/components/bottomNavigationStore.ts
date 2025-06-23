@@ -3,12 +3,13 @@ import { BasePagePaths } from '@libs/mode2/routerTypes/types';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
 import { NavigateOptions } from 'react-router/dist/lib/context';
 
-interface BottomNavigationUnit {
+export interface BottomNavigationUnit {
   labelKey: I18NContent;
   icon: string;
   iconActive: string;
   isDrop: boolean;
   isActive: boolean;
+  unReadCount: number;
   isShowRedDot: boolean;
   actionPayload: {
     navigateTarget: BasePagePaths;
@@ -20,6 +21,7 @@ export enum BottomNavigationScenarios {
   DEFAULT = 'DEFAULT',
   TEAM_CLUB = 'TEAM_CLUB',
   INVITE_WHEEL = 'INVITE_WHEEL',
+  V6_DEFAULT = 'V6_DEFAULT',
 }
 
 interface UsageScenarios {

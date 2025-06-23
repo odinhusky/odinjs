@@ -1,7 +1,6 @@
 import { POST_WITHDRAW_RECORDS_URL } from '../../urls';
 import { ExternalEndpoint } from '../../types';
 import { ResponseStructure } from '../ResponseStructure';
-import { RechargeRecordStatus } from '@mode2API/endpoint/record/PostRechargeRecordsEndpoint';
 
 export interface WithdrawRecordsRequest {
   limit: number;
@@ -15,6 +14,7 @@ export interface WithdrawRecordsItemResponse {
   Status?: number; // 0
   IsUpi?: number; //1
   Message?: string; // 失敗原因
+  FinalTime?: number; // 結束時間，成功與失敗
 }
 
 export interface WithdrawRecordsResponse {
@@ -47,8 +47,12 @@ export type WithdrawRecordItemResult = {
   amount: number;
   orderNumber: string;
   status: WithdrawRecordStatus;
-  timestamp: number;
+  timestamp: number; // 建立訂單時間
   message: string;
+  withdrawType: string;
+  successTime: number;
+  failedTime: number;
+  finalTime?: number;
 };
 
 type WithdrawRecordsResult = {
@@ -66,6 +70,7 @@ const recordStateMapping: Record<string, WithdrawRecordStatus> = {
   '1': WithdrawRecordStatus.SUCCESS,
   '2': WithdrawRecordStatus.FAIL,
   '3': WithdrawRecordStatus.FAIL,
+  '6': WithdrawRecordStatus.PROCESSING,
   '22': WithdrawRecordStatus.FAIL_EXPIRED,
 };
 
@@ -93,6 +98,10 @@ const transformResponse = (
           status: mapRecordState(`${item?.Status}`),
           timestamp: item?.Date || 0,
           message: item?.Message || '',
+          withdrawType: 'Online', // 無區分。先固定
+          successTime: item?.FinalTime || 0,
+          failedTime: item?.FinalTime || 0,
+          finalTime: item?.FinalTime || 0,
         })) || defaultResult.withdrawRecords,
     };
   }

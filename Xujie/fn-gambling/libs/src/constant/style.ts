@@ -2,8 +2,8 @@ import { EResourceLevel, getImgUrl } from '@libs/mode2/utils';
 import { cx } from '../commonUtils';
 
 export const MOBILE_BREAK_POINT_MAX_WIDTH = 'max-w-[750px] mx-auto';
-
 export const FULL = 'w-full h-full';
+export const FIT = 'w-fit h-fit';
 export const FLEX_CENTER = 'flex justify-center items-center';
 export const FLEX_ITEMS_CENTER = 'flex items-center';
 export const FLEX_ITEMS_STRETCH = 'flex items-stretch';
@@ -29,10 +29,17 @@ export const PATTERN_BG = 'bg-repeat bg-fixed';
 
 export const remToPx = 16;
 
+export const CONTAINER_CLASS = cx(
+  FLEX_COL,
+  'gap-3',
+  'w-full',
+  'relative z-[1]'
+);
 export const patternBgStyle = {
   backgroundImage: `url(${getImgUrl(EResourceLevel.V, 'pattern')})`,
   backgroundSize: '40rem 40rem',
   backgroundPosition: 'top left',
+  backgroundAttachment: 'scroll',
 };
 
 // Versions Classes

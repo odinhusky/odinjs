@@ -1,21 +1,19 @@
-import useNavigateInterceptor from '@mode2/usecase/navPageClick/useNavigateInterceptor';
 import { LoginFormType } from '@mode2/zustand/loginStore';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
 import { NavigateOptions } from 'react-router/dist/lib/context';
 import useNavToLoginPage from '@mode2/usecase/navPageClick/useNavToLoginPage';
 import { To } from 'react-router';
 import useShouldNavigate from '@mode2/usecase/navPageClick/useShouldNavigate';
-import { KYC_BOTH_STATE } from '@constant/KYC';
 import useBindPlayerPhoneModalStore from '@libs/mode2/zustand/modal/BindPlayerPhoneModal';
 import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
 import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
+import { hasBindPhoneModalVersionList } from '@libs/constant/versions';
 
 /**
  * 已經登入的使用者，導航決策
  */
 const usePlayerNavPageClickStrategy = () => {
   const navigate = useShouldNavigate();
-  const { toWalletPageWithdrawTab } = useNavigateInterceptor();
   const setShowBindPlayerPhoneModal = useBindPlayerPhoneModalStore(
     (state) => state.setShowBindPlayerPhoneModal
   );
@@ -39,14 +37,17 @@ const usePlayerNavPageClickStrategy = () => {
   const navToWalletPage = (query: string = '', options?: NavigateOptions) => {
     const curSwitchContentTabId =
       useWalletPageSwitchContentTabsStore.getState().curSwitchContentTabId;
+    const vVersion = import.meta.env['VITE_V_VERSION'];
     if (
-      options?.state?.tab === WalletPageTabType.WITHDRAW ||
-      curSwitchContentTabId === WalletPageTabType.WITHDRAW
+      (options?.state?.tab === WalletPageTabType.WITHDRAW ||
+        curSwitchContentTabId === WalletPageTabType.WITHDRAW) &&
+      hasBindPhoneModalVersionList.includes(vVersion)
     ) {
       setShowBindPlayerPhoneModal(true);
     } else {
       navigate(`${BasePagePathObj.WalletPage}${query}`, options);
     }
+    // navigate(`${BasePagePathObj.WalletPage}${query}`, options);
   };
 
   const navToInvitePage = (query: string = '', options?: NavigateOptions) => {
@@ -150,6 +151,13 @@ const usePlayerNavPageClickStrategy = () => {
     navigate(`${BasePagePathObj.GiftCodeRedeemPage}${query}`, options);
   };
 
+  const navToSearchGamePage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.SearchGamePage}${query}`, options);
+  };
+
   // ---- new foe v6 start ----
   const navToAccountPage = (query: string = '', options?: NavigateOptions) => {
     navigate(`${BasePagePathObj.AccountPage}${query}`, options);
@@ -166,18 +174,62 @@ const usePlayerNavPageClickStrategy = () => {
     navigate(`${BasePagePathObj.SettingPage}${query}`, options);
   };
 
-  const navToGameSupplierListPage = (
-    query: string = '',
-    options?: NavigateOptions
-  ) => {
-    navigate(`${BasePagePathObj.GameSupplierListPage}${query}`, options);
-  };
-
   const navToOrderDetailPage = (
     query: string = '',
     options?: NavigateOptions
   ) => {
     navigate(`${BasePagePathObj.OrderDetailPage}${query}`, options);
+  };
+
+  const navToVipPage = (query: string = '', options?: NavigateOptions) => {
+    navigate(`${BasePagePathObj.VipPage}${query}`, options);
+  };
+
+  const navToVipBonusPage = (query: string = '', options?: NavigateOptions) => {
+    navigate(`${BasePagePathObj.VipBonusPage}${query}`, options);
+  };
+
+  const navToRankingPage = (query: string = '', options?: NavigateOptions) => {
+    navigate(`${BasePagePathObj.RankingPage}${query}`, options);
+  };
+
+  const navToActivityDetailPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.ActivityDetailPage}${query}`, options);
+  };
+
+  const navToTaskCenterPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.TaskCenterPage}${query}`, options);
+  };
+
+  const navToInboxDetailPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navigate(`${BasePagePathObj.InboxDetailPage}${query}`, options);
+  };
+
+  // TODO Evan 特殊充值通道 Player 不應該有該行為
+  const navToRechargeSecretPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navToHallPage();
+    // navigate(`${BasePagePathObj.RechargeSecretPage}${query}`, options);
+  };
+
+  // TODO Evan 破產獎勵寶箱 Player 不應該有該行為
+  const navToLowBalanceRescueBoxPage = (
+    query: string = '',
+    options?: NavigateOptions
+  ) => {
+    navToHallPage();
+    // navigate(`${BasePagePathObj.LowBalanceRescueBoxPage}${query}`, options);
   };
   // ---- new foe v6 end ----
 
@@ -257,11 +309,35 @@ const usePlayerNavPageClickStrategy = () => {
       case BasePagePathObj.SettingPage:
         navToSettingPage(query, options);
         break;
-      case BasePagePathObj.GameSupplierListPage:
-        navToGameSupplierListPage(query, options);
-        break;
       case BasePagePathObj.OrderDetailPage:
         navToOrderDetailPage(query, options);
+        break;
+      case BasePagePathObj.VipPage:
+        navToVipPage(query, options);
+        break;
+      case BasePagePathObj.VipBonusPage:
+        navToVipBonusPage(query, options);
+        break;
+      case BasePagePathObj.RankingPage:
+        navToRankingPage(query, options);
+        break;
+      case BasePagePathObj.ActivityDetailPage:
+        navToActivityDetailPage(query, options);
+        break;
+      case BasePagePathObj.TaskCenterPage:
+        navToTaskCenterPage(query, options);
+        break;
+      case BasePagePathObj.SearchGamePage:
+        navToSearchGamePage(query, options);
+        break;
+      case BasePagePathObj.InboxDetailPage:
+        navToInboxDetailPage(query, options);
+        break;
+      case BasePagePathObj.RechargeSecretPage:
+        navToRechargeSecretPage(query, options);
+        break;
+      case BasePagePathObj.LowBalanceRescueBoxPage:
+        navToLowBalanceRescueBoxPage(query, options);
         break;
       default:
         navigate(`${path}${query}`, options);
@@ -294,8 +370,16 @@ const usePlayerNavPageClickStrategy = () => {
     navToAccountPage,
     navToWalletGuidePage,
     navToSettingPage,
-    navToGameSupplierListPage,
     navToOrderDetailPage,
+    navToVipPage,
+    navToVipBonusPage,
+    navToRankingPage,
+    navToActivityDetailPage,
+    navToTaskCenterPage,
+    navToSearchGamePage,
+    navToInboxDetailPage,
+    navToRechargeSecretPage,
+    navToLowBalanceRescueBoxPage,
   };
 };
 

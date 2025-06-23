@@ -1,13 +1,23 @@
+import { RechargeReceiptState } from '@libs/mode2/external/api/endpoint/recharge/PostRechargeQueryReceiptEndpoint';
+import {
+  RechargeRecordItemResult,
+  RechargeRecordStatus,
+} from '@libs/mode2/external/api/endpoint/record/PostRechargeRecordsEndpoint';
+import { WithdrawRecordItemResult } from '@libs/mode2/external/api/endpoint/record/PostWithdrawRecordsEndpoint';
 import { create } from 'zustand';
 
-export enum OrderDeatilRecordStatus {
-  PROCESSING = 'PROCESSING',
-  SUCCESS = 'SUCCESS',
-  FAIL = 'FAIL',
-  FAIL_EXPIRED = 'FAIL_EXPIRED',
-}
-
 export type TOrderDetailTabUnitValue = 1 | 7 | 30;
+
+export type OrderDetailData = (
+  | RechargeRecordItemResult
+  | WithdrawRecordItemResult
+) & {
+  UTRCode?: string;
+  UTRState?: RechargeReceiptState;
+  withdrawType?: string;
+  payType?: string;
+  failedTime?: number;
+};
 
 export interface IOrderDetailTabUnit {
   label: string;
@@ -17,36 +27,47 @@ export interface IOrderDetailTabUnit {
 export interface IOrderDetailListType {
   amount: number;
   orderNumber: string;
-  status: OrderDeatilRecordStatus;
+  bonus: number;
+  status: RechargeRecordStatus;
   timestamp: number;
+  message: string;
+  payType: string;
+  UTRState: RechargeReceiptState;
 }
-
-export enum EOrderDetailPageType {
-  RECHARGE = 'recharge',
-  WITHDRAW = 'withdraw',
-}
-
-export type TOrderDetailPageType = `${EOrderDetailPageType}`;
 
 interface useMode2OrderDetailPageType {
-  orderDetailPageType: TOrderDetailPageType;
-  setOrderDetailPageType: (index: TOrderDetailPageType) => void;
-  orderDetailTabIndex: TOrderDetailTabUnitValue;
-  setOrderDetailTabIndex: (index: TOrderDetailTabUnitValue) => void;
-  orderDetailTabList: IOrderDetailTabUnit[];
-  setOrderDetailTabList: (value: IOrderDetailTabUnit[]) => void;
-  orderDetailList: IOrderDetailListType[];
-  setOrderDetailList: (orderDetailList: IOrderDetailListType[]) => void;
+  orderListTabIndex: TOrderDetailTabUnitValue;
+  setOrderListTabIndex: (index: TOrderDetailTabUnitValue) => void;
+  orderListTabList: IOrderDetailTabUnit[];
+  setOrderListTabList: (value: IOrderDetailTabUnit[]) => void;
+  orderList: IOrderDetailListType[];
+  setOrderList: (orderList: IOrderDetailListType[]) => void;
+
+  isShowOrderDetailModal: boolean;
+  setShowOrderDetailModal: (visible: boolean) => void;
+
+  currentOrderId: string;
+  setCurrentOrderId: (orderId: string) => void;
+
+  orderDetail: OrderDetailData;
+  setOrderDetail: (orderDetail: OrderDetailData) => void;
 }
 
 export const useMode2OrderDetailPageStore =
   create<useMode2OrderDetailPageType>()((set) => ({
-    orderDetailList: [] as IOrderDetailListType[],
-    setOrderDetailList: (value) => set({ orderDetailList: value }),
-    orderDetailTabIndex: 1,
-    setOrderDetailTabIndex: (value) => set({ orderDetailTabIndex: value }),
-    orderDetailPageType: 'recharge',
-    setOrderDetailPageType: (value) => set({ orderDetailPageType: value }),
-    orderDetailTabList: [],
-    setOrderDetailTabList: (value) => set({ orderDetailTabList: value }),
+    orderList: [] as IOrderDetailListType[],
+    setOrderList: (value) => set({ orderList: value }),
+    orderListTabIndex: 1,
+    setOrderListTabIndex: (value) => set({ orderListTabIndex: value }),
+    orderListTabList: [],
+    setOrderListTabList: (value) => set({ orderListTabList: value }),
+
+    isShowOrderDetailModal: false,
+    setShowOrderDetailModal: (visible) =>
+      set({ isShowOrderDetailModal: visible }),
+    currentOrderId: '',
+    setCurrentOrderId: (orderId) => set({ currentOrderId: orderId }),
+
+    orderDetail: {} as RechargeRecordItemResult | WithdrawRecordItemResult,
+    setOrderDetail: (orderDetail) => set({ orderDetail }),
   }));

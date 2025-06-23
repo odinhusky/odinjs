@@ -1,11 +1,16 @@
 import { ILogPayload } from '@commonUtils/eventLog/ICommand';
+import { ReportPayloadUnit } from '../strategy/analytics/local/types';
 
 export interface Common {
   init(): void;
 
   initAfter(): void;
 
+  initLocalReportQueue(): void;
+
   productName(): string;
+
+  operatedName(): string;
 
   countryName(): string;
 
@@ -15,6 +20,11 @@ export interface Common {
    * 初始sdk 就檢查是否支援  webp
    */
   initCheckWebPSupport(): void;
+
+  /**
+   * 初始sdk 就檢查是否支援  avif
+   */
+  initCheckAvifSupport(): void;
 
   /**
    * 檢查當前 H5 version
@@ -96,10 +106,41 @@ export interface Common {
    */
   isPwaInstalled(): boolean;
 
-  loggerClientSendEvent(payload: ILogPayload): void;
+  loggerClientSendEvent(
+    payload: ILogPayload<{ event: string; params: unknown }>
+  ): void;
 
   /**
    * 是開發模式
    */
   isDevelopDebug(): boolean;
+
+  /**
+   * 添加上報事件到 indexDB
+   */
+  addReportEvent(payload: ReportPayloadUnit): void;
+
+  /**
+   * 將 queue 記錄到 indexDB 中
+   */
+  setReportEvent(queue: ReportPayloadUnit[]): void;
+
+  /**
+   * 添加上報事件到 indexDB
+   */
+  clearReportQueue(): void;
+
+  /**
+   * return Fingerprint.get();
+   */
+  getWebDeviceId(): string;
+
+  downloadApp(query?: Record<string, any>): void;
+
+  wakeUpOrDownloadApp(query?: Record<string, any>): void;
+
+  /**
+   * 取得已經被綁定在apk內的邀請碼
+   */
+  getAppReferralCode(): string | null;
 }

@@ -1,6 +1,6 @@
 import handleAction from '../common/handleAction';
 import handleGlobalClick from '../handleGlobalClick';
-import { handleTeamDataDetailModalCloseBtnClick } from './actionType';
+import { handleTeamDataDetailModalCloseBtnClick } from '@mode2/action/actionTypes';
 import { HandleClickProps } from '../common/handleClickProps';
 import { ActionClickObjType } from '../common/actionClickObjetType';
 import { useTeamDataDetailModalStore } from '@libs/mode2/zustand/components/teamDataDetailModalStore';

@@ -8,7 +8,7 @@ import {
   handleSubordinateDataMobileSearchClick,
   handleSubordinateDataSortByCommissionClick,
   handleSubordinateDataSortByJoinTimeClick,
-} from './actionType';
+} from '@mode2/action/actionTypes';
 import handleGlobalClick from '../handleGlobalClick';
 import { useMode2SubordinateDataPageStore } from '@libs/mode2/zustand/page/SubordinateDataStore';
 import { useShowDatePickerStore } from '@libs/mode2/zustand/DatePickerStore';
@@ -17,18 +17,16 @@ export const ORDER = {
   ASC: 1, // 升序
   DESC: -1, // 降序
   DEFAULT: 0, // 默认
-}
-export type OrderType = typeof ORDER[keyof typeof ORDER];
+};
+export type OrderType = (typeof ORDER)[keyof typeof ORDER];
 const orderValues = [ORDER.DEFAULT, ORDER.ASC, ORDER.DESC];
 const toggleOrder = (currentOrderIndex: OrderType) => {
   currentOrderIndex = (currentOrderIndex + 1) % orderValues.length;
-  const currentOrder = orderValues[currentOrderIndex];
-  console.log('@@@===> currentOrder', currentOrder);
-  return currentOrder;
-}
+  return orderValues[currentOrderIndex];
+};
 
 type ActionClickPayloadMap = {
-  [handleSubordinateDataLevelClick]: { value: number };
+  [handleSubordinateDataLevelClick]: { value: number; hasMember: boolean };
   [handleSubordinateDataSortByJoinTimeClick]: void;
   [handleSubordinateDataSortByCommissionClick]: void;
   [handleSubordinateDataDisplayDatePickerClick]: { isShow: boolean };
@@ -38,23 +36,42 @@ type ActionClickPayloadMap = {
 
 export interface HandleSubordinateDataClickProps<
   T extends keyof ActionClickPayloadMap
-> extends HandleClickProps<T, ActionClickPayloadMap> { }
+> extends HandleClickProps<T, ActionClickPayloadMap> {}
 
 export const useSubordinateDataClickActions = () => {
-  const setSortByTier = useMode2SubordinateDataPageStore(state => state.setSortByTier);
-  const mobile = useMode2SubordinateDataPageStore(state => state.mobile);
-  const sortByJoinTime = useMode2SubordinateDataPageStore(state => state.sortByJoinTime);
-  const setSortByJoinTime = useMode2SubordinateDataPageStore(state => state.setSortByJoinTime);
-  const sortByCommission = useMode2SubordinateDataPageStore(state => state.sortByCommission);
-  const setSortByCommission = useMode2SubordinateDataPageStore(state => state.setSortByCommission);
-  const setMobile = useMode2SubordinateDataPageStore(state => state.setMobile);
-  const setDatePicker = useShowDatePickerStore(state => state.setDatePicker);
+  const setSortByTier = useMode2SubordinateDataPageStore(
+    (state) => state.setSortByTier
+  );
+  const mobile = useMode2SubordinateDataPageStore((state) => state.mobile);
+  const sortByJoinTime = useMode2SubordinateDataPageStore(
+    (state) => state.sortByJoinTime
+  );
+  const setSortByJoinTime = useMode2SubordinateDataPageStore(
+    (state) => state.setSortByJoinTime
+  );
+  const sortByCommission = useMode2SubordinateDataPageStore(
+    (state) => state.sortByCommission
+  );
+  const setSortByCommission = useMode2SubordinateDataPageStore(
+    (state) => state.setSortByCommission
+  );
+  const setMobile = useMode2SubordinateDataPageStore(
+    (state) => state.setMobile
+  );
+  const refreshUserData = useMode2SubordinateDataPageStore(
+    (state) => state.refreshUserData
+  );
+  const setDatePicker = useShowDatePickerStore((state) => state.setDatePicker);
 
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
-    [handleSubordinateDataLevelClick]: ({ value }) => {
+    [handleSubordinateDataLevelClick]: ({ value, hasMember }) => {
       handleGlobalClick({
         target: handleSubordinateDataLevelClick,
+        payload: { value, hasMember },
         callback: () => {
+          if (hasMember) {
+            refreshUserData();
+          }
           setSortByTier(value);
           setMobile('');
         },
@@ -83,6 +100,7 @@ export const useSubordinateDataClickActions = () => {
     [handleSubordinateDataDisplayDatePickerClick]: ({ isShow }) => {
       handleGlobalClick({
         target: handleSubordinateDataDisplayDatePickerClick,
+        payload: { isShow },
         callback: () => {
           setDatePicker(isShow);
           setSortByJoinTime(ORDER.DEFAULT);
@@ -94,6 +112,7 @@ export const useSubordinateDataClickActions = () => {
     [handleSubordinateDataMobileInputValueChange]: ({ value }) => {
       handleGlobalClick({
         target: handleSubordinateDataMobileInputValueChange,
+        payload: { value },
         callback: () => {
           setMobile(value);
           setSortByJoinTime(ORDER.DEFAULT);

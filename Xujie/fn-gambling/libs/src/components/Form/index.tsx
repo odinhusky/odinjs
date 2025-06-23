@@ -2,7 +2,7 @@ import React from 'react';
 import cx from '@commonUtils/cx';
 import { Form as BaseForm, FormProps as BaseFormProps } from 'antd';
 import { PropsWithChildren } from 'react';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 type FormProps<Values extends Record<string, unknown>> = PropsWithChildren<
   BaseFormProps<Values>
 >;

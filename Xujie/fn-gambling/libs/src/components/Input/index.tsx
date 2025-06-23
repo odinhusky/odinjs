@@ -5,6 +5,7 @@ import { cx } from '@libs/commonUtils';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
 import { useTranslation } from 'react-i18next';
 import renderI18N from '@libs/commonUtils/renderI18N';
+// import { preventZoom } from '@libs/mode2/utils';
 
 const inputLimitTransfer = (props: InputProps) => {
   return {
@@ -42,6 +43,8 @@ const inputLimitTransfer = (props: InputProps) => {
           event.currentTarget.value = value.replace(/[^0-9]/g, '');
         } else if (props.type === 'en_name') {
           event.currentTarget.value = value.replace(/[^a-z|A-Z\s]/g, '');
+        } else if (props.type === 'en_alnum_with_space') {
+          event.currentTarget.value = value.replace(/[^a-zA-Z0-9\s]/g, '');
         } else if (props.type !== 'text') {
           //不只允许中文字
           event.currentTarget.value = value.replace(/[\u4e00-\u9fa5]/g, '');
@@ -69,6 +72,14 @@ const inputLimitTransfer = (props: InputProps) => {
   };
 };
 
+export type InputType =
+  | 'text'
+  | 'password'
+  | 'number'
+  | 'no_rules_password'
+  | 'en_name'
+  | 'en_alnum_with_space';
+
 export interface InputProps
   extends Omit<
     InputHTMLAttributes<HTMLInputElement>,
@@ -77,16 +88,16 @@ export interface InputProps
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   outerSuffix?: React.ReactNode;
-  type?: string;
+  type?: InputType;
   placeholder?: I18NContent;
   error?: Error | undefined;
   value?: string;
   onChange?: (value: string) => void;
-  prefixNum?:string;
-  prefixClassName?:string;
-  prefixRegionClassName?:string;
-  maxLength?:number;
-  minLength?:number;
+  prefixNum?: string;
+  prefixClassName?: string;
+  prefixRegionClassName?: string;
+  maxLength?: number;
+  minLength?: number;
 
   styles?: {
     container?: string;
@@ -145,10 +156,12 @@ const BaseInput = (inputProps: InputProps) => {
             onFocus={(event) => {
               props.onFocus?.(event);
               setFocus(true);
+              // preventZoom(true);
             }}
             onBlur={(event) => {
               props.onBlur?.(event);
               setFocus(false);
+              // preventZoom(false);
             }}
             onChange={(event) => {
               onChange?.(event.target.value);

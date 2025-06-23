@@ -1,0 +1,38 @@
+export const handleDepositJackpotWheelModalCloseClick =
+  'handleDepositJackpotWheelModalCloseClick';
+
+export const handleDepositJackpotWheelModalShowClick =
+  'handleDepositJackpotWheelModalShowClick';
+
+export const handleDepositJackpotWheelModalSpinBtnClick =
+  'handleDepositJackpotWheelModalSpinBtnClick';
+
+export const handleDepositJackpotWheelModalSpinStart =
+  'handleDepositJackpotWheelModalSpinStart';
+
+export const handleSwiperActionButtonDepositJackpotWheelClick =
+  'handleSwiperActionButtonDepositJackpotWheelClick';
+
+export const handleSwiperActionButtonDepositJackpotWheelWithCountDownClick =
+  'handleSwiperActionButtonDepositJackpotWheelWithCountDownClick';
+
+export const handleDepositJackpotWheelRewardModalDoubleBonusCloseBtnClick =
+  'handleDepositJackpotWheelRewardModalDoubleBonusCloseBtnClick';
+
+export const handleDepositJackpotWheelRewardModalSpinCloseBtnClick =
+  'handleDepositJackpotWheelRewardModalSpinCloseBtnClick';
+
+export const handleDepositJackpotWheelRewardModalCashCloseBtnClick =
+  'handleDepositJackpotWheelRewardModalCashCloseBtnClick';
+
+export const handleDepositJackpotWheelRewardModalEmptyClick =
+  'handleDepositJackpotWheelRewardModalEmptyClick';
+
+export const handleDepositJackpotWheelRewardModalGoToDepositBtnClick =
+  'handleDepositJackpotWheelRewardModalGoToDepositBtnClick';
+
+export const handleDepositJackpotWheelRewardModalSpinNowBtnClick =
+  'handleDepositJackpotWheelRewardModalSpinNowBtnClick';
+
+export const handleDepositJackpotWheelModalMaskClick =
+  'handleDepositJackpotWheelModalMaskClick';

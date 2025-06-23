@@ -1,29 +1,31 @@
 import { BasePagePathObj } from '@libs/mode2/routerTypes/types';
-import { getParams } from '@libs/mode2/utils';
 import {
   useHeaderStore,
   EHeaderType,
 } from '@libs/mode2/zustand/components/headerStore';
 import {
-  EOrderDetailPageType,
   IOrderDetailTabUnit,
   useMode2OrderDetailPageStore,
 } from '@libs/mode2/zustand/page/orderDetailPageStore';
+import { useRouterPenddingDataStore } from '@libs/mode2/zustand/routerPenddingDataStore';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
+import { useNavigateClick } from '@mode2/usecase/useNavPageClick';
 
 export const useModa2OrderDetailPageHeaderSetting = () => {
   const thisPath = BasePagePathObj.OrderDetailPage;
   const location = useLocation();
+  const navigate = useNavigateClick();
   const setConfig = useHeaderStore((state) => state.setConfig);
-  const setOrderDetailPageType = useMode2OrderDetailPageStore(
-    (state) => state.setOrderDetailPageType
+  const setOrderListTabList = useMode2OrderDetailPageStore(
+    (state) => state.setOrderListTabList
   );
-  const setOrderDetailTabList = useMode2OrderDetailPageStore(
-    (state) => state.setOrderDetailTabList
+  const clearAllPaths = useRouterPenddingDataStore(
+    (state) => state.clearAllPaths
   );
-
-  const params = getParams(['tab'], location.search, location.state);
+  const setOrderListTabIndex = useMode2OrderDetailPageStore(
+    (state) => state.setOrderListTabIndex
+  );
 
   const tabList: IOrderDetailTabUnit[] = [
     {
@@ -41,22 +43,20 @@ export const useModa2OrderDetailPageHeaderSetting = () => {
   ];
 
   useEffect(() => {
-    console.log('@@===> params', params);
-
-    // 充值紀錄 ｜ 提現紀錄
-    const { tab } = params;
     if (location.pathname === thisPath) {
       setConfig({
         type: EHeaderType.Common,
         title: { i18nKey: 'History' },
+        onBack: () => {
+          navigate(-1);
+          clearAllPaths();
+          setOrderListTabIndex(1);
+        },
       });
-      setOrderDetailPageType(
-        (tab as EOrderDetailPageType) || EOrderDetailPageType.RECHARGE
-      );
     }
-  }, [params]);
+  }, []);
 
   useEffect(() => {
-    setOrderDetailTabList(tabList);
+    setOrderListTabList(tabList);
   }, []);
 };

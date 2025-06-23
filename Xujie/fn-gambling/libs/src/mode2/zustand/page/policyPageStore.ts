@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from '../middlewareWrapper';
 
 export interface IPolicyListType {
   i18nTitleKey: string;
@@ -13,11 +12,8 @@ interface useMode2PolicyPageListType {
 }
 
 export const useMode2PolicyPageListStore = create<useMode2PolicyPageListType>()(
-  devtoolsAndPersistWrapper(
-    '[page store] useMode2PolicyPageListStore',
-    (set) => ({
-      policyList: [] as IPolicyListType[],
-      setPolicyList: (value) => set({ policyList: value }),
-    })
-  )
+  (set) => ({
+    policyList: [] as IPolicyListType[],
+    setPolicyList: (value) => set({ policyList: value }),
+  })
 );

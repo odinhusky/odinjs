@@ -10,12 +10,14 @@ import {
   handleWalletPageUseGuideActionClick,
   handleWalletPageWithdrawModifierClick,
   handleWalletPageWithdrawTabCheckOrderClick,
-} from './acitonType';
+} from '@mode2/action/actionTypes';
 
 import { BasePagePathObj } from '@mode2/routerTypes/types';
 import {
   RecordPageBalanceRecordTabs,
+  RecordPageHeaderTabs,
   RecordPageTabs,
+  useRecordPageHeaderTabsStore,
 } from '@libs/mode2/zustand/page/recordPageStore';
 import { KYC_BOTH_STATE } from '@constant/KYC';
 import { HandleClickProps } from '@mode2/action/common/handleClickProps';
@@ -39,6 +41,9 @@ import useBindPlayerPhoneModalStore from '@mode2/zustand/modal/BindPlayerPhoneMo
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 import { UserRoleType } from '@mode2/@types/userRoleTypes';
 import sdkUtils from '@mode2/utils/sdk';
+import { useWalletPageStore } from '@mode2/zustand/page/WalletPage/walletPageStore';
+import { WalletDashboardType } from '@mode2/@types/walletDashboardTypes';
+import { hasBindPhoneModalVersionList } from '@libs/constant/versions';
 
 type ActionClickPayloadMap = {
   [handleWalletPageSwitchTabClick]: { id: WalletPageTabType };
@@ -59,8 +64,13 @@ export interface HandleWalletPageBaseClickProps<
 > extends HandleClickProps<T, ActionClickPayloadMap> {}
 
 export const useWalletPageBaseActions = () => {
-  const { navToLoginPage, mapRoutesNavTo, navToWalletGuidePage } =
-    useNavPageClick();
+  const {
+    navToLoginPage,
+    mapRoutesNavTo,
+    navToWalletGuidePage,
+    navToOrderDetailPage,
+    navToRecordPage,
+  } = useNavPageClick();
   const setCurSwitchContentTabId = useWalletPageSwitchContentTabsStore(
     (state) => state.setCurSwitchContentTabId
   );
@@ -83,6 +93,7 @@ export const useWalletPageBaseActions = () => {
     [handleWalletPageSwitchTabClick]: ({ id }) => {
       handleGlobalClick({
         target: handleWalletPageSwitchTabClick,
+        payload: { id },
         callback: () => {
           if (id === WalletPageTabType.WITHDRAW) {
             const userRole = useUserProfileStore.getState().userRole;
@@ -91,9 +102,12 @@ export const useWalletPageBaseActions = () => {
                 navToLoginPage(31);
                 break;
               case UserRoleType.PLAYER:
-                useBindPlayerPhoneModalStore
-                  .getState()
-                  .setShowBindPlayerPhoneModal(true);
+                const vVersion = import.meta.env['VITE_V_VERSION'];
+                if (hasBindPhoneModalVersionList.includes(vVersion)) {
+                  useBindPlayerPhoneModalStore
+                    .getState()
+                    .setShowBindPlayerPhoneModal(true);
+                }
                 break;
               case UserRoleType.USER:
                 setCurSwitchContentTabId(id);
@@ -108,6 +122,7 @@ export const useWalletPageBaseActions = () => {
     [handleWalletPageRechargeCardClick]: ({ card }) => {
       handleGlobalClick({
         target: handleWalletPageRechargeCardClick,
+        payload: { card },
         callback: () => {
           setCurrentRechargeCard(card);
         },
@@ -116,6 +131,7 @@ export const useWalletPageBaseActions = () => {
     [handleWalletPageSetPayChannelClick]: ({ item }) => {
       handleGlobalClick({
         target: handleWalletPageSetPayChannelClick,
+        payload: { item },
         callback: () => {
           setCurrentPayChannel(item);
         },
@@ -124,6 +140,7 @@ export const useWalletPageBaseActions = () => {
     [handleWalletPagePayPayChannelOtpClick]: ({ item }) => {
       handleGlobalClick({
         target: handleWalletPagePayPayChannelOtpClick,
+        payload: { item },
         callback: () => {
           setCurrentPayOption(item);
         },
@@ -159,7 +176,17 @@ export const useWalletPageBaseActions = () => {
       handleGlobalClick({
         target: handleWalletPageRechargeTabCheckOrderDeatilClick,
         callback: () => {
-          mapRoutesNavTo(BasePagePathObj.OrderDetailPage, '');
+          switch (useWalletPageStore.getState().displayDashboardType) {
+            case WalletDashboardType.BALANCE:
+              useRecordPageHeaderTabsStore
+                .getState()
+                .setHeaderTabIndex(RecordPageHeaderTabs.DETAIL);
+              navToRecordPage();
+              break;
+            case WalletDashboardType.NONE:
+              navToOrderDetailPage();
+              break;
+          }
         },
       });
     },

@@ -9,8 +9,12 @@ import { useLoadingStore } from '@libs/mode2/zustand/components/loadingStore';
 import { fileToBase64 } from '../utils';
 import { useNavigateClick } from '@mode2/usecase/useNavPageClick';
 import { useMessageStore } from '@mode2/zustand/components/messageStore';
+import { useMode2OrderDetailPageStore } from '../zustand/page/orderDetailPageStore';
+import { RechargeReceiptState } from '../external/api/endpoint/recharge/PostRechargeQueryReceiptEndpoint';
+import { useTranslation } from 'react-i18next';
 
 export const useFullOrder = () => {
+  const { t } = useTranslation();
   const navigate = useNavigateClick();
   const [
     postRechargeUploadReceipt,
@@ -32,9 +36,37 @@ export const useFullOrder = () => {
     (state) => state.setFullOrderFile
   );
 
+  const orderDetail = useMode2OrderDetailPageStore(
+    (state) => state.orderDetail
+  );
+  const setOrderDetail = useMode2OrderDetailPageStore(
+    (state) => state.setOrderDetail
+  );
+
+  const orderList = useMode2OrderDetailPageStore((state) => state.orderList);
+  const setOrderList = useMode2OrderDetailPageStore(
+    (state) => state.setOrderList
+  );
+
   useDeepEffect(() => {
     if (isSuccess && data) {
       useMessageStore.getState().success(data.result);
+      // 更改訂單列表和訂單詳情的UTRState
+      if ('UTRState' in orderDetail) {
+        setOrderDetail({
+          ...orderDetail,
+          UTRState: RechargeReceiptState.PROCESSING,
+        });
+        const updatedOrderList = orderList.map((item) =>
+          item.orderNumber === orderId
+            ? {
+                ...item,
+                UTRState: RechargeReceiptState.PROCESSING,
+              }
+            : item
+        );
+        setOrderList(updatedOrderList);
+      }
 
       setTimeout(() => {
         navigate(-1);
@@ -43,9 +75,15 @@ export const useFullOrder = () => {
   }, [isSuccess, data]);
 
   const onUpdate = useCallback(() => {
+    const trimConfirmCode = String(confirmCode ?? '').replace(/\s+/g, '');
+    if (trimConfirmCode.length > 12) {
+      useMessageStore.getState().info(t('confirm_code_too_long'));
+      return false;
+    }
+
     postRechargeUpdateReceipt({
       orderId: orderId,
-      confirmCode: confirmCode,
+      confirmCode: trimConfirmCode,
     });
     return;
   }, [confirmCode]);

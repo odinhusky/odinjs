@@ -21,8 +21,14 @@ import {
 import { AppLocalStorageKey } from '@mode2/utils/sdk/persistant/storageKey';
 import { useFetchMyIpStore } from '@mode2/zustand/fetchMyIpStore';
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 import { useDeepEffect, useUpdateEffect } from '@libs/commonUtils';
+import { UserRoleType } from '../@types/userRoleTypes';
+import { replaceSubdomainWithWWW } from '@mode2/utils';
+import {
+  PostHogEventPayload,
+  PostHogPayloadType,
+} from '@mode2/utils/sdk/strategy/analytics/PostHogAnalytics';
 
 const REFRESH_THRESHOLD = 3 * 1000;
 
@@ -54,6 +60,19 @@ const useUserInfo = () => {
   const setLowBalance = useUserProfileStore((state) => state.setLowBalance);
   const isLogin = useIsLoginStore((state) => state.isLogin);
   const setUserRole = useUserProfileStore((state) => state.setUserRole);
+
+  const setGender = useUserProfileStore((state) => state.setGender);
+  const setHasSetPassword = useUserProfileStore(
+    (state) => state.setHasSetPassword
+  );
+  const setReferralCode = useUserProfileStore((state) => state.setReferralCode);
+  const setReferralLink = useUserProfileStore((state) => state.setReferralLink);
+  const setBindReferralCode = useUserProfileStore(
+    (state) => state.setBindReferralCode
+  );
+  const setDisplayUserName = useUserProfileStore(
+    (state) => state.setDisplayUserName
+  );
 
   const refreshUserDataCount = useUserProfileStore(
     (state) => state.refreshUserDataCount
@@ -94,6 +113,12 @@ const useUserInfo = () => {
       severityLevel: 'info',
       profile: JSON.stringify(userInfo),
     });
+
+    sdkUtils.sendAnalyticsEvent<PostHogEventPayload>({
+      event: 'posthog.user',
+      postHogType: PostHogPayloadType.USER,
+      parameter: '',
+    });
   };
 
   const handleRefreshUserData = useCallback(() => {
@@ -127,6 +152,19 @@ const useUserInfo = () => {
       setLastApiUpdateTime(dayjs().unix());
       setLowBalance(mainInfo.isLowBalance);
       setUserRole(mainInfo.userRole);
+      setGender(mainInfo.gender);
+      setHasSetPassword(mainInfo.hasSetPassword);
+      setReferralCode(mainInfo.referralCode);
+      // setReferralLink(
+      //   `${location.origin}/pop?referral_code=${mainInfo.referralCode.toUpperCase()}`
+      // );
+      setReferralLink(
+        `${replaceSubdomainWithWWW()}/pop?referral_code=${
+          mainInfo.referralCode.toUpperCase()
+        }`
+      );
+      setBindReferralCode(mainInfo.bindReferralCode);
+
       if (mainInfo.isLevelPopup) {
         playerRemoveLevelCache();
       }
@@ -140,6 +178,9 @@ const useUserInfo = () => {
       // 定位 Sentry 使用者資訊
       handleSentryUser(mainInfo);
       reset();
+
+      const displayUserName = getDisplayUserName(mainInfo);
+      setDisplayUserName(displayUserName);
     }
   }, [mainInfo, isSuccess, isLoading]);
 
@@ -173,6 +214,20 @@ const useUserInfo = () => {
   useUpdateEffect(() => {
     handleRefreshUserData();
   }, [refreshUserDataCount]);
+
+  // 是否修改過暱稱
+  const getDisplayUserName = (mainInfo: PlayerMainInfoResult) => {
+    const isGuest = mainInfo.userRole === UserRoleType.GUEST;
+    if (isGuest) {
+      return 'Guest';
+    }
+
+    if (mainInfo.playerName === mainInfo.nickname) {
+      return `Player${mainInfo.nickname}`;
+    } else {
+      return `${mainInfo.nickname}`;
+    }
+  };
 };
 
 export default useUserInfo;

@@ -8,4 +8,45 @@ export const axiosBatch = rateLimit(axios.create(), {
   perMilliseconds: 1000,
 });
 
-export const axiosGetBatch = axiosBatch.get;
+// 用 Map 存储请求缓存
+const requestCache = new Map<string, Promise<any>>();
+const CACHE_DURATION = 500; // 0.5秒
+
+// Evan 避免0.5秒內相同請求
+export const axiosGetBatch = async (url: string, config = {}) => {
+  const cacheKey = JSON.stringify({ url, config });
+
+  if (requestCache.has(cacheKey)) {
+    console.log('@@@===> request deduplication');
+    return requestCache.get(cacheKey);
+  }
+
+  // 发起请求并存入缓存
+  const requestPromise = axiosBatch.get(url, config).finally(() => {
+    setTimeout(() => {
+      requestCache.delete(cacheKey);
+    }, CACHE_DURATION);
+  });
+
+  requestCache.set(cacheKey, requestPromise);
+  return requestPromise;
+};
+
+// export const axiosPreloadBatch = async (url: string, config = {}) => {
+//   const cacheKey = JSON.stringify({ url, config });
+//
+//   if (requestCache.has(cacheKey)) {
+//     console.log('@@@===> request deduplication');
+//     return requestCache.get(cacheKey);
+//   }
+//
+//   // 发起请求并存入缓存
+//   const requestPromise = axiosPBatch.get(url, config).finally(() => {
+//     setTimeout(() => {
+//       requestCache.delete(cacheKey);
+//     }, CACHE_DURATION);
+//   });
+//
+//   requestCache.set(cacheKey, requestPromise);
+//   return requestPromise;
+// };

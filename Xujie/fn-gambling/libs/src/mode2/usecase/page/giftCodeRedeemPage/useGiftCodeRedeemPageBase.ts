@@ -2,10 +2,15 @@ import { useMode2PageResetFloatActionButton } from '@mode2/usecase/page/useMode2
 import useGiftCodeRedeemPageHeaderSetting from '@mode2/usecase/page/giftCodeRedeemPage/useGiftCodeRedeemPageHeaderSetting';
 import useGiftCodeRedeemPageFooterSetting from '@mode2/usecase/page/giftCodeRedeemPage/useGiftCodeRedeemPageFooterSetting';
 import useRedeemGiftCodeBase from '@mode2/usecase/page/giftCodeRedeemPage/useRedeemGiftCodeBase';
-import { GiftCodeRedeemScenarios } from '@mode2/zustand/page/GiftCodeRedeemPage/useGiftCodeRedeemStore';
+import {
+  GiftCodeRedeemResultScenarios,
+  GiftCodeRedeemScenarios,
+} from '@mode2/zustand/page/GiftCodeRedeemPage/useGiftCodeRedeemStore';
 
-export const useGiftCodeRedeemPageBase = () => {
-  useRedeemGiftCodeBase(GiftCodeRedeemScenarios.PAGE);
+export const useGiftCodeRedeemPageBase = (
+  displayResult: GiftCodeRedeemResultScenarios = GiftCodeRedeemResultScenarios.TOAST
+) => {
+  useRedeemGiftCodeBase(GiftCodeRedeemScenarios.PAGE, displayResult);
 
   useGiftCodeRedeemPageHeaderSetting();
 

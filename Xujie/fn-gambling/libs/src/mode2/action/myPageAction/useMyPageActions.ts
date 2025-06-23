@@ -26,7 +26,10 @@ import {
   handleMyPageBankDetailActionClick,
   handleMyPageMyInfoActionClick,
   handleMyPagSettingActionClick,
-} from './acitonType';
+  handleMyPageVIPPageBtnClick,
+  handleMyPageMissionActionClick,
+  handleMyPageDownloadAppLineBtnClick,
+} from '@mode2/action/actionTypes';
 import handleGlobalClick from '../handleGlobalClick';
 import { ActionClickObjType } from '../common/actionClickObjetType';
 import { HandleClickProps } from '../common/handleClickProps';
@@ -59,6 +62,12 @@ import { useMessageStore } from '@mode2/zustand/components/messageStore';
 import { SettingPageTypes } from '@libs/mode2/zustand/page/settingPageStore';
 import { AccountPageTypes } from '@libs/mode2/zustand/page/accountPageStore';
 import sdkUtils from '@libs/mode2/utils/sdk';
+import { useWalletPageStore } from '@mode2/zustand/page/WalletPage/walletPageStore';
+import { WalletDashboardType } from '@mode2/@types/walletDashboardTypes';
+import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
+import { INV6 } from '@libs/constant/versions';
+import { useTaskCenterPageStore } from '@mode2/zustand/page/TaskCenterPage/taskCenterPageStore';
+import { MissionType } from '@mode2API/endpoint/mission/PostMissionOngoingEndpoint';
 
 export type ActionClickPayloadMap = {
   [handleMyPageActivityLineBtnClick]: void;
@@ -84,6 +93,7 @@ export type ActionClickPayloadMap = {
   [handleMyPageDepositBtnClick]: void;
   [handleMyPageWithdrawBtnClick]: void;
   [handleMyPageReloadVersionLineBtnClick]: void;
+  [handleMyPageDownloadAppLineBtnClick]: void;
   [handleMyPageAnnouncementsActionClick]: { item: AnnouncementResult };
   [handleLogoutBtnClick]: void;
   [handleCloseMyPageWeakTipsModal]: void;
@@ -91,6 +101,8 @@ export type ActionClickPayloadMap = {
   [handleMyPageBankDetailActionClick]: void;
   [handleMyPageAboutUsActionClick]: void;
   [handleMyPagSettingActionClick]: void;
+  [handleMyPageVIPPageBtnClick]: void;
+  [handleMyPageMissionActionClick]: void;
 };
 
 export interface HandleMyPageClickProps<T extends keyof ActionClickPayloadMap>
@@ -111,6 +123,8 @@ export const useMyPageActions = () => {
     navToTeamClubPage,
     navToAccountPage,
     navToSettingPage,
+    navToVipPage,
+    navToTaskCenterPage,
   } = useNavPageClick();
 
   const { copyToClipboard } = useClipboard();
@@ -140,6 +154,13 @@ export const useMyPageActions = () => {
   // const setShowBindPlayerPhoneModal = useBindPlayerPhoneModalStore(
   //   (state) => state.setShowBindPlayerPhoneModal
   // );
+  const setCurSwitchContentTabId = useWalletPageSwitchContentTabsStore(
+    (state) => state.setCurSwitchContentTabId
+  );
+
+  const setDisplayDashboardType = useWalletPageStore(
+    (state) => state.setDisplayDashboardType
+  );
 
   const [postUpdateAvatar, { isSuccess, isError }] =
     usePostPlayerUpdateAvatarMutation();
@@ -149,11 +170,7 @@ export const useMyPageActions = () => {
       refreshUserData();
       useMessageStore
         .getState()
-        .success(
-          `${t('earn_money_earn_btn_save')} ${t(
-            'account_balance_record_add_cash_record_table_content_success'
-          )}`
-        );
+        .success(`${t('profile_my_info_select_gender_success_toast')}`);
     }
   }, [isSuccess]);
 
@@ -335,8 +352,15 @@ export const useMyPageActions = () => {
       handleGlobalClick({
         target: handleMyPageUserInfoCopyIDClick,
         callback: () => {
-          copyToClipboard(`${id}`);
+          copyToClipboard(`${id}`, {
+            successMessage:
+              import.meta.env['VITE_V_VERSION'] === INV6
+                ? 'spin_and_share_wheel_copied_toast'
+                : '',
+            resetInterval: 100,
+          });
         },
+        debounceTimer: 300,
       });
     },
     [handleMyPageUserInfoAvatarSaveBtnClick]: ({
@@ -345,6 +369,7 @@ export const useMyPageActions = () => {
     }) => {
       handleGlobalClick({
         target: handleMyPageUserInfoAvatarSaveBtnClick,
+        payload: { selectedAvatarOrder, selectedAvatarFrameOrder },
         callback: () => {
           postUpdateAvatar({
             avatar: selectedAvatarOrder,
@@ -366,6 +391,8 @@ export const useMyPageActions = () => {
       handleGlobalClick({
         target: handleMyPageDepositBtnClick,
         callback: () => {
+          setDisplayDashboardType(WalletDashboardType.NONE);
+          setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
           navToWalletPage('', { state: { tab: WalletPageTabType.DEPOSIT } });
           setOpenMyDrawer(false);
         },
@@ -375,6 +402,8 @@ export const useMyPageActions = () => {
       handleGlobalClick({
         target: handleMyPageWithdrawBtnClick,
         callback: () => {
+          setDisplayDashboardType(WalletDashboardType.NONE);
+          setCurSwitchContentTabId(WalletPageTabType.WITHDRAW);
           navToWalletPage('', { state: { tab: WalletPageTabType.WITHDRAW } });
           setOpenMyDrawer(false);
         },
@@ -390,13 +419,23 @@ export const useMyPageActions = () => {
         },
       });
     },
+    [handleMyPageDownloadAppLineBtnClick]: () => {
+      handleGlobalClick({
+        target: handleMyPageDownloadAppLineBtnClick,
+        callback: () => {
+          sdkUtils.downloadApp();
+        },
+      });
+    },
     [handleMyPageAnnouncementsActionClick]: ({ item }) => {
       handleGlobalClick({
         target: handleMyPageAnnouncementsActionClick,
+        payload: { item },
         callback: () => {
           onAnnouncementAction(AnnouncementScenariosType.HOME, {
             type: item.type,
             gameObj: item.gameObj,
+            mataData: item,
           });
           setOpenMyDrawer(false);
         },
@@ -406,6 +445,7 @@ export const useMyPageActions = () => {
     [handleMyPageMyInfoActionClick]: ({ value }) => {
       handleGlobalClick({
         target: handleMyPageMyInfoActionClick,
+        payload: { value },
         callback: () => {
           navToAccountPage('', {
             state: { tab: value },
@@ -449,6 +489,27 @@ export const useMyPageActions = () => {
             state: { tab: SettingPageTypes.MUSIC_SETTING },
           });
           setOpenMyDrawer(false);
+        },
+      });
+    },
+    [handleMyPageVIPPageBtnClick]: () => {
+      handleGlobalClick({
+        target: handleMyPageVIPPageBtnClick,
+        callback: () => {
+          navToVipPage();
+        },
+      });
+    },
+    [handleMyPageMissionActionClick]: () => {
+      handleGlobalClick({
+        target: handleMyPageMissionActionClick,
+        callback: () => {
+          useTaskCenterPageStore
+            .getState()
+            .setCurrentMissionType(MissionType.NEW_PLAYER);
+          navToTaskCenterPage('', {
+            state: { tab: MissionType.NEW_PLAYER },
+          });
         },
       });
     },

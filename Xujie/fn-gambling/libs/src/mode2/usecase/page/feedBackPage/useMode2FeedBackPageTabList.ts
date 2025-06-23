@@ -4,7 +4,7 @@ import {
   useMode2FeedBackPageTabStore,
 } from '@mode2/zustand/page/feedbackPageStore';
 import { useFeedBackPageActions } from '@mode2/action/feedBackPageAction/useFeedBackPageActions';
-import { handleFeedBackPageTabClick } from '@mode2/action/feedBackPageAction/acitonType';
+import { handleFeedBackPageTabClick } from '@mode2/action/actionTypes';
 
 export const useMode2FeedBackPageTabList = () => {
   const setTabList = useMode2FeedBackPageTabStore((state) => state.setTabList);

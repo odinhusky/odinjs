@@ -262,5 +262,80 @@ export const POST_PLAYER_OTP_LOGIN_URL = '/v2/api/player/otpLogin'; //一次性�
 
 // - [V6] 新增 Start ===========
 export const POST_WITHDRAW_OPTIONS_URL = '/v2/api/pay/withdrawOptions';
+export const POST_UPDATE_GENDER_URL = '/v2/api/player/updateGender';
+export const POST_VIP_REWARD_HISTORY_URL = '/v2/api/vip/reward-history';
+export const POST_PROMOTE_START_PAGE_URL = '/v2/api/promote/start-page';
+export const POST_TEAM_NOTICE_READ_URL = '/v2/api/team/notice/read';
 
+export const POST_GAME_RECENT_PLAY_URL = '/v2/api/game/getRecentPlay';
+export const POST_RECHARGE_DETAIL_URL = '/v2/api/recharge/detail';
+export const POST_RECHARGE_CLAIM_TUTORIAL_REWARD_URL =
+  '/v2/api/recharge/claimTutorialReward';
+
+export const POST_TEAM_INVITATION_TASK_REWARD_CLAIM_URL =
+  '/v2/api/team/invitation/task/reward/claim';
+export const POST_TEAM_INVITATION_TASK_REWARD_CLAIM_ALL_URL =
+  '/v2/api/team/invitation/task/reward/claimAll';
+
+export const POST_ACTIVE_CLAIM_SURPRISE_REWARD_URL =
+  '/v2/api/active/claimSurpriseReward';
+export const POST_VIP_CLAIM_REBATE_URL = '/v2/api/vip/claimReBate';
+
+export const POST_MESSAGES_CLAIM_URL = '/v2/api/messaging/messages/claim';
+export const POST_MESSAGES_DELETE_ALL_READ_URL =
+  '/v2/api/messaging/messages/delAllRead';
+export const POST_MESSAGES_DELETE_URL = '/v2/api/messaging/messages/delete';
+
+export const POST_RANKING_HISTORY_URL = '/v2/api/ranking/history'; //查詢前次排行榜
+
+export const POST_RANKING_MY_REWARDS_URL = '/v2/api/ranking/myRewards'; //查詢自己的獎勵
+
+export const POST_RANKING_ONGOING_URL = '/v2/api/ranking/ongoing'; // 查詢當前排行榜
+
+export const POST_RANKING_RULES_URL = '/v2/api/ranking/rules'; // 排行榜規則
+
+export const POST_PROMOTE_RANKING_JACKPOT_URL =
+  '/v2/api/promote/ranking-jackpot'; // 排行榜彈窗資訊
+export const POST_PROMOTE_WINNING_SHARE_URL = '/v2/api/promote/winning-share'; //赢钱推广
+export const POST_PROMOTE_FIRST_CHARGE_URL = '/v2/api/promote/first-charge'; //首充
+export const POST_PROMOTE_SURPRISE_REWARD_URL =
+  '/v2/api/promote/surprise-reward'; //惊喜奖励
+export const POST_PROMOTE_VIP_REBATE_URL = '/v2/api/promote/vip-rebate'; //每日返水
+export const POST_PROMOTE_INVITE_WHEEL_URL = '/v2/api/promote/invite-wheel'; //邀請轉盤談窗
+
+export const POST_MISSION_CLAIM_URL = '/v2/api/mission/claim'; // 领取任务奖励
+export const POST_MISSION_CLAIM_BOX_URL = '/v2/api/mission/claimBox'; // 领取任务宝箱奖励
+export const POST_MISSION_ONGOING_URL = '/v2/api/mission/ongoing'; // 取得个人任务资讯
+export const POST_MISSION_TIP_NUMBERS_URL = '/v2/api/mission/tipNumbers'; // 取得任务完成提示
+export const POST_MISSION_HISTORY_URL = '/v2/api/mission/history'; // 取得任务完成提示
+export const POST_PROMOTE_DAILY_MISSION_URL = '/v2/api/promote/daily-mission'; // 每日任务弹窗
+export const POST_PROMOTE_NEW_PLAYER_BONUS_URL =
+  '/v2/api/promote/new-player-bonus'; // 新人福利弹窗
+
+export const POST_RECHARGE_TUTORIAL_STATUS_URL =
+  '/v2/api/recharge/tutorialStatus'; // 支付教程活动状态
 // - [V6] 新增 End ===========
+
+export const POST_REPORT_COLLECTION_BEHAVIOR_URL =
+  '/v2/api/collection/log/behavior';
+
+export const POST_PIXEL_EVENT_URL = '/v2/api/event/pixel';
+export const POST_EVENT_ADJUST_PATCH_URL = '/v2/api/event/adjust-patch';
+export const POST_GAME_ALL_URL = '/v2/api/game/all';
+export const POST_DEVICE_EVENT_URL = '/v2/api/device/event';
+
+export const PUT_MMP_UPDATE_URL = '/v2/api/mmp/update';
+export const POST_PAY_BROKEN_CONFIG_URL = '/v2/api/pay/broken/config'; // 破产充值优惠奖励选项
+export const POST_PAY_BROKEN_RECHARGE_URL = '/v2/api/pay/broken/recharge'; //破产充值
+
+export const POST_PAY_ADDON_CONFIG_URL = '/v2/api/pay/addOn/config'; //取得附加加值资讯
+export const POST_PAY_ADDON_POSTPONE_URL = '/v2/api/pay/addOn/postponeAddOn'; //推迟附加加值弹窗
+export const POST_PAY_INBOX_CONFIG_URL = '/v2/api/pay/inbox/config'; //站内信充值优惠奖励选项
+export const POST_PAY_INBOX_RECHARGE_URL = '/v2/api/pay/inbox/recharge'; //站内信充值
+
+export const POST_BROKEN_BOX_INFO_URL = '/v2/api/broken/box/information'; //取得破产宝箱奖励资讯
+
+export const POST_BROKEN_BOX_CLAIM_URL = '/v2/api/broken/box/claim'; // 领取破产宝箱奖励
+
+export const POST_PROMOTE_PRIZE_WHEEL_URL = '/v2/api/promote/prize-wheel'; // 大獎輪盤
+export const POST_WHEEL_PRIZE_SPIN_URL = '/v2/api/wheel/prize/spin'; // 大獎輪盤spin

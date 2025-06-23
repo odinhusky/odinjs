@@ -1,13 +1,13 @@
 import { usePlatformNotifyStore } from '@mode2/zustand/platform/platformNotifyStore';
 import {
   AnnouncementItem,
-  useMode2BannerActionsStore,
   useMode2BannerStore,
 } from '@mode2/zustand/page/hallPageStore';
-import { cloneDeep, isArray, isEmpty, isNil } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
+import isArray from 'lodash/isArray';
+import isEmpty from 'lodash/isEmpty';
+import isNil from 'lodash/isNil';
 import { AnnouncementResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
-import { handleBannerClickSwipe } from '@mode2/action/hallPageAction/actionType';
-import useHallPageActions from '@mode2/action/hallPageAction/useHallPageActions';
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 import { AnnouncementType } from '@mode2/@types/announcementType';
 import { useDeepEffect } from '@libs/commonUtils';
@@ -18,17 +18,11 @@ export const useBannerListBase = () => {
   );
   const isFirstDeposit = useUserProfileStore((state) => state.isFirstDeposit);
   const setBannerList = useMode2BannerStore((state) => state.setBannerList);
-  const setBannerActionList = useMode2BannerActionsStore(
-    (state) => state.setBannerActionList
-  );
-
-  const { handleHallPageClick } = useHallPageActions();
 
   useDeepEffect(() => {
     if (isNil(announcementsItems)) return;
 
     let list: AnnouncementItem[] = [];
-    let actionList: (() => void)[] = [];
 
     if (
       announcementsItems &&
@@ -51,19 +45,9 @@ export const useBannerListBase = () => {
         });
 
       list = cloneBannerList;
-
-      actionList = cloneBannerList.map((item) => () => {
-        handleHallPageClick({
-          actionName: handleBannerClickSwipe,
-          payload: {
-            item,
-          },
-        });
-      });
     }
 
     setBannerList(list);
-    setBannerActionList(actionList);
   }, [announcementsItems, isFirstDeposit]);
 };
 

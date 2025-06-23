@@ -3,7 +3,8 @@ import { rechargeWheelLevelTypeMapping } from '@libs/mode2/@types/rechargeWheelL
 import { usePostWheelPlayerProgressMutation } from '@libs/mode2/external/api';
 import { useIsLoginStore } from '@libs/mode2/zustand/loginStore';
 import useMode2RechargeWheelPageStore from '@libs/mode2/zustand/page/rechargeWheelPage';
-import { get, isEmpty } from 'lodash';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 import { useEffect } from 'react';
 
 export const useRechargeWheelPlayerProgress = () => {

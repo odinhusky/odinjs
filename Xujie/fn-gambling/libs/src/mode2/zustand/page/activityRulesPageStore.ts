@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from '@mode2/zustand/middlewareWrapper';
 
 export enum ActivityRulesContentTypes {
   RED_ENVELOPE_RAIN_RULES_CONTENT = 'RED_ENVELOPE_RAIN_RULES_CONTENT', // 紅包雨
@@ -16,11 +15,8 @@ export type ActivityRulesPageStoreTypes = {
 };
 
 export const useActivityRulesPageStore = create<ActivityRulesPageStoreTypes>()(
-  devtoolsAndPersistWrapper(
-    '[page store] useActivityRulesPageStore',
-    (set) => ({
-      contentTabIndex: null as ActivityRulesContentTypes | null,
-      setContentTabIndex: (index) => set(() => ({ contentTabIndex: index })),
-    })
-  )
+  (set) => ({
+    contentTabIndex: null as ActivityRulesContentTypes | null,
+    setContentTabIndex: (index) => set(() => ({ contentTabIndex: index })),
+  })
 );

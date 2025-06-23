@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 export enum AccountPageTypes {
   MYINFO = 0, // 個人詳情頁
-  AVATAR = 1, // 修改頭像頁
+  AVATAR = 1, // 修改頭像頁 後還是用舊的Modal來寫了
 }
 
 export enum AccountPageGenderTypes {

@@ -18,9 +18,9 @@ interface FundDetailItemResponse {
 }
 
 export enum FundDetailType {
-  ALL = 'ALL', // null
-  EXPENSE = 'EXPENSE', //2
-  INCOME = 'INCOME', //1
+  ALL = 'All', // null
+  EXPENSE = 'Expense', //2
+  INCOME = 'Income', //1
 }
 
 export interface FundDetailPayload {
@@ -63,6 +63,7 @@ export type FundDetailItemResult = {
   beforeBalance: number;
   afterBalance: number;
   isAssetIncreasing: boolean;
+  changeAmount: string;
 };
 
 type FundDetailResult = FundDetailItemResult[];
@@ -80,6 +81,7 @@ const transformResponse = (
       beforeBalance: extractApiMoneyString(item?.BeforeBalance || '0'),
       afterBalance: extractApiMoneyString(item?.AfterBalance || '0'),
       isAssetIncreasing: Number(item?.ChangeAmount || '0') > 0,
+      changeAmount: item?.ChangeAmount || '0',
     }));
   }
   return defaultResult;

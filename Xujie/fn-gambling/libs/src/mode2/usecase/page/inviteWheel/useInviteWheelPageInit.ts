@@ -52,6 +52,12 @@ const useInviteWheelPageInit = () => {
     (state) => state.setRefreshInfoNumber
   );
 
+  const setInviteWithdrawRequire = useInviteWheelPageStoreStore(
+    (state) => state.setInviteWithdrawRequire
+  );
+  const setInviteDamaRatio = useInviteWheelPageStoreStore(
+    (state) => state.setInviteDamaRatio
+  );
   const resetState = useInviteWheelPageStoreStore((state) => state.resetState);
 
   const pinduoduoFreeDrawModalVisible = usePinduoduoFreeDrawModalStore(
@@ -77,6 +83,8 @@ const useInviteWheelPageInit = () => {
       setCashOutRewardDifference(inviteWheelPortalInfo.remainingReward);
       setParticipated(inviteWheelPortalInfo.isParticipated);
       setInviteWheelPortalInfo(inviteWheelPortalInfo);
+      setInviteWithdrawRequire(inviteWheelPortalInfo.effectiveRechargeAmount);
+      setInviteDamaRatio(inviteWheelPortalInfo.rewardDamaTimes);
     }
   }, [inviteWheelPortalInfo]);
 

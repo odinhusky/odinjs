@@ -1,7 +1,7 @@
 import { useAdjustEventTokensStore } from '@mode2/zustand/platform/adjustEventTokensStore';
 import { useDeepEffect } from '@libs/commonUtils';
 import { useGetEventTokensQuery } from '@mode2API/index';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import sdkUtils from '@mode2/utils/sdk';
 
 /**

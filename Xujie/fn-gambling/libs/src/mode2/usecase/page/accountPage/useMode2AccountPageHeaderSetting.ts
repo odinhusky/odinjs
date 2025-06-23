@@ -24,7 +24,7 @@ export const useMode2AccountPageHeaderSetting = () => {
     if (tab !== undefined) {
       setConfig({
         type: EHeaderType.Common,
-        title: { i18nKey: 'My info' },
+        title: { i18nKey: 'profile_my_info_page_title' },
       });
     }
   }, [params]);

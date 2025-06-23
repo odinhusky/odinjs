@@ -9,12 +9,20 @@ import {
 import {
   POST_CAMPAIGN_LAUNCH_URL,
   POST_CAMPAIGN_LIST_URL,
+  POST_DEVICE_EVENT_URL,
+  POST_EVENT_ADJUST_PATCH_URL,
+  POST_PIXEL_EVENT_URL,
+  PUT_MMP_UPDATE_URL,
 } from '@mode2API/urls';
 import { useMessageStore } from '@mode2/zustand/components/messageStore';
 
 const SkipErrorMessageWhitelist = [
   POST_CAMPAIGN_LAUNCH_URL,
   POST_CAMPAIGN_LIST_URL,
+  POST_PIXEL_EVENT_URL,
+  POST_EVENT_ADJUST_PATCH_URL,
+  POST_DEVICE_EVENT_URL,
+  PUT_MMP_UPDATE_URL,
 ];
 
 // 略過error message 封裝
@@ -41,7 +49,7 @@ export const setupResponseInterceptors = (instance: AxiosInstance) => {
         const request = JSON.parse(response.config.data || '{}') || {};
         console.log(
           `%c===> gateway[${response.config.url}]:`,
-          'color:blue',
+          'color:pink',
           '\nrequest:',
           request.reqData,
           '\nresponse:',
@@ -58,16 +66,19 @@ export const setupResponseInterceptors = (instance: AxiosInstance) => {
       if (HttpStatusCode === 5005 || HttpStatusCode === 50005) {
         sdkUtils.removeStorage(AppLocalStorageKey.TOKEN);
         logout();
-        return Promise.reject();
+        return Promise.reject(response.data);
       }
       if (HttpStatusCode !== 200) {
         showErrorMessage(response.config?.url || '', response.data?.Msg);
+        const traceId =
+          response.headers['trace-id'] || response.headers['x-trace-id'];
         apiErrorLoggerEvent(
           `${response.config.url}`,
           response.status,
-          response.data
+          response.data,
+          traceId
         );
-        return Promise.reject();
+        return Promise.reject(response.data);
       }
       return response;
     },
@@ -79,7 +90,7 @@ export const setupResponseInterceptors = (instance: AxiosInstance) => {
         }`
       );
       apiExceptionLoggerEvent(error);
-      return Promise.reject();
+      return Promise.reject(error);
     }
   );
 };

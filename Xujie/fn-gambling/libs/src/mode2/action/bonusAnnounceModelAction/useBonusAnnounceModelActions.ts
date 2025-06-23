@@ -3,17 +3,17 @@ import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
 import {
   handleBonusAnnounceCloseClick,
   handleBonusAnnounceItemClick,
-} from '@mode2/action/bonusAnnounceModelAction/actionType';
+} from '@mode2/action/actionTypes';
 import handleGlobalClick from '@mode2/action/handleGlobalClick';
 import handleAction from '@mode2/action/common/handleAction';
-import { AnnouncementType } from '@mode2/@types/announcementType';
 import useAnnouncementActionBase, {
   AnnouncementScenariosType,
 } from '@mode2/usecase/announcement/useAnnouncementActionBase';
 import { useMode2HallPageModalStore } from '@mode2/zustand/page/hallPageStore';
+import { ParsingAnnouncementResult } from '@mode2/usecase/announcement/useParsingAnnouncementsContent';
 
 type ActionClickPayloadMap = {
-  [handleBonusAnnounceItemClick]: { type: AnnouncementType };
+  [handleBonusAnnounceItemClick]: { item: ParsingAnnouncementResult };
   [handleBonusAnnounceCloseClick]: void;
 };
 
@@ -27,11 +27,15 @@ export const useBonusAnnounceModelActions = () => {
     (state) => state.setIsShowBonusModal
   );
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
-    [handleBonusAnnounceItemClick]: ({ type }) => {
+    [handleBonusAnnounceItemClick]: ({ item }) => {
       handleGlobalClick({
         target: handleBonusAnnounceItemClick,
+        payload: { item },
         callback: () => {
-          onAnnouncementAction(AnnouncementScenariosType.POPUP, { type: type });
+          onAnnouncementAction(AnnouncementScenariosType.POPUP, {
+            type: item.type,
+            mataData: item,
+          });
         },
       });
     },

@@ -3,24 +3,26 @@ import {
   handleFABDrawerActionClick,
   handleFloatActionButtonActionClick,
   handleFloatActionInboxButtonActionClick,
-} from '@mode2/action/components/floatActionButton/acitonType';
+} from '@mode2/action/actionTypes';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
 import handleGlobalClick from '@mode2/action/handleGlobalClick';
 import sdkUtils from '@mode2/utils/sdk';
 import handleAction from '@mode2/action/common/handleAction';
 import { useFloatActionButtonListStore } from '@mode2/zustand/components/floatActionButtonStore';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { useToastStore } from '@libs/mode2/zustand/components/toastStore';
 import { useNavigateClick } from '@mode2/usecase/useNavPageClick';
 import { useMode2FeedBackPageTabStore } from '@mode2/zustand/page/feedbackPageStore';
 import { feedBackPageTabIdObj } from '@mode2/@types/feedBackPageTab';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
+import { NavigateOptions } from 'react-router/dist/lib/context';
 
 type ActionClickPayloadMap = {
   [handleFABDrawerActionClick]: void;
   [handleFloatActionButtonActionClick]: {
     isLink: boolean;
     target: string;
+    options?: NavigateOptions;
   };
   [handleFloatActionInboxButtonActionClick]: void;
 };
@@ -56,9 +58,10 @@ const useFloatActionButtonAction = () => {
       });
     },
 
-    [handleFloatActionButtonActionClick]: ({ isLink, target }) => {
+    [handleFloatActionButtonActionClick]: ({ isLink, target, options }) => {
       handleGlobalClick({
         target: handleFloatActionButtonActionClick,
+        payload: { isLink, target, options },
         callback: () => {
           if (isLink) {
             if (isEmpty(target)) {
@@ -71,7 +74,7 @@ const useFloatActionButtonAction = () => {
             useMode2FeedBackPageTabStore
               .getState()
               .setActiveTabId(feedBackPageTabIdObj.INBOX);
-            navigate(target);
+            navigate(target, options);
           }
         },
       });

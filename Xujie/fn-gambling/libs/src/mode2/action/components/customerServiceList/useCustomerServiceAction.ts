@@ -7,8 +7,8 @@ import {
   handleCustomerServiceAction,
   handleFeedbackCustomerServiceAction,
   handleFooterCustomerServiceAction,
-} from '@mode2/action/components/customerServiceList/acitonType';
-import { isEmpty } from 'lodash';
+} from '@mode2/action/actionTypes';
+import isEmpty from 'lodash/isEmpty';
 import { useToastStore } from '@libs/mode2/zustand/components/toastStore';
 import { useNavigateClick } from '@mode2/usecase/useNavPageClick';
 
@@ -38,6 +38,7 @@ export const useCustomerServiceAction = () => {
     [handleCustomerServiceAction]: ({ isLink, target }) => {
       handleGlobalClick({
         target: handleCustomerServiceAction,
+        payload: { isLink, target },
         callback: () => {
           if (isLink) {
             if (isEmpty(target)) {
@@ -55,6 +56,7 @@ export const useCustomerServiceAction = () => {
     [handleFeedbackCustomerServiceAction]: ({ isLink, target }) => {
       handleGlobalClick({
         target: handleFeedbackCustomerServiceAction,
+        payload: { isLink, target },
         callback: () => {
           if (isLink) {
             if (isEmpty(target)) {
@@ -72,6 +74,7 @@ export const useCustomerServiceAction = () => {
     [handleFooterCustomerServiceAction]: ({ isLink, target }) => {
       handleGlobalClick({
         target: handleFooterCustomerServiceAction,
+        payload: { isLink, target },
         callback: () => {
           if (isLink) {
             if (isEmpty(target)) {

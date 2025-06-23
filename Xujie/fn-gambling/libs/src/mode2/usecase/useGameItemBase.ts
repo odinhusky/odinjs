@@ -19,6 +19,7 @@ import { useLoadingStore } from '@mode2/zustand/components/loadingStore';
 import handleGlobalClick from '../action/handleGlobalClick';
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 import { useGuidanceDepositModalStore } from '@mode2/zustand/modal/GuidanceDepositModal/useGuidanceDepositModalStore';
+import { useMode2WebviewPageStore } from '../zustand/page/webviewPageStore';
 
 export interface EnterGameParams {
   id: number | null;
@@ -39,6 +40,7 @@ export const useGameItemBase = () => {
   const triggerFavoriteAction = useGameListStore(
     (state) => state.triggerFavoriteAction
   );
+  const setGameName = useMode2WebviewPageStore((state) => state.setGameName);
 
   const setShowLoading = useLoadingStore((state) => state.setShowLoading);
   const [postEnterGame] = usePostEnterGameMutation();
@@ -85,6 +87,7 @@ export const useGameItemBase = () => {
           gameId: enterGameId,
           platformId,
           enterGameType,
+          platform,
           manufacturer,
           type,
           manufacturerLogoUrl,
@@ -92,7 +95,8 @@ export const useGameItemBase = () => {
         // 1 push morePage 2 push webviewPage
         // 首次用戶 先引導到充值頁面
         const isFirstDeposit = useUserProfileStore.getState().isFirstDeposit;
-        if (isFirstDeposit) {
+
+        if (isFirstDeposit && import.meta.env['VITE_V_VERSION'] != 'v6') {
           useGuidanceDepositModalStore
             .getState()
             .setShowGuidanceDepositModal(true);
@@ -102,7 +106,10 @@ export const useGameItemBase = () => {
 
         const gameId = enterGameId || platformId;
 
-        const handleEnterGame = (gameId: number) => {
+        const handleEnterGame = (gameId: number, gameName: string) => {
+          // 贏錢Modal複製鏈接裡需要遊戲名
+          setGameName(gameName);
+
           const requestData: EnterGameRequest = {
             gameId: +gameId,
           };
@@ -137,6 +144,7 @@ export const useGameItemBase = () => {
           // 進入遊戲目錄
           navigate(BasePagePathObj.MoreGamePage, {
             state: {
+              platform: platform,
               manufacturer: manufacturer,
               manufacturerLogoUrl: manufacturerLogoUrl,
               type: type,
@@ -144,7 +152,7 @@ export const useGameItemBase = () => {
             },
           });
         } else {
-          handleEnterGame(gameId);
+          handleEnterGame(gameId, item.name || item.platform || item.gameName);
         }
       },
     });

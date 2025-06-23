@@ -1,89 +1,113 @@
-import React, { memo, SyntheticEvent, useState } from 'react';
+import React, {
+  CSSProperties,
+  memo,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import cx from '@commonUtils/cx';
 import { useImageCache } from '@mode2/usecase/useImageCache';
-import { useDeepEffect } from '@libs/commonUtils';
 import isEqual from 'lodash/isEqual';
 
 interface BaseCacheImgProps {
-  key?: string;
+  cKey?: string;
   src: string;
   className?: string;
+  style?: CSSProperties;
   alt?: string;
-  // fallback?: string;
-  onClick?: () => void;
+  imgName?: string;
+  onClick?: (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => void;
   onLoad?: () => void;
   onError?: (e: SyntheticEvent<HTMLImageElement>) => void;
+  onFetchError?: (err: unknown) => void;
 }
 
-/**
- * @param src - 圖片 url
- * @param className - 圖片的 className
- * @param alt - 圖片 alt 屬性
- // * @param fallback - 如果讀不到 src 的圖片則預設使用這個圖片當作預設顯示
- * @param onClick - 點擊事件
- * @param onLoad - 加載完成事件
- * @param onError - 錯誤事件
- * @constructor
- *
- * @example
- * import axios from 'axios';
- * import rateLimit from 'axios-rate-limit';
- *
- * - Set up an axios instance and limit concurrent requests to [5] at a time
- * const http = rateLimit(axios.create(), { maxRequests: 5, perMilliseconds: 1000 });
- *
- * - Now you can make requests as normal, but you will be limited in the number of concurrent requests.
- * http.get('https://example.com')
- *   .then(response => {
- *     console.log(response.data);
- *   });
- */
+export const BaseCacheImg = ({
+  cKey,
+  src,
+  alt,
+  className,
+  style,
+  imgName,
+  onClick,
+  onError,
+  onLoad,
+  onFetchError,
+}: BaseCacheImgProps) => {
+  const [blobUrl, setBlobUrl] = useState<string | null>(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const previousBlobUrlRef = useRef<string | null>(null);
 
-export const BaseCacheImg = (props: BaseCacheImgProps) => {
-  // const handleDefaultError = (target: HTMLImageElement) => {
-  //   console.error('BaseCacheImg Error:', target);
-  //   // e.src = src;
-  // };
+  useEffect(() => {
+    const loadImage = async () => {
+      try {
+        abortControllerRef.current?.abort(); // 取消前一次請求
+        const controller = new AbortController();
+        abortControllerRef.current = controller;
 
-  const key = props.key || `${props.src}_${props.alt}_${props}`;
-  const [imageSrc, setImageSrc] = useState<string>(props.src);
+        const cachedSrc = useImageCache.getByCache(src); // 若有快取邏輯
+        const response = await fetch(cachedSrc, {
+          signal: controller.signal,
+        });
+        const blob = await response.blob();
 
-  // 解決 LazyImage 使用中，不斷重新 assign imageSrc to <img>
-  useDeepEffect(() => {
-    const fetchImageSrc = async () => {
-      const cachedSrc = useImageCache.getByCache(props.src);
-      setImageSrc(cachedSrc);
+        // 建立 ObjectURL 並釋放舊的
+        const url = URL.createObjectURL(blob);
+        if (previousBlobUrlRef.current) {
+          URL.revokeObjectURL(previousBlobUrlRef.current);
+        }
+        previousBlobUrlRef.current = url;
+        setBlobUrl(url);
+      } catch (err: any) {
+        if (err.name !== 'AbortError') {
+          console.error('BaseCacheImg fetch error:', err);
+          onFetchError?.(err);
+        }
+      }
     };
 
-    fetchImageSrc().catch((e) =>
-      console.error('Error fetching cached image:', e)
-    );
-  }, [props.src]);
+    setHasLoaded(false); // reset loading state
+    loadImage();
+
+    return () => {
+      abortControllerRef.current?.abort();
+      if (previousBlobUrlRef.current) {
+        URL.revokeObjectURL(previousBlobUrlRef.current);
+        previousBlobUrlRef.current = null;
+      }
+    };
+  }, [src]);
 
   return (
-    <img
-      key={key}
-      src={imageSrc}
-      className={cx(props.className)}
-      alt={props.alt}
-      onClick={() => {
-        if (props.onClick instanceof Function) props.onClick();
-      }}
-      onLoad={() => {
-        if (props.onLoad instanceof Function) props.onLoad();
-      }}
-      onError={(e) => {
-        if (props.onError instanceof Function) props.onError(e);
-        // handleDefaultError(e.currentTarget);
-      }}
-    />
+    <>
+      {blobUrl && (
+        <img
+          key={cKey || src}
+          src={blobUrl}
+          className={cx(`BaseCacheImg-[${imgName}]`, className, 'opacity-0', {
+            'opacity-100': hasLoaded,
+          })}
+          style={style}
+          alt={alt}
+          onClick={(e) => {
+            onClick?.(e);
+          }}
+          onLoad={() => {
+            setHasLoaded(true);
+            onLoad?.();
+          }}
+          onError={(e) => {
+            onError?.(e);
+          }}
+        />
+        // posthog autocapture [data-ph-capture, data-ph-event-name]
+      )}
+    </>
   );
 };
 
-export default memo(BaseCacheImg, (prevProps, nextProps) => {
-  return (
-    isEqual(prevProps.src, nextProps.src) &&
-    isEqual(prevProps.className, nextProps.className) &&
-    isEqual(prevProps.key, nextProps.key)
-  );
-});
+export default memo(BaseCacheImg, (prevProps, nextProps) =>
+  isEqual(prevProps.src, nextProps.src)
+);

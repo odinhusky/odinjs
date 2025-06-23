@@ -4,7 +4,7 @@ import OneSignal from 'react-onesignal';
 import sdkUtils from '../..';
 import { AppLocalStorageKey } from '../../persistant/storageKey';
 import { useAppStore } from '@mode2/zustand/appStore';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 interface OneSignalExtra extends PushExtra {
   isSupportOneSignalPush(): boolean;
@@ -48,9 +48,11 @@ export const OneSignalPush: Push<
       } catch (e) {
         console.error('init OneSignal SDK error');
       }
-      this.registerServiceWorker()?.then(() => {
-        this.subscribePush();
-      });
+      this.registerServiceWorker()
+        ?.then(() => {
+          this.subscribePush();
+        })
+        .catch(() => {});
     }
   },
   /**
@@ -69,17 +71,7 @@ export const OneSignalPush: Push<
       OneSignal.Slidedown.promptPush();
       return;
     }
-    // const isFirstOpenAppTime = utils.getLocalStoreageItem("isFirstOpenApp");
-    // const currentTimestamp = Date.now();
-    // const differenceInHours =
-    //   (currentTimestamp - isFirstOpenAppTime) / (1000 * 60 * 60);
-    // const isWithin24Hours = Math.abs(differenceInHours) < 24;
-    // // onesignal第一次操作時間24小時後再往下走
-    // console.log("@@==>OneSignal isWithin24Hours", isWithin24Hours);
-    // if (isWithin24Hours) return;
 
-    // const isSupported = OneSignal.Notifications.isPushSupported();
-    // console.log("@@==>OneSignal isSupported", isSupported);
     // 是否有通知权限
     const permission = OneSignal.Notifications.permission;
     console.log('@@===>OneSignal isPermission', permission);
@@ -176,8 +168,10 @@ export const OneSignalPush: Push<
   getPushToken(retryCount: number = 15, delay: number = 500): Promise<string> {
     return new Promise((resolve) => {
       const attempt = (retriesLeft: number) => {
-        // @ts-expect-error : ""
-        const onesignalId = window.OneSignal?.User?.onesignalId;
+        // get(window.OneSignal?.User, 'onesignalId', null);
+        // const onesignalId =window.OneSignal?.User?.onesignalId;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const onesignalId = (window.OneSignal?.User as any)?.onesignalId;
         if (onesignalId) {
           resolve(onesignalId);
         } else if (retriesLeft > 0) {

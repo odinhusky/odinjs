@@ -8,7 +8,10 @@ import { usePostWheelPlayerSpinMutation } from '@libs/mode2/external/api';
 import { WheelSegmentCategoryResult } from '@libs/mode2/external/api/endpoint/wheel/PostWheelConfigEndpoint';
 import { useRechargeWheelTabStore } from '@libs/mode2/zustand/components/rechargeWheelTabStore';
 import useMode2RechargeWheelPageStore from '@libs/mode2/zustand/page/rechargeWheelPage';
-import { get, isArray, isEmpty, isNumber } from 'lodash';
+import get from 'lodash/get';
+import isArray from 'lodash/isArray';
+import isEmpty from 'lodash/isEmpty';
+import isNumber from 'lodash/isNumber';
 import { useEffect } from 'react';
 
 export const useRechargeWheelPlayerSpin = () => {

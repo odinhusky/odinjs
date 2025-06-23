@@ -1,4 +1,4 @@
-import { ICommand } from './ICommand';
+import { ICommand } from '@libs/design/commandPattern/ICommand';
 
 export class LoggerInvoker {
   private command: ICommand | null = null;

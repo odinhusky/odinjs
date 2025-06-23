@@ -4,26 +4,26 @@ import { useDeepEffect } from '@libs/commonUtils';
 import { useEffect } from 'react';
 
 export const useMyVipContentBase = () => {
-  const [triggerVIPHome, { data: vipHome }] = usePostVIPHomeMutation();
+  const [postVIPHome, { data: vipHome }] = usePostVIPHomeMutation();
 
   const setVipTableDatas = useMyPageStore((state) => state.setVipTableDatas);
-  const setVipLevel = useMyPageStore((state) => state.setVipLevel);
   const setVipProgressPercent = useMyPageStore(
     (state) => state.setVipProgressPercent
   );
   const setRechargeAmount = useMyPageStore((state) => state.setRechargeAmount);
+  const setVipRewardDama = useMyPageStore((state) => state.setVipRewardDama);
 
   useDeepEffect(() => {
     if (!vipHome) return;
 
     setVipTableDatas(vipHome.vipInfos);
-    setVipLevel(vipHome.vipLevel);
     setVipProgressPercent(vipHome.vipPercent);
     setRechargeAmount(vipHome.rechargeAmount);
+    setVipRewardDama(vipHome.rewardDamaTimes);
   }, [vipHome]);
 
   useEffect(() => {
-    triggerVIPHome();
+    postVIPHome();
   }, []);
 };
 

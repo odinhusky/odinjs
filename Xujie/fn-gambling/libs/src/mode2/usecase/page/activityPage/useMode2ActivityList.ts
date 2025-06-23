@@ -1,18 +1,16 @@
-import { usePostAnnouncementInfoMutation } from '@mode2API/index';
 import { useMode2ActivityListStore } from '@mode2/zustand/page/activityPageStore';
-import { useEffect } from 'react';
 import { useDeepEffect } from '@libs/commonUtils';
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 import { AnnouncementType } from '@mode2/@types/announcementType';
 
 export const useMode2ActivityList = () => {
-  const [postAnnouncementInfo, { data: activityList }] =
-    usePostAnnouncementInfoMutation();
+  // const [postAnnouncementInfo, { data: activityList }] =
+  //   usePostAnnouncementInfoMutation();
   const isFirstDeposit = useUserProfileStore((state) => state.isFirstDeposit);
 
-  const setOriginalActivityList = useMode2ActivityListStore(
-    (state) => state.setOriginalActivityList
-  );
+  // const setOriginalActivityList = useMode2ActivityListStore(
+  //   (state) => state.setOriginalActivityList
+  // );
 
   const originalActivityList = useMode2ActivityListStore(
     (state) => state.originalActivityList
@@ -22,15 +20,15 @@ export const useMode2ActivityList = () => {
   );
 
   // 因為用 post 拿資料所以不得不 trigger 一次
-  useEffect(() => {
-    postAnnouncementInfo();
-  }, []);
+  // useEffect(() => {
+  //   postAnnouncementInfo();
+  // }, []);
 
-  useDeepEffect(() => {
-    if (!activityList) return;
-    const result = activityList.map((item) => ({ ...item }));
-    setOriginalActivityList(result);
-  }, [activityList]);
+  // useDeepEffect(() => {
+  //   if (!activityList) return;
+  //   const result = activityList.map((item) => ({ ...item }));
+  //   setOriginalActivityList(result);
+  // }, [activityList]);
 
   useDeepEffect(() => {
     const items = originalActivityList.filter((item) => {

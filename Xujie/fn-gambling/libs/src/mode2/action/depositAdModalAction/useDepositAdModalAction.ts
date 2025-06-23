@@ -2,7 +2,7 @@ import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import {
   handleDepositAdModalClose,
   handleDepositAdModalToWalletClick,
-} from './acitonType';
+} from '@mode2/action/actionTypes';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
 import handleGlobalClick from '@mode2/action/handleGlobalClick';
 import handleAction from '@mode2/action/common/handleAction';

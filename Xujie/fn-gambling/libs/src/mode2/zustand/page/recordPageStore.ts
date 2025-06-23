@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 import { ClipboardInfo, ClipboardState } from '@commonUtils/hooks/useClipboard';
-import { FundDetailItemResult } from '@mode2API/endpoint/record/PostFundDetailEndpoint';
+import {
+  FundDetailItemResult,
+  FundDetailType,
+} from '@mode2API/endpoint/record/PostFundDetailEndpoint';
 import { RechargeRecordItemResult } from '@mode2API/endpoint/record/PostRechargeRecordsEndpoint';
 import { WithdrawRecordItemResult } from '@mode2API/endpoint/record/PostWithdrawRecordsEndpoint';
 import { I18NContent } from '@mode2/@types/i18nType';
@@ -146,23 +149,19 @@ export enum RecordPageHeaderTabs {
   WITHDRAWAL = 'Withdrawal',
 }
 
-export enum RecordPageDeatilTabs {
-  ALL = 'All',
-  INCOMES = 'Incomes',
-  EXPENSE = 'Expense',
-}
 export interface useRecordPageHeaderTabsStoreTypes {
   headerTabIndex: RecordPageHeaderTabs;
   setHeaderTabIndex: (index: RecordPageHeaderTabs) => void;
-  recordPageDeatilTabIndex: RecordPageDeatilTabs;
-  setRecordPageDeatilTabIndex: (index: RecordPageDeatilTabs) => void;
+  recordPageDeatilTabIndex: FundDetailType;
+  setRecordPageDeatilTabIndex: (index: FundDetailType) => void;
 }
 
 export const useRecordPageHeaderTabsStore =
   create<useRecordPageHeaderTabsStoreTypes>()((set) => ({
     headerTabIndex: RecordPageHeaderTabs.DETAIL,
     setHeaderTabIndex: (index) => set(() => ({ headerTabIndex: index })),
-    recordPageDeatilTabIndex: RecordPageDeatilTabs.ALL,
-    setRecordPageDeatilTabIndex: (index) => set(() => ({ recordPageDeatilTabIndex: index })),
+    recordPageDeatilTabIndex: FundDetailType.ALL,
+    setRecordPageDeatilTabIndex: (index) =>
+      set(() => ({ recordPageDeatilTabIndex: index })),
   }));
 // -------------- [IN][V6]新增 end  ---------------------

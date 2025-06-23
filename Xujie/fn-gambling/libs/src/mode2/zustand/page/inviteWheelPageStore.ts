@@ -27,8 +27,8 @@ export interface InviteWheelPageStoreTypes {
   spinWheelCount: number;
   spinWheel: () => void;
   resetSpinWheel: () => void;
-  spinedIndex: number;
-  setSpinedIndex: (value: number) => void;
+  prizeWheelIndex: number;
+  setPrizeWheelIndex: (value: number) => void;
   spinedReward: number;
   setSpinedReward: (value: number) => void;
   spinFastTotate: boolean;
@@ -65,6 +65,11 @@ export interface InviteWheelPageStoreTypes {
   inviteWheelSpinToastFinish: boolean;
   setInviteWheelSpinToastFinish: (isFinish: boolean) => void;
 
+  inviteWithdrawRequire: number;
+  setInviteWithdrawRequire: (require: number) => void;
+  inviteDamaRatio: number;
+  setInviteDamaRatio: (ratio: number) => void;
+
   resetState: () => void;
 }
 
@@ -74,7 +79,7 @@ const inviteWheelPageDefault = {
   eventCountDown: DEFAULT_EVENT_COUNT_DOWN,
   isWithdrawal: false,
   spinWheelCount: 0,
-  spinedIndex: 0,
+  prizeWheelIndex: 0,
   spinedReward: 0,
   spinFastTotate: false,
   marqueeText: [] as WheelNewsTickerResult[],
@@ -97,12 +102,12 @@ export const useInviteWheelPageStoreStore = create<InviteWheelPageStoreTypes>(
     spinWheelCount: 0,
     spinWheel: () =>
       set(() => ({
-        spinWheelCount: get().spinWheelCount + 1,
+        spinWheelCount: 1,
       })),
     resetSpinWheel: () => set(() => ({ spinWheelCount: 0 })),
     setSpinFastTotate: (value) => set(() => ({ spinFastTotate: value })),
 
-    setSpinedIndex: (index) => set(() => ({ spinedIndex: index })),
+    setPrizeWheelIndex: (index) => set(() => ({ prizeWheelIndex: index })),
     setSpinedReward: (index) => set(() => ({ spinedReward: index })),
     setMarqueeText: (marqueeText) => set(() => ({ marqueeText: marqueeText })),
     setInviteWheelPortalInfo: (value) =>
@@ -170,6 +175,18 @@ export const useInviteWheelPageStoreStore = create<InviteWheelPageStoreTypes>(
       set(() => ({
         inviteWheelSpinToastFinish: isFinish,
       })),
+
+    inviteWithdrawRequire: 0,
+    setInviteWithdrawRequire: (require) =>
+      set(() => ({
+        inviteWithdrawRequire: require,
+      })),
+    inviteDamaRatio: 0,
+    setInviteDamaRatio: (ratio) =>
+      set(() => ({
+        inviteDamaRatio: ratio,
+      })),
+
     resetState: () =>
       set(() => ({
         ...inviteWheelPageDefault,

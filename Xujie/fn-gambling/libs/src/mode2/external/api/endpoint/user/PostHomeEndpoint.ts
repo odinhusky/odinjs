@@ -9,12 +9,16 @@ import {
   mapEnterGameType,
 } from '@libs/mode2/zustand/page/hallPageStore';
 import {
+  AllAnnouncementsTypeMappingStrategy,
   AnnouncementOriginalData,
   ParsingAnnouncementResult,
   useParsingAnnouncementsContent,
 } from '@mode2/usecase/announcement/useParsingAnnouncementsContent';
 import { AnnouncementScenariosType } from '@mode2/usecase/announcement/useAnnouncementActionBase';
 import { Base64 } from 'js-base64';
+import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
+import { AnnouncementType } from '@mode2/@types/announcementType';
+import dayjs from 'dayjs';
 
 interface CarouselItemConfigResponse {
   reward?: number;
@@ -46,7 +50,7 @@ interface ApkInfoResponse {
   BroadcastJson?: string;
 }
 
-interface GameResponse {
+export interface GameResponse {
   GameId?: number;
   ParentManufacturer?: string;
   Manufacturer?: string;
@@ -98,7 +102,14 @@ interface RegisterRewardResponse {
   RewardEnable?: boolean;
 }
 
-type HomeResponse = {
+export interface LimitedOfferResponse {
+  AnnouncementType?: number;
+  ConfigJson?: string;
+  EndTime?: number;
+  StartTime?: number;
+}
+
+interface HomeResponse {
   ApkInfo?: ApkInfoResponse;
   ApkPcInfo?: string;
   GroupApkInfos?: ApkInfoResponse;
@@ -110,12 +121,17 @@ type HomeResponse = {
   PlatformTypes?: number[];
   Email?: string;
   RegisterReward?: RegisterRewardResponse;
-};
+  LimitedOffers?: LimitedOfferResponse[];
+}
 
 /** 獲取遊戲列表(熱門除外), 首頁Banner內容, 跑馬燈資料,平台資訊 */
 export const PostHomeEndpoint = (builder: ExternalEndpoint) =>
   builder.mutation<HomeInfoResult, void>({
     query: () => {
+      console.log(
+        '@@@===> hall popup userRole',
+        useUserProfileStore.getState().userRole
+      );
       const reqData = {
         reqData: {},
       };
@@ -189,10 +205,20 @@ export interface CustomerServicesResult {
   link: string;
 }
 
-export type HomeInfoResult = {
+export interface LimitedOffersResult {
+  type: AnnouncementType;
+  configJson: string;
+  endTime: number;
+  startTime: number;
+  countdownTime: number;
+}
+
+export interface HomeInfoResult {
   broadcastList: BroadcastItemResult[];
   carouselItemList: ParsingAnnouncementResult[];
-  announcements: AnnouncementResult[];
+  // announcements: AnnouncementResult[];
+  preloadBannerResources: string[];
+  // hallPopupAnnouncements: AnnouncementResult[];
   platformInfo: {
     [K in keyof GameListCatagory]: GameListItemResult[];
   };
@@ -203,7 +229,10 @@ export type HomeInfoResult = {
   email: string;
   apkInfoId: number;
   isDisplayRegisterReward: boolean;
-};
+  lowBalanceRechargeLimitedOffersEndTime: number;
+  lowBalanceRescueBoxLimitedOffersEndTime: number;
+  depositJackpotWheelLimitedOffersEndTimeForShow: number;
+}
 
 const mapCarouselItem = (raw: CarouselItemResponse[]): CarouselItemResult[] => {
   const items = raw.map((item) => ({
@@ -352,54 +381,138 @@ const mapBroadcastJson = (broadcastJson?: string) => {
   }
 };
 
+export const mapLimitedOffersResult = (
+  nowUnix: number,
+  item: LimitedOfferResponse
+) => {
+  const type = AllAnnouncementsTypeMappingStrategy[item?.AnnouncementType || 0];
+  const endTime = item?.EndTime || 0;
+  return {
+    type: type,
+    configJson: item?.ConfigJson || '',
+    startTime: item?.StartTime || 0,
+    endTime: item?.EndTime || 0,
+    countdownTime: endTime > nowUnix ? (endTime - nowUnix) * 1000 : 0,
+  };
+};
+
 const transformResponse = (
   response: ResponseStructure<HomeResponse>
 ): HomeInfoResult => {
   const resp = response?.Body;
-  if (resp) {
-    const carouselData = resp?.ApkInfo?.CarouselUrl
-      ? getHtml(resp?.ApkInfo?.CarouselUrl)
-      : '[]';
-    const carouselList: CarouselItemResponse[] = JSON.parse(carouselData);
+  const carouselData = resp?.ApkInfo?.CarouselUrl
+    ? getHtml(resp?.ApkInfo?.CarouselUrl)
+    : '[]';
+  const carouselList: CarouselItemResponse[] = JSON.parse(carouselData);
+  // 先過濾需要顯示的 popupAnnouncements，給到 zustand
+  const announcementsItems = resp?.Announcements || [];
 
-    return {
-      broadcastList: mapBroadcastJson(resp?.ApkInfo?.BroadcastJson),
-      carouselItemList: mapCarouselItem(carouselList),
-      announcements: useParsingAnnouncementsContent(
-        AnnouncementScenariosType.HOME,
-        resp.Announcements || []
-      ),
-      platformInfo: mapPlatformInfo(resp.PlatformInfo),
-      platformGameList: mapPlatformGameList(resp.PlatformNames || []),
-      sidebarPlatform: mapSidebarPlatformList(resp.PlatformNames || []),
-      customerServicesList: mapServicesMobileResponse([
-        ...(resp.ServicesMobiles || []),
-        ...(resp.OfficialServicesMobiles || []),
-      ]),
-      platformTypes: resp?.PlatformTypes || [],
-      email: resp.Email || '',
-      apkInfoId: resp?.ApkInfo?.Id || 0,
-      isDisplayRegisterReward: (resp?.RegisterReward?.RewardAmount || 0) > 0,
-    };
-  }
+  // 濾除需要的  parameter， 如果為null，isPopup 失效
+  // const showHallPopupItems =
+  //   announcementsItems?.filter((item) => item.IsPopup === 1) || [];
+
+  // 移除需要 Parameter 檢查
+  // const hallPopupItemsParameterCheckAndSortResults =
+  //   useAnnouncementsParameterCheckAndSortOrderId(
+  //     useParsingAnnouncementsContent(
+  //       AnnouncementScenariosType.ALL,
+  //       showHallPopupItems
+  //     )
+  //   );
+
+  // // TODO Evan 先別移除，給QA看 console
+  //
+  // console.log(
+  //   '@@@===> hall popup (後端控制IsPopup 過濾結果)',
+  //   showHallPopupItems
+  // );
+  // console.log(
+  //   '@@@===> hall popup hallPopupItemsParameterCheckAndSortResults',
+  //   hallPopupItemsParameterCheckAndSortResults
+  // );
+  //
+  // hallPopupItemsParameterCheckAndSortResults.forEach((item) => {
+  //   console.log(
+  //     `@@@===> hall popup (排序結果) type:${item.type}, orderId:${item.orderId}`
+  //   );
+  // });
+
+  // const announcements = useParsingAnnouncementsContent(
+  //   AnnouncementScenariosType.HOME,
+  //   announcementsItems
+  // );
+
+  const preloadBannerResources: string[] = announcementsItems.flatMap((item) =>
+    [item?.Image, item?.LobbyImage, item?.PopupImage].filter(
+      (src): src is string => Boolean(src)
+    )
+  );
+
+  const nowUnix = dayjs().unix();
+  const limitedOffersResult: LimitedOffersResult[] =
+    resp?.LimitedOffers?.filter((item) => {
+      const startTime = item?.StartTime || 0;
+      const endTime = item?.EndTime || 0;
+      return startTime <= nowUnix && endTime > nowUnix;
+    }).map((item) => mapLimitedOffersResult(nowUnix, item)) || [];
+
+  // const lowBalanceRechargeOffers: LimitedOffersResult | undefined =
+  //   limitedOffersResult.find(
+  //     (item) => item.type === AnnouncementType.LOW_BALANCE_RECHARGE
+  //   );
+  //
+  // const lowBalanceRescueBoxOffers: LimitedOffersResult | undefined =
+  //   limitedOffersResult.find(
+  //     (item) => item.type === AnnouncementType.LOW_BALANCE_RESCUE_BOX
+  //   );
+  //
+  // const doubleBonusLimitedOffers: LimitedOffersResult | undefined =
+  //   limitedOffersResult.find(
+  //     (item) => item.type === AnnouncementType.DEPOSIT_JACKPOT_WHEEL
+  //   );
+
+  //  支援 limitedOffers 的 AnnouncementType
+  const limitTypes = [
+    AnnouncementType.LOW_BALANCE_RECHARGE,
+    AnnouncementType.LOW_BALANCE_RESCUE_BOX,
+    AnnouncementType.DEPOSIT_JACKPOT_WHEEL,
+  ];
+
+  const limitedOffersMap: Partial<
+    Record<AnnouncementType, LimitedOffersResult>
+  > = limitedOffersResult.reduce((acc, item) => {
+    if (limitTypes.includes(item.type)) {
+      acc[item.type] = item;
+    }
+    return acc;
+  }, {} as Partial<Record<AnnouncementType, LimitedOffersResult>>);
+
   return {
-    broadcastList: [],
-    carouselItemList: [],
-    announcements: [],
-    platformInfo: {
-      slotsList: [],
-      casinoList: [],
-      sportsList: [],
-      gamesList: [],
-      fishingsList: [],
-      originalsList: [],
-    },
-    platformGameList: [],
-    sidebarPlatform: [],
-    customerServicesList: [],
-    platformTypes: [],
-    email: '',
-    apkInfoId: 0,
-    isDisplayRegisterReward: false,
+    broadcastList: mapBroadcastJson(resp?.ApkInfo?.BroadcastJson),
+    carouselItemList: mapCarouselItem(carouselList),
+    // hallPopupAnnouncements: hallPopupItemsParameterCheckAndSortResults,
+    // announcements: announcements,
+    preloadBannerResources: preloadBannerResources,
+    platformInfo: mapPlatformInfo(resp?.PlatformInfo),
+    platformGameList: mapPlatformGameList(resp?.PlatformNames || []),
+    sidebarPlatform: mapSidebarPlatformList(resp?.PlatformNames || []),
+    customerServicesList: mapServicesMobileResponse([
+      ...(resp?.ServicesMobiles || []),
+      ...(resp?.OfficialServicesMobiles || []),
+    ]),
+    platformTypes: resp?.PlatformTypes || [],
+    email: resp?.Email || '',
+    apkInfoId: resp?.ApkInfo?.Id || 0,
+    isDisplayRegisterReward: (resp?.RegisterReward?.RewardAmount || 0) > 0,
+    lowBalanceRechargeLimitedOffersEndTime:
+      limitedOffersMap[AnnouncementType.LOW_BALANCE_RECHARGE]?.endTime || 0,
+    lowBalanceRescueBoxLimitedOffersEndTime:
+      limitedOffersMap[AnnouncementType.LOW_BALANCE_RESCUE_BOX]?.endTime || 0,
+    depositJackpotWheelLimitedOffersEndTimeForShow: dayjs()
+      .add(1, 'year')
+      .unix(), // TODO Evan 充值大獎輪盤，只用於第一次顯示 先寫死好控制 HallAdModelCommand
+
+    // doubleBonusLimitedOffersEndTime:
+    //   limitedOffersMap[AnnouncementType.DEPOSIT_JACKPOT_WHEEL]?.endTime || 0, // TODO Evan 充值大獎輪盤，只用於第一次顯示
   };
 };

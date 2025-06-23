@@ -2,7 +2,7 @@ import { useAdjustEventToken } from '@mode2/usecase/platform/useAdjustEventToken
 import { useActiveUserEvent } from '@mode2/usecase/useActiveUserEvent';
 import { useEffect } from 'react';
 import sdkUtils from '@mode2/utils/sdk';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { useAppStore } from '@mode2/zustand/appStore';
 import useActivityAutoDisplay from '@mode2/usecase/activity/useActivityAutoDisplay';
 

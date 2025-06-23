@@ -2,7 +2,7 @@ import { ExternalEndpoint } from '@mode2API/types';
 import { ResponseStructure } from '@mode2API/endpoint/ResponseStructure';
 import { POST_PAY_CONFIG_INFO_WITH_OPTIONS_URL } from '@mode2API/urls';
 
-interface PayConfigInfoResponse {
+export interface PayConfigInfoResponse {
   Id?: number;
   Name?: string;
   Amount?: number;
@@ -10,11 +10,14 @@ interface PayConfigInfoResponse {
   RebateAmount?: number;
   IsHot?: number; // 0 | 1
   CashBackRate?: number;
+  CashBackAmount?: number;
   Recommended?: boolean;
   IsHighBonus?: boolean; // 支援高獎勵產品
+  DamaTimes?: number;
+  WithBonusDamaTimes?: number;
 }
 
-interface PayConfigInfoWithOptionsResponse {
+export interface PayConfigInfoWithOptionsResponse {
   PayChannelName?: string; // tpay_upi
   PayChannelDisplayName?: string; // "UpiPay",
   Configs?: PayConfigInfoResponse[];
@@ -23,7 +26,7 @@ interface PayConfigInfoWithOptionsResponse {
   IsAmountFixed?: boolean;
 }
 
-export type PayOptionsResult = {
+export interface PayOptionsResult {
   id: number;
   amount: number;
   name: string;
@@ -31,13 +34,16 @@ export type PayOptionsResult = {
   rebateAmount: number; // 處理小數點後兩位
   isHot: boolean;
   cashBackRate: number; // 處理小數點後兩位
+  cashBackAmount: number; // 處理小數點後兩位
   indexKey: string; // 方便 View 判斷比對
   fromChannelName: string;
   recommended: boolean;
   isHighBonus: boolean;
-};
+  damaTimes?: number; // 一般充值，提領下注倍率需求
+  withBonusDamaTimes?: number; // Bonus充值，提領下注倍率需求
+}
 
-type PayLimitResult = {
+export type PayLimitResult = {
   min: number;
   max: number;
 };
@@ -66,9 +72,9 @@ export type PayChannelInfoResult = {
   maxRebateAmount: number; // 當前渠道產品最大回扣金額
 };
 
-export type PayConfigInfoWithOptionsResult = {
+export interface PayConfigInfoWithOptionsResult {
   payChannels: PayChannelInfoResult[];
-};
+}
 
 /**
  * 替代 [v1/api/pay/withdrawConfig]部分功能, 由此Transform 直接計算recharge限制 [min ~ max]
@@ -110,10 +116,13 @@ const transformResponse = (
         rebateAmount: parseFloat((item.RebateAmount || 0).toFixed(2)),
         isHot: item.IsHot === 1,
         cashBackRate: parseFloat((item.CashBackRate || 0).toFixed(2)),
+        cashBackAmount: parseFloat((item.CashBackAmount || 0).toFixed(2)),
         indexKey: `${item.Id}_${item.Name}_${item.Amount}_${item.RebateAmount}`,
         fromChannelName: channelName || '',
         recommended: item.Recommended || false,
         isHighBonus: item.IsHighBonus || false,
+        damaTimes: item.DamaTimes || 0,
+        withBonusDamaTimes: item.WithBonusDamaTimes || 0,
       };
     });
     const amounts = options.map((item) => item.amount);
@@ -126,7 +135,7 @@ const transformResponse = (
         max: Math.max(...amounts),
       },
       displayName: item.PayChannelDisplayName || '',
-      payName: item.PayChannelName || '',
+      payName: (item.PayChannelName || '').toLowerCase(), // 防呆全轉
       isRecommend: item.IsRecommend === 1,
       isDefaultSelected: hasDefaultSelection
         ? item.IsDefault === true

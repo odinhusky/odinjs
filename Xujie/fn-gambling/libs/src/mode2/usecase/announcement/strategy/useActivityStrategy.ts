@@ -4,18 +4,29 @@ import { useRebateRewardModalStore } from '@mode2/zustand/components/rebateRewar
 import { usePostDownloadAwardStartMutation } from '@mode2API/index';
 import { ActionPayload } from '@mode2/usecase/announcement/useAnnouncementActionBase';
 import { AnnouncementType } from '@mode2/@types/announcementType';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import sdkUtils from '@mode2/utils/sdk';
 import { InvitePageTabType } from '@mode2/@types/invitePageTabTyp';
 import { ECampaignType } from '@mode2API/endpoint/campaign/PostCampaignLaunchEndpoint';
 import { ActivityRulesContentTypes } from '@mode2/zustand/page/activityRulesPageStore';
 import { ActivityPageTabType } from '@mode2/@types/activityPageTabType';
 import { TeamClubPageTabType } from '@mode2/@types/teamClubPageTabType';
+import { useWalletPageStore } from '@mode2/zustand/page/WalletPage/walletPageStore';
+import { WalletDashboardType } from '@mode2/@types/walletDashboardTypes';
+import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
+import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
+import { usePlatformServicesStore } from '@mode2/zustand/platform/platformServicesStore';
+import { useCallback } from 'react';
+import { ServicesTypeResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
+import { useActivityDetailPageStore } from '@mode2/zustand/page/ActivityDetailPage/useActivityDetailPageStore';
+import { MissionType } from '@mode2API/endpoint/mission/PostMissionOngoingEndpoint';
 
 // TODO Evan 測試完成 移除沒定義的action
 export const ActivityAnnouncementsTypeMappingStrategy: {
   [key: string]: AnnouncementType;
 } = {
+  '999': AnnouncementType.DYNAMIC_ACTIVITY, // 999
+  '0': AnnouncementType.NOTHING, //  無行為
   '1': AnnouncementType.FIRST_CHARGE, // 導航到 wallet
   '2': AnnouncementType.RECHARGING, // 導航到 wallet
   '3': AnnouncementType.TELEGRAM, // open telegram
@@ -35,6 +46,19 @@ export const ActivityAnnouncementsTypeMappingStrategy: {
   '17': AnnouncementType.WHATS_APP, // open whatsapp
   '18': AnnouncementType.RANKINGS, // nav 排行榜
   '19': AnnouncementType.INVITE_REWARD, // nav team_club 邀请奖励
+
+  '20': AnnouncementType.WATCH_VIDEO, // 20 看影片拿獎勵金
+  '21': AnnouncementType.WEEK_LUCKY_BONUS, //21 週儲值活動
+  '22': AnnouncementType.SURPRISE_REWARD, //22 驚喜獎勵
+  '23': AnnouncementType.VIP_REBATE, //23 VIP返利
+  '24': AnnouncementType.WINNINGS_SHARE, //24
+  '25': AnnouncementType.GIFT_CODE, //25
+  '26': AnnouncementType.PUBLISH_AND_SHARE, //26
+  '27': AnnouncementType.NEW_PLAYER_TASK, // 27
+  '28': AnnouncementType.DAILY_TASK, // 28
+  '29': AnnouncementType.LOW_BALANCE_RECHARGE, // 29
+  '32': AnnouncementType.LOW_BALANCE_RESCUE_BOX, // 32
+  '33': AnnouncementType.DEPOSIT_JACKPOT_WHEEL, //33
 };
 export const useActivityStrategy = () => {
   const { onEnterGame } = useGameItemBase();
@@ -48,6 +72,11 @@ export const useActivityStrategy = () => {
     navToInviteWheelPage,
     navToRechargeWheelPage,
     navToGiftCodeRedeemPage,
+    navToWalletGuidePage,
+    navToVipPage,
+    navToRankingPage,
+    navToActivityDetailPage,
+    navToTaskCenterPage,
   } = useNavPageClick();
 
   const setIsShowRebateRewardModal = useRebateRewardModalStore(
@@ -56,17 +85,34 @@ export const useActivityStrategy = () => {
 
   const [postDownloadAwardStart] = usePostDownloadAwardStartMutation();
 
+  const servicesList = usePlatformServicesStore((state) => state.servicesList);
+  const findLink = useCallback(
+    (type: ServicesTypeResult, def: string): string => {
+      const link = servicesList.find((item) => item.type === type)?.link;
+      return link || def;
+    },
+    [servicesList]
+  );
   const onAction = (payload: ActionPayload) => {
     const type = payload.type;
     switch (type) {
       case AnnouncementType.FIRST_CHARGE:
-        navToWalletPage();
-        break;
       case AnnouncementType.RECHARGING:
+        useWalletPageStore
+          .getState()
+          .setDisplayDashboardType(WalletDashboardType.NONE);
+        useWalletPageSwitchContentTabsStore
+          .getState()
+          .setCurSwitchContentTabId(WalletPageTabType.DEPOSIT);
         navToWalletPage();
         break;
       case AnnouncementType.TELEGRAM:
-        navToGiftCodeRedeemPage();
+        {
+          const targetUrl = findLink(ServicesTypeResult.TELEGRAM, '');
+          if (targetUrl) {
+            sdkUtils.openBrowser(targetUrl);
+          }
+        }
         break;
       case AnnouncementType.SIGN:
         // TODO
@@ -155,7 +201,12 @@ export const useActivityStrategy = () => {
         }
         break;
       case AnnouncementType.VIP:
-        navToActivityPage('', { state: { tab: ActivityPageTabType.VIP } });
+        // for [V6]
+        if (import.meta.env['VITE_V_VERSION'] === 'v6') {
+          navToVipPage();
+        } else {
+          navToActivityPage('', { state: { tab: ActivityPageTabType.VIP } });
+        }
         break;
       case AnnouncementType.INVITE_WHEEL:
         if (!sdkUtils.isCurrentLogin()) {
@@ -174,7 +225,7 @@ export const useActivityStrategy = () => {
         }
         break;
       case AnnouncementType.RANKINGS:
-        // TODO
+        navToRankingPage();
         break;
       case AnnouncementType.INVITE_REWARD:
         if (!sdkUtils.isCurrentLogin()) {
@@ -188,6 +239,45 @@ export const useActivityStrategy = () => {
             state: { tab: TeamClubPageTabType.INVITE_REWARDS },
           });
         }
+        break;
+
+      case AnnouncementType.WATCH_VIDEO:
+        navToWalletGuidePage();
+        break;
+      case AnnouncementType.WEEK_LUCKY_BONUS:
+        break;
+      case AnnouncementType.SURPRISE_REWARD:
+        break;
+      case AnnouncementType.VIP_REBATE:
+        break;
+      case AnnouncementType.GIFT_CODE:
+        navToGiftCodeRedeemPage();
+        break;
+      case AnnouncementType.DYNAMIC_ACTIVITY:
+        useActivityDetailPageStore
+          .getState()
+          .setCurrentAnnouncementType(AnnouncementType.DYNAMIC_ACTIVITY);
+        useActivityDetailPageStore
+          .getState()
+          .setCurrentOrderId(payload.mataData.orderId);
+        navToActivityDetailPage('', {
+          state: {
+            tab: AnnouncementType.DYNAMIC_ACTIVITY,
+            orderId: payload.mataData.orderId,
+          },
+        });
+        break;
+      case AnnouncementType.NEW_PLAYER_TASK:
+        navToTaskCenterPage('', {
+          state: { tab: MissionType.NEW_PLAYER },
+        });
+        break;
+      case AnnouncementType.DAILY_TASK:
+        navToTaskCenterPage('', {
+          state: { tab: MissionType.DAILY },
+        });
+        break;
+      case AnnouncementType.NOTHING:
         break;
       case AnnouncementType.UNKNOWN:
         break;

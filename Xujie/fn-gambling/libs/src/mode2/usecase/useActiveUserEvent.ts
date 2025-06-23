@@ -2,7 +2,7 @@ import { usePostPlayerEventReportMutation } from '@mode2API/index';
 import { useEffect } from 'react';
 import sdkUtils from '@mode2/utils/sdk';
 import { AppLocalStorageKey } from '@mode2/utils/sdk/persistant/storageKey';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 
 /**
  * 活躍用戶事件上報

@@ -5,16 +5,32 @@ import { useEffect } from 'react';
 import userLocalForage, {
   UserLocalforageStoreKeys,
 } from '@libs/mode2/localforage/user';
-import { isArray } from 'lodash';
+import isArray from 'lodash/isArray';
 import { GameListItemResult } from '../zustand/page/hallPageStore';
+import { usePostGameRecentPlayMutation } from '../external/api';
 
 export const useRecentGameList = () => {
   // const recentGameList = useMoreGamePageStoreStore(
   //   (state) => state.recentGameList
   // );
-  // const setRecentGameList = useMoreGamePageStoreStore(
-  //   (state) => state.setRecentGameList
-  // );
+  const setRecentGameList = useMoreGamePageStoreStore(
+    (state) => state.setRecentGameList
+  );
+
+  const [postGameRecentPlay, { data: recentGameList }] =
+    usePostGameRecentPlayMutation();
+
+  useEffect(() => {
+    postGameRecentPlay();
+  }, []);
+
+  useDeepEffect(() => {
+    console.log('!! @@@===> data', recentGameList);
+
+    if (recentGameList && isArray(recentGameList))
+      setRecentGameList(recentGameList);
+  }, [recentGameList]);
+
   // const handleGetListFromLocalForage = async () => {
   //   const savedRecentGameList = await userLocalForage.getItem(
   //     UserLocalforageStoreKeys.RECENT_GAME_LIST

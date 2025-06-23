@@ -6,7 +6,7 @@ import {
 } from '@mode2/zustand/page/invitePageStore';
 import { EResourceLevel, getImgUrl } from '@mode2/utils';
 import useInvitePageActions from '@mode2/action/invitePageAction/useInvitePageActions';
-import { handleInvitePageStaticsQAClick } from '@mode2/action/invitePageAction/actionType';
+import { handleInvitePageStaticsQAClick } from '@mode2/action/actionTypes';
 import { usePostAgentWeekRewardConfigMutation } from '@mode2API/index';
 import sdkUtils from '@libs/mode2/utils/sdk';
 

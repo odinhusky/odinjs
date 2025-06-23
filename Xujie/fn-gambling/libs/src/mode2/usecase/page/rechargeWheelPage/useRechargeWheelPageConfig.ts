@@ -6,7 +6,9 @@ import useMode2RechargeWheelPageStore, {
   WheelLevelConfigObjType,
   WheelProgressConfigObjType,
 } from '@libs/mode2/zustand/page/rechargeWheelPage';
-import { cloneDeep, get, isEmpty } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 import { useEffect } from 'react';
 
 export const useRechargeWheelPageConfig = () => {
@@ -91,8 +93,22 @@ export const useRechargeWheelPageConfig = () => {
         progressConfigs.find((item) => item.maxRequiredReward > currentDeposit)
           ?.wheelLevel || 1;
 
-      const shouldActiveTab =
-        rechargeWheelLevelTypeMapping[currentWheel] || 'silver';
+      /**
+       * 充值輪盤有四個等級，最後一個等級未開啟
+       * 加上 currentWheel === 4 ? 3 : currentWheel 是為了規避掉 每次進入頁面會閃現4 ===> 3的情況(QA提的)
+       */
+      const rechareWheelCount = Object.values(
+        rechargeWheelLevelTypeMapping
+      ).length;
+
+      const index =
+        currentWheel === rechareWheelCount
+          ? rechareWheelCount - 1
+          : currentWheel;
+
+      const shouldActiveTab = rechargeWheelLevelTypeMapping[index] || 'silver';
+
+      console.log('@@@===> rechareWheelLevel', currentWheel, shouldActiveTab, rechareWheelCount);
 
       setActiveRechargeActiveTab(shouldActiveTab);
     }

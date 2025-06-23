@@ -1,10 +1,21 @@
 import { Common } from '../interface/Common';
 import { FetchMyIp } from '@libs/commonUtils';
 import { checkWebPSupport } from '@mode2/utils/sdk/strategy/checkWebPSupport';
+import { checkAvifSupport } from '@mode2/utils/sdk/strategy/checkAvifSupport';
+
 import { clickSound } from '@mode2/media/clickSound';
 import { checkH5VersionUpdate } from '@mode2/utils/sdk/strategy/checkH5VersionUpdate';
 import { LoggerClient } from '@commonUtils/eventLog/LoggerClient';
 import { ILogPayload } from '@commonUtils/eventLog/ICommand';
+import {
+  addReportEventToZustand,
+  clearReportQueueFromIndexDB,
+  setReportQueueToIndexDB,
+} from './analytics/local';
+import { reportStore } from '@libs/mode2/localforage/stroe';
+import { ReportPayloadUnit, ReportStoreKey } from './analytics/local/types';
+import useReportStore from '@libs/mode2/zustand/reportStore';
+import Fingerprint from '@libs/commonUtils/fingerprint';
 
 const getFormattedCurrentDateTime = (): string => {
   const currentDate = new Date();
@@ -82,15 +93,32 @@ export const CommonStrategy: Common = {
   init(): void {
     FetchMyIp.doFetchMyIp();
     this.initCheckWebPSupport();
+    this.initCheckAvifSupport();
     this.initAfter();
+    this.initLocalReportQueue();
   },
 
   initAfter(): void {},
+
+  // 將 indexDB 中的 reportQueue 拿出來，儲存到 zustand 中
+  initLocalReportQueue(): void {
+    const init = async () => {
+      const reportQueueFromIndexDB: ReportPayloadUnit[] =
+        (await reportStore.getItem(ReportStoreKey)) || [];
+
+      useReportStore.getState().setReportQueue([...reportQueueFromIndexDB]);
+    };
+
+    init();
+  },
 
   productName(): string {
     return import.meta.env['VITE_PLATFORM'] || '';
   },
 
+  operatedName(): string {
+    return import.meta.env['VITE_OPERATED_NAME'] || '';
+  },
   countryName(): string {
     const code: string = import.meta.env['VITE_COUNTRY_CODE'];
     const name: { [key: string]: string } = {
@@ -107,6 +135,10 @@ export const CommonStrategy: Common = {
 
   initCheckWebPSupport() {
     return checkWebPSupport();
+  },
+
+  initCheckAvifSupport() {
+    return checkAvifSupport();
   },
 
   checkVersionUpdate() {
@@ -227,4 +259,37 @@ export const CommonStrategy: Common = {
   isDevelopDebug(): boolean {
     return import.meta.env['VITE_MODE'] !== 'prod';
   },
+
+  /**
+   * @author Odin
+   * @desciption 上報事件相關
+   */
+  addReportEvent(payload) {
+    // return addReportEventToIndexDB(payload);
+    return addReportEventToZustand(payload);
+  },
+
+  /**
+   * @author Odin
+   * @desciption 將 queue 記錄到 indexDB 中
+   */
+  setReportEvent(queue) {
+    return setReportQueueToIndexDB(queue);
+  },
+
+  clearReportQueue() {
+    return clearReportQueueFromIndexDB();
+  },
+
+  getWebDeviceId() {
+    return Fingerprint.get();
+  },
+
+  downloadApp() {},
+
+  getAppReferralCode(): string | null {
+    return null;
+  },
+
+  wakeUpOrDownloadApp() {},
 };
