@@ -1,0 +1,25 @@
+// .tab-list {
+//   background: var(--linear-1);
+
+//   .tab {
+//     &.active {
+//       background: var(--linear-8-light);
+//     }
+
+//     .tab-name {
+//       @include textColor(var(--linear-2));
+//     }
+//   }
+// }
+
+.game-swiper {
+  padding: 1px;
+  .swiper-slide {
+    width: max-content;
+    cursor: pointer;
+  }
+}
+
+.swiper-slide {
+  margin-bottom: 0 !important;
+}

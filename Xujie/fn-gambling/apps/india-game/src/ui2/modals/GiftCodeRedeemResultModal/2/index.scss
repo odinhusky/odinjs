@@ -1,0 +1,23 @@
+@keyframes popupScaleIn {
+  0% {
+    transform: scale(0.25);
+    /* 從0.25x大小開始 */
+    opacity: 1;
+  }
+
+  80% {
+    transform: scale(1.1);
+    /* 放大至1.1x */
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    /* 最终恢附1x大小 */
+    opacity: 1;
+  }
+}
+
+.animate__popupScaleIn {
+  animation-name: popupScaleIn;
+}

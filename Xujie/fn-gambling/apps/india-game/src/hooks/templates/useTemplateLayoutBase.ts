@@ -14,12 +14,22 @@ import useActivityCenterBase from '@libs/mode2/usecase/useActivityCenterBase';
 
 import useClearCacheStorage from '@mode2/usecase/useClearCacheStorage';
 import useAvoidApkRecycling from '@mode2/usecase/useAvoidApkRecycling';
-import useRecentGameList from '@mode2/usecase/useRecentGameList';
 import { useBottomNavigationBase } from '@mode2/usecase/components/useBottomNavigationBase';
 import useRechargeWheelPlayerProgress from '@libs/mode2/usecase/page/rechargeWheelPage/useRechargeWheelPlayerProgress';
 import useUserInfo from '@libs/mode2/usecase/useUserInfo';
 import useMenuListBase from '@mode2/usecase/components/useMenuListBase';
 import { usePromoteHomeBase } from '@mode2/usecase/usePromoteHomeBase';
+import useGetNoticeNum from '@mode2/usecase/components/floatActionButton/useGetNoticeNum';
+import { usePreloadDynamicResources } from '@mode2/usecase/preloadResources/usePreloadDynamicResources';
+import { useWebSocket } from '@libs/mode2/usecase/useWebSocket';
+import useLocalReport from '@mode2/usecase/useLocalReport';
+import { useAnnouncement } from '@mode2/usecase/useAnnouncement';
+import { useInNativePixelEvent } from '@mode2/usecase/platform/useInNativePixelEvent';
+import { useAlternateAdjustADID } from '@mode2/usecase/platform/useAlternateAdjustADID';
+import { useAppDeviceEvent } from '@mode2/usecase/platform/useAppDeviceEvent';
+import { useInNativeDeepLinkPixelInfoUpdate } from '@mode2/usecase/platform/useInNativeDeepLinkPixelInfoUpdate';
+import useAnalyticsRegister from '@mode2/usecase/platform/useAnalyticsRegister';
+import useDetectOrientation from '@mode2/usecase/device/useDetectOrientation';
 
 export const useTemplateLayoutBase = () => {
   /**
@@ -30,6 +40,8 @@ export const useTemplateLayoutBase = () => {
 
   // 移動到這裡，API 太亂，很多地方需要 CustomerService
   useGameList();
+
+  useAnnouncement();
 
   // API: mainInfo, userInfo 的掛載
   useUserInfo();
@@ -62,6 +74,9 @@ export const useTemplateLayoutBase = () => {
 
   // 底部導航
   useBottomNavigationBase();
+
+  // 通知未讀數
+  useGetNoticeNum();
 
   // Native AppLink || DeepLink & oneSignalId upload
   useNativePassiveJSInteraction();
@@ -101,6 +116,27 @@ export const useTemplateLayoutBase = () => {
   // === Recharge Wheel Current Deposit & spinProgress
   useRechargeWheelPlayerProgress();
 
-  // Recent
-  useRecentGameList();
+  // 預載資源處理
+  usePreloadDynamicResources();
+
+  // WebSocket
+  useWebSocket();
+
+  // local report
+  useLocalReport();
+
+  /**
+   * 只支援 Native 上報 Pixel
+   */
+  useInNativePixelEvent();
+
+  useAlternateAdjustADID();
+
+  useAppDeviceEvent();
+
+  useAnalyticsRegister();
+
+  useInNativeDeepLinkPixelInfoUpdate();
+
+  useDetectOrientation();
 };

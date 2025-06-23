@@ -4,7 +4,7 @@ import { ServicesTypeResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
 import {
   handleFloatActionButtonActionClick,
   handleFloatActionInboxButtonActionClick,
-} from '@mode2/action/components/floatActionButton/acitonType';
+} from '@mode2/action/actionTypes';
 import { useDeepEffect } from '@commonUtils/hooks';
 import { useEffect, useMemo } from 'react';
 import {
@@ -17,7 +17,6 @@ import useGetNoticeNum from '@mode2/usecase/components/floatActionButton/useGetN
 
 export const useFloatActionButtonBase = () => {
   // ==== 取得 Notice 的數量
-  useGetNoticeNum();
   // const location = useLocation();
   const { handleFloatActionButtonClick } = useFloatActionButtonAction();
   const usageScenariosList = useCustomerServiceListStore(

@@ -1,4 +1,5 @@
 import { usePostRechargeQueryReceiptMutation } from '@libs/mode2/external/api';
+// import { RechargeReceiptState } from '@libs/mode2/external/api/endpoint/recharge/PostRechargeQueryReceiptEndpoint';
 import { RechargeUploadReceiptResult } from '@libs/mode2/external/api/endpoint/recharge/PostRechargeUploadReceiptEndpoint';
 import { base64ToFile, fileToBase64, getParams } from '@libs/mode2/utils';
 import { useLoadingStore } from '@libs/mode2/zustand/components/loadingStore';
@@ -6,6 +7,7 @@ import {
   initDefaultValues,
   useMode2FullOrderDetailPageStore,
 } from '@libs/mode2/zustand/page/fullOrderDetailPageStore';
+import { useMode2OrderDetailPageStore } from '@libs/mode2/zustand/page/orderDetailPageStore';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -30,7 +32,20 @@ const useFullOrderDetailPageInit = () => {
   const setUploadDeatil = useMode2FullOrderDetailPageStore(
     (state) => state.setUploadDeatil
   );
+  const setRechargeQueryReceiptResult = useMode2FullOrderDetailPageStore(
+    (state) => state.setRechargeQueryReceiptResult
+  );
   const setShowLoading = useLoadingStore((state) => state.setShowLoading);
+  const orderDetail = useMode2OrderDetailPageStore(
+    (state) => state.orderDetail
+  );
+  // const setOrderDetail = useMode2OrderDetailPageStore(
+  //   (state) => state.setOrderDetail
+  // );
+  // const orderList = useMode2OrderDetailPageStore((state) => state.orderList);
+  // const setOrderList = useMode2OrderDetailPageStore(
+  //   (state) => state.setOrderList
+  // );
 
   const params = getParams(['orderId'], location.search, location.state);
 
@@ -45,6 +60,7 @@ const useFullOrderDetailPageInit = () => {
         const str = await fileToBase64(decodedFile!);
         setDefaultValues(queryReceipt);
         setFullOrderFile(str);
+        setRechargeQueryReceiptResult(queryReceipt);
       }
     };
     fetchData();
@@ -77,6 +93,11 @@ const useFullOrderDetailPageInit = () => {
     postRechargeQueryReceipt({
       orderId,
     });
+
+    // 更改訂單列表和訂單詳情的UTRState
+    if ('UTRState' in orderDetail) {
+      console.log('orderDetail');
+    }
 
     return () => reset();
   }, []);

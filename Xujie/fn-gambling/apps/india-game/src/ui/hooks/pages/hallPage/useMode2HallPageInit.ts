@@ -14,7 +14,7 @@ import {
 import { useEffect } from 'react';
 import { useGameListStore } from '@mode2/zustand/gameListStore';
 import { usePlatformNotifyStore } from '@mode2/zustand/platform/platformNotifyStore';
-import dayjs from 'dayjs';
+import dayjs from '@commonUtils/localizedDayjs';
 import { useRebateRewardModalStore } from '@mode2/zustand/components/rebateRewardModalStore';
 import { deleteCachedFiles } from '@mode2/usecase/useClearCacheStorage';
 import userLocalForage, {

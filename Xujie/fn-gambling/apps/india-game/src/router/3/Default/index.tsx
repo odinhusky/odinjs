@@ -1,36 +1,77 @@
-import { BasePagePathObj } from '@mode2/routerTypes/types';
-import WalletPage from '@pages/WalletPage';
-import InvitePage from '@pages/InvitePage';
-import MyPage from '@pages/MyPage';
-import LoginPage from '@pages/LoginPage';
-import ActivityPage from '@pages/ActivityPage';
-import RecordPage from '@pages/RecordPage';
-import ChangePasswordPage from '@pages/ChangePasswordPage';
-import BindKYCPage from '@pages/BindKYCPage';
-import HallPage from '@pages/HallPage';
-import WebviewPage from '@pages/WebviewPage';
-import PolicyPage from '@pages/PolicyPage';
-import FeedBackPage from '@pages/FeedBackPage';
-import MoreGamePage from '@pages/MoreGamePage';
-import SubordinateDataPage from '@pages/SubordinateDataPage';
-import TeamClubPage from '@pages/TeamClubPage';
-import ActivityRulePage from '@pages/ActivityRulePage';
-import RewardsDetailPage from '@pages/RewardsDetailPage';
-import SharePage from '@pages/SharePage';
-import ActivityRecordPage from '@pages/ActivityRecordPage';
-import InviteWheelPage from '@pages/InviteWheelPage';
-import FullOrderDetailPage from '@pages/FullOrderDetailPage';
-import RechargeWheelPage from '@pages/RechargeWheelPage';
-import RechargeWheelRecordsPage from '@pages/RechargeWheelRecordsPage';
 import { lazy } from 'react';
-import GiftCodeRedeemPage from '@pages/GiftCodeRedeemPage';
+import { BasePagePathObj } from '@mode2/routerTypes/types';
+import Layout from '@templates/Layout';
 import UndefinedRoute from '@/router/UndefinedRoute';
-import { Layout } from '@templates/Layout';
-import OrderDetailPage from '@pages/OrderDetailPage';
-import GameSupplierListPage from '@pages/GameSupplierListPage';
-import AccountPage from '@pages/AccountPage';
-import WalletGuidePage from '@pages/WalletGuidePage';
-import SettingPage from '@pages/SettingPage';
+
+// 不進行 Lazy 處理
+import HallPage from '@pages/HallPage';
+import ActivityPage from '@pages/ActivityPage';
+import InviteWheelPage from '@pages/InviteWheelPage';
+import TeamClubPage from '@pages/TeamClubPage';
+import MyPage from '@pages/MyPage';
+import InboxDetailPage from '@pages/InboxDetailPage';
+import FeedBackPage from '@pages/FeedBackPage';
+import TaskCenterPage from '@pages/TaskCenterPage';
+import WalletPage from '@pages/WalletPage';
+import WebviewPage from '@pages/WebviewPage';
+import MoreGamePage from '@pages/MoreGamePage';
+
+// 要進行 Lazy
+// import LoginPage from '@pages/LoginPage';
+// import RecordPage from '@pages/RecordPage';
+// import ChangePasswordPage from '@pages/ChangePasswordPage';
+// import BindKYCPage from '@pages/BindKYCPage';
+// import PolicyPage from '@pages/PolicyPage';
+// import SubordinateDataPage from '@pages/SubordinateDataPage';
+// import ActivityRulePage from '@pages/ActivityRulePage';
+// import RewardsDetailPage from '@pages/RewardsDetailPage';
+// import SharePage from '@pages/SharePage';
+// import ActivityRecordPage from '@pages/ActivityRecordPage';
+// import FullOrderDetailPage from '@pages/FullOrderDetailPage';
+// import RechargeWheelPage from '@pages/RechargeWheelPage';
+// import RechargeWheelRecordsPage from '@pages/RechargeWheelRecordsPage';
+// import GiftCodeRedeemPage from '@pages/GiftCodeRedeemPage';
+// import OrderDetailPage from '@pages/OrderDetailPage';
+// import AccountPage from '@pages/AccountPage';
+// import WalletGuidePage from '@pages/WalletGuidePage';
+// import SettingPage from '@pages/SettingPage';
+// import VipPage from '@pages/VipPage';
+// import VipBonusPage from '@pages/VipBonusPage';
+// import RankingPage from '@pages/RankingPage';
+// import ActivityDetailPage from '@pages/ActivityDetailPage';
+// import SearchGamePage from '@pages/SearchGamePage';
+// import RechargeSecretPage from '@pages/RechargeSecretPage';
+// import LowBalanceRescueBoxPage from '@pages/LowBalanceRescueBoxPage';
+
+const LoginPage = lazy(() => import('@pages/LoginPage'));
+const RecordPage = lazy(() => import('@pages/RecordPage'));
+const ChangePasswordPage = lazy(() => import('@pages/ChangePasswordPage'));
+const BindKYCPage = lazy(() => import('@pages/BindKYCPage'));
+const PolicyPage = lazy(() => import('@pages/PolicyPage'));
+const SubordinateDataPage = lazy(() => import('@pages/SubordinateDataPage'));
+const ActivityRulePage = lazy(() => import('@pages/ActivityRulePage'));
+const RewardsDetailPage = lazy(() => import('@pages/RewardsDetailPage'));
+const SharePage = lazy(() => import('@pages/SharePage'));
+const ActivityRecordPage = lazy(() => import('@pages/ActivityRecordPage'));
+const FullOrderDetailPage = lazy(() => import('@pages/FullOrderDetailPage'));
+const RechargeWheelPage = lazy(() => import('@pages/RechargeWheelPage'));
+const RechargeWheelRecordsPage = lazy(
+  () => import('@pages/RechargeWheelRecordsPage')
+);
+const GiftCodeRedeemPage = lazy(() => import('@pages/GiftCodeRedeemPage'));
+const OrderDetailPage = lazy(() => import('@pages/OrderDetailPage'));
+const AccountPage = lazy(() => import('@pages/AccountPage'));
+const SettingPage = lazy(() => import('@pages/SettingPage'));
+const VipPage = lazy(() => import('@pages/VipPage'));
+const VipBonusPage = lazy(() => import('@pages/VipBonusPage'));
+const RankingPage = lazy(() => import('@pages/RankingPage'));
+const ActivityDetailPage = lazy(() => import('@pages/ActivityDetailPage'));
+const SearchGamePage = lazy(() => import('@pages/SearchGamePage'));
+const WalletGuidePage = lazy(() => import('@pages/WalletGuidePage'));
+const RechargeSecretPage = lazy(() => import('@pages/RechargeSecretPage'));
+const LowBalanceRescueBoxPage = lazy(
+  () => import('@pages/LowBalanceRescueBoxPage')
+);
 
 export const DEFAULT_ROUTES = [
   {
@@ -40,13 +81,13 @@ export const DEFAULT_ROUTES = [
       <Layout path={BasePagePathObj.WalletPage} component={WalletPage} />
     ),
   },
-  {
-    path: BasePagePathObj.InvitePage,
-    component: InvitePage,
-    element: (
-      <Layout path={BasePagePathObj.InvitePage} component={InvitePage} />
-    ),
-  },
+  // {
+  //   path: BasePagePathObj.InvitePage,
+  //   component: InvitePage,
+  //   element: (
+  //     <Layout path={BasePagePathObj.InvitePage} component={InvitePage} />
+  //   ),
+  // },
   {
     path: BasePagePathObj.MyPage,
     component: MyPage,
@@ -62,6 +103,18 @@ export const DEFAULT_ROUTES = [
     component: ActivityPage,
     element: (
       <Layout path={BasePagePathObj.ActivityPage} component={ActivityPage} />
+    ),
+  },
+  {
+    path: BasePagePathObj.VipPage,
+    component: VipPage,
+    element: <Layout path={BasePagePathObj.VipPage} component={VipPage} />,
+  },
+  {
+    path: BasePagePathObj.VipBonusPage,
+    component: VipBonusPage,
+    element: (
+      <Layout path={BasePagePathObj.VipBonusPage} component={VipBonusPage} />
     ),
   },
   {
@@ -261,21 +314,87 @@ export const DEFAULT_ROUTES = [
       <Layout path={BasePagePathObj.SettingPage} component={SettingPage} />
     ),
   },
-  {
-    path: BasePagePathObj.GameSupplierListPage,
-    element: (
-      <Layout
-        path={BasePagePathObj.GameSupplierListPage}
-        component={GameSupplierListPage}
-      />
-    ),
-  },
+  // {
+  //   path: BasePagePathObj.GameSupplierListPage,
+  //   element: (
+  //     <Layout
+  //       path={BasePagePathObj.GameSupplierListPage}
+  //       component={GameSupplierListPage}
+  //     />
+  //   ),
+  // },
   {
     path: BasePagePathObj.OrderDetailPage,
     element: (
       <Layout
         path={BasePagePathObj.OrderDetailPage}
         component={OrderDetailPage}
+      />
+    ),
+  },
+  {
+    path: BasePagePathObj.RankingPage,
+    element: (
+      <Layout path={BasePagePathObj.RankingPage} component={RankingPage} />
+    ),
+  },
+  {
+    path: BasePagePathObj.ActivityDetailPage,
+    element: (
+      <Layout
+        path={BasePagePathObj.ActivityDetailPage}
+        component={ActivityDetailPage}
+      />
+    ),
+  },
+  {
+    path: BasePagePathObj.TaskCenterPage,
+    element: (
+      <Layout
+        path={BasePagePathObj.TaskCenterPage}
+        component={TaskCenterPage}
+      />
+    ),
+  },
+  {
+    path: BasePagePathObj.SearchGamePage,
+    component: SearchGamePage,
+    element: (
+      <Layout
+        path={BasePagePathObj.SearchGamePage}
+        component={SearchGamePage}
+      />
+    ),
+  },
+  {
+    path: BasePagePathObj.InboxDetailPage,
+    component: InboxDetailPage,
+    element: (
+      <Layout
+        path={BasePagePathObj.InboxDetailPage}
+        component={InboxDetailPage}
+      />
+    ),
+  },
+  // TODO Evan 特殊充值通道
+  {
+    path: BasePagePathObj.RechargeSecretPage,
+    component: RechargeSecretPage,
+    element: (
+      <Layout
+        path={BasePagePathObj.RechargeSecretPage}
+        component={RechargeSecretPage}
+      />
+    ),
+  },
+  // TODO Evan 破產獎勵寶箱
+  {
+    path: BasePagePathObj.LowBalanceRescueBoxPage,
+    component: LowBalanceRescueBoxPage,
+    element: (
+      <Layout
+        path={BasePagePathObj.LowBalanceRescueBoxPage}
+        component={LowBalanceRescueBoxPage}
       />
     ),
   },

@@ -1,6 +1,5 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from '@mode2/zustand/middlewareWrapper';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
 // interface PersonalInfoKycData {
 //   id: number;
@@ -13,7 +12,6 @@ interface BankAccountInfoKycData {
   bankCode: string;
   ifsc: string;
 }
-
 
 export interface KycDataTypes {
   // isPersonalInfoFirstBind: boolean;
@@ -51,20 +49,18 @@ const defaultKycData = {
 /**
  * KYC 所需資訊 (個人資訊, 銀行資訊)
  */
-export const useKycDataStore = create<KycDataTypes>()(
-  devtoolsAndPersistWrapper('[user store] useKycDataStore', (set) => ({
-    ...cloneDeep(defaultKycData),
-    // setIsPersonalInfoFirstBind: (value) =>
-    //   set(() => ({ isPersonalInfoFirstBind: value })),
-    // setIsBankFirstBind: (value) => set(() => ({ isBankFirstBind: value })),
-    // setKycPersonalInfo: (info) => set(() => ({ personalInfo: info })),
-    setKycBankAccountInfo: (info) => set(() => ({ bankAccountInfo: info })),
-    resetKycData: () => set(() => ({ ...cloneDeep(defaultKycData) })),
-    refreshKYCInit: () =>
-      set((state: KycDataTypes) => ({
-        refreshKycInitCount: state.refreshKycInitCount + 1,
-      })),
-    setIsAPIPlayerInformationLoading: (bool) =>
-      set(() => ({ isAPIPlayerInformationLoading: bool })),
-  }))
-);
+export const useKycDataStore = create<KycDataTypes>()((set) => ({
+  ...cloneDeep(defaultKycData),
+  // setIsPersonalInfoFirstBind: (value) =>
+  //   set(() => ({ isPersonalInfoFirstBind: value })),
+  // setIsBankFirstBind: (value) => set(() => ({ isBankFirstBind: value })),
+  // setKycPersonalInfo: (info) => set(() => ({ personalInfo: info })),
+  setKycBankAccountInfo: (info) => set(() => ({ bankAccountInfo: info })),
+  resetKycData: () => set(() => ({ ...cloneDeep(defaultKycData) })),
+  refreshKYCInit: () =>
+    set((state: KycDataTypes) => ({
+      refreshKycInitCount: state.refreshKycInitCount + 1,
+    })),
+  setIsAPIPlayerInformationLoading: (bool) =>
+    set(() => ({ isAPIPlayerInformationLoading: bool })),
+}));

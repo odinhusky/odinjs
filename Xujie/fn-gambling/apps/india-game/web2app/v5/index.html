@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="FACIL E DIVERTIDO, COMECE EM BREVE">
   <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8"/>
 
-  <script charset='UTF-8' src="static/js/sa-sdk-javascript/sensorsdata.min.js "></script>
+<!--  <script charset='UTF-8' src="static/js/sa-sdk-javascript/sensorsdata.min.js "></script>-->
   <script charset='UTF-8' src="static/js/index.js "></script>
   <script charset='UTF-8' src="static/js/fetchMyIp/index.js "></script>
   <script charset='UTF-8' src="static/js/eventPixel/index.js "></script>
@@ -35,8 +35,8 @@
     const defDomain = generateTopDomain();
 
 
-    // init Sensors Data
-    sensorsDataInit(`${defPackageName}w2a`);
+    // // init Sensors Data
+    // sensorsDataInit(`${defPackageName}w2a`);
 
     !function (f, b, e, v, n, t, s) {
       if (f.fbq) return;
@@ -120,6 +120,8 @@
     const adname = searchParams.get('p5');
     const adid = searchParams.get('p6');
     const promoteGameId = searchParams.get('top');
+    const referralCode = searchParams.get('ref_code');
+
 
     const fbclid = searchParams.get('fbclid') || getCookie('_fbc');
     const fbpid = searchParams.get('fbpid') || getCookie('_fbp');
@@ -138,7 +140,7 @@
       useEventPixel(data);
     }
 
-    sensorsDataTrack('PageView', {'fbc': fbclid || '', 'fbp': fbpid || ''});
+    // sensorsDataTrack('PageView', {'fbc': fbclid || '', 'fbp': fbpid || ''});
     doEventPixel('PageView');
 
     let isThrottled = false;
@@ -179,7 +181,8 @@
       let medium = settingData?.medium || searchParams.get('medium') || 'paid';
       let source = settingData?.source || searchParams.get('source') || 'facebook';
 
-      let downloadUrl = window.location.host;
+      const downloadDomain = await  loadDownloadDomainBySetting(defPackageName)
+      let downloadUrl = downloadDomain || window.location.host;
 
       let campaignParameter = adjustTrackerToken ? `?campaign=${campaignname}%20%28${campaignid}%29` : `?campaign=ttgroup`;
       let adgroupParameter = adjustTrackerToken ? `&adgroup=${adsetname}%20%28${adsetid}%29` : `&adgroup=ttgroup`;
@@ -188,7 +191,8 @@
       let sourceParameter = source ? `&source=${source}` : '';
       let mediumParameter = medium ? `&medium=${medium}` : '';
       let promoteGameIdParameter = promoteGameId? `__promoteGameId_${promoteGameId}` : '';
-      let labelParameter = `&label=medium_${medium}__source_${source}__channel_${channelName}` + promoteGameIdParameter;
+      let referralCodeParameter = referralCode? `__referralCode_${referralCode}` : '';
+      let labelParameter = `&label=medium_${medium}__source_${source}__channel_${channelName}` + promoteGameIdParameter + referralCodeParameter;
       let fbclidParameter = fbclid ? `&fbclid=${fbclid}` : '';
       let fbpidParameter = fbpid ? `&fbpid=${fbpid}` : '';
       let fbPixelIdParameter = fbPixelId ? `&fb_pixel_id=${fbPixelId}` : '';
@@ -208,7 +212,9 @@
       if (state) {
         redirectParameter = defDomain + "/hall";
       } else {
-        redirectParameter = `https://${downloadUrl}/apk/${defPackageName}/${defPackageName}_${channelId}.apk`;
+        let randomPath = generateRandomPath()
+        console.log('@@@===> randomPath' , randomPath)
+        redirectParameter = `https://${downloadUrl}/apk/${randomPath}/${defPackageName}/${defPackageName}_${channelId}.apk`;
       }
 
       let link = `https://app.adjust.com/${adjustTrackerToken ? adjustTrackerToken : defAdjustTrackerToken}`;
@@ -227,8 +233,8 @@
       link += '&deep_link=' + encodeURIComponent(deepLinkParameter);
       link += '&redirect=' + encodeURIComponent(redirectParameter);
       console.log('link', link);
-      // Sensors Data Track
-      sensorsDataTrack('DownloadApk', {'apkUrl': link, 'fbc': fbclid || '', 'fbp': fbpid || ''});
+      // // Sensors Data Track
+      // sensorsDataTrack('DownloadApk', {'apkUrl': link, 'fbc': fbclid || '', 'fbp': fbpid || ''});
       doEventPixel('Download');
       window.location.href = link;
     };

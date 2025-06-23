@@ -113,8 +113,8 @@ export const useHighBonusRechargeDescription = () => {
     return {
       payChannelName: currentPayChannel.displayName,
       cashBackRate: currentOptCashBackRate,
-      currentAmount: formatMoney(currentOptAmount || 0),
-      currentRebateAmount: formatMoney(currentOptRebateAmount || 0),
+      currentAmount: formatMoney({ value: currentOptAmount || 0 }),
+      currentRebateAmount: formatMoney({ value: currentOptRebateAmount || 0 }),
     };
   }, [
     currentPayChannel,

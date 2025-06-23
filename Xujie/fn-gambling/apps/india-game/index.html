@@ -6,14 +6,86 @@
   <!--  <title>{dynamic}</title>-->
   <base href="/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https:// fonts.googleapis.com">
+  <link rel="preconnect" href="https:// fonts.gstatic.com" crossorigin>
+  <link href="%VITE_GLOBAL_FONT_FAMILY_LINK%" rel="stylesheet">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <!--  <link id="favicon" rel="icon" type="image/x-icon" href="{dynamic}" />-->
   <link rel="stylesheet" href="/src/main.scss" />
+
+  <!-- Open Graph 基本設定 -->
+<!--  <meta property="og:title" content="%VITE_OG_TITLE%" />-->
+<!--  <meta property="og:description" content="%VITE_OG_DESCRIPTION%" />-->
+<!--  <meta property="og:image" content="%VITE_OG_IMAGE%" />-->
+<!--  <meta property="og:url" content="%VITE_OG_URL%" />-->
+<!--  <meta property="og:type" content="%VITE_OG_TYPE%" />-->
+<!-- TODO Evan 上正式先註解-->
+  <!-- （可選）Twitter Card -->
+<!--  <meta property="twitter:card" content="%VITE_OG_TITLE%" />-->
+<!--  <meta property="twitter:title" content="%VITE_OG_TITLE%" />-->
+<!--  <meta property="twitter:description" content="%VITE_OG_DESCRIPTION%" />-->
+<!--  <meta property="twitter:image" content="%VITE_OG_IMAGE%" />-->
+<!--  <meta property="twitter:url" content="%VITE_OG_URL%" />-->
+<!--  <meta property="twitter:type" content="%VITE_OG_TYPE%" />-->
 </head>
 
-<body>
-<div id="root"></div>
-<script type="module" src="/src/main.tsx"></script>
+<!--<body>-->
+
+<body style="font-family: '%VITE_GLOBAL_FONT_FAMILY%' ">
+  <!--<script>-->
+  <!--  console.log('@@@===> html evn', "%VITE_GLOBAL_FONT_FAMILY%")-->
+  <!--</script>-->
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+
+  <script type="module">
+    function handleGestureStart(e) {
+      e.preventDefault();
+    }
+
+    function handleDoubleClick(e) {
+      e.preventDefault();
+    }
+
+    function handleTouchStart(event) {
+      if (event.touches.length > 1) {
+        event.preventDefault();
+      }
+    }
+
+    function handleTouchEnd(event) {
+      var lastTouchEnd = 0;
+      var now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }
+
+    window.onload = function () {
+      console.log('@@@===> html onload', import.meta.env)
+      const version = import.meta.env['VITE_V_VERSION'];
+
+
+      document.addEventListener('gesturestart', handleGestureStart);
+      document.addEventListener('dblclick', handleDoubleClick);
+      document.addEventListener('touchstart', handleTouchStart);
+      document.addEventListener('touchend', handleTouchEnd);
+    };
+
+    window.onbeforeunload = function () {
+      document.removeEventListener('gesturestart', handleGestureStart);
+      document.removeEventListener('dblclick', handleDoubleClick);
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+
+
+  </script>
 </body>
 
 </html>

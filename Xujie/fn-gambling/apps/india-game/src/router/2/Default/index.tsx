@@ -25,7 +25,7 @@ import RechargeWheelRecordsPage from '@pages/RechargeWheelRecordsPage';
 import { lazy } from 'react';
 import GiftCodeRedeemPage from '@pages/GiftCodeRedeemPage';
 import UndefinedRoute from '@/router/UndefinedRoute';
-import { Layout } from '@templates/Layout';
+import Layout from '@templates/Layout';
 
 export const DEFAULT_ROUTES = [
   {

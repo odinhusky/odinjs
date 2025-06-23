@@ -156,4 +156,6 @@
   --official-btn2-hover: linear-gradient(90deg, #2255ff 0%, #00c4ff 100%);
   --official-text: #5e00ff;
   --primary-20: rgba(56, 36, 83, 1);
+
+  --bg-html: #000000;
 }

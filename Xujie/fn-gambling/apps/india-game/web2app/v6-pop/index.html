@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="referrer" content="origin" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="shortcut icon"
+      href="https://static.ttgroup.vip/in/v6/pop/favicon.ico"
+    />
+    <link rel="stylesheet" href="static/css/index.css" />
+<!--    <link rel="stylesheet" href="static/css/index1.css" />-->
+    <title id="main-title">7IND</title>
+    <meta
+      property="og:title"
+      content="Join 7IND.com and Get ₹10,000 Bonus Today!"
+    />
+    <meta
+      property="og:description"
+      content="Made for Indian players – Daily Reward. Fast withdrawals. 1000+ real money games. Start playing, start winning!"
+    />
+    <meta
+      property="og:image"
+      content="https://game.ttgroup.vip/web2app/in/v6/appicon1.png"
+    />
+    <meta property="og:site_name" content="7IND.com" />
+    <meta
+      name="twitter:title"
+      content="Join 7IND.com and Get ₹10,000 Bonus Today!"
+    />
+    <meta
+      name="twitter:description"
+      content="Made for Indian players – Daily Reward. Fast withdrawals. 1000+ real money games. Start playing, start winning!"
+    />
+    <meta
+      name="twitter:image"
+      content="https://game.ttgroup.vip/web2app/in/v6/appicon1.png"
+    />
+    <meta name="twitter:site" content="7IND.com" />
+
+    <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8" />
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>-->
+
+    <!--  <script charset='UTF-8' src="static/js/sa-sdk-javascript/sensorsdata.min.js "></script>-->
+<!--    <script charset="UTF-8" src="static/js/index.js "></script>-->
+<!--    <script charset="UTF-8" src="static/js/fetchMyIp/index.js "></script>-->
+<!--    <script charset="UTF-8" src="static/js/eventPixel/index.js "></script>-->
+<!--    <script charset="UTF-8" src="static/js/setting/trackTokenSetting.js "></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.2.0/uuidv4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
+    <script charset="UTF-8" src="static/js/fingerprint/index.js "></script>
+    <script charset="UTF-8" src="static/js/posthog/index.js "></script>
+
+    <script type="text/javascript">
+      posthog.init('phc_dw1nzS7wzR9D1gTkkBQv9YfIX5by838GGuKAHVIjJWZ', {
+        api_host: 'https://posthog.xu-jie-tech.org',
+      });
+
+      // s3 res list
+      // https://static.ttgroup.vip/in/v6/popicon_android.webp
+      // https://static.ttgroup.vip/in/v6/poplogo_7ind_com.webp
+      // https://static.ttgroup.vip/in/v6/popshare_background_2.webp
+      // https://static.ttgroup.vip/in/v6/popshare_link_img_en.webp
+      // https://static.ttgroup.vip/in/v6/popshare_link_img_hi.webp
+
+      // const defAdjustTrackerToken = '1mkwbyl6';
+      const defChannelId = '6007001';
+      const defPackageName = '7ind';
+      const defDeepLinkSchema = `my${defPackageName}`;
+      // const defDomain = generateTopDomain();
+
+      // // init Sensors Data
+      // sensorsDataInit(`${defPackageName}w2a`);
+
+      // !function (f, b, e, v, n, t, s) {
+      //   if (f.fbq) return;
+      //   n = f.fbq = function () {
+      //     n.callMethod ?
+      //       n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      //   };
+      //   if (!f._fbq) f._fbq = n;
+      //   n.push = n;
+      //   n.loaded = !0;
+      //   n.version = '2.0';
+      //   n.queue = [];
+      //   t = b.createElement(e);
+      //   t.async = !0;
+      //   t.src = v;
+      //   s = b.getElementsByTagName(e)[0];
+      //   s.parentNode.insertBefore(t, s);
+      // }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+      const searchParams = new URLSearchParams(window.location.search);
+
+      // function doNoscriptSetUp(pixelId) {
+      //   if (pixelId) {
+      //     var noscriptImg = document.createElement('img');
+      //     noscriptImg.width = '1';
+      //     noscriptImg.height = '1';
+      //     noscriptImg.style.display = 'none';
+      //     noscriptImg.src = `https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`;
+      //
+      //     var noscriptTag = document.createElement('noscript');
+      //     noscriptTag.appendChild(noscriptImg);
+      //     document.body?.appendChild(noscriptTag);
+      //   }
+      //
+      //   // doEventPixel('PageView');
+      // }
+
+      // await async .json file， 封裝一個 async fun do init fb pixel
+      // function loadDataAndProcess() {
+      //   const pixelId = searchParams.get('pixel') || '';
+      //   fbq('init', pixelId);
+      //   fbq('track', 'PageView');
+      //   doNoscriptSetUp(pixelId);
+      // }
+
+      // do and await
+      // loadDataAndProcess();
+
+      // function getCookie(name) {
+      //   let cookie = {};
+      //   document.cookie.split(';').forEach(function (el) {
+      //     let split = el.split('=');
+      //     cookie[split[0].trim()] = split.slice(1).join('=');
+      //   });
+      //   return cookie[name];
+      // }
+
+      // async function doEventPixel(eventName) {
+      //   const appId = searchParams.get('app_id') || defChannelId
+      //   const fbclid = searchParams.get('fbclid') || getCookie('_fbc');
+      //   const fbpid = searchParams.get('fbpid') || getCookie('_fbp');
+      //   const data = {
+      //     'appId': appId,
+      //     'eventName': eventName,
+      //     'fbc': fbclid || '',
+      //     'fbp': fbpid || '',
+      //     'deviceId': fingerprint.get()
+      //   };
+      //   useEventPixel(data);
+      // }
+
+      let isThrottled = false;
+
+      function throttle(func, delay) {
+        return function (...args) {
+          if (!isThrottled) {
+            func.apply(this, args);
+            isThrottled = true;
+            setTimeout(() => {
+              isThrottled = false;
+            }, delay);
+          }
+        };
+      }
+
+      async function openAppOrDownload() {
+        const appId = searchParams.get('app_id') || defChannelId;
+        const referralCode = searchParams.get('referral_code') || '';
+
+        const params = {
+          appId: appId,
+          deviceId: fingerprint.get?.(),
+          referralCode: referralCode,
+          downloadFrom: 'pop',
+          postHogDistinctId: posthog?.get_distinct_id() || '',
+        };
+
+        const filteredParams = Object.fromEntries(
+          Object.entries(params).map(([k, v]) => [k, v ?? ''])
+        );
+
+        const queryString = new URLSearchParams(filteredParams).toString();
+        const deppLink = `${defDeepLinkSchema}://app/hall?wake_up_from=pop&${queryString}`;
+
+        console.log(
+          '@@@===> pop Download params',
+          JSON.stringify(filteredParams)
+        );
+        posthog?.capture('Download', {
+          ...filteredParams,
+        });
+        // doEventPixel('Download');
+
+        const loader = document.getElementById('loader');
+        loader.classList.remove('hidden');
+
+        let link = `https://dl.7ind.com/dl/rd2`;
+        link += '?deep_link=' + encodeURIComponent(deppLink);
+        link +=
+          '&redirect=' +
+          encodeURIComponent(
+            `https://dl.7ind.com/dl/latest.apk?${queryString}`
+          );
+        window.location.href = link;
+
+        setTimeout(() => {
+          const loader = document.getElementById('loader');
+          loader.classList.add('hidden');
+        }, 1000 * 10);
+      }
+
+      function toggleLangList() {
+        const languageOptions = document.querySelector('#dropdownList');
+        languageOptions.classList.toggle('show');
+      }
+      // 封裝取抖動行為
+      const throttleHandleClick = throttle(openAppOrDownload, 500);
+    </script>
+    <!-- <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=932238105183110&ev=PageView&noscript=1"
+    /></noscript> -->
+  </head>
+
+  <body>
+    <div class="main_view_page">
+      <header class="header">
+        <img
+          class="logo"
+          src="https://static.ttgroup.vip/in/v6/pop/logo_7ind_com.webp"
+        />
+        <div class="dropdown" id="langDropdown">
+          <div class="dropdown-toggle" id="dropdownToggle">
+            <span id="selectedText">English</span>
+            <img id="selectedIcon"/>
+          </div>
+
+          <div class="dropdown-list" id="dropdownList">
+            <div
+              class="dropdown-item"
+              data-lang="hi"
+              data-text="हिंदी"
+              data-icon="https://static.ttgroup.vip/in/v6/pop/ic_lang_hi.webp"
+            >
+              <span>हिंदी</span>
+            </div>
+            <div
+              class="dropdown-item"
+              data-lang="en"
+              data-text="English"
+              data-icon="https://static.ttgroup.vip/in/v6/pop/ic_lang_en.webp"
+            >
+              <span>English</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div>
+        <img class="main_bg img_bg_1" />
+      </div>
+
+      <!--  <div style="position:relative">-->
+      <!--    <img class="main_bg img_bg_2"/>-->
+      <!--    <img style="position: absolute; bottom: 0; left: 0; right: 0;" class="main_bg"-->
+      <!--         src="https://static.ttgroup.vip/in/v6/pop/bg_gif_2.webp"/>-->
+      <!--  </div>-->
+      <!--  <img class="main_bg img_bg_3"/>-->
+
+      <!-- bg end -->
+      <div class="btns">
+        <!-- <div class="btn play" onclick="throttleHandleClick()">
+          <span class="start-text"></span>
+        </div> -->
+
+        <div class="download-btn btn-breath">
+<!--          <div class="tips breath"><span class="invite-text"></span></div>-->
+          <div class="btn download" onclick="throttleHandleClick()">
+            <img
+              class="img"
+              src="https://static.ttgroup.vip/in/v6/pop/icon_android.webp"
+            />
+            <span class="download-text"> </span>
+          </div>
+        </div>
+      </div>
+      <div id="loader" class="hidden">
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    const userLang = navigator.language || navigator.languages[0];
+
+    const indianLangs = [
+      'hi-IN',
+      // "en-IN", "bn-IN", "ta-IN", "te-IN", "ml-IN",
+      // "kn-IN", "mr-IN", "gu-IN", "ur-IN"
+    ];
+    const localeFlag = indianLangs.includes(userLang) ? 'hi' : 'en';
+
+    window.onload = function () {
+      const dots = document.querySelectorAll('.dot');
+
+      var locale = localeFlag;
+
+      // const swiper = new Swiper('.swiper', {
+      //   slidesPerView: 1,
+      //   loop: false,
+      //   speed: 1500,
+      //   autoplay: {
+      //     delay: 1000, // 设置自动播放的时间间隔
+      //     disableOnInteraction: false,
+      //   },
+      //   slideToClickedSlide: true,
+      //   on: {
+      //     slideChange: function () {
+      //       // console.log("slideChange", this.activeIndex, );
+      //       updateDots(this.activeIndex);
+      //     },
+      //   },
+      // });
+
+      // 更新小圆点的状态
+      // function updateDots(activeIndex) {
+      //   dots.forEach((dot, index) => {
+      //     dot.classList.remove('active');
+      //     if (index === activeIndex) {
+      //       dot.classList.add('active');
+      //     }
+      //   });
+      // }
+      //
+      // updateDots(swiper.activeIndex);
+
+      const content = {
+        en: {
+          // startText: 'Start the game',
+          // inviteText: '₹500 for invites!',
+          downloadText: 'Download',
+          imgBg1: 'https://static.ttgroup.vip/in/v6/pop/share2_link_img_en.webp',
+          langIcon: 'https://static.ttgroup.vip/in/v6/pop/ic_wrapper.webp',
+          langText: 'English',
+        },
+        hi: {
+          // startText: 'अभी खेलें',
+          // inviteText: 'इनवाइट्स पर ₹500 पाएं!',
+          downloadText: 'ऐप डाउनलोड करें',
+          imgBg1: 'https://static.ttgroup.vip/in/v6/pop/share2_link_img_hi.webp',
+          langIcon: 'https://static.ttgroup.vip/in/v6/pop/ic_wrapper.webp',
+          langText: 'हिंदी',
+        },
+      };
+
+      const toggle = document.getElementById('dropdownToggle');
+      const list = document.getElementById('dropdownList');
+      const selectedIcon = document.getElementById('selectedIcon');
+      const selectedText = document.getElementById('selectedText');
+
+      function reload() {
+        // document.querySelector('.start-text').textContent =
+        // content[locale].startText;
+        // document.querySelector('.invite-text').textContent =
+        //   content[locale].inviteText;
+        document.querySelector('.download-text').textContent =
+          content[locale].downloadText;
+
+        document.querySelector('.img_bg_1').src = content[locale].imgBg1;
+        console.log('!! content[locale].imgBg1', content[locale].imgBg1);
+        // document.querySelector('.img_bg_2').src = content[locale].imgBg2;
+        // document.querySelector('.img_bg_3').src = content[locale].imgBg3;
+
+        selectedIcon.src = content[locale].langIcon;
+        selectedText.textContent = content[locale].langText;
+      }
+
+      reload();
+
+      toggle.addEventListener('click', () => {
+        list.classList.toggle('show');
+      });
+
+      document.querySelectorAll('.dropdown-item').forEach((item) => {
+        console.log('!! ??');
+        item.addEventListener('click', () => {
+          const lang = item.getAttribute('data-lang');
+          list.classList.remove('show');
+          locale = lang;
+          reload();
+          console.log('選擇語言代碼:', lang);
+        });
+      });
+
+      // 點擊其他區域關閉
+      document.addEventListener('click', (e) => {
+        if (!document.getElementById('langDropdown').contains(e.target)) {
+          list.classList.remove('show');
+        }
+      });
+    };
+  </script>
+</html>

@@ -1,0 +1,66 @@
+.mode-input {
+  .input-container-div {
+    padding: 12px 8px;
+    border-radius: 4px;
+
+    .input-box {
+      display: flex;
+      align-items: center;
+      border-radius: 4px;
+
+      input {
+        background: transparent;
+        flex: 1;
+        padding: 0 8px;
+        color: var(--grayscale-100);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        width: 100%;
+        &:focus-visible {
+          outline: none;
+        }
+
+        &::placeholder {
+          color: var(--transparent-white-30);
+        }
+        &.type2::placeholder {
+          // color: var(--base-2-variant2);
+          @apply bgi-text-[var(--base-2-variant2)];
+          // @apply bgi-text-[var(--base-2-variant1)];
+        }
+      }
+
+      input[type='number']::-webkit-outer-spin-button,
+      input[type='number']::-webkit-inner-spin-button,
+      input[type='number'] {
+        -webkit-appearance: none;
+        margin: 0;
+        -moz-appearance: textfield !important;
+      }
+
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: var(--grayscale-100);
+      }
+
+      .login-autofill-input:-webkit-autofill,
+      .login-autofill-input:-webkit-autofill:hover,
+      .login-autofill-input:-webkit-autofill:focus {
+        -webkit-text-fill-color: var(--grayscale-100);
+      }
+
+      .input-prefix {
+        color: var(--transparent-white-30);
+        padding-right: 8px;
+        border-right: 1px solid var(--grayscale-80);
+      }
+
+      .input-suffix {
+        cursor: pointer;
+      }
+    }
+  }
+}

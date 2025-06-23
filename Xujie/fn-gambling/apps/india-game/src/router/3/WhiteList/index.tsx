@@ -12,6 +12,7 @@ export const ROUTE_WHITE_LIST = [
   BasePagePathObj.ActivityPage,
   BasePagePathObj.ActivityRulePage,
   BasePagePathObj.WalletPage,
+  BasePagePathObj.SearchGamePage,
 ];
 
-export default ROUTE_WHITE_LIST
+export default ROUTE_WHITE_LIST;

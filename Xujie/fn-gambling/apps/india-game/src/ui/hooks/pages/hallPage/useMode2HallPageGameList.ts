@@ -9,7 +9,7 @@ import {
 } from '@mode2/zustand/page/hallPageStore';
 import { useDeepEffect } from '@commonUtils/hooks';
 import useHallPageActions from '@mode2/action/hallPageAction/useHallPageActions';
-import { handleHallPageTabClick } from '@mode2/action/hallPageAction/actionType';
+import { handleHallPageTabClick } from '@mode2/action/actionTypes';
 import {
   useGameListStore,
   computeAllGameList,

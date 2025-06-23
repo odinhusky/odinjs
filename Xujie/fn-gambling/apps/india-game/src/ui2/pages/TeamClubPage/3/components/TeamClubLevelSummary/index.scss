@@ -1,0 +1,45 @@
+.team_club_level {
+  .swiper-pagination {
+    position: absolute !important;
+    bottom: 0.5rem !important;
+    left: 0 !important;
+    z-index: 3 !important;
+    height: 32px; // 要跟 .reward-list 的 pb 要一樣
+
+    .swiper-pagination-bullet {
+      @apply bgi-[var(--transparent-gray-70)] w-2 h-2 mx-[6px] opacity-80 border bgi-border-[var(--transparent-white-10)] bg-shadow-[var(--swiper-bullets-inset-shadow)];
+      transition: all 0.3s ease;
+    }
+
+    .swiper-pagination-bullet:hover {
+      opacity: 1;
+    }
+
+    .swiper-pagination-bullet-active {
+      @apply bgi-[var(--base-2-variant3)] opacity-100 w-2 h-2 bg-shadow-[none];
+    }
+  }
+}
+
+// 已經抽到元件內部
+// .team_club_tooltip {
+//   .ant-tooltip-inner {
+//     @apply py-2 px-3;
+//   }
+
+//   .ant-tooltip-arrow {
+//     &::before {
+//       @apply bgi-[var(--base-2-variant11)];
+//     }
+
+//     &::after {
+//       @apply border bgi-border-[var(--base-1-main)];
+//     }
+//   }
+// }
+
+// .team_club_progress_container {
+//   .ant-progress-bg.ant-progress-bg-outer {
+//     height: 8px !important;
+//   }
+// }

@@ -11,6 +11,10 @@ export const useWithdraw = () => {
   const [postPayPayout, { data, reset, isSuccess, isLoading, isError }] =
     usePostPayPayoutMutation();
 
+  const withdrawAmountSelected = useWalletPageWithdrawContentStore(
+    (state) => state.withdrawAmountSelected
+  );
+
   const withdrawAmountInputValue = useWalletPageWithdrawContentStore(
     (state) => state.withdrawAmountInputValue
   );
@@ -56,11 +60,11 @@ export const useWithdraw = () => {
     console.log('@@@===> TODO for V6 無密碼提領');
     useWalletPageStore.getState().setWithdrawalsState(false);
     postPayPayout({
-      amount: +withdrawAmountInputValue,
+      amount: withdrawAmountSelected.amount,
       password: '',
     });
     return;
-  }, [withdrawAmountInputValue, withdrawPasswordInputValue, sdkUtils]);
+  }, [withdrawAmountSelected]);
 
   useEffect(() => {
     setDisabled(isLoading);

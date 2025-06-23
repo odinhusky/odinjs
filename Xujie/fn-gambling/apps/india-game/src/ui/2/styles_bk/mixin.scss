@@ -1,0 +1,58 @@
+@use 'sass:map';
+
+$breakpoints: (
+  mobile: 768px,
+  tablet: 1439px,
+  desktop: 7680px,
+);
+
+@mixin bp($size) {
+  @if map.has-key($breakpoints, $size) {
+    @media (min-width: map.get($breakpoints, $size)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$size}.";
+  }
+}
+
+@mixin max-bp($size) {
+  @if map.has-key($breakpoints, $size) {
+    @media (max-width: map.get($breakpoints, $size)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$size}.";
+  }
+}
+
+@mixin baseButton($type) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--grayscale-100);
+  font-weight: 500;
+  background: var(--#{$type}-main);
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:active {
+    background: var(--#{$type}-dark) !important;
+  }
+
+  &:hover {
+    background: var(--#{$type}-light);
+  }
+
+  &:disabled {
+    background: var(--#{$type}-50);
+    color: var(--grayscale-50);
+  }
+}
+
+@mixin textColor($color) {
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: $color;
+}

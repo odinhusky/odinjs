@@ -6,7 +6,7 @@ import { adaptHtmlFontSize, replaceHtmlProductInformation } from '@mode2/utils';
 import 'animate.css';
 import { useAppStore } from '@mode2/zustand/appStore';
 import { useImageCache } from '@mode2/usecase/useImageCache';
-import VConsole from 'vconsole';
+// import VConsole from 'vconsole';
 import App from '@apps/App';
 
 // sdkUtils.isDevelopDebug() && new VConsole();

@@ -1,6 +1,6 @@
 /// <reference types='vitest' />
 import path from 'path';
-import { defineConfig, loadEnv, UserConfig } from 'vite';
+import { defineConfig, loadEnv, PluginOption, UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -10,9 +10,11 @@ import {
   getLibsAlias,
   getLocalExternalIPv4,
   getRollupOptions,
-  setupComponentsMapping,
+  // setupComponentsMapping,
+  setupComponentsUi2Mapping,
 } from '../../libs/src/plugins/build';
 import basicSsl from '@vitejs/plugin-basic-ssl';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 const localIP = getLocalExternalIPv4();
 console.log('@@ localIP', localIP);
@@ -43,22 +45,37 @@ export default defineConfig(({ mode }): UserConfig => {
       // If you want to exposes all env variables, which is not recommended
       // 'process.env': env
     },
+    worker: {
+      format: 'es', // 'es' 或 iife
+    },
     server: {
       open: '/hall', //npm run dev自动打开浏览器
       // port: 4200,
       host: localIP,
       proxy: {
+        '/ws': {
+          target: 'wss://in-dev.ttgroup-dev.vip', // 目标 WebSocket 服务器
+          ws: true, // 启用 WebSocket 代理
+          changeOrigin: true,
+        },
         '^/v(1|2|3)': {
+          // target: 'https://neerg.7ind.com', // V6
           target: 'https://in-dev.ttgroup-dev.vip',
           secure: true, // 協議是https的時候必須要寫
           changeOrigin: true,
         },
-        '^/resources': {
+        '^(/static|/resources)': {
           // NOTE 轉發 [S3]
           target: 'https://in-dev.ttgroup-dev.vip',
           secure: true, // 協議是https的時候必須要寫
           changeOrigin: true,
         },
+        // '^/resources': {
+        //   // NOTE 轉發 [S3]
+        //   target: 'https://in-dev.ttgroup-dev.vip',
+        //   secure: true, // 協議是https的時候必須要寫
+        //   changeOrigin: true,
+        // },
         '^/sensors_event': {
           // NOTE BI [神策]
           target: 'https://in-dev.ttgroup-dev.vip',
@@ -82,6 +99,10 @@ export default defineConfig(({ mode }): UserConfig => {
       shakeTreeImage({
         version: `${env.VITE_V_VERSION}`,
       }),
+      // shakeTreeUIMapping({
+      //   version: `${env.VITE_V_VERSION}`,
+      //   projectName: 'india-game',
+      // }),
       VitePWA({
         manifest: {
           name: `${VITE_PLATFORM}`, // App 名稱
@@ -125,16 +146,17 @@ export default defineConfig(({ mode }): UserConfig => {
         devOptions: {
           enabled: true,
         },
+        registerType: 'autoUpdate',
         workbox: {
           runtimeCaching: [
             {
               urlPattern: /\.(?:woff2?|eot|ttf|otf|json|css)$/i, // 僅緩存字體和 JSON 檔案
-              handler: 'CacheFirst',
+              handler: 'NetworkOnly',
               options: {
                 cacheName: 'static-resources',
                 expiration: {
-                  maxEntries: 20,
-                  maxAgeSeconds: 3 * 24 * 60 * 60, // 3 天
+                  maxEntries: 1,
+                  maxAgeSeconds: 24 * 60 * 60, // 1 天
                 },
               },
             },
@@ -149,17 +171,28 @@ export default defineConfig(({ mode }): UserConfig => {
       //   algorithm: 'gzip',
       //   threshold: 10240, // 对超过10k的数据压缩
       // }),
+
+      visualizer({
+        open: true, // 打包後自動打開報告
+        filename: 'stats.html', // 生成報告檔名
+        gzipSize: true,
+        brotliSize: true,
+      }) as PluginOption, // 可視化打包分析
     ],
     esbuild: {
+      // TODO Evan test
       // drop: env.VITE_MODE === 'prod' ? ['console', 'debugger'] : [],
+      pure: env.VITE_MODE === 'prod' ? ['console', 'debugger'] : [],
     },
     build: {
-      reportCompressedSize: true,
+      reportCompressedSize: false, // 禁用 gzip 壓縮大小報告，可略微減少打包時間
       commonjsOptions: {
         transformMixedEsModules: true,
       },
       outDir: '../../dist/apps/india-game',
       rollupOptions: getRollupOptions(env),
+      minify: 'esbuild',
+      sourcemap: false,
     },
     resolve: {
       alias: {
@@ -171,18 +204,21 @@ export default defineConfig(({ mode }): UserConfig => {
         '@plugins': path.resolve(__dirname, `plugins/`),
         '@transform': path.resolve(__dirname, 'src/external/transform'),
         ...getLibsAlias(),
-        ...setupComponentsMapping(env, __dirname),
+        // ...setupComponentsMapping(env, __dirname),
+        ...setupComponentsUi2Mapping(env, __dirname),
       },
     },
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `
-            @import "@styles/mixin.scss";
-            @import "@styles/components/select.scss";
-            @import "@styles/components/input.scss";
-            @import "@styles/components/table.scss";
-          `,
+          // additionalData: `
+          //   @import "@styles/mixin.scss";
+          //   @import "@styles/components/select.scss";
+          //   @import "@styles/components/input.scss";
+          //   @import "@styles/components/table.scss";
+          // `,
+          api: 'modern-compiler', // or "modern",
+          additionalData: `@use "@styles/index.scss" as *;`,
         },
       },
     },

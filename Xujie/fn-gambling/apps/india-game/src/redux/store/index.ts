@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { baseAPI, baseCryptoAPI } from '@mode2API/index';
+import { baseAPI, baseCryptoAPI, baseNoWrapperAPI } from '@mode2API/index';
 import { indiaAPI, indiaCryptoAPI } from '@/external/api';
 
 export const store = configureStore({
   reducer: {
     [baseAPI.reducerPath]: baseAPI.reducer,
     [baseCryptoAPI.reducerPath]: baseCryptoAPI.reducer,
+    [baseNoWrapperAPI.reducerPath]: baseNoWrapperAPI.reducer,
     [indiaAPI.reducerPath]: indiaAPI.reducer,
     [indiaCryptoAPI.reducerPath]: indiaCryptoAPI.reducer,
   },
@@ -14,6 +15,7 @@ export const store = configureStore({
     getDefaultMiddleware()
       .concat(baseAPI.middleware)
       .concat(baseCryptoAPI.middleware)
+      .concat(baseNoWrapperAPI.middleware)
       .concat(indiaAPI.middleware)
       .concat(indiaCryptoAPI.middleware),
 });

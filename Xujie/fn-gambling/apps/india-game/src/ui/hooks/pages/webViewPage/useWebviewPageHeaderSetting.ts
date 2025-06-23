@@ -34,6 +34,7 @@ export const useWebviewPageHeaderSetting = () => {
       onDepositClick: () => {
         setIsShowRechargeContent(true);
       },
+      onSystemLogoClick: () => {},
     });
   }, []);
 };

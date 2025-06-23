@@ -6,7 +6,7 @@ import {
   WalletPageRechargeCardUnit,
 } from '@mode2/zustand/page/WalletPage/useWalletPageRechargeCardStore';
 import useWalletPageBaseActions from '@mode2/action/walletPageAction/useWalletPageBaseActions';
-import { handleWalletPageRechargeCardClick } from '@mode2/action/walletPageAction/acitonType';
+import { handleWalletPageRechargeCardClick } from '@mode2/action/actionTypes';
 
 export const useRechargeCardList = () => {
   const { handleWalletPageBaseClick } = useWalletPageBaseActions();

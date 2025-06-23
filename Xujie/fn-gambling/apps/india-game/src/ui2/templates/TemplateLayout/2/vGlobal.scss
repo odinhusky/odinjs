@@ -1,0 +1,12 @@
+// 管理各個 V 版本的共用樣式或是客製化套件樣式
+.gradient-line {
+  @apply w-full h-[2px]
+    absolute bottom-0 left-0
+    bgi-[var(--linear-3)];
+}
+
+.gradient-top-line {
+  @apply w-full h-[2px]
+    absolute top-0 left-0
+    bgi-[var(--linear-3)];
+}

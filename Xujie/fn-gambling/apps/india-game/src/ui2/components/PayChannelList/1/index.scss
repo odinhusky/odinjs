@@ -1,0 +1,34 @@
+@mixin borderBgi($background, $borderWidth) {
+  @apply appearance-none
+    relative z-[2]
+    bgi-[#021f2500]
+    rounded-[inherit] border-0;
+
+  &::after {
+    --m-i: linear-gradient(#000, #000);
+    --m-o: content-box, padding-box;
+    content: '';
+    padding: $borderWidth;
+    // background-image: $background;
+    -webkit-mask-image: var(--m-i), var(--m-i);
+    mask-image: var(--m-i), var(--m-i);
+    -webkit-mask-origin: var(--m-o);
+    mask-origin: var(--m-o);
+    -webkit-mask-clip: var(--m-o);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
+
+    @apply absolute left-0 top-0 z-[-1]
+      w-full h-full
+      rounded
+      bgi-[#{$background}]; // 這裡沒有錯
+  }
+}
+.pay-channel-list {
+  .border-channel-active {
+    @include borderBgi(var(--base-1-main), 1.5px);
+  }
+  .border-rate-active {
+    @include borderBgi(var(--linear-2), 1px);
+  }
+}

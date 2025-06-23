@@ -4,7 +4,7 @@ import {
 } from '@mode2/zustand/components/customerServiceListStore';
 import { usePlatformServicesStore } from '@mode2/zustand/platform/platformServicesStore';
 import useCustomerServiceAction from '@mode2/action/components/customerServiceList/useCustomerServiceAction';
-import { handleCustomerServiceAction } from '@mode2/action/components/customerServiceList/acitonType';
+import { handleCustomerServiceAction } from '@mode2/action/actionTypes';
 import { ServicesTypeResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
 import { useDeepEffect } from '@commonUtils/hooks';
 import sdkUtils from '@mode2/utils/sdk';
@@ -99,7 +99,7 @@ export const useCustomerServiceListBase = () => {
       label: 'Whatsapp',
       type: ServicesTypeResult.WHATS_APP,
       payload: linkData[ServicesTypeResult.WHATS_APP],
-      icon: 'social/icon_whatsapp',
+      icon: 'icon_whatsapp',
       onActionClick: () => {
         handleCustomerServiceClick({
           actionName: handleCustomerServiceAction,
@@ -112,7 +112,7 @@ export const useCustomerServiceListBase = () => {
       label: 'Instagram',
       type: ServicesTypeResult.INSTAGRAM,
       payload: linkData[ServicesTypeResult.INSTAGRAM],
-      icon: 'social/icon_instagram',
+      icon: 'icon_instagram',
       onActionClick: () => {
         handleCustomerServiceClick({
           actionName: handleCustomerServiceAction,
@@ -125,7 +125,7 @@ export const useCustomerServiceListBase = () => {
       label: 'Telegram',
       type: ServicesTypeResult.TELEGRAM,
       payload: linkData[ServicesTypeResult.TELEGRAM],
-      icon: 'social/icon_telegram',
+      icon: 'icon_telegram',
       onActionClick: () => {
         handleCustomerServiceClick({
           actionName: handleCustomerServiceAction,
@@ -138,7 +138,7 @@ export const useCustomerServiceListBase = () => {
       label: 'LiveChat',
       type: ServicesTypeResult.LIVE_CHAT,
       payload: linkData[ServicesTypeResult.LIVE_CHAT],
-      icon: 'social/icon_live_chat',
+      icon: 'icon_live_chat',
       onActionClick: () => {
         sdkUtils.openChat(() => {
           handleCustomerServiceClick({
@@ -153,7 +153,7 @@ export const useCustomerServiceListBase = () => {
       label: 'Youtube',
       type: ServicesTypeResult.YOUTUBE,
       payload: linkData[ServicesTypeResult.YOUTUBE],
-      icon: 'social/icon_youtube',
+      icon: 'icon_youtube',
       onActionClick: () => {
         handleCustomerServiceClick({
           actionName: handleCustomerServiceAction,
@@ -166,7 +166,7 @@ export const useCustomerServiceListBase = () => {
       label: 'Facebook',
       type: ServicesTypeResult.FACEBOOK,
       payload: linkData[ServicesTypeResult.FACEBOOK],
-      icon: 'social/icon_facebook',
+      icon: 'icon_facebook',
       onActionClick: () => {
         handleCustomerServiceClick({
           actionName: handleCustomerServiceAction,
@@ -179,7 +179,7 @@ export const useCustomerServiceListBase = () => {
       label: 'Tiktok',
       type: ServicesTypeResult.TIKTOK,
       payload: linkData[ServicesTypeResult.TIKTOK],
-      icon: 'social/icon_tiktok',
+      icon: 'icon_tiktok',
       onActionClick: () => {
         handleCustomerServiceClick({
           actionName: handleCustomerServiceAction,
@@ -192,7 +192,7 @@ export const useCustomerServiceListBase = () => {
       label: '',
       type: ServicesTypeResult.TWITTER,
       payload: linkData[ServicesTypeResult.TWITTER],
-      icon: 'social/icon_twitter',
+      icon: 'icon_twitter',
       onActionClick: () => {
         handleCustomerServiceClick({
           actionName: handleCustomerServiceAction,
@@ -277,6 +277,22 @@ export const useCustomerServiceListBase = () => {
       ],
     };
 
+    const aboutusScenarios = {
+      scenarios: CustomerServiceScenarios.ABOUT_US,
+      customerServiceList: [
+        {
+          ...telegramInfo,
+          icon: 'icon_telegram_fill',
+          link: getOfficialUrl(ServicesTypeResult.TELEGRAM),
+        },
+        {
+          ...whatsAppInfo,
+          icon: 'icon_whatsapp_fill',
+          link: getOfficialUrl(ServicesTypeResult.WHATS_APP),
+        },
+      ],
+    };
+
     setUsageScenariosList([
       fabScenarios,
       drawerMenuScenarios,
@@ -285,6 +301,7 @@ export const useCustomerServiceListBase = () => {
       footerScenarios,
       feedbackScenarios,
       giftCodeScenarios,
+      aboutusScenarios,
     ]);
   }, [servicesList]);
 };

@@ -1,0 +1,287 @@
+import { formatMoney } from '@mode2/utils';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
+import Icon from '@components/Icon';
+import LangueSelect from '@components/LangueSelect';
+import { useMenuBase } from '@/hooks/components/useMenuBase';
+import { Layout } from 'antd';
+import cx from '@commonUtils/cx';
+import { useTemplateLayoutStore } from '@mode2/zustand/template/templateLayoutStore';
+import {
+  CustomerServiceScenarios,
+  useCustomerServiceListStore,
+} from '@libs/mode2/zustand/components/customerServiceListStore';
+import { useMemo } from 'react';
+import { BasePagePathObj } from '@mode2/routerTypes/types';
+import { useBreakPoint } from '@libs/commonUtils';
+import renderI18N from '@libs/commonUtils/renderI18N';
+import { usePlatformInfoStore } from '@libs/mode2/zustand/platform/platformInfoStore';
+import { usePlatformNotifyStore } from '@libs/mode2/zustand/platform/platformNotifyStore';
+import useMenuAction from '@libs/mode2/action/components/menu/menuAction';
+import { GameListItemResult } from '@libs/mode2/zustand/page/hallPageStore';
+import {
+  handleMenuAnnouncementsActionClick,
+  handleMenuPlatformItemActionClick,
+} from '@mode2/action/actionTypes';
+import {
+  useMenuListStore,
+  MenuScenarios,
+} from '@libs/mode2/zustand/components/menuListStore';
+
+const { Sider } = Layout;
+
+export const SideMenu = () => {
+  const { t } = useTranslation();
+  const location = useLocation();
+  const headerElMetrics = useTemplateLayoutStore(
+    (state) => state.headerElMetrics
+  );
+  const { handleMenuRouter, handleLogout } = useMenuBase();
+
+  const menuUsageScenariosList = useMenuListStore(
+    (state) => state.menuUsageScenariosList
+  );
+
+  const iconMapping: Record<string, string> = {
+    wallet_nav_deposit: 'ic_wallet_default',
+    wallet_nav_withdraw: 'ic_withdraw',
+    leftnav_invite_earn: 'ic_earn_money_active',
+    leftnav_recharge_bonus: 'ic_deposit_4',
+    leftnav_bonus_monthly: 'ic_vip_2',
+    leftnav_loss_in_cash_back: 'ic_activity_default',
+    leftnav_activity: 'ic_activity_default',
+    leftnav_balance_record: 'ic_balance_record',
+    leftnav_balance_report: 'ic_balance_report',
+  };
+
+  const groups = (
+    menuUsageScenariosList.find((item) => {
+      return item.scenarios === MenuScenarios.IN_MODE1_COMMON_MENU;
+    })?.menuList || []
+  ).map((item) => {
+    return {
+      ...item,
+      icon: iconMapping[item.label] || item.icon,
+    };
+  });
+
+  console.log('@@@===>groups', JSON.stringify(groups, null, 2));
+
+  const usageScenariosList = useCustomerServiceListStore(
+    (state) => state.usageScenariosList
+  );
+  const serviceList = useMemo(() => {
+    return (
+      usageScenariosList.find(
+        (item) => item.scenarios === CustomerServiceScenarios.DRAWER_MENU
+      )?.customerServiceList || []
+    );
+  }, [usageScenariosList]);
+
+  const sidebarPlatformItems = usePlatformInfoStore(
+    (state) => state.sidebarPlatformItems
+  );
+  const announcementsItems = usePlatformNotifyStore(
+    (state) => state.announcementsItems
+  );
+
+  const sidebarAnnouncement = useMemo(() => {
+    const result = announcementsItems.find((item) => {
+      return item.showInSidebar;
+    });
+    return result;
+  }, [announcementsItems]);
+
+  const sidebarAnnouncementBannerUrl = sidebarAnnouncement?.bannerUrl;
+
+  const { handleMenuClick } = useMenuAction();
+
+  const fillPlaceholder = (items: GameListItemResult[], columns: number) => {
+    const remainder = items.length % columns;
+    const placeholders = remainder > 0 ? columns - remainder : 0;
+    return Array.from({ length: placeholders }, (_, index) => (
+      <div
+        key={`placeholder-${index}`}
+        className="bgi-[var(--grayscale-20)] p-2 rounded"
+      ></div>
+    ));
+  };
+
+  const isNotInGamePage =
+    location.pathname !== BasePagePathObj.GamePage &&
+    location.pathname !== BasePagePathObj.GameLobbyPage;
+  const { isDesktop } = useBreakPoint();
+  return (
+    isNotInGamePage &&
+    isDesktop && (
+      <Sider width={320}>
+        <div
+          className={cx(
+            'side-menu',
+            'w-[320px] h-full',
+            'bgi-[var(--bg-sidebar)]',
+            'overflow-y-auto',
+            'box-border',
+            'text-base leading-6',
+            'flex flex-col justify-between shrink-0',
+            'p-4',
+            'fixed top-0 z-30',
+            'overflow-y-scroll',
+            'bgi-text-[var(--grayscale-100)]'
+          )}
+          style={{
+            paddingTop: `${headerElMetrics.height + 16}px`,
+          }}
+        >
+          <div className="flex flex-col gap-2">
+            {/* 展示側邊欄，遊戲廠商平台項目 */}
+            {sidebarPlatformItems ? (
+              <div className="grid grid-cols-2 gap-2">
+                {sidebarPlatformItems.map((item, index) => {
+                  return (
+                    <div
+                      key={index + item.type}
+                      className="flex bgi-[var(--grayscale-20)] h-8 rounded
+                  justify-center items-center cursor-pointer"
+                      onClick={() => {
+                        handleMenuClick({
+                          actionName: handleMenuPlatformItemActionClick,
+                          payload: {
+                            item: item,
+                          },
+                        });
+                      }}
+                    >
+                      <img className="h-full" src={item.coverImageSrc} />
+                    </div>
+                  );
+                })}
+
+                {/* 自動補齊 */}
+                {fillPlaceholder(sidebarPlatformItems, 2)}
+              </div>
+            ) : null}
+
+            {/* 展示側邊欄，平台公告項目 */}
+            {sidebarAnnouncement !== undefined ? (
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  handleMenuClick({
+                    actionName: handleMenuAnnouncementsActionClick,
+                    payload: {
+                      item: sidebarAnnouncement,
+                    },
+                  });
+                }}
+              >
+                <img
+                  className="rounded-lg"
+                  src={sidebarAnnouncementBannerUrl}
+                  alt="banner"
+                />
+              </div>
+            ) : null}
+
+            <div className="flex flex-col gap-1">
+              {groups?.map((item, index) => (
+                <button
+                  key={item.label + '_' + index}
+                  className="flex gap-2 rounded p-2 items-center"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    item.action && item.action();
+                  }}
+                >
+                  <Icon
+                    className="h-6 w-6"
+                    name={item.icon}
+                    color={item.iconColor ? item.iconColor : ''}
+                  />
+                  <span className="text-base text-left font-medium">
+                    {item.param
+                      ? renderI18N(
+                          {
+                            i18nKey: item.label,
+                            i18nOption: {
+                              value:
+                                item.label === 'leftnav_invite_earn' ||
+                                item.label === 'leftnav_bonus_monthly'
+                                  ? formatMoney({
+                                      value: Number(item.param) || 0,
+                                    })
+                                  : item.param,
+                            },
+                          },
+                          t
+                        )
+                      : renderI18N({ i18nKey: item.label }, t)}
+                  </span>
+                </button>
+              ))}
+              <div className="flex gap-2 p-2 items-center">
+                <Icon className="w-6 h-6" name="ic_language" />
+                <LangueSelect
+                  arrowColor="var(--grayscale-100)"
+                  labClassName="!bgi-text-[var(--grayscale-100)]"
+                  langueClassName="px-0"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
+              <span className="text-base font-medium">
+                {renderI18N({ i18nKey: 'leftnav_join_the_community' }, t)}
+              </span>
+              <div className="flex gap-2">
+                {serviceList.map((item, index) => (
+                  <button
+                    key={index}
+                    className="relative group"
+                    onClick={item.onActionClick}
+                  >
+                    <Icon
+                      className="w-8 h-8 hover:brightness-[1.15] active:brightness-[0.85]"
+                      name={`fab_${item.label.toLocaleLowerCase()}_default`}
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="font-medium">
+              <span className="text-base">
+                {renderI18N({ i18nKey: 'leftnav_support' }, t)}
+              </span>
+              <br />
+              <span className="text-sm">
+                {renderI18N({ i18nKey: 'leftnav_get_help' }, t)}
+              </span>
+            </div>
+            <button
+              className="flex gap-2 p-2 items-center rounded
+                  hover:bgi-[var(--grayscale-20)] active:bgi-[var(--grayscale-00)]"
+              onClick={() => handleMenuRouter(BasePagePathObj.FeedBackPage)}
+            >
+              <Icon name={'ic_customer_support'} />
+              <span>
+                {renderI18N({ i18nKey: 'leftnav_customer_support' }, t)}
+              </span>
+            </button>
+            <button
+              className="flex gap-2 p-2 items-center rounded
+                  hover:bgi-[var(--grayscale-20)] active:bgi-[var(--grayscale-00)]"
+              onClick={handleLogout}
+            >
+              <Icon name={'ic_quit'} />
+              <span className="bgi-text-[var(--grayscale-50)]">
+                {renderI18N({ i18nKey: 'leftnav_quit' }, t)}
+              </span>
+            </button>
+          </div>
+        </div>
+      </Sider>
+    )
+  );
+};

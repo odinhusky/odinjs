@@ -1,9 +1,10 @@
 import {
+  usePostPayAddOnConfigMutation,
   usePostPayRechargeMutation,
   usePostRechargeIntoGameMutation,
 } from '@mode2API/index';
-import { useCallback } from 'react';
-import { PayRechargeRequest } from '@mode2API/endpoint/info/PostPayRechargeEndpoint';
+import { useCallback, useEffect } from 'react';
+import { PayRechargePayload } from '@mode2API/endpoint/info/PostPayRechargeEndpoint';
 import { useDeepEffect } from '@libs/commonUtils';
 import {
   RechargeFromResult,
@@ -23,6 +24,13 @@ import {
   useWalletPageRechargeCardStore,
 } from '@mode2/zustand/page/WalletPage/useWalletPageRechargeCardStore';
 import { useMessageStore } from '@mode2/zustand/components/messageStore';
+import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
+import useRechargeRepeatTopUpBonusModalStore, {
+  PayAddOnOption,
+} from '@mode2/zustand/modal/RechargeRepeatTopUpBonusModal';
+import { UserRoleType } from '@mode2/@types/userRoleTypes';
+import posthog from 'posthog-js';
+import { PostHogFeatureTypes } from '@mode2/utils/sdk/strategy/analytics/PostHogAnalytics';
 
 export const useRecharge = () => {
   const setShowLoading = useLoadingStore((status) => status.setShowLoading);
@@ -63,7 +71,7 @@ export const useRecharge = () => {
   const rechargeAmount = useRechargeStore((state) => state.rechargeAmount);
 
   /* 充值來源 */
-  const rechargeFrom = useRechargeStore((state) => state.rechargeFrom);
+  // const rechargeFrom = useRechargeStore((state) => state.rechargeFrom);
 
   /* */
   const rechargeResult = useRechargeStore((state) => state.rechargeResult);
@@ -83,6 +91,10 @@ export const useRecharge = () => {
   /* 充值狀態 */
   const setRechargeStatus = useRechargeStore(
     (state) => state.setRechargeStatus
+  );
+  /* 復充追加加值選項 */
+  const setPayAdditionalOptions = useRechargeStore(
+    (state) => state.setPayAdditionalOptions
   );
 
   // TODO Evan 自定義收銀台
@@ -134,8 +146,12 @@ export const useRecharge = () => {
 
   useDeepEffect(() => {
     if (isRechargeSuccess && rechargeData) {
+      // 加碼充值彈窗
+      useRechargeRepeatTopUpBonusModalStore
+        .getState()
+        .setIsShowRechargeRepeatTopUpBonusModal(false);
       const rechargeUrl: string = rechargeData.rechargeUrl || '';
-
+      const rechargeFrom = useRechargeStore.getState().rechargeFrom;
       const result = {
         rechargeUrl,
         payActivation: currentPayChannel.payActivation,
@@ -174,33 +190,98 @@ export const useRecharge = () => {
     }
   }, [isRechargeIntoGameSuccess, rechargeIntoGameResult]);
 
-  /**
-   * 執行充值
-   */
-  const onRecharge = useCallback(() => {
-    sdkUtils.sendEvent(AdjustEventKey.START_RECHARGE);
-    const data: PayRechargeRequest = {
-      amount: +rechargeAmount,
-      isReward: currentRechargeCard === RechargeCard.GENERAL ? 0 : 1,
-      isTransferInGame: rechargeFrom === RechargeFromResult.TRANSFER_IN_GAME,
-      payConfigName: currentPayChannel.payName,
-      payType: 'upi',
-    };
+  const setIsShowRechargeRepeatTopUpBonusModal =
+    useRechargeRepeatTopUpBonusModalStore(
+      (state) => state.setIsShowRechargeRepeatTopUpBonusModal
+    );
 
-    if (+rechargeAmount <= 0) {
-      return false;
+  const [
+    postPayAddOnConfig,
+    {
+      data: payAddOnConfigData,
+      isSuccess: isPayAddOnConfigSuccess,
+      isError: isPayAddOnConfigError,
+      isLoading: isPayAddOnConfigLoading,
+    },
+  ] = usePostPayAddOnConfigMutation();
+
+  useEffect(() => {
+    useLoadingStore.getState().setShowLoading(isPayAddOnConfigLoading);
+    if (isPayAddOnConfigError) {
+      setIsShowRechargeRepeatTopUpBonusModal(false);
+      setPayAdditionalOptions([]);
+      return;
     }
-    // if (
-    //   mapCustomizedPayCheckout[currentPayChannel.payActivation] &&
-    //   rechargeResult.txId
-    // ) {
-    //   //STEP checkout走rechargeResult缓存数据
-    //   setRechargeStatus(RechargeStatusResult.CUSTOMIZED);
-    // } else {
-    //   postPayRecharge(data);
-    // }
+  }, [isPayAddOnConfigLoading, isPayAddOnConfigError]);
 
-    postPayRecharge(data);
+  useEffect(() => {
+    if (payAddOnConfigData && isPayAddOnConfigSuccess) {
+      setIsShowRechargeRepeatTopUpBonusModal(payAddOnConfigData.isPopupAddOn);
+      setPayAdditionalOptions(payAddOnConfigData.payAdditionalOption);
+      if (!payAddOnConfigData.isPopupAddOn) {
+        doRecharge();
+      }
+    }
+  }, [payAddOnConfigData, isPayAddOnConfigSuccess]);
+
+  const doAddOnRecharge = useCallback(
+    (payAddOnOption: PayAddOnOption | null) => {
+      if (payAddOnOption) {
+        doRecharge({
+          isAddon: true,
+          amount: payAddOnOption?.addOnAmount,
+          baseAmount: payAddOnOption?.amount,
+        });
+      } else {
+        doRecharge();
+      }
+    },
+    []
+  );
+
+  const doRecharge = useCallback(
+    (options?: { isAddon: boolean; amount: number; baseAmount: number }) => {
+      const rechargeFrom = useRechargeStore.getState().rechargeFrom;
+
+      // TODO Evan check options.baseAmount > 0 ? options.baseAmount : +rechargeAmount,
+      const data: PayRechargePayload = {
+        ...options,
+        amount: options ? options.amount + options.baseAmount : +rechargeAmount,
+        isReward: currentRechargeCard !== RechargeCard.GENERAL,
+        isTransferInGame: rechargeFrom === RechargeFromResult.TRANSFER_IN_GAME,
+        payConfigName: currentPayChannel.payName,
+        payType: 'upi',
+        isAddon: !!options,
+        baseAmount: options ? options.baseAmount : 0,
+      };
+
+      if (+rechargeAmount <= 0) {
+        return false;
+      }
+      postPayRecharge(data);
+      return;
+    },
+    [
+      rechargeAmount,
+      currentRechargeCard,
+      currentPayChannel,
+      rechargeResult.txId,
+    ]
+  );
+
+  /**
+   * 執行充值前
+   */
+  const onRechargeBefore = useCallback(() => {
+    sdkUtils.sendEvent(AdjustEventKey.START_RECHARGE);
+    const isFirstDeposit = useUserProfileStore.getState().isFirstDeposit;
+    const userRole = useUserProfileStore.getState().userRole;
+    if (!isFirstDeposit && userRole === UserRoleType.USER) {
+      postPayAddOnConfig({ amount: +rechargeAmount });
+      return;
+    }
+
+    doRecharge();
     return;
   }, [
     rechargeAmount,
@@ -230,7 +311,9 @@ export const useRecharge = () => {
   };
 
   return {
-    onRecharge,
+    onRechargeBefore,
+    doRecharge,
+    doAddOnRecharge,
     doRechargeInToGameCallback,
   };
 };

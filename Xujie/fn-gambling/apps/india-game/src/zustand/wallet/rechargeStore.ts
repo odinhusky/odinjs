@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { PayActivationResult } from '@mode2API/endpoint/wallet/PostPayConfigInfoWithOptionsEndpoint';
+import {PayAdditionalResult} from "@mode2API/endpoint/recharge/PostPayAddOnConfigEndpoint";
 
 interface RechargeResult {
   rechargeUrl: string;
@@ -36,7 +37,16 @@ export interface RechargeStoreTypes {
   finishRecharge: () => void;
   isDepositWeakTipsModalShow: boolean;
   setIsDepositWeakTipsModalShow: (isShow: boolean) => void;
+
+  isInProgressTipsModalShow: boolean;
+  setInProgressTipsModalShow: (isShow: boolean) => void;
+  inProgressRecharge2h: number;
+  setInProgressRecharge2h: (count: number) => void;
+
+  payAdditionalOptions: PayAdditionalResult[]
+  setPayAdditionalOptions: (options: PayAdditionalResult[]) => void;
 }
+
 const defaultRechargeResult: RechargeResult = {
   rechargeUrl: '',
   payActivation: PayActivationResult.EXTERNAL,
@@ -83,4 +93,17 @@ export const useRechargeStore = create<RechargeStoreTypes>((set) => ({
     set(() => ({
       isDepositWeakTipsModalShow: isShow,
     })),
+
+  isInProgressTipsModalShow: false,
+  setInProgressTipsModalShow: (isShow) =>
+    set(() => ({
+      isInProgressTipsModalShow: isShow,
+    })),
+  inProgressRecharge2h: 0,
+  setInProgressRecharge2h: (value) =>
+    set(() => ({ inProgressRecharge2h: value })),
+
+  payAdditionalOptions: [],
+  setPayAdditionalOptions: (options) =>
+    set(() => ({ payAdditionalOptions: options })),
 }));

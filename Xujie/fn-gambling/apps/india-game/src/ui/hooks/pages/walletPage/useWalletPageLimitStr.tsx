@@ -15,8 +15,8 @@ export const useWalletPageLimitStr = () => {
     if (currentPayChannel && currentPayChannel.payLimit) {
       const min = currentPayChannel.payLimit.min;
       const max = currentPayChannel.payLimit.max;
-      const minLimit = formatMoney(min);
-      const maxLimit = formatMoney(max);
+      const minLimit = formatMoney({ value: min });
+      const maxLimit = formatMoney({ value: max });
       setRechargeLimitStr([minLimit, maxLimit]);
     }
   }, [currentPayChannel]);

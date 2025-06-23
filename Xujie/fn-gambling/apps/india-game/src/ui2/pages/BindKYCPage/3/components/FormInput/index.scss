@@ -1,0 +1,35 @@
+
+.kyc_input .ant-form-item-control-input .input-container-div {
+  @apply bgi-[var(--base-2-variant7)] rounded-sm
+}
+
+.kyc_input .ant-form-item-label {
+  line-height: 0 !important;
+}
+
+.kyc_input .ant-form-item-control-input {
+  min-height: auto !important;
+}
+
+
+//.kyc_input .input-container-div .input-box input::placeholder {
+//  //color: red ;
+//  color: #BE6970 !important;
+//  //background-clip: text !important;
+//  //-webkit-background-clip: text !important;
+//  //background-image : var(--base-2-variant2) !important;
+//  //@apply bgi-text-[var(--base-1-main)] !important;
+//}
+//
+//.kyc_input .input-container-div .input-box input {
+//
+//  &:focus-visible {
+//    outline: none;
+//    @apply bgi-border-[var(--state-success-main)]
+//  }
+//
+//  &::placeholder {
+//    color: var(--transparent-white-90);
+//  }
+//
+//}

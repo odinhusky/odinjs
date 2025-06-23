@@ -1,23 +1,29 @@
 import {
+  handleTeamClubInviteRewardClaimClick,
   handleTeamClubLevelSummaryDetailButtonClick,
   handleTeamClubRulesInviteButtonClick,
   handleTeamClubSharesInviteYourFriendsButtonClick,
   handleTeamClubWithDrawClaimButtonClick,
   handleTeamClubWithDrawDetailButtonClick,
   handleTeamClubWithDrawReceivedOKButtonClick,
-} from '@/action/teamClub/acitonType';
+} from '@mode2/action/actionTypes';
 import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
 import handleGlobalClick from '@mode2/action/handleGlobalClick';
 import handleAction from '@mode2/action/common/handleAction';
-import { TeamClubPageTabType } from '@libs/mode2/@types/teamClubPageTabType';
 import { useTeamClubWithDrawStore } from '@libs/mode2/zustand/components/myRewardsContent';
 import { useNavPageClick } from '@libs/mode2/usecase/useNavPageClick';
-import { usePostTeamCollectRewardMutation } from '@libs/mode2/external/api';
+import {
+  usePostTeamCollectRewardMutation,
+  usePostTeamInvitationRewardClaimAllMutation,
+  usePostTeamInvitationRewardClaimMutation,
+} from '@libs/mode2/external/api';
 import { useEffect } from 'react';
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 import sdkUtils from '@mode2/utils/sdk';
 import { AppLocalStorageKey } from '@mode2/utils/sdk/persistant/storageKey';
+import { useToastStore } from '@libs/mode2/zustand/components/toastStore';
+import { useInviteRewardsContentStore } from '@libs/mode2/zustand/components/inviteRewardsContentStore';
 
 type ActionClickPayloadMap = {
   [handleTeamClubLevelSummaryDetailButtonClick]: { tab: number };
@@ -26,6 +32,7 @@ type ActionClickPayloadMap = {
   [handleTeamClubWithDrawReceivedOKButtonClick]: void;
   [handleTeamClubRulesInviteButtonClick]: void;
   [handleTeamClubSharesInviteYourFriendsButtonClick]: void;
+  [handleTeamClubInviteRewardClaimClick]: { settleId: number };
 };
 
 export interface HandleRechargeConfirmationProps<
@@ -35,12 +42,21 @@ export interface HandleRechargeConfirmationProps<
 export const useTeamClubAction = () => {
   const [triggerClaimTeamCollectionReward, { isSuccess: isClaimSuccess }] =
     usePostTeamCollectRewardMutation();
+  const [
+    triggerClaimTeamInviteAllRewardClaimAll,
+    { isSuccess: isClaimAllSuccess },
+  ] = usePostTeamInvitationRewardClaimAllMutation();
+  const [
+    triggerClaimTeamInviteRewardClaim,
+    { isSuccess: isClaimSingleSuccess },
+  ] = usePostTeamInvitationRewardClaimMutation();
+
   const {
     navToSharePage,
     navToRewardsDetailPage,
     navToSubordinateDataPage,
     navToLoginPage,
-    navToTeamClubPage,
+    // navToTeamClubPage,
   } = useNavPageClick();
 
   const setIsShowReceivedModal = useTeamClubWithDrawStore(
@@ -53,6 +69,10 @@ export const useTeamClubAction = () => {
 
   const setRefreshTeamInformationCount = useTeamClubWithDrawStore(
     (state) => state.setRefreshTeamInformationCount
+  );
+
+  const setRefreshInviteRewardsCount = useInviteRewardsContentStore(
+    (state) => state.setRefreshInviteRewardsCount
   );
 
   // 每次點擊清除[新成為加入通知]
@@ -80,10 +100,27 @@ export const useTeamClubAction = () => {
     if (isClaimSuccess) setIsShowReceivedModal(true);
   }, [isClaimSuccess]);
 
+  useEffect(() => {
+    if (isClaimAllSuccess) {
+      // TODO i18n
+      setRefreshInviteRewardsCount();
+      useToastStore.getState().showToast('The reward has been claimed!');
+    }
+  }, [isClaimAllSuccess]);
+
+  useEffect(() => {
+    if (isClaimSingleSuccess) {
+      // TODO i18n
+      setRefreshInviteRewardsCount();
+      useToastStore.getState().showToast('The reward has been claimed!');
+    }
+  }, [isClaimSingleSuccess]);
+
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
     [handleTeamClubLevelSummaryDetailButtonClick]: ({ tab }) => {
       handleGlobalClick({
         target: handleTeamClubLevelSummaryDetailButtonClick,
+        payload: { tab },
         callback: () => {
           saveCurrentMemberCount();
           navToSubordinateDataPage('', { state: { tab } });
@@ -120,9 +157,10 @@ export const useTeamClubAction = () => {
         target: handleTeamClubRulesInviteButtonClick,
         callback: () => {
           if (sdkUtils.isCurrentLogin()) {
-            navToTeamClubPage('', {
-              state: { tab: TeamClubPageTabType.SHARE_FOR_BONUS },
-            });
+            // navToTeamClubPage('', {
+            //   state: { tab: TeamClubPageTabType.SHARE_FOR_BONUS },
+            // });
+            navToSharePage();
           } else {
             navToLoginPage(67);
           }
@@ -134,6 +172,20 @@ export const useTeamClubAction = () => {
         target: handleTeamClubSharesInviteYourFriendsButtonClick,
         callback: () => {
           navToSharePage();
+        },
+      });
+    },
+    [handleTeamClubInviteRewardClaimClick]: ({ settleId }) => {
+      handleGlobalClick({
+        target: handleTeamClubInviteRewardClaimClick,
+        payload: { settleId },
+        callback: () => {
+          console.log('@@==> isAll', settleId);
+          if (settleId === 0) {
+            triggerClaimTeamInviteAllRewardClaimAll();
+          } else {
+            triggerClaimTeamInviteRewardClaim({ settleId });
+          }
         },
       });
     },

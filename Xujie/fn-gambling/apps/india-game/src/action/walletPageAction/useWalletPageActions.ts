@@ -1,19 +1,24 @@
 import {
+  handleRechargeRepeatTopUpBonusModalAddBtnClick,
+  handleRechargeRepeatTopUpBonusModalNoThanksBtnClick,
+  handleWalletPageAddAccountBtnClick,
   handleWalletPageRechargeAmountChange,
   handleWalletPageRechargeAmountClearClick,
   handleWalletPageRechargeContentDepositBtnClick,
+  handleWalletPageRechargeContentWeakTipsModalBindPlayerPhoneBtnClick,
+  handleWalletPageRechargeContentWeakTipsModalCloseBtnClick,
   handleWalletPageRechargeContentWeakTipsModalPrimaryBtnClick,
+  handleWalletPageRechargeDepositExtraBtnClick,
   handleWalletPageWithdrawAmountInputValueChange,
   handleWalletPageWithdrawAmountInputValueClear,
   handleWalletPageWithdrawAmountSelected,
   handleWalletPageWithdrawBtnClick,
   handleWalletPageWithdrawPasswordInputValueChange,
   handleWalletPageWithdrawPasswordInputValueClear,
-} from './acitonType';
+} from '@mode2/action/actionTypes';
 
 import { useWalletPageWithdrawContentStore } from '@/zustand/page/walletPageStore';
 import { useRechargeStore } from '@/zustand/wallet/rechargeStore';
-import { BasePagePathObj } from '@mode2/routerTypes/types';
 import { KYC_BOTH_STATE, KYC_PERSONAL_STATE } from '@constant/KYC';
 import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';
@@ -30,6 +35,18 @@ import {
   useWithdrawStore,
   WithdrawOptItem,
 } from '@/zustand/wallet/useWithdrawStore';
+import {
+  usePostPayAddOnPostponeMutation,
+  usePostRechargeRecordsMutation,
+} from '@mode2API/index';
+import useBindPlayerPhoneModalStore from '@mode2/zustand/modal/BindPlayerPhoneModal';
+import userLocalForage, {
+  UserLocalforageStoreKeys,
+} from '@mode2/localforage/user';
+import dayjs from '@commonUtils/localizedDayjs';
+import { useEffect } from 'react';
+import { useLoadingStore } from '@mode2/zustand/components/loadingStore';
+import { PayAddOnOption } from '@mode2/zustand/modal/RechargeRepeatTopUpBonusModal';
 
 export type ActionClickPayloadMap = {
   [handleWalletPageRechargeAmountChange]: { value: string };
@@ -43,7 +60,19 @@ export type ActionClickPayloadMap = {
     isRechargeFromGame?: boolean;
   };
   [handleWalletPageRechargeContentWeakTipsModalPrimaryBtnClick]: void;
+  [handleWalletPageRechargeContentWeakTipsModalBindPlayerPhoneBtnClick]: void;
+  [handleWalletPageRechargeContentWeakTipsModalCloseBtnClick]: void;
+
   [handleWalletPageWithdrawAmountSelected]: { item: WithdrawOptItem };
+  [handleWalletPageAddAccountBtnClick]: void;
+
+  [handleWalletPageRechargeDepositExtraBtnClick]: {
+    isRechargeFromGame?: boolean;
+  };
+  [handleRechargeRepeatTopUpBonusModalNoThanksBtnClick]: void;
+  [handleRechargeRepeatTopUpBonusModalAddBtnClick]: {
+    payAddOnOption: PayAddOnOption | null;
+  };
 };
 
 export interface HandleWalletPageClickProps<
@@ -51,11 +80,10 @@ export interface HandleWalletPageClickProps<
 > extends HandleClickProps<T, ActionClickPayloadMap> {}
 
 export const useWalletPageActions = () => {
-  const { mapRoutesNavTo, navToLoginPage } = useNavPageClick();
+  const { navToLoginPage, navToBindKYCPage } = useNavPageClick();
 
-  const { onRecharge } = useRecharge();
-  const { onWithdraw, onPasswordlessWithdraw, isWithdrawSuccess } =
-    useWithdraw();
+  const { onRechargeBefore, doRecharge, doAddOnRecharge } = useRecharge();
+  const { onWithdraw, onPasswordlessWithdraw } = useWithdraw();
   const { requiredVerifyBeforeRecharging, checkIsBankFirstBind } =
     useUserVerifyState();
 
@@ -66,19 +94,19 @@ export const useWalletPageActions = () => {
   const setIsDepositWeakTipsModalShow = useRechargeStore(
     (state) => state.setIsDepositWeakTipsModalShow
   );
-
-  // set 當前支付通道
-  // const setCurrentPayChannel = useWalletPageRechargeContentStore(
-  //   (state) => state.setCurrentPayChannel
-  // );
-
-  // 當前支付通道-支付選項
-  // const setCurrentPayOption = useWalletPageRechargeContentStore(
-  //   (state) => state.setCurrentPayOption
-  // );
+  const setInProgressTipsModalShow = useRechargeStore(
+    (state) => state.setInProgressTipsModalShow
+  );
+  const setShowBindPlayerPhoneModal = useBindPlayerPhoneModalStore(
+    (state) => state.setShowBindPlayerPhoneModal
+  );
 
   const setWithdrawAmountInputValue = useWalletPageWithdrawContentStore(
     (state) => state.setWithdrawAmountInputValue
+  );
+
+  const setWithdrawAmountSelected = useWalletPageWithdrawContentStore(
+    (state) => state.setWithdrawAmountSelected
   );
 
   const setWithdrawPasswordInputValue = useWalletPageWithdrawContentStore(
@@ -90,19 +118,31 @@ export const useWalletPageActions = () => {
     if (!sdkUtils.isCurrentLogin()) {
       navToLoginPage(66);
     } else if (!requiredVerifyBeforeRecharging()) {
-      onRecharge();
+      onRechargeBefore();
     } else {
-      mapRoutesNavTo(BasePagePathObj.BindKYCPage, '', {
+      navToBindKYCPage('', {
         state: { tab: KYC_PERSONAL_STATE },
       });
     }
   };
 
+  /**
+   * player 綁定手機號碼弱提醒只顯示一次
+   */
+  const seveUserBindPhoneWeakTipsFlag = () => {
+    userLocalForage.setItem(
+      UserLocalforageStoreKeys.BIND_PLAYER_PHONE_WEAK_TIPS,
+      JSON.stringify({ flagTime: dayjs().unix() })
+    );
+  };
+
   // 抽出點擊後判斷的邏輯，怕寫在 actionClickObj 中 userRole 不會變動，造成判斷失誤
-  const handleJudgeDepositClick = () => {
+  const handleJudgeDepositClick = async () => {
     const userRole = useUserProfileStore.getState().userRole;
-    console.log('@@===> handleJudgeDepositClick userRole', userRole);
-    if (userRole === UserRoleType.PLAYER) {
+    const flag = await userLocalForage.getItem(
+      UserLocalforageStoreKeys.BIND_PLAYER_PHONE_WEAK_TIPS
+    );
+    if (userRole === UserRoleType.PLAYER && flag === null) {
       // 讓 WeakTipsModal 出現
       setIsDepositWeakTipsModalShow(true);
     } else {
@@ -110,6 +150,36 @@ export const useWalletPageActions = () => {
       handleDeposit();
     }
   };
+  const [postRechargeRecords] = usePostRechargeRecordsMutation();
+
+  /**
+   * 即時判斷是否兩小時內連續五筆代處理訂單
+   */
+  const handleJudgeDepositExtraClick = async () => {
+    postRechargeRecords({ page: 1, limit: 5 })
+      .unwrap()
+      .then((resp) => {
+        useRechargeStore
+          .getState()
+          .setInProgressRecharge2h(resp.inProgressRecharge2h);
+        if (resp.inProgressRecharge2h >= 5) {
+          setInProgressTipsModalShow(true);
+        } else {
+          handleJudgeDepositClick();
+        }
+      })
+      .catch((e) => {
+        handleJudgeDepositClick();
+      });
+  };
+
+  const [postPayAddOnPostpone, { isLoading }] =
+    usePostPayAddOnPostponeMutation();
+
+  // 延遲加碼優惠
+  useEffect(() => {
+    useLoadingStore.getState().setShowLoading(isLoading);
+  }, [isLoading]);
 
   const actionClickObj: ActionClickObjType<ActionClickPayloadMap> = {
     // [handleWalletPageSwitchTabClick]: ({ id }) => {
@@ -123,6 +193,7 @@ export const useWalletPageActions = () => {
     [handleWalletPageRechargeAmountChange]: ({ value }) => {
       handleGlobalClick({
         target: handleWalletPageRechargeAmountChange,
+        payload: { value },
         callback: () => {
           setRechargeAmount(value);
         },
@@ -163,6 +234,7 @@ export const useWalletPageActions = () => {
     [handleWalletPageWithdrawAmountInputValueChange]: ({ value }) => {
       handleGlobalClick({
         target: handleWalletPageWithdrawAmountInputValueChange,
+        payload: { value },
         callback: () => {
           setWithdrawAmountInputValue(value);
         },
@@ -171,6 +243,7 @@ export const useWalletPageActions = () => {
     [handleWalletPageWithdrawAmountSelected]: ({ item }) => {
       handleGlobalClick({
         target: handleWalletPageWithdrawAmountSelected,
+        payload: { item },
         callback: () => {
           useWithdrawStore.setState((state) => {
             const withdrawOptions = state.withdrawOptions.map((opt) =>
@@ -182,6 +255,7 @@ export const useWalletPageActions = () => {
               withdrawOptions: withdrawOptions,
             };
           });
+          setWithdrawAmountSelected(item);
           setWithdrawAmountInputValue(`${item.amount}`);
         },
       });
@@ -224,6 +298,7 @@ export const useWalletPageActions = () => {
     [handleWalletPageWithdrawBtnClick]: ({ isPasswordless }) => {
       handleGlobalClick({
         target: handleWalletPageWithdrawBtnClick,
+        payload: { isPasswordless },
         callback: () => {
           /**
            * 驗證 KYC
@@ -237,9 +312,7 @@ export const useWalletPageActions = () => {
            *  - `false`: 未完成 KYC
            */
           if (checkIsBankFirstBind()) {
-            mapRoutesNavTo(BasePagePathObj.BindKYCPage, '', {
-              state: { tab: KYC_BOTH_STATE },
-            });
+            navToBindKYCPage('', { state: { tab: KYC_BOTH_STATE } });
           } else {
             if (isPasswordless) {
               onPasswordlessWithdraw();
@@ -266,35 +339,70 @@ export const useWalletPageActions = () => {
         callback: () => {
           handleDeposit();
           setIsDepositWeakTipsModalShow(false);
+          setInProgressTipsModalShow(false);
+          seveUserBindPhoneWeakTipsFlag();
         },
       });
     },
-    // [handleWalletPageRechargeTabCheckOrderClick]: () => {
-    //   handleGlobalClick({
-    //     target: handleWalletPageRechargeTabCheckOrderClick,
-    //     callback: () => {
-    //       navigate(BasePagePathObj.RecordPage, {
-    //         state: {
-    //           tab: RecordPageTabs.RECORD,
-    //           subTab: RecordPageBalanceRecordTabs.ADD_CASH_RECORD,
-    //         },
-    //       });
-    //     },
-    //   });
-    // },
-    // [handleWalletPageWithdrawTabCheckOrderClick]: () => {
-    //   handleGlobalClick({
-    //     target: handleWalletPageWithdrawTabCheckOrderClick,
-    //     callback: () => {
-    //       navigate(BasePagePathObj.RecordPage, {
-    //         state: {
-    //           tab: RecordPageTabs.RECORD,
-    //           subTab: RecordPageBalanceRecordTabs.WITHDRAWALS_RECORD,
-    //         },
-    //       });
-    //     },
-    //   });
-    // },
+    [handleWalletPageRechargeContentWeakTipsModalBindPlayerPhoneBtnClick]:
+      () => {
+        handleGlobalClick({
+          target:
+            handleWalletPageRechargeContentWeakTipsModalBindPlayerPhoneBtnClick,
+          callback: () => {
+            setShowBindPlayerPhoneModal(true);
+            setIsDepositWeakTipsModalShow(false);
+            seveUserBindPhoneWeakTipsFlag();
+          },
+        });
+      },
+    [handleWalletPageRechargeContentWeakTipsModalCloseBtnClick]: () => {
+      handleGlobalClick({
+        target: handleWalletPageRechargeContentWeakTipsModalCloseBtnClick,
+        callback: () => {
+          setIsDepositWeakTipsModalShow(false);
+          setInProgressTipsModalShow(false);
+          seveUserBindPhoneWeakTipsFlag();
+        },
+      });
+    },
+    [handleWalletPageAddAccountBtnClick]: () => {
+      handleGlobalClick({
+        target: handleWalletPageAddAccountBtnClick,
+        callback: () => {
+          navToBindKYCPage('', { state: { tab: KYC_BOTH_STATE } });
+        },
+      });
+    },
+    // 額外充值前，判斷是否過多處理中訂單未完成
+    [handleWalletPageRechargeDepositExtraBtnClick]: ({
+      isRechargeFromGame,
+    }) => {
+      handleGlobalClick({
+        target: handleWalletPageRechargeDepositExtraBtnClick,
+        callback: () => {
+          handleJudgeDepositExtraClick();
+        },
+      });
+    },
+    [handleRechargeRepeatTopUpBonusModalAddBtnClick]: ({ payAddOnOption }) => {
+      handleGlobalClick({
+        target: handleRechargeRepeatTopUpBonusModalAddBtnClick,
+        payload: { payAddOnOption },
+        callback: () => {
+          doAddOnRecharge(payAddOnOption);
+        },
+      });
+    },
+    [handleRechargeRepeatTopUpBonusModalNoThanksBtnClick]: () => {
+      handleGlobalClick({
+        target: handleRechargeRepeatTopUpBonusModalNoThanksBtnClick,
+        callback: () => {
+          doRecharge();
+          postPayAddOnPostpone();
+        },
+      });
+    },
   };
 
   const handleWalletPageClick = <T extends keyof ActionClickPayloadMap>({

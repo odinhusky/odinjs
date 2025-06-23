@@ -1,0 +1,51 @@
+.invite-rewards-milestones-progress {
+  height: 0.75rem;
+
+  position: relative;
+
+  .ant-progress {
+    padding-left: calc((100% / 10));
+    padding-right: calc((100% / 10));
+    //height: 0.75rem !important;
+    line-height: 0;
+    font-size:0;
+
+    .ant-progress-outer {
+      height: 0.75rem !important;
+    }
+
+    .ant-progress-inner {
+      height: 0.75rem !important;
+
+
+      .ant-progress-bg {
+        height: 0.75rem !important;
+        @apply bgi-[var(--base-2-variant17)]
+      }
+
+      .ant-progress-bg-outer {
+        height: 0.75rem !important;
+      }
+      @apply bgi-[var(--transparent-gray-70)]
+    }
+  }
+
+
+  .handle-list {
+    height: 0.75rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-left: calc((100% / 10) - 0.1875rem);
+    margin-right: calc((100% / 10) - 0.1875rem);
+
+    .dot {
+      height: 0.875rem;
+      width: 0.875rem;
+    }
+  }
+
+
+}

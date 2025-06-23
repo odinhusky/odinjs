@@ -1,0 +1,15 @@
+.ranking-rule-table {
+  .table-tbody {
+    .table-tbody-tr:nth-child(1) {
+      background-image: var(--linear-8) !important;
+    }
+
+    .table-tbody-tr:nth-child(2) {
+      background-image: var(--linear-9) !important;
+    }
+
+    .table-tbody-tr:nth-child(3) {
+      background-image: var(--linear-10) !important;
+    }
+  }
+}

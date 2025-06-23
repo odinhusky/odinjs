@@ -1,0 +1,9 @@
+.ant-tooltip {
+  .ant-tooltip-inner {
+    @apply py-2 px-3;
+  }
+
+  .ant-tooltip-arrow {
+    @apply hidden;
+  }
+}

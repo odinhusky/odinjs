@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouteObject } from 'react-router-dom';
 
 import { FunctionComponent } from 'react';
 import DEFAULT_ROUTES from '@router/Default';
@@ -14,33 +14,15 @@ export const DEFAULT_ROUTES_OBJ: Record<string, FunctionComponent> =
     };
   }, {});
 
-console.log('!! DEFAULT_ROUTES_OBJ', DEFAULT_ROUTES_OBJ);
+// 過濾啟用的路由
+const getEnabledRoutes = (
+  routes: Array<{ path: string; enabled?: boolean; element: React.ReactNode }>
+) => routes.filter((route) => route.enabled ?? true);
 
-/**
- * 官網，PWA 引導安裝畫面
- */
-// export const OFFICIAL_ROUTES = [
-//   {
-//     path: BasePagePathObj.OfficialWebsite,
-//     element: (
-//       <OfficialLayout component={lazy(() => import('@pages/OfficialPage'))} />
-//     ),
-//   },
-//   {
-//     path: BasePagePathObj.PwaInstallGuide,
-//     element: (
-//       <OfficialLayout
-//         component={lazy(() => import('@pages/PwaInstallGuidePage'))}
-//       />
-//     ),
-//   },
-//   {
-//     path: BasePagePathObj.PopPage,
-//     element: (
-//       <OfficialLayout component={lazy(() => import('@pages/PopPage'))} />
-//     ),
-//   },
-// ];
+const routes: RouteObject[] = [
+  ...DEFAULT_ROUTES,
+  ...getEnabledRoutes(OFFICIAL_ROUTES),
+];
 
-const router = createBrowserRouter([...DEFAULT_ROUTES, ...OFFICIAL_ROUTES]);
+const router = createBrowserRouter(routes);
 export default router;

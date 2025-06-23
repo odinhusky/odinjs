@@ -1,6 +1,6 @@
 import { BasePagePaths } from '@mode2/routerTypes/types';
 import { useMenuAction } from '@mode2/action/components/menu/menuAction';
-import { handleMenuRouterActionClick } from '@mode2/action/components/menu/actionType';
+import { handleMenuRouterActionClick } from '@mode2/action/actionTypes';
 import { NavigateOptions } from 'react-router';
 import { useShowMenuStore } from '@libs/mode2/zustand/menuStore';
 import { useNavigateClick } from '@libs/mode2/usecase/useNavPageClick';

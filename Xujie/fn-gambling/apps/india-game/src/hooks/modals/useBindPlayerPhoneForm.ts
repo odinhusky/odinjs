@@ -6,7 +6,12 @@ import { useLoadingStore } from '@libs/mode2/zustand/components/loadingStore';
 import { PlayerBindAccountPayload } from '@libs/mode2/external/api/endpoint/user/PostPlayerBindAccountEndpoint';
 import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
 import { useUpdateEffect } from '@libs/commonUtils';
-import { OTPCodeValidator, PasswordValidator } from '@/validator/antdValidator';
+import {
+  OTPCodeValidator,
+  PasswordValidator,
+  PhoneNumberValidator,
+} from '@/validator/antdValidator';
+import { useTaskCenterPageStore } from '@mode2/zustand/page/TaskCenterPage/taskCenterPageStore';
 
 export interface BindPlayerPhoneFormProps {
   onSuccess?: () => void;
@@ -34,19 +39,11 @@ export const useBindPlayerPhoneForm = ({
 
   const OTPCodeValidatorInstance = OTPCodeValidator(t);
   const PasswordValidatorInstance = PasswordValidator(t);
+  const PhoneNumberValidatorInstance = PhoneNumberValidator(t);
 
   const validator = useMemo(
     () => ({
-      phone: (value: string) => {
-        const nameRegex = /^\d{10,11}$/;
-        if (!value) {
-          return Promise.reject(t('toast_mobile_phone_cannot_be_empty'));
-        }
-        if (!nameRegex.test(value)) {
-          return Promise.reject(t('toast_phone_numbers_restrict'));
-        }
-        return Promise.resolve();
-      },
+      phone: PhoneNumberValidatorInstance.phone,
       otpCode: OTPCodeValidatorInstance.otpCode,
       password: PasswordValidatorInstance.password,
       confirmPassword: PasswordValidatorInstance.confirmPassword,
@@ -64,6 +61,9 @@ export const useBindPlayerPhoneForm = ({
     onSuccess?.();
     onClose?.();
 
+    if (isBindSuccess) {
+      useTaskCenterPageStore.getState().refreshTaskCenter();
+    }
     if (bindPlayerPhoneData?.userRole)
       setUserRole(bindPlayerPhoneData?.userRole);
   }, [isBindSuccess]);

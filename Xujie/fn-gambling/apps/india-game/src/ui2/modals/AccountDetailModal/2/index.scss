@@ -1,0 +1,9 @@
+.input {
+  &::-webkit-input-placeholder {
+    font-size: 0.875rem !important; // 14px 
+  }
+
+  &::-ms-input-placeholder {
+    font-size: 0.875rem !important;
+  }
+}

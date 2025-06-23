@@ -1,0 +1,17 @@
+.my-page {
+  .bet-amount-progress.ant-progress {
+    line-height: 0px;
+    border: 1px solid #fe8b34;
+    border-radius: 100px;
+  }
+
+  // antd
+  .bet-amount-progress.ant-progress .ant-progress-inner {
+    background: var(--transparent-white-10);
+  }
+
+  .bet-amount-progress.ant-progress .ant-progress-success-bg,
+  .bet-amount-progress.ant-progress .ant-progress-bg {
+    background: var(--linear-5);
+  }
+}

@@ -2,7 +2,7 @@ import {
   handleFinishRechargeInToGameClick,
   handleLastRechargeInToGameClick,
   handleRechargeInToGameClick,
-} from '@/action/rechargeConfirmationAction/acitonType';
+} from '@mode2/action/actionTypes';
 import { useRecharge } from '@/usecase/useRecharge';
 import { HandleClickProps } from '@mode2/action/common/handleClickProps';
 import { ActionClickObjType } from '@mode2/action/common/actionClickObjetType';

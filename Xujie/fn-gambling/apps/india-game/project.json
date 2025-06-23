@@ -14,20 +14,8 @@
         "outputPath": "dist/apps/india-game"
       },
       "configurations": {
-        "v5": {
-          "buildTarget": "india-game:build:v5"
-        },
-        "v4": {
-          "buildTarget": "india-game:build:v4"
-        },
-        "v1": {
-          "buildTarget": "india-game:build:v1"
-        },
-        "v3": {
-          "buildTarget": "india-game:build:v3"
-        },
-        "v2": {
-          "buildTarget": "india-game:build:v2"
+        "v6": {
+          "buildTarget": "india-game:build:v6"
         }
       }
     },
@@ -39,20 +27,8 @@
         "hmr": true
       },
       "configurations": {
-        "v5": {
-          "mode": "v5"
-        },
-        "v4": {
-          "mode": "v4"
-        },
-        "v1": {
-          "mode": "v1"
-        },
-        "v3": {
-          "mode": "v3"
-        },
-        "v2": {
-          "mode": "v2"
+        "v6": {
+          "mode": "v6"
         }
       }
     },

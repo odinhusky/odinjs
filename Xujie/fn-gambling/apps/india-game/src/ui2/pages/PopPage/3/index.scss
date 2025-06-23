@@ -1,0 +1,17 @@
+.input-placeholder {
+  &::-webkit-input-placeholder {
+    font-size: 0.875rem !important; // 14px 
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: var(--base-2-variant2);
+  }
+
+  &::-ms-input-placeholder {
+    font-size: 0.875rem !important;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: var(--base-2-variant2);
+  }
+}

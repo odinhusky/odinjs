@@ -1,0 +1,17 @@
+.input-container {
+  @apply py-2 px-0;
+}
+
+// antd
+.withdrawable-progress.ant-progress {
+  @apply leading-[normal] border-[none];
+}
+
+.withdrawable-progress.ant-progress .ant-progress-inner {
+  @apply bgi-[var(--transparent-white-30)];
+}
+
+.withdrawable-progress.ant-progress .ant-progress-success-bg,
+.withdrawable-progress.ant-progress .ant-progress-bg {
+  @apply bgi-[var(--linear-4)];
+}

@@ -1,0 +1,20 @@
+.ant-tooltip {
+  .ant-tooltip-content {
+    border-radius: 4px !important;
+
+    .ant-tooltip-inner {
+      @apply py-2 px-3;
+    }
+  }
+
+
+  .ant-tooltip-arrow {
+    &::before {
+      @apply bgi-[var(--base-2-variant11)];
+    }
+
+    &::after {
+      @apply border bgi-border-[var(--base-1-main)];
+    }
+  }
+}

@@ -11,11 +11,17 @@ export interface WithdrawOptItem extends WithdrawOptItemResul {
   disabled: boolean;
 }
 
+// interface WithdrawFee {
+//   fee: number;
+//   feeRate: number;
+// }
+
 interface WithdrawLimit {
   remainingWithdrawLimit: number; //當日剩餘可提現金額 (RemainingWithdrawLimit)
   maxWithdraw: number; // VIP提現上限
   remainingBetToWithdraw: number; //要求打碼 (RequireTurnover - Turnover)
-  withdrawTimes: number; // 提現次數
+  // withdrawTimes: number; // 提現次數
+  freeDailyWithdrawals: number; // 免手續費提領次數
 }
 
 export interface WithdrawStoreTypes {
@@ -25,6 +31,8 @@ export interface WithdrawStoreTypes {
   setWithdrawTotalBalance: (totalBalance: number) => void;
   withdrawLockAssets: number;
   setWithdrawLockAssets: (lockAssets: number) => void;
+  totalAssets: number;
+  setTotalAssets: (totalAssets: number) => void;
   dailyWithdrawLimit: number;
   setDailyWithdrawLimit: (limit: number) => void;
   withdrawProgress: number;
@@ -34,21 +42,31 @@ export interface WithdrawStoreTypes {
 
   withdrawOptions: WithdrawOptItem[];
   setWithdrawOptions: (value: WithdrawOptItem[]) => void;
+  // withdrawFee: WithdrawFee;
+  // setWithdrawFee: (value: WithdrawFee) => void;
+  // fee: resp?.withdrawAmount || 0,
+  // feeRate: resp?.withdrawRate || 0.0,
 }
 
 const defaultRechargeResult = {
   withdrawVipLevel: 0,
   withdrawTotalBalance: 0,
   withdrawLockAssets: 0,
+  totalAssets: 0,
   dailyWithdrawLimit: 0,
   withdrawProgress: 0,
   withdrawLimit: {
     remainingWithdrawLimit: 0,
     maxWithdraw: 0,
     remainingBetToWithdraw: 0,
-    withdrawTimes: 0,
+    // withdrawTimes: 0,
+    freeDailyWithdrawals: 0,
   },
   withdrawOptions: [] as WithdrawOptItem[],
+  // withdrawFee: {
+  //   fee: 0,
+  //   feeRate: 0.0,
+  // },
 };
 
 export const useWithdrawStore = create<WithdrawStoreTypes>((set) => ({
@@ -59,9 +77,11 @@ export const useWithdrawStore = create<WithdrawStoreTypes>((set) => ({
     set(() => ({ withdrawTotalBalance: totalBalance })),
   setWithdrawLockAssets: (lockAssets) =>
     set(() => ({ withdrawLockAssets: lockAssets })),
+  setTotalAssets: (value) => set(() => ({ totalAssets: value })),
   setDailyWithdrawLimit: (limit) => set(() => ({ dailyWithdrawLimit: limit })),
   setWithdrawProgress: (progress) =>
     set(() => ({ withdrawProgress: progress })),
   setWithdrawLimit: (value) => set(() => ({ withdrawLimit: value })),
   setWithdrawOptions: (value) => set(() => ({ withdrawOptions: value })),
+  // setWithdrawFee: (value) => set(() => ({ withdrawFee: value })),
 }));

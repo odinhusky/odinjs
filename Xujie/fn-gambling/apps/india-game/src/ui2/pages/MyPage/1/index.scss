@@ -1,0 +1,175 @@
+.my-page {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  color: var(--grayscale-100);
+
+  .vip-info {
+    padding: 12px;
+    border-radius: 4px;
+    background: var(--grayscale-20);
+
+    .vip-lv {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+    }
+
+    .vip-progress {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 16px;
+    }
+
+    .vip-btns {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 16px;
+    }
+  }
+
+  .btnItems {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+
+      &:hover {
+        background: var(--grayscale-20);
+      }
+
+      &:active {
+        background: var(--grayscale-00);
+      }
+
+      &:disabled {
+        background: var(--transparent-gray-60);
+        filter: grayscale(100%);
+      }
+
+      .item-txt {
+        width: 100%;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        text-align: left;
+        background: var(--grayscale-100);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .item-border {
+      border-bottom: 1px solid var(--grayscale-30);
+    }
+  }
+
+  .banner {
+    width: 100%;
+  }
+
+  .quit {
+    display: flex;
+    justify-content: center;
+    padding: 8px 12px 8px 12px;
+    border-radius: 4px;
+    background: var(--grayscale-10);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: var(--grayscale-50);
+    text-align: center;
+
+    .quit-layout {
+      display: flex;
+      gap: 8px;
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  //.btn {
+  //  //display: flex;
+  //  //gap: 4px;
+  //  //flex-direction: column;
+  //  //width: 100%;
+  //  //padding: 4px 16px 4px 16px;
+  //  //border-radius: 4px;
+  //  //justify-content: center;
+  //  //align-items: center;
+  //  //background: var(--base-1-main);
+  //  //box-shadow: 0px 4px 4px 0px #cccccc40 inset,
+  //  //  0px -4px 4px 0px #33333340 inset;
+  //
+  //  //&:hover {
+  //    //background: var(--base-1-light);
+  //  //}
+  //
+  //  //&:active {
+  //    //background: var(--base-1-dark);
+  //  //}
+  //
+  //  //&:disabled {
+  //  //  color: var(--transparent-white-30);
+  //  //  background: var(--transparent-gray-30);
+  //  //}
+  //
+  //  //img {
+  //  //  width: 20px;
+  //  //  height: 20px;
+  //  //}
+  //}
+}
+
+.bet-amount-progress.ant-progress {
+  line-height: 0px;
+  position: relative;
+}
+
+.bet-amount-progress.ant-progress::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: -1px;
+  right: -1px;
+  display: block;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  background: linear-gradient(180deg, #f2e33e 0%, #fcd743 100%) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  -mask-composite: exclude;
+}
+
+// antd
+.team_club_progress .ant-progress .ant-progress-inner {
+  background: var(--transparent-white-10);
+}
+
+.team_club_progress .ant-progress .ant-progress-success-bg,
+.team_club_progress .ant-progress .ant-progress-bg {
+  background: var(--linear-4);
+}

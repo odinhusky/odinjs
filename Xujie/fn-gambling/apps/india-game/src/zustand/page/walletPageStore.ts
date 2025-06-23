@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import { devtoolsAndPersistWrapper } from '@mode2/zustand/middlewareWrapper';
 import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
 import { I18NContent } from '@libs/mode2/@types/i18nType';
+import { WithdrawOptItemResul } from '@mode2API/endpoint/wallet/PostWithdrawOptionsEndpoint';
 
 // - Wallet Page Store
 
@@ -49,24 +49,30 @@ export interface WalletPageWithdrawContentStoreTypes {
   setWithdrawLimitValue: (limitArr: [number, number]) => void;
   disabled: boolean;
   setDisabled: (value: boolean) => void;
+
+  withdrawAmountSelected: WithdrawOptItemResul;
+  setWithdrawAmountSelected: (value: WithdrawOptItemResul) => void;
 }
 
 export const useWalletPageWithdrawContentStore =
-  create<WalletPageWithdrawContentStoreTypes>()(
-    devtoolsAndPersistWrapper(
-      '[page store] useWalletPageWithdrawContentStore',
-      (set) => ({
-        withdrawAmountInputValue: '',
-        setWithdrawAmountInputValue: (value) =>
-          set(() => ({ withdrawAmountInputValue: value })),
-        withdrawPasswordInputValue: '',
-        setWithdrawPasswordInputValue: (password) =>
-          set(() => ({ withdrawPasswordInputValue: password })),
-        withdrawLimitStr: [0, 0] as [number, number],
-        setWithdrawLimitValue: (limitArr: [number, number]) =>
-          set(() => ({ withdrawLimitStr: limitArr })),
-        disabled: false,
-        setDisabled: (value) => set({ disabled: value }),
-      })
-    )
-  );
+  create<WalletPageWithdrawContentStoreTypes>()((set) => ({
+    withdrawAmountInputValue: '',
+    setWithdrawAmountInputValue: (value) =>
+      set(() => ({ withdrawAmountInputValue: value })),
+    withdrawPasswordInputValue: '',
+    setWithdrawPasswordInputValue: (password) =>
+      set(() => ({ withdrawPasswordInputValue: password })),
+    withdrawLimitStr: [0, 0] as [number, number],
+    setWithdrawLimitValue: (limitArr: [number, number]) =>
+      set(() => ({ withdrawLimitStr: limitArr })),
+    disabled: false,
+    setDisabled: (value) => set({ disabled: value }),
+
+    withdrawAmountSelected: {
+      index: 0,
+      amount: 0,
+      fee: 0,
+    },
+    setWithdrawAmountSelected: (value) =>
+      set(() => ({ withdrawAmountSelected: value })),
+  }));

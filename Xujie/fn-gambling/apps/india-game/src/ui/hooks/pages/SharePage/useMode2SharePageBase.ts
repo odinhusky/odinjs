@@ -33,8 +33,6 @@ export const useMode2SharePageBase = () => {
 
   useTeamClubRulesBase();
 
-  // TODO  // 俱樂部 copyLink 文案 的第二個數值 477
-
   useInviteRecommend();
 
   useSharePageHeaderSetting();

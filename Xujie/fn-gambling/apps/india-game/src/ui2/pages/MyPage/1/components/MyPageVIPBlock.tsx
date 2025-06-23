@@ -1,0 +1,64 @@
+import { handleMyPageVIPDetailBtnClick } from '@mode2/action/actionTypes';
+import useMyPageActions from '@mode2/action/myPageAction/useMyPageActions';
+import { EResourceLevel, formatMoney, getImgUrl } from '@mode2/utils';
+import { useMyPageStore } from '@mode2/zustand/page/myPageStore';
+import { Progress } from 'antd';
+import { useTranslation } from 'react-i18next';
+import Icon from '@components/Icon';
+import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
+
+export const MyPageVIPBlock = () => {
+  const { t } = useTranslation();
+  const { handleMyPageClick } = useMyPageActions();
+
+  const betProgressPercent = useMyPageStore(
+    (state) => state.betProgressPercent
+  );
+  const rechargeAmount = useMyPageStore((state) => state.rechargeAmount);
+  const level = useUserProfileStore((state) => state.level);
+
+  return (
+    <div className="vip-info">
+      <div
+        className="vip-lv cursor-pointer"
+        onClick={() => {
+          handleMyPageClick({
+            actionName: handleMyPageVIPDetailBtnClick,
+          });
+        }}
+      >
+        <img
+          className={'max-h-10 mobile:max-h-12'}
+          src={getImgUrl(EResourceLevel.V, `vip_level_${level}`)}
+          alt="vip"
+        />
+        <div>
+          {t('account_menu_currently_accumulated', {
+            rechargeAmount: formatMoney({
+              value: rechargeAmount,
+              includeDecimal: true,
+            }),
+          })}
+        </div>
+        <div>
+          <Icon name={'ic_arrow_right_1'} />
+        </div>
+      </div>
+
+      <div className="vip-progress !mb-0">
+        <div>
+          {t('earn_money_statistics_bonus_info_table_header_bet_amount')}
+        </div>
+
+        <Progress
+          className="bet-amount-progress"
+          style={betProgressPercent > 0 ? { borderColor: 'transparent' } : {}}
+          percent={betProgressPercent}
+          showInfo={false}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default MyPageVIPBlock;

@@ -1,20 +1,26 @@
+import { useUpdateEffect } from '@libs/commonUtils';
 import {
+  usePostPlayerBindAccountMutation,
   usePostPlayerBindReferCodeMutation,
   usePostPlayerInfoSaveMutation,
 } from '@libs/mode2/external/api';
 import sdkUtils from '@libs/mode2/utils/sdk';
 import { AdjustEventKey } from '@libs/mode2/utils/sdk/persistant/adjust/AdjustEventKey';
 import { useMessageStore } from '@libs/mode2/zustand/components/messageStore';
+import { useOTPCountDownStore } from '@libs/mode2/zustand/components/OTPCountDownStore';
 import {
   TLoginFormProps,
   useAccountPageStore,
 } from '@libs/mode2/zustand/page/accountPageStore';
 import { useUserProfileStore } from '@libs/mode2/zustand/user/userProfileStore';
-import { t } from 'i18next';
 import { useEffect, useState } from 'react';
+import { useUserState } from './useUserState';
+import { useTranslation } from 'react-i18next';
+import { useTaskCenterPageStore } from '@mode2/zustand/page/TaskCenterPage/taskCenterPageStore';
 
 export const useAccount = () => {
-  // const { refreshUserState } = useUserState();
+  const { refreshUserState } = useUserState();
+  const { t } = useTranslation();
 
   const [
     postPlayerInfoSave,
@@ -28,10 +34,21 @@ export const useAccount = () => {
     },
   ] = usePostPlayerBindReferCodeMutation();
 
+  const [postBind, { data: bindPlayerPhoneData, isSuccess: isBindSuccess }] =
+    usePostPlayerBindAccountMutation();
+
+  const setUserRole = useUserProfileStore((state) => state.setUserRole);
+
+  const otpId = useOTPCountDownStore((state) => state.otpId);
+
   const realPhone = useUserProfileStore((state) => state.realPhone);
   const setShowEditModal = useAccountPageStore(
     (state) => state.setShowEditModal
   );
+  // const loginForm = useAccountPageStore((state) => state.loginForm);
+  const setLoginForm = useAccountPageStore((state) => state.setLoginForm);
+  const setReferCode = useAccountPageStore((state) => state.setReferCode);
+  const setNickname = useAccountPageStore((state) => state.setNickname);
 
   // 編輯暱稱
   const editNickname = ({ nickname }: { nickname: string }) => {
@@ -42,7 +59,7 @@ export const useAccount = () => {
     });
   };
 
-  // 綁定邀請碼 TODO Ronan TODO Evan check API 500 待測試
+  // 綁定邀請碼
   const bindInviteCode = ({ referCode }: { referCode: string }) => {
     console.log(referCode);
     postPlayerBindReferCode({
@@ -50,25 +67,30 @@ export const useAccount = () => {
     });
   };
 
-  // 綁定登錄密碼 TODO Ronan TODO Evan check API
+  // 綁定登錄密碼
   const bindPassword = (loginForm: TLoginFormProps) => {
     console.log('@@@===> loginForm', loginForm);
 
-    useMessageStore.getState().success(t('toast_payment_info_saved'));
-
-    setTimeout(() => {
-      setShowEditModal(false);
-    }, 500);
+    postBind({
+      otpCode: loginForm.otpCode,
+      otpId: otpId,
+      phone: loginForm.phone,
+      password: loginForm.password,
+    });
   };
 
   useEffect(() => {
     if (isPlayerInfoSuccess) {
       sdkUtils.sendEvent(AdjustEventKey.RECHARGE_INFO_VERIFICATION);
-      useMessageStore.getState().success(t('toast_payment_info_saved'));
-      // refreshUserState();
+      useMessageStore
+        .getState()
+        .success(t('profile_my_info_select_gender_success_toast'));
+      useTaskCenterPageStore.getState().refreshTaskCenter();
+      refreshUserState();
 
       setTimeout(() => {
         setShowEditModal(false);
+        setNickname('');
       }, 500);
     } else {
       console.log('@@ bindPlayerInfoFail');
@@ -77,15 +99,43 @@ export const useAccount = () => {
 
   useEffect(() => {
     if (isPlayerBindReferCodeSuccess) {
-      useMessageStore.getState().success(t('toast_payment_info_saved'));
+      useMessageStore
+        .getState()
+        .success(t('profile_my_info_select_gender_success_toast'));
+      useTaskCenterPageStore.getState().refreshTaskCenter();
+      refreshUserState();
 
       setTimeout(() => {
         setShowEditModal(false);
+        setReferCode('');
       }, 500);
     } else {
       console.log('@@ bindPlayerReferCodeail');
     }
   }, [isPlayerBindReferCodeSuccess]);
+
+  useUpdateEffect(() => {
+    if (isBindSuccess) {
+      useMessageStore
+        .getState()
+        .success(t('profile_my_info_select_gender_success_toast'));
+      useTaskCenterPageStore.getState().refreshTaskCenter();
+      refreshUserState();
+    }
+    setTimeout(() => {
+      setShowEditModal(false);
+      setLoginForm({
+        phone: realPhone,
+        otpCode: '',
+        password: '',
+        confirmPassword: '',
+      });
+    }, 500);
+
+    if (bindPlayerPhoneData?.userRole) {
+      setUserRole(bindPlayerPhoneData?.userRole);
+    }
+  }, [isBindSuccess]);
 
   const [disabled, setDisabled] = useState(false);
   useEffect(() => {

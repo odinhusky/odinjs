@@ -11,7 +11,7 @@ import { WalletPageTabType } from '@mode2/@types/walletPageTabType';
 import { useWalletPageSwitchContentTabsStore } from '@mode2/zustand/page/WalletPage/walletPageSwitchContentTabsStore';
 import { useUserVerifyState } from '@/usecase/useUserVerifyState';
 import useWalletPageBaseActions from '@mode2/action/walletPageAction/useWalletPageBaseActions';
-import { handleWalletPageSwitchTabClick } from '@mode2/action/walletPageAction/acitonType';
+import { handleWalletPageSwitchTabClick } from '@mode2/action/actionTypes';
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 import { UserRoleType } from '@mode2/@types/userRoleTypes';
 
@@ -52,13 +52,13 @@ export const useWalletPageSwitchTabs = () => {
       {
         id: WalletPageTabType.DEPOSIT,
         url: 'ic_deposit',
-        urlActive: 'ic_deposit',
+        urlActive: 'ic_deposit_active',
         label: { i18nKey: 'wallet_nav_deposit' },
       },
       {
         id: WalletPageTabType.WITHDRAW,
         url: 'ic_withdraw',
-        urlActive: 'ic_withdraw',
+        urlActive: 'ic_withdraw_active',
         label: { i18nKey: 'wallet_nav_withdraw' },
       },
     ];

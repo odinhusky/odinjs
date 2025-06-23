@@ -434,6 +434,7 @@
   "footer_welcome_to_2": "At {{productName}} we proudly offer a wide range of games, from beloved classics like slots, roulette and blackjack, to modern innovations like live casino experiences and sports betting. Backed by industry-leading software providers, our games guarantee a fair and reliable gaming career.",
   "footer_welcome_to_3": "To enhance your gaming journey, we offer a range of rewards and promotions. Our dedicated customer support department is available 24/7 for any questions or suggestions you may have. Join {{productName}} today and immerse yourself in the exciting world of online gaming like never before! Your adventure starts here.",
   "footer_welcome_to_4": "*Please note: This website offers a risky gaming experience and you must be at least 18 years old; Otherwise, we are not responsible for violations of local laws regarding online gaming.",
+  "footer_welcome_to_5": "{{productName}} is owned and operated by {{operatedName}}",
   "wallet_withdraw_note_2": "Withdrawals will arrive within 24 hours at most. If there is a banking system failure, withdrawals may be delayed for two days.",
   "earn_money_ranking_list_content_rule_2": "2. The ranking only counts active players’ bets.",
   "earn_money_ranking_list_content_rule_3": "3. Settlement will be made at 24:00 every Sunday, and the reward obtained shall be subject to the final statistical results.",
@@ -805,7 +806,7 @@
   "spin_and_share_wheel_record_fortune_pack": "Fortune Pack",
   "spin_and_share_wheel_rules_page_title": "Rules",
   "spin_and_share_wheel_rules_title": "Activity rules",
-  "spin_and_share_wheel_rules_1": "You can apply for withdrawal once your cumulative balance reaches {{value}}.",
+  "spin_and_share_wheel_rules_1": "You can apply for withdrawal once your cumulative balance reaches {{withdrawRequire}}.",
   "spin_and_share_wheel_rules_2": "A valid spin requires your invited friends to register and deposit.",
   "spin_and_share_wheel_rules_3": "The activity lasts for 3 days. After each cycle, rewards will reset, and a new activity period will begin.",
   "spin_and_share_wheel_rules_4": "Each user is entitled to 1 free spin per day. Spin counts reset at 12:00 AM every day.",
@@ -840,7 +841,7 @@
   "balance_record_deposit_record_receipt_label_full": "Unique Transaction Reference",
   "balance_record_deposit_record_receipt_input_placeholde": "UTR must be 12 to 22 digits",
   "balance_record_deposit_record_receipt_screenshot_label": "UTR screenshot",
-  "balance_record_deposit_record_receipt_screenshot_label_optiona": "optional",
+  "balance_record_deposit_record_receipt_screenshot_label_optiona": "Optional",
   "balance_record_deposit_record_receipt_screenshot_choose_imag": "Choose image",
   "balance_record_deposit_record_receipt_reminder": "Please double check that the information is correct, if the deposit failed or you have any other questions, please contact Customer Service 24/7",
   "balance_record_deposit_record_receipt_send_butto": "Send",
@@ -854,7 +855,7 @@
   "balance_record_deposit_record_receipt_notice_popup_title": "Notice",
   "balance_record_deposit_record_receipt_notice_popup_content": "UTR not submitted yet. Are you sure you want to leave this page?",
   "balance_record_deposit_record_receipt_notice_popup_leave_butto": "Leave",
-  "balance_record_deposit_record_receipt_notice_popup_confirm_butto": "Continue",
+  "balance_record_deposit_record_receipt_notice_popup_confirm_button": "Continue",
   "balance_record_deposit_record_receipt_not_filled_toast": "Please fill in the UTR field.",
 
   "gift_code_page_title": "Reward redemption code",
@@ -911,5 +912,6 @@
   "deposit_warning_binding_button": "Binding",
 
   "bind_phone_number_setting_login_password_placeholder":"Setting login password",
-  "bind_phone_number_setting_login_password_note": "To ensure the security of your funds, please link your mobile number and make sure to remember or securely store your password. It’s important for your account’s safety!"
+  "bind_phone_number_setting_login_password_note": "To ensure the security of your funds, please link your mobile number and make sure to remember or securely store your password. It’s important for your account’s safety!",
+  "piggy_bank_no_cashback_message" : "Received today."
 }

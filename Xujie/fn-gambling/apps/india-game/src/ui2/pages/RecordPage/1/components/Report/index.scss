@@ -1,0 +1,293 @@
+.report {
+  .report-tabs {
+    width: 100%;
+    display: flex;
+    background: var(--grayscale-15);
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+
+    .report-tabs-btn {
+      width: 100%;
+      text-align: center;
+      color: var(--grayscale-50);
+      border-bottom: 2px solid transparent;
+      padding: 8px 12px;
+    }
+
+    .report-tabs-btn-select {
+      padding: 8px 12px;
+
+      .report-tabs-btn-txt {
+        background: var(--base-1-main);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+
+  .tab-content {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 20px;
+    gap: 16px;
+    background: var(--grayscale-20);
+
+    @include bp(tablet) {
+      padding: 12px 24px;
+      gap: 24px;
+    }
+
+    @include bp(mobile) {
+      padding: 24px;
+      gap: 12px;
+    }
+
+    .tab-progress {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .progress-group {
+        display: flex;
+        gap: 32px;
+
+        .progress-item {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          align-items: center;
+          justify-content: center;
+
+          .progress {
+            width: 110%;
+            height: 156px;
+            position: relative;
+
+            @include bp(mobile) {
+              height: 198px;
+            }
+          }
+
+          .tips {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 4px 16px 4px 16px;
+            border-radius: 4px;
+            background: var(--base-1-main);
+            box-shadow: 0px 0px 4px 0px #00000040;
+
+            .tips_txt1 {
+              font-size: 12px;
+              font-weight: 500;
+              line-height: 16px;
+
+              @include bp(mobile) {
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 20px;
+              }
+            }
+
+            .tips_txt2 {
+              font-size: 12px;
+              font-weight: 600;
+              line-height: 16px;
+              background: var(--linear-4);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+
+              @include bp(mobile) {
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 24px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .tab-btns-group {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+
+      @include bp(tablet) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      @include bp(mobile) {
+        row-gap: 12px;
+        column-gap: 16px;
+      }
+
+      .group-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 12px 12px;
+        box-shadow: 0px 4px 4px 0px #cccccc40 inset,
+          0px -4px 4px 0px #33333340 inset;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        background-clip: padding-box, border-box;
+        background-origin: padding-box, border-box;
+        overflow: hidden;
+        min-height: 100px;
+
+        @include bp(mobile) {
+          gap: 12px;
+          align-items: center;
+          padding: 22px 12px;
+          min-height: auto;
+          justify-content: center;
+        }
+
+        @include bp(tablet) {
+          gap: 24px;
+        }
+
+        .item-top {
+          display: flex;
+          gap: 8px;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+
+          img {
+            filter: drop-shadow(3px 3px 6px #00000066)
+              drop-shadow(0px 0px 0px #00000000);
+            width: 20px;
+            height: 20px;
+
+            @include bp(mobile) {
+              width: 24px;
+              height: 24px;
+            }
+          }
+
+          div {
+            filter: drop-shadow(2px 2px 4px #00000066)
+              drop-shadow(0px 0px 0px #00000000);
+          }
+
+          @include bp(mobile) {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+            margin: 0 auto;
+          }
+        }
+
+        .item-bottom {
+          display: flex;
+          gap: 8px;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 24px;
+
+          img {
+            filter: drop-shadow(3px 3px 6px #00000066)
+              drop-shadow(0px 0px 0px #00000000);
+            width: 20px;
+            height: 20px;
+
+            @include bp(mobile) {
+              width: 24px;
+              height: 24px;
+            }
+          }
+
+          div {
+            filter: drop-shadow(2px 2px 4px #00000066)
+              drop-shadow(0px 0px 0px #00000000);
+          }
+
+          @include bp(mobile) {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 28px;
+          }
+        }
+
+        .sj1 {
+          position: absolute;
+          bottom: 0.5px;
+          right: 0px;
+          width: 0;
+          height: 0;
+          border-top: 90px solid transparent;
+          border-right: 52px solid var(--transparent-gray-10);
+        }
+
+        .sj2 {
+          position: absolute;
+          bottom: 0.5px;
+          right: 0px;
+          width: 0;
+          height: 0;
+          border-top: 60px solid transparent;
+          border-right: 32px solid var(--transparent-gray-10);
+        }
+      }
+    }
+  }
+}
+
+/** antd progress bar */
+.report-amount-progress.ant-progress-line {
+  width: 152px;
+  height: 26px;
+
+  @include bp(mobile) {
+    width: 196px;
+  }
+}
+
+.report-amount-progress {
+  border: none;
+  position: absolute;
+  transform: rotate(-90deg);
+  bottom: 65px;
+  left: -64px;
+
+  @include bp(mobile) {
+    bottom: 86px;
+    left: -78px;
+  }
+
+  // 外框
+  .ant-progress-outer {
+    position: absolute;
+    height: 24px !important;
+
+    // 黑色背景部分
+    .ant-progress-inner {
+      border-radius: 4px;
+      height: 24px !important;
+      background: var(--grayscale-10);
+
+      // 數值部分
+      .ant-progress-success-bg,
+      .ant-progress-bg {
+        border-radius: 4px;
+        height: 24px !important;
+        background: var(--base-3-main);
+      }
+    }
+  }
+}

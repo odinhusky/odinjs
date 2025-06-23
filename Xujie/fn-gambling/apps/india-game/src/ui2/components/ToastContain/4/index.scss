@@ -1,0 +1,11 @@
+.full_toast {
+  width: 100% !important;
+  max-width: 750px !important;
+  @apply px-4;
+
+  .inner {
+    width: 100%;
+    background-color: var(--grayscale-100);
+    @apply text-sm py-1 px-4 font-medium rounded text-center;
+  }
+}

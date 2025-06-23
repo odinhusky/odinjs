@@ -1,0 +1,84 @@
+// 圖，文，超連結
+.template-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+  font-size: 0.875rem;
+  color: var(--grayscale-100);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  img {
+    object-fit: contain;
+  }
+
+  a {
+    color: var(--state-success-main); /* 替换成你的主色 */
+    text-decoration-line: underline;
+    //text-decoration: none; /* 取消下划线，可选 */
+  }
+
+  a:hover {
+    color: var(--state-success-main); /* 悬停时的颜色 */
+    text-decoration-line: underline;
+    //text-decoration: underline; /* 可选 */
+  }
+
+  p {
+    text-wrap: initial;
+    //text-wrap-mode: initial;
+    //text-wrap-style: auto;
+  }
+
+}
+
+.template-2 {
+  font-size: 0.875rem;
+  color: var(--grayscale-100);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  p {
+    text-wrap: initial;
+  }
+
+  .title {
+    color: var(--state-error-main);
+
+    span {
+      color: var(--base-1-main);
+    }
+  }
+
+  .content {
+    padding-right: 20%;
+  }
+}
+
+.template-3 {
+  font-size: 0.875rem;
+  color: var(--grayscale-100);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  a {
+    color: var(--state-success-main); /* 替换成你的主色 */
+    text-decoration-line: underline;
+    //text-decoration: none; /* 取消下划线，可选 */
+  }
+
+  a:hover {
+    color: var(--state-success-main); /* 悬停时的颜色 */
+    text-decoration-line: underline;
+    //text-decoration: underline; /* 可选 */
+  }
+
+  p {
+    text-wrap: initial;
+  }
+
+}

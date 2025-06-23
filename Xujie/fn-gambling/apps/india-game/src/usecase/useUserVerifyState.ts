@@ -1,5 +1,5 @@
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 export const useUserVerifyState = () => {
   const checkIsPersonalInfoFirstBind = (): boolean => {

@@ -6,18 +6,23 @@ async function fetchMyIp() {
 
   try {
     // 封装 fetch 请求
-    const requests = apis.map(url => fetch(url).then(res => res.json()));
+    const requests = apis.map((url) => fetch(url).then((res) => res.json()));
 
     // 使用 Promise.race，返回第一个成功的请求结果，且包含 country 或 countryName
-    const response = await Promise.race(requests.map(req =>
-      req.then(data => {
-        // 检查 country 或 countryName 是否存在
-        if (data.country || data.countryName) {
-          return data;
-        }
-        return null; // 返回 null 表示无效结果
-      }).catch(() => null) // 捕获并忽略任何请求错误
-    ));
+    const response = await Promise.race(
+      requests.map(
+        (req) =>
+          req
+            .then((data) => {
+              // 检查 country 或 countryName 是否存在
+              if (data.country || data.countryName) {
+                return data;
+              }
+              return null; // 返回 null 表示无效结果
+            })
+            .catch(() => null) // 捕获并忽略任何请求错误
+      )
+    );
 
     let ip = '';
     let country = '';
@@ -32,10 +37,10 @@ async function fetchMyIp() {
     // 提取 country 或 countryName
     country = response?.country || response?.countryName || '';
 
-    return {ip, country};
+    return { ip, country };
   } catch (error) {
     console.error('Error fetching IP:', error);
-    return {ip: '', country: ''};
+    return { ip: '', country: '' };
   }
 }
 

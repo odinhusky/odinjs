@@ -18,6 +18,7 @@ export const useWalletPageBase = () => {
 
   const { refreshUserState } = useUserState();
   // Evan 進入錢包頁面先刷新 user 資料，避免當賢頁面重新整理導致KYC狀態錯誤
+
   useEffect(() => {
     refreshUserState();
   }, []);
@@ -25,8 +26,8 @@ export const useWalletPageBase = () => {
   // ==== API Init
   useWalletPageAPIInit();
 
-  // ==== Switch tabs
-  useWalletPageSwitchTabs();
+  // // ==== Switch tabs
+  // useWalletPageSwitchTabs();
 
   // ==== limitStr
   useWalletPageLimitStr();

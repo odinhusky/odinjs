@@ -1,7 +1,7 @@
 import { useFooterStore } from '@mode2/zustand/components/footerStore';
 import useFooterAction from '@mode2/action/components/footer/useFooterAction';
 
-import { handleFooterHyperlinkActionClick } from '@mode2/action/components/footer/acitonType';
+import { handleFooterHyperlinkActionClick } from '@mode2/action/actionTypes';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BasePagePathObj } from '@mode2/routerTypes/types';
@@ -21,6 +21,7 @@ export const useFooterBase = () => {
   const setIntroduction = useFooterStore((state) => state.setIntroduction);
 
   const productName = sdkUtils.productName();
+  const operatedName = sdkUtils.operatedName();
   const setCopyrightInfo = useFooterStore((state) => state.setCopyrightInfo);
   const setCustomerServiceTitle = useFooterStore(
     (state) => state.setCustomerServiceTitle
@@ -70,6 +71,14 @@ export const useFooterBase = () => {
       t('footer_welcome_to_2', { productName: productName }),
       t('footer_welcome_to_3', { productName: productName }),
       t('footer_welcome_to_4'),
+      ...(operatedName
+        ? [
+            t('footer_welcome_to_5', {
+              productName: productName,
+              operatedName: operatedName,
+            }),
+          ]
+        : []),
     ]);
 
     setCopyrightInfo(

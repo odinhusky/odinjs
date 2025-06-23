@@ -3,6 +3,7 @@ import useMode2HallPageTabs from './useMode2HallPageTabs';
 import useMode2HallPageGameList from './useMode2HallPageGameList';
 import useMode2HallPageInit from './useMode2HallPageInit';
 import useHallPageHeaderSetting from './useHallPageHeaderSetting';
+import useHallPageDeepLinkWithQueryString from './useHallPageDeepLinkWithQueryString';
 import { useHallPageFooterSetting } from '@/ui/hooks/pages/hallPage/useHallPageFooterSetting';
 import { useHallPageFABSetting } from '@/ui/hooks/pages/hallPage/useHallPageFABSetting';
 import useBannerListBase from '@mode2/usecase/components/useBannerListBase';
@@ -31,6 +32,9 @@ export const useMode2HallPageBase = () => {
 
   // === 首頁 FloatActionButton setting
   useHallPageFABSetting();
+
+  // === DeepLink
+  useHallPageDeepLinkWithQueryString();
 };
 
 export default useMode2HallPageBase;

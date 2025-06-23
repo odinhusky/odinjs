@@ -14,14 +14,11 @@ const Loading = ({ tip = 'Loading' }: { tip?: string }) => {
 
   useEffect(() => {
     if (isShowLoading) {
-      console.log('@@@===> Loading.show');
       document.querySelector('body')?.classList.add('overflow-hidden');
     } else {
-      console.log('@@@===> Loading.hidden');
       document.querySelector('body')?.classList.remove('overflow-hidden');
     }
     return () => {
-      console.log('@@@===> Loading.return');
       document.querySelector('body')?.classList.remove('overflow-hidden');
     };
   }, [isShowLoading]);

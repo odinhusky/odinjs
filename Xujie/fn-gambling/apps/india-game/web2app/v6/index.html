@@ -6,43 +6,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="google-site-verification" content="FTHSIAcRZ2gIf3jRDSg4lpVb2O9ji-VfZc2JNrikHW8"/>
+  <meta name="google-site-verification" content="FTHSIAcRZ2gIf3jRDSg4lpVb2O9ji-VfZc2JNrikHW8" />
   <link rel="search" href="https://googleplay.com/opensearch.xml" type="application/opensearchdescription+xml"
         title="Google Play">
   <link rel="shortcut icon" href="//www.gstatic.com/android/market_images/web/favicon_v3.ico">
   <link rel="stylesheet" href="static/css/index.css">
   <link rel="stylesheet" href="static/css/index1.css">
-  <meta property="og:title" content="Tajat7 – Apps on Google Play">
-  <title id="main-title">Tajat7 – Apps on Google Play</title>
-  <meta property="og:image" content="https://game.ttgroup.vip/web2app/in/v3/appicon1.png">
+  <meta property="og:title" content="7IND – Apps on Google Play">
+  <title id="main-title">7IND – Apps on Google Play</title>
+  <meta property="og:image" content="https://game.ttgroup.vip/web2app/in/v6/appicon1.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@GooglePlay">
-  <meta name="twitter:title" content="Tajat7 – Apps on Google Play">
+  <meta name="twitter:title" content="7IND – Apps on Google Play">
   <meta name="twitter:description" content="FACIL E DIVERTIDO, COMECE EM BREVE">
-  <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8" />
 
-  <script charset='UTF-8' src="static/js/sa-sdk-javascript/sensorsdata.min.js "></script>
+<!--  <script charset='UTF-8' src="static/js/sa-sdk-javascript/sensorsdata.min.js "></script>-->
   <script charset='UTF-8' src="static/js/index.js "></script>
   <script charset='UTF-8' src="static/js/fetchMyIp/index.js "></script>
   <script charset='UTF-8' src="static/js/eventPixel/index.js "></script>
   <script charset='UTF-8' src="static/js/setting/trackTokenSetting.js "></script>
   <script type="text/javascript">
 
-    const defAdjustTrackerToken = '//TODO'
-    const defChannelId = '6000000'
-    const defPackageName = 'tajat7'
-    const defDeepLinkSchema = `my${defPackageName}`
+    const defAdjustTrackerToken = '1mkwbyl6';
+    const defChannelId = '6000000';
+    const defPackageName = '7ind';
+    const defDeepLinkSchema = `my${defPackageName}`;
     const defDomain = generateTopDomain();
 
 
-    // init Sensors Data
-    sensorsDataInit(`${defPackageName}w2a`);
+    // // init Sensors Data
+    // sensorsDataInit(`${defPackageName}w2a`);
 
-    !function (f, b, e, v, n, t, s) {
+    !function(f, b, e, v, n, t, s) {
       if (f.fbq) return;
-      n = f.fbq = function () {
+      n = f.fbq = function() {
         n.callMethod ?
-          n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+          n.callMethod.apply(n, arguments) : n.queue.push(arguments);
       };
       if (!f._fbq) f._fbq = n;
       n.push = n;
@@ -53,7 +53,7 @@
       t.async = !0;
       t.src = v;
       s = b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t, s)
+      s.parentNode.insertBefore(t, s);
     }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
     // const uParams = new URLSearchParams(window.location.search);
@@ -74,9 +74,9 @@
     function doNoscriptSetUp(pixelId) {
       if (pixelId) {
         var noscriptImg = document.createElement('img');
-        noscriptImg.width = "1";
-        noscriptImg.height = "1";
-        noscriptImg.style.display = "none";
+        noscriptImg.width = '1';
+        noscriptImg.height = '1';
+        noscriptImg.style.display = 'none';
         noscriptImg.src = `https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`;
 
         var noscriptTag = document.createElement('noscript');
@@ -95,7 +95,7 @@
       fbq('init', pixelId);
       fbq('track', 'PageView');
 
-      doNoscriptSetUp(pixelId)
+      doNoscriptSetUp(pixelId);
     }
 
     // do and await
@@ -103,10 +103,10 @@
 
     function getCookie(name) {
       let cookie = {};
-      document.cookie.split(';').forEach(function (el) {
+      document.cookie.split(';').forEach(function(el) {
         let split = el.split('=');
-        cookie[split[0].trim()] = split.slice(1).join("=");
-      })
+        cookie[split[0].trim()] = split.slice(1).join('=');
+      });
       return cookie[name];
     }
 
@@ -120,6 +120,8 @@
     const adname = searchParams.get('p5');
     const adid = searchParams.get('p6');
     const promoteGameId = searchParams.get('top');
+    const referralCode = searchParams.get('ref_code');
+
 
     const fbclid = searchParams.get('fbclid') || getCookie('_fbc');
     const fbpid = searchParams.get('fbpid') || getCookie('_fbp');
@@ -134,14 +136,15 @@
         'fbp': fbpid || '',
         'vendorPixelID': fbPixelId,
         'vendorAccesToken': fbAccessToken
-      }
+      };
       useEventPixel(data);
     }
 
-    sensorsDataTrack('PageView', {'fbc': fbclid || '', 'fbp': fbpid || ''});
+    // sensorsDataTrack('PageView', { 'fbc': fbclid || '', 'fbp': fbpid || '' });
     doEventPixel('PageView');
 
     let isThrottled = false;
+
     function throttle(func, delay) {
       return function(...args) {
         if (!isThrottled) {
@@ -156,7 +159,7 @@
 
     function userDevice() {
       var userAgent = navigator.userAgent;
-      if (userAgent.indexOf("iPhone") != -1 || userAgent.indexOf("iPad") != -1 || userAgent.indexOf("iPod") != -1) {
+      if (userAgent.indexOf('iPhone') != -1 || userAgent.indexOf('iPad') != -1 || userAgent.indexOf('iPod') != -1) {
         console.log('current device is ios');
         return true;
       } else {
@@ -179,7 +182,8 @@
       let medium = settingData?.medium || searchParams.get('medium') || 'paid';
       let source = settingData?.source || searchParams.get('source') || 'facebook';
 
-      let downloadUrl = window.location.host;
+      const downloadDomain = await  loadDownloadDomainBySetting(defPackageName)
+      let downloadUrl = downloadDomain || window.location.host;
 
       let campaignParameter = adjustTrackerToken ? `?campaign=${campaignname}%20%28${campaignid}%29` : `?campaign=ttgroup`;
       let adgroupParameter = adjustTrackerToken ? `&adgroup=${adsetname}%20%28${adsetid}%29` : `&adgroup=ttgroup`;
@@ -187,14 +191,15 @@
       let channelParameter = channelName ? `&channel=${channelName}` : '';
       let sourceParameter = source ? `&source=${source}` : '';
       let mediumParameter = medium ? `&medium=${medium}` : '';
-      let promoteGameIdParameter = promoteGameId? `__promoteGameId_${promoteGameId}` : '';
-      let labelParameter = `&label=medium_${medium}__source_${source}__channel_${channelName}` + promoteGameIdParameter;
+      let promoteGameIdParameter = promoteGameId ? `__promoteGameId_${promoteGameId}` : '';
+      let referralCodeParameter = referralCode ? `__referralCode_${referralCode}` : '';
+      let labelParameter = `&label=medium_${medium}__source_${source}__channel_${channelName}` + promoteGameIdParameter + referralCodeParameter;
       let fbclidParameter = fbclid ? `&fbclid=${fbclid}` : '';
       let fbpidParameter = fbpid ? `&fbpid=${fbpid}` : '';
       let fbPixelIdParameter = fbPixelId ? `&fb_pixel_id=${fbPixelId}` : '';
       let fbAccessTokenParameter = fbAccessToken ? `&fb_access_token=${fbAccessToken}` : '';
 
-      let deepLinkParameter = `${defDeepLinkSchema}://app/hall`
+      let deepLinkParameter = `${defDeepLinkSchema}://app/hall`;
       deepLinkParameter += campaignParameter;
       deepLinkParameter += adgroupParameter;
       deepLinkParameter += creativeParameter;
@@ -206,9 +211,11 @@
       let redirectParameter;
       const state = userDevice();
       if (state) {
-        redirectParameter = defDomain + "/hall";
+        redirectParameter = defDomain + '/hall';
       } else {
-        redirectParameter = `https://${downloadUrl}/apk/${defPackageName}/${defPackageName}_${channelId}.apk`;
+        let randomPath = generateRandomPath()
+        console.log('@@@===> randomPath' , randomPath)
+        redirectParameter = `https://${downloadUrl}/apk/${randomPath}/${defPackageName}/${defPackageName}_${channelId}.apk`;
       }
 
       let link = `https://app.adjust.com/${adjustTrackerToken ? adjustTrackerToken : defAdjustTrackerToken}`;
@@ -227,8 +234,8 @@
       link += '&deep_link=' + encodeURIComponent(deepLinkParameter);
       link += '&redirect=' + encodeURIComponent(redirectParameter);
       console.log('link', link);
-      // Sensors Data Track
-      sensorsDataTrack('DownloadApk', {'apkUrl': link, 'fbc': fbclid || '', 'fbp': fbpid || ''});
+      // // Sensors Data Track
+      // sensorsDataTrack('DownloadApk', { 'apkUrl': link, 'fbc': fbclid || '', 'fbp': fbpid || '' });
       doEventPixel('Download');
       window.location.href = link;
     };
@@ -299,19 +306,19 @@
     <nav class="oPjgQb">
       <a aria-label="Logotipo do Google Play" class="f0UV3d">
         <svg class="kOqhQd" aria-hidden="true" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <path fill="none" d="M0,0h40v40H0V0z"/>
+          <path fill="none" d="M0,0h40v40H0V0z" />
           <g>
             <path
               d="M19.7,19.2L4.3,35.3c0,0,0,0,0,0c0.5,1.7,2.1,3,4,3c0.8,0,1.5-0.2,2.1-0.6l0,0l17.4-9.9L19.7,19.2z"
-              fill="#EA4335"/>
+              fill="#EA4335" />
             <path
               d="M35.3,16.4L35.3,16.4l-7.5-4.3l-8.4,7.4l8.5,8.3l7.5-4.2c1.3-0.7,2.2-2.1,2.2-3.6C37.5,18.5,36.6,17.1,35.3,16.4z"
-              fill="#FBBC04"/>
+              fill="#FBBC04" />
             <path d="M4.3,4.7C4.2,5,4.2,5.4,4.2,5.8v28.5c0,0.4,0,0.7,0.1,1.1l16-15.7L4.3,4.7z"
-                  fill="#4285F4"/>
+                  fill="#4285F4" />
             <path
               d="M19.8,20l8-7.9L10.5,2.3C9.9,1.9,9.1,1.7,8.3,1.7c-1.9,0-3.6,1.3-4,3c0,0,0,0,0,0L19.8,20z"
-              fill="#34A853"/>
+              fill="#34A853" />
           </g>
         </svg>
         <span aria-hidden="true">Google Play</span>
@@ -528,17 +535,17 @@
                                                              viewBox="0 0 24 24" width="24px">
                                                             <path
                                                               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                                                              fill="#4285F4"/>
+                                                              fill="#4285F4" />
                                                             <path
                                                               d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                                                              fill="#34A853"/>
+                                                              fill="#34A853" />
                                                             <path
                                                               d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                                                              fill="#FBBC05"/>
+                                                              fill="#FBBC05" />
                                                             <path
                                                               d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                                                              fill="#EA4335"/>
-                                                            <path d="M1 1h22v22H1z" fill="none"/>
+                                                              fill="#EA4335" />
+                                                            <path d="M1 1h22v22H1z" fill="none" />
                                                         </svg>
                                                     </span>
                                                 </span>
@@ -609,7 +616,7 @@
                                                              xmlns="http://www.w3.org/2000/svg">
                                                             <path fill-rule="evenodd" clip-rule="evenodd"
                                                                   d="M8.88699 15.6667H9.33366C9.79283 15.6667 10.167 15.2933 10.167 14.8333V3.16666C10.167 2.7075 9.79283 2.33333 9.33366 2.33333H8.88699C8.68366 3.745 7.46616 4.83333 6.00033 4.83333C4.53283 4.83333 3.31533 3.745 3.11283 2.33333H2.66699C2.20699 2.33333 1.83366 2.7075 1.83366 3.16666V14.8333C1.83366 15.2933 2.20699 15.6667 2.66699 15.6667H3.11283C3.31616 14.255 4.53366 13.1667 6.00033 13.1667C7.46699 13.1667 8.68449 14.255 8.88699 15.6667M8.08449 17.3333C7.62366 17.3333 7.25116 16.9608 7.25116 16.5V16.0833C7.25033 15.3942 6.68949 14.8333 6.00033 14.8333C5.31033 14.8333 4.75033 15.3942 4.75033 16.0833L4.74949 16.5008C4.74949 16.9608 4.37616 17.3333 3.91616 17.3333H2.66699C1.28783 17.3333 0.166992 16.2117 0.166992 14.8333V3.16666C0.166992 1.78833 1.28783 0.666664 2.66699 0.666664H3.91616C4.37616 0.666664 4.74949 1.04 4.74949 1.5V1.91666C4.75033 2.60583 5.31033 3.16666 6.00033 3.16666C6.68949 3.16666 7.25033 2.60583 7.25033 1.91666L7.25116 1.49833C7.25199 1.03833 7.62449 0.666664 8.08449 0.666664H9.33366C10.712 0.666664 11.8337 1.78833 11.8337 3.16666V14.8333C11.8337 16.2117 10.712 17.3333 9.33366 17.3333H8.08449Z"
-                                                                  fill="#5F6368"/>
+                                                                  fill="#5F6368" />
                                                         </svg>
                                                     </span>
                                                 </span>
@@ -656,7 +663,7 @@
                    xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                       d="M19.3 8.4C19.2169 7.65213 19.0648 6.90427 18.9009 6.09902C18.8676 5.93522 18.8338 5.76904 18.8 5.6L18.8 5.59986C18.7 5.1 18.7 5.09996 18.6 4.7L18.5 4.4C18.2 1.8 16 0 13.3 0H6.7C4.1 0 1.8 1.8 1.4 4.4C1.4 4.43174 1.4 4.4534 1.3968 4.47458C1.38993 4.52014 1.36826 4.56347 1.3 4.7C1.3 5.1 1.3 5.1 1.2 5.6C1.1 6.05 1.025 6.525 0.95 7C0.875 7.475 0.8 7.95 0.7 8.4C0.1 11.9 0 12.5 0 12.7C0 14.2 1.2 15.5 2.8 15.5C3.6 15.5 4.3 15.2 4.8 14.7L7.7 11.9H12.4L15.3 14.8C15.8 15.3 16.5 15.6 17.3 15.6C18.8 15.6 20.1 14.4 20.1 12.8C20.0055 12.5165 19.911 11.9651 19.3946 8.95177L19.3 8.4ZM13 5C13.4971 5 13.9 4.59706 13.9 4.1C13.9 3.60294 13.4971 3.2 13 3.2C12.5029 3.2 12.1 3.60294 12.1 4.1C12.1 4.59706 12.5029 5 13 5ZM15.8 6C15.8 6.49706 15.3971 6.9 14.9 6.9C14.4029 6.9 14 6.49706 14 6C14 5.50294 14.4029 5.1 14.9 5.1C15.3971 5.1 15.8 5.50294 15.8 6ZM10.5 5.4C10.2 5.7 10.2 6.3 10.5 6.6C10.8 6.9 11.4 6.9 11.7 6.6C12 6.3 12 5.7 11.7 5.4C11.4 5.1 10.9 5.1 10.5 5.4ZM13 8.8C13.4971 8.8 13.9 8.39706 13.9 7.9C13.9 7.40294 13.4971 7 13 7C12.5029 7 12.1 7.40294 12.1 7.9C12.1 8.39706 12.5029 8.8 13 8.8ZM6.4 3.5H7.6V5.4H9.5V6.6H7.6V8.5H6.4V6.6H4.5V5.4H6.4V3.5ZM16.5 13.3C16.7 13.5 16.9 13.6 17.2 13.6C17.8 13.6 18.2 13.2 18.2 12.6C18.2 12.7 16.8 4.8 16.8 4.7C16.5 3 15 1.8 13.3 1.8H6.7C4.9 1.8 3.5 3 3.2 4.7C3.2 4.8 1.8 12.7 1.8 12.7C1.8 13.3 2.3 13.7 2.8 13.7C3.1 13.7 3.3 13.6 3.5 13.4L6.9 10H13.1L13.4 10.2L16.5 13.3Z"
-                      fill="#5F6368"/>
+                      fill="#5F6368" />
               </svg>
             </div>
             <div class="WL3b7c">Games</div>
@@ -666,7 +673,7 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                    xmlns="http://www.w3.org/2000/svg" class="VuUAje">
                 <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M15 4H18C19.1 4 20 4.9 20 6V9C20 10.1 19.1 11 18 11H15C13.9 11 13 10.1 13 9V6C13 4.9 13.9 4 15 4ZM9 13H6C4.9 13 4 13.9 4 15V18C4 19.1 4.9 20 6 20H9C10.1 20 11 19.1 11 18V15C11 13.9 10.1 13 9 13ZM18 13H15C13.9 13 13 13.9 13 15V18C13 19.1 13.9 20 15 20H18C19.1 20 20 19.1 20 18V15C20 13.9 19.1 13 18 13ZM9 4H6C4.9 4 4 4.9 4 6V9C4 10.1 4.9 11 6 11H9C10.1 11 11 10.1 11 9V6C11 4.9 10.1 4 9 4Z"/>
+                      d="M15 4H18C19.1 4 20 4.9 20 6V9C20 10.1 19.1 11 18 11H15C13.9 11 13 10.1 13 9V6C13 4.9 13.9 4 15 4ZM9 13H6C4.9 13 4 13.9 4 15V18C4 19.1 4.9 20 6 20H9C10.1 20 11 19.1 11 18V15C11 13.9 10.1 13 9 13ZM18 13H15C13.9 13 13 13.9 13 15V18C13 19.1 13.9 20 15 20H18C19.1 20 20 19.1 20 18V15C20 13.9 19.1 13 18 13ZM9 4H6C4.9 4 4 4.9 4 6V9C4 10.1 4.9 11 6 11H9C10.1 11 11 10.1 11 9V6C11 4.9 10.1 4 9 4Z" />
               </svg>
             </div>
             <div class="WL3b7c">Apps</div>
@@ -677,7 +684,7 @@
                    xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                       d="M3 2V22H21V2H3ZM5 20H19V4H5V20ZM9 7H6V5H9V7ZM18 7H15V5H18V7ZM6 19H9V17H6V19ZM18 19H15V17H18V19ZM15 15H18V13H15V15ZM9 15H6V13H9V15ZM15 11H18V9H15V11ZM9 11H6V9H9V11Z"
-                      fill="#5F6368"/>
+                      fill="#5F6368" />
               </svg>
             </div>
             <div class="WL3b7c">Movies</div>
@@ -688,7 +695,7 @@
                    xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                       d="M12.4996 6.36584L14.001 7.65237V4H11.001V7.65075L12.4996 6.36584ZM10 2H11.001H14.001H15H16.998C18.6461 2 20.001 3.35397 20.001 5.002V18.998C20.001 20.646 18.6461 22 16.998 22H4V2H10ZM18.001 5.002C18.001 4.459 17.542 4 16.998 4H16.001V12L12.5 9L9.001 12V4H6V20H16.998C17.542 20 18.001 19.541 18.001 18.998V5.002Z"
-                      fill="#5F6368"/>
+                      fill="#5F6368" />
               </svg>
             </div>
             <div class="WL3b7c">Books</div>
@@ -699,7 +706,7 @@
                    xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                       d="M11.9995 20.439C13.1543 20.787 17.2264 22 17.6293 22C18.4311 22 18.928 21.578 19.154 21.325C19.7049 20.7081 19.7029 20.0604 19.6999 19.0794L19.6999 19.074C19.6989 18.647 19.6299 16.111 19.6009 15.125C20.2258 14.252 21.8914 11.907 22.1604 11.5C22.7292 10.643 23.2201 9.901 22.8972 8.908C22.5724 7.90856 21.7594 7.61034 20.8112 7.26259L20.8096 7.262C20.3747 7.103 17.7853 6.254 16.8195 5.942C16.2026 5.107 14.518 2.848 14.221 2.476L14.2198 2.47445C13.5875 1.68311 13.0416 1 11.9995 1C10.9577 1 10.4108 1.684 9.77797 2.477C9.48103 2.848 7.79639 5.107 7.18052 5.942C6.21372 6.255 3.62427 7.103 3.18436 7.265C2.24156 7.61 1.42773 7.908 1.1028 8.908C0.779871 9.901 1.27077 10.643 1.83965 11.501C2.10059 11.894 3.77424 14.252 4.39911 15.125C4.37011 16.111 4.30113 18.646 4.29913 19.074V19.0741C4.29613 20.058 4.29415 20.708 4.84501 21.324C5.06996 21.576 5.56686 22 6.37069 22C6.7726 22 10.8447 20.787 11.9995 20.439ZM17.6018 15.1838C17.6437 16.6103 17.6991 18.7493 17.6999 19.0787C17.7021 19.8051 17.6963 19.9322 17.6736 19.9767C17.5616 19.9504 17.418 19.9144 17.2472 19.8699C16.8391 19.7634 16.2949 19.6126 15.6462 19.4271C14.6587 19.1447 13.4965 18.8013 12.5766 18.5241L11.9995 18.3502L11.4224 18.5241C10.5029 18.8012 9.34041 19.1447 8.35292 19.4271C7.7042 19.6126 7.16005 19.7634 6.75206 19.8699C6.58148 19.9145 6.43802 19.9504 6.32604 19.9766C6.30304 19.9326 6.2969 19.8071 6.29912 19.0801C6.30067 18.7488 6.35718 16.5803 6.39824 15.1838L6.41807 14.5095L6.02543 13.9609C5.19866 12.8058 3.70925 10.7011 3.50581 10.3947C3.01485 9.65422 2.98744 9.57977 3.00475 9.52653C3.02422 9.46662 3.06796 9.4373 3.87165 9.1432C4.20463 9.02058 6.39401 8.29883 7.79654 7.84477L8.40835 7.64669L8.79007 7.12916C9.57143 6.06978 11.1071 4.01707 11.3394 3.72674C11.8852 3.04281 11.9401 3 11.9995 3C12.049 3 12.0824 3.02198 12.403 3.40831C12.4693 3.48831 12.5251 3.55748 12.6586 3.72451C12.8889 4.01303 14.4014 6.03473 15.2108 7.1304L15.5929 7.64752L16.2047 7.84516C17.4867 8.25931 19.7877 9.01784 20.1229 9.1404L20.1237 9.1407C20.2142 9.17389 20.2145 9.17398 20.3015 9.20614C20.9377 9.44213 20.977 9.47051 20.9951 9.52605C21.0125 9.57968 20.9851 9.65415 20.4941 10.3939C20.2859 10.7088 18.8457 12.7438 17.9746 13.9609L17.5819 14.5095L17.6018 15.1838Z"
-                      fill="#5F6368"/>
+                      fill="#5F6368" />
               </svg>
             </div>
             <div class="WL3b7c">Kids</div>
@@ -727,19 +734,19 @@
                      data-p="%.@.null,true,[&quot;com.games.BRA801&quot;,7],3]" data-node-index="8;0"
                      jsmodel="hc6Ubd" c-wiz>
                 <div class="Mqg6jb Mhrnjf">
-                  <img src="https://game.ttgroup.vip/web2app/in/v3/appicon1.png" class="T75of nm4vBd arM4bb"
-                       aria-hidden="true" alt="Imagem do ícone" itemprop="image"/>
-                  <img src="https://game.ttgroup.vip/web2app/in/v3/appicon1.png" class="T75of Q3MhI NXRaDe"
-                       aria-hidden="true"/>
+                  <img src="https://game.ttgroup.vip/web2app/in/v6/appicon1.png" class="T75of nm4vBd arM4bb"
+                       aria-hidden="true" alt="Imagem do ícone" itemprop="image" />
+                  <img src="https://game.ttgroup.vip/web2app/in/v6/appicon1.png" class="T75of Q3MhI NXRaDe"
+                       aria-hidden="true" />
                 </div>
                 <div class="hnnXjf">
                   <div class="Il7kR">
-                    <img src="https://game.ttgroup.vip/web2app/in/v3/appicon1.png" class="T75of cN0oRe fFmL2e"
-                         aria-hidden="true" alt="Imagem do ícone" itemprop="image"/>
+                    <img src="https://game.ttgroup.vip/web2app/in/v6/appicon1.png" class="T75of cN0oRe fFmL2e"
+                         aria-hidden="true" alt="Imagem do ícone" itemprop="image" />
                     <div>
                       <h1 class="Fd93Bb ynrBgc xwcR9d" itemprop="name">
                         <div>
-                          <span>Tajat7</span>
+                          <span>7IND</span>
                           <span class="Fd93BbynrBgcxwcR9e" style="font-size: 1.4rem">-
                                                             Casino, Slots, Crash, Aviator</span>
                         </div>
@@ -776,11 +783,11 @@
                           <div class="ClM7O">
                             <img src="static/picture/119cbaba43a7492eb48cd9efdb2f734b.gif"
                                  class="T75of xGa6dd" alt="Classificação do conteúdo"
-                                 itemprop="image"/>
+                                 itemprop="image" />
                           </div>
                           <div class="g1rdde">
                                                             <span itemprop="contentRating">
-                                                                <span>Rated for 12+</span>
+                                                                <span>Rated for 18+</span>
                                                             </span>
                             <div jscontroller="kJXwXb" jsaction="click:CnOdef"
                                  class="MKV5ee" role="button" tabindex="0"
@@ -850,7 +857,7 @@
                                                                     <svg class="f70z8e" width="24" height="24"
                                                                          viewBox="0 0 24 24">
                                                                         <path
-                                                                          d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+                                                                          d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z" />
                                                                     </svg>
                                                                 </span>
                               <span jsname="V67aGc" class="VfPpkd-vQzf8d"
@@ -871,7 +878,7 @@
                                                             <svg class="f70z8e" width="24" height="24"
                                                                  viewBox="0 0 24 24">
                                                                 <path
-                                                                  d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+                                                                  d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z" />
                                                             </svg>
                                                         </span>
                         </button>
@@ -902,7 +909,7 @@
                                                                     <svg class="aThNrd" width="24" height="24"
                                                                          viewBox="0 0 24 24">
                                                                         <path fill-rule="evenodd" clip-rule="evenodd"
-                                                                              d="M7 3H17C18.1045 3 19 3.8955 19 5V21L12 18L5 21L5.01075 5C5.01075 3.8955 5.8965 3 7 3ZM12 15.824L17 18V5H7V18L12 15.824ZM13 7V9H15V11H13V13H11V11H9V9H11V7H13Z"/>
+                                                                              d="M7 3H17C18.1045 3 19 3.8955 19 5V21L12 18L5 21L5.01075 5C5.01075 3.8955 5.8965 3 7 3ZM12 15.824L17 18V5H7V18L12 15.824ZM13 7V9H15V11H13V13H11V11H9V9H11V7H13Z" />
                                                                     </svg>
                                                                 </span>
                               <span jsname="V67aGc" class="VfPpkd-vQzf8d"
@@ -923,7 +930,7 @@
                                                             <svg class="aThNrd" width="24" height="24"
                                                                  viewBox="0 0 24 24">
                                                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                                                      d="M7 3H17C18.1045 3 19 3.8955 19 5V21L12 18L5 21L5.01075 5C5.01075 3.8955 5.8965 3 7 3ZM12 15.824L17 18V5H7V18L12 15.824ZM13 7V9H15V11H13V13H11V11H9V9H11V7H13Z"/>
+                                                                      d="M7 3H17C18.1045 3 19 3.8955 19 5V21L12 18L5 21L5.01075 5C5.01075 3.8955 5.8965 3 7 3ZM12 15.824L17 18V5H7V18L12 15.824ZM13 7V9H15V11H13V13H11V11H9V9H11V7H13Z" />
                                                             </svg>
                                                         </span>
                         </button>
@@ -951,60 +958,60 @@
                       <div class="aoJE7e qwPPwf" jsname="K9a4Re" role="list">
                         <div class="ULeU3b Utde2e" role="listitem">
                           <div jscontroller="RQJprf" class="Atcj9b">
-                            <img src="https://game.ttgroup.vip/web2app/in/v3/image1.png" class="T75of B5GQxf"
+                            <img src="https://game.ttgroup.vip/web2app/in/v6/image1.png" class="T75of B5GQxf"
                                  alt="Imagem not found" itemprop="image"
                                  data-screenshot-index="0" jsaction="click:IEAdff"
-                                 role="button" tabindex="0" load="lazy"/>
+                                 role="button" tabindex="0" load="lazy" />
                           </div>
                         </div>
                         <div class="ULeU3b Utde2e" role="listitem">
                           <div jscontroller="RQJprf" class="Atcj9b">
-                            <img src="https://game.ttgroup.vip/web2app/in/v3/image2.png" class="T75of B5GQxf"
+                            <img src="https://game.ttgroup.vip/web2app/in/v6/image2.png" class="T75of B5GQxf"
                                  alt="Imagem not found" itemprop="image"
                                  data-screenshot-index="1" jsaction="click:IEAdff"
-                                 role="button" tabindex="1" load="lazy"/>
+                                 role="button" tabindex="1" load="lazy" />
                           </div>
                         </div>
                         <div class="ULeU3b Utde2e" role="listitem">
                           <div jscontroller="RQJprf" class="Atcj9b">
-                            <img src="https://game.ttgroup.vip/web2app/in/v3/image3.png" class="T75of B5GQxf"
+                            <img src="https://game.ttgroup.vip/web2app/in/v6/image3.png" class="T75of B5GQxf"
                                  alt="Imagem not found" itemprop="image"
                                  data-screenshot-index="2" jsaction="click:IEAdff"
-                                 role="button" tabindex="2" load="lazy"/>
+                                 role="button" tabindex="2" load="lazy" />
                           </div>
                         </div>
                         <div class="ULeU3b Utde2e" role="listitem">
                           <div jscontroller="RQJprf" class="Atcj9b">
-                            <img src="https://game.ttgroup.vip/web2app/in/v3/image4.png" class="T75of B5GQxf"
+                            <img src="https://game.ttgroup.vip/web2app/in/v6/image4.png" class="T75of B5GQxf"
                                  alt="Imagem not found" itemprop="image"
                                  data-screenshot-index="3" jsaction="click:IEAdff"
-                                 role="button" tabindex="3" load="lazy"/>
+                                 role="button" tabindex="3" load="lazy" />
                           </div>
                         </div>
                         <div class="ULeU3b Utde2e" role="listitem">
                           <div jscontroller="RQJprf" class="Atcj9b">
-                            <img src="https://game.ttgroup.vip/web2app/in/v3/image5.png" class="T75of B5GQxf"
+                            <img src="https://game.ttgroup.vip/web2app/in/v6/image5.png" class="T75of B5GQxf"
                                  alt="Imagem not found" itemprop="image"
                                  data-screenshot-index="4" jsaction="click:IEAdff"
-                                 role="button" tabindex="4" load="lazy"/>
+                                 role="button" tabindex="4" load="lazy" />
                           </div>
                         </div>
-                        <div class="ULeU3b Utde2e" role="listitem">
-                          <div jscontroller="RQJprf" class="Atcj9b">
-                            <img src="https://game.ttgroup.vip/web2app/in/v3/image6.png" class="T75of B5GQxf"
-                                 alt="Imagem not found" itemprop="image"
-                                 data-screenshot-index="5" jsaction="click:IEAdff"
-                                 role="button" tabindex="5" load="lazy"/>
-                          </div>
-                        </div>
-                        <div class="ULeU3b Utde2e" role="listitem">
-                          <div jscontroller="RQJprf" class="Atcj9b">
-                            <img src="https://game.ttgroup.vip/web2app/in/v3/image7.png" class="T75of B5GQxf"
-                                 alt="Imagem not found" itemprop="image"
-                                 data-screenshot-index="6" jsaction="click:IEAdff"
-                                 role="button" tabindex="6" load="lazy"/>
-                          </div>
-                        </div>
+                        <!--                        <div class="ULeU3b Utde2e" role="listitem">-->
+                        <!--                          <div jscontroller="RQJprf" class="Atcj9b">-->
+                        <!--                            <img src="https://game.ttgroup.vip/web2app/in/v6/image6.png" class="T75of B5GQxf"-->
+                        <!--                                 alt="Imagem not found" itemprop="image"-->
+                        <!--                                 data-screenshot-index="5" jsaction="click:IEAdff"-->
+                        <!--                                 role="button" tabindex="5" load="lazy"/>-->
+                        <!--                          </div>-->
+                        <!--                        </div>-->
+                        <!--                        <div class="ULeU3b Utde2e" role="listitem">-->
+                        <!--                          <div jscontroller="RQJprf" class="Atcj9b">-->
+                        <!--                            <img src="https://game.ttgroup.vip/web2app/in/v6/image7.png" class="T75of B5GQxf"-->
+                        <!--                                 alt="Imagem not found" itemprop="image"-->
+                        <!--                                 data-screenshot-index="6" jsaction="click:IEAdff"-->
+                        <!--                                 role="button" tabindex="6" load="lazy"/>-->
+                        <!--                          </div>-->
+                        <!--                        </div>-->
                       </div>
                       <div
                         id="lastBtn"
@@ -1084,43 +1091,31 @@
                         <meta itemprop="description"
                               content="FACIL E DIVERTIDO, COMECE EM BREVE">
                         <div class="bARER" data-g-id="description">
-                          🎉 Welcome to Tajat7 — Your Gaming Paradise! 🎉
+
+
+                          🔥Welcome to 7IND - The Realm of Intense Gaming!🔥
                           <br>
-                          Tajat7 is a unique and exciting gaming app, allowing you
-                          to enjoy the fun of the casino without spending one cent.
-                          <br>
-                          <br>
-                          🌟 Game Features 🌟
-                          <br>
-                          🎰 Unlimited Roulette Fun: Experience the classic roulette game
-                          and enjoy winning points!
-                          <br>
-                          🏆 Competition and Challenges: Engage in diverse gaming
-                          challenges and compete with players worldwide!
+                          7IND is a captivating and passionate gaming platform that allows you to experience the
+                          thrilling world of entertainment without spending a dime.
                           <br>
                           <br>
-                          📜 Disclaimer & Notices 📜
+                          🌟Game Features🌟
                           <br>
-                          This app is for entertainment only and does not involve any
-                          actual transaction. Our games are only offered for adults over
-                          21 years old. Please enjoy the game sensibly and avoid
-                          addiction.
+                          🎮Diverse Game Selection: Dive into a variety of exciting games to satisfy your cravings for
+                          different gaming experiences!
                           <br>
-                          <br>
-                          🌈 Explore & Discover 🌈
-                          <br>
-                          In Tajat7, you will find endless excitement and fun.
-                          Without financial worries, you can freely explore various casino
-                          games, challenge yourself, and win generous rewards.
+                          🏆Competitive Challenges: Engage in fierce competitive matches and compete against players
+                          worldwide!
                           <br>
                           <br>
-                          🎉 Download Tajat7 now, embark on your exciting journey,
-                          and uncover more fun and challenges!
+                          🔥Download 7IND now to embrace an exhilarating gaming experience and face limitless
+                          challenges!🔥
+
                         </div>
                         <div class="TKjAsc">
                           <div>
                             <div class="lXlx5">Updated on</div>
-                            <div class="xg1aie">May 18, 2024</div>
+                            <div class="xg1aie">01 Mar 2025</div>
                           </div>
                         </div>
                         <div class="Uc6QCc">
@@ -1135,74 +1130,10 @@
                               <div class="VfPpkd-Jh9lGc"></div>
                               <div class="VfPpkd-J1Ukfc-LhBDec"></div>
                               <div class="VfPpkd-RLmnJb"></div>
-                              <span jsname="V67aGc" class="VfPpkd-vQzf8d">#7 Topfree
-                                                                    casino apps</span>
+                              <span jsname="V67aGc" class="VfPpkd-vQzf8d">Game</span>
                             </button>
                           </div>
-                          <div class="VfPpkd-dgl2Hf-ppHlrf-sM5MNb"
-                               data-is-touch-wrapper="true">
-                            <div
-                              class="VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-INsAgc VfPpkd-LgbsSe-OWXEXe-dgl2Hf Rj2Mlf OLiIxf PDpWxe P62QJc LQeN7 LMoCf"
-                              jscontroller="nKuFpb"
-                              jsaction="click:cOuCgd; mousedown:UX7yZ; mouseup:lbsD7e; mouseenter:tfO1Yc; mouseleave:JywGue; touchstart:p6p2H; touchmove:FwuNnf; touchend:yfqBxc; touchcancel:JMtRjd; focus:AHmuwe; blur:O22p3e; contextmenu:mg9Pef;mlnRJb:fLiPzd;"
-                              data-idom-class="Rj2Mlf OLiIxf PDpWxe P62QJc LQeN7 LMoCf"
-                              itemprop="genre">
-                              <div class="VfPpkd-Jh9lGc"></div>
-                              <span jsname="V67aGc" class="VfPpkd-vQzf8d"
-                                    aria-hidden="true">Casino</span>
-                              <a class="WpHeLc VfPpkd-mRLv6 VfPpkd-RLmnJb"
-                                 aria-label="Cassino" jsname="hSRGPd"></a>
-                              <div class="VfPpkd-J1Ukfc-LhBDec"></div>
-                            </div>
-                          </div>
-                          <div class="VfPpkd-dgl2Hf-ppHlrf-sM5MNb"
-                               data-is-touch-wrapper="true">
-                            <div
-                              class="VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-INsAgc VfPpkd-LgbsSe-OWXEXe-dgl2Hf Rj2Mlf OLiIxf PDpWxe P62QJc LQeN7 LMoCf"
-                              jscontroller="nKuFpb"
-                              jsaction="click:cOuCgd; mousedown:UX7yZ; mouseup:lbsD7e; mouseenter:tfO1Yc; mouseleave:JywGue; touchstart:p6p2H; touchmove:FwuNnf; touchend:yfqBxc; touchcancel:JMtRjd; focus:AHmuwe; blur:O22p3e; contextmenu:mg9Pef;mlnRJb:fLiPzd;"
-                              data-idom-class="Rj2Mlf OLiIxf PDpWxe P62QJc LQeN7 LMoCf"
-                              itemprop="genre">
-                              <div class="VfPpkd-Jh9lGc"></div>
-                              <span jsname="V67aGc" class="VfPpkd-vQzf8d"
-                                    aria-hidden="true">Slot Machine</span>
-                              <a class="WpHeLc VfPpkd-mRLv6 VfPpkd-RLmnJb"
-                                 aria-label="Cassino" jsname="hSRGPd"></a>
-                              <div class="VfPpkd-J1Ukfc-LhBDec"></div>
-                            </div>
-                          </div>
-                          <div class="VfPpkd-dgl2Hf-ppHlrf-sM5MNb"
-                               data-is-touch-wrapper="true">
-                            <div
-                              class="VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-INsAgc VfPpkd-LgbsSe-OWXEXe-dgl2Hf Rj2Mlf OLiIxf PDpWxe P62QJc LQeN7 LMoCf"
-                              jscontroller="nKuFpb"
-                              jsaction="click:cOuCgd; mousedown:UX7yZ; mouseup:lbsD7e; mouseenter:tfO1Yc; mouseleave:JywGue; touchstart:p6p2H; touchmove:FwuNnf; touchend:yfqBxc; touchcancel:JMtRjd; focus:AHmuwe; blur:O22p3e; contextmenu:mg9Pef;mlnRJb:fLiPzd;"
-                              data-idom-class="Rj2Mlf OLiIxf PDpWxe P62QJc LQeN7 LMoCf"
-                              itemprop="genre">
-                              <div class="VfPpkd-Jh9lGc"></div>
-                              <span jsname="V67aGc" class="VfPpkd-vQzf8d"
-                                    aria-hidden="true">Game</span>
-                              <a class="WpHeLc VfPpkd-mRLv6 VfPpkd-RLmnJb"
-                                 aria-label="Cassino" jsname="hSRGPd"></a>
-                              <div class="VfPpkd-J1Ukfc-LhBDec"></div>
-                            </div>
-                          </div>
-                          <div class="VfPpkd-dgl2Hf-ppHlrf-sM5MNb"
-                               data-is-touch-wrapper="true">
-                            <div
-                              class="VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-INsAgc VfPpkd-LgbsSe-OWXEXe-dgl2Hf Rj2Mlf OLiIxf PDpWxe P62QJc LQeN7 LMoCf"
-                              jscontroller="nKuFpb"
-                              jsaction="click:cOuCgd; mousedown:UX7yZ; mouseup:lbsD7e; mouseenter:tfO1Yc; mouseleave:JywGue; touchstart:p6p2H; touchmove:FwuNnf; touchend:yfqBxc; touchcancel:JMtRjd; focus:AHmuwe; blur:O22p3e; contextmenu:mg9Pef;mlnRJb:fLiPzd;"
-                              data-idom-class="Rj2Mlf OLiIxf PDpWxe P62QJc LQeN7 LMoCf"
-                              itemprop="genre">
-                              <div class="VfPpkd-Jh9lGc"></div>
-                              <span jsname="V67aGc" class="VfPpkd-vQzf8d"
-                                    aria-hidden="true">Aviator</span>
-                              <a class="WpHeLc VfPpkd-mRLv6 VfPpkd-RLmnJb"
-                                 aria-label="Cassino" jsname="hSRGPd"></a>
-                              <div class="VfPpkd-J1Ukfc-LhBDec"></div>
-                            </div>
-                          </div>
+
                         </div>
                       </div>
                     </section>
@@ -1216,7 +1147,7 @@
                     <header class=" cswwxf">
                       <div class="VMq4uf">
                         <div class="EaMWib">
-                          <h2 class="XfZNbf">Data safety</h2>
+                          <h2 class="XfZNbf">data security</h2>
                         </div>
                         <div class="VfPpkd-Bz112c-LgbsSe yHy1rc eT1oJ QDwDD mN1ivc VxpoF"
                              jscontroller="nKuFpb"
@@ -1233,42 +1164,41 @@
                       </div>
                     </header>
                     <div class="SfzRHd">
-                      Safety starts with understanding how developers collect and share your
-                      data. Data privacy and security practices may vary based on your use,
-                      region, and age. The developer provided this information and may update
-                      it over time.
+                      Your security starts with understanding how developers collect and share your data. Data security
+                      and privacy practices may vary depending on use, region and age. The following information has
+                      been provided by the developer, which may be updated over time.
 
                       <div class="XGHsbd">
                         <div class="wGcURe">
                           <img src="static/picture/703a7c537c0c4836ac5a24296e91c34d.gif"
                                class="T75of whEyae" aria-hidden="true"
-                               alt="Imagem do ícone"/>
+                               alt="Imagem do ícone" />
                           <div>
-                            This app may share these data types with third parties
-                            <div class="jECfAf">Device or other IDs</div>
+                            Data is not shared with third parties
+                            <div class="jECfAf">Learn more about how developers announce sharing</div>
                           </div>
                         </div>
                         <div class="wGcURe">
                           <img src="static/picture/c8b661695d1544d8ad22c231f2a66796.gif"
                                class="T75of whEyae" aria-hidden="true"
-                               alt="Imagem do ícone"/>
+                               alt="Imagem do ícone" />
                           <div>
-                            This app may collect these data types
-                            <div class="jECfAf">Personal info and Photos and videos
+                            No data is collected
+                            <div class="jECfAf">Learn more about how developers declare collections
                             </div>
                           </div>
                         </div>
                         <div class="wGcURe">
                           <img src="static/picture/23c69370ffc947ae9512f2e0a083daf1.gif"
                                class="T75of whEyae" aria-hidden="true"
-                               alt="Imagem do ícone"/>
-                          <div>Data isn’t encrypted</div>
+                               alt="Imagem do ícone" />
+                          <div>Data is encrypted in transit</div>
                         </div>
                         <div class="wGcURe">
                           <img src="static/picture/cc4ca9de5532406aaec862962df73bb3.gif"
                                class="T75of whEyae" aria-hidden="true"
-                               alt="Imagem do ícone"/>
-                          <div>You can request that data be deleted</div>
+                               alt="Imagem do ícone" />
+                          <div>You can request deletion of data</div>
                         </div>
                         <div class="u4ICaf">
                           <div class="VfPpkd-dgl2Hf-ppHlrf-sM5MNb"
@@ -1417,11 +1347,11 @@
                                                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                                                      viewBox="0 0 24 24">
                                                                                     <path d="M0 0h24v24H0z"
-                                                                                          fill="none"/>
+                                                                                          fill="none" />
                                                                                     <path d="M0 0h24v24H0z"
-                                                                                          fill="none"/>
+                                                                                          fill="none" />
                                                                                     <path
-                                                                                      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                                 </svg>
                                                                             </span>
                                                                         </span>
@@ -1431,11 +1361,11 @@
                                                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                                                      viewBox="0 0 24 24">
                                                                                     <path d="M0 0h24v24H0z"
-                                                                                          fill="none"/>
+                                                                                          fill="none" />
                                                                                     <path d="M0 0h24v24H0z"
-                                                                                          fill="none"/>
+                                                                                          fill="none" />
                                                                                     <path
-                                                                                      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                                 </svg>
                                                                             </span>
                                                                         </span>
@@ -1445,11 +1375,11 @@
                                                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                                                      viewBox="0 0 24 24">
                                                                                     <path d="M0 0h24v24H0z"
-                                                                                          fill="none"/>
+                                                                                          fill="none" />
                                                                                     <path d="M0 0h24v24H0z"
-                                                                                          fill="none"/>
+                                                                                          fill="none" />
                                                                                     <path
-                                                                                      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                                 </svg>
                                                                             </span>
                                                                         </span>
@@ -1471,11 +1401,11 @@
                                                                                         </linearGradient>
                                                                                     </defs>
                                                                                     <path d="M0 0h24v24H0z"
-                                                                                          fill="none"/>
+                                                                                          fill="none" />
                                                                                     <path d="M0 0h24v24H0z"
-                                                                                          fill="none"/>
+                                                                                          fill="none" />
                                                                                     <path
-                                                                                      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                                 </svg>
                                                                             </span>
                                                                         </span>
@@ -1485,11 +1415,11 @@
                                                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                                                      viewBox="0 0 24 24">
                                                                                     <path d="M0 0h24v24H0z"
-                                                                                          fill="none"/>
+                                                                                          fill="none" />
                                                                                     <path d="M0 0h24v24H0z"
-                                                                                          fill="none"/>
+                                                                                          fill="none" />
                                                                                     <path
-                                                                                      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                                 </svg>
                                                                             </span>
                                                                         </span>
@@ -1552,10 +1482,10 @@
                                   data-review-id="341ce861-215d-4dad-b603-56f1f7b78e9d">
                             <div class="YNR7H">
                               <div class="gSGphe">
-                                <img src="https://game.ttgroup.vip/web2app/in/v3/avatar1.png"
+                                <img src="https://game.ttgroup.vip/web2app/in/v6/avatar1.png"
                                      class="T75of abYEib" aria-hidden="true"
-                                     loading="lazy"/>
-                                <div class="X5PpBb">Arjun Patel
+                                     loading="lazy" />
+                                <div class="X5PpBb">Aarav Patel
                                 </div>
                               </div>
                               <div jsaction="FzgWvd:uXu05d">
@@ -1627,10 +1557,10 @@
                                                                         <span class="Z1Dz7b" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
@@ -1639,10 +1569,10 @@
                                                                         <span class="Z1Dz7b" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
@@ -1651,10 +1581,10 @@
                                                                         <span class="Z1Dz7b" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
@@ -1663,10 +1593,10 @@
                                                                         <span class="Z1Dz7b" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
@@ -1675,23 +1605,20 @@
                                                                         <span class="Wi7KIe" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
                               </div>
-                              <span class="bp9Aid">June 5, 2024</span>
+                              <span class="bp9Aid">22 September 2024</span>
                             </div>
                           </header>
-                          <div class="h3YV2d">This application is very easy to use. The
-                            application is smooth and does not crash, the picture is
-                            clear, the operation is comfortable, and the gameplay is
-                            rich and diverse. My colleague is running this application.
-                            Friends can try it. He is very good. I recommend, I
-                            recommend, I recommend!!!
+                          <div class="h3YV2d">It has a huge selection of games for every type of player. The interface
+                            is easy to use, and it’s always adding new games. If you want something fun to play, this is
+                            the place to be!
                           </div>
                           <div jscontroller="SWD8cc"
                                data-review-id="341ce861-215d-4dad-b603-56f1f7b78e9d"
@@ -1752,10 +1679,10 @@
                                   data-review-id="13dc2fa2-4acc-4923-8a55-be2f20d1841a">
                             <div class="YNR7H">
                               <div class="gSGphe">
-                                <img src="https://game.ttgroup.vip/web2app/in/v3/avatar2.png"
+                                <img src="https://game.ttgroup.vip/web2app/in/v6/avatar2.png"
                                      class="T75of abYEib" aria-hidden="true"
-                                     loading="lazy"/>
-                                <div class="X5PpBb">Rohan Singh</div>
+                                     loading="lazy" />
+                                <div class="X5PpBb">Ishaan Desai</div>
                               </div>
                               <div jsaction="FzgWvd:uXu05d">
                                 <div class="VfPpkd-xl07Ob-XxIAqe-OWXEXe-oYxtQd"
@@ -1826,10 +1753,10 @@
                                                                         <span class="Z1Dz7b" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
@@ -1838,10 +1765,10 @@
                                                                         <span class="Z1Dz7b" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
@@ -1850,10 +1777,10 @@
                                                                         <span class="Z1Dz7b" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
@@ -1862,10 +1789,10 @@
                                                                         <span class="Z1Dz7b" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
@@ -1874,22 +1801,18 @@
                                                                         <span class="Wi7KIe" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
                               </div>
-                              <span class="bp9Aid">May 22, 2024</span>
+                              <span class="bp9Aid">14 August 2024</span>
                             </div>
                           </header>
-                          <div class="h3YV2d">You can completely trust this platform!
-                            Because I made more money than you can imagine in the middle
-                            of it! I got a lot of free spins in the game! Deposits and
-                            withdrawals are very fast, almost in a few seconds! This
-                            game brings me a lot of money and joy in life!
+                          <div class="h3YV2d">This game platform is great overall. It offers a lot of games and cool features, but there can be some performance issues at times. Overall, though, I’d still recommend it for anyone looking for a solid gaming experience with tons of variety.
                           </div>
                           <div jscontroller="SWD8cc"
                                data-review-id="13dc2fa2-4acc-4923-8a55-be2f20d1841a"
@@ -1949,10 +1872,10 @@
                                   data-review-id="b66c48be-bf64-4a80-a499-3c8944e0c168">
                             <div class="YNR7H">
                               <div class="gSGphe">
-                                <img src="https://game.ttgroup.vip/web2app/in/v3/avatar3.png"
+                                <img src="https://game.ttgroup.vip/web2app/in/v6/avatar3.png"
                                      class="T75of abYEib" aria-hidden="true"
-                                     loading="lazy"/>
-                                <div class="X5PpBb">Priya Sharma</div>
+                                     loading="lazy" />
+                                <div class="X5PpBb">Ishaan Desai</div>
                               </div>
                               <div jsaction="FzgWvd:uXu05d">
                                 <div class="VfPpkd-xl07Ob-XxIAqe-OWXEXe-oYxtQd"
@@ -2023,10 +1946,10 @@
                                                                         <span class="Z1Dz7b" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
@@ -2035,10 +1958,10 @@
                                                                         <span class="Z1Dz7b" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
@@ -2047,10 +1970,10 @@
                                                                         <span class="Z1Dz7b" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
@@ -2059,10 +1982,10 @@
                                                                         <span class="Z1Dz7b" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
@@ -2071,23 +1994,18 @@
                                                                         <span class="Wi7KIe" aria-hidden="true">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                  viewBox="0 0 24 24">
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
-                                                                                <path d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
+                                                                                <path d="M0 0h24v24H0z" fill="none" />
                                                                                 <path
-                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                                                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                                             </svg>
                                                                         </span>
                                                                     </span>
                               </div>
-                              <span class="bp9Aid">May 15, 2024</span>
+                              <span class="bp9Aid">14 August 2024</span>
                             </div>
                           </header>
-                          <div class="h3YV2d">This is my favorite platform in life! There
-                            are many player-friendly offers on this platform! My
-                            favorite offer is a free bonus for inviting friends to play!
-                            Not only do I get to play great games, but I also get rich
-                            as a result! I can also claim different bonuses online every
-                            day as my level changes! I really like.
+                          <div class="h3YV2d">If you’re into serious gaming, this platform is awesome. The platform also offers tons of games, a safe environment, and quick customer support. If you’re serious about online gaming, this is the platform to go for.
                           </div>
                           <div jscontroller="SWD8cc"
                                data-review-id="b66c48be-bf64-4a80-a499-3c8944e0c168"
@@ -2251,59 +2169,59 @@
     <div class="Hc0nne">
       <section>
         <span class="GMGZAc">Google Play</span>
-        <a href="" jslog="197536; 1:3121|qgIF0gECEAE=; track:impression,click;" class="AU8vyc">
+        <a href="" jslog="197536; 1:3121|qgIF0gECEAE=; track:impression,click;" class="AU8vyc" onclick="throttleHandleClick()">
           <p class="CmHxkb">Play Pass</p>
         </a>
-        <a href="" jslog="197536; 1:3121|qgIF0gECEAI=; track:impression,click;" class="AU8vyc">
+        <a href="" jslog="197536; 1:3121|qgIF0gECEAI=; track:impression,click;" class="AU8vyc" onclick="throttleHandleClick()">
           <p class="CmHxkb">Play Points</p>
         </a>
-        <a href="" jslog="197536; 1:3121|qgIF0gECEAM=; track:impression,click;" class="AU8vyc">
+        <a href="" jslog="197536; 1:3121|qgIF0gECEAM=; track:impression,click;" class="AU8vyc" onclick="throttleHandleClick()">
           <p class="CmHxkb">Gift cards</p>
         </a>
-        <a href="" jslog="197536; 1:3121|qgIF0gECEAQ=; track:impression,click;" class="AU8vyc">
+        <a href="" jslog="197536; 1:3121|qgIF0gECEAQ=; track:impression,click;" class="AU8vyc" onclick="throttleHandleClick()">
           <p class="CmHxkb">Redeem</p>
         </a>
-        <a href="" jslog="197536; 1:3121|qgIF0gECEAU=; track:impression,click;" class="AU8vyc">
+        <a href="" jslog="197536; 1:3121|qgIF0gECEAU=; track:impression,click;" class="AU8vyc" onclick="throttleHandleClick()">
           <p class="CmHxkb">Refund policy</p>
         </a>
       </section>
       <section>
         <span class="GMGZAc">Kids & family</span>
-        <a href="" jslog="197536; 1:3121|qgIF0gECEAc=; track:impression,click;" class="AU8vyc">
+        <a href="" jslog="197536; 1:3121|qgIF0gECEAc=; track:impression,click;" class="AU8vyc" onclick="throttleHandleClick()">
           <p class="CmHxkb">Parent Guide</p>
         </a>
-        <a href="" jslog="197536; 1:3121|qgIF0gECEAg=; track:impression,click;" class="AU8vyc">
+        <a href="" jslog="197536; 1:3121|qgIF0gECEAg=; track:impression,click;" class="AU8vyc" onclick="throttleHandleClick()">
           <p class="CmHxkb">Family sharing</p>
         </a>
       </section>
     </div>
     <div class="sv9Noe">
       <div class="KvNvKe">
-        <a href="https://play.google.com/intl/pt-IN_in/about/play-terms.html" target="_blank"
+        <a href="https://play.google.com/intl/en-US/about/play-terms/index.html" target="_blank"
            jslog="197536; 1:3121; track:impression,click;" class="AU8vyc">
           <p class="QOTGFf">Terms of Service</p>
         </a>
       </div>
       <div class="KvNvKe">
-        <a href="https://policies.google.com/privacy" target="_blank"
+        <a href="https://policies.google.com/privacy?hl=en-IN" target="_blank"
            jslog="197536; 1:3121; track:impression,click;" class="AU8vyc">
           <p class="QOTGFf">Privacy</p>
         </a>
       </div>
       <div class="KvNvKe">
-        <a href="https://support.google.com/googleplay/?p=about_play" target="_blank"
+        <a href="https://support.google.com/googleplay/answer/6034670?visit_id=638747596682645803-2547335988&p=about_play&rd=1&hl=en&sjid=15748254365098083465-NC" target="_blank"
            jslog="197536; 1:3121; track:impression,click;" class="AU8vyc">
           <p class="QOTGFf">About Google Play</p>
         </a>
       </div>
       <div class="KvNvKe">
-        <a href="https://developer.android.com/index.html" target="_blank"
+        <a href="https://developer.android.com/" target="_blank"
            jslog="197536; 1:3121; track:impression,click;" class="AU8vyc">
           <p class="QOTGFf">Developers</p>
         </a>
       </div>
       <div class="KvNvKe">
-        <a href="https://store.google.com/?playredirect=true" target="_blank"
+        <a href="https://store.google.com/in/?hl=en-IN&regionRedirect=true" target="_blank"
            jslog="197536; 1:3121; track:impression,click;" class="AU8vyc">
           <p class="QOTGFf">Google Store</p>
         </a>

@@ -5,6 +5,7 @@ import { useIsLoginStore } from '@mode2/zustand/loginStore';
 import { useKycDataStore } from '@/zustand/kyc/useKycDataStore';
 import { useUserProfileStore } from '@mode2/zustand/user/userProfileStore';
 import { useWithdrawStore } from '@/zustand/wallet/useWithdrawStore';
+import sdkUtils from '@mode2/utils/sdk';
 
 export const useKYCInit = () => {
   const [postPlayerInformation, { data: playerInfo, isLoading }] =
@@ -42,6 +43,8 @@ export const useKYCInit = () => {
   const setWithdrawLockAssets = useWithdrawStore(
     (state) => state.setWithdrawLockAssets
   );
+  const setTotalAssets = useWithdrawStore((state) => state.setTotalAssets);
+
   const setDailyWithdrawLimit = useWithdrawStore(
     (state) => state.setDailyWithdrawLimit
   );
@@ -52,14 +55,15 @@ export const useKYCInit = () => {
 
   const setWithdrawLimit = useWithdrawStore((state) => state.setWithdrawLimit);
 
-  const handleRefreshPlayerInformation = useCallback(() => {
-    if (isLogin) {
+  const handleRefreshPlayerInformation = () => {
+    if (sdkUtils.isCurrentLogin()) {
       postPlayerInformation();
     }
-  }, [isLogin]);
+  };
 
   useDeepEffect(() => {
     if (playerInfo) {
+      console.log('@@@===> playerInfo', JSON.stringify(playerInfo, null, 2));
       setKycBankAccountInfo(playerInfo.bankAccountInfo);
       setIsBankFirstBind(playerInfo.isBankFirstBind);
       setIsPersonalInfoFirstBind(playerInfo.isPersonalInfoFirstBind);
@@ -71,6 +75,7 @@ export const useKYCInit = () => {
       setWithdrawVipLevel(playerInfo.vipLevel);
       setWithdrawTotalBalance(playerInfo.withdrawAmount);
       setWithdrawLockAssets(playerInfo.limitAmount);
+      setTotalAssets(playerInfo.totalAssets);
       setDailyWithdrawLimit(playerInfo.maxWithdraw);
       const withdrawProgress = Math.min(
         (Number(playerInfo.turnover) / Number(playerInfo.requireTurnover)) *
@@ -83,7 +88,8 @@ export const useKYCInit = () => {
         remainingWithdrawLimit: playerInfo.remainingWithdrawLimit,
         maxWithdraw: playerInfo.maxWithdraw,
         remainingBetToWithdraw: playerInfo.remainingBetToWithdraw,
-        withdrawTimes: playerInfo.withdrawTimes,
+        // withdrawTimes: playerInfo.withdrawTimes,
+        freeDailyWithdrawals: playerInfo.freeDailyWithdrawals,
       });
     }
   }, [playerInfo]);
@@ -92,7 +98,8 @@ export const useKYCInit = () => {
     setIsAPIPlayerInformationLoading(isLoading);
   }, [isLoading]);
 
-  useUpdateEffect(() => {
+  useEffect(() => {
+    console.log('@@@===>refreshKycInitCount');
     handleRefreshPlayerInformation();
   }, [refreshKycInitCount]);
 };

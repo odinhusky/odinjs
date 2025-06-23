@@ -7,8 +7,9 @@ import {
   useHallPageActionsStore,
   HallPageIdObj,
 } from '@mode2/zustand/page/hallPageStore';
-import { cloneDeep, isArray } from 'lodash';
-import { handleHallPageTabClick } from '@mode2/action/hallPageAction/actionType';
+import cloneDeep from 'lodash/cloneDeep';
+import isArray from 'lodash/isArray';
+import { handleHallPageTabClick } from '@mode2/action/actionTypes';
 import useHallPageActions from '@mode2/action/hallPageAction/useHallPageActions';
 import { useGameListStore } from '@mode2/zustand/gameListStore';
 import { useDeepEffect } from '@libs/commonUtils';
@@ -160,38 +161,51 @@ export const useMode2HallPageTabs = () => {
     [curTab, collectListLength]
   );
 
-  const mixTabList: HallPageTab[] = useMemo(
-    () => [
-      lobbyTab,
-      favoriteTab,
-      hotTab,
-      casinoTab,
-      originalTab,
-      slotsTab,
-      gameTab,
-      fishingTab,
-      sportsTab,
-    ],
-    [
-      lobbyTab,
-      favoriteTab,
-      hotTab,
-      casinoTab,
-      originalTab,
-      slotsTab,
-      gameTab,
-      fishingTab,
-      sportsTab,
-      addOrRemoveFavoriteSuccessCount, // 等成功拿到最新的我的最愛列表後，更新 tabList
-    ]
-  );
+  const mixTabList: HallPageTab[] = useMemo(() => {
+    if (import.meta.env['VITE_V_VERSION'] === 'v6') {
+      return [
+        lobbyTab,
+        favoriteTab,
+        hotTab,
+        slotsTab,
+        originalTab,
+        casinoTab,
+        gameTab,
+        fishingTab,
+        sportsTab,
+      ];
+    } else {
+      return [
+        lobbyTab,
+        favoriteTab,
+        hotTab,
+        casinoTab,
+        originalTab,
+        slotsTab,
+        gameTab,
+        fishingTab,
+        sportsTab,
+      ];
+    }
+  }, [
+    lobbyTab,
+    favoriteTab,
+    hotTab,
+    casinoTab,
+    originalTab,
+    slotsTab,
+    gameTab,
+    fishingTab,
+    sportsTab,
+    addOrRemoveFavoriteSuccessCount, // 等成功拿到最新的我的最愛列表後，更新 tabList
+  ]);
 
   useDeepEffect(() => {
     let list = cloneDeep(mixTabList);
 
     // v6 版本沒有 Lobby Tab
     if (import.meta.env['VITE_V_VERSION'] === 'v6') {
-      list = list.slice(2); // 移除 lobby 以及 hot 的標籤
+      list = list.slice(2); // 移除 lobby 以及 Favorite 的標籤
     }
 
     const actionList = list.map((item) => () => {

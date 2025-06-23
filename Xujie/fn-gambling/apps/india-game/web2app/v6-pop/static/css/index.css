@@ -1,0 +1,478 @@
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+}
+
+html,
+body {
+  height: 100%;
+  overflow-y: auto;
+  color: #fff;
+  background: #000;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: rgba(0, 0, 0, 0.87);
+  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+  margin: 0;
+  text-size-adjust: 100%;
+}
+
+img {
+  border: none;
+}
+
+.main_view_page {
+  margin: 0 auto;
+  position: relative;
+  max-width: 750px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  /*background-image: url('https://static.ttgroup.vip/in/v6/pop/share_background_2.webp');*/
+  background-size: 100%;
+  /*padding-top: 46px;*/
+  /*background-image: linear-gradient(180deg, #1c1c1c 0%, #161617 100%);*/
+  background-position-y: 46px;
+  background-repeat: no-repeat;
+}
+
+.main_bg {
+  margin: auto;
+  width: 100%;
+}
+
+/*header {*/
+/*  max-width: 750px;*/
+/*  width: 100%;*/
+/*  height: 12vw;*/
+/*  max-height: 88px;*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  background: #000;*/
+/*  position: fixed;*/
+/*  z-index: 2;*/
+/*}*/
+
+.header {
+  /*height: 12vw;*/
+  /*max-height: 88px;*/
+  padding: 0.5rem 1rem;
+  justify-content: space-between;
+  align-items: center;
+  /*width: 100%;*/
+  height: 2.875rem;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 10;
+  background-image: linear-gradient(
+    180deg,
+    #202124 0%,
+    #1a1b1c 50%,
+    #1a1b1c 100%
+  );
+}
+
+header .logo {
+  /*width: 10vw;*/
+  /*max-width: 75px;*/
+  height: 46px;
+  /*position: absolute;*/
+  /*left: 10px;*/
+}
+
+header .title {
+  font-size: 18px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.banner {
+  position: relative;
+}
+
+.banner .image1 {
+  width: 100%;
+  height: auto;
+}
+
+.banner .float-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.banner .float-btn .icon-float {
+  width: 12vw;
+  max-width: 104px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.banner .float-btn .icon-float:last-child {
+  margin-bottom: 0;
+}
+
+.image2 {
+  width: 100%;
+  height: auto;
+}
+
+.hot-title {
+  font-size: 18px;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  margin: 17px 0;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0 23px;
+}
+
+.dots .dot {
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  border-radius: 100%;
+  background: #a6a6a6;
+  cursor: pointer;
+}
+
+.dots .active {
+  background: #fff;
+}
+
+.height-footer {
+  height: 0px;
+}
+
+.btns {
+  max-width: 750px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 16px;
+  box-sizing: border-box;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 12;
+}
+
+.btns .btn {
+  flex: 1;
+  height: 52px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.3);
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.btn:hover {
+  /* hover 狀態樣式 */
+  filter: brightness(1.2);
+  /*background-color: lightgray; !* 可根據需要修改 *!*/
+}
+
+.btn:active {
+  /* active 狀態樣式 */
+  filter: brightness(0.9);
+  /*background-color: darkgray; !* 可根據需要修改 *!*/
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+}
+
+.btns .play {
+  /*margin-right: 16px;*/
+  background: linear-gradient(180deg, #ffc203 0%, #ffa626 100%);
+  flex-basis: 42%;
+}
+
+/*.btns .download {*/
+/*    background: linear-gradient(180deg, #23B6FE 0%, #3D90EA 100%);*/
+/*}*/
+
+.download-btn {
+  /* flex-basis: 55%; */
+  width: 100%;
+  max-width: 264px;
+  margin-bottom: 24px;
+}
+
+.btns .download {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  inset: 0px;
+  /*padding: 1em;*/
+  /*border-radius: 4px;*/
+  /* background: linear-gradient(180deg, #23B6FE 0%, #3D90EA 100%); */
+  /* background: linear-gradient(180deg, #ffc203 0%, #ffa626 100%); */
+  background: linear-gradient(
+    180deg,
+    #fff6d0 0%,
+    #e6ca65 47%,
+    #e4ad4a 67%,
+    #c19039 87%,
+    #e3af45 100%
+  );
+  font-size: 20px;
+  font-weight: 500;
+  /*background: radial-gradient(circle at 50% 100%, #30f8f8 10%, #30f8f800 55%),*/
+  /*linear-gradient(#00526a, #009dcd);*/
+  overflow: hidden;
+  transition: inherit;
+  color: black;
+}
+
+.btns .download::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(-65deg, #0000 40%, #fff7 50%, #0000 70%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: thing 3s ease infinite;
+}
+
+.btns .download .img {
+  width: 24px;
+  height: 24px;
+}
+
+@keyframes thing {
+  0% {
+    background-position: 130%;
+    opacity: 1;
+  }
+
+  to {
+    background-position: -166%;
+    opacity: 0;
+  }
+}
+
+.tips {
+  position: absolute;
+  background: #ea4e3d;
+  height: 30px;
+  border-radius: 10px 10px 10px 0;
+  padding: 0 10px;
+  line-height: 30px;
+  right: 10px;
+  top: -24px;
+  font-size: 16px;
+}
+
+.tips::after {
+  content: '';
+  position: absolute;
+  bottom: -11px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-top: 13px solid #ea4e3d;
+  border-right: 13px solid transparent;
+}
+
+.breath {
+  animation-name: breath;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes breath {
+  from {
+    transform: scale(100%);
+    /*opacity: 1.0;*/
+  }
+  /*75% {*/
+  /*  transform: scale(85%);*/
+  /*opacity: 0.7;*/
+  /*}*/
+  50% {
+    transform: scale(85%);
+    /*opacity: 0.5;*/
+  }
+  /*25% {*/
+  /*  transform: scale(75%);*/
+  /*  !*opacity: 0.7;*!*/
+  /*}*/
+  to {
+    transform: scale(100%);
+    /*opacity: 1.0;*/
+  }
+}
+
+
+.btn-breath {
+  animation-name: btn-breath;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes btn-breath {
+  from {
+    transform: scale(100%);
+    /*opacity: 1.0;*/
+  }
+  /*75% {*/
+  /*  transform: scale(85%);*/
+  /*opacity: 0.7;*/
+  /*}*/
+  50% {
+    transform: scale(95%);
+    /*opacity: 0.5;*/
+  }
+  /*25% {*/
+  /*  transform: scale(75%);*/
+  /*  !*opacity: 0.7;*!*/
+  /*}*/
+  to {
+    transform: scale(100%);
+    /*opacity: 1.0;*/
+  }
+}
+
+.dropdown {
+  position: relative;
+  /*position: absolute;*/
+  /*top: 16px;*/
+  /*right: 24px;*/
+  width: 76px;
+  /*height: 24px;*/
+}
+
+.dropdown-toggle {
+  /*width: 86px;*/
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px;
+  /* border: 1px solid #ccc; */
+  background-image: linear-gradient(
+    180deg,
+    #fff6d0 0%,
+    #e6ca65 47%,
+    #e4ad4a 67%,
+    #c19039 87%,
+    #e3af45 100%
+  );
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 6px;
+  color: #202124;
+}
+
+/*.dropdown-toggle img {*/
+/*  width: 10px;*/
+/*  height: 10px;*/
+/*}*/
+
+.dropdown-list {
+  display: none;
+  margin-top: 6px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  width: 100%;
+  /*margin-left: 6px;*/
+  background: #0C0000;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  /*width: 100%;*/
+  border: 1px solid rgba(239, 217, 139, 1);
+  border-radius: 6px;
+  z-index: 999;
+  font-size: 12px;
+}
+
+.dropdown-list.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 24px;
+  cursor: pointer;
+  color: #fdf1c5;
+}
+
+.dropdown-item:hover {
+  background-color: #f5e5a64d;
+}
+
+.dropdown-item img {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.66);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+/* Spinner 動畫 */
+.spinner {
+  width: 20%;
+  max-width: 100px;
+  height: calc(100vw / 5);
+  max-height: 100px;
+  border: 8px solid rgba(204, 204, 204, 0.7);
+  border-top-color: #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 載入完成後隱藏 */
+#loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}

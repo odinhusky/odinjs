@@ -9,9 +9,11 @@ import {
 import { usePlatformNotifyStore } from '@mode2/zustand/platform/platformNotifyStore';
 import { useEffect, useRef } from 'react';
 import { getRandomColor } from './data/marQueueListColors';
-import { isArray, isEmpty, isNil } from 'lodash';
+import isArray from 'lodash/isArray';
+import isEmpty from 'lodash/isEmpty';
+import isNil from 'lodash/isNil';
 import { BroadcastItemResult } from '@mode2API/endpoint/user/PostHomeEndpoint';
-import { handleMarqueeActionClick } from '@mode2/action/hallPageAction/actionType';
+import { handleMarqueeActionClick } from '@mode2/action/actionTypes';
 
 export const useMode2MarqueeList = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -96,7 +98,7 @@ export const useMode2MarqueeList = () => {
         });
       });
     }
-    
+
     setMarqueeList(list);
     setMarqueeActionList(actionList);
   }, [broadcastItems]);

@@ -5,9 +5,10 @@ import useWalletPageBaseActions from '@mode2/action/walletPageAction/useWalletPa
 import {
   handleWalletPagePayPayChannelOtpClick,
   handleWalletPageSetPayChannelClick,
-} from '@mode2/action/walletPageAction/acitonType';
+} from '@mode2/action/actionTypes';
 import { useDeepEffect } from '@libs/commonUtils';
 import { useIsLoginStore } from '@mode2/zustand/loginStore';
+import sdkUtils from '@mode2/utils/sdk';
 
 export const useRechargeChannelConfig = () => {
   const { handleWalletPageBaseClick } = useWalletPageBaseActions();
@@ -33,9 +34,21 @@ export const useRechargeChannelConfig = () => {
     postPayConfigInfo();
   }, [isLogin]);
 
+  const blackPayNameList = ['paytm'];
   useEffect(() => {
     if (payConfigInfoResult && payConfigInfoResult.payChannels) {
-      setOriginalPayChannelActionItems(payConfigInfoResult.payChannels);
+      if (
+        sdkUtils.isInNative() ||
+        sdkUtils.isAndroidKernel() ||
+        sdkUtils.isIOSKernel()
+      ) {
+        setOriginalPayChannelActionItems(payConfigInfoResult.payChannels);
+      } else {
+        const payChannels = payConfigInfoResult.payChannels.filter((item) => {
+          return !blackPayNameList.includes(item.payName);
+        });
+        setOriginalPayChannelActionItems(payChannels);
+      }
     }
   }, [payConfigInfoResult]);
 

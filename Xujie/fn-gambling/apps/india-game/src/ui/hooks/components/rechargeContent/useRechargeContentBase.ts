@@ -42,6 +42,7 @@ export const useRechargeContentBase = ({
   useEffect(() => {
     refreshUserState();
     return () => {
+      refreshUserState();
       useRechargeStore.getState().setRechargeAmount('');
       useWalletPageRechargeContentStore.getState().reset();
     };
