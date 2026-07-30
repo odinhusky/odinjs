@@ -1,0 +1,25 @@
+:root {
+  --text-color: #fff;
+  --bg-color: transparent;
+
+  --table-bg: #151515;
+  --table-thead-bg: linear-gradient(360deg, #000000 -23%, #666666 164%);
+  --table-thead-text-color: rgba(255, 255, 255, 0.7);
+  --table-tbody-bg-even: rgba(255, 255, 255, 0.1);
+  --table-tbody-content-badge: linear-gradient(180deg, #fdeabc 0%, #d7960f 83%);
+
+  --tab-activity-bg: linear-gradient(0deg, #000 0%, #000 100%);
+  --tab-activity-text-color: #ffffff;
+  --tab-disabled-bg: #000000;
+  --tab-disabled-text-color: #666666;
+
+  --dialog-bg: #262626;
+  --dialog-text-color: #fff;
+  --dialog-header-bg: linear-gradient(360deg, #000000 -23%, #666666 164%);
+  --dialog-header-text-color: var(--table-header-text-color);
+  --dialog-btn-bg: #000;
+  --dialog-btn-text-color: #fff;
+  --dialog-btn-border: 1px solid #ed773e;
+
+  --section-bg: transparent;
+}

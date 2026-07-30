@@ -1,0 +1,14 @@
+@import "app/template/bmm_set_obtd/assets/css/_variable.sass";
+
+// 加密貨幣錢包彈窗：套用 bmm_set_obtd 深色綠色主題配色（排版維持共用元件預設）
+.crypto-wallet-dialog {
+  --cwd-bg: #031006;                         // 深色背景
+  --cwd-text: #{$white-color};               // #ffffff
+  --cwd-muted: #ffffffb2;                    // 淡白文字
+  --cwd-card: #1a5b39;                       // 綠卡背
+  --cwd-accent: #009e50;                     // 主綠
+  --cwd-warning: #{$danger-color};           // #F23C3B 紅
+  --cwd-border: #ffffff47;                   // 邊框
+  --cwd-action-bg: #009e50;                  // 主綠
+  --cwd-action-text: #{$white-color};        // #ffffff
+}

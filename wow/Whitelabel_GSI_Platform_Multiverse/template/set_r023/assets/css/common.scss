@@ -1,0 +1,13 @@
+// 加密貨幣錢包彈窗：套用 set_r023 主題配色（排版維持共用元件預設）
+// set_r023 使用 light/dark 雙主題（變數於 :root / .body--dark 切換）
+.crypto-wallet-dialog {
+  --cwd-bg: var(--dialog-bg);            // 亮:#f6f7f8 / 暗:#3f266b
+  --cwd-text: var(--dialog-text-01);     // 亮:#000000e0 / 暗:#ffffff
+  --cwd-muted: var(--neutral-05);        // 中性灰
+  --cwd-card: var(--card-bg-02);         // 卡背
+  --cwd-accent: var(--primary-01);       // 亮:#025be8 / 暗:#8d5bff
+  --cwd-warning: var(--emotional-01);    // #ff3b3b
+  --cwd-border: var(--neutral-07);       // 邊框
+  --cwd-action-bg: var(--primary-01);    // 主色按鈕
+  --cwd-action-text: var(--neutral-01);  // 白
+}

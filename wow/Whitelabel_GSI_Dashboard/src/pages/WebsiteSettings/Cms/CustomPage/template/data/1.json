@@ -1,0 +1,168 @@
+{
+  "id": 1,
+  "entrance": [
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 103,
+      "payload": {
+        "row_show": 1,
+        "nested_entrance": [
+          {
+            "img": "",
+            "lang": {
+              "bm": "Barong Sacred Battle",
+              "bn": "Barong Sacred Battle",
+              "br": "Barong Sacred Battle",
+              "en": "Barong Sacred Battle",
+              "id": "Barong Sacred Battle",
+              "jp": "Barong Sacred Battle",
+              "ko": "Barong Sacred Battle",
+              "sp": "Barong Sacred Battle",
+              "th": "Barong Sacred Battle",
+              "vi": "Barong Sacred Battle",
+              "zh-cn": "Barong Sacred Battle",
+              "zh-tw": "Barong Sacred Battle"
+            },
+            "sort": 1,
+            "type": 1,
+            "payload": {
+              "game_code": "BARONG_SACRED_BATTLE",
+              "game_type": 1,
+              "product_code": 1148,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/1/01K59082V5PQV42DEB0CZ1BH3Z.webp"
+          }
+        ]
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 1,
+      "updated_time": 1758022026
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 103,
+      "payload": {
+        "row_show": 2,
+        "nested_entrance": [
+          {
+            "img": "",
+            "lang": {
+              "bm": "Titans",
+              "bn": "Titans",
+              "br": "Titans",
+              "en": "Titans",
+              "id": "Titans",
+              "jp": "Titans",
+              "ko": "Titans",
+              "sp": "Titans",
+              "th": "Titans",
+              "vi": "Titans",
+              "zh-cn": "Titans",
+              "zh-tw": "Titans"
+            },
+            "sort": 1,
+            "type": 1,
+            "payload": {
+              "game_code": "TITAN_MONSTER",
+              "game_type": 1,
+              "product_code": 1148,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/1/01K590DP7B2NMFJ48BA6F66C6E.webp"
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "",
+              "bn": "",
+              "br": "",
+              "en": "",
+              "id": "",
+              "jp": "",
+              "ko": "",
+              "sp": "",
+              "th": "",
+              "vi": "",
+              "zh-cn": "",
+              "zh-tw": ""
+            },
+            "sort": 2,
+            "type": 1,
+            "payload": {
+              "game_code": "",
+              "game_type": 1,
+              "product_code": 1148,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/1/01K590DP7FN0TQJHVFP43KED5K.webp"
+          }
+        ]
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 2,
+      "updated_time": 1758022026
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 104,
+      "payload": {
+        "title": "✨WOW Gaming",
+        "row_num": 10,
+        "row_show": 5,
+        "game_type_id": 1,
+        "product_code": 1148,
+        "product_integration_id": 1,
+        "game_type_entrance_type": 2
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 3,
+      "updated_time": 1758022026
+    }
+  ]
+}

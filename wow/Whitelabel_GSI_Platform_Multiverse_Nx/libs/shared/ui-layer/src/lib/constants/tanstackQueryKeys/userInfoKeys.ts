@@ -1,0 +1,5 @@
+export const TANSTACK_QUERY_KEY_USER_WALLET_LIST = "userWalletList"
+export const TANSTACK_QUERY_KEY_ACCOUNT_INFO = "accountInfo"
+export const TANSTACK_QUERY_KEY_USER_INFO = "userInfo"
+export const TANSTACK_QUERY_KEY_MEMBER_COLUMN = "memberColumn"
+export const TANSTACK_QUERY_KEY_MEMBER_SUMMARY = "memberSummary"

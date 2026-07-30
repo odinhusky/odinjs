@@ -1,0 +1,5 @@
+export const TANSTACK_QUERY_KEY_MONEY_HISTORY_LIST = "moneyHistoryList"
+export const TANSTACK_QUERY_KEY_MONEY_HISTORY_TOTAL = "moneyHistoryTotal"
+export const TANSTACK_QUERY_KEY_PENDING_ORDER_LIST = "pendingOrderList"
+export const TANSTACK_QUERY_KEY_MONEY_PENDING_LIST = TANSTACK_QUERY_KEY_PENDING_ORDER_LIST
+export const TANSTACK_QUERY_KEY_MAIL_LIST = "memberInboxMailList"

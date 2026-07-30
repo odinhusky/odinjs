@@ -1,0 +1,19 @@
+:root {
+  --text-color: #000;
+  --bg-color: #fff;
+
+  --table-bg: #000000;
+  --table-thead-bg: linear-gradient(0deg, #fff -23%, #fff 164%);
+  --table-thead-text-color: #fff;
+  --table-tbody-bg-even: 255, 255, 255;
+  --table-tbody-border-color: #000;
+  --table-tbody-content-badge: linear-gradient(180deg, #fdeabc 0%, #d7960f 83%);
+
+  --tab-activity-bg: linear-gradient(0deg, #fff 0%, #bad5ff 100%);
+  --tab-activity-text-color: #ffffff;
+  --tab-activity-underline: 3px #009d46 solid;
+  --tab-disabled-bg: rgba(255, 255, 255, 0.2);
+  --tab-disabled-text-color: #666666;
+
+  --section-bg: #fff;
+}

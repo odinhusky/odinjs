@@ -1,0 +1,56 @@
+// 首屏關鍵字型：只引用一份拉丁 core（OpenSans-Core）。
+// 其餘 family 名稱 alias 到同一檔，避免再下載 NotoSans-Core / NotoSansTC-Core。
+// 繁中完整字形由 index.html 非阻塞載入 Google「Noto Sans TC」（400;700）。
+@font-face {
+  font-family: "OpenSans";
+  src: url("/src/common/assets/fonts/OpenSans-Core.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+2000-214F;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("/src/common/assets/fonts/OpenSans-Core.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+2000-214F;
+}
+
+@font-face {
+  font-family: "NotoSans";
+  src: url("/src/common/assets/fonts/OpenSans-Core.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+2000-214F;
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  src: url("/src/common/assets/fonts/OpenSans-Core.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+2000-214F;
+}
+
+@font-face {
+  font-family: "NotoSansTC";
+  src: url("/src/common/assets/fonts/OpenSans-Core.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+2000-214F;
+}
+
+@font-face {
+  font-family: "Noto Sans TC";
+  src: url("/src/common/assets/fonts/OpenSans-Core.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+2000-214F;
+}

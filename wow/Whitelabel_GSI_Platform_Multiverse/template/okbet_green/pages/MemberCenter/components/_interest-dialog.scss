@@ -1,0 +1,139 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/okbet_green/assets/css/_variable.sass";
+
+.interest-dialog-wrapper {
+  @include tablet-width {
+    :deep(.q-dialog__inner) {
+      padding: 0;
+    }
+  }
+}
+
+.interest-dialog-shell {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // padding: 16px;
+}
+
+.interest-description-dialog {
+  background: #fff;
+  color: $text-charcoal-gray-color;
+  width: 100%;
+  min-width: 400px;
+  max-width: 600px;
+  border-radius: 0.5rem;
+
+  @include tablet-width {
+    min-width: 0;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid $border-pale-gray-color;
+
+    .dialog-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $text-charcoal-gray-color;
+    }
+
+    .close-btn {
+      color: $text-smoke-gray-color;
+    }
+  }
+
+  .dialog-content {
+    padding: 1.5rem;
+    max-height: 400px;
+    overflow-y: auto;
+    font-size: 0.875rem;
+    line-height: 1.8;
+    color: $text-gray-fourth;
+
+    @include tablet-width {
+      padding: 1rem;
+      max-height: 300px;
+    }
+
+    .rules-content {
+      .rules-title {
+        font-weight: 700;
+        color: $text-charcoal-gray-color;
+        margin-bottom: 0.75rem;
+      }
+
+      p {
+        margin-bottom: 0.5rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .dialog-actions {
+    padding: 1rem 1.5rem;
+    justify-content: center;
+
+    .confirm-btn {
+      width: 100%;
+      background: $primary-color !important;
+      color: #fff !important;
+      font-weight: 600;
+      padding: 0.75rem;
+    }
+  }
+
+  &.redeem-dialog,
+  &.min-principal-dialog {
+    .dialog-header {
+      border-bottom: 0;
+    }
+  }
+
+  &.redeem-dialog {
+    .redemptions-dialog-actions {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.625rem;
+      padding: 1rem 1.5rem;
+
+      .cancel-btn,
+      .confirm-btn {
+        flex: 1 1 0;
+        min-width: 0;
+        min-height: 2.75rem;
+        margin: 0 !important;
+        border: 0;
+        border-radius: 0.5rem;
+        box-shadow: none !important;
+        font-weight: 600;
+      }
+
+      .cancel-btn {
+        background: transparent !important;
+        color: $primary-color !important;
+      }
+
+      .confirm-btn {
+        background: $primary-color !important;
+        color: #fff !important;
+      }
+
+      :deep(.q-focus-helper),
+      .cancel-btn::before,
+      .confirm-btn::before {
+        display: none;
+      }
+    }
+  }
+}

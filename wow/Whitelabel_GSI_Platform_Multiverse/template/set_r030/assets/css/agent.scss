@@ -1,0 +1,113 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/set_r030/assets/css/_variable.scss";
+@import "src/common/css/AIAgent/theme.scss";
+
+.separator {
+  @apply my-4;
+  background: var(--separator01);
+}
+
+.setting-input-container {
+  @apply flex gap-[30px] mt-[10px];
+
+
+  :deep(.q-field__control) {
+    @apply w-full max-w-[300px] h-[56px] rounded-[4px];
+    background: #000;
+    border: 1px solid #070609;
+    box-shadow: $shadoe03;
+  }
+
+  :deep(.q-field__native) {
+    color: #fff;
+  }
+}
+
+.bet-item-container {
+  @apply flex flex-col items-start gap-1;
+}
+
+.bet-item-title {
+  @apply text-sm font-bold;
+  color: var(--neutral02);
+}
+
+.bet-item-text {
+  @apply inline-flex py-1 px-2 rounded-[8px] justify-center items-center;
+  background: var(--neutral04);
+  color: var(--neutral01);
+}
+
+.card-edit-btn {
+  @apply flex w-full rounded-[8px] mt-4;
+  border: 1px solid var(--primary01);
+  color: var(--primary01);
+}
+
+.betting-disk-container {
+  :deep(.q-btn__content) {
+    justify-content: space-between !important;
+  }
+
+  :deep(.q-btn:before) {
+    box-shadow: none !important;
+  }
+}
+
+.setting-input-tips {
+  @apply text-[.875rem] font-bold;
+  color: var(--tips-text);
+}
+
+.card-wrapper {
+  @apply rounded-[12px];
+  background: var(--secondary02);
+}
+
+.card-header {
+  @apply flex items-center justify-between;
+
+  .card-header-title {
+    @apply flex items-center gap-2;
+
+    .title-icon {
+      @apply flex w-[3px] h-[18px];
+      background: var(--primary01);
+    }
+
+    .title-text {
+      @apply text-base font-bold;
+      color: var(--neutral01);
+    }
+  }
+}
+
+.card-disk-item {
+  @apply flex flex-1 flex-col items-start gap-1;
+}
+
+.condition-wrapper {
+  @apply p-[12px];
+
+  .condition-card {
+    @apply flex flex-col p-4 rounded-[12px];
+    background: var(--secondary01);
+  }
+}
+
+.agent-title {
+  @apply flex items-center gap-2 text-[1.75rem] font-semibold;
+  color: #fff;
+}
+
+// Desktop
+.card-footer {
+  @apply flex justify-between;
+
+  .edit-btn {
+    @apply flex items-center justify-center w-[200px] h-[37px] rounded-[8px];
+    padding: 10px 4px;
+    border: 1px solid #fff;
+    color:  #fff;
+  }
+}

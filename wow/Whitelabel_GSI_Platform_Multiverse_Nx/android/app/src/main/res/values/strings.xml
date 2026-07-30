@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">multiverse_nx_work</string>
+    <string name="title_activity_main">multiverse_nx_work</string>
+    <string name="package_name">com.r001.anip</string>
+    <string name="custom_url_scheme">com.r001.anip</string>
+</resources>

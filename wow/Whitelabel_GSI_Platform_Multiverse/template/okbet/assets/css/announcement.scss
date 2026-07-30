@@ -1,0 +1,125 @@
+@import "app/template/okbet/assets/css/_variable.sass";
+
+.custom-announcement-wrapper {
+  --dialog-bg: var(--primary-04, #025be8);
+  --bg-line-03: var(--neutral-03, #dddedf);
+  --bg-04: var(--secondary-12, #f5f5f7);
+  --btn-bg-01: var(--primary-04, #025be8);
+  --btn-text-05: var(--neutral-01, #ffffff);
+
+  .dialog-header {
+    .dialog-title {
+      color: var(--dialog-text-01, #ffffff) !important;
+    }
+  }
+
+  .sidebar-item.active,
+  .sidebar-item.sidebar-item--advanced.active {
+    background: var(--tab-bg-04, #e6effd) !important;
+  }
+
+  .sidebar-pagination,
+  .mobile-pagination {
+    .q-pagination__content,
+    .q-pagination__middle {
+      gap: 0.5rem;
+    }
+
+    .q-btn {
+      min-height: 2rem;
+      min-width: 2rem;
+      border-radius: 0.25rem;
+      background: var(--bg-pagination, #e6effd) !important;
+      color: var(--text-pagination-enabled, #7b7b7b) !important;
+      font-weight: 700;
+
+      &::before {
+        box-shadow: none !important;
+      }
+
+      &[aria-current="true"] {
+        background: var(--bg-10, #5c8cf0) !important;
+        color: var(--text-pagination-focused, #e6effd) !important;
+      }
+
+      &.disabled {
+        background: var(--bg-pagination, #e6effd) !important;
+        color: var(--icon-01) !important;
+        opacity: 1 !important;
+      }
+    }
+
+    .q-pagination__middle button[aria-current="true"] {
+      background: var(--bg-10, #5c8cf0) !important;
+      color: var(--text-pagination-focused, #e6effd) !important;
+    }
+  }
+
+  .announcement-checkbox-wrapper {
+    .q-checkbox {
+      .q-checkbox__inner {
+        color: var(--bg-line-03) !important;
+
+        .q-checkbox__bg {
+          border: 1px solid var(--bg-line-03, #dddedf) !important;
+          background-color: var(--bg-04, #f5f5f7);
+        }
+
+        .q-checkbox__svg {
+          background-color: transparent !important;
+          color: transparent !important;
+        }
+
+        &.q-checkbox__inner--truthy {
+          color: var(--btn-bg-01) !important;
+
+          .q-checkbox__bg {
+            background-color: var(--btn-bg-01) !important;
+            border-color: var(--btn-bg-01);
+          }
+
+          .q-checkbox__svg {
+            background-color: transparent !important;
+            color: var(--btn-text-05) !important;
+          }
+        }
+      }
+
+      .q-checkbox__label {
+        color: #262626 !important;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 1.75rem;
+      }
+    }
+  }
+}
+
+.announcement-type-menu-popup {
+  background-color: var(--bg-08);
+  border: 1px solid var(--bg-line-02, #e0e0e0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+
+  .q-item {
+    min-height: 2.5rem;
+    padding: 0.5rem 1rem;
+    color: var(--text-02);
+    background-color: var(--bg-08);
+  }
+
+  .q-item__label {
+    color: var(--text-02);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+  }
+
+  .q-item.q-item--active,
+  .q-item.q-item--focused {
+    background: linear-gradient(90deg, var(--btn-bg-01) 0%, var(--btn-bg-02) 100%);
+
+    .q-item__label {
+      color: var(--btn-text-05);
+    }
+  }
+}

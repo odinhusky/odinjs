@@ -1,0 +1,29 @@
+:root {
+  --text-color: #fff;
+  --bg-color: #0a0a0a;
+
+  --table-bg: #313131;
+  --table-thead-bg: linear-gradient(180deg, #f7d99d 0%, #a48155 100%);
+  --table-thead-text-color: #000;
+  --table-tbody-bg-even: 255, 255, 255;
+  --table-tbody-border: 0.0625rem solid var(--table-tbody-border-color);
+  --table-tbody-border-color: #434343;
+  --table-tbody-content-badge: linear-gradient(180deg, #fdeabc 0%, #d7960f 83%);
+
+  --tab-activity-bg: linear-gradient(180deg, #f7d99d 0%, #a48155 100%);
+  --tab-activity-text-color: #000;
+  --tab-activity-underline: 3px #fff solid;
+  --tab-disabled-bg: #313131;
+  --tab-disabled-text-color: #c0c0c0;
+  --tab-activity-bg-h5: linear-gradient(180deg, #f7d99d 0%, #a48155 100%);
+  --tab-activity-text-color-h5: #000;
+  --tab-activity-underline-h5: 3px #fff solid;
+  --tab-disabled-bg-h5: linear-gradient(180deg, #f7d99d 0%, #a48155 100%);
+  --tab-disabled-text-color-h5: #fff;
+
+  --dialog-bg: #262626;
+  --dialog-text-color: #fff;
+  --dialog-header-bg: linear-gradient(360deg, #000000 -23%, #666666 164%);
+
+  --section-bg: #1e1e1e;
+}

@@ -1,0 +1,13 @@
+// 加密貨幣錢包彈窗：套用 set_royalslot88 深色主題配色（排版維持共用元件預設）
+// 此模板無 SCSS 變數檔，使用其 style.css 中的色系直接寫入
+.crypto-wallet-dialog {
+  --cwd-bg: #1a1a1a;          // 深黑卡背（對應 body 黑底）
+  --cwd-text: #ffffff;        // body 文字白色
+  --cwd-muted: #b3b3b3;       // 淡灰文字
+  --cwd-card: #2c2c2c;        // 內部 row 卡背
+  --cwd-accent: #d4af37;      // 皇家金色強調（royalslot 主視覺金色）
+  --cwd-warning: #ff4242;     // 紅警示
+  --cwd-border: #3a3a3a;      // 暗灰邊框
+  --cwd-action-bg: #d4af37;   // 金色按鈕
+  --cwd-action-text: #000000; // 黑字配金底
+}

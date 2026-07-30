@@ -1,0 +1,298 @@
+@import "src/common/css/_custom-global.scss";
+
+$emotional002: #3ecc31;
+$emotional01: #ff3b3b;
+$emotional02: #ffe2e3;
+$emotional03: #00d0ff;
+$emotional04: #009d46;
+$emotional05: #ddf6e8;
+$emotional06: #00d0ff;
+$emotional07: #008ae6;
+$emotional08: #d2edff;
+
+$neutral01: #ffffff;
+$neutral02: #ffffffc4;
+$neutral03: #ffffff78;
+$neutral04: #d2d2d23d;
+$neutral05: #262626;
+$neutral06: #ffffff1a;
+$neutral07: #0000000d;
+$neutral08: #262626;
+$neutral10: #000000;
+$neutral100: #000000;
+
+$primany01: #f26319;
+$primany02: #d12d00;
+
+$secondary01: #1d125d;
+$secondary02: #0c0c1c;
+$secondary03: #b1a79e;
+$secondary04: #64594f;
+$secondary05: #000025;
+$secondary06: #070609;
+$secondary07: #79739e;
+$secondary08: #03032357;
+$secondary09: #14144a61;
+$secondary10: #030323;
+$secondary11: #3f3b52;
+$secondary12: #2d2941;
+$secondary13: #1c192e;
+$secondary14: #25167f;
+$secondary15: #ff8181;
+$secondary16: #78d3f8;
+
+$gradient01: linear-gradient(90deg, var(--btn-bg-01) 0%, var(--btn-bg-02) 100%) !important;
+
+$shadoe01: 0px 2px 4px 0px #00000080;
+$shadoe02: 0px 4px 4px 0px #00000066;
+$shadoe03: 0px 2px 4px 0px #00000050;
+
+$bg01: #8139ff;
+$bg02: #0004ff;
+$bg03: #d000ff;
+$bg04: $secondary12;
+$bg05: $secondary10;
+$bg06: $secondary13;
+$bg07: $secondary14;
+$bg08: $secondary11;
+$bg09: $primany01;
+$bg10: $primany02;
+$bg11: $secondary08;
+$bg12: $neutral05;
+$bg13: $secondary01;
+$bg14: $neutral02;
+$bg15: $secondary15;
+$bg16: $secondary16;
+$bg17: $secondary03;
+$bgFooter: $neutral100;
+$bgHeader: $secondary12;
+$bgLine01: $neutral02;
+$bgLine02: $neutral05;
+$bgLine03: $neutral03;
+$bgNavbar: $secondary11;
+$btnBg01: $primany01;
+$btnBg02: $primany02;
+$btnBg03: #f2631900;
+$btnBg04: $neutral03;
+$btnBg05: $neutral04;
+$btnBg06: $secondary11;
+$btnBorder01: $neutral05;
+$btnBorder02: $primany01;
+$btnBorder03: $neutral01;
+$btnIcon01: $neutral01;
+$btnText01: $neutral01;
+$btnText02: $neutral04;
+$btnText03: $neutral07;
+$btnText04: $primany01;
+$cardBg01: $neutral100;
+$cardBorder01: $primany01;
+$cardText01: $primany01;
+$cardText02: $neutral01;
+$cardText03: $neutral04;
+$dialogBg: $secondary08;
+$dialogText01: $neutral01;
+$icon01: $neutral01;
+$icon02: $neutral03;
+$icon03: $neutral04;
+$icon04: $primany01;
+$icon05: $emotional01;
+$iconBg01: $primany01;
+$iconBg02: $neutral01;
+$iconBg03: $secondary01;
+$iconBg04: $secondary08;
+$iconBg05: $secondary09;
+$iconBg06: $emotional01;
+$iconBg07: $secondary14;
+$iconBg08: $secondary07;
+$iconBorder01: $neutral03;
+$iconNavber01: $neutral01;
+$iconNavber02: $secondary06;
+$iconNavber03: $primany01;
+$iconNavber04: $primany02;
+$inputDropdownBg01: $secondary10;
+$inputDropdownBorder01: $neutral05;
+$inputDropdownBorder02: $emotional01;
+$inputDropdownText01: $neutral04;
+$inputDropdownText02: $neutral01;
+$inputDropdownText03: $neutral05;
+$tabBg01: $primany01;
+$tabBg02: $primany02;
+$tabBg03: $secondary10;
+$tabBg04: $neutral05;
+$tabText01: $neutral01;
+$tagBg01: $neutral05;
+$tagBg02: $emotional02;
+$tagBg03: $emotional05;
+$tagBg04: $emotional08;
+$tagText01: $neutral01;
+$tagText02: $emotional01;
+$tagText03: $emotional04;
+$tagText04: $emotional07;
+$text01: $neutral01;
+$text02: $neutral03;
+$text03: $neutral04;
+$text04: $secondary16;
+
+@mixin scrollbar01($thumb-color: #6034DB,
+  $thumb-hover-color: #6034DB,
+  $track-color: #6034DB,
+  $width: .25rem,
+  $radius: .25rem) {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #{$thumb-color} #{$track-color};
+
+  /* WebKit-based browsers */
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+    border-radius: $radius;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: $radius;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $thumb-hover-color;
+  }
+}
+
+/* component_1 */
+:root {
+  /* R030 */
+  /* color */
+
+  --primany-01: #22C55E;
+  --primany-02: #1FAB3D;
+  --text-01: #22C55E;
+  --ann-checkbox-bg-active: #22C55E;
+  --secondary-08: #0B0F19;
+  // --ann-checkbox-bg: #22C55E;
+  --bg-01: var(--color-purple-neon-violet);
+  --bg-02: var(--color-purple-violet);
+  --bg-03: var(--color-purple-magenta);
+  --bg-04: var(--color-blue-deep-space);
+  --bg-05: var(--color-blue-cool-denim);
+  --bg-06: var(--color-gray-iron-gray);
+  --bg-07: var(--color-gray-dark-coal);
+  --bg-08: var(--color-gray-iron-gray);
+  --bg-09: var(--color-green-neon-leaf);
+  --bg-10: var(--color-green-vibrant-green);
+  --bg-11: var(--color-gray-dark-coal);
+  --bg-12: var(--color-gray-dark-coal);
+  --bg-13: var(--color-blue-deep-space);
+  --bg-14: var(--color-white-white-10);
+  --bg-15: var(--color-blue-royal);
+  --bg-16: var(--color-blue-light-sky);
+  --bg-17: var(--color-black-black-60);
+  --bg-18: var(--color-gray-iron-gray);
+  --bg-19: var(--color-purple-neon-violet);
+  --bg-20: var(--color-orange-apricot);
+  --bg-21: var(--color-orange-coral);
+  --bg-22: var(--color-gray-medium);
+  --bg-23: var(--color-white-white);
+  --bg-footer: var(--color-black-black);
+  --bg-header: var(--color-gray-dark-coal);
+  --bg-line-01: var(--color-white-white-10);
+  --bg-line-02: var(--color-gray-silver-25);
+  --bg-line-03: var(--color-white-white-45);
+  --bg-line-04: var(--color-green-lime-green);
+  --bg-line-05: var(--color-blue-cyan);
+  --bg-line-06: var(--color-white-white-0);
+  --bg-line-07: var(--color-white-white-10);
+  --bg-navbar: var(--color-blue-darkest);
+  --bg-pagination: var(--color-blue-midnight-blue);
+  --bg-sidebar: var(--color-gray-dark-coal);
+  --btn-bg-01: #22C55E;
+  --btn-bg-02: #1FAB3D;
+  --btn-bg-03: var(--color-green-neon-leaf-0);
+  --btn-bg-04: var(--color-white-white-45);
+  --btn-bg-05: var(--color-white-white-75);
+  --btn-bg-06: var(--color-blue-darkest);
+  --btn-bg-07: var(--color-gray-silver-25);
+  --btn-bg-08: var(--color-purple-obsidian);
+  --btn-border-01: var(--color-gray-silver-25);
+  --btn-border-02: var(--color-green-neon-leaf);
+  --btn-border-03: var(--color-white-white);
+  --btn-icon-01: var(--color-white-white);
+  --btn-text-01: var(--color-white-white);
+  --btn-text-02: var(--color-blue-cool-blue);
+  --btn-text-03: var(--color-gray-medium);
+  --btn-text-04: var(--color-green-neon-leaf);
+  --btn-text-05: var(--color-white-white);
+  --card-bg-01: var(--color-gray-iron-gray);
+  --card-bg-02: var(--color-gray-iron-gray);
+  --card-bg-03: #1FAB3D;
+  --card-bg-04: var(--color-black-graphite);
+  --card-bg-05: var(--color-purple-neon-violet-0);
+  --card-bg-06: var(--color-purple-neon-violet-50);
+  --card-border-01: var(--color-green-neon-leaf);
+  --card-text-01: #22C55E;
+  --card-text-02: var(--color-white-white);
+  --card-text-03: var(--color-white-white-75);
+  --dialog-bg: var(--color-gray-dark-coal);
+  --dialog-bg-02: var(--color-blue-deep-space);
+  --dialog-text-01: var(--color-white-white);
+  --dialog-text-02: var(--color-white-white);
+  --dialog-text-03: var(--color-white-white);
+  --icon-01: var(--color-white-white);
+  --icon-02: var(--color-blue-cool-blue);
+  --icon-03: var(--color-white-white-75);
+  --icon-04: var(--color-green-neon-leaf);
+  --icon-05: #22C55E;
+  --icon-06: var(--color-green-lime-green);
+  --icon-bg-01: var(--color-purple-bright-violet);
+  --icon-bg-02: var(--color-white-white);
+  --icon-bg-03: var(--color-blue-navy-40);
+  --icon-bg-04: var(--color-blue-deep-space);
+  --icon-bg-05: var(--color-purple-slate);
+  --icon-bg-06: var(--color-orange-danger);
+  --icon-bg-07: var(--color-purple-slate);
+  --icon-bg-08: var(--color-gray-iron-gray);
+  --icon-border-01: var(--color-white-white-45);
+  --icon-navber-01: var(--color-white-white);
+  --icon-navber-02: var(--color-purple-lavender);
+  --icon-navber-03: var(--color-purple-bright-violet);
+  --icon-navber-04: var(--color-purple-deep-indigo);
+  --icon-pagination: var(--color-white-white);
+  --icon-sidebar-focused: var(--color-white-white);
+  --input-dropdown-bg-01: var(--color-blue-midnight-blue);
+  --input-dropdown-border-01: var(--color-white-white-10);
+  --input-dropdown-border-02: var(--color-orange-danger);
+  --input-dropdown-text-01: var(--color-white-white-75);
+  --input-dropdown-text-02: var(--color-white-white);
+  --input-dropdown-text-03: var(--color-white-white-10);
+  --tab-bg-01: var(--color-green-neon-leaf);
+  --tab-bg-02: var(--color-green-vibrant-green);
+  --tab-bg-03: var(--color-blue-dark-blue);
+  --tab-bg-04: var(--color-gray-silver-25);
+  --tab-bg-05: var(--color-gray-iron-gray);
+  --tab-line-01: var(--color-gray-silver-25);
+  --tab-text-01: var(--color-white-white);
+  --tab-text-02: var(--color-white-white);
+  --tag-bg-01: var(--color-gray-silver-25);
+  --tag-bg-02: var(--color-orange-peach);
+  --tag-bg-03: var(--color-green-pale-mint);
+  --tag-bg-04: var(--color-blue-pale-sky);
+  --tag-text-01: var(--color-white-white);
+  --tag-text-02: var(--color-orange-danger);
+  --tag-text-03: var(--color-green-lime-green);
+  --tag-text-04: var(--color-blue-azure);
+  --text-01: var(--color-white-white);
+  --text-02: var(--color-white-white);
+  --text-03: var(--color-white-white-75);
+  --text-04: #FF3B3B;
+  --text-05: var(--color-green-lime-green);
+  --text-06: var(--color-orange-danger);
+  --text-07: var(--color-green-neon-leaf);
+  --text-08: var(--color-green-deep-forest);
+  --text-footer: var(--color-white-white);
+  --text-pagination-enabled: var(--color-white-white-75);
+  --text-pagination-focused: var(--color-white-white);
+}

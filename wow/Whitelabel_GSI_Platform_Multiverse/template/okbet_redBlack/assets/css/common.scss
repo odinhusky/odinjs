@@ -1,0 +1,13 @@
+// 加密貨幣錢包彈窗：套用 okbet_redBlack 深色 + 紅色主題配色（排版維持共用元件預設）
+// 使用 _variable.sass 定義之 CSS custom properties
+.crypto-wallet-dialog {
+  --cwd-bg: #1a0808;                     // 深色卡背
+  --cwd-text: #ffffff;                   // 白
+  --cwd-muted: #FFFFFFA6;                // 淡白文字
+  --cwd-card: #2a0e0e;                   // 內部 row 卡背
+  --cwd-accent: #700E0E;                 // 紅色主色
+  --cwd-warning: #ff3b3b;                // 紅
+  --cwd-border: #FFFFFF1A;               // 邊框
+  --cwd-action-bg: #700E0E;              // 紅色按鈕
+  --cwd-action-text: #ffffff;            // 白
+}

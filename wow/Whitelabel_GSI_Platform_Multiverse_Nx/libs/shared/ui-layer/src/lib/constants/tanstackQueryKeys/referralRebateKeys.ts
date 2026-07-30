@@ -1,0 +1,5 @@
+export const TANSTACK_QUERY_KEY_REFERRAL_REBATE_GROUP = "referralRebateGroup"
+export const TANSTACK_QUERY_KEY_REFERRAL_REBATE_SUMMARY = "referralRebateSummary"
+export const TANSTACK_QUERY_KEY_REFERRAL_REBATE_STATEMENT = "referralRebateStatement"
+export const TANSTACK_QUERY_KEY_REFERRAL_REBATE_EVENTS = "referralRebateEvents"
+export const TANSTACK_QUERY_KEY_REFERRAL_REBATE_EVENT_DETAIL = "referralRebateEventDetail"

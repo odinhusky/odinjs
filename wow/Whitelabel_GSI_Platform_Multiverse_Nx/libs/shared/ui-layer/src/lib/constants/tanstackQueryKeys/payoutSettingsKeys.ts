@@ -1,0 +1,3 @@
+export const TANSTACK_QUERY_KEY_PAYOUT_SETTINGS_LIST = "payoutSettingsList"
+export const TANSTACK_QUERY_KEY_PAYOUT_SETTINGS_DETAIL = "payoutSettingsDetail"
+export const TANSTACK_QUERY_KEY_PAYOUT_SETTINGS_EWALLET_PROVIDER_LIST = "payoutSettingsEwalletProviderList"

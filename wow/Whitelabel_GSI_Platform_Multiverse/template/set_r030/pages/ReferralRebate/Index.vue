@@ -1,0 +1,631 @@
+<template>
+  <div class="referral-rebate">
+    <div class="referral-rebate-content">
+      <div class="title text-nowrap">
+        <span>{{ $t("member.referralRebate.title1") }}</span>
+        <span :class="{ 'ml-2': !['zh-tw', 'zh-cn'].includes(locale) }">{{ $t("member.referralRebate.title2") }}</span>
+      </div>
+
+      <!-- Currency -->
+      <div>
+        <div class="currency-select">
+          <span class="currency-select-title">{{ $t("common.btn.currency") }}</span>
+          <q-btn-dropdown
+            :label="referralRebateCurrencyCode"
+            menu-anchor="bottom middle"
+            menu-self="bottom middle"
+            :loading="isLoading"
+            class="currency-select-dropdown"
+          >
+            <q-list>
+              <q-item
+                v-for="item in currencyDropdown"
+                :key="item.value"
+                clickable
+                v-close-popup
+                @click="changeCurrency(item)"
+              >
+                <q-item-section class="text-white">
+                  <q-item-label>{{ item.label }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+        </div>
+      </div>
+
+      <!-- Summary / referral code -->
+      <div class="summary-wrapper">
+        <Summary :data="referralRebateSummary" />
+        <div class="referral-code">
+          <div class="referral-code-title">{{ $t("collaboration.exclusive_referral_code") }}</div>
+          <q-input class="referral-code-value" v-model="referralCode" dense :borderless="true" readonly>
+            <template v-slot:append>
+              <q-icon
+                name="share"
+                @click="copyMessage(inviteCodeUrl({ inviteCode: referralCode, routerName: 'HomePage' }))"
+                class="cursor-pointer mr-1 hover:opacity-50"
+                size="xs"
+              ></q-icon>
+              <q-icon
+                name="content_copy"
+                class="cursor-pointer hover:opacity-50"
+                size="xs"
+                @click="copyMessage(referralCode)"
+              ></q-icon>
+            </template>
+          </q-input>
+        </div>
+      </div>
+
+      <template v-if="selectedEventId === null || selectedEventId === undefined">
+        <div>
+          <!--  Tabs -->
+          <div class="proxy-tabs">
+            <q-tabs v-model="activeTab" align="center">
+              <q-tab name="eventStatement" :label="$t('member.referralRebate.eventStatement')" />
+              <q-tab name="revenueDetail" :label="$t('member.referralRebate.revenueDetail')" />
+            </q-tabs>
+          </div>
+          <!-- Search content -->
+          <q-tab-panels v-model="activeTab" class="proxy-tab-panels">
+            <q-tab-panel name="eventStatement">
+              <div class="table-content">
+                <div class="search-content-title">{{ $t("member.referralRebate.searchContent") }}</div>
+                <div class="member-number">
+                  <div class="label">{{ $t("member.referralRebate.account") }}</div>
+                  <q-input
+                    :placeholder="$t('member.referralRebate.account')"
+                    borderless
+                    dense
+                    v-model="accountNumber"
+                    class="w-full md:w-auto"
+                  ></q-input>
+                </div>
+                <div class="actions">
+                  <div class="currency-action">
+                    <div class="currency-select">
+                      <span class="currency-select-title">{{ $t("common.btn.currency") }}</span>
+                      <q-btn-dropdown
+                        :label="referralRebateCurrencyCode"
+                        menu-anchor="bottom middle"
+                        menu-self="bottom middle"
+                        :loading="isLoading"
+                        class="w-full md:w-auto"
+                      >
+                        <q-list>
+                          <q-item
+                            v-for="item in currencyDropdown"
+                            :key="item.value"
+                            clickable
+                            v-close-popup
+                            @click="changeCurrency(item)"
+                          >
+                            <q-item-section class="text-white">
+                              <q-item-label>{{ item.label }}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
+                      </q-btn-dropdown>
+                    </div>
+                  </div>
+                  <div class="gametype-action">
+                    <div class="gametype-select">
+                      <span class="gametype-select-title">{{ $t("member.referralRebate.gametype") }}</span>
+                      <q-btn-dropdown
+                        borderless
+                        :label="$t(gameTypeCode)"
+                        menu-anchor="bottom middle"
+                        menu-self="bottom middle"
+                        :loading="isLoading"
+                        class="w-full md:w-auto"
+                      >
+                        <q-list>
+                          <q-item
+                            v-for="item in gameTypeDropdownWithAll"
+                            :key="item.value"
+                            clickable
+                            v-close-popup
+                            @click="changeGameType(item)"
+                          >
+                            <q-item-section class="text-white">
+                              <q-item-label>{{ item.label }}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
+                      </q-btn-dropdown>
+                    </div>
+                  </div>
+                  <div class="date-action">
+                    <div class="date-select">
+                      <span class="date-select-title">{{ $t("member.referralRebate.searchTime") }}</span>
+                      <q-input
+                        v-model="displayDate"
+                        placeholder=""
+                        outlined
+                        readonly
+                        dense
+                        class="w-full md:w-auto date-select-input"
+                      >
+                        <template v-slot:append>
+                          <q-icon name="event" class="cursor-pointer" />
+                        </template>
+                        <q-menu ref="statementMenuRef">
+                          <div class="data_wrapper">
+                            <div class="date-picker-wrapper">
+                              <div class="date-quick-btns">
+                                <q-btn
+                                  v-for="item in dateShortcuts"
+                                  :key="item.days"
+                                  :label="item.label"
+                                  :class="{ active: activeShortcut === item.days }"
+                                  class="quick-btn"
+                                  dense
+                                  no-caps
+                                  @click="applyShortcut(item.days, 'statement')"
+                                />
+                              </div>
+                              <q-date
+                                range
+                                v-model="selectedDate"
+                                mask="YYYY-MM-DD"
+                                class="r030-date-picker"
+                                @range-end="closeStatementMenu"
+                              />
+                            </div>
+                          </div>
+                        </q-menu>
+                      </q-input>
+                    </div>
+                  </div>
+                  <q-btn class="search-btn" @click="() => getStatement(false)">{{ $t("common.btn.search") }}</q-btn>
+                </div>
+                <div class="tables">
+                  <q-table
+                    v-if="referralRebateStatementsList.length > 0"
+                    :rows="referralRebateStatementsList"
+                    :columns="referralRebateStatementsTableColumns"
+                    hide-bottom
+                    :pagination="{ rowsPerPage: 0 }"
+                    :grid="$q.platform.is.mobile ? true : false"
+                  >
+                    <template v-slot:body="props">
+                      <tr>
+                        <td v-for="col in referralRebateStatementsTableColumns" :key="col.name">
+                          <span>{{ props.row[col.field] }}</span>
+                        </td>
+                      </tr>
+                    </template>
+                    <template v-slot:item="props">
+                      <q-card class="w-full">
+                        <template v-for="col in props.cols" :key="col.name">
+                          <div v-if="col.name !== 'action'" class="row-item">
+                            <div class="label">
+                              {{ col.label }}
+                            </div>
+                            <div class="value">
+                              {{ col.value }}
+                            </div>
+                          </div>
+
+                          <div v-else>
+                            <q-btn
+                              class="detail-btn"
+                              denst
+                              flat
+                              @click="handleDetailClick(props.row.id)"
+                              :label="$t('member.referralRebate.detail')"
+                            />
+                          </div>
+                        </template>
+                      </q-card>
+                    </template>
+                  </q-table>
+                  <div v-else class="no-data">{{ $t("tableHeader.no_data") }}</div>
+                  <q-pagination
+                    v-model="referralRebateStatements.pagination.page"
+                    :max="referralRebateStatements.pagination.total"
+                    class="r-pagination"
+                    color="grey-7"
+                    direction-links
+                    @update:model-value="handleReferralRebateStatementsPagination"
+                  />
+                </div>
+              </div>
+            </q-tab-panel>
+            <q-tab-panel name="revenueDetail">
+              <div class="table-content">
+                <div class="search-content-title">{{ $t("member.referralRebate.searchContent") }}</div>
+                <div class="actions">
+                  <div class="date-action">
+                    <div class="date-select">
+                      <span class="date-select-title">{{ $t("member.referralRebate.settlementTime") }}</span>
+
+                      <q-input
+                        v-model="displayDate"
+                        placeholder=""
+                        outlined
+                        readonly
+                        dense
+                        class="w-full md:w-auto date-select-input"
+                      >
+                        <template v-slot:append>
+                          <q-icon name="event" class="cursor-pointer" />
+                        </template>
+                        <q-menu ref="revenueMenuRef">
+                          <div class="data_wrapper">
+                            <div class="date-picker-wrapper">
+                              <div class="date-quick-btns">
+                                <q-btn
+                                  v-for="item in dateShortcuts"
+                                  :key="item.days"
+                                  :label="item.label"
+                                  :class="{ active: activeShortcut === item.days }"
+                                  class="quick-btn"
+                                  dense
+                                  no-caps
+                                  @click="applyShortcut(item.days)"
+                                />
+                              </div>
+                              <q-date
+                                range
+                                v-model="selectedDate"
+                                mask="YYYY-MM-DD"
+                                class="r030-date-picker"
+                                @range-end="closeRevenueMenu"
+                              />
+                            </div>
+                          </div>
+                        </q-menu>
+                      </q-input>
+                    </div>
+                  </div>
+                  <div class="currency-action">
+                    <div class="currency-select">
+                      <span class="currency-select-title">{{ $t("common.btn.currency") }}</span>
+                      <q-btn-dropdown
+                        :label="referralRebateCurrencyCode"
+                        menu-anchor="bottom middle"
+                        menu-self="bottom middle"
+                        :loading="isLoading"
+                        class="w-full md:w-auto"
+                      >
+                        <q-list>
+                          <q-item
+                            v-for="item in currencyDropdown"
+                            :key="item.value"
+                            clickable
+                            v-close-popup
+                            @click="changeCurrency(item)"
+                          >
+                            <q-item-section class="text-white">
+                              <q-item-label>{{ item.label }}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
+                      </q-btn-dropdown>
+                    </div>
+                  </div>
+                  <q-btn class="search-btn" @click="getEvents">{{ $t("common.btn.search") }}</q-btn>
+                </div>
+                <div class="tables">
+                  <q-table
+                    v-if="referralRebateEvents.list.length > 0"
+                    :rows="referralRebateEvents.list"
+                    :columns="referralRebateEventsTableColumns"
+                    hide-bottom
+                    :pagination="{ rowsPerPage: 0 }"
+                    @row-click="handleEventsRowClick"
+                    :table-row-class-fn="tableRowClass"
+                    :grid="$q.platform.is.mobile ? true : false"
+                  >
+                    <template v-slot:item="props">
+                      <q-card class="w-full">
+                        <template v-for="col in props.cols" :key="col.name">
+                          <div v-if="col.name !== 'action'" class="row-item">
+                            <div class="label">
+                              {{ col.label }}
+                            </div>
+                            <div class="value">
+                              {{ col.value }}
+                            </div>
+                          </div>
+
+                          <div v-else>
+                            <q-btn
+                              class="detail-btn"
+                              denst
+                              flat
+                              @click="handleDetailClick(props.row.id)"
+                              :label="$t('member.referralRebate.detail')"
+                            />
+                          </div>
+                        </template>
+                      </q-card>
+                    </template>
+                  </q-table>
+                  <div v-else class="no-data">{{ $t("tableHeader.no_data") }}</div>
+
+                  <q-pagination
+                    v-model="referralRebateEvents.pagination.page"
+                    :max="referralRebateEvents.pagination.total"
+                    class="r-pagination"
+                    color="grey-7"
+                    direction-links
+                    @update:model-value="handleReferralRebateEventsPagination"
+                  />
+                </div>
+              </div>
+            </q-tab-panel>
+          </q-tab-panels></div
+      ></template>
+
+      <template v-else>
+        <div class="mt-[4rem] events-detail-header">
+          <q-btn
+            class="back-btn"
+            :to="{ name: 'ReferralRebate' }"
+            :label="$t('common.btn.back')"
+            icon="reply"
+            @click="changeGameType(gameTypeDropdownWithAll[0])"
+          >
+          </q-btn>
+        </div>
+        <div class="table-content events-detail">
+          <div class="search-content-title">{{ $t("member.referralRebate.searchContent") }}</div>
+          <div class="member-number">
+            <div class="label">{{ $t("member.referralRebate.account") }}</div>
+            <q-input
+              :placeholder="$t('member.referralRebate.account')"
+              borderless
+              dense
+              v-model="accountNumber"
+              class="w-full md:w-auto"
+            ></q-input>
+          </div>
+          <div class="actions">
+            <div class="currency-action">
+              <div class="currency-select">
+                <span class="currency-select-title">{{ $t("common.btn.currency") }}</span>
+                <q-btn-dropdown
+                  rounded
+                  :label="referralRebateCurrencyCode"
+                  menu-anchor="bottom middle"
+                  menu-self="bottom middle"
+                  :loading="isLoading"
+                  class="w-full md:w-auto"
+                >
+                  <q-list>
+                    <q-item
+                      v-for="item in currencyDropdown"
+                      :key="item.value"
+                      clickable
+                      v-close-popup
+                      @click="changeCurrency(item)"
+                    >
+                      <q-item-section class="text-white">
+                        <q-item-label>{{ item.label }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-btn-dropdown>
+              </div>
+            </div>
+            <div class="gametype-action">
+              <div class="gametype-select">
+                <span class="gametype-select-title">{{ $t("member.referralRebate.gametype") }}</span>
+                <q-btn-dropdown
+                  rounded
+                  borderless
+                  :label="$t(gameTypeCode)"
+                  menu-anchor="bottom middle"
+                  menu-self="bottom middle"
+                  :loading="isLoading"
+                  class="w-full md:w-auto"
+                >
+                  <q-list>
+                    <q-item
+                      v-for="item in gameTypeDropdownWithAll"
+                      :key="item.value"
+                      clickable
+                      v-close-popup
+                      @click="changeGameType(item)"
+                    >
+                      <q-item-section class="text-white">
+                        <q-item-label>{{ item.label }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-btn-dropdown>
+              </div>
+            </div>
+            <q-btn class="search-btn" @click="getEventsStatements(selectedEventId, false)">{{
+              $t("common.btn.search")
+            }}</q-btn>
+          </div>
+          <div class="tables">
+            <q-table
+              :rows="referralRebateEventsStatements.list"
+              :columns="referralRebateEventsStatementsTableColumns"
+              hide-bottom
+              :pagination="{ rowsPerPage: 0 }"
+              v-if="referralRebateEventsStatements.list.length > 0"
+              :grid="$q.platform.is.mobile ? true : false"
+            >
+              <template v-slot:item="props">
+                <q-card class="w-full">
+                  <template v-for="col in props.cols" :key="col.name">
+                    <div v-if="col.name !== 'action'" class="row-item">
+                      <div class="label">
+                        {{ col.label }}
+                      </div>
+                      <div class="value">
+                        {{ col.value }}
+                      </div>
+                    </div>
+
+                    <div v-else>
+                      <q-btn
+                        class="detail-btn"
+                        denst
+                        flat
+                        @click="handleDetailClick(props.row.id)"
+                        :label="$t('member.referralRebate.detail')"
+                      />
+                    </div>
+                  </template>
+                </q-card>
+              </template>
+            </q-table>
+            <div v-else class="no-data">{{ $t("tableHeader.no_data") }}</div>
+            <q-pagination
+              v-model="referralRebateEventsStatements.pagination.page"
+              :max="referralRebateEventsStatements.pagination.total"
+              class="r-pagination"
+              color="grey-7"
+              direction-links
+              @update:model-value="handlereferralRebateEventsStatementsPagination"
+            />
+          </div></div
+      ></template>
+    </div>
+  </div>
+</template>
+
+<style scoped lang="scss">
+@import "src/common/css/_variable.sass";
+@import "app/template/set_r030/assets/css/_variable.scss";
+@import "app/template/set_r030/assets/css/referral-rebate.scss";
+</style>
+
+<script setup lang="ts">
+import { useReferralRebate } from "src/common/composables/useReferralRebate"
+import { useUserInfo } from "src/common/composables/useUserInfo"
+import { onMounted, ref, computed } from "vue"
+import { useCommon } from "src/common/hooks/useCommon"
+import { useAuth } from "src/common/hooks/useAuth"
+import Summary from "src/common/components/ReferralRebate/Summary.vue"
+import { useRouter } from "vue-router"
+import { useI18n } from "vue-i18n"
+const { locale, t } = useI18n()
+const revenueMenuRef = ref()
+const statementMenuRef = ref()
+const activeShortcut = ref<number | null>(null)
+
+const dateShortcuts = computed(() => [
+  { label: t("common.btn.today2"), days: 0 },
+  { label: `3${t("common.btn.days")}`, days: 3 },
+  { label: t("common.btn.withinSevenDays"), days: 7 },
+  { label: t("common.btn.withinThirtyDays"), days: 30 }
+])
+
+const padDate = (date: Date) => {
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, "0")
+  const d = String(date.getDate()).padStart(2, "0")
+  return `${y}-${m}-${d}`
+}
+
+const applyShortcut = (days: number, target: "revenue" | "statement" = "revenue") => {
+  activeShortcut.value = days
+  const end = new Date()
+  const start = new Date()
+  start.setDate(end.getDate() - days)
+
+  const endStr = padDate(end)
+  if (days === 0) {
+    selectedDate.value = { from: endStr, to: endStr }
+  } else {
+    selectedDate.value = { from: padDate(start), to: endStr }
+  }
+
+  if (target === "revenue") {
+    revenueMenuRef.value?.hide()
+  } else {
+    statementMenuRef.value?.hide()
+  }
+}
+
+const closeRevenueMenu = () => {
+  revenueMenuRef.value?.hide()
+}
+
+const closeStatementMenu = () => {
+  statementMenuRef.value?.hide()
+}
+
+const router = useRouter()
+const { isLogin } = useAuth()
+const { copyMessage } = useCommon()
+const { inviteCodeUrl } = useUserInfo()
+const {
+  activeTab,
+  isLoading,
+  selectedEventId,
+  accountNumber,
+  selectedDate,
+  displayDate,
+  currencyDropdown,
+  gameTypeDropdownWithAll,
+  initDetail,
+  initReferralRebateDate,
+  initReferralRebateCurrency,
+  referralCode,
+  gameTypeCode,
+  referralRebateCurrencyCode,
+  referralRebateSummary,
+  changeCurrency,
+  changeGameType,
+  getSummary,
+  getStatement,
+  getEventsStatements,
+  getEvents,
+  getReferralCode,
+  referralRebateStatements,
+  referralRebateEventsStatementsTableColumns,
+  referralRebateEvents,
+  referralRebateEventsStatements,
+  referralRebateEventsTableColumns,
+  referralRebateStatementsTableColumns,
+  referralRebateStatementsList,
+  handleReferralRebateEventsPagination,
+  handleReferralRebateStatementsPagination,
+  handlereferralRebateEventsStatementsPagination,
+  handleEventsRowClick,
+  handleDetailClick,
+  tableRowClass
+} = useReferralRebate()
+
+onMounted(async () => {
+  if (isLogin.value) {
+    initDetail()
+    initReferralRebateDate()
+    await initReferralRebateCurrency()
+    await getReferralCode()
+    await getSummary()
+    await getStatement(false)
+    await getEvents()
+  } else {
+    router.push({ path: "/" })
+  }
+})
+</script>
+
+<style lang="scss">
+@import "app/template/set_r030/assets/css/_variable.scss";
+@import "app/template/set_r030/assets/css/date-picker.scss";
+</style>
+
+<style lang="scss" scoped>
+@import "src/common/css/_variable.sass";
+
+.currency-select-dropdown {
+  @include phone-width {
+    flex: 1;
+  }
+}
+
+.proxy-tab-panels {
+  background-color: #111827;
+}
+</style>

@@ -1,0 +1,12 @@
+// 加密貨幣錢包彈窗：套用 okbet_green 綠色主題配色（排版維持共用元件預設）
+.crypto-wallet-dialog {
+  --cwd-bg: var(--secondary-10);          // #E7F8E9 淺綠背景
+  --cwd-text: var(--neutral-08);          // #262626 深色文字
+  --cwd-muted: var(--neutral-07);         // #676767
+  --cwd-card: var(--secondary-11);        // #effff1 更淡綠卡背
+  --cwd-accent: var(--primary-01);        // #1fab3d 綠
+  --cwd-warning: var(--emotional-01);     // #ff3b3b 紅
+  --cwd-border: var(--neutral-05);        // #d2d2d23d
+  --cwd-action-bg: var(--primary-01);     // #1fab3d 綠
+  --cwd-action-text: var(--neutral-01);   // #ffffff
+}

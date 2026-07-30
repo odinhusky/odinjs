@@ -1,0 +1,613 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/okbet_blackGold/assets/css/_variable.sass";
+
+// 僅顏色／色票差異；版面與尺寸見共用 MemberMessenger 元件
+
+$member-messenger-panel-bg: #040404;
+$member-messenger-input-bg: #0e0e0e;
+$member-messenger-muted-text: rgba(255, 255, 255, 0.75);
+$member-messenger-on-gold-text: rgba(0, 0, 0, 0.7);
+$member-messenger-table-even: rgba(44, 44, 44, 1);
+$member-messenger-accent: rgba(210, 178, 126, 1);
+$member-messenger-backdrop: rgba(0, 0, 0, 0.75);
+$member-messenger-input-shadow: rgba(0, 0, 0, 0.12);
+$member-messenger-white-solid: #ffffff;
+
+// 站內信深色語意（對齊 MemberHistory）＋站內信專用色票，供共用元件 var(--*)
+.member-messenger,
+.member-messenger-dialog,
+.member-messenger-confirm-dialog {
+  --neutral-01: #{$tertiary-black-color};
+  --neutral-02: #{$gray-border-color};
+  --neutral-03: #{$gray-border-color};
+  --neutral-05: #{$secondary-white-color};
+  --neutral-06: #{$member-messenger-muted-text};
+  --neutral-08: #{$primary-white-color};
+  --neutral-10: #{$primary-black-color};
+  --primary-01: #{$tertiary-black-color};
+  --primary-04: #{$secondary-gold-color};
+  --primary-07: #{$member-messenger-panel-bg};
+  --secondary-01: #{$primary-black-color};
+  --secondary-03: #{$gray-border-color};
+  --secondary-07: #{$primary-white-color};
+  --secondary-09: #{$secondary-black-color};
+  --bg-05: #{$secondary-black-color};
+  --bg-22: #{$tertiary-black-color};
+  --text-01: #{$member-messenger-on-gold-text};
+  --member-messenger-thead-border-bottom: #{$member-messenger-white-solid};
+  --member-messenger-thead-color: #{$primary-white-color};
+  --secondary-card: #{$background-gray};
+  --secondary-card-sec: #{$tertiary-black-color};
+  --secondary-line: #{$gray-border-color};
+  --text-white-text: #{$primary-white-color};
+  --primany-01: #{$member-messenger-accent};
+  --text-black-text: #{$primary-text-black};
+  --text-black-text-sec: #{$member-messenger-on-gold-text};
+  --secondary-input: var(--secondary-04);
+}
+
+.member-messenger {
+  .member-messenger-tabs {
+    border-bottom-color: $primary-black-color;
+
+    .q-tab {
+      color: $primary-white-color;
+
+      &.q-tab--active {
+        color: var(--primary-05);
+        text-shadow: $primary-text-shadow;
+      }
+
+      .q-tab__indicator {
+        background-color: var(--primary-05);
+        box-shadow: $border-shadow-sm;
+      }
+    }
+  }
+
+  .member-messenger-panels {
+    background-color: $member-messenger-panel-bg;
+  }
+
+  .member-messenger-tab-panel {
+    padding: 0 !important;
+    background-color: var(--neutral-01);
+  }
+
+  .member-messenger-panel-card {
+    background: var(--secondary-card-sec);
+    border: 1px solid var(--secondary-line);
+  }
+
+  &.member-messenger--mobile {
+    background: var(--secondary-card);
+
+    .member-messenger-tabs {
+      background: var(--secondary-card);
+    }
+
+    .member-messenger-panels,
+    .member-messenger-panels .q-tab-panels,
+    .member-messenger-tab-panel {
+      background: var(--secondary-card);
+    }
+
+    .member-messenger-panel-card {
+      background: transparent !important;
+      border: none !important;
+    }
+  }
+
+  .member-messenger-toolbar-divider {
+    border-color: var(--secondary-line);
+  }
+
+  .member-messenger-filter-label {
+    color: var(--secondary-07);
+  }
+
+  .inbox-table {
+    background-color: $tertiary-black-color;
+    border-color: $gray-border-color;
+
+    .q-table thead,
+    .q-table tr,
+    .q-table td {
+      border-color: transparent !important;
+    }
+
+    .q-table thead th.member-messenger-table-cell {
+      color: $primary-white-color !important;
+    }
+
+    tbody tr td {
+      color: var(--secondary-07) !important;
+    }
+
+    tbody td.member-messenger-table-cell--odd {
+      background: transparent;
+    }
+
+    tbody td.member-messenger-table-cell--even {
+      background: $member-messenger-table-even;
+    }
+  }
+
+  .member-messenger-status-tag--read {
+    background-color: var(--emotional-05) !important;
+    color: var(--emotional-04) !important;
+  }
+
+  .member-messenger-status-tag--closed {
+    background-color: var(--emotional-10) !important;
+    color: var(--emotional-09) !important;
+  }
+
+  .member-messenger-status-tag--unread {
+    background-color: var(--emotional-02) !important;
+    color: var(--emotional-01) !important;
+  }
+
+  .outbox-close-thread-btn-desktop,
+  .outbox-close-thread-btn-mobile {
+    color: var(--emotional-01) !important;
+
+    .q-btn__content {
+      color: var(--emotional-01) !important;
+    }
+  }
+
+  .view-btn-desktop {
+    color: $secondary-gold-color !important;
+  }
+
+  .view-btn-mobile {
+    color: $member-messenger-on-gold-text !important;
+    background: $primary-gradient-color !important;
+  }
+
+  .member-messenger-dtpicker .mx-input {
+    color: $primary-white-color;
+    background-color: $member-messenger-input-bg;
+    border: 1px solid $gray-border-color !important;
+
+    &:hover,
+    &:focus {
+      border-color: $gray-border-color !important;
+    }
+  }
+
+  .member-messenger-filter-select {
+    .q-field__control {
+      border-radius: 1rem !important;
+      background-color: $member-messenger-input-bg !important;
+      color: $primary-white-color;
+      overflow: hidden;
+
+      &::before,
+      &::after {
+        border-radius: 1rem !important;
+      }
+
+      &::before {
+        border-color: $gray-border-color !important;
+      }
+    }
+
+    &.q-field--focused .q-field__control::before,
+    &.q-field--highlighted .q-field__control::before {
+      border-color: $gray-border-color !important;
+    }
+
+    &.q-field--focused .q-field__control::after,
+    &.q-field--highlighted .q-field__control::after {
+      border-color: transparent !important;
+    }
+
+    .q-field__native,
+    .q-field__append {
+      color: $primary-white-color;
+    }
+  }
+
+  .member-messenger-search-btn {
+    background: $primary-gradient-color !important;
+    color: $primary-text-black !important;
+
+    .q-btn__content {
+      color: $primary-text-black !important;
+    }
+  }
+}
+
+// ConfirmDialog teleport 至 body，需獨立選擇器並覆寫 Quasar 預設 opacity／背景
+.member-messenger-confirm-dialog.confirm-dialog {
+  .q-dialog__backdrop {
+    background: $member-messenger-backdrop !important;
+    opacity: 1 !important;
+  }
+
+  .q-card.q-dialog-plugin {
+    background-color: var(--secondary-card) !important;
+    color: var(--text-white-text);
+  }
+
+  .confirm-dialog-title {
+    color: var(--text-white-text) !important;
+  }
+
+  .confirm-dialog-close {
+    color: var(--text-white-text) !important;
+  }
+
+  .q-dialog__message {
+    color: var(--text-white-text) !important;
+  }
+
+  .messenger-compose-btn-submit {
+    background: $primary-gradient-color !important;
+    color: $member-messenger-on-gold-text !important;
+
+    .q-btn__content {
+      color: $member-messenger-on-gold-text !important;
+    }
+  }
+
+  .messenger-compose-btn-cancel {
+    border-color: $secondary-gold-color !important;
+    color: $secondary-gold-color !important;
+
+    .q-btn__content {
+      color: $secondary-gold-color !important;
+    }
+  }
+}
+
+.member-messenger-dialog {
+  --neutral-02: #{$secondary-white-color};
+  scrollbar-width: thin;
+  scrollbar-color: $gray-border-color var(--secondary-card);
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: $gray-border-color var(--secondary-card);
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: var(--secondary-card);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: $gray-border-color;
+    border-radius: 999px;
+  }
+
+  .messenger-compose-dialog-card,
+  .inbox-message-dialog-card,
+  .outbox-message-dialog-card {
+    background: var(--secondary-card) !important;
+    color: var(--text-white-text);
+  }
+
+  .inbox-message-dialog-time {
+    color: var(--neutral-02) !important;
+  }
+
+  .messenger-compose-dialog-title,
+  .messenger-compose-dialog-field-label,
+  .inbox-message-dialog-title,
+  .inbox-message-dialog-content,
+  .outbox-message-dialog-title,
+  .outbox-message-dialog-sidebar-time,
+  .outbox-message-dialog-subject,
+  .outbox-message-dialog-detail-content,
+  .outbox-message-dialog-empty-hint {
+    color: var(--text-white-text);
+  }
+
+  .messenger-compose-dialog-body {
+    border: 1px solid var(--secondary-line);
+    background: transparent;
+  }
+
+  .messenger-compose-subject-field,
+  .messenger-compose-content-field {
+    .q-field__control {
+      border-radius: 1rem !important;
+      background: var(--secondary-card-sec) !important;
+      overflow: hidden;
+
+      &::before {
+        border: 1px solid var(--secondary-line) !important;
+      }
+
+      &::after {
+        border-radius: 1rem !important;
+      }
+    }
+
+    &.q-field--focused .q-field__control::before,
+    &.q-field--highlighted .q-field__control::after {
+      border-color: var(--secondary-line) !important;
+    }
+
+    .q-field__native {
+      color: var(--text-white-text);
+    }
+  }
+
+  .q-card {
+    border-color: $gray-border-color;
+  }
+
+  .messenger-compose-btn-submit {
+    background: $primary-gradient-color !important;
+    color: $member-messenger-on-gold-text !important;
+  }
+
+  .messenger-compose-btn-cancel {
+    border-color: $secondary-gold-color !important;
+    color: $secondary-gold-color !important;
+  }
+
+  &.outbox-message-dialog {
+    .outbox-message-dialog-chat-frame {
+      background: var(--secondary-card-sec) !important;
+      border: 1px solid var(--secondary-line) !important;
+    }
+
+    .outbox-message-dialog-reply-panel {
+      background: var(--secondary-card) !important;
+    }
+
+    .outbox-message-dialog-reply-input {
+      .q-field__control {
+        background: var(--secondary-card-sec) !important;
+        box-shadow: 0 4px 12px 0 $member-messenger-input-shadow !important;
+        border-radius: 1rem !important;
+        overflow: hidden;
+
+        &::before {
+          border-color: transparent !important;
+        }
+
+        &::after {
+          border-radius: 1rem !important;
+        }
+      }
+
+      .q-field__native {
+        color: var(--text-white-text);
+      }
+    }
+
+    .outbox-message-dialog-send-btn {
+      background: var(--primany-01) !important;
+      color: var(--text-black-text) !important;
+
+      .q-btn__wrapper {
+        background: var(--primany-01) !important;
+      }
+
+      .q-btn__content,
+      .outbox-message-dialog-send-icon {
+        color: var(--text-black-text) !important;
+      }
+
+      &::before {
+        box-shadow: none !important;
+      }
+    }
+
+    .outbox-message-dialog-avatar {
+      background: var(--primany-01) !important;
+    }
+
+    .outbox-message-dialog-avatar-icon {
+      color: var(--text-black-text) !important;
+    }
+
+    .outbox-message-dialog-member-name {
+      color: var(--primany-01) !important;
+    }
+
+    .outbox-message-dialog-detail-card {
+      background: var(--secondary-input) !important;
+    }
+
+    .outbox-message-bubble--admin {
+      --bg-22: #{$member-messenger-white-solid};
+      background: var(--bg-22) !important;
+    }
+
+    .outbox-message-bubble--admin .outbox-message-bubble__sender,
+    .outbox-message-bubble--admin .outbox-message-bubble__time {
+      color: var(--text-black-text) !important;
+    }
+
+    .outbox-message-bubble--admin .outbox-message-bubble__content {
+      color: var(--text-black-text-sec) !important;
+    }
+
+    .outbox-message-bubble--player {
+      background: var(--primany-01) !important;
+      border: none !important;
+    }
+
+    .outbox-message-bubble--player .outbox-message-bubble__sender,
+    .outbox-message-bubble--player .outbox-message-bubble__time {
+      color: var(--text-black-text) !important;
+    }
+
+    .outbox-message-bubble--player .outbox-message-bubble__content {
+      color: var(--text-black-text-sec) !important;
+    }
+
+    @media (min-width: 640px) {
+      .outbox-message-dialog-chat-col {
+        border-right: 1px solid var(--secondary-line) !important;
+      }
+    }
+  }
+}
+
+// Filter select / date picker 展開層 teleport 至 body，需全域 class
+.member-messenger-filter-select-popup {
+  background-color: $member-messenger-input-bg !important;
+  border: 1px solid $gray-border-color;
+
+  .q-item {
+    color: $primary-white-color !important;
+    background-color: transparent !important;
+
+    .q-focus-helper {
+      background: $tertiary-black-color !important;
+    }
+
+    .q-item__section--main,
+    .q-item__label {
+      position: relative;
+      z-index: 1;
+      color: $primary-white-color !important;
+    }
+  }
+
+  .q-item:hover .q-focus-helper {
+    opacity: 0.4 !important;
+  }
+
+  .q-item:hover .q-item__label,
+  .q-item--active .q-item__label {
+    color: $secondary-gold-color !important;
+  }
+
+  .q-item--active:not(:hover) .q-focus-helper {
+    opacity: 0.55 !important;
+  }
+}
+
+.member-messenger-dtpicker-popup {
+  z-index: 7001 !important;
+  color: $primary-white-color !important;
+  // popup-class 與 mx-datepicker-main 為同一節點，不可寫成後代選擇器
+  border: 1px solid $gray-border-color !important;
+
+  &.mx-datepicker-main,
+  .mx-datepicker-body,
+  .mx-datepicker-content,
+  .mx-datepicker-sidebar,
+  .mx-calendar,
+  .mx-date-time,
+  .mx-date-time-range,
+  .mx-time,
+  .mx-time-content,
+  .mx-time-columns,
+  .mx-time-column {
+    background-color: $member-messenger-input-bg !important;
+    color: $primary-white-color !important;
+    border-color: $gray-border-color !important;
+  }
+
+  .mx-datepicker-sidebar + .mx-datepicker-content {
+    border-left-color: $gray-border-color !important;
+  }
+
+  .mx-calendar + .mx-calendar,
+  .mx-time + .mx-time,
+  .mx-time-column {
+    border-left-color: $gray-border-color !important;
+  }
+
+  .mx-datepicker-header,
+  .mx-datepicker-footer,
+  .mx-time-header {
+    background-color: $member-messenger-input-bg !important;
+    border-color: $gray-border-color !important;
+  }
+
+  .mx-table th {
+    color: $member-messenger-muted-text !important;
+    background-color: transparent !important;
+  }
+
+  .mx-calendar-header-label,
+  .mx-btn-icon-left,
+  .mx-btn-icon-right,
+  .mx-btn-icon-double-left,
+  .mx-btn-icon-double-right,
+  .mx-btn-shortcut {
+    color: $primary-white-color !important;
+  }
+
+  .mx-btn-shortcut:hover {
+    color: $secondary-gold-color !important;
+    background-color: $tertiary-black-color !important;
+  }
+
+  .mx-btn {
+    color: $primary-white-color !important;
+    border-color: $gray-border-color !important;
+    background-color: transparent !important;
+  }
+
+  .mx-btn:hover {
+    color: $secondary-gold-color !important;
+    border-color: $secondary-gold-color !important;
+  }
+
+  .mx-calendar-content .cell,
+  .mx-time-column .mx-time-item,
+  .mx-time-option {
+    color: $primary-white-color !important;
+    background-color: transparent !important;
+  }
+
+  .mx-calendar-content .cell:hover,
+  .mx-time-column .mx-time-item:hover,
+  .mx-time-option:hover,
+  .mx-calendar-week-mode .mx-date-row:hover {
+    color: $primary-white-color !important;
+    background-color: $tertiary-black-color !important;
+  }
+
+  .mx-calendar-content .cell.active,
+  .mx-time-column .mx-time-item.active,
+  .mx-time-option.active {
+    color: $primary-text-black !important;
+    background-color: $member-messenger-accent !important;
+  }
+
+  .mx-calendar-content .cell.in-range,
+  .mx-calendar-content .cell.hover-in-range,
+  .mx-calendar-week-mode .mx-date-row.mx-active-week {
+    color: $primary-white-color !important;
+    background-color: rgba($member-messenger-accent, 0.25) !important;
+  }
+
+  .mx-table-date .cell.not-current-month {
+    color: $member-messenger-muted-text !important;
+    background-color: transparent !important;
+  }
+
+  .mx-table-date .today {
+    color: $secondary-gold-color !important;
+  }
+
+  .mx-calendar-content .cell.disabled,
+  .mx-time-column .mx-time-item.disabled,
+  .mx-time-option.disabled {
+    color: rgba(255, 255, 255, 0.3) !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
+  }
+
+  .mx-calendar-week-mode .mx-date-row .cell:hover,
+  .mx-calendar-week-mode .mx-date-row .cell.active {
+    color: $primary-white-color !important;
+    background-color: transparent !important;
+  }
+}

@@ -1,0 +1,12 @@
+// 加密貨幣錢包彈窗：套用 okbet_blackGold 黑金主題配色（排版維持共用元件預設）
+.crypto-wallet-dialog {
+  --cwd-bg: var(--secondary-08);          // #1e1e1e 黑色卡背
+  --cwd-text: var(--neutral-01);          // #ffffff
+  --cwd-muted: var(--neutral-04);         // #bcbcbc
+  --cwd-card: var(--secondary-07);        // #292929 內部 row 卡背
+  --cwd-accent: var(--primary-01);        // #d2b27e 金
+  --cwd-warning: var(--emotional-01);     // #ff3b3b 紅
+  --cwd-border: var(--secondary-06);      // #1d1d1d66
+  --cwd-action-bg: var(--primary-01);     // #d2b27e 金按鈕
+  --cwd-action-text: var(--neutral-100);  // #000000 黑字配金底
+}

@@ -1,0 +1,28 @@
+// @import "./_variable.sass"
+
+::-webkit-scrollbar-track
+  background: #F5F5F5
+
+//捲軸寬度
+::-webkit-scrollbar
+  width: 0.4rem
+  height: .1875rem
+//捲軸本體顏色
+::-webkit-scrollbar-thumb
+  cursor: pointer
+  border-radius: 107.5px
+  background-color: #999999
+
+@import "app/template/set_jokerhill/assets/css/_variable.sass"
+
+// 加密貨幣錢包彈窗：套用 set_jokerhill 深紅金主題配色（排版維持共用元件預設）
+.crypto-wallet-dialog
+  --cwd-bg: #3E0303                        // 深紅卡背
+  --cwd-text: #ffffff                      // 白
+  --cwd-muted: #C8C8C8                     // 淡灰
+  --cwd-card: #2D1113                      // 內部 row 卡背
+  --cwd-accent: #FFC002                    // 金黃強調
+  --cwd-warning: #FF4242                   // 紅警示
+  --cwd-border: #FFFFFF33                  // 邊框
+  --cwd-action-bg: #802827                 // 暗紅按鈕
+  --cwd-action-text: #ffffff               // 白

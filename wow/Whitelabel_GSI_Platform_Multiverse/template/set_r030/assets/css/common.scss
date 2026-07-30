@@ -1,0 +1,28 @@
+@import "app/template/set_r030/assets/css/_variable.scss";
+
+.game-tab {
+  width: 90vw;
+  overflow-x: auto;
+
+  &.scrollX {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: $neutral04 transparent;
+    overflow: auto hidden;
+    transform: translate(0);
+    height: 45px !important;
+  }
+}
+
+// 加密貨幣錢包彈窗：套用 set_r030 深色 + 橘色主題配色（排版維持共用元件預設）
+.crypto-wallet-dialog {
+  --cwd-bg: #{$secondary08};              // #03032357 深色卡背
+  --cwd-text: #{$neutral01};              // #ffffff
+  --cwd-muted: #{$neutral03};             // #ffffff78
+  --cwd-card: #{$secondary07};            // #79739e 內部 row 卡背
+  --cwd-accent: #{$primany01};            // #f26319 橘
+  --cwd-warning: #{$emotional01};         // #ff3b3b 紅
+  --cwd-border: #{$neutral06};            // #ffffff1a
+  --cwd-action-bg: #{$primany01};         // #f26319
+  --cwd-action-text: #{$neutral01};       // #ffffff
+}

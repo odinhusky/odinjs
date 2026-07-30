@@ -1,0 +1,20 @@
+.submit-btn
+    @apply font-['Century_Gothic'] font-bold
+.cancle-btn
+    @apply font-['Century_Gothic'] font-bold
+.btn-group
+    @apply font-['Century_Gothic'] font-bold
+
+@import "app/template/set_r016/assets/css/_variable.scss"
+
+// 加密貨幣錢包彈窗：套用 set_r016 深紅 + 金色主色配色（排版維持共用元件預設）
+.crypto-wallet-dialog
+  --cwd-bg: #{$primary08}                  // #290000 深紅卡背
+  --cwd-text: #{$neutral01}                // #FFFFFF
+  --cwd-muted: #{$neutral05}               // #C8C8C8 淺灰文字
+  --cwd-card: #{$primary07}                // #540000 內部 row 卡背
+  --cwd-accent: #{$primary-color}          // #FFC002 金黃
+  --cwd-warning: #{$primary03}             // #FF4242 紅
+  --cwd-border: #{$secondary02}            // rgba(255,255,255,.2)
+  --cwd-action-bg: #{$primary-color}       // #FFC002 金黃按鈕
+  --cwd-action-text: #{$primary08}         // #290000 深紅文字（金底配深字）

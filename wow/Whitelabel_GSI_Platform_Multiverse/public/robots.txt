@@ -1,0 +1,6 @@
+# As a search engine crawler, this robots.txt controls crawling of this site.
+User-agent: *
+Allow: /
+
+# Block common non-content / app-internal paths if exposed as URLs
+Disallow: /environment.json

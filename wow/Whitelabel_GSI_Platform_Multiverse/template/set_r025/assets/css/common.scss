@@ -1,0 +1,14 @@
+@import "app/template/set_r025/assets/css/_variable.sass";
+
+// 加密貨幣錢包彈窗：套用 set_r025 深色綠色主題配色（排版維持共用元件預設）
+.crypto-wallet-dialog {
+  --cwd-bg: #{$background-background};       // #031006 深色背景
+  --cwd-text: #{$neutral-01};                // #ffffff
+  --cwd-muted: #{$neutral-02};               // #ffffffb2
+  --cwd-card: #{$secondary-card};            // #1a5b39 綠卡背
+  --cwd-accent: #{$primany-01};              // #009e50 主綠
+  --cwd-warning: #{$semantic-error};         // #ff474c 紅
+  --cwd-border: #{$functional-line};         // #ffffff47
+  --cwd-action-bg: #{$primany-01};           // #009e50
+  --cwd-action-text: #{$neutral-01};         // #ffffff
+}

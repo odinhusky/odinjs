@@ -1,0 +1,94 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/set_r033/assets/css/_variable.scss";
+
+.management-area .agent-report-panel .agent-report-brand {
+  @media (min-width: $phone-media + 1px) {
+    .search-form {
+      .search-form-row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        .search-item {
+          display: flex;
+          align-items: center;
+          flex-shrink: 0;
+          margin-right: 1.25rem;
+          margin-bottom: 0;
+          overflow: visible;
+
+          .search-item-label {
+            white-space: nowrap;
+          }
+        }
+
+        .agent-report__date-toggle,
+        .toggle-date-picker {
+          flex-shrink: 0;
+        }
+
+        .agent-report__date-input--desktop-range {
+          flex-shrink: 0;
+          width: fit-content;
+          min-width: 14rem;
+
+          .q-field__control {
+            width: auto;
+          }
+
+          .q-field__native {
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .agent-report__search-btn {
+        flex-shrink: 0;
+      }
+    }
+  }
+}
+
+.agent-report-brand {
+  @include phone-width {
+    --ar-matrix-data-row-border-inset-x: 0.5rem;
+    --ar-matrix-data-row-border-color: var(--secondary-09);
+    --ar-matrix-container-bg: var(--bg-08);
+    --ar-matrix-row-bg: transparent;
+    --ar-matrix-header-bg: var(--bg-13);
+    --ar-matrix-header-color: var(--text-03);
+    --ar-matrix-cell-color: var(--text-01);
+    --ar-matrix-wallet-bg: var(--btn-bg-07);
+
+    .agent-report__matrix {
+      background-color: var(--bg-08);
+    }
+
+    .agent-report__matrix-row:not(.agent-report__matrix-row--header) {
+      background-color: transparent !important;
+    }
+
+    .agent-report__matrix-row--header {
+      background-color: var(--bg-13) !important;
+      color: var(--text-03);
+
+      .agent-report__matrix-cell {
+        color: var(--text-03);
+      }
+    }
+
+    .agent-report__team-data {
+      .agent-report__account-cell {
+        color: var(--text-01);
+
+        .q-icon {
+          color: var(--text-01) !important;
+        }
+
+        span {
+          color: var(--text-01) !important;
+        }
+      }
+    }
+  }
+}

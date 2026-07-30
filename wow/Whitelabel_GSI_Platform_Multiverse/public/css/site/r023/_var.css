@@ -1,0 +1,39 @@
+:root .body--dark,
+.body--light {
+  --text-color: var(--secondary-01);
+  --bg-color: var(--bg-main-bg);
+
+  --table-bg: var(--neutral-02);
+  --table-border: 0.0625rem solid var(--neutral-03);
+  --table-thead-bg: linear-gradient(to bottom, var(--neutral-01) 0%, var(--neutral-04) 100%);
+  --table-thead-border: 1px solid var(--neutral-03);
+  --table-thead-text-color: var(--text-color);
+  --table-tbody-bg-even: var(--primary-07);
+  --table-tbody-border: 1px solid var(--neutral-03);
+  --table-tbody-border-color: rgba(118, 118, 128, 0.12);
+  --table-tbody-text-color: var(--text-color);
+  --table-tbody-content-badge: linear-gradient(180deg, #fdeabc 0%, #d7960f 83%);
+
+  --tab-border: 0.0625rem solid var(--neutral-03);
+  --tab-activity-bg: var(--primary-07);
+  --tab-activity-text-color: var(--primary-01);
+  --tab-activity-underline: 3px var(--primary-01) solid;
+  --tab-disabled-bg: var(--primary-07);
+  --tab-disabled-text-color: var(--primary-02);
+  --tab-activity-bg-h5: var(--tab-activity-bg);
+  --tab-activity-text-color-h5: var(--tab-activity-text-color);
+  --tab-activity-underline-h5: var(--tab-activity-underline);
+  --tab-disabled-bg-h5: var(--tab-disabled-bg);
+  --tab-disabled-text-color-h5: var(--tab-disabled-text-color);
+
+  --dialog-bg: var(--neutral-03);
+  --dialog-text-color: var(--table-tbody-text-color);
+  --dialog-header-bg: var(--table-thead-bg);
+  --dialog-header-text-color: var(--table-thead-text-color);
+  --dialog-btn-bg: var(--tab-activity-bg);
+  --dialog-btn-text-color: var(--tab-activity-text-color);
+  --dialog-btn-border: 0px solid #ed773e;
+
+  --section-bg: transparent;
+  --section-padding: 0rem 0rem 2.5rem;
+}

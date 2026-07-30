@@ -1,0 +1,15 @@
+{
+  "markdown.preview.fontSize": 18,
+  "markdown.preview.lineHeight": 1.6,
+  "markdown.styles": [
+    ".vscode/markdown-preview.css"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue"]
+}

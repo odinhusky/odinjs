@@ -1,0 +1,33 @@
+.stepperLabelWrapper {
+  border: 0;
+  border-bottom: none;
+  border-radius: 0.625rem 0.625rem 0 0;
+  text-align: center;
+  vertical-align: middle;
+  color: rgba(83, 82, 82, 1);
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.1);
+}
+
+
+:deep(.stepperHeaderWrapper) {
+  max-width: 43.75rem;
+  width: 100%;
+
+  .q-stepper__tab {
+    min-height: auto;
+    padding: 24px 32px 0;
+  }
+
+  .q-stepper__dot {
+    width: 1.875rem;
+    min-width: 1.875rem;
+    height: 1.875rem;
+  }
+}
+
+.stepperTipWrapper {
+  font-weight: 700;
+  font-size: 1.125rem;
+  text-align: center;
+  color: rgba(83, 82, 82, 1);
+}

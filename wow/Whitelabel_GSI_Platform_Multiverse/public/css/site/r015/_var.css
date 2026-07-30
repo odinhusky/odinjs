@@ -1,0 +1,33 @@
+:root {
+  --text-color: #fff;
+  --bg-color: #191b1e;
+
+  --table-bg: #1c2532;
+  --table-thead-bg: #007bff;
+  --table-thead-text-color: #fff;
+  --table-tbody-bg-even: 255, 255, 255;
+  --table-tbody-border: 0.25rem solid var(--bg-color);
+  --table-tbody-border-color: rgba(118, 118, 128, 0.12);
+  --table-tbody-content-badge: linear-gradient(180deg, #fdeabc 0%, #d7960f 83%);
+
+  --tab-activity-bg: #007bff;
+  --tab-activity-text-color: #fff;
+  --tab-activity-underline: 3px #fff solid;
+  --tab-disabled-bg: #3d3f4b;
+  --tab-disabled-text-color: #fff;
+  --tab-activity-bg-h5: #007bff;
+  --tab-activity-text-color-h5: rgba(255, 255, 255, 0.8980392157);
+  --tab-activity-underline-h5: 3px #fff solid;
+  --tab-disabled-bg-h5: #3d3f4b;
+  --tab-disabled-text-color-h5: #c8d1ff;
+
+  --dialog-bg: var(--table-bg);
+  --dialog-text-color: var(--text-color);
+  --dialog-header-bg: var(--table-thead-bg);
+  --dialog-header-text-color: var(--table-thead-text-color);
+  --dialog-btn-bg: var(--tab-activity-bg);
+  --dialog-btn-text-color: var(--tab-activity-text-color);
+  --dialog-btn-border: 0px solid #ed773e;
+
+  --section-bg: #191b1e;
+}

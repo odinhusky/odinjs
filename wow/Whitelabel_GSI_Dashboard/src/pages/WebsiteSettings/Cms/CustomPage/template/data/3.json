@@ -1,0 +1,166 @@
+{
+  "id": 3,
+  "entrance": [
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 103,
+      "payload": {
+        "row_show": 1,
+        "nested_entrance": [
+          {
+            "img": "",
+            "lang": {
+              "bm": "",
+              "bn": "",
+              "br": "",
+              "en": "",
+              "id": "",
+              "jp": "",
+              "ko": "",
+              "sp": "",
+              "th": "",
+              "vi": "",
+              "zh-cn": "",
+              "zh-tw": ""
+            },
+            "sort": 1,
+            "type": 1,
+            "payload": {
+              "game_code": "",
+              "game_type": 1,
+              "product_code": 1148,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/3/01K5968TB2CKDMXHADZHVDHNBE.webp"
+          }
+        ]
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 1,
+      "updated_time": 1758024550
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 104,
+      "payload": {
+        "row_num": 8,
+        "row_show": 5,
+        "game_type_id": 1,
+        "product_code": 1148,
+        "product_integration_id": 1,
+        "game_type_entrance_type": 2
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 2,
+      "updated_time": 1758024550
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 103,
+      "payload": {
+        "row_show": 1,
+        "nested_entrance": [
+          {
+            "img": "",
+            "lang": {
+              "bm": "",
+              "bn": "",
+              "br": "",
+              "en": "",
+              "id": "",
+              "jp": "",
+              "ko": "",
+              "sp": "",
+              "th": "",
+              "vi": "",
+              "zh-cn": "",
+              "zh-tw": ""
+            },
+            "sort": 1,
+            "type": 3,
+            "payload": {
+              "link": "",
+              "opening_method": 0
+            },
+            "imgFileName": "recommendTemplate/3/01K5968TD9DZ0WEPC52F9JZYEW.webp"
+          }
+        ]
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 3,
+      "updated_time": 1758024550
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 104,
+      "payload": {
+        "row_num": 8,
+        "row_show": 5,
+        "game_type_id": 1,
+        "product_code": 1007,
+        "product_integration_id": 1,
+        "game_type_entrance_type": 2
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 4,
+      "updated_time": 1758024550
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+// 加密貨幣錢包彈窗：套用 okbet（藍色亮色）主題配色（排版維持共用元件預設）
+.crypto-wallet-dialog {
+  --cwd-bg: var(--secondary-01);          // #fbfcfd 接近白的淺背景
+  --cwd-text: var(--neutral-08);          // #262626 深色文字
+  --cwd-muted: var(--neutral-07);         // #676767
+  --cwd-card: var(--secondary-02);        // #f5f5f7 淺灰卡背
+  --cwd-accent: var(--primary-04);        // #025be8 主藍
+  --cwd-warning: var(--emotional-01);     // #ff3b3b
+  --cwd-border: var(--neutral-04);        // #bcbcbc
+  --cwd-action-bg: var(--primary-04);     // #025be8
+  --cwd-action-text: var(--neutral-01);   // #ffffff
+}

@@ -1,0 +1,337 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/okbet/assets/css/_variable.sass";
+
+// 僅色票；版面、尺寸、陰影、圓角等見共用 MemberMessenger 元件
+
+.member-messenger {
+  &.member-messenger--mobile {
+    background-color: var(--neutral-01);
+
+    .member-messenger-tabs {
+      background-color: var(--neutral-01);
+
+      .q-tab.q-tab--active {
+        background-color: transparent;
+      }
+    }
+
+    .member-messenger-panels,
+    .member-messenger-panels .q-tab-panels,
+    .member-messenger-tab-panel {
+      background-color: var(--neutral-01);
+    }
+  }
+
+  .member-messenger-panels {
+    background-color: var(--primary-07);
+  }
+
+  .member-messenger-tab-panel {
+    background-color: var(--neutral-01);
+  }
+
+  .member-messenger-tabs {
+    border-bottom-color: var(--neutral-03);
+    background-color: var(--neutral-01);
+
+    .q-tab {
+      color: var(--neutral-06);
+
+      &.q-tab--active {
+        color: var(--primary-04);
+      }
+
+      .q-tab__indicator {
+        background-color: var(--primary-04);
+      }
+    }
+  }
+
+  .member-messenger-filter-label {
+    color: var(--neutral-100);
+  }
+
+  .member-messenger-toolbar-divider {
+    border-color: var(--neutral-03);
+  }
+
+  .member-messenger-panel-card {
+    background-color: var(--neutral-01);
+    border-color: var(--secondary-03);
+  }
+
+  .member-messenger-mobile-card {
+    border-color: var(--secondary-03);
+    background-color: var(--secondary-01);
+  }
+
+  .member-messenger-mobile-card-time {
+    color: var(--neutral-06);
+  }
+
+  .member-messenger-mobile-card-title {
+    color: var(--primary-04);
+  }
+
+  .member-messenger-mobile-card-actions {
+    background-color: var(--primary-01);
+  }
+
+  .member-messenger-status-tag--read {
+    background-color: var(--emotional-05);
+    color: var(--emotional-04);
+  }
+
+  .member-messenger-status-tag--closed {
+    background-color: var(--emotional-10);
+    color: var(--emotional-09);
+  }
+
+  .member-messenger-status-tag--unread {
+    background-color: var(--neutral-02);
+    color: var(--neutral-06);
+  }
+
+  .inbox-table table thead tr th.member-messenger-table-cell {
+    color: var(--secondary-07) !important;
+  }
+
+  .inbox-table table tbody tr td.member-messenger-table-cell {
+    color: var(--secondary-07) !important;
+  }
+
+  .inbox-table table tbody td.member-messenger-table-cell--odd {
+    background-color: var(--primary-01) !important;
+  }
+
+  .inbox-table table tbody td.member-messenger-table-cell--even {
+    background-color: var(--neutral-01) !important;
+  }
+
+  .view-btn-desktop {
+    color: var(--primary-04) !important;
+  }
+
+  .view-btn-mobile {
+    color: var(--neutral-01) !important;
+    background: linear-gradient(90deg, var(--primary-03) 0%, var(--primary-04) 100%) !important;
+
+    .q-btn__content {
+      color: var(--neutral-01) !important;
+    }
+  }
+
+  .member-messenger-dtpicker .mx-input {
+    border: 1px solid var(--secondary-03);
+    background-color: var(--neutral-01);
+    color: var(--neutral-06);
+
+    &:hover,
+    &:focus {
+      border-color: var(--secondary-03);
+    }
+  }
+
+  .member-messenger-filter-select {
+    .q-field__control {
+      background-color: var(--neutral-01);
+
+      &::before {
+        border: 1px solid var(--secondary-03);
+      }
+
+      &::after {
+        border-color: transparent;
+      }
+    }
+
+    &.q-field--focused .q-field__control::before,
+    &.q-field--highlighted .q-field__control::before {
+      border-color: var(--secondary-03);
+    }
+
+    &.q-field--focused .q-field__control::after,
+    &.q-field--highlighted .q-field__control::after {
+      border-color: transparent !important;
+    }
+  }
+
+  .outbox-close-thread-btn-desktop,
+  .outbox-close-thread-btn-mobile {
+    color: var(--emotional-01) !important;
+  }
+}
+
+.member-messenger-dialog {
+  .messenger-compose-dialog-card {
+    background-color: var(--neutral-01);
+  }
+
+  .messenger-compose-dialog-title {
+    color: var(--primary-04);
+  }
+
+  .messenger-compose-dialog-body {
+    background-color: var(--primary-01);
+  }
+
+  .messenger-compose-dialog-field-label {
+    color: var(--neutral-08);
+  }
+
+  .messenger-compose-subject-field,
+  .messenger-compose-content-field {
+    .q-field__control {
+      background-color: var(--neutral-01);
+
+      &::before {
+        border-color: var(--secondary-03);
+      }
+    }
+
+    &.q-field--focused .q-field__control::after,
+    &.q-field--highlighted .q-field__control::after {
+      border-color: var(--secondary-03);
+    }
+  }
+
+  .messenger-compose-btn-submit {
+    background: var(--primary-04) !important;
+    color: var(--neutral-01) !important;
+  }
+
+  .messenger-compose-btn-cancel {
+    border-color: var(--primary-04) !important;
+    color: var(--primary-04) !important;
+  }
+
+  .inbox-message-dialog-card {
+    background-color: var(--neutral-01);
+  }
+
+  .inbox-message-dialog-title {
+    color: var(--primary-04);
+  }
+
+  .inbox-message-dialog-time {
+    color: var(--neutral-05);
+  }
+
+  .inbox-message-dialog-content {
+    color: var(--neutral-08);
+  }
+
+  .inbox-message-dialog-image {
+    border-color: var(--secondary-03);
+  }
+
+  &.outbox-message-dialog {
+    .outbox-message-dialog-card {
+      background-color: var(--neutral-01);
+    }
+
+    .outbox-message-dialog-title {
+      color: var(--primary-04);
+    }
+
+    .outbox-message-dialog-chat-col {
+      border-color: var(--neutral-02);
+    }
+
+    .outbox-message-dialog-chat-frame {
+      border-color: var(--secondary-03);
+    }
+
+    .outbox-message-dialog-chat-log {
+      background-color: var(--secondary-09);
+    }
+
+    .outbox-message-dialog-empty-hint {
+      color: var(--neutral-05);
+    }
+
+    .outbox-message-dialog-reply-panel {
+      background-color: var(--bg-05);
+    }
+
+    .outbox-message-bubble {
+      border-color: var(--secondary-03);
+    }
+
+    .outbox-message-bubble--admin {
+      background-color: var(--bg-22);
+    }
+
+    .outbox-message-bubble--player {
+      background-color: var(--primary-04);
+    }
+
+    .outbox-message-bubble--admin .outbox-message-bubble__sender,
+    .outbox-message-bubble--admin .outbox-message-bubble__time {
+      color: var(--neutral-08);
+    }
+
+    .outbox-message-bubble--player .outbox-message-bubble__sender,
+    .outbox-message-bubble--player .outbox-message-bubble__time,
+    .outbox-message-bubble--player .outbox-message-bubble__content {
+      color: var(--secondary-11);
+    }
+
+    .outbox-message-bubble--admin .outbox-message-bubble__content {
+      color: var(--text-01);
+    }
+
+    .outbox-message-dialog-sidebar-time {
+      color: var(--neutral-07);
+    }
+
+    .outbox-message-dialog-sidebar-panel {
+      background-color: var(--primary-01);
+    }
+
+    .outbox-message-dialog-avatar {
+      background-color: var(--primary-04);
+    }
+
+    .outbox-message-dialog-avatar-icon {
+      color: var(--neutral-01);
+    }
+
+    .outbox-message-dialog-member-name {
+      color: var(--primary-04);
+    }
+
+    .outbox-message-dialog-detail-card {
+      background-color: var(--neutral-01);
+    }
+
+    .outbox-message-dialog-subject {
+      color: var(--neutral-08);
+    }
+
+    .outbox-message-dialog-separator {
+      background-color: var(--neutral-02);
+    }
+
+    .outbox-message-dialog-detail-image {
+      border-color: var(--secondary-03);
+    }
+
+    .outbox-message-dialog-detail-content {
+      color: var(--neutral-06);
+    }
+  }
+}
+
+// ConfirmDialog teleport 至 body；按鈕與 compose dialog 共用 class
+.member-messenger-confirm-dialog {
+  .messenger-compose-btn-submit {
+    background: var(--primary-04) !important;
+    color: var(--neutral-01) !important;
+  }
+
+  .messenger-compose-btn-cancel {
+    border-color: var(--primary-04) !important;
+    color: var(--primary-04) !important;
+  }
+}

@@ -1,0 +1,3 @@
+export const TANSTACK_QUERY_KEY_AGENT_PAYMENT_GROUP_LIST = "agentPaymentGroupList"
+export const TANSTACK_QUERY_KEY_AGENT_PAYMENT_GROUP_DETAIL = "agentPaymentGroupDetail"
+export const TANSTACK_QUERY_KEY_PLAYER_PAYMENT_GATEWAY_GROUPS = "playerPaymentGatewayGroups"

@@ -1,0 +1,43 @@
+// app global css in SASS form
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './layout.scss';
+
+@import './_variable.sass';
+
+@import './homePage/index.scss';
+
+@import './profile/index.scss';
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+
+@font-face {
+  font-family: Poligon-Medium;
+  src: url("./fonts/Poligon-Medium.eot");
+  src: url("./fonts/Poligon-Medium.eot?#iefix")format("embedded-opentype"),
+    url("./fonts/Poligon-Medium.woff")format("woff"),
+    url("./fonts/Poligon-Medium.woff2")format("woff2"),
+    url("./fonts/Poligon-Medium.ttf")format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('./fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font: normal normal medium;
+  font-family: Poligon-Medium, 'Noto Sans TC', '微軟正黑體', sans-serif;
+  width: inherit;
+
+}
+
+@import "@/css/tabsMenu.scss";

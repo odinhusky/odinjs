@@ -1,0 +1,137 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/set_r029/assets/css/_variable.scss";
+
+.field-input {
+  @apply px-2 mb-4;
+  border-radius: .625rem;
+  height: 2.75rem;
+  color: $r029-text-primary !important;
+  background: $r029-bg-card;
+
+  ::v-deep(input) {
+    color: $r029-text-primary !important;
+  }
+
+  ::v-deep(.q-field__label) {
+    color: $r029-text-secondary !important;
+  }
+
+  .field-icon {
+    @apply text-base ml-1;
+    color: $r029-text-secondary;
+  }
+}
+
+.btn-submit {
+  @apply w-full capitalize my-[1.25rem];
+  background: $r029-action-primary;
+  color: #0B0F19;
+  font-weight: 700;
+  border-radius: 3rem;
+}
+
+::v-deep(.q-field__control) {
+  background: $r029-bg-card !important;
+  color: $r029-text-primary !important;
+
+  .q-field__label {
+    color: $r029-text-secondary !important;
+  }
+
+  .q-icon {
+    color: $r029-text-secondary !important;
+  }
+
+  .q-field__native {
+    color: $r029-text-primary !important;
+  }
+
+  input {
+    color: $r029-text-primary !important;
+  }
+}
+
+.bg-input {
+  background-color: $modal-bg-light !important;
+}
+
+.form-btn-wrapper {
+  @apply mt-[1.25rem] mb-4 flex;
+
+  .form-btn-submit {
+    @apply w-full font-extrabold text-[.875rem];
+    background: linear-gradient(90deg, #22C55E 0%, #4EED88 100%);
+
+    color: $green10;
+
+    &:hover {
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
+
+.calendar-content {
+  ::v-deep(.q-date__header) {
+    background: linear-gradient(90deg, #22C55E 0%, #4EED88 100%);
+
+    color: $green10;
+  }
+
+  ::v-deep(.bg-primary) {
+    background: $green03 !important;
+  }
+
+  ::v-deep(.q-date__today) {
+    box-shadow: 0 0 0 .0625rem $pink-shadow-color;
+  }
+}
+
+// History & Pending Transaction
+.transaction-history-wrapper {
+  .btn-submit {
+    @apply w-full mt-2 mb-0;
+    background: linear-gradient(90deg, #22C55E 0%, #4EED88 100%);
+
+    color: #05312D;
+  }
+}
+
+.history-search-wrapper {
+  @apply flex flex-col justify-center p-2 gap-1;
+  background: #161E28;
+
+  @include phone-width() {
+    @apply p-0;
+    background: transparent;
+  }
+
+  .search-type-content {
+    @apply flex w-full gap-1;
+
+    @include phone-width() {
+      @apply p-2 flex-wrap;
+      background: #161E28;
+    }
+  }
+
+  .search-type-time {
+    @include phone-width() {
+      @apply mt-1;
+
+      .btn-history {
+        flex: 0 0 calc(50% - 0.25rem);
+      }
+    }
+  }
+
+  .btn-history {
+    @apply text-white flex-1 h-[3.125rem];
+    background: #1F2937;
+
+    &.active {
+      color: #05312D;
+      background: linear-gradient(90deg, #22C55E 0%, #4EED88 100%);
+
+    }
+  }
+}

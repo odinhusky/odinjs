@@ -1,0 +1,31 @@
+.edit-input {
+  border: 0.0625rem solid #c2c2ca;
+  border-radius: 0.25rem;
+  padding: 0.0313rem 0.625rem;
+  background-color: #fff;
+
+  &.q-number {
+    ::v-deep(.q-field__native) {
+      padding: 0;
+    }
+  }
+
+  &.no-label {
+    ::v-deep(.q-field__control-container) {
+      padding-top: 0;
+    }
+  }
+}
+
+.no-indet {
+  ::v-deep(.q-checkbox__inner--indet) {
+    .q-checkbox__bg {
+      background: transparent;
+      border-color: rgba($color: #000000, $alpha: 0.54);
+
+      .q-checkbox__svg {
+        color: transparent;
+      }
+    }
+  }
+}

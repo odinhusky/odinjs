@@ -1,0 +1,251 @@
+{
+  "id": 4,
+  "entrance": [
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 103,
+      "payload": {
+        "row_show": 1,
+        "nested_entrance": [
+          {
+            "img": "",
+            "lang": {
+              "bm": "",
+              "bn": "",
+              "br": "",
+              "en": "",
+              "id": "",
+              "jp": "",
+              "ko": "",
+              "sp": "",
+              "th": "",
+              "vi": "",
+              "zh-cn": "",
+              "zh-tw": ""
+            },
+            "sort": 1,
+            "type": 5,
+            "payload": {
+              "did": "product_hall",
+              "link_id": 5,
+              "opening_method": 1
+            },
+            "imgFileName": "recommendTemplate/4/01K598PAZQBVHM7P6XCRCG1JSJ.webp"
+          }
+        ]
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 1,
+      "updated_time": 1758026786
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 102,
+      "payload": {
+        "page": [
+          {
+            "lang": "en",
+            "title": "",
+            "content": "<p><span style=\"font-size: 16pt;\"><strong>Popular Games</strong></span></p>"
+          },
+          {
+            "lang": "zh-tw",
+            "title": "",
+            "content": "<p><strong style=\"font-size: 21.3333px;\">Popular Games</strong></p>"
+          },
+          {
+            "lang": "zh-cn",
+            "title": "",
+            "content": "<p><strong style=\"font-size: 21.3333px;\">Popular Games</strong></p>"
+          },
+          {
+            "lang": "jp",
+            "title": "",
+            "content": "<p><strong style=\"font-size: 21.3333px;\">Popular Games</strong></p>"
+          },
+          {
+            "lang": "id",
+            "title": "",
+            "content": "<p><strong style=\"font-size: 21.3333px;\">Popular Games</strong></p>"
+          },
+          {
+            "lang": "bn",
+            "title": "",
+            "content": "<p><strong style=\"font-size: 21.3333px;\">Popular Games</strong></p>"
+          },
+          {
+            "lang": "ko",
+            "title": "",
+            "content": "<p><strong style=\"font-size: 21.3333px;\">Popular Games</strong></p>"
+          },
+          {
+            "lang": "th",
+            "title": "",
+            "content": "<p><strong style=\"font-size: 21.3333px;\">Popular Games</strong></p>"
+          },
+          {
+            "lang": "vi",
+            "title": "",
+            "content": "<p><strong style=\"font-size: 21.3333px;\">Popular Games</strong></p>"
+          },
+          {
+            "lang": "sp",
+            "title": "",
+            "content": "<p><strong style=\"font-size: 21.3333px;\">Popular Games</strong></p>"
+          },
+          {
+            "lang": "br",
+            "title": "",
+            "content": "<p><strong style=\"font-size: 21.3333px;\">Popular Games</strong></p>"
+          },
+          {
+            "lang": "bm",
+            "title": "",
+            "content": "<p><strong style=\"font-size: 21.3333px;\">Popular Games</strong></p>"
+          }
+        ]
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 2,
+      "updated_time": 1758026786
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 104,
+      "payload": {
+        "title": "WOW Gaming",
+        "row_num": 4,
+        "row_show": 7,
+        "game_type_id": 1,
+        "product_code": 1148,
+        "product_integration_id": 1,
+        "game_type_entrance_type": 2
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 3,
+      "updated_time": 1758026786
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 101,
+      "payload": {
+        "nested_entrance": [
+          {
+            "img": "",
+            "lang": {
+              "bm": "",
+              "bn": "",
+              "br": "",
+              "en": "",
+              "id": "",
+              "jp": "",
+              "ko": "",
+              "sp": "",
+              "th": "",
+              "vi": "",
+              "zh-cn": "",
+              "zh-tw": ""
+            },
+            "sort": 1,
+            "type": 1,
+            "payload": {
+              "game_code": "",
+              "game_type": 12,
+              "product_code": 1148,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/4/01K598XJC4B40FDNQND7382DWX.webp"
+          }
+        ]
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 4,
+      "updated_time": 1758026786
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 104,
+      "payload": {
+        "title": "LIVE CASINO",
+        "row_num": 3,
+        "row_show": 3,
+        "game_type_id": 2,
+        "game_type_entrance_type": 1
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 5,
+      "updated_time": 1758026786
+    }
+  ]
+}

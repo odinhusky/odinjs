@@ -1,0 +1,2 @@
+export const TANSTACK_QUERY_KEY_WITHDRAW_PAYMENT_LIST = "withdrawPaymentList"
+export const TANSTACK_QUERY_KEY_WITHDRAW_PAYMENT_DETAIL = "withdrawPaymentDetail"

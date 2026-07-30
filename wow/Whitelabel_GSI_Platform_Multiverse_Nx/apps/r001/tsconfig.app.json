@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true, // 核心修正：開啟宣告檔輸出
+    "declarationMap": true, // 建議同步開啟，方便 IDE 跳轉原始碼
+    "types": []
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "../../libs/shared/ui-layer/src/**/*.ts",
+    "../../libs/shared/ui-layer/src/**/*.vue",
+    "../../dist/apps/r001/.nuxt/nuxt.d.ts"
+  ],
+  "exclude": []
+}

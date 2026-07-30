@@ -1,0 +1,61 @@
+# clean mac system auto generated files
+._*
+
+.DS_Store
+.thumbs.db
+node_modules
+.pnpm-store
+
+# 本機／遺留語系 bundle（勿放版控原始碼；動態載入邏輯見 src/common/i18n/）
+/src/i18n/
+
+# 由 build:onlyCode 等腳本自 template 複製，勿提交（避免本地 build 誤 commit）
+/src/router/build.ts
+
+# Quasar core related directories
+.quasar
+/dist
+# Quasar leaves these when quasar.config fails (for inspection); remove with `quasar clean`
+/quasar.config.*.temporary.compiled*
+
+# Cordova related directories and files
+/src-cordova/node_modules
+/src-cordova/platforms
+/src-cordova/plugins
+/src-cordova/www
+
+# Cordova related directories and files
+/src-capacitor
+
+# Capacitor related directories and files
+/src-capacitor/www
+/src-capacitor/node_modules
+
+# BEX related directories and files
+/src-bex/www
+/src-bex/js/core
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.map
+
+# local .env overrides (do not commit secrets)
+/.env.local*
+
+.env.development
+.env.production
+
+# build router
+**/.env.deploy
+
+# 文件目錄不納入版控
+/docs/

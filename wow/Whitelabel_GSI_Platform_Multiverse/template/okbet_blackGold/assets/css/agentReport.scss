@@ -1,0 +1,301 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/okbet_blackGold/assets/css/_variable.sass";
+
+.agent-report-brand {
+  .agent-report__section-title {
+    color: #fff;
+  }
+
+  .agent-report__section-title-icon {
+    color: $primary-gold-color;
+  }
+
+  .agent-report__field-label {
+    color: #fff;
+  }
+
+  .agent-report__field-label--currency {
+    color: #fff;
+  }
+
+  .agent-report__back-bar,
+  .agent-report__link {
+    color: $primary-gold-color;
+  }
+
+  .agent-report__account-cell .agent-report__link {
+    color: $primary-gold-color;
+  }
+
+  .agent-report__date-input--outlined {
+    .q-field__control {
+      border: 1px solid transparent;
+      border-radius: 0.5rem;
+      background:
+        linear-gradient($primary-black-color, $primary-black-color) padding-box,
+        linear-gradient(180deg, #d1b17c 0%, #a48155 100%) border-box;
+
+      &::before,
+      &::after {
+        border: none !important;
+      }
+    }
+
+    .q-field__native {
+      color: #fff;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    .q-icon {
+      color: #fff;
+    }
+  }
+
+  .agent-report__date-toggle,
+  .toggle-date-picker {
+    border: 1px solid transparent !important;
+    border-radius: 0.5rem !important;
+    background:
+      linear-gradient($primary-black-color, $primary-black-color) padding-box,
+      linear-gradient(180deg, #d1b17c 0%, #a48155 100%) border-box !important;
+
+    .q-btn {
+      color: #fff;
+
+      &.bg-primary {
+        background: $secondary-gold-color !important;
+        color: #000 !important;
+      }
+    }
+  }
+
+  @media (min-width: $phone-media + 1px) {
+    .search-form .search-form-row .search-item {
+      .agent-report__date-toggle,
+      .toggle-date-picker {
+        border: 1px solid transparent !important;
+        border-radius: 0.5rem !important;
+        background:
+          linear-gradient($primary-black-color, $primary-black-color) padding-box,
+          linear-gradient(180deg, #d1b17c 0%, #a48155 100%) border-box !important;
+      }
+    }
+    .search-form {
+      .search-form-row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        .search-item {
+          display: flex;
+          align-items: center;
+          flex-shrink: 0;
+          margin-right: 1.25rem;
+          margin-bottom: 0;
+
+          .search-item-label {
+            color: #fff;
+            font-size: 0.875rem;
+            font-weight: 400;
+            margin-right: 0.625rem;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+          }
+        }
+
+        .agent-report__date-toggle,
+        .toggle-date-picker {
+          flex-shrink: 0;
+        }
+
+        .agent-report__date-input--desktop-range {
+          flex-shrink: 0;
+          width: fit-content;
+          min-width: calc(14rem + 10px);
+
+          .q-field__control {
+            width: auto;
+          }
+
+          .q-field__native {
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .agent-report__search-btn {
+        flex-shrink: 0;
+        background: $secondary-gold-color !important;
+        color: #000 !important;
+        padding: 0.4375rem 2.6875rem;
+      }
+    }
+
+    .agent-report__currency-select {
+      .q-field__control {
+        background-color: #f0f1f4;
+        border-radius: 6.25rem;
+        height: 3rem;
+        min-height: 3rem;
+      }
+    }
+
+    .agent-report__personal-table,
+    .agent-report__team-table {
+      .agent-report__data-row {
+        color: #fff;
+      }
+
+      .agent-report__header-item {
+        border-color: rgba($secondary-gold-color, 0.3);
+      }
+
+      .agent-report__data-area--detail {
+        background-color: $tertiary-black-color;
+      }
+    }
+
+    .agent-report__table {
+      background: $primary-black-color;
+      color: #fff;
+
+      thead,
+      tbody {
+        color: #fff;
+      }
+
+      th {
+        border-color: rgba($secondary-gold-color, 0.3);
+      }
+
+      .q-table__middle,
+      .q-table__bottom,
+      table,
+      thead tr,
+      tbody tr,
+      th,
+      td {
+        background: $primary-black-color !important;
+        color: #fff;
+      }
+
+      .q-table__bottom {
+        background: $primary-black-color !important;
+        color: #fff;
+
+        span {
+          color: #fff !important;
+        }
+      }
+
+      .text-\[\#4a4a4a\] {
+        color: #fff !important;
+      }
+
+      .agent-report__account-cell {
+        color: #fff;
+
+        span:not(.agent-report__link) {
+          color: #fff;
+        }
+      }
+
+      .agent-report__team-detail-tr {
+        background-color: $tertiary-black-color;
+
+        td {
+          background-color: $tertiary-black-color !important;
+          color: #fff;
+        }
+      }
+    }
+
+    .flex.justify-end.mt-5 {
+      .q-pagination .q-btn {
+        color: #fff !important;
+
+        &.text-blue-8 {
+          color: $primary-gold-color !important;
+        }
+      }
+    }
+  }
+
+  @include phone-width {
+    --ar-matrix-data-row-border-inset-x: 0.5rem;
+    --ar-matrix-data-row-border-color: var(--secondary-05);
+    --ar-matrix-cell-color: var(--neutral-01);
+    --ar-matrix-header-color: var(--neutral-01);
+    --ar-matrix-header-bg: #{$primary-black-color};
+    --ar-matrix-wallet-bg: var(--secondary-05);
+
+    .agent-report__matrix {
+      border-color: var(--secondary-05);
+      color: var(--neutral-01);
+
+      .agent-report__matrix-cell,
+      .agent-report__matrix-row--header .agent-report__matrix-cell {
+        color: var(--neutral-01);
+      }
+
+      .agent-report__matrix-row:not(.agent-report__matrix-row--header) {
+        .agent-report__matrix-cell:not(.agent-report__matrix-cell--wallet) {
+          background-color: $tertiary-black-color;
+        }
+      }
+
+      .agent-report__matrix-row--header {
+        background-color: $primary-black-color;
+
+        .agent-report__matrix-cell {
+          background-color: $primary-black-color;
+        }
+      }
+
+      .agent-report__matrix-row:not(.agent-report__matrix-row--header) {
+        .agent-report__matrix-cell--wallet {
+          background-color: var(--secondary-05) !important;
+        }
+      }
+    }
+
+    .agent-report__team-data {
+      color: var(--neutral-01);
+
+      .agent-report__account-cell {
+        .agent-report__link,
+        span {
+          color: var(--neutral-01) !important;
+        }
+
+        .q-icon {
+          color: var(--neutral-01) !important;
+        }
+      }
+    }
+
+    .agent-report__no-data {
+      border-color: var(--secondary-05);
+      background: $tertiary-black-color !important;
+      color: var(--neutral-01);
+    }
+
+    .agent-report__search-btn {
+      background: $secondary-gold-color !important;
+      color: #000 !important;
+    }
+
+    .flex.justify-end.mt-5 {
+      .q-pagination .q-btn {
+        color: var(--neutral-01) !important;
+
+        &.text-blue-8 {
+          color: $primary-gold-color !important;
+        }
+      }
+    }
+  }
+}

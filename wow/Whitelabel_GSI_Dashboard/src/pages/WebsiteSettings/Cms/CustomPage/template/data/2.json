@@ -1,0 +1,608 @@
+{
+  "id": 2,
+  "entrance": [
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 101,
+      "payload": {
+        "nested_entrance": [
+          {
+            "img": "",
+            "lang": {
+              "bm": "",
+              "bn": "",
+              "br": "",
+              "en": "",
+              "id": "",
+              "jp": "",
+              "ko": "",
+              "sp": "",
+              "th": "",
+              "vi": "",
+              "zh-cn": "",
+              "zh-tw": ""
+            },
+            "sort": 1,
+            "type": 1,
+            "payload": {
+              "game_code": "",
+              "game_type": 2,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/2/01K593TZWQ5Y9209HSM14QG1J4.webp"
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "",
+              "bn": "",
+              "br": "",
+              "en": "",
+              "id": "",
+              "jp": "",
+              "ko": "",
+              "sp": "",
+              "th": "",
+              "vi": "",
+              "zh-cn": "",
+              "zh-tw": ""
+            },
+            "sort": 2,
+            "type": 1,
+            "payload": {
+              "game_code": "",
+              "game_type": 2,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/2/01K593TZZ00XRWV81WZPHHJW53.webp"
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "",
+              "bn": "",
+              "br": "",
+              "en": "",
+              "id": "",
+              "jp": "",
+              "ko": "",
+              "sp": "",
+              "th": "",
+              "vi": "",
+              "zh-cn": "",
+              "zh-tw": ""
+            },
+            "sort": 3,
+            "type": 1,
+            "payload": {
+              "game_code": "",
+              "game_type": 1,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/2/01K593TZWYVG8T3F84EDJ022TS.webp"
+          }
+        ]
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 1,
+      "updated_time": 1759232383
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 103,
+      "payload": {
+        "row_show": 6,
+        "nested_entrance": [
+          {
+            "img": "",
+            "lang": {
+              "bm": "Sugar Rush 1000",
+              "bn": "Sugar Rush 1000",
+              "br": "Sugar Rush 1000",
+              "en": "Sugar Rush 1000",
+              "id": "Sugar Rush 1000",
+              "jp": "Sugar Rush 1000",
+              "ko": "Sugar Rush 1000",
+              "sp": "Sugar Rush 1000",
+              "th": "Sugar Rush 1000",
+              "vi": "Sugar Rush 1000",
+              "zh-cn": "Sugar Rush 1000",
+              "zh-tw": "Sugar Rush 1000"
+            },
+            "sort": 1,
+            "type": 1,
+            "payload": {
+              "game_code": "vs20sugarrushx",
+              "game_type": 1,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/2/01K592AS976YS7D2FX1GM4WT93.webp"
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "Sugar Rush Summer Time",
+              "bn": "Sugar Rush Summer Time",
+              "br": "Sugar Rush Summer Time",
+              "en": "Sugar Rush Summer Time",
+              "id": "Sugar Rush Summer Time",
+              "jp": "Sugar Rush Summer Time",
+              "ko": "Sugar Rush Summer Time",
+              "sp": "Sugar Rush Summer Time",
+              "th": "Sugar Rush Summer Time",
+              "vi": "Sugar Rush Summer Time",
+              "zh-cn": "Sugar Rush Summer Time",
+              "zh-tw": "Sugar Rush Summer Time"
+            },
+            "sort": 2,
+            "type": 1,
+            "payload": {
+              "game_code": "vs20cms",
+              "game_type": 1,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/2/01K592AS976YS7D2FX1E5E8XEN.webp"
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "Sweet Bonanza",
+              "bn": "Sweet Bonanza",
+              "br": "Sweet Bonanza",
+              "en": "Sweet Bonanza",
+              "id": "Sweet Bonanza",
+              "jp": "Sweet Bonanza",
+              "ko": "Sweet Bonanza",
+              "sp": "Sweet Bonanza",
+              "th": "Sweet Bonanza",
+              "vi": "Sweet Bonanza",
+              "zh-cn": "Sweet Bonanza",
+              "zh-tw": "Sweet Bonanza"
+            },
+            "sort": 3,
+            "type": 1,
+            "payload": {
+              "game_code": "vs20fruitsw",
+              "game_type": 1,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/2/01K592ASB525XXXETJ38DVF1CR.webp"
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "Grace of Ebisu",
+              "bn": "Grace of Ebisu",
+              "br": "Grace of Ebisu",
+              "en": "Grace of Ebisu",
+              "id": "Grace of Ebisu",
+              "jp": "Grace of Ebisu",
+              "ko": "Grace of Ebisu",
+              "sp": "Grace of Ebisu",
+              "th": "Grace of Ebisu",
+              "vi": "Grace of Ebisu",
+              "zh-cn": "Grace of Ebisu",
+              "zh-tw": "Grace of Ebisu"
+            },
+            "sort": 4,
+            "type": 1,
+            "payload": {
+              "game_code": "vs20olympgrace",
+              "game_type": 1,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/2/01K592ASBDKVCE4CW7FR4NTVNY.webp"
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "Mahjong X",
+              "bn": "Mahjong X",
+              "br": "Mahjong X",
+              "en": "Mahjong X",
+              "id": "Mahjong X",
+              "jp": "Mahjong X",
+              "ko": "Mahjong X",
+              "sp": "Mahjong X",
+              "th": "Mahjong X",
+              "vi": "Mahjong X",
+              "zh-cn": "Mahjong X",
+              "zh-tw": "Mahjong X"
+            },
+            "sort": 5,
+            "type": 1,
+            "payload": {
+              "game_code": "vs20mahjxbnz",
+              "game_type": 1,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/2/01K592ASBDKVCE4CW7FNMF0N4E.webp"
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "Sugar Rush",
+              "bn": "Sugar Rush",
+              "br": "Sugar Rush",
+              "en": "Sugar Rush",
+              "id": "Sugar Rush",
+              "jp": "Sugar Rush",
+              "ko": "Sugar Rush",
+              "sp": "Sugar Rush",
+              "th": "Sugar Rush",
+              "vi": "Sugar Rush",
+              "zh-cn": "Sugar Rush",
+              "zh-tw": "Sugar Rush"
+            },
+            "sort": 6,
+            "type": 1,
+            "payload": {
+              "game_code": "vs20sugarrush",
+              "game_type": 1,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+            "imgFileName": "recommendTemplate/2/01K592ASC6CDGH2FRVF7RB99EQ.webp"
+          }
+        ]
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 2,
+      "updated_time": 1759232383
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 102,
+      "payload": {
+        "page": [
+          {
+            "lang": "en",
+            "title": "",
+            "content": "<p><strong>Pragmatic Play Live Casino</strong> <span style=\"color: #007bff;\">powers up new possibilities</span> &mdash; <span style=\"color: #28a745;\">reinventing classics</span>, <span style=\"color: #ff9800;\">refreshing favorites</span>, and <span style=\"color: #e91e63;\">elevating entertainment</span>.</p>"
+          },
+          {
+            "lang": "zh-tw",
+            "title": "",
+            "content": ""
+          },
+          {
+            "lang": "zh-cn",
+            "title": "",
+            "content": ""
+          },
+          {
+            "lang": "jp",
+            "title": "",
+            "content": ""
+          },
+          {
+            "lang": "id",
+            "title": "",
+            "content": ""
+          },
+          {
+            "lang": "bn",
+            "title": "",
+            "content": ""
+          },
+          {
+            "lang": "ko",
+            "title": "",
+            "content": ""
+          },
+          {
+            "lang": "th",
+            "title": "",
+            "content": ""
+          },
+          {
+            "lang": "vi",
+            "title": "",
+            "content": ""
+          },
+          {
+            "lang": "sp",
+            "title": "",
+            "content": ""
+          },
+          {
+            "lang": "br",
+            "title": "",
+            "content": ""
+          },
+          {
+            "lang": "bm",
+            "title": "",
+            "content": ""
+          }
+        ]
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 3,
+      "updated_time": 1759232383
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 103,
+      "payload": {
+        "row_show": 3,
+        "nested_entrance": [
+          {
+            "img": "",
+            "lang": {
+              "bm": "Treasure Island",
+              "bn": "Treasure Island",
+              "br": "Treasure Island",
+              "en": "Treasure Island",
+              "id": "Treasure Island",
+              "jp": "Treasure Island",
+              "ko": "Treasure Island",
+              "sp": "Treasure Island",
+              "th": "Treasure Island",
+              "vi": "Treasure Island",
+              "zh-cn": "Treasure Island",
+              "zh-tw": "Treasure Island"
+            },
+            "sort": 1,
+            "type": 1,
+            "payload": {
+              "game_code": "1701",
+              "game_type": 2,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+
+            "imgFileName": ""
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "Baccarat 1",
+              "bn": "Baccarat 1",
+              "br": "Baccarat 1",
+              "en": "Baccarat 1",
+              "id": "Baccarat 1",
+              "jp": "Baccarat 1",
+              "ko": "Baccarat 1",
+              "sp": "Baccarat 1",
+              "th": "Baccarat 1",
+              "vi": "Baccarat 1",
+              "zh-cn": "Baccarat 1",
+              "zh-tw": "Baccarat 1"
+            },
+            "sort": 2,
+            "type": 1,
+            "payload": {
+              "game_code": "401",
+              "game_type": 2,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+
+            "imgFileName": ""
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "Speed Baccarat 1",
+              "bn": "Speed Baccarat 1",
+              "br": "Speed Baccarat 1",
+              "en": "Speed Baccarat 1",
+              "id": "Speed Baccarat 1",
+              "jp": "Speed Baccarat 1",
+              "ko": "Speed Baccarat 1",
+              "sp": "Speed Baccarat 1",
+              "th": "Speed Baccarat 1",
+              "vi": "Speed Baccarat 1",
+              "zh-cn": "Speed Baccarat 1",
+              "zh-tw": "Speed Baccarat 1"
+            },
+            "sort": 3,
+            "type": 1,
+            "payload": {
+              "game_code": "402",
+              "game_type": 2,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+
+            "imgFileName": ""
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "Roulette 2 Extra Time",
+              "bn": "Roulette 2 Extra Time",
+              "br": "Roulette 2 Extra Time",
+              "en": "Roulette 2 Extra Time",
+              "id": "Roulette 2 Extra Time",
+              "jp": "Roulette 2 Extra Time",
+              "ko": "Roulette 2 Extra Time",
+              "sp": "Roulette 2 Extra Time",
+              "th": "Roulette 2 Extra Time",
+              "vi": "Roulette 2 Extra Time",
+              "zh-cn": "Roulette 2 Extra Time",
+              "zh-tw": "Roulette 2 Extra Time"
+            },
+            "sort": 4,
+            "type": 1,
+            "payload": {
+              "game_code": "201",
+              "game_type": 2,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+
+            "imgFileName": ""
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "VIP Roulette",
+              "bn": "VIP Roulette",
+              "br": "VIP Roulette",
+              "en": "VIP Roulette",
+              "id": "VIP Roulette",
+              "jp": "VIP Roulette",
+              "ko": "VIP Roulette",
+              "sp": "VIP Roulette",
+              "th": "VIP Roulette",
+              "vi": "VIP Roulette",
+              "zh-cn": "VIP Roulette",
+              "zh-tw": "VIP Roulette"
+            },
+            "sort": 5,
+            "type": 1,
+            "payload": {
+              "game_code": "545",
+              "game_type": 2,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+
+            "imgFileName": ""
+          },
+          {
+            "img": "",
+            "lang": {
+              "bm": "Sweet Bonanza CandyLand",
+              "bn": "Sweet Bonanza CandyLand",
+              "br": "Sweet Bonanza CandyLand",
+              "en": "Sweet Bonanza CandyLand",
+              "id": "Sweet Bonanza CandyLand",
+              "jp": "Sweet Bonanza CandyLand",
+              "ko": "Sweet Bonanza CandyLand",
+              "sp": "Sweet Bonanza CandyLand",
+              "th": "Sweet Bonanza CandyLand",
+              "vi": "Sweet Bonanza CandyLand",
+              "zh-cn": "Sweet Bonanza CandyLand",
+              "zh-tw": "Sweet Bonanza CandyLand"
+            },
+            "sort": 6,
+            "type": 1,
+            "payload": {
+              "game_code": "1101",
+              "game_type": 2,
+              "product_code": 1006,
+              "opening_method": 0,
+              "product_integration_id": 1
+            },
+
+            "imgFileName": ""
+          }
+        ]
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 4,
+      "updated_time": 1759232383
+    },
+    {
+      "lang": {
+        "bm": "",
+        "bn": "",
+        "br": "",
+        "en": "",
+        "id": "",
+        "jp": "",
+        "ko": "",
+        "sp": "",
+        "th": "",
+        "vi": "",
+        "zh-cn": "",
+        "zh-tw": ""
+      },
+      "type": 104,
+      "payload": {
+        "title": "SLOTS",
+        "row_num": 99,
+        "row_show": 5,
+        "game_type_id": 1,
+        "product_code": 1006,
+        "product_integration_id": 1,
+        "game_type_entrance_type": 2
+      },
+      "img_path": "",
+      "img_base64": "",
+      "sort": 5,
+      "updated_time": 1759232383
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+.icon-img {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.sort-input {
+  width: 3.125rem;
+  margin: 0 auto;
+
+  :deep(.q-field__native) {
+    .q-field__input {
+      text-align: center;
+    }
+  }
+}
+
+.cms-form-input {
+  width: 16.875rem;
+  // height: 2.25rem;
+
+  :deep(.q-field__control) {
+    border-radius: .25rem;
+  }
+}
+
+.search-input {
+  :deep(.q-field__control) {
+    border-radius: .25rem;
+  }
+}
+
+.entrance-row {
+  gap: 1rem;
+
+  .card-entrance {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 17.125rem;
+    min-height: 38.25rem;
+    padding: .75rem;
+    border: 1px solid #D0D0D0;
+    border-radius: .5rem;
+    gap: .5rem;
+    position: relative;
+
+    .entrance-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      img {
+        width: 1.5rem;
+        height: 1.5rem;
+        cursor: pointer !important;
+      }
+    }
+
+    .mk {
+      background: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      z-index: 99;
+      border-radius: 0.5rem;
+    }
+
+    :deep(.preview-image) {
+      width: 10rem;
+      height: 10rem;
+    }
+
+    .entrance-link {
+      width: 100%;
+
+      .cms-form-input {
+        width: 100%;
+      }
+    }
+
+    .entrance-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 2.625rem;
+
+      .cms-form-input {
+        width: 13.375rem;
+      }
+    }
+
+    &.add-container {
+      height: auto;
+
+      .add-title {
+        font-size: .875rem;
+        font-weight: 700;
+        line-height: 20.27px;
+        color: #040207E0;
+        letter-spacing: .0625rem;
+        margin: 0;
+      }
+
+      .add-img {
+        width: 3.75rem;
+        height: 3.75rem;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.btns {
+  .q-btn {
+    width: 10.375rem;
+    height: 2.5rem;
+  }
+}

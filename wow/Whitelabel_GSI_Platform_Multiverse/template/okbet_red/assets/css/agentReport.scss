@@ -1,0 +1,258 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/okbet_red/assets/css/_variable.sass";
+
+.agent-report-brand {
+  .agent-report__section-title,
+  .agent-report__section-title-icon {
+    color: $secondary-color;
+  }
+
+  .agent-report__field-label {
+    color: $white-color;
+  }
+
+  .agent-report__back-bar,
+  .agent-report__link {
+    color: $secondary-color;
+  }
+
+  .agent-report__account-cell .agent-report__link {
+    color: $secondary-color;
+  }
+
+  .agent-report__date-toggle,
+  .toggle-date-picker {
+    border-color: $secondary-color !important;
+  }
+
+  .flex.justify-end.mt-5 {
+    .q-pagination .q-btn {
+      color: $white-color !important;
+
+      &.text-blue-8 {
+        color: $secondary-color !important;
+      }
+    }
+  }
+
+  .agent-report__date-input--outlined {
+    .q-field__control {
+      &::before,
+      &::after {
+        border: 1px solid $secondary-color !important;
+      }
+    }
+
+    .q-field__native {
+      color: $white-color;
+
+      &::placeholder {
+        color: $sky-gray-color;
+      }
+    }
+
+    .q-icon {
+      color: $white-color;
+    }
+  }
+
+  @media (min-width: $phone-media + 1px) {
+    .search-form {
+      .search-form-row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        .search-item {
+          display: flex;
+          align-items: center;
+          flex-shrink: 0;
+          margin-right: 1.25rem;
+          margin-bottom: 0;
+
+          .search-item-label {
+            color: $white-color;
+            font-size: 0.875rem;
+            font-weight: 400;
+            margin-right: 0.625rem;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+          }
+        }
+
+        .agent-report__date-toggle,
+        .toggle-date-picker {
+          flex-shrink: 0;
+        }
+
+        .agent-report__date-input--desktop-range {
+          flex-shrink: 0;
+          width: fit-content;
+          min-width: 14rem;
+
+          .q-field__control {
+            width: auto;
+          }
+
+          .q-field__native {
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .agent-report__search-btn {
+        flex-shrink: 0;
+        background: $secondary-color !important;
+        color: black !important;
+        padding: 0.4375rem 2.6875rem;
+      }
+    }
+
+    .agent-report__currency-select {
+      .q-field__control {
+        background-color: #f0f1f4;
+        border-radius: 6.25rem;
+        height: 3rem;
+        min-height: 3rem;
+      }
+    }
+
+    .agent-report__date-toggle {
+      .q-btn {
+        color: $white-color;
+
+        &.bg-primary {
+          background: $secondary-color !important;
+          color: black !important;
+        }
+      }
+    }
+
+    .agent-report__personal-table,
+    .agent-report__team-table {
+      .agent-report__data-row {
+        color: $white-color;
+      }
+
+      .agent-report__header-item {
+        border-color: #d25c5c;
+      }
+
+      .agent-report__data-area--detail {
+        background-color: #cd2e2b;
+      }
+    }
+
+    .agent-report__table {
+      background: $primary-color;
+      color: $white-color;
+
+      thead,
+      tbody {
+        color: $white-color;
+      }
+
+      th {
+        border-color: #d25c5c;
+      }
+
+      .q-table__middle,
+      .q-table__bottom,
+      table,
+      thead tr,
+      tbody tr,
+      th,
+      td {
+        background: $primary-color !important;
+        color: $white-color;
+      }
+
+      .q-table__bottom {
+        background: $primary-color !important;
+        color: $white-color;
+
+        span {
+          color: $white-color !important;
+        }
+      }
+
+      .agent-report__team-detail-tr {
+        background-color: #cd2e2b;
+
+        td {
+          background-color: #cd2e2b !important;
+          color: $white-color;
+        }
+      }
+    }
+  }
+
+  @include phone-width {
+    background-color: $pale-silver-color;
+    margin: -0.625rem;
+    padding: 0.625rem;
+    border-radius: 0.625rem;
+    min-height: 100%;
+
+    --ar-matrix-data-row-border-inset-x: 0.5rem;
+    --ar-matrix-data-row-border-color: #{$gray-color};
+    --ar-matrix-container-bg: transparent;
+    --ar-matrix-row-bg: transparent;
+    --ar-matrix-header-bg: #{$primary-color};
+    --ar-matrix-header-color: #{$white-color};
+    --ar-matrix-cell-color: #{$white-color};
+    --ar-matrix-wallet-bg: #00000099;
+
+    .agent-report__search-btn {
+      background: $secondary-color !important;
+      color: black !important;
+    }
+
+    .agent-report__date-toggle {
+      .q-btn {
+        color: $white-color;
+
+        &.bg-primary {
+          background: $secondary-color !important;
+          color: black !important;
+        }
+      }
+    }
+
+    .agent-report__matrix {
+      border-color: $gray-color;
+      color: $white-color;
+
+      .agent-report__matrix-row:not(.agent-report__matrix-row--header) {
+        .agent-report__matrix-cell:not(.agent-report__matrix-cell--wallet) {
+          background-color: #6b1212;
+        }
+      }
+    }
+
+    .agent-report__team-data {
+      color: $white-color;
+
+      .agent-report__account-cell {
+        .agent-report__link,
+        span {
+          color: $white-color !important;
+        }
+
+        .q-icon {
+          color: $white-color !important;
+        }
+      }
+
+      .agent-report__matrix {
+        margin-bottom: 1.25rem;
+      }
+    }
+
+    .agent-report__no-data {
+      border-color: $secondary-color;
+      background: transparent;
+      color: $white-color;
+    }
+  }
+}

@@ -1,0 +1,94 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/okbet/assets/css/_variable.sass";
+
+.management-area .agent-report-panel .agent-report-brand {
+  @media (min-width: $phone-media + 1px) {
+    .search-form {
+      .search-form-row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        .search-item {
+          display: flex;
+          align-items: center;
+          flex-shrink: 0;
+          margin-right: 1.25rem;
+          margin-bottom: 0;
+          overflow: visible;
+
+          .search-item-label {
+            white-space: nowrap;
+          }
+        }
+
+        .agent-report__date-toggle,
+        .toggle-date-picker {
+          flex-shrink: 0;
+        }
+
+        .agent-report__date-input--desktop-range {
+          flex-shrink: 0;
+          width: fit-content;
+          min-width: 14rem;
+
+          .q-field__control {
+            width: auto;
+          }
+
+          .q-field__native {
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .agent-report__search-btn {
+        flex-shrink: 0;
+      }
+    }
+  }
+}
+
+.agent-report-brand {
+  @include phone-width {
+    --ar-matrix-data-row-border-inset-x: 0.5rem;
+    --ar-matrix-data-row-border-color: var(--secondary-09);
+    --ar-matrix-container-bg: #5c8cf0;
+    --ar-matrix-row-bg: transparent;
+    --ar-matrix-header-bg: #ffffff;
+    --ar-matrix-header-color: var(--neutral-07);
+    --ar-matrix-cell-color: var(--neutral-01);
+    --ar-matrix-wallet-bg: #d2d2d23d;
+
+    .agent-report__matrix {
+      background-color: #5c8cf0;
+    }
+
+    .agent-report__matrix-row:not(.agent-report__matrix-row--header) {
+      background-color: transparent !important;
+    }
+
+    .agent-report__matrix-row--header {
+      background-color: #ffffff !important;
+      color: var(--neutral-07);
+
+      .agent-report__matrix-cell {
+        color: var(--neutral-07);
+      }
+    }
+
+    .agent-report__team-data {
+      .agent-report__account-cell {
+        color: var(--neutral-01);
+
+        .q-icon {
+          color: var(--neutral-01) !important;
+        }
+
+        span {
+          color: var(--neutral-01) !important;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "types": []
+  },
+  "files": [],
+  "include": [
+    "nuxt.config.ts",
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "../../libs/shared/ui-layer/src/**/*.ts",
+    "../../libs/shared/ui-layer/src/**/*.vue",
+    ".nuxt/nuxt.d.ts",
+    ".nuxt/imports.d.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    }
+  ]
+}

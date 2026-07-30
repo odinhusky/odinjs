@@ -1,0 +1,1 @@
+export const TANSTACK_QUERY_KEY_MEMBER_BANK_CARD_LIST = "memberBankCardList"

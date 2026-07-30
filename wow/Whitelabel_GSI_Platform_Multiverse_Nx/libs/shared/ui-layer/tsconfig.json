@@ -1,0 +1,36 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "ESNext", // 核心修正：將 commonjs 改為 ESNext
+    "moduleResolution": "bundler", // 補上這行，確保解析邏輯與 Vite 一致
+    "ignoreDeprecations": "6.0",
+    "types": ["node", "nuxt", "@nuxtjs/i18n"],
+    "paths": {
+      "@shared-lib/*": ["./src/lib/*"],
+      "@shared-src/*": ["./src/*"],
+      "#imports": ["./.nuxt/imports.d.ts"],
+      "#app": ["../../../node_modules/nuxt/dist/app"]
+    },
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "files": [],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue",
+    ".nuxt/imports.d.ts",
+    ".nuxt/nuxt.d.ts",
+    ".nuxt/types/*.d.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}

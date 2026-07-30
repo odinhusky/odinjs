@@ -1,0 +1,7 @@
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
+  - re2
+  - sharp
+  - vue-demi
+  - vue-echarts

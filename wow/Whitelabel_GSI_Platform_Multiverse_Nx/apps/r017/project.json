@@ -1,0 +1,43 @@
+{
+  "name": "r017",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/r017/src",
+  "targets": {
+    "prepare": {
+      "command": "node ../../scripts/generate-r017-runtime-themes.mjs",
+      "options": {
+        "cwd": "apps/r017"
+      },
+      "outputs": ["{projectRoot}/src/public/themes"]
+    },
+    "serve": {
+      "command": "node ../../scripts/serve-r017-with-theme-watch.mjs",
+      "options": {
+        "cwd": "apps/r017",
+        "env": {
+          "NODE_OPTIONS": "--max-old-space-size=8192"
+        }
+      }
+    },
+    "build": {
+      "dependsOn": ["prepare"],
+      "command": "nuxi generate",
+      "options": {
+        "cwd": "apps/r017"
+      },
+      "inputs": [
+        "{projectRoot}/**/*",
+        "!{projectRoot}/**/*.spec.ts",
+        "{workspaceRoot}/libs/shared/ui-layer/**/*",
+        "{workspaceRoot}/tsconfig.base.json"
+      ]
+    },
+    "preview": {
+      "command": "nuxi preview",
+      "options": {
+        "cwd": "apps/r017"
+      }
+    }
+  }
+}

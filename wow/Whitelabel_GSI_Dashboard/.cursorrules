@@ -1,0 +1,14 @@
+# 1. 前端代碼生成規範
+- 除非我明確要求，否則絕對不要使用 framer-motion 或任何 <motion.div> 標籤。
+- 所有的區塊容器請一律使用標準的 <div> 或 Semantic HTML (如 section, article 等)。
+- 不要自行添加未經 import 的第三方動畫庫元件。
+
+# 2. 多語系 (vue-i18n) 處理規範
+- 本專案的多語系 (vue-i18n) 採用【動態加載機制】。
+- 絕對不要嘗試在專案本地目錄內搜尋、修改或建立多語系檔（如 locales/*.json ）。
+- 在修改代碼時，如果遇到 `$t(...)` 或 `t(...)`，請【原封不動地保留】。絕對不要去猜測、修改或用新的 key 來替換它們。
+- 如果需要新增文字，請直接使用硬編碼 (Hardcoded) 或是詢問我，不要自行發明新的 i18n key。
+
+# 3. Git 操作與 Commit 規範
+- 當協助進行 Git 合併 (merge)、變基 (rebase) 或撰寫 commit message 時，【絕對不要】添加任何關於 "cursor", "co-author", "Co-authored-by" 或 AI 相關的作者資訊。
+- 保持 Commit 紀錄的純淨，只留下人類開發者的資訊，不要夾帶任何 Cursor 的置入性簽名。

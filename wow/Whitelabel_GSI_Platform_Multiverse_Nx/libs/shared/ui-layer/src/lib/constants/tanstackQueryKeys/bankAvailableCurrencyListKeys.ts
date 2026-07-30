@@ -1,0 +1,1 @@
+export const TANSTACK_QUERY_KEY_BANK_AVAILABLE_CURRENCY_LIST = "bankAvailableCurrencyList"

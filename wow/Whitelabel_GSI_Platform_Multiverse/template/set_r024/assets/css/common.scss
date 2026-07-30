@@ -1,0 +1,30 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/set_r024/assets/css/_variable.sass";
+
+.calendar-content {
+  ::v-deep(.q-date__header) {
+    background: $secondary-card;
+    color: $neutral-01;
+  }
+
+  ::v-deep(.bg-primary) {
+    background: $secondary-card !important;
+  }
+
+  ::v-deep(.q-date__today) {
+    box-shadow: 0 0 1px 0 currentColor !important;
+  }
+}
+
+// 加密貨幣錢包彈窗：套用 set_r024 深色綠色主題配色（排版維持共用元件預設）
+.crypto-wallet-dialog {
+  --cwd-bg: #{$background-background};       // #031006 深色背景
+  --cwd-text: #{$neutral-01};                // #ffffff
+  --cwd-muted: #{$neutral-02};               // #ffffffb2
+  --cwd-card: #{$secondary-card};            // #1a5b39 綠卡背
+  --cwd-accent: #{$primary-01};              // #e38901 主色
+  --cwd-warning: #{$semantic-error};         // #ff474c 紅
+  --cwd-border: #{$functional-line};         // #ffffff47
+  --cwd-action-bg: #{$primary-01};           // #e38901
+  --cwd-action-text: #{$neutral-01};         // #ffffff
+}

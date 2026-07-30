@@ -1,0 +1,280 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/set_amuse/assets/css/_variable.sass";
+
+.agent-report-brand {
+  .agent-report__section-title {
+    color: #ededed;
+  }
+
+  .agent-report__section-title-icon {
+    color: #ed772e;
+  }
+
+  .agent-report__field-label {
+    color: #ededed;
+  }
+
+  .agent-report__field-label--currency {
+    color: #ededed;
+  }
+
+  .agent-report__back-bar,
+  .agent-report__link {
+    color: #ed772e;
+  }
+
+  .agent-report__account-cell .agent-report__link {
+    color: #ed772e;
+  }
+
+  .agent-report__date-input--outlined {
+    .q-field__control {
+      border: 1px solid rgba(90, 90, 90, 0.6);
+      border-radius: 0.5rem;
+      background: rgba(96, 96, 96, 0.24);
+
+      &::before,
+      &::after {
+        border: none !important;
+      }
+    }
+
+    .q-field__native {
+      color: #ededed;
+
+      &::placeholder {
+        color: rgba(243, 243, 243, 0.6);
+      }
+    }
+
+    .q-icon {
+      color: #ededed;
+    }
+  }
+
+  .agent-report__date-toggle,
+  .toggle-date-picker {
+    border: 1px solid #ec7d38 !important;
+    border-radius: 0.5rem !important;
+
+    .q-btn {
+      color: #ededed;
+
+      &.bg-primary {
+        background: #ed772e !important;
+        color: #fff !important;
+      }
+    }
+  }
+
+  .agent-report__search-btn {
+    background: transparent !important;
+    border: 1px solid #ec7d38 !important;
+    border-radius: 0.5rem !important;
+    color: #fff !important;
+  }
+
+  @media (min-width: $phone-media + 1px) {
+    .search-form {
+      background: #000000;
+      padding: 0.75rem;
+
+      .search-form-row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        .search-item {
+          display: flex;
+          align-items: center;
+          flex-shrink: 0;
+          margin-right: 1.25rem;
+          margin-bottom: 0;
+          overflow: visible;
+
+          .search-item-label {
+            color: #ededed;
+            font-size: 0.875rem;
+            font-weight: 400;
+            margin-right: 0.625rem;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+          }
+        }
+
+        .agent-report__date-toggle,
+        .toggle-date-picker {
+          flex-shrink: 0;
+        }
+
+        .agent-report__date-input--desktop-range {
+          flex-shrink: 0;
+          width: fit-content;
+          min-width: calc(14rem + 20px);
+
+          .q-field__control {
+            width: auto;
+          }
+
+          .q-field__native {
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .agent-report__search-btn {
+        flex-shrink: 0;
+        padding: 0.4375rem 2.6875rem;
+      }
+    }
+
+    .agent-report__currency-select {
+      .q-field__control {
+        background-color: #f0f1f4;
+        border-radius: 6.25rem;
+        height: 3rem;
+        min-height: 3rem;
+      }
+    }
+
+    .agent-report__personal-table,
+    .agent-report__team-table {
+      .agent-report__data-row {
+        color: #ededed;
+      }
+
+      .agent-report__header-item {
+        border-color: #e2b854;
+      }
+
+      .agent-report__data-area--detail {
+        background-color: #1f1f1f;
+      }
+    }
+
+    .agent-report__table {
+      background: #101010;
+      color: #ededed;
+
+      thead,
+      tbody {
+        color: #ededed;
+      }
+
+      th {
+        border-color: #e2b854;
+      }
+
+      .q-table__middle,
+      .q-table__bottom,
+      table,
+      thead tr,
+      tbody tr,
+      th,
+      td {
+        background: #101010 !important;
+        color: #ededed;
+      }
+
+      .q-table__bottom {
+        background: #1c1e22 !important;
+        color: #ededed;
+
+        span {
+          color: #ededed !important;
+        }
+      }
+
+      .text-\[\#4a4a4a\] {
+        color: #ededed !important;
+      }
+
+      .agent-report__account-cell {
+        color: #ededed;
+
+        span:not(.agent-report__link) {
+          color: #ededed;
+        }
+      }
+
+      .agent-report__team-detail-tr {
+        background-color: #1f1f1f;
+
+        td {
+          background-color: #1f1f1f !important;
+          color: #ededed;
+        }
+      }
+    }
+
+    .flex.justify-end.mt-5 {
+      .q-pagination .q-btn {
+        color: #ededed !important;
+
+        &.text-blue-8 {
+          color: #ed772e !important;
+        }
+      }
+    }
+  }
+
+  @include phone-width {
+    --ar-matrix-data-row-border-inset-x: 0.5rem;
+    --ar-matrix-data-row-border-color: rgba(255, 255, 255, 0.2);
+    --ar-matrix-cell-color: #ededed;
+    --ar-matrix-header-color: #ededed;
+    --ar-matrix-header-bg: #101010;
+    --ar-matrix-wallet-bg: #1f1f1f;
+
+    .agent-report__matrix {
+      border-color: #e2b854;
+      color: #ededed;
+
+      .agent-report__matrix-cell,
+      .agent-report__matrix-row--header .agent-report__matrix-cell {
+        color: #ededed;
+      }
+
+      .agent-report__matrix-row:not(.agent-report__matrix-row--header) {
+        .agent-report__matrix-cell:not(.agent-report__matrix-cell--wallet) {
+          background-color: #101010;
+        }
+      }
+
+      .agent-report__matrix-row--header {
+        background-color: #101010;
+
+        .agent-report__matrix-cell {
+          background-color: #101010;
+        }
+      }
+
+      .agent-report__matrix-row:not(.agent-report__matrix-row--header) {
+        .agent-report__matrix-cell--wallet {
+          background-color: #1f1f1f !important;
+        }
+      }
+    }
+
+    .agent-report__team-data {
+      color: #ededed;
+
+      .agent-report__account-cell {
+        .agent-report__link,
+        span {
+          color: #ededed !important;
+        }
+
+        .q-icon {
+          color: #ededed !important;
+        }
+      }
+    }
+
+    .agent-report__no-data {
+      border-color: #e2b854;
+      background: #1c1e22 !important;
+      color: #ededed;
+    }
+  }
+}

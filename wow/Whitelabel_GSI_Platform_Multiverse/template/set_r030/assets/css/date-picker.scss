@@ -1,0 +1,164 @@
+// r030 Date Picker Dark Theme
+// 從 Commission.vue 抽取的共用樣式
+@import "app/template/set_r030/assets/css/_variable.scss";
+
+.q-menu {
+  background: #0b0f19;
+  max-height: 80vh!important;
+}
+
+.q-menu {
+  .q-item {
+    color: $neutral01 !important;
+  }
+
+  .q-item--active,
+  .q-item.q-manual-focusable--focused {
+    color: $neutral01 !important;
+    font-weight: 700;
+  }
+}
+
+
+.data_wrapper {
+  background: #0b0f19;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  height: fit-content;
+  overflow-y: visible;
+}
+
+.date-picker-wrapper {
+  background: #0c0c1c;
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  .date-quick-btns {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #0b0f19;
+
+    .quick-btn {
+      border-radius: 1rem;
+      padding: 0.25rem 0.875rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      background: $secondary11;
+      color: $neutral01;
+      min-height: 1.75rem;
+
+      &.active,
+      &:hover {
+        background: linear-gradient(90deg, #22c55e 0%, #1fab3d 100%);
+        color: $neutral01;
+      }
+    }
+  }
+}
+
+.r030-date-picker.q-date {
+  background: $secondary10;
+  color: $neutral01;
+  box-shadow: none;
+
+  .q-date__header {
+    background: linear-gradient(90deg, #22c55e 0%, #1fab3d 100%);
+    color: $neutral01;
+  }
+
+  .q-date__navigation {
+    color: $neutral01;
+
+    .q-btn {
+      color: $neutral01;
+    }
+  }
+
+  .q-date__calendar-days-container .q-btn {
+    color: $neutral02;
+  }
+
+  .q-date__calendar-item--out {
+    opacity: 0.3;
+  }
+
+  .bg-date,
+  .bg-primary {
+    background: linear-gradient(90deg, #22c55e 0%, #1fab3d 100%) !important;
+    color: $neutral01;
+  }
+
+  // 已確認的範圍
+  .q-date__range,
+  .q-date__range-from,
+  .q-date__range-to {
+    &::before {
+      background-color: rgba(#fff, 0.4) !important;
+    }
+  }
+
+  // 正在選取中的範圍（預覽 / 虛線框）
+  .q-date__edit-range {
+    color: #22c55e !important;
+    &::before {
+      background: rgba(#22c55e, 0.1);
+      border-top: 1px dashed rgba(#22c55e, 0.5);
+      border-bottom: 1px dashed rgba(#22c55e, 0.5);
+    }
+  }
+
+  .q-date__edit-range:after {
+    border-color: #22c55e transparent;
+  }
+
+  .q-date__edit-range-from {
+    color: #22c55e !important;
+    &::after {
+      border-right-color: #22c55e;
+      border-top-color: #22c55e;
+      border-bottom-color: #22c55e;
+      border: 1px dashed #22c55e;
+      border-right: none;
+      border-radius: 50% 0 0 50%;
+    }
+  }
+
+  .q-date__edit-range-to {
+    color: #22c55e !important;
+
+    &::after {
+      border-right-color: #22c55e;
+      border-top-color: #22c55e;
+      border-bottom-color: #22c55e;
+      border: 1px dashed #22c55e;
+      border-left: none;
+      border-radius: 0 50% 50% 0;
+    }
+  }
+
+  .q-date__edit-range-from-to {
+    color: #22c55e !important;
+
+    &::after {
+      border-right-color: #22c55e;
+      border-top-color: #22c55e;
+      border-left-color: #22c55e;
+      border-bottom-color: #22c55e;
+      border: 1px dashed #22c55e;
+      border-radius: 50%;
+    }
+  }
+
+  // 選取中的起點/終點圓形按鈕
+  .q-date__edit-range-from-to .q-btn,
+  .q-date__edit-range .q-btn,
+  .q-date__edit-range-from .q-btn,
+  .q-date__edit-range-to .q-btn {
+    color: #22c55e !important;
+  }
+
+  .q-date__calendar-weekdays>div {
+    color: #fff;
+  }
+}

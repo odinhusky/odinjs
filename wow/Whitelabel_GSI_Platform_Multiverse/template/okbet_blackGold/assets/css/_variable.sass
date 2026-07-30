@@ -1,0 +1,251 @@
+// =============================================================================
+// 1. Base CSS Variables (基礎色板)
+// =============================================================================
+:root
+  /* obbl-OKBET_黑金 */
+  --bg-headerbottom: #ffffff
+  --bg-main-bg: #ffffff
+  --bg-side: #ffffff
+  --emotional-03: #3ecc31
+  --emotional-01: #ff3b3b
+  --emotional-02: #ffe2e3
+  --emotional-04: #009d46
+  --emotional-05: #ddf6e8
+  --emotional-06: #00d0ff
+  --emotional-07: #008ae6
+  --emotional-08: #d2edff
+  --emotional-correct-01: #ffffff
+  --emotional-correct-02: #ffffff
+  --emotional-danger-01: #ffffff
+  --emotional-danger-02: #ffffff
+  --emotional-default-01: #ffffff
+  --emotional-default-02: #ffffff
+  --emotional-warning-01: #ffffff
+  --emotional-warning-02: #ffffff
+  --neutral-01: #ffffff
+  --neutral-02: #efefef
+  --neutral-03: #dddedf
+  --neutral-04: #bcbcbc
+  --neutral-05: #9fa0a1
+  --neutral-06: #7b7b7b
+  --neutral-07: #676767
+  --neutral-08: #262626
+  --neutral-09: #ffffff
+  --neutral-10: #ffffff
+  --neutral-100: #000000
+  --primary-01: #d2b27e
+  --primary-02: #f7d99d
+  --primary-03: #a48155
+  --primary-04: #816f4b
+  --primary-05: #fff7e9
+  --primary-06: #ffffff
+  --primary-07: #ffffff
+  --primary-08: #ffffff
+  --primary-09: #ffffff
+  --secondary-01: #ffffffe5
+  --secondary-02: #ffffffb2
+  --secondary-03: #00000099
+  --secondary-04: #141414b2
+  --secondary-05: #92929291
+  --secondary-06: #1d1d1d66
+  --secondary-07: #292929
+  --secondary-08: #1e1e1e
+  --secondary-09: #292929
+  --secondary-10: #141414
+  --secondary-11: #331133
+  --secondary-12: #252525
+  --secondary-13: #ffffff
+  --secondary-14: #ffffff
+  --secondary-15: #ffffff
+  --secondary-16: #ffffff
+  --text-01: #ffffff
+  --text-link: #ffffff
+
+// =============================================================================
+// 2. Component CSS Variables (元件變數)
+// =============================================================================
+:root
+  --bg-01: #8139ff
+  --bg-02: #0004ff
+  --bg-03: #d000ff
+  --bg-04: var(--secondary-10)
+  --bg-05: var(--secondary-10)
+  --bg-06: var(--secondary-13)
+  --bg-07: var(--secondary-14)
+  --bg-08: var(--secondary-07)
+  --bg-09: var(--primary-01)
+  --bg-10: var(--primary-02)
+  --bg-11: var(--secondary-12)
+  --bg-12: var(--neutral-05)
+  --bg-13: var(--secondary-01)
+  --bg-14: var(--neutral-02)
+  --bg-15: var(--secondary-15)
+  --bg-16: var(--secondary-16)
+  --bg-17: var(--secondary-03)
+  --bg-18: var(--secondary-07)
+  --bg-19: #4c38c0
+  --bg-20: #f7a491
+  --bg-21: #f47458
+  --bg-22: #ffffff
+  --bg-23: #ffffff
+  --bg-footer: var(--neutral-100)
+  --bg-header: var(--secondary-12)
+  --bg-line-01: var(--neutral-02)
+  --bg-line-02: var(--secondary-06)
+  --bg-line-03: var(--neutral-03)
+  --bg-line-04: var(--emotional-03)
+  --bg-line-05: var(--emotional-06)
+  --bg-navbar: var(--secondary-11)
+  --btn-bg-01: var(--primary-03)
+  --btn-bg-02: var(--primary-01)
+  --btn-bg-03: #f2631900
+  --btn-bg-04: var(--neutral-03)
+  --btn-bg-05: var(--neutral-04)
+  --btn-bg-06: var(--secondary-11)
+  --btn-bg-07: var(--neutral-05)
+  --btn-bg-08: var(--secondary-14)
+  --btn-border-01: var(--neutral-05)
+  --btn-border-02: var(--primary-01)
+  --btn-border-03: var(--neutral-01)
+  --btn-icon-01: var(--neutral-01)
+  --btn-text-01: var(--neutral-01)
+  --btn-text-02: var(--neutral-04)
+  --btn-text-03: var(--neutral-07)
+  --btn-text-04: var(--primary-01)
+  --btn-text-05: var(--neutral-01)
+  --card-bg-01: var(--neutral-100)
+  --card-bg-02: var(--secondary-07)
+  --card-bg-03: var(--secondary-06)
+  --card-bg-04: var(--neutral-08)
+  --card-border-01: var(--primary-01)
+  --card-text-01: var(--primary-01)
+  --card-text-02: var(--neutral-01)
+  --card-text-03: var(--neutral-04)
+  --dialog-bg: var(--secondary-12)
+  --dialog-bg-02: #ffffff
+  --dialog-text-01: var(--neutral-01)
+  --dialog-text-02: #ffffff
+  --dialog-text-03: #ffffff
+  --icon-01: var(--neutral-02)
+  --icon-02: var(--neutral-02)
+  --icon-03: var(--neutral-01)
+  --icon-04: var(--primary-01)
+  --icon-05: var(--emotional-01)
+  --icon-06: var(--emotional-03)
+  --icon-bg-01: var(--primary-01)
+  --icon-bg-02: var(--neutral-01)
+  --icon-bg-03: var(--secondary-01)
+  --icon-bg-04: var(--secondary-08)
+  --icon-bg-05: var(--secondary-09)
+  --icon-bg-06: var(--emotional-01)
+  --icon-bg-07: var(--secondary-14)
+  --icon-bg-08: var(--secondary-07)
+  --icon-border-01: var(--neutral-03)
+  --icon-navber-01: var(--neutral-01)
+  --icon-navber-02: var(--secondary-06)
+  --icon-navber-03: var(--primary-01)
+  --icon-navber-04: var(--primary-02)
+  --input-dropdown-bg-01: var(--secondary-10)
+  --input-dropdown-border-01: var(--neutral-05)
+  --input-dropdown-border-02: var(--emotional-01)
+  --input-dropdown-text-01: var(--neutral-04)
+  --input-dropdown-text-02: var(--neutral-01)
+  --input-dropdown-text-03: var(--neutral-05)
+  --tab-bg-01: var(--primary-03)
+  --tab-bg-02: var(--primary-01)
+  --tab-bg-03: var(--secondary-05)
+  --tab-bg-04: var(--neutral-05)
+  --tab-bg-05: var(--secondary-08)
+  --tab-line-01: var(--neutral-06)
+  --tab-text-01: var(--neutral-01)
+  --tag-bg-01: var(--neutral-05)
+  --tag-bg-02: var(--emotional-02)
+  --tag-bg-03: var(--emotional-05)
+  --tag-bg-04: var(--emotional-08)
+  --tag-text-01: var(--neutral-01)
+  --tag-text-02: var(--emotional-01)
+  --tag-text-03: var(--emotional-04)
+  --tag-text-04: var(--emotional-07)
+  --text-01: var(--neutral-01)
+  --text-02: var(--neutral-01)
+  --text-03: var(--neutral-01)
+  --text-04: var(--secondary-16)
+  --text-05: var(--emotional-03)
+  --text-06: var(--emotional-01)
+  --text-07: var(--primary-01)
+
+
+// =============================================================================
+// 3. Sass Variables Alias (映射至 CSS Variables)
+// =============================================================================
+
+$color-title: rgb(5, 11, 24)
+$color-subtitle: rgb(109, 118, 147)
+$color-title-h5:rgb(13, 34, 69)
+$color-border: rgb(229, 235, 242)
+$color-border-secondary: rgba(255, 255, 255, 0.1)
+$color-border-tertiary: #E7EAF1
+$color-error: rgb(242, 60, 59)
+$color-primary: rgb(2, 91, 232)
+$color-secondary: #5C8CF0
+$color-white-text:rgb(251, 252, 253)
+$color-pagination: rgb(15, 108, 231)
+$color-success: #4DC700
+
+$age-verification-enter-color: #025be8
+$age-verification-exit-color: #e2e2e2
+
+$color-cancel-btn-bg:$color-secondary
+$mobile-info-text-color:#14141466
+$mobile-details-border-color: #0000001A
+
+$bg-white: #F0F1F4
+$bg-red: #FFE2E3
+$bg-green: #DDF6E8
+$bg-blue: rgba(214, 244, 248, 0.85)
+$bg-orange: rgba(255, 228, 210, 0.85)
+$bg-progress: rgba(214, 181, 149, 1)
+
+$text-red: #FF4C51
+$text-red-secondary: #E14848
+$text-green: #04A84D
+$text-blue: #067BCA
+$text-orange: #EA6D00
+
+$primary-black-color: #1E1E1E
+$secondary-black-color: #161616
+$tertiary-black-color: #313131
+$quaternary-black-color: #0A0A0A
+$quinary-black-color: #131313
+
+// black color
+$primary-text-black: #000000
+// white color
+$primary-white-color: #FFFFFFE5
+$secondary-white-color: rgba(235, 235, 235, 0.7)
+// gold color
+$primary-gold-color: #F7D99D
+$secondary-gold-color: #D1B17C
+$tertiary-gold-color: #FFDE33
+$quaternary-gold-color: #D6B595
+// gray color
+$primary-gray-color: #EBEBEBCC
+$secondary-gray-color: #C0C0C0
+
+// border color
+$gray-border-color: #92929291
+$white-border-color: #FFF7E9
+
+// gradient color
+$primary-gradient-color: linear-gradient(180deg, #F7D99D 0%, #A48155 100%)
+$secondary-gradient-color: linear-gradient(180deg, #474747 0%, #080808 100%)
+
+// 霓虹燈 effect
+$border-shadow-sm: 0px 0px 6px 0px rgba(255, 233, 191, 0.8)
+$border-shadow-md: 0px 0px 13.9px 0px rgba(255, 233, 191, 0.8)
+$effect-shadow-sm: drop-shadow(0 0 6px rgba(255, 233, 191, 0.8))
+$effect-shadow-md: drop-shadow(0 0 13.9px rgba(255, 233, 191, 0.8))
+$primary-text-shadow: 0 0 6px rgba(255, 233, 191, 1)
+
+// background colors
+$background-gray: rgba(30, 30, 30, 1)

@@ -1,0 +1,638 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/set_r033/assets/css/_variable.scss";
+@import "app/template/set_r033/assets/css/menu.sass";
+
+// ── q-date 彈出日曆深色主題 ─────────────────────────────────────
+// q-menu 會把日曆 teleport 到 body，此段須為全域（本檔在 MembershipManagement.vue 以非 scoped 引入）
+// 於 .q-date 層級覆蓋 --q-primary，讓「選中日期 / 範圍 / 今日」自動用品牌金，僅影響日曆本身
+.q-date {
+  --q-primary: var(--primany-01);
+  background: var(--bg-11) !important;
+  color: var(--text-01);
+
+  .q-date__header {
+    background: linear-gradient(90deg, var(--btn-bg-01) 0%, var(--btn-bg-02) 100%) !important;
+    color: var(--btn-text-01) !important;
+  }
+
+  .q-date__content {
+    background: var(--bg-11) !important;
+  }
+
+  .q-date__calendar-item .q-btn {
+    color: var(--text-01);
+  }
+
+  .q-date__today .q-btn {
+    border-color: var(--btn-bg-01);
+  }
+
+  .q-date__arrow,
+  .q-date__view {
+    color: var(--text-01);
+  }
+}
+
+.management-area {
+
+  // 無資料空狀態圖（各面板 no-data 用）
+  .agent-center-empty-img {
+    width: 10rem;
+    margin-top: 3.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  // 下級會員標籤框（查看下級時顯示當前下級帳號）
+  .subordinate-tag {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+    min-width: 11rem;
+    padding: 0.25rem 1.5rem;
+    background: var(--bg-line-02);
+    border-radius: 0.5rem;
+
+    @include phone-width {
+      display: flex;
+      width: 100%;
+      margin-bottom: 1.25rem;
+    }
+
+    .subordinate-tag-account {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-02);
+      word-break: break-all;
+      text-align: center;
+    }
+
+    .subordinate-tag-label {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--text-03);
+    }
+  }
+
+  .bet-report-table,
+  .bet-record-query-table {
+    .search-form {
+      margin-bottom: 0.625rem;
+      padding-bottom: 0.625rem;
+      border-bottom: 1px solid rgba(210, 210, 210, 0.24);
+    }
+  }
+
+  .manage-panel,
+  .detail-panel,
+  .bet-report-panel,
+  .bet-record-query-panel,
+  .agent-report-panel {
+    width: 100%;
+    padding: 0;
+    border-radius: 0.625rem;
+    overflow: hidden;
+    background: transparent;
+    color: var(--text-01);
+
+    @include phone-width {}
+
+    .manage-table,
+    .detail-table,
+    .bet-report-table,
+    .bet-record-query-table {
+      width: 100%;
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    .search-item-checkbox-wrap {
+      display: flex;
+      flex-direction: column;
+      margin-right: 1.25rem;
+      font-size: 0.875rem;
+
+      .search-item-checkbox {
+        line-height: 1rem;
+
+        // 縮小勾選框尺寸（Quasar checkbox 大小由 .q-checkbox__inner 的 font-size 決定）
+        :deep(.q-checkbox__inner) {
+          width: 1.375rem;
+          height: 1.375rem;
+          min-width: 1.375rem;
+          font-size: 1.375rem;
+        }
+
+        // checkbox 文字（label）配色
+        :deep(.q-checkbox__label) {
+          color: var(--text-01);
+          font-size: 0.875rem;
+        }
+
+        // 未勾選：框邊框
+        :deep(.q-checkbox__bg) {
+          border-color: var(--text-01);
+        }
+
+        // 勾選：框底金色 var(--primany-01)、打勾 var(--text-02)
+        :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
+          background: var(--primany-01) !important;
+          border-color: var(--primany-01) !important;
+
+          .q-checkbox__svg {
+            color: var(--text-02) !important;
+          }
+        }
+      }
+    }
+
+    // Quasar flat 表格根元素帶 .q-table__card，預設白底，改透明融入深色卡片
+    :deep(.q-table__card) {
+      background: transparent;
+      color: inherit;
+      box-shadow: none;
+    }
+
+    :deep(.q-table__top) {
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    // 上排：下級標籤 + 搜索表單（同一行）
+    .manage-search-row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: flex-end;
+      gap: 1.5rem;
+      margin-bottom: 0.625rem;
+      padding-bottom: 0.625rem;
+      border-bottom: 1px solid rgba(210, 210, 210, 0.24);
+
+      @include phone-width {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+      }
+    }
+
+    // 下排：新增下級 / 返回 + 代理剩餘額度（筛选下方、表格上方）
+    .manage-action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+
+      @include phone-width {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .add-subordinate-btn {
+        border: 1px solid var(--btn-bg-01);
+        color: var(--btn-bg-01);
+        border-radius: 0.25rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .back-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        border: 1px solid var(--btn-bg-01);
+        color: var(--btn-bg-01);
+        border-radius: 0.25rem;
+        padding: 0.5rem 1rem 0.5rem 0.5rem;
+
+        .back-btn-img {
+          font-size: 1.5rem;
+          color: var(--btn-bg-01);
+        }
+
+        .back-btn-text {
+          font-size: 1rem;
+          font-weight: 400;
+          color: var(--btn-bg-01);
+        }
+      }
+
+      .amount-text {
+        margin-left: auto;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-01);
+
+        span {
+          color: var(--btn-bg-01);
+        }
+      }
+    }
+
+    .search-form {
+      width: 100%;
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-wrap: wrap;
+
+      @include phone-width {
+        margin-bottom: 0.625rem;
+        padding-bottom: 0.625rem;
+        border-bottom: 1px solid rgba(210, 210, 210, 0.24);
+        flex-direction: column;
+        gap: 0.625rem;
+
+        // BetRecordQuery 手機版表單：各行間距
+        &.bet-record-mobile-form {
+          gap: 0.625rem;
+        }
+      }
+
+      .search-form-row {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        gap: 0.625rem;
+
+        @include phone-width {
+          flex-wrap: wrap;
+          align-items: center;
+        }
+
+        // BetRecordQuery 手機版：注單編號 + 會員帳號 兩欄
+        &.bet-record-mobile-grid {
+          @include phone-width {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            align-items: start;
+          }
+        }
+
+        .search-item {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          margin-right: 1.25rem;
+          font-size: 0.875rem;
+          overflow: hidden;
+
+          @include phone-width {
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 0;
+            flex-direction: column;
+            flex: 1;
+          }
+
+          &.manage,
+          &.bet-report,
+          &.bet-record-report {
+            margin-right: 1.25rem;
+
+            @include phone-width {
+              margin-right: 0;
+            }
+          }
+
+          &.checkbox {
+            @include phone-width {
+              justify-content: flex-start;
+              flex-direction: row;
+              flex-wrap: wrap;
+              gap: 1rem;
+
+              // 兩個勾選項各佔一半
+              >div {
+                flex: 1;
+              }
+            }
+
+            // 勾選框配色（未勾選邊框 var(--text-01)、勾選金底 + var(--text-02) 打勾）
+            :deep(.q-checkbox__bg) {
+              border-color: var(--text-01);
+            }
+
+            :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
+              background: var(--primany-01) !important;
+              border-color: var(--primany-01) !important;
+
+              .q-checkbox__svg {
+                color: var(--text-02) !important;
+              }
+            }
+          }
+
+          .search-item-label {
+            color: var(--neutral-04);
+            font-weight: 400;
+            margin-bottom: 0.25rem;
+            margin-right: 0.625rem;
+
+            @include phone-width {
+              width: 100%;
+              margin-bottom: 0.375rem;
+              margin-right: 0;
+            }
+
+            &.manage,
+            &.bet-report,
+            &.bet-record-report {
+              font-size: 0.875rem;
+              font-weight: 400;
+              margin-right: 0;
+            }
+          }
+
+          .search-item-input {
+            color: var(--input-dropdown-text-01);
+            background-color: var(--input-dropdown-bg-01);
+            border: 1px solid var(--input-dropdown-text-03);
+            overflow: hidden;
+
+            @include phone-width {
+              width: 100%;
+            }
+
+            &::placeholder {
+              color: var(--input-dropdown-text-01);
+            }
+
+            &.account {
+              width: 8.6875rem;
+              border-radius: 0.625rem;
+
+              @include phone-width {
+                width: 100%;
+              }
+
+              &.manage,
+              &.bet-report,
+              &.bet-record-report {
+                width: 13.75rem;
+
+                @include phone-width {
+                  width: 100%;
+                }
+              }
+            }
+
+            &.type {
+              min-width: 7.5rem;
+              border-radius: 6.25rem;
+
+              @include phone-width {
+                width: 100%;
+              }
+
+              &.bet-report {
+                border-radius: 0.625rem;
+              }
+
+              :deep(.q-field__append) {
+                margin-right: 0.875rem;
+              }
+            }
+
+            // 日期輸入框（activator）樣式對齊 AgentReport：1px 邊框 + 圓角 0.625rem
+            &.date {
+              border-radius: 0.625rem;
+              min-width: 17rem; // 參考 set_r017，避免被擠
+
+              @include phone-width {
+                width: 100%;
+                min-width: 0;
+              }
+
+              &.no-time {
+                min-width: 15rem;
+              }
+            }
+
+            :deep(.q-field__control) {
+              padding: 0;
+              height: 2.4375rem;
+              background: transparent;
+              box-shadow: none;
+
+              &::before {
+                border: none;
+              }
+
+              .q-field__native {
+                color: var(--input-dropdown-text-01);
+                padding: 0.625rem 0.875rem;
+                padding-right: 0;
+                font-size: 0.875rem;
+              }
+
+              .q-field__append {
+                height: 100%;
+
+                .q-icon {
+                  color: var(--input-dropdown-text-01);
+                  width: 1.5rem;
+                  height: 1.5rem;
+                }
+              }
+            }
+          }
+
+          .toggle-date-picker {
+            @apply border border-solid border-gray-300 rounded-lg text-base min-h-[2.75rem];
+
+            @include phone-width {
+              @apply my-2;
+              width: 100%;
+            }
+
+            :deep(.q-btn) {
+              font-weight: 400;
+
+              @include phone-width {
+                width: calc(100%/3);
+              }
+
+              &.bg-primary {
+                font-weight: 510;
+                background: linear-gradient(90deg, var(--btn-bg-01) 0%, var(--btn-bg-02) 100%) !important;
+              }
+            }
+          }
+        }
+
+        .search-btn {
+          background: linear-gradient(90deg, var(--btn-bg-01) 0%, var(--btn-bg-02) 100%);
+          border-radius: 0.25rem;
+          padding: 0.625rem 1.25rem;
+
+          &.manage,
+          &.bet-report,
+          &.bet-record-report {
+            font-size: 1.25rem;
+            padding: 0.4375rem 2.6875rem;
+            min-height: auto;
+            line-height: normal;
+
+            @include phone-width {
+              font-size: 1rem;
+              padding: 0.625rem 0;
+            }
+          }
+
+          @include phone-width {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1.25rem;
+
+      // 自訂 active 頁碼配色（品牌金漸層，取代預設 blue-8）
+      :deep(.q-pagination .bg-blue-8),
+      :deep(.q-pagination .q-btn[aria-current="true"]) {
+        background: linear-gradient(90deg, var(--btn-bg-01) 0%, var(--btn-bg-02) 100%) !important;
+        color: var(--btn-text-01) !important;
+      }
+    }
+  }
+
+  :deep(.q-table) {
+    thead {
+      background: var(--bg-13);
+      color: var(--text-03);
+    }
+
+    tbody {
+      background: var(--table-bg);
+      color: var(--text-03);
+    }
+
+    th {
+      font-size: 0.875rem;
+      padding-top: 0.59375rem;
+      padding-bottom: 0.59375rem;
+      text-align: center;
+      color: var(--text-02);
+    }
+
+    td {
+      font-size: 1rem;
+      padding-top: 0.6875rem;
+      padding-bottom: 0.6875rem;
+      text-align: center;
+
+      .operation-btn {
+        color: var(--btn-bg-01);
+        cursor: pointer;
+      }
+    }
+
+    .page-total,
+    .search-result-total {
+      background-color: var(--bg-13);
+      color: var(--text-01);
+      font-weight: 700;
+    }
+  }
+
+  :deep(.q-table__bottom) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--table-bg);
+    color: var(--text-03);
+  }
+
+  .expansion-menu {
+    font-size: 12px;
+    font-weight: 400;
+    border-top-left-radius: 0.625rem;
+    border-top-right-radius: 0.625rem;
+
+    .expansion-item {
+      background-color: var(--bg-14);
+      border: 0.0625rem solid var(--input-dropdown-text-03);
+      border-radius: 0.625rem;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+
+    :deep(.q-item) {
+      padding: 0.625rem 1rem;
+    }
+
+    :deep(.q-card) {
+      .q-card__section {}
+    }
+
+    .expansion-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: self-start;
+      gap: 0.625rem;
+
+      &-top {
+        width: 100%;
+        display: flex;
+        align-items: self-start;
+        justify-content: space-between;
+        color: var(--text-01);
+      }
+
+      &-bottom {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--text-01);
+
+        .operating-btn {
+          color: var(--btn-bg-01);
+          cursor: pointer;
+        }
+      }
+
+      .expansion-header-item {
+        width: 50%;
+      }
+
+      .text-gray {
+        color: var(--text-03);
+        margin-top: 0.375rem;
+      }
+    }
+
+    .expansion-detail {
+      width: 100%;
+      color: var(--text-01);
+      border-radius: 0.25rem;
+      font-size: 0.625rem;
+      font-weight: 700;
+
+      .expansion-detail-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem;
+        border-top: 0.0625rem solid rgba(255, 255, 255, 0.2);
+
+        &:first-child {
+          border-top: none;
+        }
+      }
+    }
+  }
+}

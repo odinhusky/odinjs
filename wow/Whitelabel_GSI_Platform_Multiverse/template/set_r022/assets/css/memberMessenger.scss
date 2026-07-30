@@ -1,0 +1,606 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/set_r022/assets/css/_variable.scss";
+
+.member-messenger-tabs-pill .member-messenger .member-messenger-tabs {
+  .q-tab {
+    border-color: var(--neutral-03);
+    background-color: var(--neutral-04);
+    color: var(--neutral-06);
+
+    &.q-tab--active {
+      color: var(--text-01);
+      background-color: var(--primary-01);
+    }
+  }
+
+  @include dark {
+    .q-tab:not(.q-tab--active) {
+      background: var(--primary-07);
+      color: var(--primary-02);
+    }
+  }
+}
+
+.member-messenger {
+  &.member-messenger--mobile {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: auto !important;
+    max-height: 100%;
+
+    .member-messenger-panels {
+      flex: 1 1 auto;
+      min-height: 0;
+
+      &.q-tab-panels {
+        display: flex;
+        flex-direction: column;
+      }
+
+      // 僅作用中 panel 參與 flex；勿覆寫非作用中 panel 的 display:none / hidden
+      .q-tab-panel[hidden] {
+        display: none !important;
+      }
+
+      .q-tab-panel:not([aria-hidden="true"]):not([hidden]) {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    .member-messenger-panel {
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+
+    .member-messenger-panel-card {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .member-messenger-mobile-list {
+      flex: 1 1 0;
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      // 列表末尾避開 fixed FooterNav（4.0625rem ≈ 65px）
+      padding-bottom: 4.0625rem !important;
+    }
+  }
+
+  .member-messenger-tab-panel.q-tab-panel {
+    padding: 0 !important;
+  }
+
+  .member-messenger-panel,
+  .member-messenger-panel-card {
+    border: none !important;
+  }
+
+  @include dark {
+    .member-messenger-tab-panel.q-tab-panel {
+      background: var(--neutral-01);
+    }
+
+    .inbox-table {
+      background: var(--neutral-01);
+
+      thead tr th.member-messenger-table-cell,
+      tbody tr td.member-messenger-table-cell,
+      tbody td.member-messenger-table-cell--odd,
+      tbody td.member-messenger-table-cell--even {
+        background-color: var(--neutral-01) !important;
+      }
+    }
+
+    .member-messenger-filter-label {
+      color: var(--primary-02);
+    }
+
+    .member-messenger-filter-select {
+      .q-field__control {
+        background-color: var(--primary-07) !important;
+        box-shadow: none !important;
+        color: var(--primary-02);
+
+        &::before {
+          border: 1px solid var(--neutral-07) !important;
+        }
+
+        &::after {
+          border-color: transparent !important;
+        }
+      }
+
+      &.q-field--focused .q-field__control::before,
+      &.q-field--highlighted .q-field__control::before {
+        border-color: var(--neutral-08) !important;
+      }
+
+      &.q-field--focused .q-field__control::after,
+      &.q-field--highlighted .q-field__control::after {
+        border-color: transparent !important;
+      }
+
+      .q-field__native,
+      .q-field__append,
+      .q-field__append .q-icon {
+        color: var(--primary-02) !important;
+      }
+    }
+
+    .member-messenger-dtpicker {
+      .mx-input {
+        border: 1px solid var(--neutral-07) !important;
+        background-color: var(--primary-07) !important;
+        color: var(--primary-02);
+        box-shadow: none !important;
+
+        &:hover,
+        &:focus {
+          border-color: var(--neutral-08) !important;
+        }
+
+        &::placeholder {
+          color: var(--primary-06);
+        }
+      }
+
+      .mx-icon-calendar,
+      .mx-icon-clear {
+        color: var(--primary-06);
+      }
+
+      .mx-icon-clear:hover {
+        color: var(--primary-02);
+      }
+    }
+
+    .member-messenger-status-tag--unread {
+      background-color: var(--neutral-04);
+      color: var(--neutral-05);
+    }
+  }
+
+  .inbox-table tbody tr td.member-messenger-table-cell {
+    border-bottom: 1px solid var(--neutral-07) !important;
+  }
+
+  .member-messenger-search-btn,
+  .q-btn[color="primary"] {
+    background-color: var(--primary-01) !important;
+    color: var(--text-01) !important;
+
+    .q-btn__content {
+      color: var(--text-01) !important;
+    }
+  }
+
+  // 列表狀態 chip（對應 getMessengerListStatusTagClasses）
+  .member-messenger-status-tag--read {
+    background-color: var(--tag-bg-03);
+    color: var(--tag-text-03);
+  }
+
+  .member-messenger-status-tag--closed {
+    background-color: var(--emotional-10);
+    color: var(--emotional-09);
+  }
+
+  .member-messenger-status-tag--unread {
+    background-color: var(--neutral-04);
+    color: var(--neutral-05);
+  }
+
+  // 查看按鈕：色票／圓角對齊搜尋按鈕（尺寸與 padding 維持共用元件）
+  .view-btn-desktop,
+  .view-btn-mobile {
+    border-radius: 0.5rem !important;
+    background: var(--primary-01) !important;
+    color: var(--text-01) !important;
+
+    &::before {
+      border: none;
+      box-shadow: none;
+    }
+
+    .q-btn__wrapper {
+      background: var(--primary-01) !important;
+    }
+
+    .q-btn__content {
+      color: var(--text-01) !important;
+    }
+
+    .q-focus-helper {
+      display: none;
+    }
+  }
+
+  // 關閉對話：邊框＋文字 --emotional-danger-01（根元素 border ＋ wrapper::before 雙寫，相容 Quasar flat）
+  .outbox-close-thread-btn-desktop,
+  .outbox-close-thread-btn-mobile {
+    border: 1px solid var(--emotional-danger-01) !important;
+    border-radius: 0.5rem !important;
+    color: var(--emotional-danger-01) !important;
+    background: transparent !important;
+
+    .q-btn__wrapper {
+      border-radius: inherit !important;
+
+      &::before {
+        border: 1px solid var(--emotional-danger-01) !important;
+        border-radius: inherit !important;
+        box-shadow: none !important;
+        opacity: 1 !important;
+      }
+    }
+
+    .q-btn__content {
+      color: var(--emotional-danger-01) !important;
+    }
+  }
+}
+
+// 撰寫新訊息／確認對話框共用送出、取消鈕（ConfirmDialog teleport 至 body）
+.member-messenger-dialog,
+.member-messenger-confirm-dialog {
+  .messenger-compose-btn-submit {
+    background-color: var(--primary-01) !important;
+    color: var(--text-01) !important;
+
+    .q-btn__wrapper {
+      background: var(--primary-01) !important;
+    }
+
+    .q-btn__content {
+      color: var(--text-01) !important;
+    }
+  }
+
+  .messenger-compose-btn-cancel {
+    border-color: var(--primary-01) !important;
+    color: var(--primary-01) !important;
+
+    .q-btn__content {
+      color: var(--primary-01) !important;
+    }
+  }
+}
+
+.member-messenger-dialog {
+  .messenger-compose-dialog-body {
+    background: var(--primary-07);
+  }
+
+  &.outbox-message-dialog {
+    .outbox-message-dialog-title {
+      color: var(--neutral-10);
+    }
+
+    .outbox-message-dialog-chat-frame {
+      border: none !important;
+    }
+
+    .outbox-message-dialog-chat-log {
+      background: var(--primary-07);
+      scrollbar-width: thin;
+      scrollbar-color: var(--neutral-03) transparent;
+
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--neutral-03) transparent;
+      }
+
+      *::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+      }
+
+      *::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      *::-webkit-scrollbar-thumb {
+        background: var(--neutral-03);
+        border-radius: 999px;
+      }
+    }
+
+    .outbox-message-dialog-empty-hint {
+      color: var(--neutral-05);
+    }
+
+    .outbox-message-dialog-reply-panel {
+      background: var(--neutral-04);
+    }
+
+    .outbox-message-dialog-reply-input {
+      .q-field__control {
+        background: var(--neutral-01) !important;
+
+        &::before {
+          border: none !important;
+          box-shadow: none !important;
+        }
+      }
+
+      &.q-field--focused .q-field__control::before,
+      &.q-field--highlighted .q-field__control::before {
+        border: none !important;
+        box-shadow: none !important;
+      }
+    }
+
+    .outbox-message-dialog-send-btn {
+      background: var(--primary-01) !important;
+      color: var(--text-01) !important;
+
+      .q-btn__wrapper {
+        background: var(--primary-01) !important;
+      }
+
+      .q-btn__content,
+      .outbox-message-dialog-send-icon {
+        color: var(--text-01) !important;
+      }
+
+      &::before {
+        box-shadow: none !important;
+      }
+    }
+
+    .outbox-message-dialog-avatar {
+      background: var(--primary-01) !important;
+    }
+
+    .outbox-message-dialog-avatar-icon {
+      color: var(--text-01) !important;
+    }
+
+    .outbox-message-dialog-member-name {
+      color: var(--primary-01) !important;
+    }
+
+    .outbox-message-dialog-sidebar-time {
+      color: var(--primary-02);
+    }
+
+    .outbox-message-dialog-sidebar-panel {
+      background: var(--primary-07);
+    }
+
+    .outbox-message-dialog-detail-card {
+      background: var(--neutral-01);
+    }
+
+    .outbox-message-dialog-subject {
+      color: var(--neutral-10);
+    }
+
+    .outbox-message-dialog-separator {
+      background: var(--neutral-07);
+    }
+
+    .outbox-message-dialog-detail-image {
+      border-color: var(--neutral-07);
+    }
+
+    .outbox-message-dialog-detail-content {
+      color: var(--neutral-10);
+    }
+
+    .outbox-message-bubble--admin,
+    .outbox-message-bubble--player {
+      border: none !important;
+    }
+
+    .outbox-message-bubble--admin {
+      background: var(--neutral-01);
+
+      .outbox-message-bubble__sender,
+      .outbox-message-bubble__time {
+        color: var(--primary-02);
+      }
+
+      .outbox-message-bubble__content {
+        color: var(--neutral-10);
+      }
+    }
+
+    .outbox-message-bubble--player {
+      background: var(--primary-01);
+
+      .outbox-message-bubble__sender,
+      .outbox-message-bubble__time {
+        color: var(--neutral-02);
+      }
+
+      .outbox-message-bubble__content {
+        color: var(--neutral-01);
+      }
+    }
+  }
+}
+
+// ConfirmDialog teleport 至 body
+.member-messenger-confirm-dialog {
+  .confirm-dialog-title {
+    color: var(--neutral-10) !important;
+  }
+
+  .confirm-dialog-close {
+    color: var(--neutral-09) !important;
+  }
+}
+
+.body--dark {
+  .member-messenger-dialog {
+    .messenger-compose-dialog-card,
+    .outbox-message-dialog-card,
+    .inbox-message-dialog-card {
+      background: var(--neutral-01);
+    }
+
+    .messenger-compose-subject-field,
+    .messenger-compose-content-field {
+      .q-field__control {
+        background-color: var(--neutral-01) !important;
+
+        &::before {
+          border: 1px solid var(--neutral-03) !important;
+        }
+      }
+
+      &.q-field--focused .q-field__control::before,
+      &.q-field--highlighted .q-field__control::before {
+        border: 1px solid var(--neutral-03) !important;
+      }
+    }
+
+    .s3-image-uploader label {
+      border-color: var(--neutral-08) !important;
+      background: var(--primary-07) !important;
+
+      .q-icon,
+      span {
+        color: var(--neutral-05) !important;
+      }
+    }
+
+    &.outbox-message-dialog {
+      .outbox-message-dialog-chat-col {
+        border-color: var(--neutral-07);
+      }
+
+      .outbox-message-dialog-sidebar-time {
+        color: var(--primary-06);
+      }
+
+      .outbox-message-dialog-chat-log {
+        scrollbar-color: var(--neutral-08) transparent;
+
+        * {
+          scrollbar-color: var(--neutral-08) transparent;
+        }
+
+        *::-webkit-scrollbar-thumb {
+          background: var(--neutral-08);
+        }
+      }
+    }
+  }
+
+  .member-messenger-confirm-dialog .q-dialog-plugin {
+    background: var(--neutral-01) !important;
+  }
+
+  // Filter select / date picker 展開層 teleport 至 body
+  .member-messenger-filter-select-popup {
+    background-color: var(--primary-07) !important;
+    border: 1px solid var(--neutral-07) !important;
+
+    .q-item {
+      color: var(--primary-02) !important;
+
+      .q-item__section--main,
+      .q-item__label {
+        color: var(--primary-02) !important;
+      }
+    }
+
+    .q-item--active .q-item__label {
+      color: var(--primary-01) !important;
+    }
+
+    .q-focus-helper {
+      background: var(--neutral-02) !important;
+    }
+
+    .q-item:hover .q-focus-helper {
+      opacity: 0.35 !important;
+    }
+  }
+
+  .member-messenger-dtpicker-popup {
+    color: var(--primary-02) !important;
+    border: 1px solid var(--neutral-07) !important;
+
+    &.mx-datepicker-main,
+    .mx-datepicker-body,
+    .mx-datepicker-content,
+    .mx-datepicker-sidebar,
+    .mx-calendar,
+    .mx-date-time,
+    .mx-date-time-range,
+    .mx-time,
+    .mx-time-content,
+    .mx-time-columns,
+    .mx-time-column {
+      background-color: var(--primary-07) !important;
+      color: var(--primary-02) !important;
+      border-color: var(--neutral-07) !important;
+    }
+
+    .mx-datepicker-sidebar + .mx-datepicker-content,
+    .mx-calendar + .mx-calendar,
+    .mx-time + .mx-time,
+    .mx-time-column {
+      border-left-color: var(--neutral-07) !important;
+    }
+
+    .mx-datepicker-header,
+    .mx-datepicker-footer,
+    .mx-time-header {
+      background-color: var(--primary-07) !important;
+      border-color: var(--neutral-07) !important;
+    }
+
+    .mx-table th {
+      color: var(--primary-06) !important;
+    }
+
+    .mx-calendar-header-label,
+    .mx-btn-icon-left,
+    .mx-btn-icon-right,
+    .mx-btn-icon-double-left,
+    .mx-btn-icon-double-right,
+    .mx-btn-shortcut,
+    .mx-btn {
+      color: var(--primary-02) !important;
+    }
+
+    .mx-calendar-content .cell,
+    .mx-time-column .mx-time-item,
+    .mx-time-option {
+      color: var(--primary-02) !important;
+    }
+
+    .mx-calendar-content .cell:hover,
+    .mx-time-column .mx-time-item:hover,
+    .mx-time-option:hover {
+      background-color: var(--neutral-02) !important;
+    }
+
+    .mx-calendar-content .cell.in-range,
+    .mx-calendar-content .cell.hover-in-range {
+      background-color: var(--neutral-02) !important;
+      color: var(--primary-02) !important;
+    }
+
+    .mx-calendar-content .cell.active,
+    .mx-time-column .mx-time-item.active,
+    .mx-time-option.active {
+      background-color: var(--primary-01) !important;
+      color: var(--text-01) !important;
+    }
+
+    .mx-calendar-content .cell.today {
+      color: var(--primary-01) !important;
+    }
+  }
+}

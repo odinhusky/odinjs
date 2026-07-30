@@ -1,0 +1,30 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "Bundler",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "jsx": "preserve",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "ignoreDeprecations": "6.0", // 消除警告的核心
+    "paths": {
+      // 改為相對路徑
+      "@shared-src/*": ["./libs/shared/ui-layer/src/*"],
+      "@shared-lib/*": ["./libs/shared/ui-layer/src/lib/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

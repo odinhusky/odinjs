@@ -1,0 +1,123 @@
+.loginWrapper {
+
+  .formWrapper {
+    .copyright {
+      font-size: 0.75rem;
+      translate: scale(0.05);
+    }
+
+    .btnSubmit {
+      width: 100%;
+    }
+  }
+
+  // 總控樣式
+  &.adminWrapper {
+    background: url("@/assets/images/login/admin-bg.webp") #000 no-repeat center center;
+    background-size: cover;
+    width: 100%;
+
+    .formWrapper {
+      width: 100%;
+      max-width: 56.25rem;
+      overflow: hidden;
+
+      .logoWrapper {
+        background: url("@/assets/images/login/admin-form-bg.webp") #000 no-repeat center center;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+
+        .logo {
+          max-width: 23rem;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &.generalAgentWrapper {
+    background: url("@/assets/images/login/general-agent-bg.webp") #000 no-repeat center center;
+    background-size: cover;
+    width: 100%;
+
+    .formWrapper {
+      width: 100%;
+      max-width: 31.25rem;
+      overflow: hidden;
+    }
+
+    .logoWrapper {
+
+      .logo {
+        width: 6.875rem;
+      }
+    }
+  }
+
+  // 代理樣式
+  &.agentWrapper {
+    background: url("@/assets/images/login/agent-bg.webp") #000 no-repeat center center;
+    background-size: cover;
+    width: 100%;
+
+    .formWrapper {
+      width: 100%;
+      max-width: 56.25rem;
+      overflow: hidden;
+
+      .logoWrapper {
+
+        .logo {
+          width: 6.875rem;
+        }
+      }
+
+      .formImg {
+        background: url("@/assets/images/login/agent-form-bg.webp") #000 no-repeat center center;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        min-height: 14rem;
+      }
+    }
+  }
+}
+
+.input-control {
+  :deep(.q-field__control-container) {
+    @apply flex items-center justify-center;
+  }
+
+  :deep(.q-field__native) {
+    height: calc(100% - 6px);
+    min-height: initial !important;
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      /* --- 關鍵：停用 Quasar 的自動填入偵測動畫 --- */
+      -webkit-animation-name: none !important;
+      animation-name: none !important;
+
+      /* 除了內陰影，強行把 background 設為透明 */
+      background-color: transparent !important;
+      background-image: none !important;
+
+      // 使用巨大的內陰影覆蓋背景色
+      -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+      box-shadow: 0 0 0px 1000px #ffffff inset !important;
+      // 強制文字顏色（例如白色）
+      // -webkit-text-fill-color: #ffffff !important;
+
+      // --- 關鍵修復：處理左右出現的邊框 ---
+      border-radius: 0 !important;
+      border: none !important;
+      outline: none !important;
+
+      /* 阻止樣式跳轉 */
+      transition: background-color 5000s ease-in-out 0s;
+    }
+  }
+}

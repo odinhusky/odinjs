@@ -1,0 +1,117 @@
+@import "app/template/set_r027/assets/css/_variable.scss";
+
+.q-menu:not(.header-menu-r027) {
+  background: #0c141c !important;
+  background-color: var(--bg-04, #0c141c) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-color: var(--bg-line-01, rgba(255, 255, 255, 0.1)) !important;
+  color: #fff !important;
+  color: var(--text-01, #fff) !important;
+  box-shadow: none !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .q-list:not(.header-menu-list),
+  .q-virtual-scroll__content,
+  .q-item:not(.header-menu-item) {
+    background: #0c141c !important;
+    background-color: var(--bg-04, #0c141c) !important;
+    color: #fff !important;
+    color: var(--text-01, #fff) !important;
+  }
+
+  .q-item:not(.header-menu-item) .q-item__section,
+  .q-item:not(.header-menu-item) .q-item__label,
+  .q-item:not(.header-menu-item) .q-item__section--main,
+  .q-item:not(.header-menu-item) .q-item__section--side,
+  .q-item:not(.header-menu-item) .q-item__label--header,
+  .q-item:not(.header-menu-item) .q-item__label--caption {
+    color: #fff !important;
+    color: var(--text-01, #fff) !important;
+  }
+
+  .q-item:not(.header-menu-item).q-item--active,
+  .q-item:not(.header-menu-item).q-manual-focusable--focused,
+  .q-item:not(.header-menu-item).q-hoverable:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    color: var(--text-01, #fff) !important;
+  }
+}
+
+.q-menu.r027-dropdown-menu-bg,
+.q-menu--dark.r027-dropdown-menu-bg,
+.q-select__dialog .scroll.r027-dropdown-menu-bg,
+.q-select__dialog--dark .scroll.r027-dropdown-menu-bg,
+.q-menu.q-position-engine.scroll[style*="background-color: rgb(29, 18, 93)"],
+.q-menu.q-position-engine.scroll[style*="background-color: #1d125d"],
+.q-menu.q-position-engine.scroll[style*="background-color:#1d125d"],
+.r027-dropdown-menu-bg,
+.unified-dark-dropdown-menu {
+  // Keep explicit R027 dropdown hooks aligned with the global menu theme.
+  background: #0c141c !important;
+  background-color: var(--bg-04, #0c141c) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-color: var(--bg-line-01, rgba(255, 255, 255, 0.1)) !important;
+  color: #fff !important;
+  color: var(--text-01, #fff) !important;
+  border-radius: 0.5rem !important;
+  box-shadow: none !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .q-list,
+  .q-virtual-scroll__content {
+    background: #0c141c !important;
+    background-color: var(--bg-04, #0c141c) !important;
+    color: #fff !important;
+    color: var(--text-01, #fff) !important;
+  }
+
+  .q-item {
+    background: #0c141c !important;
+    background-color: var(--bg-04, #0c141c) !important;
+    color: #fff !important;
+    color: var(--text-01, #fff) !important;
+
+    .q-item__section,
+    .q-item__label,
+    .q-item__section--main,
+    .q-item__section--side,
+    .q-item__label--header,
+    .q-item__label--caption {
+      color: #fff !important;
+      color: var(--text-01, #fff) !important;
+    }
+
+    &.q-item--active,
+    &.q-manual-focusable--focused,
+    &.q-hoverable:hover {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+      color: #fff !important;
+      color: var(--text-01, #fff) !important;
+
+      .q-item__section,
+      .q-item__label,
+      .q-item__section--main,
+      .q-item__section--side,
+      .q-item__label--header,
+      .q-item__label--caption {
+        color: #fff !important;
+        color: var(--text-01, #fff) !important;
+      }
+    }
+  }
+}

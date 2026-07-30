@@ -1,0 +1,14 @@
+@import "app/template/set_ed3/assets/css/_variable.scss";
+
+// 加密貨幣錢包彈窗：套用 set_ed3 深色 + 金色 + 綠按鈕主題配色（排版維持共用元件預設）
+.crypto-wallet-dialog {
+  --cwd-bg: #{$primary-color};               // #1a1a1a 深灰
+  --cwd-text: #{$white-color};               // #ffffff
+  --cwd-muted: #{$header-text-gray};         // #676767
+  --cwd-card: #{$primary-color-light};       // #292929 卡背
+  --cwd-accent: #{$menu-text-color};         // #cba354 金色強調
+  --cwd-warning: #{$danger-color};           // #FF0000 紅
+  --cwd-border: #{$border01};                // #1a1a1a
+  --cwd-action-bg: #{$pink-color};           // #086a51 綠按鈕
+  --cwd-action-text: #{$white-color};        // #ffffff
+}

@@ -1,0 +1,3 @@
+[type縮寫(feat/fix/docs/refactor/perf/test/build/ci/add)]: [標題]
+
+- [條列細項說明、原因...等]

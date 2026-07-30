@@ -1,0 +1,13 @@
+.dialogWrapper {
+  .dialogMainWrapper {
+    max-height: 80vh;
+  }
+
+  .hide-scrollY {
+    overflow-y: hidden;
+  }
+
+  .q-dialog__inner>.q-card>.q-card__actions .q-btn--rectangle {
+    min-width: 78px;
+  }
+}

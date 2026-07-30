@@ -1,0 +1,406 @@
+// =============================================================================
+// 1. Base CSS Variables (基礎色板)
+// =============================================================================
+
+:root
+  /* set_pobg(okbet_green) */
+  /* color */
+  --bg-headerbottom: #ffffff
+  --bg-main-bg: #ffffff
+  --bg-side: #ffffff
+  --emotional-01: #ff3b3b
+  --emotional-02: #ffe2e3
+  --emotional-03: #3ecc31
+  --emotional-04: #009d46
+  --emotional-05: #ddf6e8
+  --emotional-06: #00d0ff
+  --emotional-07: #008ae6
+  --emotional-08: #d2edff
+  --emotional-09: #C79200
+  --emotional-10: #FFF8D9
+  --emotional-correct-01: #ffffff
+  --emotional-correct-02: #ffffff
+  --emotional-danger-01: #ffffff
+  --emotional-danger-02: #ffffff
+  --emotional-default-01: #ffffff
+  --emotional-default-02: #ffffff
+  --emotional-warning-01: #ffffff
+  --emotional-warning-02: #ffffff
+  --neutral-01: #ffffff
+  --neutral-02: #efefef
+  --neutral-03: #dddedf
+  --neutral-04: #bcbcbc
+  --neutral-05: #9fa0a1
+  --neutral-06: #7b7b7b
+  --neutral-07: #676767
+  --neutral-08: #262626
+  --neutral-09: #ffffff
+  --neutral-10: #ffffff
+  --neutral-100: #000000
+  --primary-01: #e6effd
+  --primary-02: #5c8cf0
+  --primary-03: #0295e8
+  --primary-04: #025be8
+  --primary-05: #bad5ff
+  --primary-06: #90bbff
+  --primary-07: #ffffff
+  --primary-08: #ffffff
+  --primary-09: #ffffff
+  --secondary-01: #fbfcfd
+  --secondary-02: #f5f5f7
+  --secondary-03: #e8ecf8
+  --secondary-04: #7696b1
+  --secondary-05: #a7b2c4
+  --secondary-06: #7983a2
+  --secondary-07: #4b5678
+  --secondary-08: #00000099
+  --secondary-09: #d2d2d23d
+  --secondary-10: #e6effd
+  --secondary-11: #e6effd
+  --secondary-12: #f5f5f7
+  --secondary-13: #ffffff
+  --secondary-14: #ffffff
+  --secondary-15: #ffffff
+  --secondary-16: #ffffff
+  --text-01: #ffffff
+  --text-link: #ffffff
+  --ticker-01: #5c8cf0
+  --ticker-02: #0295e8
+  --ticker-03: #025be8
+
+// =============================================================================
+// 2. Component CSS Variables (元件變數)
+// =============================================================================
+:root
+  /* set_pobg(okbet_green) */
+  /* color */
+  --bg-01: #f5f5f7
+  --bg-02: #f5f5f7
+  --bg-03: #f5f5f7
+  --bg-04: var(--secondary-12)
+  --bg-05: var(--secondary-10)
+  --bg-06: var(--secondary-13)
+  --bg-07: var(--secondary-14)
+  --bg-08: var(--secondary-01)
+  --bg-09: var(--primary-01)
+  --bg-10: var(--primary-02)
+  --bg-11: var(--secondary-01)
+  --bg-12: var(--neutral-05)
+  --bg-13: var(--secondary-10)
+  --bg-14: var(--neutral-02)
+  --bg-15: var(--secondary-15)
+  --bg-16: var(--secondary-16)
+  --bg-17: var(--secondary-08)
+  --bg-18: var(--secondary-07)
+  --bg-19: #4c38c0
+  --bg-20: #f7a491
+  --bg-21: #f47458
+  --bg-22: #ffffff
+  --bg-23: var(--secondary-11)
+  --bg-footer: var(--neutral-100)
+  --bg-header: var(--secondary-12)
+  --bg-line-01: var(--neutral-02)
+  --bg-line-02: var(--secondary-09)
+  --bg-line-03: var(--neutral-03)
+  --bg-line-04: var(--emotional-03)
+  --bg-line-05: var(--emotional-06)
+  --bg-navbar: var(--secondary-11)
+  --btn-bg-01: var(--primary-04)
+  --btn-bg-02: var(--primary-04)
+  --btn-bg-03: #f2631900
+  --btn-bg-04: var(--neutral-03)
+  --btn-bg-05: var(--neutral-04)
+  --btn-bg-06: var(--secondary-11)
+  --btn-bg-07: var(--neutral-05)
+  --btn-bg-08: var(--secondary-14)
+  --btn-border-01: var(--neutral-04)
+  --btn-border-02: var(--primary-04)
+  --btn-border-03: var(--neutral-01)
+  --btn-icon-01: var(--neutral-01)
+  --btn-text-01: var(--neutral-08)
+  --btn-text-02: var(--neutral-07)
+  --btn-text-03: var(--neutral-07)
+  --btn-text-04: var(--primary-04)
+  --btn-text-05: var(--neutral-01)
+  --card-bg-01: var(--neutral-01)
+  --card-bg-02: var(--secondary-07)
+  --card-bg-03: var(--primary-05)
+  --card-bg-04: var(--neutral-03)
+  --card-border-01: var(--primary-04)
+  --card-text-01: var(--primary-01)
+  --card-text-02: var(--neutral-05)
+  --card-text-03: var(--neutral-06)
+  --dialog-bg: var(--primary-04)
+  --dialog-bg-02: var(--neutral-01)
+  --dialog-text-01: var(--neutral-01)
+  --dialog-text-02: var(--primary-04)
+  --dialog-text-03: var(--neutral-08)
+  --icon-01: var(--neutral-04)
+  --icon-02: var(--neutral-05)
+  --icon-03: var(--neutral-06)
+  --icon-04: var(--primary-02)
+  --icon-05: var(--emotional-01)
+  --icon-06: var(--emotional-03)
+  --icon-bg-01: var(--primary-01)
+  --icon-bg-02: var(--neutral-01)
+  --icon-bg-03: var(--secondary-01)
+  --icon-bg-04: var(--secondary-08)
+  --icon-bg-05: var(--secondary-09)
+  --icon-bg-06: var(--emotional-01)
+  --icon-bg-07: var(--secondary-14)
+  --icon-bg-08: var(--secondary-07)
+  --icon-border-01: var(--neutral-03)
+  --icon-navber-01: var(--neutral-01)
+  --icon-navber-02: var(--secondary-06)
+  --icon-navber-03: var(--primary-01)
+  --icon-navber-04: var(--primary-02)
+  --input-dropdown-bg-01: var(--neutral-01)
+  --input-dropdown-border-01: var(--neutral-05)
+  --input-dropdown-border-02: var(--emotional-01)
+  --input-dropdown-text-01: var(--neutral-04)
+  --input-dropdown-text-02: var(--neutral-07)
+  --input-dropdown-text-03: var(--neutral-05)
+  --tab-bg-01: var(--primary-06)
+  --tab-bg-02: var(--primary-05)
+  --tab-bg-03: var(--secondary-02)
+  --tab-bg-04: var(--secondary-11)
+  --tab-bg-05: var(--secondary-11)
+  --tab-line-01: var(--neutral-05)
+  --tab-text-01: var(--neutral-07)
+  --tag-bg-01: var(--neutral-05)
+  --tag-bg-02: var(--emotional-02)
+  --tag-bg-03: var(--emotional-05)
+  --tag-bg-04: var(--emotional-08)
+  --tag-text-01: var(--neutral-01)
+  --tag-text-02: var(--emotional-01)
+  --tag-text-03: var(--emotional-04)
+  --tag-text-04: var(--emotional-07)
+  --text-01: var(--neutral-07)
+  --text-02: var(--neutral-100)
+  --text-03: var(--neutral-06)
+  --text-04: var(--secondary-16)
+  --text-05: var(--emotional-03)
+  --text-06: var(--emotional-01)
+  --text-07: var(--primary-01)
+
+// =============================================================================
+// 3. Sass Variables Alias (映射至 CSS Variables)
+// =============================================================================
+// color
+$primary-color: #025be8
+$secondary-color: #5C8CF0
+$quaternary-color: #1976D2
+
+$white-color: #fff
+$black-color: #000
+$danger-color: #F23C3B
+$danger-color-secondary: #E14848
+$danger-color-tertiary: #E11717
+$danger-color-quaternary: #d22c2c
+$success-color: #4DC700
+$success-color-secondary: #1CD219
+$success-color-tertiary: #41a700
+$gray-color: #e2e2e2
+
+$pale-silver-color: #F0F1F4
+$dark-slate-color: #050B18
+$deep-ocean-color: #0D2245
+$steel-blue-color: #6D7693
+$sky-gray-color: #A7B2C4
+$charcoal-gray-color: #414655
+$charcoal-gray-color-light: #535D76
+$night-sky-color: #303C55
+$pale-gray-color: #E5EBF2
+$pale-blue-color: #E6EFFD
+$ocean-blue-color: #18426B
+$mint-green-color: #31D089
+$ocean-blue-dark-color: #14366B
+$smoke-gray-color: #5E6D78
+$neutral-gray-color: #4D4D4D
+$misty-blue-color: #D3DEF5
+$slate-blue-color: #7F87A1
+$dusty-blue-color: #BEC7DC
+$dusty-blue-light-color: #C9CFD7
+$warm-gold-color: #ECCD86
+$bright-yellow-color: #FFC002
+$light-warm-gold: #F8E8BD
+$dark-warm-gold: #EDB266
+$neon-yellow-color: #FFE400
+$medium-gray-color: #CCCCCC
+$bright-blue-color: #71ADFF
+$bright-blue-purple-color: #7599FF
+$vivid-blue-color: #1971FD
+$electric-blue-color: #0063FF
+$cyan-blue-color: #0295E8
+$cyan-blue-light-color: #10B7F3
+$dusk-blue-color: #191E2D
+$ocean-depths-color: #00265F
+$muted-blue-color: #0C70AA
+$muted-blue-dark-color: #085D8F
+$pale-pink-color: #FFE7FB
+$midnight-gray-color: #24262B
+$dark-gray-color: #141414
+$denim-blue-color: #1F529E
+$deep-slate-color: #00181E
+$vibrant-blue-color: #0085FF
+$periwinkle-blue-color: #A6C5FC
+$aqua-blue-color: #97DAE1
+$cool-blue-color: #547C9D
+$soft-slate-gray-color: #A2A2B4
+$dusty-blue-light-color: #BFC9EB
+$soft-blue-gray-color: #94A1C8
+$eclipse-gray-color: #1C1E22
+$blue-charcoal-color: #3F4C71
+$turquoise-blue-color: #4FC0D2
+$balanced-gray-color: #999999
+$mid-gray-color: #6D6D6D
+$standard-gray-color: #828282
+$cool-slate-blue-color: #8593b0
+$soft-periwinkle-color: #8baaf1
+$midnight-ocean-color: #152f57
+$lightest-gray-color: #eaeaea
+$light-steel-blue-color: #6282c4
+$medium-bright-blue-color: #3498db
+$charcoal-gray-dark-color: #2a2a2a
+$soft-yellow-color: #f0e47f
+// referral table action
+$referral-table-danger: #FFE2E3
+$referral-table-success: #DDF6E8
+$referral-table-info: rgba(214, 244, 248, 0.85)
+$referral-table-warning: rgba(255, 228, 210, 0.85)
+$referral-text-success: #04A84D
+$referral-text-info: #067BCA
+$referral-text-warning: #EA6D00
+// ai agent
+$gold-color: #D6B595
+$card-betting-title-color: #4E4E4E
+$card-betting-item-color: #EEE
+$bg-linear-gradient01: linear-gradient(180deg, #143A76 0%, #052656 100%)
+$bg-linear-gradient02: linear-gradient(90deg, #70ACFF 0%, #1971FD 100%)
+$box-shadow01: 0px 3px 3px 0px rgba(0, 0, 0, 0.12)
+$ai-border-color: #CACACA
+$cancel-btn-bg: #EB1111
+$tips-text: #FF0000
+$apply-btn-bg: #E0ECFF
+$toggle-active-btn-bg: #30D158
+$toggle-inactive-btn-bg: #9E9E9E
+
+// background
+$background-primary-color: $primary-color
+$background-secondary-color: $secondary-color
+$background-quaternary-color: $quaternary-color
+$background-danger-color: $danger-color
+$background-gray-color: $gray-color
+$background-pale-silver-color: $pale-silver-color
+$background-light-color: $white-color
+$background-dark-color: $black-color
+$background-pale-gray-color: $pale-gray-color
+$background-mint-green-color: $mint-green-color
+$background-pale-blue-color: $pale-blue-color
+$background-bright-yellow-color: $bright-yellow-color
+$background-medium-gray-color: $medium-gray-color
+$background-bright-blue-color: $bright-blue-color
+$background-vivid-blue-color: $vivid-blue-color
+$background-electric-blue-color: $electric-blue-color
+$background-cyan-blue-color: $cyan-blue-color
+$background-bright-blue-purple-color: $bright-blue-purple-color
+$background-dusk-blue-color: $dusk-blue-color
+$background-ocean-depths-color: $ocean-depths-color
+$background-cyan-blue-light-color: $cyan-blue-light-color
+$background-muted-blue-color: $muted-blue-color
+$background-muted-blue-dark-color: $muted-blue-dark-color
+$background-pale-pink-color: $pale-pink-color
+$background-midnight-gray-color: $midnight-gray-color
+$background-denim-blue-color: $denim-blue-color
+$background-periwinkle-blue-color: $periwinkle-blue-color
+$background-aqua-blue-color: $aqua-blue-color
+$background-cool-blue-color: $cool-blue-color
+$background-dusty-blue-light-color: $dusty-blue-light-color
+$background-danger-color-quaternary: $danger-color-quaternary
+$background-success-color-tertiary: $success-color-tertiary
+$background-eclipse-gray-color: $eclipse-gray-color
+$background-mid-gray-color: $mid-gray-color
+$background-dark-gray-color: $dark-gray-color
+$background-light-warm-gold: $light-warm-gold
+$background-dark-warm-gold: $dark-warm-gold
+// text
+$text-primary-color: $primary-color
+$text-secondary-color: $secondary-color
+$text-quaternary-color: $quaternary-color
+$text-danger-color: $danger-color
+$text-danger-secondary-color: $danger-color-secondary
+$text-danger-tertiary-color: $danger-color-tertiary
+$text-success-color: $success-color
+$text-success-color-secondary: $success-color-secondary
+$text-light-color: $white-color
+$text-dark-color: $black-color
+$text-gray-color: $gray-color
+$text-night-sky-color: $night-sky-color
+$text-steel-blue-color: $steel-blue-color
+$text-charcoal-gray-color: $charcoal-gray-color
+$text-charcoal-gray-color-light: $charcoal-gray-color-light
+$text-deep-ocean-color: $deep-ocean-color
+$text-sky-gray-color: $sky-gray-color
+$text-ocean-blue-color: $ocean-blue-color
+$text-mint-green-color: $mint-green-color
+$text-ocean-blue-dark-color: $ocean-blue-dark-color
+$text-smoke-gray-color: $smoke-gray-color
+$text-neutral-gray-color: $neutral-gray-color
+$text-slate-blue-color: $slate-blue-color
+$text-dusty-blue-color: $dusty-blue-color
+$text-warm-gold-color: $warm-gold-color
+$text-bright-yellow-color: $bright-yellow-color
+$text-pale-blue-color: $pale-blue-color
+$text-midnight-gray-color: $midnight-gray-color
+$text-dark-gray-color: $dark-gray-color
+$text-eclipse-gray-color: $eclipse-gray-color
+$text-blue-charcoal-color: $blue-charcoal-color
+$text-turquoise-blue-color: $turquoise-blue-color
+$text-balanced-gray-color: $balanced-gray-color
+$text-vibrant-blue-color: $vibrant-blue-color
+$text-vivid-blue-color: $vivid-blue-color
+$text-standard-gray-color: $standard-gray-color
+$text-pale-gray-color: $pale-gray-color
+$text-cool-slate-blue-color: $cool-slate-blue-color
+$text-mid-gray-color: $mid-gray-color
+$text-soft-periwinkle-color: $soft-periwinkle-color
+$text-midnight-ocean-color: $midnight-ocean-color
+$text-lightest-gray-color: $lightest-gray-color
+$text-light-steel-blue-color: $light-steel-blue-color
+$text-dusty-blue-light-color: $dusty-blue-light-color
+// border
+$border-secondary-color: $secondary-color
+$border-quaternary-color: $quaternary-color
+$border-light-color: $white-color
+$border-dark-color: $black-color
+$border-pale-silver-color: $pale-silver-color
+$border-pale-gray-color: $pale-gray-color
+$border-pale-blue-color: $pale-blue-color
+$border-sky-gray-color: $sky-gray-color
+$border-misty-blue-color: $misty-blue-color
+$border-gray-color: $gray-color
+$border-steel-blue-color: $steel-blue-color
+$border-cyan-blue-color: $cyan-blue-color
+$border-midnight-gray-color: $midnight-gray-color
+$border-turquoise-blue-color: $turquoise-blue-color
+$border-night-sky-color: $night-sky-color
+$border-neon-yellow-color: $neon-yellow-color
+$border-medium-bright-blue-color: $medium-bright-blue-color
+$border-charcoal-gray-dark-color: $charcoal-gray-dark-color
+$border-soft-yellow-color: $soft-yellow-color
+// box-shadow
+$box-shadow-primary-color: $primary-color
+$box-shadow-light-color: $white-color
+$box-shadow-dark-color: $black-color
+$box-shadow-pale-silver-color: $pale-silver-color
+$box-shadow-deep-slate-color: $deep-slate-color
+$box-shadow-vibrant-blue-color: $vibrant-blue-color
+$box-shadow-soft-slate-gray-color: $soft-slate-gray-color
+$box-shadow-soft-blue-gray-color: $soft-blue-gray-color
+// 動態登入 & 註冊 ModeLoginRegister
+$login-register-title: $dark-slate-color
+$login-register-title-h5: $deep-ocean-color
+$login-register-subtitle: $steel-blue-color
+
+$text-favorite-color: #484848
+$text-input-color: rgba(0, 0, 0, 0.87)

@@ -1,0 +1,32 @@
+@import "src/common/css/_variable.sass";
+@import "app/template/set_DBO88/assets/css/_variable.scss";
+
+.common-page-wrapper {
+  @apply flex flex-col w-full max-w-[65rem] mx-auto mb-4;
+
+  @include pad-large-width {
+    @apply px-4 py-2;
+  }
+}
+
+.common-page-container {
+  @apply rounded-2xl p-[2.25rem] mb-4;
+  background: #24262b;
+
+  @include pad-large-width {
+    @apply p-2;
+  }
+}
+
+// 加密貨幣錢包彈窗：套用 set_DBO88 深色主題配色（排版維持共用元件預設）
+.crypto-wallet-dialog {
+  --cwd-bg: #{$midnight-blue-color};      // #161f2c 深色卡背
+  --cwd-text: #{$white-color};            // #ffffff
+  --cwd-muted: #{$sky-blue-color};        // #93acd3 淺藍灰文字
+  --cwd-card: #{$deep-slate-color};       // #3d3f4b 內部 row 卡背
+  --cwd-accent: #{$bright-blue-color};    // #2283f6 亮藍
+  --cwd-warning: #{$danger};              // #dc3545 紅
+  --cwd-border: #{$steel-blue-color};     // #475c72
+  --cwd-action-bg: #{$bright-blue-color}; // #2283f6
+  --cwd-action-text: #{$white-color};     // #ffffff
+}

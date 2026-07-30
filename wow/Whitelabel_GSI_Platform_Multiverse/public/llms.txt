@@ -1,0 +1,9 @@
+# Online Gaming Platform
+
+> Online gaming platform offering games, promotions, and member account services.
+
+## Site
+
+- [Home](/): Main lobby and featured content
+- [Promotions](/promotion): Current promotions and offers
+- [Contact](/ContactUs): Contact and support information

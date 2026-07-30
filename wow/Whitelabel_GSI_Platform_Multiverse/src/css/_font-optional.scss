@@ -1,0 +1,24 @@
+// 非首屏字型：由 boot/fontsOptional 在 idle 後載入，避免進主 CSS / 搶 FCP。
+@font-face {
+  font-family: "DMSans";
+  src: url("/src/common/assets/fonts/DM_Sans/DMSans-VariableFont_opsz\,wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Century Gothic";
+  src: url("/src/common/assets/fonts/Century_Gothic/centurygothic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Century Gothic";
+  src: url("/src/common/assets/fonts/Century_Gothic/centurygothic_bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}

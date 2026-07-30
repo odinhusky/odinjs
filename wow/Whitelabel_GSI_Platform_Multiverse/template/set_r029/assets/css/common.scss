@@ -1,0 +1,14 @@
+@import "app/template/set_r029/assets/css/_variable.scss";
+
+// 加密貨幣錢包彈窗：套用 set_r029 深色主題（金色強調 + 綠按鈕）配色（排版維持共用元件預設）
+.crypto-wallet-dialog {
+  --cwd-bg: #{$r029-bg-section};         // #111827 深色卡背
+  --cwd-text: #{$r029-text-primary};     // #F9FAFB
+  --cwd-muted: #{$r029-text-secondary};  // #9CA3AF
+  --cwd-card: #{$r029-bg-card};          // #1F2937 內部 row 卡背
+  --cwd-accent: #{$menu-text-color};     // #cba354 金色強調
+  --cwd-warning: #{$r029-error};         // #EF4444
+  --cwd-border: #{$border01};            // #1a1a1a
+  --cwd-action-bg: #{$r029-action-primary}; // #22C55E 綠按鈕
+  --cwd-action-text: #{$white-color};    // #ffffff
+}

@@ -1,0 +1,6 @@
+export const TANSTACK_QUERY_KEY_REFERRAL_SETTING = "referralSetting"
+export const TANSTACK_QUERY_KEY_REFERRAL_SETTING_DETAIL = "referralSettingDetail"
+export const TANSTACK_QUERY_KEY_REFERRAL_INFO = "referralInfo"
+export const TANSTACK_QUERY_KEY_REFERRAL_SUMMARY = "referralSummary"
+export const TANSTACK_QUERY_KEY_REFERRAL_STATEMENT_LIST = "referralStatementList"
+export const TANSTACK_QUERY_KEY_REFERRAL_STATEMENT_DETAIL = "referralStatementDetail"

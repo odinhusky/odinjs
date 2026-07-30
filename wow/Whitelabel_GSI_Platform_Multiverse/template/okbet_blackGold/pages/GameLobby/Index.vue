@@ -1,0 +1,769 @@
+<template>
+  <div :class="cx('w-full', PAGE_X_SPACING, FLEX_CENTER)">
+    <GameBanner :isNeedMaxWidth="isNeedMaxWidth" />
+  </div>
+
+  <MobileNav />
+
+  <div class="w-full px-6 phone:px-4">
+    <div class="provider-container" :class="`${isMobile ? 'h5' : 'pc'}`">
+      <div class="provider-title">
+        <p class="item-desc">{{ $t("home.entertaining") }}</p>
+        <h3 class="title">
+          <!-- 特規: 黑金版泰文特規，不顯示「遊戲」，只顯示「供應商」 -->
+          <span v-if="nowLang !== LANGUAGE_TYPE.Enums.TH"> {{ $t("home.game") }} </span> {{ $t("home.providers") }}
+        </h3>
+      </div>
+      <div v-if="productList.length" class="provider-swiper-wrapper">
+        <button type="button" class="provider-swiper-arrow provider-swiper-prev" aria-label="Previous provider">
+          <q-icon name="chevron_left" size="24px" />
+        </button>
+
+        <swiper
+          :modules="[Navigation]"
+          :navigation="{
+            prevEl: '.provider-swiper-prev',
+            nextEl: '.provider-swiper-next'
+          }"
+          :slides-per-view="isMobile ? 2.5 : 4.3"
+          :space-between="10"
+        >
+          <swiper-slide
+            v-for="product in productList"
+            :key="product.product_code"
+            :class="{ active: selectedProductCode === product.product_code }"
+            @click="selectProductCode(product.product_code)"
+          >
+            <img
+              :src="getProductTabImage({ ...product, siteKey: 'okbet_blackGold' })"
+              class="tab-img"
+              :alt="product.product_name"
+              @error="setDefaultProductTabImg"
+            />
+          </swiper-slide>
+        </swiper>
+
+        <button type="button" class="provider-swiper-arrow provider-swiper-next" aria-label="Next provider">
+          <q-icon name="chevron_right" size="24px" />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full px-6 phone:px-4">
+    <div v-if="isMobile" class="game-container h5">
+      <div class="search-container">
+        <div class="tabs">
+          <q-btn
+            v-for="tag in gameTagList"
+            :key="`tag-${tag.value}`"
+            flat
+            class="hide-hover btn-tag"
+            :class="{ active: gameSearchType === tag.value }"
+            @click="gameSearchType = tag.value"
+            :disable="gameSearchType === tag.value"
+          >
+            <q-icon :name="tag.icon" class="mr-2"></q-icon>
+            {{ tag.label }}
+          </q-btn>
+        </div>
+        <q-input
+          v-model.trim="searchKeyword"
+          borderless
+          clearable
+          clear-icon="close"
+          class="search-input"
+          :placeholder="$t('placeholder.searchGame')"
+        >
+          <template #append> <q-icon name="search" /> </template
+        ></q-input>
+      </div>
+
+      <q-virtual-scroll
+        ref="virtualScrollRef"
+        v-if="showGameList.length > 0"
+        :items="gameRows"
+        :virtual-scroll-item-size="virtualRowHeight"
+        :virtual-scroll-slice-size="virtualScrollSliceSize"
+        :virtual-scroll-slice-ratio-before="virtualScrollSliceRatioBefore"
+        :virtual-scroll-slice-ratio-after="virtualScrollSliceRatioAfter"
+        :scroll-target="resolvedVirtualScrollTarget"
+      >
+        <template #default="{ item: gameRow, index }">
+          <ul :key="`game-row-${index}`" class="game-row">
+            <li
+              v-for="game in gameRow"
+              :key="game.game_id"
+              class="game-item"
+              @click="
+                openGame(
+                  game.integration_id,
+                  game.product_code,
+                  game.game_code,
+                  gameType,
+                  true,
+                  undefined,
+                  undefined,
+                  false,
+                  undefined,
+                  game.support_currency
+                )
+              "
+            >
+              <div class="img-container">
+                <img :src="getGameImage(game)" :alt="game.game_code" class="game-img" loading="lazy" decoding="async" @error="setDefaultGameImg" />
+                <q-btn
+                  v-if="isGameFavorited(game)"
+                  class="btn-favorite hide-hover"
+                  round
+                  flat
+                  @click.stop="removeFavorite(game, true)"
+                >
+                  <img :src="svgIcon('heart-btn-active')" alt="" />
+                </q-btn>
+                <q-btn v-else class="btn-favorite hide-hover" round flat @click.stop="addFavorite(game, true)">
+                  <img :src="svgIcon('heart-btn')" alt="" />
+                </q-btn>
+              </div>
+
+              <div class="hot-tag">
+                <img v-if="game.hot" :src="hotTagImg" />
+                <img v-if="game.newly" :src="newTagImg" />
+              </div>
+
+              <div class="game-name">{{ game.game_name }}</div>
+              <div class="game-favorites">
+                <img :src="svgIcon('heart-collet')" alt="" />
+                <span> {{ formatNumberKM(game.favorite_count) }} </span>
+              </div>
+            </li>
+          </ul>
+        </template>
+      </q-virtual-scroll>
+      <div v-else class="no-data-container no-data">
+        <img v-if="getWideLogo" :src="getWideLogo()" alt="" />
+        <span>{{ $t("tableHeader.no_data") }}</span>
+      </div>
+      <FooterNav />
+    </div>
+
+    <div v-else class="game-container pc">
+      <div class="search-container">
+        <div class="tabs">
+          <swiper :slides-per-view="4" :space-between="16">
+            <swiper-slide v-for="tag in gameTagList" :key="`tag-${tag.value}`" :name="tag.value">
+              <q-btn
+                flat
+                class="hide-hover btn-tag"
+                :class="{ active: gameSearchType === tag.value }"
+                @click="gameSearchType = tag.value"
+                :disable="gameSearchType === tag.value"
+              >
+                {{ tag.label }}
+              </q-btn>
+            </swiper-slide>
+          </swiper>
+        </div>
+        <q-input
+          v-model.trim="searchKeyword"
+          borderless
+          clearable
+          clear-icon="close"
+          class="search-input"
+          :placeholder="$t('placeholder.searchGame')"
+        >
+          <template #append> <q-icon name="search" /> </template
+        ></q-input>
+      </div>
+
+      <q-virtual-scroll
+        ref="virtualScrollRef"
+        v-if="showGameList.length > 0"
+        :items="gameRows"
+        :virtual-scroll-item-size="virtualRowHeight"
+        :virtual-scroll-slice-size="virtualScrollSliceSize"
+        :virtual-scroll-slice-ratio-before="virtualScrollSliceRatioBefore"
+        :virtual-scroll-slice-ratio-after="virtualScrollSliceRatioAfter"
+        :scroll-target="resolvedVirtualScrollTarget"
+      >
+        <template #default="{ item: gameRow, index }">
+          <ul :key="`game-row-${index}`" class="game-row">
+            <li v-for="game in gameRow" :key="game.game_id" class="game-item">
+              <div class="img-container">
+                <img :src="getGameImage(game)" :alt="game.game_code" class="game-img" loading="lazy" decoding="async" @error="setDefaultGameImg" />
+                <q-btn
+                  v-if="isGameFavorited(game)"
+                  class="btn-favorite hide-hover"
+                  round
+                  flat
+                  @click="removeFavorite(game, true)"
+                >
+                  <img :src="svgIcon('heart-btn-active')" alt="" />
+                </q-btn>
+                <div class="play-btn-container">
+                  <q-btn
+                    class="btn-play hide-hover"
+                    @click="
+                      openGame(
+                        game.integration_id,
+                        game.product_code,
+                        game.game_code,
+                        gameType,
+                        true,
+                        undefined,
+                        undefined,
+                        false,
+                        undefined,
+                        game.support_currency
+                      )
+                    "
+                  >
+                    {{ $t("game.play_now") }}
+                  </q-btn>
+                  <q-btn
+                    v-if="!isGameFavorited(game)"
+                    class="btn-favorite hide-hover"
+                    round
+                    flat
+                    @click="addFavorite(game, true)"
+                  >
+                    <img :src="svgIcon('heart-btn')" alt="" />
+                  </q-btn>
+                </div>
+              </div>
+
+              <div class="hot-tag">
+                <img v-if="game.hot" :src="hotTagImg" />
+                <img v-if="game.newly" :src="newTagImg" />
+              </div>
+
+              <div class="title-container">
+                <span class="game-name">{{ game.game_name }}</span>
+                <span class="game-favorites">
+                  <img :src="svgIcon('heart-collet')" alt="" />
+                  {{ formatNumberKM(game.favorite_count) }}
+                </span>
+              </div>
+            </li>
+          </ul>
+        </template>
+      </q-virtual-scroll>
+      <div v-else class="no-data-container no-data">
+        <img v-if="getWideLogo" :src="getWideLogo()" alt="" />
+        <span>{{ $t("tableHeader.no_data") }}</span>
+      </div>
+      <div class="w-full px-4 md:p-x6">
+        <RankBoard class="rank-board my-8 w-full" />
+      </div>
+    </div>
+  </div>
+
+  <FooterArea v-if="!isMobile" />
+</template>
+<script lang="ts">
+export default {
+  name: "GameLobby"
+}
+</script>
+<script lang="ts" setup>
+import { computed, onMounted } from "vue"
+import { useRoute, useRouter } from "vue-router"
+import { useQuasar } from "quasar"
+import "swiper/css"
+import { Swiper, SwiperSlide } from "swiper/vue"
+import { Navigation } from "swiper/modules"
+import GameBanner from "app/template/okbet_blackGold/components/Banner/GameBanner.vue"
+import RankBoard from "app/template/okbet_blackGold/components/Carousel/RankBoard.vue"
+import FooterArea from "app/template/okbet_blackGold/components/Footer/Index.vue"
+import MobileNav from "app/template/okbet_blackGold/components/MobileNav.vue"
+import FooterNav from "../../components/Footer/FooterNav.vue"
+import { useSiteImg } from "app/template/okbet_blackGold/hooks/useSiteImg"
+import { useBanner } from "src/common/composables/useBanner"
+import { useGameLobbyVirtualScroll } from "src/common/composables/useGameLobbyVirtualScroll"
+import { useProviderGameLobby } from "src/common/composables/useProviderLobby"
+import { useGame } from "src/common/composables/useGame"
+import { useLanguage } from "src/common/composables/useLanguage"
+import { useLogo } from "src/common/composables/useLogo"
+import { useAIHelperEvent } from "src/common/hooks/useAIHelperEvent"
+import { useCommon } from "src/common/hooks/useCommon"
+import { useCommonImg } from "src/common/hooks/useCommonImg"
+import { useProviderGameLobbyRoute } from "src/common/composables/useProviderGameLobbyRoute"
+import { useMediaQuery } from "src/common/hooks/useMediaQuery"
+import { AI_HELPER_EVENT_ROUTES, BANNER_POSITION, GAME_TYPE, LANGUAGE_TYPE } from "src/common/utils/constants"
+import { PAGE_X_SPACING, FLEX_CENTER } from "src/common/utils/constants/styles"
+import { cx } from "src/common/utils/cx"
+
+const { width, isDown } = useMediaQuery()
+const isNeedMaxWidth = computed(() => width.value >= 1200)
+
+const $q = useQuasar()
+const isMobile = $q.platform.is.mobile
+const isDesktop = computed(() => !isMobile)
+
+// 對齊 main：PC 6→5→4；H5 4 / iphone 3
+const rowItemsCount = computed(() => {
+  if (isMobile) return isDown.iphone ? 3 : 4
+  if (isDown.pcXl) return 4
+  if (isDown.pc2xl) return 5
+  return 6
+})
+
+const route = useRoute()
+const router = useRouter()
+const { nowLang } = useLanguage()
+const { handleBannerList } = useBanner()
+const { gameTagList, openGame, getGameImage, getProductTabImage } = useGame()
+const { setDefaultGameImg } = useCommonImg()
+const { setDefaultProductTabImg, svgIcon, hotTagImg, newTagImg } = useSiteImg()
+const { formatNumberKM } = useCommon()
+const { getWideLogo } = useLogo()
+const { handleAIHelperRouteEvent } = useAIHelperEvent()
+
+const { safeGameType, routeIntegrationId, routeProductCode } = useProviderGameLobbyRoute(route, router)
+const gameType = safeGameType
+
+
+const {
+  selectedProductCode,
+  productList,
+  searchKeyword,
+  showGameList,
+  selectProductCode,
+  isGameFavorited,
+  addFavorite,
+  removeFavorite,
+  gameSearchType,
+} = useProviderGameLobby(router, safeGameType, { routeIntegrationId, routeProductCode })
+
+const {
+  virtualScrollRef,
+  virtualRowHeight,
+  virtualScrollSliceSize,
+  virtualScrollSliceRatioBefore,
+  virtualScrollSliceRatioAfter,
+  resolvedVirtualScrollTarget,
+  gameRows,
+} = useGameLobbyVirtualScroll(showGameList, isDesktop, { rowItemsCount })
+
+async function getBanner() {
+  await handleBannerList(BANNER_POSITION.Enums.ProductLobby, gameType.value)
+}
+
+onMounted(async () => {
+  handleAIHelperRouteEvent(AI_HELPER_EVENT_ROUTES.Enums.GAME_LOBBY)
+  await getBanner()
+})
+</script>
+
+<style lang="scss" scoped>
+@import "src/common/css/_variable.sass";
+@import "app/template/okbet_blackGold/assets/css/game.scss";
+@import "app/template/okbet_blackGold/assets/css/button.scss";
+@import "app/template/okbet_blackGold/assets/css/data.scss";
+
+.provider-container {
+  @include setFlex;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-direction: column;
+
+  .provider-swiper-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .provider-swiper-arrow {
+    width: 32px;
+    height: 32px;
+    opacity: 1 !important;
+    border-radius: 9999px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    background-image: radial-gradient(71.88% 71.88% at 45.31% -6.25%, #737373 0%, #333333 76.26%),
+      linear-gradient(180deg, #f7d99d 0%, #a48155 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 247, 233, 1) !important;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .provider-swiper-prev {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .provider-swiper-next {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &.pc {
+    @apply w-full mb-8;
+
+    .provider-title {
+      width: 100%;
+    }
+
+    .item-desc {
+      font-family: OpenSans;
+      font-style: normal;
+      font-weight: 860;
+      font-size: 0.75rem;
+      line-height: 0.875rem;
+      color: $secondary-gold-color;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    .title {
+      @apply relative mb-5;
+      font-family: OpenSans;
+      font-style: normal;
+      font-size: 1.75rem;
+      line-height: 2.0625rem;
+      color: #fff;
+      font-weight: 500;
+
+      span {
+        color: $secondary-gold-color;
+        font-weight: 860;
+      }
+    }
+
+    .swiper {
+      width: 100%;
+
+      .swiper-slide {
+        width: 260px;
+        height: 100px;
+        background: $primary-black-color;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 0 0 auto;
+        margin-left: 0;
+        overflow: hidden;
+        cursor: pointer;
+
+        &.active {
+          box-shadow: 0 0 0 2px $secondary-gold-color;
+        }
+      }
+
+      .tab-img {
+        width: 70%;
+      }
+    }
+  }
+
+  &.h5 {
+    @apply pt-0 mt-2 mb-5 iphone:mb-4 mx-0;
+    @apply max-w-none;
+
+    .item-desc {
+      display: none;
+    }
+
+    .title {
+      display: none;
+    }
+
+    .swiper {
+      width: 100vw;
+      @include iphone-width {
+        max-width: 92vw;
+      }
+
+      .swiper-slide {
+        @apply w-auto h-[6.25rem] phone:h-20;
+        background: $primary-black-color;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 0 0 auto;
+        margin-left: 0;
+        overflow: hidden;
+        cursor: pointer;
+
+        &.active {
+          box-shadow: 0 0 0 2px $secondary-gold-color;
+        }
+      }
+
+      .tab-img {
+        width: 200px;
+      }
+    }
+  }
+}
+
+.hot-tag {
+  position: absolute;
+  left: -5%;
+  top: 5%;
+  z-index: 10;
+
+  width: 71px;
+  height: 50px;
+
+  @media (max-width: 767px) {
+    width: 50px;
+    height: 35px;
+    left: -7%;
+    top: 3%;
+  }
+}
+
+.game-container {
+  @include setFlex;
+  flex-direction: column;
+
+  &.pc {
+    margin: 2rem 2rem 8rem 2rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+
+    .search-container {
+      width: 100%;
+      @apply flex justify-end;
+
+      .tabs {
+        width: 100%;
+        display: flex;
+        flex: 1 1 0%;
+        margin-bottom: 20px;
+        margin-right: 20px;
+        overflow-x: auto;
+        border-radius: 16px;
+        padding-bottom: 4px;
+
+        .swiper {
+          margin: 0;
+
+          .swiper-slide {
+            width: auto !important;
+
+            .btn-tag {
+              padding: 10px 20px;
+              border-radius: 100px;
+              font-family: OpenSans;
+              font-style: normal;
+              font-weight: 400;
+              font-size: 16px;
+              line-height: 19px;
+              margin-left: 0px;
+              background: $tertiary-black-color;
+              color: $secondary-gray-color;
+              white-space: nowrap;
+              flex: 0 0 auto;
+              text-transform: none;
+
+              &.active {
+                font-weight: 510;
+                color: black;
+                background: $primary-gradient-color;
+              }
+
+              &.disabled {
+                opacity: 1 !important;
+              }
+            }
+          }
+        }
+      }
+
+      .search-input {
+        width: 13.75rem;
+        height: 2.5rem;
+        border-radius: 2.125rem;
+        background: $primary-black-color;
+
+        :deep(.q-field__control) {
+          height: 2.5rem;
+          font-family: Roboto, Helvetica, Arial, sans-serif;
+          font-weight: 400;
+          font-size: 1rem;
+          line-height: 1.4375em;
+          letter-spacing: 0.00938em;
+          color: rgba(0, 0, 0, 0.87);
+          box-sizing: border-box;
+          cursor: text;
+          display: inline-flex;
+          align-items: center;
+          position: relative;
+          border-radius: 4px;
+          padding-right: 0.875rem;
+
+          input {
+            color: #afdccc;
+            font-family: OpenSans;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.1875rem;
+            padding-left: 1.25rem;
+          }
+
+          .q-icon {
+            color: #afdccc;
+          }
+        }
+      }
+    }
+
+    .game-row {
+      width: 100%;
+      @apply grid grid-cols-6 gap-4;
+      @apply pb-5;
+
+      .hot-tag {
+        position: absolute;
+        left: -5%;
+        top: 9%;
+        z-index: 10;
+        width: 71px;
+        height: 50px;
+      }
+
+      @include pc-2xl-width {
+        @apply grid-cols-5;
+      }
+
+      @include pc-xl-width {
+        @apply grid-cols-4;
+      }
+    }
+  }
+
+  &.h5 {
+    padding-bottom: 7rem;
+
+    .search-container {
+      @apply w-full;
+      @apply flex justify-center items-center flex-wrap gap-5 iphone:gap-4;
+      @apply rounded-lg overflow-hidden;
+
+      .tabs {
+        width: 100%;
+        display: flex;
+        overflow-x: auto;
+        border-radius: 0.5rem;
+        justify-content: space-between;
+
+        .btn-tag {
+          @apply rounded-lg;
+          width: 23.5%;
+          padding: 5px 0;
+          font-family: OpenSans;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 19px;
+          margin-left: 0px;
+          background: $primary-black-color;
+          color: $primary-white-color;
+          white-space: nowrap;
+          flex: 0 0 auto;
+          text-transform: none;
+
+          &.active {
+            font-weight: 510;
+            color: black;
+            background: $primary-gradient-color;
+          }
+
+          &.disabled {
+            opacity: 1 !important;
+          }
+        }
+      }
+
+      .search-input {
+        @apply w-full h-9 px-2 rounded-lg;
+        background: $primary-black-color;
+
+        :deep(.q-field__control) {
+          @apply h-9;
+
+          input {
+            color: #afdccc;
+            &:placeholder-shown {
+              color: #afdccc;
+            }
+          }
+        }
+
+        :deep(.q-field__marginal) {
+          @apply h-9;
+          color: #afdccc;
+
+          .q-field__focusable-action {
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 6px;
+            color: #afdccc;
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    .game-row {
+      @apply w-full;
+      @apply pt-4 pb-6 phone:py-4;
+      @apply flex flex-wrap;
+      @apply grid grid-cols-4 gap-4;
+      @apply phone:grid-cols-4 phone:gap-2;
+
+      .hot-tag {
+        width: 50px;
+        height: 35px;
+        left: -7%;
+        top: 9%;
+        position: absolute;
+        z-index: 10;
+      }
+
+      .game-item {
+        @apply w-full h-auto pb-3 rounded-lg;
+
+        .img-container {
+          @apply h-auto rounded-lg;
+
+          img {
+            @apply rounded-lg;
+          }
+        }
+
+        .game-name {
+          @apply mt-2;
+        }
+
+        .game-favorites {
+          img {
+            @apply w-5 h-5;
+          }
+        }
+      }
+
+      @include iphone-width {
+        @apply grid grid-cols-3 gap-2;
+      }
+    }
+  }
+}
+</style>

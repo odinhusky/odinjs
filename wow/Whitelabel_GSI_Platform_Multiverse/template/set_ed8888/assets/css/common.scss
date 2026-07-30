@@ -1,0 +1,14 @@
+@import "app/template/set_ed8888/assets/css/_variable.scss";
+
+// 加密貨幣錢包彈窗：套用 set_ed8888 深紅主題配色（排版維持共用元件預設）
+.crypto-wallet-dialog {
+  --cwd-bg: #{$primary-color};               // #400001 深紅卡背
+  --cwd-text: #{$white-color};               // #ffffff
+  --cwd-muted: #{$header-text-gray};         // #676767
+  --cwd-card: #{$primary-color-light};       // #531a1b 內部 row 卡背
+  --cwd-accent: #{$pink-color};              // #fd857b 粉紅強調
+  --cwd-warning: #{$danger-color};           // #FF0000 紅
+  --cwd-border: #{$secondary-color};         // #7c0000
+  --cwd-action-bg: #{$secondary-color};      // #7c0000 紅按鈕
+  --cwd-action-text: #{$white-color};        // #ffffff
+}

@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../../dist/out-tsc",
+    "composite": true,
+    "declaration": true,
+    "ignoreDeprecations": "6.0",
+    "types": ["node", "nuxt", "@nuxtjs/i18n"],
+    "paths": {
+      "@shared-lib/*": ["./src/lib/*"],
+      "@shared-src/*": ["./src/*"],
+      "@ui-layer/*": ["./src/*"],
+      "#imports": ["./.nuxt/imports.d.ts"], // 指向共用層目錄下的 .nuxt
+      "#app": ["../../../node_modules/nuxt/dist/app"] // 讓 TS 找到 Nuxt 核心
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue",
+    ".nuxt/imports.d.ts",
+    ".nuxt/nuxt.d.ts",
+    ".nuxt/types/*.d.ts"
+  ],
+  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts"]
+}

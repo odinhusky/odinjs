@@ -1,0 +1,24 @@
+.memberLevelSettingsWrapper {
+
+
+
+
+  .avatarWrapper {
+    flex: auto;
+
+    .avatarImg {
+      border-radius: 0.3125rem;
+      font-size: 1.6875rem;
+      width: 3.25rem;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 1/1;
+    }
+
+    .avatarTips {
+      font-size: 0.75rem;
+    }
+  }
+}

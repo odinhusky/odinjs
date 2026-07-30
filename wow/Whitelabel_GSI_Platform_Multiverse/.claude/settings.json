@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs sed:*)",
+      "Bash(git checkout:*)",
+      "Bash(find \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\" -type d -name \"set_obbl\" 2>nul)",
+      "Bash(find \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\" -type d -name \"templates\" -o -type d -name \"template\" 2>nul | head -20)",
+      "Bash(ls \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\\\\src\" 2>nul | head -20)",
+      "Bash(ls \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\\\\template\" 2>nul)",
+      "Bash(find \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\" -type d -iname \"*obbl*\" 2>nul)",
+      "Bash(find \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\\\\template\" -type f -iname \"*login*\" -o -iname \"*register*\" -o -iname \"*signin*\" -o -iname \"*signup*\" 2>nul | head -30)",
+      "Bash(ls \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\\\\template\\\\set_r033\" 2>nul | head -20)",
+      "Bash(find \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\" -type f -name \"*Login.vue\" -o -name \"*Register.vue\" 2>nul | head -30)",
+      "Bash(grep -i \"^.*obbl.*$\")",
+      "PowerShell(git -C \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\" log -L 251,251:src/common/hooks/useBetByGame.ts --no-patch --pretty=format:\"%h%x09%an%x09%ad%x09%s\" --date=short -n 5)",
+      "PowerShell(git -C \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\" log -L 251,251:src/common/hooks/useBetByGame.ts -n 2 --date=short)",
+      "PowerShell(git -C \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\" show a28cc304a --stat --pretty=format:\"%h%n%an%x20%ad%n%s%n%b\" --date=short)",
+      "PowerShell(git -C \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\" show a28cc304a -- src/common/hooks/useBetByGame.ts src/api/game.ts src/api/request.type.ts)",
+      "PowerShell(git -C \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\" show a28cc304a -- src/common/composables/useGame.ts src/stores/gameDialogStore.ts)",
+      "PowerShell(git -C \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\" add src/common/hooks/useDigitainGame.ts src/common/hooks/useSabaGame.ts)",
+      "PowerShell(git -C \"c:\\\\Users\\\\yinya\\\\git\\\\Whitelabel_GSI_Platform_Multiverse\" status)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\yinya\\git\\Whitelabel_GSI_Platform_Multiverse"
+    ]
+  }
+}

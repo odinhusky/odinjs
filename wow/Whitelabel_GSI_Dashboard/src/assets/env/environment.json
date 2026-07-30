@@ -1,0 +1,9 @@
+{
+  "mode": "agent",
+  "baseApi": "https://api-devm-dev.gsiwl.com",
+  "staticResourceUrl": "/statics/staging",
+  "dynamicResourceUrl": "https://wowdata.gpsriowdl.com/gsi/dev/devm",
+  "apiPath": "/v1/agent",
+  "version": "1.0.0",
+  "agentCode": "dobt"
+}

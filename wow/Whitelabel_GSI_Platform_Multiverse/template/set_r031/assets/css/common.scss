@@ -1,0 +1,45 @@
+@import "app/template/set_r031/assets/css/_variable.scss";
+
+.game-tab {
+  width: 90vw;
+  overflow-x: auto;
+
+  &.scrollX {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: $neutral04 transparent;
+    overflow: auto hidden;
+    transform: translate(0);
+    height: 45px !important;
+  }
+}
+
+// 統一 q-select 下拉選單配色
+.q-menu,
+.q-select__dialog {
+  background: var(--dialog-bg);
+  color: var(--dialog-text-01);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .q-item--active {
+    color: var(--dialog-text-01) !important;
+  }
+}
+
+// 加密貨幣錢包彈窗：套用 r031 深色 + 洋紅主色配色（排版維持共用元件預設）
+.crypto-wallet-dialog {
+  --cwd-bg: var(--secondary-08);          // #1E1335 深色卡背
+  --cwd-text: var(--neutral-01);          // #ffffff
+  --cwd-muted: var(--neutral-03);         // #af9dd5 淺紫文字
+  --cwd-card: var(--secondary-07);        // #290a45 內部 row 卡背
+  --cwd-accent: var(--primary-01);        // #ce4388 洋紅
+  --cwd-warning: var(--emotional-01);     // #ff3b3b 紅
+  --cwd-border: var(--neutral-02);        // rgba(255,255,255,.1)
+  --cwd-action-bg: var(--primary-01);     // #ce4388
+  --cwd-action-text: var(--neutral-01);   // #ffffff
+}

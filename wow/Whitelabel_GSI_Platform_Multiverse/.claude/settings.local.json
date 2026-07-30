@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(echo \"GIT_DIR=$GIT_DIR\")",
+      "Bash(echo \"GIT_WORK_TREE=$GIT_WORK_TREE\")",
+      "Bash(xxd .git/HEAD)",
+      "Bash(xxd \"src/common/utils/constants/walletType.ts\")",
+      "Bash(git checkout HEAD -- src/api/rank.ts src/common/utils/constants/s3StorageCategory.ts src/common/utils/constants/walletType.ts template/set_r024/assets/css/common.scss)",
+      "Bash(rm -f .git/index)",
+      "Bash(git reset:*)"
+    ]
+  }
+}

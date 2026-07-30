@@ -1,0 +1,110 @@
+$c1: #fff
+$c2: #000
+$c3: #d8c99f
+$c4: #75442f
+$cRed: #bc0e14
+$cPurple: #c43aeb
+$cBlue: #35a6e3
+$cGreen: #00843b
+
+$headerBg: linear-gradient(to right, rgba(19,0,0,0.7) 0%,rgba(19,0,0,0.8) 25%,rgba(19,0,0,1) 50%,rgba(19,0,0,0.8) 75%,rgba(19,0,0,0.7) 100%) //--【電腦版】header：背景色
+$headerBorder: #dccca0 //--【電腦版】header：邊框色
+$headerMainColor: #fff //--【電腦版】header：元件主色
+
+$mbMenuBg: #5a0000 //--【手機版】側選單：選單背色
+$mbActBg: #7d0000 //--【手機版】側選單：活動連結區塊背色
+$mbBtnBg: #e3c66f //--【手機版】側選單：立即登入按鈕背景色
+$mbMainColor: #ffffff //--【手機版】header & 側選單：元件主色
+
+$pc-media: 1200px
+$pad-media: 992px
+$phone-media: 768px
+$iphone-media: 575px
+
+$mainColor: #409eff
+$mainDeepColor: rgba(195, 195, 195, 1)
+$mainLightColor: #000
+$mainLightColor2: #E8E4F7
+$mainGreyColor: #F4F5F9
+$textGreyColor: #535252
+$mainBlueColor: #086eff
+$mainBorderRadius: 12px
+
+
+//========== mixin ==========
+@mixin size($w,$h:$w)
+  width: $w
+  height: $h
+
+@mixin setAuto($w, $m:auto)
+  width: $w
+  margin: $m
+
+@mixin setImgBg($file, $w:null, $h:null, $size:initial, $post:top center, $repeat:no-repeat, $color:null)
+  background-image: url(~@img/#{$file})
+  background-repeat: $repeat
+  background-size: $size
+  background-position: $post
+  @if($color)
+    +setBg($color)
+  @if($w and $h)
+    +size($w, $h)
+
+@mixin setBg($color)
+  background-color: $color
+
+@mixin setBorder($w, $c)
+  border: $w solid $c
+
+@mixin position($type, $top, $left, $zindex:0)
+  position: $type
+  top: $top
+  left: $left
+  z-index: $zindex
+
+@mixin setPosAbs($top:0, $right:0, $bottom:null, $left:0, $zindex:0)
+  position: absolute
+  top: $top
+  right: $right
+  bottom: $bottom
+  left: $left
+  z-index: $zindex
+
+@mixin setFlex($horizontal:center, $vertical:center)
+  display: flex
+  align-items: $vertical
+  justify-content: $horizontal
+
+@mixin setFont($fz, $les:null, $lh:inherit, $fw:normal)
+  font-size: $fz
+  letter-spacing: $les
+  line-height: $lh
+  font-weight: $fw
+
+//-pc
+@mixin pc-width()
+  @media (max-width: $pc-media)
+    @content
+
+//-pad
+@mixin pad-width()
+  @media (max-width: $pad-media)
+    @content
+
+//-phone
+@mixin phone-width()
+  @media (max-width: $phone-media)
+    @content
+
+//-iphone
+@mixin iphone-width()
+  @media (max-width: $iphone-media)
+    @content
+
+//-only iphone5
+@mixin iphone5-width()
+  @media (width: 320px) and (height: 568px)
+    @content
+
+//===================================
+
